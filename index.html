@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vividh Bharati</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --bg:#0f1115;
+  --card:#171b26;
+  --card-hover:#1f2433;
+  --border:#1f2433;
+  --text:#ffffff;
+  --muted:#9ca3af;
+  --green:#22c55e;
+}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 12px;
+  background:#141823;
+  border-bottom:1px solid var(--border);
+}
+
+.header-title{
+  font-size:20px;
+  font-weight:700;
+}
+
+.header-btns{
+  display:flex;
+  gap:14px;
+}
+
+.icon-btn{
+  font-size:18px;
+  text-decoration:none;
+  color:#e5e7eb;
+  opacity:.9;
+}
+.icon-btn:hover{ opacity:1; }
+
+/* SECTION */
+.section{
+  padding:16px 14px 6px;
+}
+.section h2{
+  font-size:16px;
+  margin:0 0 12px;
+  color:#e5e7eb;
+}
+
+/* STATION LIST */
+.station{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:var(--card);
+  padding:14px;
+  border-radius:14px;
+  margin-bottom:12px;
+  border:1px solid var(--border);
+  text-decoration:none;
+  color:var(--text);
+}
+.station:hover{ background:var(--card-hover); }
+
+.station-name{
+  font-size:15px;
+  font-weight:600;
+}
+
+.program-row{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-top:4px;
+}
+.live-dot{
+  width:8px;
+  height:8px;
+  background:var(--green);
+  border-radius:50%;
+  box-shadow:0 0 6px rgba(34,197,94,.9);
+}
+.program{
+  font-size:13px;
+  color:var(--muted);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.play{ font-size:18px; }
+
+/* CARDS */
+.full-card{
+  display:block;
+  background:var(--card);
+  padding:14px;
+  border-radius:14px;
+  margin-bottom:12px;
+  text-decoration:none;
+  color:var(--text);
+  border:1px solid var(--border);
+}
+.full-card:hover{ background:var(--card-hover); }
+
+.subtext{
+  font-size:13px;
+  margin-top:4px;
+  color:var(--muted);
+}
+.green{ color:var(--green); }
+
+/* PRIVACY POPUP */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+.modal-box{
+  background:#141823;
+  padding:18px;
+  border-radius:14px;
+  width:85%;
+  max-width:360px;
+  border:1px solid var(--border);
+}
+.modal-box h3{
+  margin:0 0 10px;
+  font-size:16px;
+}
+.modal-box p{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.5;
+}
+.close-btn{
+  margin-top:14px;
+  text-align:center;
+  padding:10px;
+  background:var(--card);
+  border-radius:10px;
+  cursor:pointer;
+}
+.close-btn:hover{ background:var(--card-hover); }
+
+.footer-space{ height:16px; }
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <a href="http://action_share" class="icon-btn">🔗</a>
+  <div class="header-title">🎧 Vividh Bharati</div>
+  <div class="header-btns">
+    <a href="http://action_search" class="icon-btn">🔍</a>
+    <span class="icon-btn" onclick="openPrivacy()">🔒</span>
+  </div>
+</div>
+
+<!-- 1. Popular Stations -->
+<div class="section">
+<h2>🔥 Popular Stations</h2>
+<div id="stations"></div>
+</div>
+
+<!-- 2. Radio -->
+<div class="section">
+<h2>📻 Radio</h2>
+<a href="go:S201" class="full-card">
+  <div style="font-weight:600;">AIR Radio</div>
+  <div class="subtext">All India Radio Live</div>
+</a>
+<a href="go:S202" class="full-card">
+  <div style="font-weight:600;">FM Radio</div>
+  <div class="subtext">Music • Entertainment • Local</div>
+</a>
+</div>
+
+<!-- 3. Cricket -->
+<div class="section">
+<h2>🏏 Cricket</h2>
+<a href="go:S401" class="full-card">
+  <div style="font-weight:600;">🎧 Cricket Commentary</div>
+  <div class="subtext green">On Match Days</div>
+</a>
+<a href="go:S402" class="full-card">
+  <div style="font-weight:600;">📊 Cricket Score</div>
+  <div class="subtext">Live scores & updates</div>
+</a>
+</div>
+
+<!-- 4. BBC Dinbhar Podcast -->
+<div class="section">
+<h2>🎙️ BBC Dinbhar Podcast</h2>
+<a href="go:S301" class="station">
+  <div>
+    <div class="station-name">दिनभर: आज की बड़ी खबरें</div>
+    <div class="program-row">
+      <span class="live-dot"></span>
+      <div class="program green">
+        Updated: 21 Jan 2026 · 09:05 AM
+      </div>
+    </div>
+  </div>
+  <div class="play">▶</div>
+</a>
+</div>
+
+<!-- 5. Live News -->
+<div class="section">
+<h2>📰 Live News</h2>
+<a href="go:S501" class="full-card">
+  <div style="font-weight:600;">Live News Channels</div>
+  <div class="subtext">Breaking • National • International</div>
+</a>
+</div>
+
+<div class="footer-space"></div>
+
+<!-- PRIVACY POLICY POPUP -->
+<div class="modal" id="privacyModal">
+  <div class="modal-box">
+    <h3>Privacy Policy</h3>
+    <p>
+      Vividh Bharati does not collect personal data.
+      This app only streams publicly available audio content.
+      No user information is stored or shared with third parties.
+    </p>
+    <div class="close-btn" onclick="closePrivacy()">Close</div>
+  </div>
+</div>
+
+<!-- SCHEDULE -->
+<script src="https://airappandroid.github.io/allindiaradio/schedule.js"></script>
+
+<script>
+const popularStations=[
+ {name:"AIR Live",code:"S101"},
+ {name:"FM Gold",code:"S102"},
+ {name:"FM Rainbow",code:"S103"},
+ {name:"Regional AIR",code:"S104"}
+];
+
+function timeToMinutes(t){
+ const[a,b]=t.split(" ");
+ let[h,m]=a.split(":").map(Number);
+ if(b==="PM"&&h!==12)h+=12;
+ if(b==="AM"&&h===12)h=0;
+ return h*60+m;
+}
+
+function getCurrentProgram(channel){
+ if(!window.SCHEDULE_DATA)return"Live Broadcast";
+ const now=new Date();
+ const nowMin=now.getHours()*60+now.getMinutes();
+ const list=window.SCHEDULE_DATA
+ .filter(p=>p.channel.toLowerCase().includes(channel.toLowerCase()))
+ .map(p=>({...p,min:timeToMinutes(p.time)}))
+ .sort((a,b)=>a.min-b.min);
+ for(let i=0;i<list.length;i++){
+  const cur=list[i],next=list[i+1];
+  if(nowMin>=cur.min&&(!next||nowMin<next.min))return cur.title;
+ }
+ return"Live Broadcast";
+}
+
+function renderStations(){
+ const box=document.getElementById("stations");
+ box.innerHTML="";
+ popularStations.forEach(st=>{
+  const a=document.createElement("a");
+  a.href="go:"+st.code;
+  a.className="station";
+  a.innerHTML=`
+   <div>
+    <div class="station-name">${st.name}</div>
+    <div class="program-row">
+     <span class="live-dot"></span>
+     <div class="program">${getCurrentProgram(st.name)}</div>
+    </div>
+   </div>
+   <div class="play">▶</div>`;
+  box.appendChild(a);
+ });
+}
+
+function openPrivacy(){document.getElementById("privacyModal").style.display="flex";}
+function closePrivacy(){document.getElementById("privacyModal").style.display="none";}
+
+renderStations();
+setInterval(renderStations,60000);
+</script>
+
+</body>
+</html>
