@@ -162,6 +162,83 @@ body{
 .close-btn:hover{ background:var(--card-hover); }
 
 .footer-space{ height:16px; }
+
+.quick-actions{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  padding:14px;
+}
+
+.quick-btn{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:14px 6px;
+  text-align:center;
+  font-size:13px;
+  font-weight:600;
+  color:var(--text);
+  text-decoration:none;
+}
+
+.quick-btn:hover{
+  background:var(--card-hover);
+}
+
+.quick-icon{
+  font-size:20px;
+  display:block;
+  margin-bottom:6px;
+}
+
+.upcoming-box{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:14px;
+  margin-top:10px;
+}
+
+.up-title{
+  font-size:14px;
+  font-weight:600;
+  margin-bottom:10px;
+  color:#e5e7eb;
+}
+
+.match-row{
+  display:flex;
+  justify-content:space-between;
+  padding:8px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.match-row:last-child{
+  border-bottom:none;
+}
+
+.match-name{
+  font-size:14px;
+}
+
+.match-time{
+  font-size:13px;
+  color:var(--muted);
+}
+
+.cricket-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.cricket-actions .full-card{
+  margin-bottom:0;
+  padding:14px 10px;
+  text-align:center;
+}
+
 </style>
 </head>
 
@@ -177,37 +254,67 @@ body{
   </div>
 </div>
 
+<!-- QUICK BUTTONS -->
+<div class="quick-actions">
+  <a href="go:S201" class="quick-btn">
+    <span class="quick-icon">📻</span>
+    AIR Radio
+  </a>
+  <a href="go:S202" class="quick-btn">
+    <span class="quick-icon">🎶</span>
+    FM
+  </a>
+  <a href="go:sec123" class="quick-btn">
+    <span class="quick-icon">🗞️</span>
+    AIR News
+  </a>
+  <a href="go:S501" class="quick-btn">
+    <span class="quick-icon">📡</span>
+    Live News
+  </a>
+</div>
+
+
 <!-- 1. Popular Stations -->
 <div class="section">
 <h2>🔥 Popular Stations</h2>
 <div id="stations"></div>
 </div>
 
-<!-- 2. Radio -->
-<div class="section">
-<h2>📻 Radio</h2>
-<a href="go:S201" class="full-card">
-  <div style="font-weight:600;">AIR Radio</div>
-  <div class="subtext">All India Radio Live</div>
-</a>
-<a href="go:S202" class="full-card">
-  <div style="font-weight:600;">FM Radio</div>
-  <div class="subtext">Music • Entertainment • Local</div>
-</a>
-</div>
 
 <!-- 3. Cricket -->
-<div class="section">
-<h2>🏏 Cricket</h2>
-<a href="go:S401" class="full-card">
-  <div style="font-weight:600;">🎧 Cricket Commentary</div>
-  <div class="subtext green">On Match Days</div>
-</a>
-<a href="go:S402" class="full-card">
-  <div style="font-weight:600;">📊 Cricket Score</div>
-  <div class="subtext">Live scores & updates</div>
-</a>
+<div class="cricket-actions">
+  <a href="go:S401" class="full-card">
+    <div style="font-weight:600;">🎧 Commentary</div>
+    <div class="subtext green">On Match Days</div>
+  </a>
+
+  <a href="go:S402" class="full-card">
+    <div style="font-weight:600;">📊 Cricket Score</div>
+    <div class="subtext">Live scores & updates</div>
+  </a>
 </div>
+
+<!-- UPCOMING MATCHES -->
+<div class="upcoming-box">
+  <div class="up-title">🏏 Upcoming Matches</div>
+
+  <div class="match-row">
+    <div class="match-name">IND vs AUS</div>
+    <div class="match-time">25 Jan • 7:30 PM</div>
+  </div>
+
+  <div class="match-row">
+    <div class="match-name">PAK vs NZ</div>
+    <div class="match-time">27 Jan • 2:00 PM</div>
+  </div>
+
+  <div class="match-row">
+    <div class="match-name">ENG vs SA</div>
+    <div class="match-time">29 Jan • 8:00 PM</div>
+  </div>
+</div>
+
 
 <!-- 4. BBC Dinbhar Podcast -->
 <div class="section">
@@ -226,14 +333,6 @@ body{
 </a>
 </div>
 
-<!-- 5. Live News -->
-<div class="section">
-<h2>📰 Live News</h2>
-<a href="go:S501" class="full-card">
-  <div style="font-weight:600;">Live News Channels</div>
-  <div class="subtext">Breaking • National • International</div>
-</a>
-</div>
 
 <div class="footer-space"></div>
 
