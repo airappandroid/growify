@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hindi Audio News</title>
+
+<style>
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Arial, sans-serif;
+  background:#0d1117;
+  color:#fff;
+}
+
+.header{
+  padding:14px 16px;
+  font-size:18px;
+  font-weight:600;
+  background:#161b22;
+  border-bottom:1px solid #222;
+}
+
+.player-list{
+  padding:10px;
+}
+
+.player-card{
+  background:#161b22;
+  border-radius:14px;
+  padding:14px;
+  margin-bottom:12px;
+}
+
+.player-top{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.play-btn{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:#1f6feb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  cursor:pointer;
+  flex-shrink:0;
+}
+
+.play-btn.pause{
+  background:#d29922;
+}
+
+.title{
+  font-size:16px;
+  font-weight:600;
+}
+
+.date{
+  font-size:12px;
+  color:#aaa;
+}
+
+.progress{
+  margin-top:12px;
+}
+
+.progress input{
+  width:100%;
+}
+
+.time{
+  display:flex;
+  justify-content:space-between;
+  font-size:11px;
+  color:#aaa;
+  margin-top:4px;
+}
+
+audio{ display:none; }
+</style>
+</head>
+
+<body>
+
+<div class="header">📰 हिंदी समाचार बुलेटिन</div>
+
+<div class="player-list">
+
+ <div class="player-card" data-player>
+    <div class="player-top">
+      <div class="play-btn">▶</div>
+      <div>
+        <div class="title">प्रति घंटा समाचार</div>
+        <div class="date">21 Jan 2026 | 4:00 PM</div>
+      </div>
+    </div>
+    <div class="progress">
+      <input type="range" value="0">
+      <div class="time">
+        <span class="current">0:00</span>
+        <span class="duration">0:00</span>
+      </div>
+    </div>
+    <audio src="https://www.newsonair.gov.in/wp-content/uploads/2026/01/hindid.mp3"></audio>
+  </div>
+
+  <div class="player-card" data-player>
+    <div class="player-top">
+      <div class="play-btn">▶</div>
+      <div>
+        <div class="title">समाचार प्रभात</div>
+        <div class="date">21 Jan 2026 | 8:00 AM</div>
+      </div>
+    </div>
+    <div class="progress">
+      <input type="range" value="0">
+      <div class="time">
+        <span class="current">0:00</span>
+        <span class="duration">0:00</span>
+      </div>
+    </div>
+    <audio src="https://www.newsonair.gov.in/wp-content/uploads/2026/01/0800-1.mp3"></audio>
+  </div>
+
+  <div class="player-card" data-player>
+    <div class="player-top">
+      <div class="play-btn">▶</div>
+      <div>
+        <div class="title">दोपहर समाचार</div>
+        <div class="date">21 Jan 2026 | 2:15 PM</div>
+      </div>
+    </div>
+    <div class="progress">
+      <input type="range" value="0">
+      <div class="time">
+        <span class="current">0:00</span>
+        <span class="duration">0:00</span>
+      </div>
+    </div>
+    <audio src="https://www.newsonair.gov.in/wp-content/uploads/2026/01/midday-hindi-6.mp3"></audio>
+  </div>
+
+  <div class="player-card" data-player>
+    <div class="player-top">
+      <div class="play-btn">▶</div>
+      <div>
+        <div class="title">समाचार संध्या</div>
+        <div class="date">20 Jan 2026 | 8:45 PM</div>
+      </div>
+    </div>
+    <div class="progress">
+      <input type="range" value="0">
+      <div class="time">
+        <span class="current">0:00</span>
+        <span class="duration">0:00</span>
+      </div>
+    </div>
+    <audio src="https://www.newsonair.gov.in/wp-content/uploads/2026/01/Samachar-Sandhya-20445-2100.mp3"></audio>
+  </div>
+
+ 
+
+</div>
+
+<script>
+const cards = document.querySelectorAll('[data-player]');
+
+cards.forEach(card=>{
+  const audio = card.querySelector('audio');
+  const btn = card.querySelector('.play-btn');
+  const range = card.querySelector('input');
+  const current = card.querySelector('.current');
+  const duration = card.querySelector('.duration');
+
+  btn.onclick = ()=>{
+    cards.forEach(c=>{
+      if(c!==card){
+        c.querySelector('audio').pause();
+        c.querySelector('.play-btn').textContent='▶';
+        c.querySelector('.play-btn').classList.remove('pause');
+      }
+    });
+
+    if(audio.paused){
+      audio.play();
+      btn.textContent='⏸';
+      btn.classList.add('pause');
+    }else{
+      audio.pause();
+      btn.textContent='▶';
+      btn.classList.remove('pause');
+    }
+  };
+
+  audio.onloadedmetadata = ()=>{
+    duration.textContent = format(audio.duration);
+  };
+
+  audio.ontimeupdate = ()=>{
+    range.value = (audio.currentTime / audio.duration) * 100;
+    current.textContent = format(audio.currentTime);
+  };
+
+  range.oninput = ()=>{
+    audio.currentTime = (range.value/100) * audio.duration;
+  };
+});
+
+function format(sec){
+  const m = Math.floor(sec/60);
+  const s = Math.floor(sec%60);
+  return `${m}:${s<10?'0':''}${s}`;
+}
+</script>
+
+</body>
+</html>
