@@ -2,148 +2,132 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <title>Vividh Bharati</title>
 
 <style>
-:root{
-  --bg:#f4f6f8;
-  --card:#ffffff;
-  --text:#222;
-  --muted:#666;
-  --radius:14px;
-}
 
+/* ===== GLOBAL RESET & FIX ===== */
 *{
   box-sizing:border-box;
+}
+
+html, body{
   margin:0;
   padding:0;
+  width:100%;
+  overflow-x:hidden;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background:#f4f6f8;
 }
 
-body{
-  background:var(--bg);
-  color:var(--text);
-}
-
-/* ---------- HEADER ---------- */
-.app-header{
+/* ===== HEADER ===== */
+.header{
   position:fixed;
-  top:0;
-  left:0;
-  right:0;
+  top:0; left:0; right:0;
   height:52px;
-  background:#ffffff;
+  background:#fff;
   display:flex;
   align-items:center;
   justify-content:space-between;
   padding:0 12px;
-  border-bottom:1px solid #eaeaea;
-  z-index:999;
+  border-bottom:1px solid #e6e6e6;
+  z-index:1000;
 }
-.header-spacer{
-  height:52px;
-}
-.header-left,
-.header-right{
+
+.header .icons{
   display:flex;
-  align-items:center;
   gap:12px;
 }
-.header-title{
-  font-size:15px;
-  font-weight:600;
-  letter-spacing:.5px;
-}
-.icon:active{
-  background:#f0f0f0;
-}
-.icon{
+
+.header a{
   text-decoration:none;
   font-size:18px;
   color:#000;
-  padding:6px;
-  border-radius:50%;
 }
 
-/* ---------- QUICK BUTTONS ---------- */
-.quick-buttons{
+.header-title{
+  font-weight:600;
+  font-size:15px;
+}
+
+.spacer{
+  height:52px;
+}
+
+/* ===== SECTION WRAPPER (VERY IMPORTANT) ===== */
+.section{
+  padding:8px 12px;   /* 👈 compact padding */
+}
+
+/* section titles */
+.section h2{
+  margin:6px 0 8px;   /* 👈 gap control */
+  font-size:18px;
+}
+
+.section h3{
+  margin:8px 0 6px;
+  font-size:15px;
+}
+
+/* ===== QUICK BUTTONS ===== */
+.quick{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:12px;
-  padding:14px;
+  gap:10px;            /* reduced */
 }
 
 .qbtn{
-  text-decoration:none;
-  padding:16px 12px;
-  border-radius:16px;
-  font-weight:600;
-  font-size:14px;
-  color:#fff;
+  padding:14px 12px;  /* reduced height */
+  border-radius:18px;
   text-align:center;
+  color:#fff;
+  font-weight:600;
+  text-decoration:none;
+  font-size:14px;
 }
 
-.qbtn:active{
-  opacity:.85;
-}
+.qbtn:active{ opacity:.85 }
 
-/* different colours */
-.air{ background:#0077b6; }
-.fm{ background:#2a9d8f; }
-.airnews{ background:#e76f51; }
-.livenews{ background:#6a4c93; }
+.air{background:#0077b6;}
+.fm{background:#2a9d8f;}
+.airnews{background:#e76f51;}
+.livenews{background:#6a4c93;}
 
-
-/* ---------- SECTION ---------- */
-.section{
-  padding:0 14px 14px;
-}
-
-.section h2{
-  font-size:15px;
-  margin:14px 0 10px;
-}
-
-/* ---------- STATION LIST ---------- */
+/* ===== POPULAR STATIONS ===== */
 .station{
+  width:100%;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:12px;
-  margin-bottom:10px;
-  border-radius:14px;
+  padding:10px 12px;     /* 👈 compact card */
+  margin-bottom:6px;    /* 👈 MAIN GAP FIX */
+  border-radius:18px;
   text-decoration:none;
   color:#000;
 }
-.station-name{
-  font-weight:600;
-  font-size:14px;
+
+.station:last-child{
+  margin-bottom:0;
 }
-.station:active{
-  opacity:.85;
-}
-.program-row{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  font-size:13px;
-  color:#444;
-}
+
 .program{
   font-size:13px;
-  color:#555;
+  color:#444;
   display:flex;
   align-items:center;
   gap:6px;
+  line-height:1.2;      /* 👈 height fix */
 }
-.live-dot{
+
+.dot{
   width:8px;
   height:8px;
   background:#e63946;
   border-radius:50%;
-  
 }
 
 .play{
@@ -154,146 +138,104 @@ body{
   font-size:13px;
 }
 
-/* ---------- CRICKET HUB ---------- */
-.cricket-grid{
+/* ===== CRICKET HUB ===== */
+.cricket{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-bottom:16px;
+  gap:10px;
 }
 
-.cricket-box{
-  padding:16px 12px;
-  border-radius:16px;
+.cricket a{
+  text-decoration:none;
+  padding:14px;
+  border-radius:18px;
   font-weight:600;
   color:#000;
-  display:flex;
-  flex-direction:column;
-  gap:4px;
-  text-decoration:none;
-}
-.cricket-box small{
-  font-size:12px;
-  font-weight:400;
+  font-size:14px;
 }
 
 .commentary{ background:#ffe066; }
 .score{ background:#90dbf4; }
-.cricket-box:active{ opacity:.85 }
 
-/* upcoming list */
-.up-title{
-  font-size:15px;
-  margin-bottom:8px;
-}
-
-.upcoming{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
+/* ===== UPCOMING MATCHES ===== */
 .match{
   background:#fff;
+  padding:10px 12px;
   border-radius:14px;
-  padding:12px;
   display:flex;
   justify-content:space-between;
-  align-items:center;
+  margin-bottom:6px;
+  font-size:14px;
 }
 
-.match span{
-  font-size:12px;
-  color:#555;
-}
-.section-gap{
-  height:15px;   /* slight but visible gap */
+.match:last-child{
+  margin-bottom:0;
 }
 
-
-/* ---------- NEWS ---------- */
-.news-list{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  padding:0 14px 14px;
+/* ===== SMALL GAP BETWEEN SECTIONS ===== */
+.gap{
+  height:8px;
 }
 
-.news-card{
-  background:#fffdf7;          /* new warm off-white colour */
-  border-radius:14px;
-  padding:12px;
+/* ===== NEWS ARTICLES ===== */
+.news{
+  background:#fffdf7;
+  border-radius:16px;
+  padding:10px 12px;
+  margin-bottom:6px;
+  border-left:5px solid;
   text-decoration:none;
   color:#000;
-  border-left:5px solid transparent;  /* colour comes from class */
+  display:block;
 }
 
-.news-card h3{
+.news:last-child{
+  margin-bottom:0;
+}
+
+.news h3{
+  margin:0 0 3px;
   font-size:14px;
-  font-weight:600;
-  margin-bottom:4px;
 }
 
-.news-card .sub{
+.news .sub{
   font-size:13px;
   color:#444;
-  margin-bottom:6px;
+  margin-bottom:4px;
+  line-height:1.25;
 }
 
-.news-card .date{
+.news .date{
   font-size:11px;
   color:#777;
 }
 
-.news-card:active{
-  background:#f6f4ee;
-}
+/* border colours */
+.blue{ border-color:#1e88e5; }
+.green{ border-color:#43a047; }
+.orange{ border-color:#fb8c00; }
+.purple{ border-color:#8e24aa; }
+.red{ border-color:#e53935; }
 
-/* ---- Border colours (per article) ---- */
-.border-blue{ border-left-color:#1e88e5; }
-.border-green{ border-left-color:#43a047; }
-.border-orange{ border-left-color:#fb8c00; }
-.border-purple{ border-left-color:#8e24aa; }
-.border-red{ border-left-color:#e53935; }
-
-/* ---------- PODCAST ---------- */
-.podcast-list{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  padding:0 14px 20px;
-}
-
-.podcast-card{
-  border-radius:16px;
-  padding:14px;
+/* ===== PODCAST ===== */
+.podcast{
+  display:block;
   text-decoration:none;
   color:#000;
-  display:flex;
-  flex-direction:column;
-  gap:6px;
+  padding:12px;
+  border-radius:18px;
+  margin-bottom:6px;
 }
 
-.podcast-card b{
-  font-size:14px;
+.podcast:last-child{
+  margin-bottom:0;
 }
 
-.podcast-card .updated{
-  font-size:12px;
-  color:#555;
-}
+.podcast.blue{ background:#e3f2fd; }
+.podcast.green{ background:#e8f5e9; }
 
-.podcast-card:active{
+.podcast:active{
   opacity:.85;
-}
-
-/* different colours */
-.podcast-blue{
-  background:#e3f2fd;
-}
-
-.podcast-green{
-  background:#e8f5e9;
 }
 
 </style>
@@ -301,153 +243,130 @@ body{
 
 <body>
 
-<!-- STICKY HEADER -->
-<div class="app-header">
-  
-  <!-- LEFT ICONS -->
-  <div class="header-left">
-    <a href="go:share" class="icon">📤</a>
-    <a href="go:feedback" class="icon">💬</a>
+<!-- HEADER -->
+<div class="header">
+  <div class="icons">
+    <a href="go:share">📤</a>
+    <a href="go:feedback">💬</a>
   </div>
-
-  <!-- TITLE -->
-  <div class="header-title">
-    VIVIDH BHARATI
-  </div>
-
-  <!-- RIGHT ICONS -->
-  <div class="header-right">
-    <a href="go:search" class="icon">🔍</a>
-    <a href="go:privacy" class="icon">🔒</a>
-  </div>
-
-</div>
-
-<!-- HEADER SPACE FIX -->
-<div class="header-spacer"></div>
-
-
-<div class="quick-buttons">
-
-  <a href="go:airradio" class="qbtn air">
-    AIR RADIO
-  </a>
-
-  <a href="go:fmradio" class="qbtn fm">
-    FM RADIO
-  </a>
-
-  <a href="go:airnews" class="qbtn airnews">
-    AIR NEWS
-  </a>
-
-  <a href="go:livenews" class="qbtn livenews">
-   LIVE NEWS
-  </a>
-
-</div>
-
-
-<!-- POPULAR STATIONS -->
-<h3 class="section-title">🔥 Popular Stations</h3>
-<div id="stations"></div>
-
-<!-- AIR SCHEDULE DATA -->
-<script src="https://airappandroid.github.io/allindiaradio/schedule.js"></script>
-
-<!-- CRICKET HUB -->
-<h3 class="section-title">🏏 Cricket Hub</h3>
-
-<!-- ONLY THESE TWO ARE CLICKABLE -->
-<div class="cricket-grid">
-  <a href="go:commentary" class="cricket-box commentary">
-    🎙️ LIVE COMMENTARY
-    <small>Ball by Ball Audio</small>
-  </a>
-
-  <a href="go:score" class="cricket-box score">
-    📊 LIVE SCORE
-    <small>Match Updates</small>
-  </a>
-</div>
-
-<h3 class="up-title">📅 Upcoming Matches</h3>
-
-<!-- NOT CLICKABLE -->
-<div class="upcoming">
-  <div class="match">
-    <b>IND vs NZ</b>
-    <span>25 Jan • 7:00 PM</span>
-  </div>
-
-  <div class="match">
-    <b>AUS vs ENG</b>
-    <span>26 Jan • 5:30 PM</span>
-  </div>
-
-  <div class="match">
-    <b>PAK vs SA</b>
-    <span>27 Jan • 8:00 PM</span>
+  <div class="header-title">VIVIDH BHARATI</div>
+  <div class="icons">
+    <a href="go:search">🔍</a>
+    <a href="go:privacy">🔒</a>
   </div>
 </div>
-<div class="section-gap"></div>
+<div class="spacer"></div>
 
+<!-- QUICK -->
+<div class="section quick">
+  <a href="go:airradio" class="qbtn air">AIR RADIO</a>
+  <a href="go:fmradio" class="qbtn fm">FM RADIO</a>
+  <a href="go:airnews" class="qbtn airnews">AIR NEWS</a>
+  <a href="go:livenews" class="qbtn livenews">LIVE NEWS</a>
+</div>
+
+<!-- POPULAR -->
+<div class="section">
+<h3>🔥 Popular Stations</h3>
+
+<a href="go:FMR" class="station" style="background:#e3f2fd">
+  <div>
+    <b>FM Rainbow</b>
+    <div class="program"><span class="dot"></span>Western Music</div>
+  </div>
+  <div class="play">▶</div>
+</a>
+
+<a href="go:VV" class="station" style="background:#fff3e0">
+  <div>
+    <b>Vividh Bharati</b>
+    <div class="program"><span class="dot"></span>विविध भारती गीतमाला</div>
+  </div>
+  <div class="play">▶</div>
+</a>
+
+<a href="go:FMG" class="station" style="background:#e8f5e9">
+  <div>
+    <b>FM Gold</b>
+    <div class="program"><span class="dot"></span>Geet Suhane</div>
+  </div>
+  <div class="play">▶</div>
+</a>
+
+<a href="go:INDRA" class="station" style="background:#fdecef">
+  <div>
+    <b>Indraprastha</b>
+    <div class="program"><span class="dot"></span>Live Broadcast</div>
+  </div>
+  <div class="play">▶</div>
+</a>
+</div>
+
+<!-- CRICKET -->
+<div class="section">
+<h3>🏏 Cricket Hub</h3>
+<div class="cricket">
+  <a href="go:commentary" class="commentary">🎙 LIVE COMMENTARY<br><small>Ball by Ball</small></a>
+  <a href="go:score" class="score">📊 LIVE SCORE<br><small>Updates</small></a>
+</div>
+
+<h3>📅 Upcoming Matches</h3>
+<div class="match"><b>IND vs NZ</b><span>25 Jan • 7:00 PM</span></div>
+<div class="match"><b>AUS vs ENG</b><span>26 Jan • 5:30 PM</span></div>
+<div class="match"><b>PAK vs SA</b><span>27 Jan • 8:00 PM</span></div>
+</div>
+
+<div class="gap"></div>
 
 <!-- NEWS -->
-<h3 class="section-title">📰 News Articles</h3>
-<div class="section-gap"></div>
-<div class="news-list">
+<div class="section">
+<h3>📰 News Articles</h3>
 
-  <a href="go:news1" class="news-card border-blue">
-    <h3>Government Announces New Policy</h3>
-    <p class="sub">Key reforms expected to boost economy</p>
-    <span class="date">24 Jan 2026 • 10:30 AM</span>
-  </a>
+<a href="go:news1" class="news blue">
+<h3>Government Announces New Policy</h3>
+<div class="sub">Key reforms expected</div>
+<div class="date">24 Jan 2026 • 10:30 AM</div>
+</a>
 
-  <a href="go:news2" class="news-card border-green">
-    <h3>Weather Update Across India</h3>
-    <p class="sub">Cold wave in north, rain in south</p>
-    <span class="date">24 Jan 2026 • 9:15 AM</span>
-  </a>
+<a href="go:news2" class="news green">
+<h3>Weather Update Across India</h3>
+<div class="sub">Cold wave & rain</div>
+<div class="date">24 Jan 2026 • 9:15 AM</div>
+</a>
 
-  <a href="go:news3" class="news-card border-orange">
-    <h3>Cricket Series Schedule Released</h3>
-    <p class="sub">India to play 5 T20 matches</p>
-    <span class="date">23 Jan 2026 • 8:00 PM</span>
-  </a>
+<a href="go:news3" class="news orange">
+<h3>Cricket Series Schedule Released</h3>
+<div class="sub">5 T20 matches</div>
+<div class="date">23 Jan 2026 • 8:00 PM</div>
+</a>
 
-  <a href="go:news4" class="news-card border-purple">
-    <h3>Railway Announces Special Trains</h3>
-    <p class="sub">Extra trains for festival rush</p>
-    <span class="date">23 Jan 2026 • 6:45 PM</span>
-  </a>
+<a href="go:news4" class="news purple">
+<h3>Railway Announces Special Trains</h3>
+<div class="sub">Festival rush</div>
+<div class="date">23 Jan 2026 • 6:45 PM</div>
+</a>
 
-  <a href="go:news5" class="news-card border-red">
-    <h3>Fuel Price Update Today</h3>
-    <p class="sub">Petrol and diesel rates revised</p>
-    <span class="date">23 Jan 2026 • 7:00 AM</span>
-  </a>
-
+<a href="go:news5" class="news red">
+<h3>Fuel Price Update Today</h3>
+<div class="sub">Rates revised</div>
+<div class="date">23 Jan 2026 • 7:00 AM</div>
+</a>
 </div>
-
-<div class="section-gap"></div>
 
 <!-- PODCAST -->
-<h2 class="section-title">🎧 Podcasts</h2>
+<div class="section">
+<h3>🎧 Podcasts</h3>
 
-<div class="podcast-list">
+<a href="go:bbc_dinbhar" class="podcast blue">
+  <b>BBC Dinbhar</b><br>
+  <small>Last updated: 24 Jan 2026 • 9:00 PM</small>
+</a>
 
-  <a href="go:bbc_dinbhar" class="podcast-card podcast-blue">
-    <b>BBC Dinbhar</b>
-    <span class="updated">Last updated: 24 Jan 2026 • 9:00 PM</span>
-  </a>
+<a href="go:db_dinbhar" class="podcast green">
+  <b>DB Dinbhar</b><br>
+  <small>Last updated: 24 Jan 2026 • 9:00 PM</small>
+</a>
 
-  <a href="go:db_dinbhar" class="podcast-card podcast-green">
-    <b>DB Dinbhar</b>
-    <span class="updated">Last updated: 24 Jan 2026 • 9:00 PM</span>
-  </a>
-
-</div>
 
 <script>
 const popularStations = [
