@@ -1,220 +1,143 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hindi Audio News</title>
+<title>AIR Audio News Bulletin</title>
 
 <style>
+*{-webkit-tap-highlight-color:transparent;outline:none;}
 body{
-  margin:0;
-  font-family: system-ui, -apple-system, Arial, sans-serif;
-  background:#0d1117;
-  color:#fff;
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
+    background:#121417;
+    color:#e6e6e6;
 }
 
-.header{
-  padding:14px 16px;
-  font-size:18px;
-  font-weight:600;
-  background:#161b22;
-  border-bottom:1px solid #222;
+/* Tabs */
+/* ===== TOP LANGUAGE TABS (HIGHLIGHTED) ===== */
+.lang-tabs{
+    display:flex;
+    gap:12px;
+    padding:14px;
+    background:linear-gradient(180deg,#1f2430,#1b1f24);
+    position:sticky;
+    top:0;
+    z-index:10;
 }
 
-.player-list{
-  padding:10px;
+.lang-tabs button{
+    flex:1;
+    padding:12px 0;
+    font-size:15px;
+    font-weight:600;
+    border-radius:999px;
+    border:1px solid #2a2f36;
+    background:#161a20;
+    color:#c9d1d9;
+    transition:background .25s ease, transform .15s ease;
+
 }
 
-.player-card{
-  background:#161b22;
-  border-radius:14px;
-  padding:14px;
-  margin-bottom:12px;
+/* Active tab – strong highlight */
+.lang-tabs button.active{
+    background:linear-gradient(135deg,#4da3ff,#1e90ff);
+    color:#000;
+    border-color:#4da3ff;
+    box-shadow:0 0 0 3px rgba(77,163,255,.25),
+               0 6px 16px rgba(77,163,255,.35);
 }
 
-.player-top{
-  display:flex;
-  align-items:center;
-  gap:12px;
+/* Tap feedback */
+.lang-tabs button:active{
+    transform:scale(.97);
 }
 
+
+/* Content */
+.content{display:none;padding:14px;}
+.content.active{display:block;}
+
+/* Bulletin */
+.bulletin{
+    border-radius:14px;
+    padding:14px;
+    margin-bottom:12px;
+    border:1px solid #2a2f36;
+}
+.bulletin a{
+    text-decoration:none;
+    color:#e6e6e6;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.bulletin-text{max-width:80%;}
+.bulletin-title{font-size:16px;font-weight:600;}
+.bulletin-time{font-size:12px;color:#8b949e;margin-top:6px;}
+
+/* Play */
 .play-btn{
-  width:48px;
-  height:48px;
-  border-radius:50%;
-  background:#1f6feb;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:20px;
-  cursor:pointer;
-  flex-shrink:0;
+    width:42px;height:42px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
 }
 
-.play-btn.pause{
-  background:#d29922;
-}
+/* Colors */
+.blt-hourly{border-left:5px solid #2ecc71;background:linear-gradient(90deg,#1f2d26,#1c2128);}
+.blt-hourly .play-btn{background:#2ecc71;}
 
-.title{
-  font-size:16px;
-  font-weight:600;
-}
+.blt-morning{border-left:5px solid #4da3ff;background:linear-gradient(90deg,#1c2735,#1c2128);}
+.blt-morning .play-btn{background:#4da3ff;}
 
-.date{
-  font-size:12px;
-  color:#aaa;
-}
+.blt-midday{border-left:5px solid #f39c12;background:linear-gradient(90deg,#332613,#1c2128);}
+.blt-midday .play-btn{background:#f39c12;}
 
-.progress{
-  margin-top:12px;
-}
-
-.progress input{
-  width:100%;
-}
-
-.time{
-  display:flex;
-  justify-content:space-between;
-  font-size:11px;
-  color:#aaa;
-  margin-top:4px;
-}
-
-audio{ display:none; }
+.blt-evening{border-left:5px solid #9b59b6;background:linear-gradient(90deg,#2a1e33,#1c2128);}
+.blt-evening .play-btn{background:#9b59b6;color:#fff;}
 </style>
 </head>
 
 <body>
 
-<div class="header">📰 हिंदी समाचार बुलेटिन</div>
-
-<div class="player-list">
-
-<div class="player-card" data-player>
-    <div class="player-top">
-      <div class="play-btn">▶</div>
-      <div>
-        <div class="title">प्रति घंटा समाचार</div>
-        <div class="date">23 Jan 2026 | 1:00 PM</div>
-      </div>
-    </div>
-    <div class="progress">
-      <input type="range" value="0">
-      <div class="time">
-        <span class="current">0:00</span>
-        <span class="duration">0:00</span>
-      </div>
-    </div>
-    <audio src="https://www.newsonair.gov.in/wp-content/uploads/2026/01/Hindi-1300-1305-18.mp3"></audio>
-  </div>
-
- <div class="player-card" data-player>
-    <div class="player-top">
-      <div class="play-btn">▶</div>
-      <div>
-        <div class="title">दोपहर समाचार</div>
-        <div class="date">23 Jan 2026 | 2:15 PM</div>
-      </div>
-    </div>
-    <div class="progress">
-      <input type="range" value="0">
-      <div class="time">
-        <span class="current">0:00</span>
-        <span class="duration">0:00</span>
-      </div>
-    </div>
-    <audio src="https://www.newsonair.gov.in/wp-content/uploads/2026/01/1415-3.mp3"></audio>
-  </div>
-  
-  
- <div class="player-card" data-player>
-    <div class="player-top">
-      <div class="play-btn">▶</div>
-      <div>
-        <div class="title">समाचार प्रभात</div>
-        <div class="date">23 Jan 2026 | 8:00 AM</div>
-      </div>
-    </div>
-    <div class="progress">
-      <input type="range" value="0">
-      <div class="time">
-        <span class="current">0:00</span>
-        <span class="duration">0:00</span>
-      </div>
-    </div>
-    <audio src="https://www.newsonair.gov.in/wp-content/uploads/2026/01/Samachar-Prabhat-0800-0815-20.mp3"></audio>
-  </div>
-
-  
-<div class="player-card" data-player>
-    <div class="player-top">
-      <div class="play-btn">▶</div>
-      <div>
-        <div class="title">समाचार संध्या</div>
-        <div class="date">22 Jan 2026 | 8:45 PM</div>
-      </div>
-    </div>
-    <div class="progress">
-      <input type="range" value="0">
-      <div class="time">
-        <span class="current">0:00</span>
-        <span class="duration">0:00</span>
-      </div>
-    </div>
-    <audio src="https://www.newsonair.gov.in/wp-content/uploads/2026/01/Samachar-Sandhya-2045-2100-9.mp3"></audio>
-  </div>
- 
-
+<div class="lang-tabs">
+    <button class="active" onclick="openTab('hindi',this)">हिन्दी</button>
+    <button onclick="openTab('english',this)">English</button>
+    <button onclick="openTab('urdu',this)">Urdu</button>
 </div>
+
+<!-- HINDI -->
+<div id="hindi" class="content active">
+    <div class="bulletin blt-hourly"><a href="go:H1"><div class="bulletin-text"><div class="bulletin-title">प्रतिघंटा समाचार</div><div class="bulletin-time">23 Jan | 7:00 PM</div></div><div class="play-btn">▶</div></a></div>
+    <div class="bulletin blt-morning"><a href="go:H2"><div class="bulletin-text"><div class="bulletin-title">समाचार प्रभात</div><div class="bulletin-time">23 Jan | 8:00 AM</div></div><div class="play-btn">▶</div></a></div>
+    <div class="bulletin blt-midday"><a href="go:H3"><div class="bulletin-text"><div class="bulletin-title">दोपहर समाचार</div><div class="bulletin-time">23 Jan | 2:15 PM</div></div><div class="play-btn">▶</div></a></div>
+    <div class="bulletin blt-evening"><a href="go:H4"><div class="bulletin-text"><div class="bulletin-title">समाचार संध्या</div><div class="bulletin-time">22 Jan | 8:45 PM</div></div><div class="play-btn">▶</div></a></div>
+</div>
+
+<!-- ENGLISH -->
+<div id="english" class="content">
+    <div class="bulletin blt-hourly"><a href="go:eng_hourly"><div class="bulletin-text"><div class="bulletin-title">Hourly News Bulletin</div><div class="bulletin-time">10:00 AM</div></div><div class="play-btn">▶</div></a></div>
+    <div class="bulletin blt-morning"><a href="go:eng_morning"><div class="bulletin-text"><div class="bulletin-title">Morning News Bulletin</div><div class="bulletin-time">06:45 AM</div></div><div class="play-btn">▶</div></a></div>
+    <div class="bulletin blt-midday"><a href="go:eng_midday"><div class="bulletin-text"><div class="bulletin-title">Mid-Day News Bulletin</div><div class="bulletin-time">01:15 PM</div></div><div class="play-btn">▶</div></a></div>
+    <div class="bulletin blt-evening"><a href="go:eng_evening"><div class="bulletin-text"><div class="bulletin-title">Evening News Bulletin</div><div class="bulletin-time">06:45 PM</div></div><div class="play-btn">▶</div></a></div>
+</div>
+
+<!-- URDU -->
+<div id="urdu" class="content">
+    <div class="bulletin blt-morning"><a href="go:urdu_morning"><div class="bulletin-text"><div class="bulletin-title">Morning Urdu Bulletin</div><div class="bulletin-time">07:00 AM</div></div><div class="play-btn">▶</div></a></div>
+    <div class="bulletin blt-midday"><a href="go:urdu_midday"><div class="bulletin-text"><div class="bulletin-title">Mid-Day Urdu Bulletin</div><div class="bulletin-time">01:30 PM</div></div><div class="play-btn">▶</div></a></div>
+    <div class="bulletin blt-evening"><a href="go:urdu_evening"><div class="bulletin-text"><div class="bulletin-title">Evening Urdu Bulletin</div><div class="bulletin-time">07:00 PM</div></div><div class="play-btn">▶</div></a></div>
+</div>
+
 <script>
-const cards = document.querySelectorAll('[data-player]');
-
-cards.forEach(card=>{
-  const audio = card.querySelector('audio');
-  const btn = card.querySelector('.play-btn');
-  const range = card.querySelector('input');
-  const current = card.querySelector('.current');
-  const duration = card.querySelector('.duration');
-
-  btn.onclick = ()=>{
-    cards.forEach(c=>{
-      if(c!==card){
-        c.querySelector('audio').pause();
-        c.querySelector('.play-btn').textContent='▶';
-        c.querySelector('.play-btn').classList.remove('pause');
-      }
-    });
-
-    if(audio.paused){
-      audio.play();
-      btn.textContent='⏸';
-      btn.classList.add('pause');
-    }else{
-      audio.pause();
-      btn.textContent='▶';
-      btn.classList.remove('pause');
-    }
-  };
-
-  audio.onloadedmetadata = ()=>{
-    duration.textContent = format(audio.duration);
-  };
-
-  audio.ontimeupdate = ()=>{
-    range.value = (audio.currentTime / audio.duration) * 100;
-    current.textContent = format(audio.currentTime);
-  };
-
-  range.oninput = ()=>{
-    audio.currentTime = (range.value/100) * audio.duration;
-  };
-});
-
-function format(sec){
-  const m = Math.floor(sec/60);
-  const s = Math.floor(sec%60);
-  return `${m}:${s<10?'0':''}${s}`;
+function openTab(id,btn){
+    document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));
+    document.querySelectorAll('.lang-tabs button').forEach(b=>b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
 }
 </script>
 
