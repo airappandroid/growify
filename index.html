@@ -177,56 +177,81 @@ body{
   font-size:16px;
 }
 
-/* ===== CRICKET ===== */
+/* ===== CRICKET CARD ===== */
+.cricket-card{
+  background:#2b2d31;
+   padding-top:12px;
+}
+
+/* TITLE */
 .cricket-title{
   font-size:18px;
   font-weight:800;
+  margin-bottom:12px;
 }
 
+/* BUTTON ROW */
 .cricket-buttons{
-  display: flex;
-  gap: 12px;
-  margin-top: 14px;
+  display:flex;
+  gap:12px;
+  margin-bottom:18px;
 }
 
-.cbtn{
-  flex: 1 1 0;
-  min-width: 0;
-  padding: 12px;
-   width: 100%;
-  border-radius: 20px;
-  background: #2f3136;
-  text-align: center;
-  border: 1px solid #3a3d42;
-}
 .cricket-buttons a{
-  flex: 1 1 0;
-  min-width: 0;     /* 🔥 यही main fix है */
+  flex:1 1 0;
+  min-width:0;
+  text-decoration:none;
+}
+
+/* COMMON BUTTON */
+.cbtn{
+  position:relative;
+  padding:14px 12px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 8px 20px rgba(0,0,0,.65);
+  border:1px solid transparent;
 }
 
 .cbtn b{
-  display: block;
-  font-size: 14px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  display:block;
+  font-size:14px;
+  font-weight:800;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 .cbtn small{
-  display: block;
-  font-size: 12px;
-  color: #b3b7bd;
-  margin-top: 4px;
+  display:block;
+  font-size:12px;
+  margin-top:4px;
+  opacity:.9;
 }
 
+/* 🔴 LIVE COMMENTARY */
+.cbtn.commentary{
+  background:linear-gradient(135deg,#b71c1c,#ff3b3b);
+  border-color:#ff6b6b;
+  color:#ffffff;
+}
 
+/* 🔵 LIVE SCORE */
+.cbtn.score{
+  background:linear-gradient(135deg,#0d47a1,#1e88e5);
+  border-color:#64b5f6;
+  color:#ffffff;
+}
+
+/* LIVE BADGE */
 .live-badge{
   position:absolute;
   top:8px;
   right:10px;
-  background:#ff3b3b;
+  background:#ffffff;
+  color:#d32f2f;
   font-size:10px;
-  font-weight:700;
+  font-weight:800;
   padding:2px 6px;
   border-radius:6px;
   animation:blink 1.2s infinite;
@@ -234,16 +259,18 @@ body{
 
 @keyframes blink{
   0%{opacity:1}
-  50%{opacity:.3}
+  50%{opacity:.4}
   100%{opacity:1}
 }
 
+/* UPCOMING */
 .upcoming-title{
-  font-size:18px;
+  font-size:17px;
   font-weight:800;
-  margin:22px 0 12px;
+  margin:18px 0 12px;
 }
 
+/* MATCH CARD */
 .match{
   background:#24262a;
   border-radius:16px;
@@ -251,7 +278,12 @@ body{
   margin-bottom:10px;
   border:1px solid #33363c;
 }
-.match-name{font-weight:600}
+
+.match-name{
+  font-size:14px;
+  font-weight:600;
+}
+
 .match-time{
   font-size:12px;
   color:#b3b7bd;
@@ -405,19 +437,50 @@ body{
 <div id="stations"></div>
 
 
+<!-- 🏏 CRICKET HUB -->
 <h2 class="section-title">🏏 Cricket Hub</h2>
-<div class="card">
-  <div class="cricket-title">Live Cricket</div>
+
+<div class="card cricket-card">
 
   <div class="cricket-buttons">
-    <a href="go:S401"><div class="cbtn" style="position:relative">🎙 Commentary<small>On Match Days</small><span class="live-badge">LIVE</span></div></a>
-    <a href="go:S402"><div class="cbtn">📊 Live Score<small>Cricket Updates</small></div></a>
+
+    <!-- LIVE COMMENTARY -->
+    <a href="go:S401">
+      <div class="cbtn commentary">
+        <b>Commentary</b>
+        <small>On Match Days</small>
+        
+      </div>
+    </a>
+
+    <!-- LIVE SCORE -->
+    <a href="go:S402">
+      <div class="cbtn score">
+        <b>Score</b>
+        <small>Cricket Updates</small>
+      </div>
+    </a>
+
   </div>
 
+  <!-- UPCOMING -->
   <div class="upcoming-title">📅 Upcoming Matches</div>
-  <div class="match"><div class="match-name">India vs New Zealand, 3rd T20I</div><div class="match-time">25 Jan 2026 | 7:00 PM</div></div>
-  <div class="match"><div class="match-name">India vs New Zealand, 4th T20I</div><div class="match-time">28 Jan 2026 | 7:00 PM</div></div>
-   <div class="match"><div class="match-name">India vs New Zealand, 5th T20I</div><div class="match-time">31 Jan 2026 | 7:00 PM</div></div>
+
+  <div class="match">
+    <div class="match-name">India vs New Zealand, 3rd T20I</div>
+    <div class="match-time">25 Jan 2026 | 7:00 PM</div>
+  </div>
+
+  <div class="match">
+    <div class="match-name">India vs New Zealand, 4th T20I</div>
+    <div class="match-time">28 Jan 2026 | 7:00 PM</div>
+  </div>
+
+  <div class="match">
+    <div class="match-name">India vs New Zealand, 5th T20I</div>
+    <div class="match-time">31 Jan 2026 | 7:00 PM</div>
+  </div>
+
 </div>
 
 <!-- NEWS -->
