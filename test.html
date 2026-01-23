@@ -12,7 +12,10 @@ content="width=device-width, initial-scale=1, maximum-scale=1">
 /* ===== GLOBAL RESET & FIX ===== */
 *{
   box-sizing:border-box;
+   -webkit-tap-highlight-color:transparent;
 }
+
+  
 
 html, body{
   margin:0;
@@ -21,7 +24,9 @@ html, body{
   overflow-x:hidden;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   background:#f4f6f8;
+  -webkit-overflow-scrolling: touch;
 }
+
 
 /* ===== HEADER ===== */
 .header{
@@ -82,7 +87,7 @@ html, body{
 
 .qbtn{
   padding:14px 12px;  /* reduced height */
-  border-radius:18px;
+  border-radius:14px;
   text-align:center;
   color:#fff;
   font-weight:600;
@@ -105,7 +110,7 @@ html, body{
   align-items:center;
   padding:10px 12px;     /* 👈 compact card */
   margin-bottom:6px;    /* 👈 MAIN GAP FIX */
-  border-radius:18px;
+  border-radius:14px;
   text-decoration:none;
   color:#000;
 }
@@ -148,7 +153,7 @@ html, body{
 .cricket a{
   text-decoration:none;
   padding:14px;
-  border-radius:18px;
+  border-radius:14px;
   font-weight:600;
   color:#000;
   font-size:14px;
@@ -162,14 +167,21 @@ html, body{
   background:#fff;
   padding:10px 12px;
   border-radius:14px;
-  display:flex;
+ 
   justify-content:space-between;
   margin-bottom:6px;
   font-size:14px;
 }
 
-.match:last-child{
-  margin-bottom:0;
+.match-name{
+  font-size:14px;
+  font-weight:600;
+  margin-bottom:2px;   /* name & time gap */
+}
+
+.match-time{
+  font-size:12px;
+  color:#666;
 }
 
 /* ===== SMALL GAP BETWEEN SECTIONS ===== */
@@ -180,7 +192,7 @@ html, body{
 /* ===== NEWS ARTICLES ===== */
 .news{
   background:#fffdf7;
-  border-radius:16px;
+  border-radius:14px;
   padding:10px 12px;
   margin-bottom:6px;
   border-left:5px solid;
@@ -223,7 +235,7 @@ html, body{
   text-decoration:none;
   color:#000;
   padding:12px;
-  border-radius:18px;
+  border-radius:14px;
   margin-bottom:6px;
 }
 
@@ -236,6 +248,14 @@ html, body{
 
 .podcast:active{
   opacity:.85;
+}
+.station,
+.news,
+.podcast,
+.qbtn,
+.cricket a{
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 </style>
@@ -295,7 +315,7 @@ html, body{
 
 <a href="go:INDRA" class="station" style="background:#fdecef">
   <div>
-    <b>Indraprastha</b>
+    <b>Indraprashtha</b>
     <div class="program"><span class="dot"></span>Live Broadcast</div>
   </div>
   <div class="play">▶</div>
@@ -311,10 +331,22 @@ html, body{
 </div>
 
 <h3>📅 Upcoming Matches</h3>
-<div class="match"><b>IND vs NZ</b><span>25 Jan • 7:00 PM</span></div>
-<div class="match"><b>AUS vs ENG</b><span>26 Jan • 5:30 PM</span></div>
-<div class="match"><b>PAK vs SA</b><span>27 Jan • 8:00 PM</span></div>
+
+<div class="match">
+  <div class="match-name">IND vs NZ</div>
+  <div class="match-time">25 Jan • 7:00 PM</div>
 </div>
+
+<div class="match">
+  <div class="match-name">AUS vs ENG</div>
+  <div class="match-time">26 Jan • 5:30 PM</div>
+</div>
+
+<div class="match">
+  <div class="match-name">PAK vs SA</div>
+  <div class="match-time">27 Jan • 8:00 PM</div>
+</div>
+
 
 <div class="gap"></div>
 
@@ -373,7 +405,7 @@ const popularStations = [
   { name:"FM Rainbow", code:"FMR", color:"#e3f2fd" },
   { name:"Vividh Bharati", code:"VV", color:"#fff3e0" },
   { name:"FM Gold", code:"FMG", color:"#e8f5e9" },
-  { name:"Indraprastha", code:"INDRA", color:"#fce4ec" }
+  { name:"Indraprashtha", code:"INDRA", color:"#fce4ec" }
 ];
 
 const lastProgram = {};
