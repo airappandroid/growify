@@ -30,33 +30,27 @@ body{
   background:#1e1f22;            /* charcoal base */
   color:#e8e8e8;
 }
-
-/* ===== HEADER ===== */
-.header{
-  position:sticky;
-  top:0;
-  z-index:10;
+/* ===== TOP MOBILE AD (320x100) ===== */
+.top-ad{
+  width:100%;
+  padding:8px 10px 0;
   display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:14px 16px;
-  background:#26282c;
- box-shadow:0 3px 8px rgba(0,0,0,.35);
+  justify-content:center;
+  background:#1e1f22;
+}
 
+.top-ad img{
+  width:100%;
+  max-width:320px;   /* Ad width */
+  height:auto;       /* Keeps 320x100 ratio */
+  border-radius:12px;
+  display:block;
+  box-shadow:0 3px 8px rgba(0,0,0,.35);
 }
-.header-left,.header-right{
-  display:flex;
-  gap:16px
-}
-.icon{font-size:18px}
-.header-title{
-  font-size:16px;
-  font-weight:700;
-  letter-spacing:.3px;
-}
+
 
 /* ===== LAYOUT ===== */
-.container{padding:16px}
+.container{padding:12px 16px 16px}
 
 .section-title{
   font-size:19px;
@@ -394,18 +388,11 @@ body{
 </head>
 
 <body>
-
-<!-- HEADER -->
-<div class="header">
-  <div class="header-left">
-    <a href="http://action_share"><div class="icon">🔗</div></a>
-    <a href="go:FD" target="_blank"><div class="icon">📝</div></a>
-  </div>
-  <div class="header-title">🇮🇳 Vividh Bharati</div>
-  <div class="header-right">
-    <a href="http://action_search"><div class="icon">🔍</div></a>
-    <div class="icon" onclick="openPrivacy()">🔒</div>
-  </div>
+<!-- TOP AD BANNER -->
+<div class="top-ad">
+ 
+    <img src="https://res.cloudinary.com/dzczl0fzu/image/upload/v1769267725/U53Hp1769267639_1_txyzyj.jpg" alt="AIR Banner">
+  </a>
 </div>
 
 <div class="container">
@@ -517,6 +504,15 @@ body{
 <h2 class="section-title">📰 News Articles</h2>
 <div class="card news-list">
 
+   <a href="go:news1" class="news-link">
+    <div class="news-card">
+      <div class="news-title">⚖️ ICC से सज़ा का खतरा?</div>
+      <div class="news-desc">बांग्लादेश क्रिकेट पर लटक रही बड़ी तलवार ⚠️</div>
+      <div class="news-date">24 Jan 2026</div>
+    </div>
+  </a>
+    <div class="news-divider"></div>
+   
   <a href="go:news5" class="news-link">
     <div class="news-card">
       <div class="news-title">🛢️ क्या भारत ने रूसी तेल खरीदना बंद कर दिया?</div>
@@ -555,20 +551,8 @@ body{
     </div>
   </a>
 
-  <div class="news-divider"></div>
-
-  <a href="go:news1" class="news-link">
-    <div class="news-card">
-      <div class="news-title">🏏 T20 World Cup से बाहर हुई बांग्लादेश!</div>
-      <div class="news-desc">ICC के अल्टीमेटम के बाद बड़ा फैसला 🤔</div>
-      <div class="news-date">22 Jan 2026</div>
-    </div>
-  </a>
 
 </div>
-
-
-
 <!-- PODCAST -->
 <h2 class="section-title">🎧 Podcasts</h2>
 <a href="go:S301"><div class="card podcast"><div><div class="station-name">BBC दिनभर: पूरा दिन,पूरी ख़बर </div><div class="updated">Last updated: 23 Jan 2026 · 9:10 PM</div></div></div></a>
