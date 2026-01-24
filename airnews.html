@@ -6,98 +6,113 @@
 <title>AIR Audio News Bulletin</title>
 
 <style>
-*{-webkit-tap-highlight-color:transparent;outline:none;}
-body{
-    margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
-    background:#121417;
-    color:#e6e6e6;
+*{
+  -webkit-tap-highlight-color:transparent;
+  box-sizing:border-box;
 }
 
-/* Tabs */
-/* ===== TOP LANGUAGE TABS (HIGHLIGHTED) ===== */
+body{
+  margin:0;
+  font-family:Roboto,system-ui,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+  background:#1e1f22;   /* Home jaisa charcoal */
+  color:#e8e8e8;
+}
+
+/* ===== LANGUAGE TABS ===== */
 .lang-tabs{
-    display:flex;
-    gap:12px;
-    padding:14px;
-    background:linear-gradient(180deg,#1f2430,#1b1f24);
-    position:sticky;
-    top:0;
-    z-index:10;
+  display:flex;
+  gap:12px;
+  padding:14px;
+  background:#24262a;              /* slightly lighter than body */
+  position:sticky;
+  top:0;
+  z-index:10;
+  border-bottom:1px solid #33363c;
 }
 
 .lang-tabs button{
-    flex:1;
-    padding:12px 0;
-    font-size:15px;
-    font-weight:600;
-    border-radius:999px;
-    border:1px solid #2a2f36;
-    background:#161a20;
-    color:#c9d1d9;
-    transition:background .25s ease, transform .15s ease;
-
+  flex:1;
+  padding:11px 0;
+  font-size:14px;
+  font-weight:600;
+  border-radius:999px;
+  border:1px solid #33363c;
+  background:#2b2d31;              /* card tone */
+  color:#e8e8e8;
+  transition:transform .1s ease, opacity .1s ease, background .2s ease;
 }
 
-/* Active tab – strong highlight */
 .lang-tabs button.active{
-    background:linear-gradient(135deg,#4da3ff,#1e90ff);
-    color:#000;
-    border-color:#4da3ff;
-    box-shadow:0 0 0 3px rgba(77,163,255,.25),
-               0 6px 16px rgba(77,163,255,.35);
+  background:#4cc2ff;
+  color:#000;
+  border-color:#4cc2ff;
 }
 
-/* Tap feedback */
 .lang-tabs button:active{
-    transform:scale(.97);
+  transform:scale(.97);
+  opacity:.85;
 }
 
-
-/* Content */
+/* ===== CONTENT ===== */
 .content{display:none;padding:14px;}
 .content.active{display:block;}
 
-/* Bulletin */
+/* ===== BULLETIN CARD ===== */
 .bulletin{
-    border-radius:14px;
-    padding:14px;
-    margin-bottom:12px;
-    border:1px solid #2a2f36;
+  border-radius:18px;
+  padding:14px;
+  margin-bottom:12px;
+  border:1px solid #33363c;
+  background:#2b2d31;              /* same as other cards */
+  box-shadow:0 2px 6px rgba(0,0,0,.25);
 }
+
 .bulletin a{
-    text-decoration:none;
-    color:#e6e6e6;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+  text-decoration:none;
+  color:#e8e8e8;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
 }
-.bulletin-text{max-width:80%;}
-.bulletin-title{font-size:16px;font-weight:600;}
-.bulletin-time{font-size:12px;color:#8b949e;margin-top:6px;}
 
-/* Play */
+.bulletin-text{
+  flex:1;
+  min-width:0;
+}
+
+.bulletin-title{
+  font-size:15px;
+  font-weight:600;
+}
+
+.bulletin-time{
+  font-size:12px;
+  color:#b3b7bd;                   /* secondary text */
+  margin-top:6px;
+}
+
+/* ===== PLAY BUTTON ===== */
 .play-btn{
-    width:42px;height:42px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:18px;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  background:#4cc2ff;              /* same accent as home */
+  color:#000;
+  flex-shrink:0;
+  box-shadow:0 2px 6px rgba(0,0,0,.25);
+  transition:transform .1s ease, opacity .1s ease;
 }
 
-/* Colors */
-.blt-hourly{border-left:5px solid #2ecc71;background:linear-gradient(90deg,#1f2d26,#1c2128);}
-.blt-hourly .play-btn{background:#2ecc71;}
+.play-btn:active{
+  transform:scale(.9);
+  opacity:.85;
+}
 
-.blt-morning{border-left:5px solid #4da3ff;background:linear-gradient(90deg,#1c2735,#1c2128);}
-.blt-morning .play-btn{background:#4da3ff;}
-
-.blt-midday{border-left:5px solid #f39c12;background:linear-gradient(90deg,#332613,#1c2128);}
-.blt-midday .play-btn{background:#f39c12;}
-
-.blt-evening{border-left:5px solid #9b59b6;background:linear-gradient(90deg,#2a1e33,#1c2128);}
-.blt-evening .play-btn{background:#9b59b6;color:#fff;}
 </style>
 </head>
 
