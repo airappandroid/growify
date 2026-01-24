@@ -589,7 +589,6 @@ body{
 
 <!-- JS : POPULAR STATIONS ONLY -->
 
-
 <script src="https://airappandroid.github.io/allindiaradio/schedule.js"></script>
 
 <script>
@@ -647,7 +646,9 @@ function renderStations(){
         <div class="station-name">${st.name}</div>
         <div class="program-row">
           <span class="live-dot"></span>
-          <div class="program">${getCurrentProgram(st.name)}</div>
+          <div class="program" data-channel="${st.name}">
+            ${getCurrentProgram(st.name)}
+          </div>
         </div>
       </div>
       <div class="play">▶</div>
@@ -656,9 +657,24 @@ function renderStations(){
   });
 }
 
+/* 🔄 Only update program text (no DOM rebuild) */
+function updateProgramsOnly(){
+  document.querySelectorAll(".program").forEach(el=>{
+    const channel = el.getAttribute("data-channel");
+    el.textContent = getCurrentProgram(channel);
+  });
+}
+
+/* Initial render */
 renderStations();
-setInterval(renderStations,60000);
+
+/* Update every 60 seconds */
+setInterval(updateProgramsOnly, 60000);
+
+/* Extra safety: update once after schedule loads */
+setTimeout(updateProgramsOnly, 4000);
 </script>
+
 
 <script>
 const privacyModal = document.getElementById("privacyModal");
