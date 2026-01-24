@@ -26,7 +26,7 @@ a:active,a:focus{outline:none}
 /* ===== BASE ===== */
 body{
   margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
+  font-family:Roboto,system-ui,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
   background:#1e1f22;            /* charcoal base */
   color:#e8e8e8;
 }
@@ -182,7 +182,7 @@ body{
 /* ===== CRICKET CARD ===== */
 .cricket-card{
   background:#2b2d31;
-   padding-top:12px;
+  padding:10px 12px 12px;
 }
 
 /* TITLE */
@@ -268,48 +268,43 @@ body{
 
 /* UPCOMING */
 .upcoming-title{
-  font-size:17px;
+  font-size:15px;
   font-weight:800;
-  margin:18px 0 12px;
+ margin:14px 0 8px;
 }
 
 /* MATCH CARD */
 .match{
   background:#24262a;
-  border-radius:16px;
-  padding:14px;
-  margin-bottom:10px;
+  border-radius:14px;
+  padding:11px 12px;
+  margin-bottom:8px;
   border:1px solid #33363c;
 }
 
 .match-name{
-  font-size:14px;
+  font-size:13px;
   font-weight:600;
 }
 
 .match-time{
-  font-size:12px;
+  font-size:11px;
   color:#b3b7bd;
-  margin-top:4px;
+  margin-top:3px;
 }
-/* ===== NEWS ===== */
+/* ===== NEWS WITH READ BUTTON ===== */
 
-.news-list{
-  padding:0 14px;
-}
-
-.news-link{
-  display:block;
-  border-radius:14px;
-  transition:background .2s ease;
+.news-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:10px 0;
 }
 
-.news-link:active{
-  background:rgba(255,255,255,.05); /* touch feedback */
-}
-
-.news-card{
-  padding:14px 0;
+.news-text{
+  flex:1;
+  min-width:0;
 }
 
 .news-title{
@@ -329,23 +324,44 @@ body{
   font-size:11px;
   color:#8a8f98;
   margin-top:4px;
+  font-weight:500;
 }
 
+/* READ pill button */
+.news-read{
+  background:#4cc2ff;
+  color:#000;
+  font-size:11px;
+  font-weight:700;
+  padding:6px 12px;
+  border-radius:999px;
+  text-decoration:none;
+  flex-shrink:0;
+  box-shadow:0 2px 6px rgba(0,0,0,.25);
+  transition:transform .1s ease, opacity .1s ease;
+}
+
+.news-read:active{
+  transform:scale(.95);
+  opacity:.8;
+}
 .news-divider{
   height:1px;
-  background:linear-gradient(to right, transparent, #3a3d42, transparent);
-  margin:6px 0;
+  background:#3a3d42;
+  margin:8px 0;
+  opacity:.6;
 }
 
 /* ===== PODCAST ===== */
 .podcast{
   display:flex;
   align-items:center;
+  line-height:1.3;
 }
 .updated{
-  font-size:13px;
+  font-size:11px;
   color:#4cc2ff;
-  margin-top:6px;
+  margin-top:2px;
   font-weight:500;
 }
 </style>
@@ -467,55 +483,57 @@ body{
 <h2 class="section-title">📰 News Articles</h2>
 <div class="card news-list">
 
-   <a href="go:news1" class="news-link">
-    <div class="news-card">
+  <div class="news-item">
+    <div class="news-text">
       <div class="news-title">⚖️ ICC से सज़ा का खतरा?</div>
       <div class="news-desc">बांग्लादेश क्रिकेट पर लटक रही बड़ी तलवार ⚠️</div>
       <div class="news-date">24 Jan 2026</div>
     </div>
-  </a>
-    <div class="news-divider"></div>
-   
-  <a href="go:news5" class="news-link">
-    <div class="news-card">
+    <a href="go:news1" class="news-read">READ</a>
+  </div>
+  <div class="news-divider"></div>
+
+  <div class="news-item">
+    <div class="news-text">
       <div class="news-title">🛢️ क्या भारत ने रूसी तेल खरीदना बंद कर दिया?</div>
       <div class="news-desc">ट्रंप टैरिफ के बाद सच क्या है 🧩</div>
       <div class="news-date">24 Jan 2026</div>
     </div>
-  </a>
-
+    <a href="go:news5" class="news-read">READ</a>
+  </div>
   <div class="news-divider"></div>
 
-  <a href="go:news4" class="news-link">
-    <div class="news-card">
+  <div class="news-item">
+    <div class="news-text">
       <div class="news-title">🧊 कश्मीर जाने से पहले ये खबर देख लें!</div>
       <div class="news-desc">NH-44 पर हालात बिगड़े, हजारों वाहन फंसे 🚑</div>
       <div class="news-date">24 Jan 2026</div>
     </div>
-  </a>
-
+    <a href="go:news4" class="news-read">READ</a>
+  </div>
   <div class="news-divider"></div>
 
-  <a href="go:news3" class="news-link">
-    <div class="news-card">
+  <div class="news-item">
+    <div class="news-text">
       <div class="news-title">🇮🇳 Republic Day पर सिनेमाघरों में तूफान!</div>
       <div class="news-desc">Border 2 देखने से पहले ये जान लीजिए 🎖️</div>
       <div class="news-date">20 Jan 2026</div>
     </div>
-  </a>
-
+    <a href="go:news3" class="news-read">READ</a>
+  </div>
   <div class="news-divider"></div>
 
-  <a href="go:news2" class="news-link">
-    <div class="news-card">
+  <div class="news-item">
+    <div class="news-text">
       <div class="news-title">📢 26 जनवरी से पहले दिल्ली हाई अलर्ट!</div>
       <div class="news-desc">आख़िर किसकी धमकी से बढ़ी सुरक्षा?⚠️</div>
       <div class="news-date">23 Jan 2026</div>
     </div>
-  </a>
-
+    <a href="go:news2" class="news-read">READ</a>
+  </div>
 
 </div>
+
 <!-- PODCAST -->
 <h2 class="section-title">🎧 Podcasts</h2>
 <a href="go:S301"><div class="card podcast"><div><div class="station-name">BBC दिनभर: पूरा दिन,पूरी ख़बर </div><div class="updated">Last updated: 23 Jan 2026 · 9:10 PM</div></div></div></a>
