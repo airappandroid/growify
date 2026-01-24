@@ -167,7 +167,7 @@ body{
   height:9px;
   border-radius:50%;
   background:#00e676;
-  box-shadow:0 0 8px rgba(76,194,255,.8);
+ box-shadow:0 0 4px rgba(0,230,118,.6);
   flex-shrink:0;
 }
 
@@ -298,32 +298,49 @@ body{
   color:#b3b7bd;
   margin-top:4px;
 }
-
 /* ===== NEWS ===== */
-.news-card{padding:14px 0}
+
+.news-list{
+  padding:0 14px;
+}
+
+.news-link{
+  display:block;
+  border-radius:14px;
+  transition:background .2s ease;
+}
+
+.news-link:active{
+  background:rgba(255,255,255,.05); /* touch feedback */
+}
+
+.news-card{
+  padding:14px 0;
+}
+
 .news-title{
   font-size:15px;
   font-weight:600;
+  line-height:1.3;
 }
+
 .news-desc{
   font-size:13px;
   color:#b3b7bd;
   margin-top:4px;
+  line-height:1.4;
 }
+
 .news-date{
   font-size:11px;
   color:#8a8f98;
   margin-top:4px;
 }
+
 .news-divider{
   height:1px;
-  background:linear-gradient(
-    to right,
-    transparent,
-    #3a3d42,
-    transparent
-  );
-  margin:8px 0;
+  background:linear-gradient(to right, transparent, #3a3d42, transparent);
+  margin:6px 0;
 }
 
 /* ===== PODCAST ===== */
@@ -496,11 +513,11 @@ body{
 
 </div>
 
-<!-- NEWS --> 
+<!-- NEWS -->  
 <h2 class="section-title">📰 News Articles</h2>
-<div class="card">
+<div class="card news-list">
 
-  <a href="go:news5">
+  <a href="go:news5" class="news-link">
     <div class="news-card">
       <div class="news-title">🛢️ क्या भारत ने रूसी तेल खरीदना बंद कर दिया?</div>
       <div class="news-desc">ट्रंप टैरिफ के बाद सच क्या है 🧩</div>
@@ -508,34 +525,39 @@ body{
     </div>
   </a>
 
-  <a href="go:news4">
+  <div class="news-divider"></div>
+
+  <a href="go:news4" class="news-link">
     <div class="news-card">
       <div class="news-title">🧊 कश्मीर जाने से पहले ये खबर देख लें!</div>
       <div class="news-desc">NH-44 पर हालात बिगड़े, हजारों वाहन फंसे 🚑</div>
       <div class="news-date">24 Jan 2026</div>
     </div>
   </a>
+
   <div class="news-divider"></div>
 
-  <a href="go:news3">
+  <a href="go:news3" class="news-link">
     <div class="news-card">
       <div class="news-title">🇮🇳 Republic Day पर सिनेमाघरों में तूफान!</div>
       <div class="news-desc">Border 2 देखने से पहले ये जान लीजिए 🎖️</div>
       <div class="news-date">20 Jan 2026</div>
     </div>
   </a>
+
   <div class="news-divider"></div>
 
-  <a href="go:news2">
+  <a href="go:news2" class="news-link">
     <div class="news-card">
       <div class="news-title">📢 26 जनवरी से पहले दिल्ली हाई अलर्ट!</div>
       <div class="news-desc">आख़िर किसकी धमकी से बढ़ी सुरक्षा?⚠️</div>
       <div class="news-date">23 Jan 2026</div>
     </div>
   </a>
+
   <div class="news-divider"></div>
 
-  <a href="go:news1">
+  <a href="go:news1" class="news-link">
     <div class="news-card">
       <div class="news-title">🏏 T20 World Cup से बाहर हुई बांग्लादेश!</div>
       <div class="news-desc">ICC के अल्टीमेटम के बाद बड़ा फैसला 🤔</div>
@@ -544,6 +566,7 @@ body{
   </a>
 
 </div>
+
 
 
 <!-- PODCAST -->
