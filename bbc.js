@@ -16,5 +16,24 @@ window.SCHEDULE_DATA = [
   { "time": "07:30 PM (BST)", "title": "Radio 1’s Live Lounge Late: King Princess", "channel": "BBC Radio 1" },
   { "time": "08:00 PM (BST)", "title": "Radio 1’s Future Artists with Sian Eleri (Future Flex from SHEE)", "channel": "BBC Radio 1" },
   { "time": "10:00 PM (BST)", "title": "Radio 1’s Power Down Playlist with Sian Eleri (Airplane Mode)", "channel": "BBC Radio 1" },
-  { "time": "11:00 PM (BST)", "title": "Martha Saidah in the mix and Martha’s January favourites", "channel": "BBC Radio 1" }
+  { "time": "11:00 PM (BST)", "title": "Martha Saidah in the mix and Martha’s January favourites", "channel": "BBC Radio 1" },
+
+
+  { "time": "12:00 AM (BST)", "title": "OJ Borg — Things you've explained to kids...", "channel": "BBC Radio 2" },
+  { "time": "02:30 AM (BST)", "title": "One Hit Wonders with OJ Borg — All the Sixes (2016)", "channel": "BBC Radio 2" },
+  { "time": "03:00 AM (BST)", "title": "Radio 2's Piano Room — Coldplay Full Set (R)", "channel": "BBC Radio 2" },
+  { "time": "03:15 AM (BST)", "title": "Radio 2's Piano Room — Cat Burns Full Set (R)", "channel": "BBC Radio 2" },
+  { "time": "03:30 AM (BST)", "title": "Radio 2's Piano Room — Tom Grennan Full Set (R)", "channel": "BBC Radio 2" },
+  { "time": "03:45 AM (BST)", "title": "Radio 2's Piano Room — RAYE Full Set (R)", "channel": "BBC Radio 2" },
+  { "time": "04:00 AM (BST)", "title": "Owain Wyn Evans — Early Breakfast with Airdrum Anthems", "channel": "BBC Radio 2" },
+  { "time": "06:30 AM (BST)", "title": "The Scott Mills Breakfast Show — with Take That guests", "channel": "BBC Radio 2" },
+  { "time": "09:30 AM (BST)", "title": "Vernon Kay — Who's up for Ten To The Top?", "channel": "BBC Radio 2" },
+  { "time": "12:00 PM (BST)", "title": "Jeremy Vine — News headlines and guests", "channel": "BBC Radio 2" },
+  { "time": "02:00 PM (BST)", "title": "Trevor Nelson — DJ Spoony sits in (music across the decades)", "channel": "BBC Radio 2" },
+  { "time": "04:00 PM (BST)", "title": "Sara Cox — Teatime show with laughs and music", "channel": "BBC Radio 2" },
+  { "time": "06:30 PM (BST)", "title": "Sara Cox’s Half Wower — biggest & best tunes", "channel": "BBC Radio 2" },
+  { "time": "07:00 PM (BST)", "title": "Jo Whiley’s Shiny Happy Playlist — feel-good tunes", "channel": "BBC Radio 2" },
+  { "time": "07:30 PM (BST)", "title": "Jo Whiley — James King reviews books/music", "channel": "BBC Radio 2" },
+  { "time": "09:00 PM (BST)", "title": "The Jazz Show with Jamie Cullum — guest Johanna Linnea Jakobsson", "channel": "BBC Radio 2" },
+  { "time": "10:00 PM (BST)", "title": "The Good Groove with DJ Spoony — dancefloor favourites & soul gems", "channel": "BBC Radio 2" }
 ];
