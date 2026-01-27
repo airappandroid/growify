@@ -1,0 +1,20 @@
+window.SCHEDULE_DATA = [
+  { "time": "01:00 AM (BST)", "title": "BBC Introducing Rock on Radio 1 with Alyx Holcombe: Tune of the Week from Parma Violence", "channel": "BBC Radio 1" },
+  { "time": "02:00 AM (BST)", "title": "Radio 1 Anthems (JoJo, Scissor Sisters, Fontaines D.C. and more)", "channel": "BBC Radio 1" },
+  { "time": "04:00 AM (BST)", "title": "Radio 1 Pop Anthems (Justin Bieber, LMFAO, Charli XCX and more)", "channel": "BBC Radio 1" },
+  { "time": "05:00 AM (BST)", "title": "Radio 1 Early Breakfast with Dean McCullough", "channel": "BBC Radio 1" },
+  { "time": "06:58 AM (BST)", "title": "Radio 1 Newsbeat", "channel": "BBC Radio 1" },
+  { "time": "07:00 AM (BST)", "title": "Radio 1 Breakfast with Greg James", "channel": "BBC Radio 1" },
+  { "time": "10:30 AM (BST)", "title": "Radio 1 Newsbeat", "channel": "BBC Radio 1" },
+  { "time": "10:33 AM (BST)", "title": "Rickie, Melvin and Charlie: Mess with Melvin", "channel": "BBC Radio 1" },
+  { "time": "12:45 PM (BST)", "title": "Newsbeat: New driver rules", "channel": "BBC Radio 1" },
+  { "time": "01:00 PM (BST)", "title": "Matt and Mollie: Matt v Mollie", "channel": "BBC Radio 1" },
+  { "time": "03:30 PM (BST)", "title": "Radio 1 Newsbeat", "channel": "BBC Radio 1" },
+  { "time": "03:33 PM (BST)", "title": "Going Home with Katie and Jamie: It’s Quiz time – can you complete the year?", "channel": "BBC Radio 1" },
+  { "time": "05:45 PM (BST)", "title": "Newsbeat: Wales’s spending plans", "channel": "BBC Radio 1" },
+  { "time": "06:00 PM (BST)", "title": "Radio 1’s New Music Show with Jack Saunders (Kanine Hottest & King Princess Live Lounge Late)", "channel": "BBC Radio 1" },
+  { "time": "07:30 PM (BST)", "title": "Radio 1’s Live Lounge Late: King Princess", "channel": "BBC Radio 1" },
+  { "time": "08:00 PM (BST)", "title": "Radio 1’s Future Artists with Sian Eleri (Future Flex from SHEE)", "channel": "BBC Radio 1" },
+  { "time": "10:00 PM (BST)", "title": "Radio 1’s Power Down Playlist with Sian Eleri (Airplane Mode)", "channel": "BBC Radio 1" },
+  { "time": "11:00 PM (BST)", "title": "Martha Saidah in the mix and Martha’s January favourites", "channel": "BBC Radio 1" }
+];
