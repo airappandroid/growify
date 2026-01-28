@@ -2,151 +2,84 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Live Cricket</title>
 
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: Arial, sans-serif;
-}
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background: #000;
+  }
 
-/* iframe */
-.iframe-wrapper {
-  height: calc(100vh - 80px);
-  width: 100%;
-}
+  .iframe-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 
-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
 
-.bottom-banner {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 115px;
-  background: linear-gradient(90deg, #b71c1c, #e53935, #b71c1c);
-  background-size: 300% 300%;
-  animation: gradientMove 4s infinite, shake 2.5s infinite;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  box-shadow: 0 -6px 25px rgba(0,0,0,0.6);
-  border-top: 3px solid #ffeb3b;
-}
+  /* 🔄 Loading Spinner Overlay */
+  .loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
 
-/* Gradient movement */
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255,255,255,0.2);
+    border-top: 5px solid #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
 
-/* Light shake */
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  95% { transform: translateX(0); }
-  96% { transform: translateX(-2px); }
-  97% { transform: translateX(2px); }
-  98% { transform: translateX(-2px); }
-  99% { transform: translateX(2px); }
-}
-
-.bottom-banner a {
-  text-decoration: none;
-  color: #fff;
-  width: 100%;
-  text-align: center;
-  padding: 12px;
-}
-
-/* LIVE badge */
-.live-badge {
-  display: inline-block;
-  background: #ffeb3b;
-  color: #000;
-  font-size: 12px;
-  font-weight: 800;
-  padding: 3px 8px;
-  border-radius: 4px;
-  margin-bottom: 4px;
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  50% { opacity: 0.3; }
-}
-
-/* Headline */
-.banner-line-1 {
-  font-size: 17px;
-  font-weight: 800;
-  letter-spacing: 0.4px;
-}
-
-/* Sub */
-.banner-line-2 {
-  font-size: 14px;
-  margin-top: 4px;
-  opacity: 0.95;
-}
-
-/* CTA */
-.banner-line-3 {
-  margin-top: 8px;
-  font-size: 14px;
-  font-weight: bold;
-  color: #ffeb3b;
-  animation: pulse 1.2s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.12); }
-  100% { transform: scale(1); }
-}
-
-/* Arrow animation */
-.arrow {
-  display: inline-block;
-  margin-left: 6px;
-  animation: arrowMove 0.8s infinite;
-}
-
-@keyframes arrowMove {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(6px); }
-  100% { transform: translateX(0); }
-}
-
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 </style>
 </head>
 
 <body>
 
+<!-- Loader -->
+<div class="loader" id="loader">
+  <div class="spinner"></div>
+</div>
+
 <div class="iframe-wrapper">
-  <iframe src="https://cricketingfacts.com/project/cricket-live-score-3/" loading="lazy"></iframe>
+  <iframe 
+    src="https://cricketingfacts.com/project/cricket-live-score-3/" 
+    loading="lazy"
+    allowfullscreen
+    onload="hideLoader()">
+  </iframe>
 </div>
 
-<div class="bottom-banner">
-  <a href="market://details?id=oc.t" target="_blank">
-    <div class="live-badge">🔴 LIVE</div>
-    <div class="banner-line-1">Cricket Match LIVE Commentary</div>
-    <div class="banner-line-2">AIR पर हर Ball Hindi Commentary में</div>
-    <div class="banner-line-3">
-      👉 Tap to Listen FREE
-      <span class="arrow">➡️</span>
-    </div>
-  </a>
-</div>
-
+<script>
+  function hideLoader() {
+    document.getElementById("loader").style.display = "none";
+  }
+</script>
 
 </body>
 </html>
