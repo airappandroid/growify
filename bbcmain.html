@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Radio App</title>
+
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(180deg, #0f172a, #0b1220);
+    color: white;
+}
+
+.section { padding: 14px; }
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 14px;
+}
+
+.station-card {
+    background: linear-gradient(145deg, #1e293b, #162033);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+}
+
+.station-card:active { transform: scale(0.98); }
+
+.station-info { max-width: 80%; }
+.station-name { font-weight: bold; font-size: 16px; margin-bottom: 6px; }
+
+.playing-row {
+    font-size: 13px;
+    display: flex;
+    align-items: center; /* vertical center */
+    opacity: 0.95;
+}
+
+
+.live-dot {
+    width: 10px;
+    height: 10px;
+    min-width: 10px;
+    min-height: 10px;
+    background: #22c55e;
+    border-radius: 50%;
+    margin-right: 8px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+.program-title {
+    font-weight: bold;
+}
+
+.play-btn {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #3b82f6, #2563eb);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+    text-decoration: none;
+}
+
+.play-btn:active {
+    transform: scale(0.92);
+}
+
+.play-btn::before {
+    content: "";
+    border-left: 12px solid white;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    margin-left: 3px;
+}
+
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.card {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 14px;
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+}
+.card:active { transform: scale(0.97); }
+</style>
+
+<!-- BBC Schedule Source -->
+<script src="https://airappandroid.github.io/growify/bbc.js"></script>
+</head>
+<body>
+
+<div class="section">
+    <div class="title">📻 Popular Stations</div>
+
+    <!-- BBC Radio 1 -->
+    <div class="station-card">
+        <div class="station-info">
+            <div class="station-name">BBC Radio 1</div>
+            <div class="playing-row">
+                <div class="live-dot"></div>
+                <span id="bbc1">Loading...</span>
+            </div>
+        </div>
+        <a href="go:example" class="play-btn"></a>
+    </div>
+
+    <!-- BBC Radio 2 -->
+    <div class="station-card">
+        <div class="station-info">
+            <div class="station-name">BBC Radio 2</div>
+            <div class="playing-row">
+                <div class="live-dot"></div>
+                <span id="bbc2">Loading...</span>
+            </div>
+        </div>
+        <a href="go:example" class="play-btn"></a>
+    </div>
+
+    <!-- BBC Radio 3 -->
+    <div class="station-card">
+        <div class="station-info">
+            <div class="station-name">BBC Radio 3</div>
+            <div class="playing-row">
+                <div class="live-dot"></div>
+                <span id="bbc3">Loading...</span>
+            </div>
+        </div>
+        <a href="go:example" class="play-btn"></a>
+    </div>
+
+    <!-- BBC Radio 4 -->
+    <div class="station-card">
+        <div class="station-info">
+            <div class="station-name">BBC Radio 4</div>
+            <div class="playing-row">
+                <div class="live-dot"></div>
+                <span id="bbc4">Loading...</span>
+            </div>
+        </div>
+        <a href="go:example" class="play-btn"></a>
+    </div>
+
+</div>
+<div class="section">
+    <div class="title">⚡ Quick Access</div>
+    <div class="grid">
+        <a href="go:example" class="card">🇬🇧 BBC Radio</a>
+        <a href="go:example" class="card">📻 UK Radio</a>
+        <a href="go:example" class="card">📰 News Radio</a>
+        <a href="go:example" class="card">🏀 Sports Radio</a>
+    </div>
+</div>
+
+<script>
+function getUKMinutesNow() {
+    const parts = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/London',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    }).formatToParts(new Date());
+
+    let h = parseInt(parts.find(p => p.type === 'hour').value);
+    let m = parseInt(parts.find(p => p.type === 'minute').value);
+    return h * 60 + m;
+}
+
+function timeStringToMinutesUK(timeStr) {
+    let [time, period] = timeStr.split(" ");
+    let [h, m] = time.split(":").map(Number);
+
+    if (period === "PM" && h !== 12) h += 12;
+    if (period === "AM" && h === 12) h = 0;
+
+    return h * 60 + m;
+}
+
+function getCurrentShow(channelName) {
+    if (typeof SCHEDULE_DATA === "undefined") return "Loading...";
+
+    let nowMin = getUKMinutesNow();
+
+    let list = SCHEDULE_DATA
+        .filter(p => p.channel.toLowerCase().includes(channelName.toLowerCase()))
+        .sort((a, b) => timeStringToMinutesUK(a.time) - timeStringToMinutesUK(b.time));
+
+    for (let i = 0; i < list.length; i++) {
+        let start = timeStringToMinutesUK(list[i].time);
+        let end = (i < list.length - 1)
+            ? timeStringToMinutesUK(list[i + 1].time)
+            : 1440;
+
+        if (nowMin >= start && nowMin < end) {
+            return list[i].title;
+        }
+    }
+    return "Live Show";
+}
+
+function updatePrograms() {
+    document.getElementById("bbc1").innerText  = getCurrentShow("Radio 1");
+    document.getElementById("bbc2").innerText  = getCurrentShow("Radio 2");
+    document.getElementById("bbc3").innerText  = getCurrentShow("Radio 3");
+    document.getElementById("bbc4").innerText  = getCurrentShow("Radio 4");
+    document.getElementById("bbcws").innerText = getCurrentShow("World Service");
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    updatePrograms();
+    setInterval(updatePrograms, 60000);
+});
+</script>
+
+</body>
+</html>
