@@ -1,108 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Live Cricket</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    background: #000;
-  }
+body { margin:0; background:#000; }
 
-  /* 🔝 Top Ad Space (320x100) */
-  .top-ad {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background: #111;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10000;
-  }
+.top-ad {
+  height:50px;
+  background:#111;
+}
 
-  /* Iframe area below ad */
-  .iframe-wrapper {
-    position: fixed;
-    top: 100px;
-    left: 0;
-    width: 100%;
-    height: calc(100% - 100px);
-  }
+iframe {
+  width:100%;
+  height:calc(100vh - 100px);
+  border:0;
+  display:block;
+}
 
-  iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
+.loader {
+  position:fixed;
+  top:100px;
+  left:0;
+  width:100%;
+  height:calc(100vh - 100px);
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
-  /* 🔄 Loading Spinner (below ad) */
-  .loader {
-    position: fixed;
-    top: 100px;
-    left: 0;
-    width: 100%;
-    height: calc(100% - 100px);
-    background: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-  }
+.spinner {
+  width:40px;
+  height:40px;
+  border:4px solid rgba(255,255,255,0.2);
+  border-top:4px solid #fff;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
 
-  .spinner {
-    width: 50px;
-    height: 50px;
-    border: 5px solid rgba(255,255,255,0.2);
-    border-top: 5px solid #ffffff;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    box-shadow: 0 0 12px rgba(255,255,255,0.7);
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+@keyframes spin { to { transform:rotate(360deg); } }
 </style>
 </head>
 
 <body>
 
-<!-- 🔝 AdMob Banner Space -->
 <div class="top-ad">
-  <!-- Paste AdMob 320x100 banner code here -->
-  AD 320x100
+  <!-- AdMob 320x100 code here -->
 </div>
 
-<!-- 🔄 Loader -->
 <div class="loader" id="loader">
   <div class="spinner"></div>
 </div>
 
-<!-- 📺 Live Iframe -->
-<div class="iframe-wrapper">
-  <iframe 
-    src="https://cricketingfacts.com/project/cricket-live-score-3/" 
-    loading="lazy"
-    allowfullscreen
-    onload="hideLoader()">
-  </iframe>
-</div>
-
-<script>
-  function hideLoader() {
-    document.getElementById("loader").style.display = "none";
-  }
-</script>
+<iframe src="https://cricketingfacts.com/project/cricket-live-score-3/"
+        onload="document.getElementById('loader').style.display='none'">
+</iframe>
 
 </body>
 </html>
