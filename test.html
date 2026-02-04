@@ -23,6 +23,11 @@
 a{text-decoration:none;color:inherit}
 a:active,a:focus{outline:none}
 
+html {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* ===== BASE ===== */
 body{
   margin:0;
@@ -60,53 +65,54 @@ body{
   color:#ffffff;
 }
 
-/* ===== QUICK BUTTON ===== */
-/* GRID WRAPPER */
+/* ===== QUICK BUTTONS ONE ROW ===== */
 .quick-buttons{
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  margin-bottom: 10px;
+  display:flex;
+  gap:8px;
+  margin-bottom:14px;
 }
 
-/* BUTTON */
-.qbtn{
-  padding: 10px 12px;
-  border-radius: 16px;
-  background: #2b2d31;
-  border: 1px solid #33363c;
-  width: 100%;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition:transform .1s ease, opacity .1s ease;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.2;
-  color: #e8e8e8;
+.quick-buttons a{
+  flex:1;
+  min-width:0;
+  text-decoration:none;
 }
+
+.qbtn{
+  padding:10px 6px;
+  border-radius:16px;
+  background:#2b2d31;
+  border:1px solid #33363c;
+  text-align:center;
+  font-size:12px;
+  font-weight:700;
+  color:#e8e8e8;
+  box-shadow:0 2px 4px rgba(0,0,0,.25);
+  transition:transform .1s ease, opacity .1s ease;
+  height:100%;
+}
+
 .qbtn:active{
   transform:scale(.96);
   opacity:.85;
 }
-/* ICON */
-.qicon svg{
-  width: 16px;
-  height: 16px;
-  fill: currentColor;
-  flex-shrink: 0;
+
+/* ICON STYLE */
+.icon{
+  margin-bottom:4px;
 }
 
-/* TEXT */
-.qtext{
-  white-space: normal;
-  text-align:center;
-  line-height:1.2;
+.icon svg{
+  width:20px;
+  height:20px;
+  fill:#4cc2ff;
 }
 
-
+/* TEXT WRAP */
+.label{
+  line-height:1.15;
+  word-break:break-word;
+}
 
 /* ===== CARD COMMON ===== */
 .card{
@@ -266,25 +272,6 @@ body{
   transform:scale(.95);
   opacity:.8;
 }
-/* LIVE BADGE */
-.live-badge{
-  position:absolute;
-  top:8px;
-  right:10px;
-  background:#ffffff;
-  color:#d32f2f;
-  font-size:10px;
-  font-weight:800;
-  padding:2px 6px;
-  border-radius:6px;
-  animation:blink 1.2s infinite;
-}
-
-@keyframes blink{
-  0%{opacity:1}
-  50%{opacity:.4}
-  100%{opacity:1}
-}
 
 /* UPCOMING */
 .upcoming-title{
@@ -399,7 +386,7 @@ body{
 
 /* Last Updated Text */
 .updated{
-  font-size:11px;
+  font-size:10px;
   color:#4cc2ff;
   margin-top:2px;
   font-weight:500;
@@ -428,17 +415,102 @@ body{
   transform:scale(.9);
   opacity:.85;
 }
+/* ===== POPULAR STATES (MATCHING EXISTING UI) ===== */
+
+.state-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:10px;
+  margin-bottom:10px;
+}
+
+.state-item{
+  background:#24262a;
+  border:1px solid #33363c;
+  border-radius:16px;
+  padding:12px 10px;
+  text-align:center;
+  font-size:14px;
+  font-weight:600;
+  color:#e8e8e8;
+  text-decoration:none;
+  box-shadow:0 2px 4px rgba(0,0,0,.25);
+  transition:transform .1s ease, opacity .1s ease;
+}
+
+.state-item:active{
+  transform:scale(.96);
+  opacity:.85;
+}
+
+.view-all-states{
+  display:block;
+  text-align:center;
+  font-size:13px;
+  font-weight:700;
+  color:#4cc2ff;
+  text-decoration:none;
+  margin-top:6px;
+}
+/* ===== TOGGLE SYSTEM ===== */
+.content-toggles{
+  display:flex;
+  gap:8px;
+  margin:6px 0 14px;
+}
+
+.toggle-btn{
+  flex:1;
+  padding:10px 6px;
+  border-radius:14px;
+  border:1px solid #33363c;
+  background:#2b2d31;
+  color:#e8e8e8;
+  font-size:12px;
+  font-weight:700;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+}
+.ticon svg{
+  width:20px;
+  height:20px;
+  fill:#4cc2ff;
+}
+.toggle-btn.active .ticon svg{
+  fill:#000;
+}
+.toggle-btn.active{
+  background:#4cc2ff;
+  color:#000;
+  border-color:#4cc2ff;
+}
+
+.toggle-section{
+  display:none;
+}
+
+.back-home{
+  font-size:13px;
+  color:#4cc2ff;
+  font-weight:700;
+  margin-bottom:8px;
+  cursor:pointer;
+}
 
 </style>
 </head>
 
 <body>
 <!-- TOP AD BANNER -->
+  <a href="go:FMR"> 
 <div class="top-ad">
-  <img src="https://res.cloudinary.com/dzczl0fzu/image/upload/v1769277007/100001740_vrhda5.jpg" alt="AIR Banner">
-</div>
+  <img src="https://res.cloudinary.com/dzczl0fzu/image/upload/v1770229131/IMG_20260204_234716_446_vdl3zo.jpg" alt="AIR Banner">
+</div></a>
 
-
+   
 <div class="container">
 
 <!-- QUICK -->
@@ -447,58 +519,124 @@ body{
   <!-- AIR RADIO -->
   <a href="go:S201">
     <div class="qbtn">
-      <span class="qicon">
+      <div class="icon">
+        <!-- Radio SVG -->
         <svg viewBox="0 0 24 24">
-          <path d="M4 7h16v10H4zM6 9h6v2H6zM6 13h4v2H6zM15 10a2 2 0 110 4 2 2 0 010-4z"/>
+          <path d="M3 10v8a2 2 0 002 2h14a2 2 0 002-2v-8H3zm16 8H5v-6h14v6zM7 4l10 4H7V4zm2 9h3v3H9v-3zm7 1a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/>
         </svg>
-      </span>
-      <span class="qtext">AIR Radio</span>
+      </div>
+      <div class="label">AIR</div>
     </div>
   </a>
 
   <!-- FM RADIO -->
   <a href="go:S202">
     <div class="qbtn">
-      <span class="qicon">
+      <div class="icon">
+        <!-- Signal SVG -->
         <svg viewBox="0 0 24 24">
           <path d="M12 3a9 9 0 019 9h-2a7 7 0 00-14 0H3a9 9 0 019-9zm0 6a3 3 0 013 3h-2a1 1 0 00-2 0H9a3 3 0 013-3zm-1 8h2v4h-2z"/>
         </svg>
-      </span>
-      <span class="qtext">FM Radio</span>
+      </div>
+      <div class="label">FM</div>
     </div>
   </a>
 
   <!-- AIR NEWS -->
   <a href="go:sec123">
     <div class="qbtn">
-      <span class="qicon">
+      <div class="icon">
+        <!-- Newspaper SVG -->
         <svg viewBox="0 0 24 24">
           <path d="M4 4h14v16H4zM6 7h10v2H6zM6 11h10v2H6zM6 15h6v2H6zM20 8v8a2 2 0 01-2 2v-2V8z"/>
         </svg>
-      </span>
-      <span class="qtext">AIR News</span>
+      </div>
+      <div class="label">News</div>
     </div>
   </a>
 
   <!-- LIVE NEWS -->
   <a href="go:S501">
     <div class="qbtn">
-      <span class="qicon">
+      <div class="icon">
+        <!-- Live Broadcast SVG -->
         <svg viewBox="0 0 24 24">
           <path d="M3 6h18v12H3zM10 9l5 3-5 3zM8 20h8v-2H8z"/>
         </svg>
-      </span>
-      <span class="qtext">Live News</span>
+      </div>
+      <div class="label">Live</div>
     </div>
   </a>
 
 </div>
+<div class="content-toggles">
+  
+  <button class="toggle-btn" onclick="openSection('cricketSection', this)">
+    <span class="ticon">
+      <!-- Cricket SVG -->
+      <svg viewBox="0 0 24 24">
+        <path d="M14 2l8 8-2 2-8-8 2-2zM2 14l8 8 2-2-8-8-2 2z"/>
+      </svg>
+    </span>
+    <span>Cricket</span>
+  </button>
+
+  <button class="toggle-btn" onclick="openSection('newsSection', this)">
+    <span class="ticon">
+      <!-- News SVG -->
+      <svg viewBox="0 0 24 24">
+        <path d="M4 4h14v16H4zM6 7h10v2H6zM6 11h10v2H6zM6 15h6v2H6zM20 8v8a2 2 0 01-2 2V8z"/>
+      </svg>
+    </span>
+    <span>Read News</span>
+  </button>
+
+  <button class="toggle-btn" onclick="openSection('podcastSection', this)">
+    <span class="ticon">
+      <!-- Podcast SVG -->
+      <svg viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 00-6 6v3a6 6 0 0012 0V9a6 6 0 00-6-6zm-1 14h2v4h-2z"/>
+      </svg>
+    </span>
+    <span>Podcasts</span>
+  </button>
+
+</div>
+
+
+<!--Popular Stations-->
+<div id="homeContent">
 
 <h2 class="section-title">🔥 Popular Stations</h2>
 <div id="stations"></div>
 
+<!--Popular States--->
+
+<h2 class="section-title">📍 Popular States</h2>
+
+<div class="card">
+  <div class="state-grid">
+
+    <a href="go:DELHI" class="state-item">Delhi</a>
+    <a href="go:UP" class="state-item">Uttar Pradesh</a>
+
+    <a href="go:MH" class="state-item">Maharashtra</a>
+    <a href="go:BIHAR" class="state-item">Bihar</a>
+
+    <a href="go:WB" class="state-item">West Bengal</a>
+    <a href="go:TN" class="state-item">Tamil Nadu</a>
+
+  </div>
+
+  <a href="go:S201" class="view-all-states">View All States →</a>
+</div>
+</div>
+
 
 <!-- 🏏 CRICKET HUB -->
+<div id="cricketSection" class="toggle-section">
+<div class="back-home" onclick="goHome()">← Back to Home</div>
+
 <h2 class="section-title">🏏 Cricket Hub</h2>
 
 <div class="card cricket-card">
@@ -527,95 +665,113 @@ body{
   <!-- UPCOMING -->
   <div class="upcoming-title">📅 Upcoming Matches</div>
 
-  <div class="match">
-    <div class="match-name">India vs New Zealand, 3rd T20I</div>
-    <div class="match-time">25 Jan 2026 | 7:00 PM</div>
+<div class="match">
+    <div class="match-name">India vs South Africa (T20-WC)</div>
+    <div class="match-time">4 Feb 2026 | 7:00 PM</div>
+</div>
+   
+<div class="match">
+    <div class="match-name">India vs America (T20-WC)</div>
+    <div class="match-time">7 Feb 2026 | 7:00 PM</div>
   </div>
 
-  <div class="match">
-    <div class="match-name">India vs New Zealand, 4th T20I</div>
-    <div class="match-time">28 Jan 2026 | 7:00 PM</div>
+<div class="match">
+    <div class="match-name">India vs Namibia (T20-WC)</div>
+    <div class="match-time">12 Feb 2026 | 7:00 PM</div>
   </div>
-
-  <div class="match">
-    <div class="match-name">India vs New Zealand, 5th T20I</div>
-    <div class="match-time">31 Jan 2026 | 7:00 PM</div>
-  </div>
-
+   
+</div>
 </div>
 
 <!-- NEWS -->  
+<div id="newsSection" class="toggle-section">
+<div class="back-home" onclick="goHome()">← Back to Home</div>
+
 <h2 class="section-title">📰 News Articles</h2>
 <div class="card news-list">
 
-  <div class="news-item">
+<div class="news-item">
     <div class="news-text">
-      <div class="news-title">⚖️ ICC से सज़ा का खतरा?</div>
-      <div class="news-desc">बांग्लादेश क्रिकेट पर लटक रही बड़ी तलवार ⚠️</div>
-      <div class="news-date">24 Jan 2026</div>
-    </div>
-    <a href="go:news1" class="news-read">READ</a>
-  </div>
-  <div class="news-divider"></div>
-
-  <div class="news-item">
-    <div class="news-text">
-      <div class="news-title">🛢️ क्या भारत ने रूसी तेल खरीदना बंद कर दिया?</div>
-      <div class="news-desc">ट्रंप टैरिफ के बाद सच क्या है 🧩</div>
-      <div class="news-date">24 Jan 2026</div>
+      <div class="news-title">🤯 भारत-अमेरिका डील में बड़ा ट्विस्ट!</div>
+      <div class="news-desc">टैरिफ घटे… लेकिन कहानी यहीं खत्म नहीं</div>
+      <div class="news-date">4 Feb 2026</div>
     </div>
     <a href="go:news5" class="news-read">READ</a>
   </div>
-  <div class="news-divider"></div>
-
-  <div class="news-item">
+ <div class="news-divider"></div>
+   
+<div class="news-item">
     <div class="news-text">
-      <div class="news-title">🧊 कश्मीर जाने से पहले ये खबर देख लें!</div>
-      <div class="news-desc">NH-44 पर हालात बिगड़े, हजारों वाहन फंसे 🚑</div>
-      <div class="news-date">24 Jan 2026</div>
+      <div class="news-title">🚨 India-Pakistan मैच पर बड़ा संकट</div>
+      <div class="news-desc">ICC ने दिया सख्त संकेत</div>
+      <div class="news-date">3 Feb 2026</div>
     </div>
     <a href="go:news4" class="news-read">READ</a>
   </div>
-  <div class="news-divider"></div>
-
-  <div class="news-item">
+ <div class="news-divider"></div>
+   
+<div class="news-item">
     <div class="news-text">
-      <div class="news-title">🇮🇳 Republic Day पर सिनेमाघरों में तूफान!</div>
-      <div class="news-desc">Border 2 देखने से पहले ये जान लीजिए 🎖️</div>
-      <div class="news-date">20 Jan 2026</div>
+      <div class="news-title">🎭 Parliament में बड़ा पॉलिटिकल ड्रामा</div>
+      <div class="news-desc">एक किताब का जिक्र और हंगामा शुरू</div>
+      <div class="news-date">2 Feb 2026</div>
     </div>
     <a href="go:news3" class="news-read">READ</a>
   </div>
-  <div class="news-divider"></div>
-
-  <div class="news-item">
+ <div class="news-divider"></div>
+   
+<div class="news-item">
     <div class="news-text">
-      <div class="news-title">📢 26 जनवरी से पहले दिल्ली हाई अलर्ट!</div>
-      <div class="news-desc">आख़िर किसकी धमकी से बढ़ी सुरक्षा?⚠️</div>
-      <div class="news-date">23 Jan 2026</div>
+      <div class="news-title">💸 सैलरी, टैक्स और EMI — सब पर असर!</div>
+      <div class="news-desc">बजट 2026 ने क्या बदल दिया?</div>
+      <div class="news-date">1 Feb 2026</div>
     </div>
     <a href="go:news2" class="news-read">READ</a>
   </div>
+   <div class="news-divider"></div>
 
+<div class="news-item">
+    <div class="news-text">
+      <div class="news-title">🌍 पाकिस्तान PM बोले — सिर झुकाना पड़ता है</div>
+      <div class="news-desc">कर्ज पर ऐसा बयान क्यों?</div>
+      <div class="news-date">31 Jan 2026</div>
+    </div>
+    <a href="go:news1" class="news-read">READ</a>
+  </div>
+   
+</div>
 </div>
 
 <!-- PODCAST -->
+<div id="podcastSection" class="toggle-section">
+<div class="back-home" onclick="goHome()">← Back to Home</div>
+
 <h2 class="section-title">🎧 Podcasts</h2>
 
 <div class="card podcast">
   <div class="podcast-text">
+    <div class="station-name">DB दिनभर – हर दिन, हर बड़ी खबर</div>
+    <div class="updated">Last updated: 4 Feb 2026 · 9:15 PM</div>
+  </div>
+  <a href="go:DB" class="podcast-play">▶</a>
+</div>
+   
+<div class="card podcast">
+  <div class="podcast-text">
     <div class="station-name">BBC दिनभर: पूरा दिन,पूरी ख़बर</div>
-    <div class="updated">Last updated: 23 Jan 2026 · 9:10 PM</div>
+    <div class="updated">Last updated: 4 Feb 2026 · 9:30 PM</div>
   </div>
   <a href="go:S301" class="podcast-play">▶</a>
 </div>
 
+
 <div class="card podcast">
   <div class="podcast-text">
-    <div class="station-name">DB दिनभर – हर दिन, हर बड़ी खबर</div>
-    <div class="updated">Last updated: 24 Jan 2026 · 9:50 PM</div>
+    <div class="station-name">प्रधानमंत्री के साथ मन की बात</div>
+    <div class="updated">Last updated: 25 Jan 2026 · 12:10 PM</div>
   </div>
-  <a href="go:DB" class="podcast-play">▶</a>
+  <a href="go:MANN" class="podcast-play">▶</a>
+</div>
 </div>
 
 <!-- JS : POPULAR STATIONS ONLY -->
@@ -716,6 +872,37 @@ setInterval(updateProgramsOnly, 60000);
 
 /* Extra safety refresh after schedule loads */
 setTimeout(updateProgramsOnly, 4000);
+function openSection(id, btn){
+  document.getElementById("homeContent").style.display = "none";
+
+  document.querySelectorAll('.toggle-section').forEach(sec=>{
+    sec.style.display = "none";
+  });
+
+  document.querySelectorAll('.toggle-btn').forEach(b=>{
+    b.classList.remove('active');
+  });
+
+  document.getElementById(id).style.display = "block";
+  btn.classList.add('active');
+
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function goHome(){
+  document.getElementById("homeContent").style.display = "block";
+
+  document.querySelectorAll('.toggle-section').forEach(sec=>{
+    sec.style.display = "none";
+  });
+
+  document.querySelectorAll('.toggle-btn').forEach(b=>{
+    b.classList.remove('active');
+  });
+
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
 </script>
 
 </body>
