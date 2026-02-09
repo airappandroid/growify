@@ -107,7 +107,7 @@ window.SCHEDULE_DATA = [
   { "time": "05:45 AM", "title": "Farming Today", "channel": "BBC Radio 4" },
   { "time": "05:57 AM", "title": "Weather", "channel": "BBC Radio 4" },
 
-  { "time": "06:00 AM", "title": "Today", "channel": "BBC Radio 4" },
+  { "time": "06:00 AM", "title": "Today-News & Current Affairs", "channel": "BBC Radio 4" },
   { "time": "09:00 AM", "title": "Start the Week - Fun and Games", "channel": "BBC Radio 4" },
   { "time": "09:45 AM", "title": "Cafe Hope - Community Fitness", "channel": "BBC Radio 4" },
   { "time": "10:00 AM", "title": "Womans Hour", "channel": "BBC Radio 4" },
