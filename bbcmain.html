@@ -192,44 +192,16 @@ body {
 
 
 <script>
-function getUKMinutesNow() {
-    const parts = new Intl.DateTimeFormat('en-GB', {
-        timeZone: 'Europe/London',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-    }).formatToParts(new Date());
-
-    let h = parseInt(parts.find(p => p.type === 'hour').value);
-    let m = parseInt(parts.find(p => p.type === 'minute').value);
-    return h * 60 + m;
-}
-
-function timeStringToMinutesUK(timeStr) {
-    let [time, period] = timeStr.split(" ");
-    let [h, m] = time.split(":").map(Number);
-
-    if (period === "PM" && h !== 12) h += 12;
-    if (period === "AM" && h === 12) h = 0;
-
-    return h * 60 + m;
-}
-
 function getCurrentShow(channelName) {
     if (typeof SCHEDULE_DATA === "undefined") return "Loading...";
 
     let nowMin = getUKMinutesNow();
 
     let list = SCHEDULE_DATA
-        .filter(p =>
-  p.channel
-   .toLowerCase()
-   .replace(/\s+/g, " ")
-   .trim()
-   .includes(channelName.toLowerCase())
-)
-
+        .filter(p => p.channel.toLowerCase().includes(channelName.toLowerCase()))
         .sort((a, b) => timeStringToMinutesUK(a.time) - timeStringToMinutesUK(b.time));
+
+    if (!list.length) return "Live";
 
     for (let i = 0; i < list.length; i++) {
         let start = timeStringToMinutesUK(list[i].time);
@@ -237,27 +209,18 @@ function getCurrentShow(channelName) {
             ? timeStringToMinutesUK(list[i + 1].time)
             : 1440;
 
+        // normal daytime match
         if (nowMin >= start && nowMin < end) {
             return list[i].title;
         }
     }
-    return list.length ? "Live Show" : "Schedule Loading";
 
+    // 🌙 MIDNIGHT FIX:
+    // if current time is before first show
+    if (nowMin < timeStringToMinutesUK(list[0].time)) {
+        return list[list.length - 1].title;
+    }
+
+    return list[list.length - 1].title;
 }
-
-function updatePrograms() {
-    document.getElementById("bbc1").innerText  = getCurrentShow("Radio 1");
-    document.getElementById("bbc2").innerText  = getCurrentShow("Radio 2");
-    document.getElementById("bbc3").innerText  = getCurrentShow("Radio 3");
-    document.getElementById("bbc4").innerText  = getCurrentShow("Radio 4");
-    document.getElementById("bbcws").innerText = getCurrentShow("World Service");
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    updatePrograms();
-    setInterval(updatePrograms, 60000);
-});
 </script>
-
-</body>
-</html>
