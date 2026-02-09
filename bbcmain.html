@@ -221,7 +221,14 @@ function getCurrentShow(channelName) {
     let nowMin = getUKMinutesNow();
 
     let list = SCHEDULE_DATA
-        .filter(p => p.channel.toLowerCase().includes(channelName.toLowerCase()))
+        .filter(p =>
+  p.channel
+   .toLowerCase()
+   .replace(/\s+/g, " ")
+   .trim()
+   .includes(channelName.toLowerCase())
+)
+
         .sort((a, b) => timeStringToMinutesUK(a.time) - timeStringToMinutesUK(b.time));
 
     for (let i = 0; i < list.length; i++) {
@@ -234,7 +241,8 @@ function getCurrentShow(channelName) {
             return list[i].title;
         }
     }
-    return "Live Show";
+    return list.length ? "Live Show" : "Schedule Loading";
+
 }
 
 function updatePrograms() {
