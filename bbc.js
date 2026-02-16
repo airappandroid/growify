@@ -106,4 +106,5 @@ window.SCHEDULE_DATA = [
   { "time": "10:00 PM", "title": "The World Tonight", "channel": "BBC Radio 4" },
   { "time": "10:45 PM", "title": "James by Percival Everett", "channel": "BBC Radio 4" },
   { "time": "11:00 PM", "title": "Limelight", "channel": "BBC Radio 4" },
-  { "time": "11:30 PM", "title": "Artworks", "channel": "BBC Radio 4" },
+  { "time": "11:30 PM", "title": "Artworks", "channel": "BBC Radio 4" }
+  ];
