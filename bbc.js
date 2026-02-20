@@ -69,7 +69,7 @@ window.SCHEDULE_DATA = [
   { "time": "05:43 AM", "title": "Prayer for the Day", "channel": "BBC Radio 4" },
   { "time": "05:45 AM", "title": "Farming Today", "channel": "BBC Radio 4" },
 
-  { "time": "06:00 AM", "title": "Today", "channel": "BBC Radio 4" },
+  { "time": "06:00 AM", "title": "Today- News & Current Affairs", "channel": "BBC Radio 4" },
   { "time": "09:00 AM", "title": "Desert Island Discs", "channel": "BBC Radio 4" },
   { "time": "10:00 AM", "title": "Woman's Hour", "channel": "BBC Radio 4" },
   { "time": "11:00 AM", "title": "The Food Programme", "channel": "BBC Radio 4" },
@@ -77,7 +77,7 @@ window.SCHEDULE_DATA = [
 
   { "time": "12:00 PM", "title": "News Summary", "channel": "BBC Radio 4" },
   { "time": "12:04 PM", "title": "AntiSocial", "channel": "BBC Radio 4" },
-  { "time": "12:57 PM", "title": "Weather", "channel": "BBC Radio 4" },
+  { "time": "12:57 PM", "title": "Weather Updates", "channel": "BBC Radio 4" },
   { "time": "01:00 PM", "title": "World at One", "channel": "BBC Radio 4" },
   { "time": "01:45 PM", "title": "Shadow World", "channel": "BBC Radio 4" },
   { "time": "02:00 PM", "title": "The Archers", "channel": "BBC Radio 4" },
@@ -87,7 +87,7 @@ window.SCHEDULE_DATA = [
   { "time": "03:45 PM", "title": "Short Works", "channel": "BBC Radio 4" },
   { "time": "04:00 PM", "title": "Last Word", "channel": "BBC Radio 4" },
   { "time": "04:30 PM", "title": "Sideways", "channel": "BBC Radio 4" },
-  { "time": "05:00 PM", "title": "PM", "channel": "BBC Radio 4" },
+  { "time": "05:00 PM", "title": "PM- News & Current Affairs", "channel": "BBC Radio 4" },
 
   { "time": "06:00 PM", "title": "Six O'Clock News", "channel": "BBC Radio 4" },
   { "time": "06:30 PM", "title": "The News Quiz", "channel": "BBC Radio 4" },
