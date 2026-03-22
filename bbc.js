@@ -1,96 +1,143 @@
 window.SCHEDULE_DATA = [
-  { "time": "12:00 AM", "title": "Radio 1's Essential Mix (Voices From the Lake)", "channel": "BBC Radio 1" },
-  { "time": "02:00 AM", "title": "Radio 1 Dance Presents (Three Six Zero: Cam Stockman)", "channel": "BBC Radio 1" },
-  { "time": "03:00 AM", "title": "Danny Howard's Club Mix", "channel": "BBC Radio 1" },
-  { "time": "04:00 AM", "title": "Radio 1 Dance Party Starters", "channel": "BBC Radio 1" },
-  { "time": "05:00 AM", "title": "Radio 1's Happy Anthems", "channel": "BBC Radio 1" },
-  { "time": "06:00 AM", "title": "Radio 1 Weekend Early Breakfast (with Oré Olukoga)", "channel": "BBC Radio 1" },
-  { "time": "07:00 AM", "title": "Radio 1 Weekend Breakfast (with James Cusack)", "channel": "BBC Radio 1" },
-  { "time": "10:00 AM", "title": "Radio 1 Anthems (with James Cusack)", "channel": "BBC Radio 1" },
-  { "time": "10:30 AM", "title": "Radio 1 Newsbeat", "channel": "BBC Radio 1" },
-  { "time": "10:32 AM", "title": "Radio 1 Anthems (with Vicky & Minah)", "channel": "BBC Radio 1" },
-  { "time": "11:00 AM", "title": "Radio 1's Group Chat (with Nat & Vicky)", "channel": "BBC Radio 1" },
-  { "time": "01:00 PM", "title": "Sam and Danni", "channel": "BBC Radio 1" },
-  { "time": "04:00 PM", "title": "Radio 1's Dance Anthems (with Connor Coates)", "channel": "BBC Radio 1" },
-  { "time": "05:00 PM", "title": "Radio 1's Dance Anthems (Track2Track Mix)", "channel": "BBC Radio 1" },
-  { "time": "06:00 PM", "title": "Radio 1's Dance Anthems (Today's Dance Hits)", "channel": "BBC Radio 1" },
-  { "time": "07:00 PM", "title": "Radio 1's Soundsystem Party", "channel": "BBC Radio 1" },
-  { "time": "09:00 PM", "title": "Radio 1's Rap Show (with AJ Tracey)", "channel": "BBC Radio 1" },
-  { "time": "10:30 PM", "title": "Radio 1's Rap Mixtape", "channel": "BBC Radio 1" },
-  { "time": "11:00 PM", "title": "Radio 1's Drum & Bass Show (with Charlie Tee)", "channel": "BBC Radio 1" },
+  { "time": "12:00 AM", "title": "Radio 1 Dance Drum & Bass Mix (Gardna)", "channel": "BBC Radio 1" },
+  { "time": "12:30 AM", "title": "Radio 1 Dance Drum & Bass Mix (Alix Perez)", "channel": "BBC Radio 1" },
 
+  { "time": "1:00 AM", "title": "Classic Essential Mix (Carl Cox Live)", "channel": "BBC Radio 1" },
+  { "time": "3:00 AM", "title": "Future Dance Mix (Sarah Story)", "channel": "BBC Radio 1" },
+  { "time": "3:30 AM", "title": "Pete Tong's Hot Mix", "channel": "BBC Radio 1" },
 
- 
-  { "time": "12:00 AM", "title": "For the Love of Hip Hop (Romesh Ranganathan: 50 Cent)", "channel": "BBC Radio 2" },
-  { "time": "01:00 AM", "title": "Sounds of Soul (Tony Blackburn)", "channel": "BBC Radio 2" },
-  { "time": "02:00 AM", "title": "Radio 2's Piano Room (Best of 2026)", "channel": "BBC Radio 2" },
-  { "time": "04:00 AM", "title": "Radio 2 In Concert (Level 42 - 1985)", "channel": "BBC Radio 2" },
-  { "time": "05:00 AM", "title": "Radio 2 Unwinds (Angela Griffin)", "channel": "BBC Radio 2" },
-  { "time": "06:00 AM", "title": "Sounds of the 60s (Tony Blackburn)", "channel": "BBC Radio 2" },
-  { "time": "08:00 AM", "title": "Dermot O'Leary Show", "channel": "BBC Radio 2" },
-  { "time": "10:00 AM", "title": "Romesh Ranganathan Show", "channel": "BBC Radio 2" },
-  { "time": "01:00 PM", "title": "Emma Willis (Saturday Lunchtime Show)", "channel": "BBC Radio 2" },
-  { "time": "03:00 PM", "title": "Rylan On Saturday", "channel": "BBC Radio 2" },
-  { "time": "06:00 PM", "title": "Shaun Keaveny", "channel": "BBC Radio 2" },
-  { "time": "08:00 PM", "title": "Sounds of the 80s (Gary Davies)", "channel": "BBC Radio 2" },
-  { "time": "10:00 PM", "title": "Sounds of the 90s (Fearne Cotton)", "channel": "BBC Radio 2" },
-  { "time": "11:00 PM", "title": "Sounds of the 90s (Mixtape)", "channel": "BBC Radio 2" },
+  { "time": "4:00 AM", "title": "Dance Party Starters", "channel": "BBC Radio 1" },
+  { "time": "5:00 AM", "title": "Dance Anthems (Nonstop Classics)", "channel": "BBC Radio 1" },
 
- 
-  
-  { "time": "12:30 AM", "title": "Through the Night (Poulenc Organ Concerto)", "channel": "BBC Radio 3" },
-  { "time": "06:30 AM", "title": "Breakfast (Classical Music with Hannah French)", "channel": "BBC Radio 3" },
-  { "time": "09:00 AM", "title": "Saturday Morning (with Tom Service)", "channel": "BBC Radio 3" },
-  { "time": "12:00 PM", "title": "Earlier... with Jools Holland", "channel": "BBC Radio 3" },
-  { "time": "01:00 PM", "title": "Music Matters (Choral Odyssey)", "channel": "BBC Radio 3" },
-  { "time": "02:00 PM", "title": "Record Review", "channel": "BBC Radio 3" },
-  { "time": "04:00 PM", "title": "Sound of Cinema", "channel": "BBC Radio 3" },
-  { "time": "05:00 PM", "title": "Opera on 3 (Tristan and Isolde)", "channel": "BBC Radio 3" },
-  { "time": "10:30 PM", "title": "New Music Show (Icelandic Chill)", "channel": "BBC Radio 3" },
+  { "time": "6:00 AM", "title": "Weekend Early Breakfast (Swarzy)", "channel": "BBC Radio 1" },
+  { "time": "7:00 AM", "title": "Weekend Breakfast (James Cusack)", "channel": "BBC Radio 1" },
 
+  { "time": "10:00 AM", "title": "Radio 1 00s (James Cusack)", "channel": "BBC Radio 1" },
+  { "time": "10:30 AM", "title": "Newsbeat", "channel": "BBC Radio 1" },
+  { "time": "10:32 AM", "title": "Radio 1 00s (Vicky & Minah)", "channel": "BBC Radio 1" },
+
+  { "time": "11:00 AM", "title": "Radio 1 10s (Vicky & Minah)", "channel": "BBC Radio 1" },
+
+  { "time": "12:00 PM", "title": "Radio 1 20s (Vicky & Minah)", "channel": "BBC Radio 1" },
+  { "time": "1:00 PM", "title": "Sam and Danni", "channel": "BBC Radio 1" },
+
+  { "time": "4:00 PM", "title": "Life Hacks (Lauren & Calum)", "channel": "BBC Radio 1" },
+
+  { "time": "6:00 PM", "title": "Official Chart: First Look", "channel": "BBC Radio 1" },
+  { "time": "7:00 PM", "title": "Chillest Show (Catching Flies Mix)", "channel": "BBC Radio 1" },
+
+  { "time": "9:00 PM", "title": "Indie Show", "channel": "BBC Radio 1" },
+  { "time": "11:00 PM", "title": "BBC Introducing (Jess Iszatt)", "channel": "BBC Radio 1" },
 
  
 
-  { "time": "12:00 AM", "title": "Midnight News", "channel": "BBC Radio 4" },
-  { "time": "12:30 AM", "title": "Shock and War: Iraq 20 Years On", "channel": "BBC Radio 4" },
-  { "time": "12:48 AM", "title": "Shipping Forecast", "channel": "BBC Radio 4" },
-  { "time": "01:00 AM", "title": "BBC World Service Programmes", "channel": "BBC Radio 4" },
-  { "time": "05:30 AM", "title": "News Summary", "channel": "BBC Radio 4" },
-  { "time": "05:34 AM", "title": "Shipping Forecast", "channel": "BBC Radio 4" },
-  { "time": "05:43 AM", "title": "Prayer for the Day", "channel": "BBC Radio 4" },
-  { "time": "05:45 AM", "title": "Lent Talks", "channel": "BBC Radio 4" },
-  { "time": "06:00 AM", "title": "News and Papers", "channel": "BBC Radio 4" },
-  { "time": "06:07 AM", "title": "Open Country", "channel": "BBC Radio 4" },
-  { "time": "06:30 AM", "title": "Farming Today", "channel": "BBC Radio 4" },
-  { "time": "06:57 AM", "title": "Weather", "channel": "BBC Radio 4" },
-  { "time": "07:00 AM", "title": "Today", "channel": "BBC Radio 4" },
-  { "time": "09:00 AM", "title": "Saturday Live", "channel": "BBC Radio 4" },
-  { "time": "10:00 AM", "title": "You're Dead to Me", "channel": "BBC Radio 4" },
-  { "time": "10:30 AM", "title": "The Kitchen Cabinet", "channel": "BBC Radio 4" },
-  { "time": "11:00 AM", "title": "The Week in Westminster", "channel": "BBC Radio 4" },
-  { "time": "11:30 AM", "title": "From Our Own Correspondent", "channel": "BBC Radio 4" },
-  { "time": "12:00 PM", "title": "News Summary", "channel": "BBC Radio 4" },
-  { "time": "12:04 PM", "title": "Money Box", "channel": "BBC Radio 4" },
-  { "time": "12:30 PM", "title": "The Naked Week", "channel": "BBC Radio 4" },
-  { "time": "12:57 PM", "title": "Weather", "channel": "BBC Radio 4" },
-  { "time": "01:00 PM", "title": "News", "channel": "BBC Radio 4" },
-  { "time": "01:10 PM", "title": "Any Questions?", "channel": "BBC Radio 4" },
-  { "time": "02:05 PM", "title": "Any Answers?", "channel": "BBC Radio 4" },
-  { "time": "02:45 PM", "title": "The Archers", "channel": "BBC Radio 4" },
-  { "time": "03:00 PM", "title": "Drama on 4", "channel": "BBC Radio 4" },
-  { "time": "04:30 PM", "title": "Woman's Hour", "channel": "BBC Radio 4" },
-  { "time": "05:00 PM", "title": "PM (News Programme)", "channel": "BBC Radio 4" },
-  { "time": "05:30 PM", "title": "Political Thinking", "channel": "BBC Radio 4" },
-  { "time": "05:54 PM", "title": "Shipping Forecast", "channel": "BBC Radio 4" },
-  { "time": "05:57 PM", "title": "Weather", "channel": "BBC Radio 4" },
-  { "time": "06:00 PM", "title": "Six O'Clock News", "channel": "BBC Radio 4" },
-  { "time": "06:15 PM", "title": "Loose Ends", "channel": "BBC Radio 4" },
-  { "time": "07:00 PM", "title": "Profile", "channel": "BBC Radio 4" },
-  { "time": "07:15 PM", "title": "The History Podcast", "channel": "BBC Radio 4" },
-  { "time": "08:00 PM", "title": "Archive on 4", "channel": "BBC Radio 4" },
-  { "time": "09:00 PM", "title": "Moral Maze", "channel": "BBC Radio 4" },
-  { "time": "10:00 PM", "title": "News", "channel": "BBC Radio 4" },
-  { "time": "10:15 PM", "title": "The Food Programme", "channel": "BBC Radio 4" },
-  { "time": "11:00 PM", "title": "The Matt Forde Focus Group", "channel": "BBC Radio 4" },
-  { "time": "11:30 PM", "title": "Counterpoint", "channel": "BBC Radio 4" }
+  { "time": "12:00 AM", "title": "Radio 2 Loves Musicals (Michelle Visage)", "channel": "BBC Radio 2" },
+  { "time": "1:00 AM", "title": "Love Songs (Michael Ball - Les Mis Special)", "channel": "BBC Radio 2" },
+  { "time": "2:00 AM", "title": "Dance Sounds of the 90s (Vernon Kay)", "channel": "BBC Radio 2" },
+  { "time": "3:00 AM", "title": "Radio 2 Unwinds (Angela Griffin)", "channel": "BBC Radio 2" },
+  { "time": "4:00 AM", "title": "Radio 2 In Concert (Paul Young 1997)", "channel": "BBC Radio 2" },
+
+  { "time": "5:00 AM", "title": "Tracks Of My Years (Holliday Grainger)", "channel": "BBC Radio 2" },
+
+  { "time": "6:00 AM", "title": "Good Morning Sunday", "channel": "BBC Radio 2" },
+  { "time": "9:00 AM", "title": "Love Songs (Michael Ball)", "channel": "BBC Radio 2" },
+  { "time": "11:00 AM", "title": "Paddy McGuinness Show", "channel": "BBC Radio 2" },
+
+  { "time": "1:00 PM", "title": "Elaine Paige on Sunday", "channel": "BBC Radio 2" },
+  { "time": "3:00 PM", "title": "Sounds of the 70s (Bob Harris)", "channel": "BBC Radio 2" },
+  { "time": "5:00 PM", "title": "Pick of the Pops (1983)", "channel": "BBC Radio 2" },
+
+  { "time": "6:00 PM", "title": "Pick of the Pops (1994)", "channel": "BBC Radio 2" },
+  { "time": "7:00 PM", "title": "Tony Blackburn's Golden Hour", "channel": "BBC Radio 2" },
+  { "time": "8:00 PM", "title": "Paul Gambaccini Collection", "channel": "BBC Radio 2" },
+
+  { "time": "10:00 PM", "title": "Radio 2 Unwinds (Angela Griffin)", "channel": "BBC Radio 2" },
+  { "time": "11:00 PM", "title": "Radio 2 Unwinds Mix", "channel": "BBC Radio 2" },
+
+ 
+ 
+  { "time": "12:30 AM", "title": "Through the Night (Mahler & Helen Grime)", "channel": "BBC Radio 3" },
+
+  { "time": "6:30 AM", "title": "Breakfast (Classical Music)", "channel": "BBC Radio 3" },
+  { "time": "9:00 AM", "title": "Sunday Morning (Classical Music)", "channel": "BBC Radio 3" },
+
+  { "time": "12:00 PM", "title": "Private Passions (Sir Ian Blatchford)", "channel": "BBC Radio 3" },
+  { "time": "1:30 PM", "title": "Music Map (Delius)", "channel": "BBC Radio 3" },
+  { "time": "3:00 PM", "title": "Choral Evensong", "channel": "BBC Radio 3" },
+  { "time": "4:00 PM", "title": "Jazz Record Requests", "channel": "BBC Radio 3" },
+  { "time": "5:00 PM", "title": "The Early Music Show", "channel": "BBC Radio 3" },
+
+  { "time": "6:00 PM", "title": "Words and Music", "channel": "BBC Radio 3" },
+  { "time": "7:15 PM", "title": "Between the Ears", "channel": "BBC Radio 3" },
+  { "time": "7:45 PM", "title": "Sunday Feature", "channel": "BBC Radio 3" },
+  { "time": "8:00 PM", "title": "Record Review", "channel": "BBC Radio 3" },
+  { "time": "9:00 PM", "title": "20th Century Radicals", "channel": "BBC Radio 3" },
+
+  { "time": "10:00 PM", "title": "Compline (Night Prayer)", "channel": "BBC Radio 3" },
+  { "time": "10:30 PM", "title": "Night Tracks", "channel": "BBC Radio 3" },
+  { "time": "11:30 PM", "title": "Unclassified", "channel": "BBC Radio 3" },
+
+ 
+
+  { "time": "12:00 AM", "title": "Midnight News – National and International Updates", "channel": "BBC Radio 4" },
+  { "time": "12:15 AM", "title": "Take Four Books – Susan Choi on Her Novel and Influences", "channel": "BBC Radio 4" },
+  { "time": "12:48 AM", "title": "Shipping Forecast – Latest Maritime Weather Updates", "channel": "BBC Radio 4" },
+  { "time": "1:00 AM", "title": "BBC World Service – News, Current Affairs and Features", "channel": "BBC Radio 4" },
+
+  { "time": "5:30 AM", "title": "News Summary – Morning Headlines", "channel": "BBC Radio 4" },
+  { "time": "5:34 AM", "title": "Shipping Forecast – Early Morning Weather for Seas", "channel": "BBC Radio 4" },
+  { "time": "5:43 AM", "title": "Bells on Sunday – Church Bells from Lavenham", "channel": "BBC Radio 4" },
+  { "time": "5:45 AM", "title": "In Touch – Highlights from the Winter Paralympic Games", "channel": "BBC Radio 4" },
+
+  { "time": "6:00 AM", "title": "News Summary – Start of Day Updates", "channel": "BBC Radio 4" },
+  { "time": "6:05 AM", "title": "Heart and Soul – Exploring Faith, Relationships and Life", "channel": "BBC Radio 4" },
+  { "time": "6:35 AM", "title": "On Your Farm – Stories from Rural Life and Farming", "channel": "BBC Radio 4" },
+  { "time": "6:57 AM", "title": "Weather – Daily Forecast and Conditions", "channel": "BBC Radio 4" },
+
+  { "time": "7:00 AM", "title": "News and Papers – Headlines and Newspaper Review", "channel": "BBC Radio 4" },
+  { "time": "7:10 AM", "title": "Sunday – Religion, Ethics and Current Issues", "channel": "BBC Radio 4" },
+  { "time": "7:54 AM", "title": "Radio 4 Appeal – Charity Feature (Comic Relief)", "channel": "BBC Radio 4" },
+  { "time": "7:57 AM", "title": "Weather – Short Forecast Update", "channel": "BBC Radio 4" },
+
+  { "time": "8:00 AM", "title": "News and Papers – Top Stories and Press Analysis", "channel": "BBC Radio 4" },
+  { "time": "8:10 AM", "title": "Sunday Worship – Special Service for Lent", "channel": "BBC Radio 4" },
+  { "time": "8:48 AM", "title": "Witness History – Stories from the Past", "channel": "BBC Radio 4" },
+  { "time": "8:58 AM", "title": "Tweet of the Day – Nature and Wildlife Feature", "channel": "BBC Radio 4" },
+
+  { "time": "9:00 AM", "title": "Broadcasting House – Sunday News Magazine", "channel": "BBC Radio 4" },
+  { "time": "10:00 AM", "title": "Desert Island Discs – Guest Interview and Music Choices", "channel": "BBC Radio 4" },
+  { "time": "11:00 AM", "title": "The Archers Omnibus – Weekly Drama Compilation", "channel": "BBC Radio 4" },
+
+  { "time": "12:15 PM", "title": "Profile – In-Depth Look at Ed Miliband", "channel": "BBC Radio 4" },
+  { "time": "12:30 PM", "title": "Unspeakable – Comedy and Language Exploration", "channel": "BBC Radio 4" },
+  { "time": "12:57 PM", "title": "Weather – Afternoon Forecast", "channel": "BBC Radio 4" },
+
+  { "time": "1:00 PM", "title": "The World This Weekend – Weekly News Analysis", "channel": "BBC Radio 4" },
+  { "time": "1:30 PM", "title": "Profile – Benjamin Netanyahu Story", "channel": "BBC Radio 4" },
+  { "time": "2:00 PM", "title": "Gardeners' Question Time – Gardening Advice and Tips", "channel": "BBC Radio 4" },
+  { "time": "2:45 PM", "title": "Opening Lines – Literature and Storytelling Insights", "channel": "BBC Radio 4" },
+  { "time": "3:00 PM", "title": "Drama on 4 – Flight (Radio Drama)", "channel": "BBC Radio 4" },
+
+  { "time": "4:00 PM", "title": "Take Four Books – Author Interview and Reading Picks", "channel": "BBC Radio 4" },
+  { "time": "4:30 PM", "title": "Counterpoint – Music Quiz Show", "channel": "BBC Radio 4" },
+  { "time": "5:00 PM", "title": "Witness History – Historic Moments Retold", "channel": "BBC Radio 4" },
+  { "time": "5:10 PM", "title": "Understand – Exploring Identity and Society", "channel": "BBC Radio 4" },
+  { "time": "5:54 PM", "title": "Shipping Forecast – Evening Maritime Weather", "channel": "BBC Radio 4" },
+  { "time": "5:57 PM", "title": "Weather – Evening Forecast Update", "channel": "BBC Radio 4" },
+
+  { "time": "6:00 PM", "title": "Six O'Clock News – Evening Headlines", "channel": "BBC Radio 4" },
+  { "time": "6:15 PM", "title": "Pick of the Week – Best of BBC Audio", "channel": "BBC Radio 4" },
+  { "time": "7:00 PM", "title": "The Archers – Daily Radio Drama Episode", "channel": "BBC Radio 4" },
+  { "time": "7:15 PM", "title": "Illuminated – Thought-Provoking Stories", "channel": "BBC Radio 4" },
+  { "time": "7:45 PM", "title": "Lent Talks – Reflections on Power and Life", "channel": "BBC Radio 4" },
+
+  { "time": "8:00 PM", "title": "Feedback – Listener Opinions and Media Review", "channel": "BBC Radio 4" },
+  { "time": "8:30 PM", "title": "Last Word – Obituaries and Life Stories", "channel": "BBC Radio 4" },
+  { "time": "9:00 PM", "title": "Money Box – Finance and Consumer Advice", "channel": "BBC Radio 4" },
+  { "time": "9:25 PM", "title": "Radio 4 Appeal – Charity Spotlight", "channel": "BBC Radio 4" },
+  { "time": "9:30 PM", "title": "From Our Own Correspondent – Global Stories", "channel": "BBC Radio 4" },
+
+  { "time": "10:00 PM", "title": "Westminster Hour – Politics and Analysis", "channel": "BBC Radio 4" },
+  { "time": "11:00 PM", "title": "In Our Time – History and Ideas Discussion", "channel": "BBC Radio 4" },
+  { "time": "11:45 PM", "title": "Short Works – New Fiction Story", "channel": "BBC Radio 4" }
 ];
