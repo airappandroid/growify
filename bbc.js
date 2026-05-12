@@ -1,26 +1,25 @@
 window.SCHEDULE_DATA = [
-  { "time": "01:00 AM", "title": "BBC Radio 1's Big Weekend Live Sets, Stormzy (Middlesbrough 2019)", "channel": "BBC Radio 1" },
-  { "time": "01:40 AM", "title": "BBC Radio 1's Big Weekend Live Sets, Dave (Middlesbrough 2019)", "channel": "BBC Radio 1" },
-  { "time": "02:05 AM", "title": "BBC Radio 1's Big Weekend Live Sets, Headie One (Dundee 2023)", "channel": "BBC Radio 1" },
-  { "time": "02:35 AM", "title": "BBC Radio 1's Big Weekend Live Sets, Aitch b2b AJ Tracey (Liverpool 2025)", "channel": "BBC Radio 1" },
-  { "time": "03:00 AM", "title": "BBC Radio 1's Big Weekend North East Anthems", "channel": "BBC Radio 1" },
-  { "time": "03:30 AM", "title": "Radio 1's Chill Mix, Erin LeCount", "channel": "BBC Radio 1" },
-  { "time": "04:00 AM", "title": "Radio 1's Workout Anthems, David Guetta, Yeah Yeah Yeahs, Fred again... and more", "channel": "BBC Radio 1" },
+  { "time": "01:00 AM", "title": "BBC Introducing Rock on Radio 1 with Alyx Holcombe: Frozemode Track of the Week", "channel": "BBC Radio 1" },
+  { "time": "02:00 AM", "title": "Radio 1 Anthems – Justin Bieber, Paramore, Peggy Gou and more", "channel": "BBC Radio 1" },
+  { "time": "04:00 AM", "title": "Radio 1 Pop Anthems – Tame Impala, JENNIE, Troye Sivan and more!", "channel": "BBC Radio 1" },
   { "time": "05:00 AM", "title": "Radio 1 Early Breakfast with Dean McCullough", "channel": "BBC Radio 1" },
-  { "time": "06:58 AM", "title": "Radio 1 Newsbeat, 11/05/2026", "channel": "BBC Radio 1" },
-  { "time": "07:00 AM", "title": "Radio 1 Breakfast with Greg James, 11/05/2026", "channel": "BBC Radio 1" },
-  { "time": "10:30 AM", "title": "Radio 1 Newsbeat, 11/05/2026", "channel": "BBC Radio 1" },
-  { "time": "10:33 AM", "title": "Rickie, Melvin and Charlie, Rickie, Melvin OR Charlie?", "channel": "BBC Radio 1" },
-  { "time": "12:45 PM", "title": "Newsbeat, 11/05/2026", "channel": "BBC Radio 1" },
-  { "time": "01:00 PM", "title": "Matt and Mollie, Don't Match Matt", "channel": "BBC Radio 1" },
-  { "time": "03:30 PM", "title": "Radio 1 Newsbeat, 11/05/2026", "channel": "BBC Radio 1" },
-  { "time": "03:33 PM", "title": "Going Home with Vick, Katie and Jamie on Radio 1, Chaos on your way home!", "channel": "BBC Radio 1" },
-  { "time": "05:45 PM", "title": "Newsbeat, 11/05/2026", "channel": "BBC Radio 1" },
-  { "time": "06:00 PM", "title": "Radio 1's New Music Show with Jack Saunders, 11/05/2026", "channel": "BBC Radio 1" },
-  { "time": "08:00 PM", "title": "Radio 1's Future Artists with Sian Eleri, Live music from LØLØ", "channel": "BBC Radio 1" },
-  { "time": "10:00 PM", "title": "Radio 1's Power Down Playlist with Sian Eleri, Comfort Blanket", "channel": "BBC Radio 1" },
-  { "time": "11:00 PM", "title": "Radio 1's Rock Show with Daniel P Carter, Basement", "channel": "BBC Radio 1" },
 
+  { "time": "06:58 AM", "title": "Radio 1 Newsbeat – Latest news from the UK and around the world", "channel": "BBC Radio 1" },
+  { "time": "07:00 AM", "title": "Radio 1 Breakfast with Greg James – Pedro Pascal", "channel": "BBC Radio 1" },
+  { "time": "10:30 AM", "title": "Radio 1 Newsbeat – Latest news from the UK and around the world", "channel": "BBC Radio 1" },
+  { "time": "10:33 AM", "title": "Rickie, Melvin and Charlie – Mess with Melvin", "channel": "BBC Radio 1" },
+
+  { "time": "12:45 PM", "title": "Newsbeat – Latest news from the UK and around the world", "channel": "BBC Radio 1" },
+  { "time": "01:00 PM", "title": "Matt and Mollie – Matt v Mollie", "channel": "BBC Radio 1" },
+  { "time": "03:30 PM", "title": "Radio 1 Newsbeat – Latest news from the UK and around the world", "channel": "BBC Radio 1" },
+  { "time": "03:33 PM", "title": "Going Home with Vick, Katie and Jamie on Radio 1 – Complete the Year Quiz", "channel": "BBC Radio 1" },
+  { "time": "05:45 PM", "title": "Newsbeat – Latest news from the UK and around the world", "channel": "BBC Radio 1" },
+
+  { "time": "06:00 PM", "title": "Radio 1's New Music Show with Jack Saunders – Overmono and Turnstile", "channel": "BBC Radio 1" },
+  { "time": "07:30 PM", "title": "Radio 1's Live Lounge Late – Amazing Live Lounge performances", "channel": "BBC Radio 1" },
+  { "time": "08:00 PM", "title": "Radio 1's Future Artists with Sian Eleri – Future Flex from oskar med k", "channel": "BBC Radio 1" },
+  { "time": "10:00 PM", "title": "Radio 1's Power Down Playlist with Sian Eleri – Airplane Mode", "channel": "BBC Radio 1" },
+  { "time": "11:00 PM", "title": "Martha – Ams in the guest mix and Martha's deep frequencies mix", "channel": "BBC Radio 1" },
   
  
   { "time": "12:00 AM", "title": "Richie Anderson, Let’s start the week right!", "channel": "BBC Radio 2" },
@@ -51,6 +50,108 @@ window.SCHEDULE_DATA = [
   { "time": "10:00 PM", "title": "Night Tracks, Music for the darkling hour", "channel": "BBC Radio 3" },
   { "time": "11:30 PM", "title": "'Round Midnight, Laura Misch’s 4/4", "channel": "BBC Radio 3" },
  
+
+
+  { "time": "12:00 AM", "title": "BBC News Summary – Latest two minute news summary", "channel": "BBC World Service" },
+  { "time": "12:02 AM", "title": "Sport Today – Top sporting news and interviews", "channel": "BBC World Service" },
+  { "time": "12:30 AM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "12:36 AM", "title": "From Our Own Correspondent – Putin and Russia's new normal", "channel": "BBC World Service" },
+
+  { "time": "01:00 AM", "title": "BBC News Summary – Latest two minute news summary", "channel": "BBC World Service" },
+  { "time": "01:02 AM", "title": "Discovery – The Life Scientific: Lucy Carpenter", "channel": "BBC World Service" },
+  { "time": "01:30 AM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "01:36 AM", "title": "Newshour – Trump: Iran ceasefire on massive life support", "channel": "BBC World Service" },
+
+  { "time": "02:30 AM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "02:36 AM", "title": "The Interview – Mikhail Ulyanov: Rescuing Iran nuclear talks", "channel": "BBC World Service" },
+
+  { "time": "03:00 AM", "title": "BBC News Summary – Latest two minute news summary", "channel": "BBC World Service" },
+  { "time": "03:02 AM", "title": "The Conversation – Falling in love with flowers", "channel": "BBC World Service" },
+  { "time": "03:30 AM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "03:36 AM", "title": "The Newsroom – Global events as they happen", "channel": "BBC World Service" },
+
+  { "time": "04:00 AM", "title": "BBC News Summary – Latest two minute news summary", "channel": "BBC World Service" },
+  { "time": "04:02 AM", "title": "World Business Report – Oil deadlock deepens", "channel": "BBC World Service" },
+  { "time": "04:30 AM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "04:36 AM", "title": "The History Hour – Sir David Attenborough's first Zoo Quest and a WW2 sabotage mission", "channel": "BBC World Service" },
+
+  { "time": "05:30 AM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "05:36 AM", "title": "The Newsroom – Global events as they happen", "channel": "BBC World Service" },
+
+  { "time": "06:00 AM", "title": "BBC News Summary – Latest two minute news summary", "channel": "BBC World Service" },
+  { "time": "06:02 AM", "title": "The Global Story – Operation Ajax: The CIA’s Iran coup", "channel": "BBC World Service" },
+  { "time": "06:30 AM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "06:36 AM", "title": "The Newsroom – Global events as they happen", "channel": "BBC World Service" },
+
+  { "time": "07:00 AM", "title": "BBC News Summary – Latest two minute news summary", "channel": "BBC World Service" },
+  { "time": "07:02 AM", "title": "Assignment – Return to Khartoum: War, loss and hope", "channel": "BBC World Service" },
+  { "time": "07:30 AM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "07:36 AM", "title": "Outlook – We never believed our mother was a murderer", "channel": "BBC World Service" },
+
+  { "time": "08:20 AM", "title": "Witness History – Canada’s Truth and Reconciliation Commission", "channel": "BBC World Service" },
+  { "time": "08:30 AM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "08:36 AM", "title": "The Newsroom – Global events as they happen", "channel": "BBC World Service" },
+
+  { "time": "09:00 AM", "title": "BBC News Summary – Latest two minute news summary", "channel": "BBC World Service" },
+  { "time": "09:02 AM", "title": "In the Studio – Mosaic Art: Art in Nairobi's Slums", "channel": "BBC World Service" },
+  { "time": "09:30 AM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "09:36 AM", "title": "Newsday – Live news, business and sport", "channel": "BBC World Service" },
+
+  { "time": "10:30 AM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "10:36 AM", "title": "Newsday – Live news, business and sport", "channel": "BBC World Service" },
+
+  { "time": "11:30 AM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "11:36 AM", "title": "Newsday – Live news, business and sport", "channel": "BBC World Service" },
+
+  { "time": "12:30 PM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "12:36 PM", "title": "People Fixing The World – Saving Chile's urban wetlands", "channel": "BBC World Service" },
+
+  { "time": "01:00 PM", "title": "BBC News Summary – Latest two minute news summary", "channel": "BBC World Service" },
+  { "time": "01:02 PM", "title": "Business Daily – How lucrative licences are shaping the toy industry", "channel": "BBC World Service" },
+  { "time": "01:20 PM", "title": "Witness History – The fossil that revealed the first dinosaur feathers", "channel": "BBC World Service" },
+  { "time": "01:30 PM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "01:36 PM", "title": "The Newsroom – Global events as they happen", "channel": "BBC World Service" },
+
+  { "time": "02:00 PM", "title": "BBC News Summary – Latest two minute news summary", "channel": "BBC World Service" },
+  { "time": "02:02 PM", "title": "Assignment – Return to Khartoum: War, loss and hope", "channel": "BBC World Service" },
+  { "time": "02:30 PM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "02:36 PM", "title": "The Arts Hour – Film-maker Alejandro González Iñárritu", "channel": "BBC World Service" },
+
+  { "time": "03:30 PM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "03:36 PM", "title": "The Newsroom – Global events as they happen", "channel": "BBC World Service" },
+
+  { "time": "04:00 PM", "title": "BBC News Summary – Latest two minute news summary", "channel": "BBC World Service" },
+  { "time": "04:02 PM", "title": "The Global Story", "channel": "BBC World Service" },
+  { "time": "04:30 PM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "04:36 PM", "title": "Outlook – We crossed the Atlantic in two floating cars", "channel": "BBC World Service" },
+
+  { "time": "05:20 PM", "title": "Witness History – The fossil that revealed the first dinosaur feathers", "channel": "BBC World Service" },
+  { "time": "05:30 PM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "05:36 PM", "title": "The Newsroom – Global events as they happen", "channel": "BBC World Service" },
+
+  { "time": "06:00 PM", "title": "BBC News Summary – Latest two minute news summary", "channel": "BBC World Service" },
+  { "time": "06:02 PM", "title": "In the Studio – Mosaic Art: Art in Nairobi's Slums", "channel": "BBC World Service" },
+  { "time": "06:30 PM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "06:36 PM", "title": "Newshour – Interviews, news and analysis of global events", "channel": "BBC World Service" },
+
+  { "time": "07:30 PM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "07:36 PM", "title": "People Fixing The World – Saving Chile's urban wetlands", "channel": "BBC World Service" },
+
+  { "time": "08:00 PM", "title": "BBC News Summary – Latest two minute news summary", "channel": "BBC World Service" },
+  { "time": "08:02 PM", "title": "Business Daily – How lucrative licences are shaping the toy industry", "channel": "BBC World Service" },
+  { "time": "08:20 PM", "title": "World Business Express – Finance, economy and business news", "channel": "BBC World Service" },
+  { "time": "08:30 PM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "08:36 PM", "title": "Outside Source – Analysis and reaction from around the world", "channel": "BBC World Service" },
+
+  { "time": "09:30 PM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "09:36 PM", "title": "Outside Source – Analysis and reaction from around the world", "channel": "BBC World Service" },
+
+  { "time": "10:30 PM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "10:36 PM", "title": "Outlook – We crossed the Atlantic in two floating cars", "channel": "BBC World Service" },
+
+  { "time": "11:20 PM", "title": "Witness History – The fossil that revealed the first dinosaur feathers", "channel": "BBC World Service" },
+  { "time": "11:30 PM", "title": "BBC News – Latest five minute news bulletin", "channel": "BBC World Service" },
+  { "time": "11:36 PM", "title": "The Newsroom – Global events as they happen", "channel": "BBC World Service" },
 
   
   { "time": "12:00 AM", "title": "Midnight News, National and international news from BBC Radio 4", "channel": "BBC Radio 4" },
