@@ -1,61 +1,90 @@
 window.SCHEDULE_DATA = [
-  { "time": "01:00 AM", "title": "BBC Introducing Rock on Radio 1 with Alyx Holcombe: Frozemode Track of the Week", "channel": "BBC Radio 1" },
-  { "time": "02:00 AM", "title": "Radio 1 Anthems – Justin Bieber, Paramore, Peggy Gou and more", "channel": "BBC Radio 1" },
-  { "time": "04:00 AM", "title": "Radio 1 Pop Anthems – Tame Impala, JENNIE, Troye Sivan and more!", "channel": "BBC Radio 1" },
+  { "time": "01:00 AM", "title": "Radio 1 Dance Drum & Bass Mix: T & Sugah", "channel": "BBC Radio 1" },
+  { "time": "01:30 AM", "title": "Radio 1 Dance Drum & Bass Mix: Chilled D&B with KUMARACHI", "channel": "BBC Radio 1" },
+
+  { "time": "02:00 AM", "title": "Radio 1 Anthems: Avicii, Shawn Mendes, The Killers and more", "channel": "BBC Radio 1" },
+
+  { "time": "04:00 AM", "title": "Radio 1 Pop Anthems: Selena Gomez, Dua Lipa, Shawn Mendes and more", "channel": "BBC Radio 1" },
+
   { "time": "05:00 AM", "title": "Radio 1 Early Breakfast with Dean McCullough", "channel": "BBC Radio 1" },
 
-  { "time": "06:58 AM", "title": "Radio 1 Newsbeat – Latest news from the UK and around the world", "channel": "BBC Radio 1" },
-  { "time": "07:00 AM", "title": "Radio 1 Breakfast with Greg James – Pedro Pascal", "channel": "BBC Radio 1" },
-  { "time": "10:30 AM", "title": "Radio 1 Newsbeat – Latest news from the UK and around the world", "channel": "BBC Radio 1" },
-  { "time": "10:33 AM", "title": "Rickie, Melvin and Charlie – Mess with Melvin", "channel": "BBC Radio 1" },
+  { "time": "06:58 AM", "title": "Radio 1 Newsbeat", "channel": "BBC Radio 1" },
 
-  { "time": "12:45 PM", "title": "Newsbeat – Latest news from the UK and around the world", "channel": "BBC Radio 1" },
-  { "time": "01:00 PM", "title": "Matt and Mollie – Matt v Mollie", "channel": "BBC Radio 1" },
-  { "time": "03:30 PM", "title": "Radio 1 Newsbeat – Latest news from the UK and around the world", "channel": "BBC Radio 1" },
-  { "time": "03:33 PM", "title": "Going Home with Vick, Katie and Jamie on Radio 1 – Complete the Year Quiz", "channel": "BBC Radio 1" },
-  { "time": "05:45 PM", "title": "Newsbeat – Latest news from the UK and around the world", "channel": "BBC Radio 1" },
+  { "time": "07:00 AM", "title": "Radio 1 Breakfast with Greg James", "channel": "BBC Radio 1" },
 
-  { "time": "06:00 PM", "title": "Radio 1's New Music Show with Jack Saunders – Overmono and Turnstile", "channel": "BBC Radio 1" },
-  { "time": "07:30 PM", "title": "Radio 1's Live Lounge Late – Amazing Live Lounge performances", "channel": "BBC Radio 1" },
-  { "time": "08:00 PM", "title": "Radio 1's Future Artists with Sian Eleri – Future Flex from oskar med k", "channel": "BBC Radio 1" },
-  { "time": "10:00 PM", "title": "Radio 1's Power Down Playlist with Sian Eleri – Airplane Mode", "channel": "BBC Radio 1" },
-  { "time": "11:00 PM", "title": "Martha – Ams in the guest mix and Martha's deep frequencies mix", "channel": "BBC Radio 1" },
-  
+  { "time": "10:30 AM", "title": "Radio 1 Newsbeat", "channel": "BBC Radio 1" },
+
+  { "time": "10:33 AM", "title": "Rickie, Melvin and Charlie: Ask Rickie, Melvin and Charlie", "channel": "BBC Radio 1" },
+
+  { "time": "12:45 PM", "title": "Newsbeat", "channel": "BBC Radio 1" },
+
+  { "time": "01:00 PM", "title": "Matt and Mollie: Mol’s Teaser", "channel": "BBC Radio 1" },
+
+  { "time": "03:30 PM", "title": "Radio 1 Newsbeat", "channel": "BBC Radio 1" },
+
+  { "time": "03:33 PM", "title": "Going Home with Vick, Katie and Jamie on Radio 1: Time for a midweek movie game!", "channel": "BBC Radio 1" },
+
+  { "time": "05:45 PM", "title": "Newsbeat", "channel": "BBC Radio 1" },
+
+  { "time": "06:00 PM", "title": "Radio 1's New Music Show with Jack Saunders: Tove Lo Hottest Record", "channel": "BBC Radio 1" },
+
+  { "time": "08:00 PM", "title": "Radio 1's Future Pop with Jodie Bryant", "channel": "BBC Radio 1" },
+
+  { "time": "10:00 PM", "title": "Radio 1's Power Down Playlist with Sian Eleri: Carefree Sounds", "channel": "BBC Radio 1" },
+
+  { "time": "11:00 PM", "title": "Benji B: Joe Kay in the mix", "channel": "BBC Radio 1" },
  
   
-  { "time": "12:00 AM", "title": "OJ Borg – Tuesday means OJ is back", "channel": "BBC Radio 2" },
-  { "time": "02:30 AM", "title": "One Hit Wonders with OJ Borg – '73 & '74", "channel": "BBC Radio 2" },
-  { "time": "03:00 AM", "title": "Dance Sounds of the 90s with Vernon Kay – A Day In Ibiza", "channel": "BBC Radio 2" },
-  { "time": "04:00 AM", "title": "Owain Wyn Evans – Early Breakfast with Airdrum Anthems and Step Back in Time", "channel": "BBC Radio 2" },
+ 
+  { "time": "03:00 AM", "title": "Sounds of the 90s with Fearne Cotton: 90s Gig Greats Mixtape", "channel": "BBC Radio 2" },
 
-  { "time": "06:30 AM", "title": "The Radio 2 Breakfast Show with Gary Davies – Antigoni Eurovision Interview", "channel": "BBC Radio 2" },
-  { "time": "09:30 AM", "title": "Vernon Kay – Ten To The Top", "channel": "BBC Radio 2" },
+  { "time": "04:00 AM", "title": "Owain Wyn Evans: Have you tried...", "channel": "BBC Radio 2" },
 
-  { "time": "12:00 PM", "title": "Jeremy Vine – News headlines and guest discussions", "channel": "BBC Radio 2" },
-  { "time": "02:00 PM", "title": "Trevor Nelson – DJ Spoony sits in", "channel": "BBC Radio 2" },
-  { "time": "04:00 PM", "title": "Sara Cox – Ellie Taylor sits in", "channel": "BBC Radio 2" },
+  { "time": "06:30 AM", "title": "The Radio 2 Breakfast Show with Gary Davies", "channel": "BBC Radio 2" },
 
-  { "time": "07:30 PM", "title": "Sara Cox's Half Wower – Ellie Taylor sits in", "channel": "BBC Radio 2" },
-  { "time": "08:00 PM", "title": "Radio 2 Loves Eurovision! – Eurovision 2026 Semi-Final 1", "channel": "BBC Radio 2" },
-  { "time": "10:30 PM", "title": "OJ Borg – Extended show after Eurovision semi-final", "channel": "BBC Radio 2" },
-  
+  { "time": "09:30 AM", "title": "Vernon Kay: Good News Wednesday", "channel": "BBC Radio 2" },
+
+  { "time": "12:00 PM", "title": "Jeremy Vine", "channel": "BBC Radio 2" },
+
+  { "time": "02:00 PM", "title": "Trevor Nelson: DJ Spoony sits in", "channel": "BBC Radio 2" },
+
+  { "time": "04:00 PM", "title": "Sara Cox: Teatime", "channel": "BBC Radio 2" },
+
+  { "time": "06:30 PM", "title": "Sara Cox's Half Wower: Wednesday's Half Wower", "channel": "BBC Radio 2" },
+
+  { "time": "07:00 PM", "title": "Jo Whiley's Shiny Happy Playlist: Upbeat tunes to lift your mood", "channel": "BBC Radio 2" },
+
+  { "time": "07:30 PM", "title": "Jo Whiley: Sofa Session: Jessie Ware", "channel": "BBC Radio 2" },
+
+  { "time": "09:00 PM", "title": "The Folk Show with Mark Radcliffe", "channel": "BBC Radio 2" },
+
+  { "time": "10:00 PM", "title": "The Good Groove with DJ Spoony: Melvin Odoom sits in", "channel": "BBC Radio 2" },
  
 
-  { "time": "12:30 AM", "title": "Through the Night – German National Youth Orchestra from Cologne", "channel": "BBC Radio 3" },
-
-  { "time": "06:30 AM", "title": "Breakfast – Start the day on the right note with classical music", "channel": "BBC Radio 3" },
-  { "time": "09:30 AM", "title": "Essential Classics – The very best of classical music", "channel": "BBC Radio 3" },
-
-  { "time": "01:00 PM", "title": "Classical Live – Brahms from the BBC National Orchestra of Wales", "channel": "BBC Radio 3" },
-  { "time": "04:00 PM", "title": "Composer of the Week – Florence Price (1887-1953), New World", "channel": "BBC Radio 3" },
-  { "time": "05:00 PM", "title": "In Tune – Papagena sing live from their album Tomorrow is Today", "channel": "BBC Radio 3" },
-
-  { "time": "07:00 PM", "title": "Classical Mixtape – Classical music to inspire you", "channel": "BBC Radio 3" },
-  { "time": "07:30 PM", "title": "Radio 3 in Concert – Tchaikovsky's Rococo Variations", "channel": "BBC Radio 3" },
-  { "time": "09:45 PM", "title": "The Essay – David Munrow: The Pied Piper, Popularising Early Music", "channel": "BBC Radio 3" },
-  { "time": "10:00 PM", "title": "Night Tracks – Immersive music for late night listening", "channel": "BBC Radio 3" },
-  { "time": "11:30 PM", "title": "'Round Midnight – Brand new from Audrey Powne", "channel": "BBC Radio 3" },
  
+  { "time": "12:30 AM", "title": "Through the Night: Beethoven's Violin Concerto and 'Eroica' Symphony", "channel": "BBC Radio 3" },
+
+  { "time": "06:30 AM", "title": "Breakfast: Rise and shine with classical music", "channel": "BBC Radio 3" },
+
+  { "time": "09:30 AM", "title": "Essential Classics: Relax into the day with classical", "channel": "BBC Radio 3" },
+
+  { "time": "01:00 PM", "title": "Classical Live: The BBC Philharmonic Orchestra Live from Salford Quays", "channel": "BBC Radio 3" },
+
+  { "time": "03:00 PM", "title": "Choral Evensong: Bristol Cathedral", "channel": "BBC Radio 3" },
+
+  { "time": "04:00 PM", "title": "Composer of the Week: Florence Price (1887-1953), Dean of the Midwest", "channel": "BBC Radio 3" },
+
+  { "time": "05:00 PM", "title": "In Tune: Petroc talks to Sir John Tomlinson", "channel": "BBC Radio 3" },
+
+  { "time": "07:00 PM", "title": "Classical Mixtape: The perfect classical half hour", "channel": "BBC Radio 3" },
+
+  { "time": "07:30 PM", "title": "Radio 3 in Concert: Strauss's Death and Transfiguration", "channel": "BBC Radio 3" },
+
+  { "time": "09:45 PM", "title": "The Essay: David Munrow - The Pied Piper, 3. The amorous flute", "channel": "BBC Radio 3" },
+
+  { "time": "10:00 PM", "title": "Night Tracks: Dissolve into a nocturnal soundworld", "channel": "BBC Radio 3" },
+
+  { "time": "11:30 PM", "title": "'Round Midnight: Soothing sounds from Eleanor Dunsdon & Gregor Black", "channel": "BBC Radio 3" },
 
 
  
@@ -158,50 +187,86 @@ window.SCHEDULE_DATA = [
   { "time": "11:32 PM", "title": "World Business Report", "channel": "BBC World Service" },
   
 
-  { "time": "12:00 AM", "title": "Midnight News – National and international news", "channel": "BBC Radio 4" },
-  { "time": "12:30 AM", "title": "Weimar: Life on the Edge of Catastrophe – 1945 and 1914: Germany in a Nutshell", "channel": "BBC Radio 4" },
-  { "time": "12:48 AM", "title": "Shipping Forecast – Latest weather reports for UK shipping", "channel": "BBC Radio 4" },
-  { "time": "01:00 AM", "title": "Selection of BBC World Service Programmes", "channel": "BBC Radio 4" },
+   
+  { "time": "12:00 AM", "title": "Midnight News – National and international news from BBC Radio 4", "channel": "BBC Radio 4" },
 
-  { "time": "05:00 AM", "title": "News Summary – National and international news", "channel": "BBC Radio 4" },
-  { "time": "05:04 AM", "title": "Betting on Disaster – The rise of prediction markets", "channel": "BBC Radio 4" },
-  { "time": "05:34 AM", "title": "Shipping Forecast – Latest weather reports for UK shipping", "channel": "BBC Radio 4" },
-  { "time": "05:43 AM", "title": "Prayer for the Day – The devotion of Florence Nightingale", "channel": "BBC Radio 4" },
-  { "time": "05:45 AM", "title": "Farming Today – Farming in Wales after Senedd elections", "channel": "BBC Radio 4" },
+  { "time": "12:30 AM", "title": "Weimar: Life on the Edge of Catastrophe by Katja Hoyer – 1919-1921: A New Heart", "channel": "BBC Radio 4" },
 
-  { "time": "06:00 AM", "title": "Today – News and current affairs", "channel": "BBC Radio 4" },
-  { "time": "09:00 AM", "title": "The Gift – Series 3, Twins Part 2", "channel": "BBC Radio 4" },
-  { "time": "09:30 AM", "title": "All in the Mind – Overcoming OCD", "channel": "BBC Radio 4" },
-  { "time": "10:00 AM", "title": "Woman's Hour – Topical conversations and stories", "channel": "BBC Radio 4" },
-  { "time": "11:00 AM", "title": "Screenshot – Amélie", "channel": "BBC Radio 4" },
-  { "time": "11:45 AM", "title": "Weimar: Life on the Edge of Catastrophe – 1919-1921: A New Heart", "channel": "BBC Radio 4" },
+  { "time": "12:48 AM", "title": "Shipping Forecast – The latest weather reports and forecasts for UK shipping", "channel": "BBC Radio 4" },
 
-  { "time": "12:00 PM", "title": "News Summary – Latest national and international news", "channel": "BBC Radio 4" },
-  { "time": "12:04 PM", "title": "You and Yours – Insurance company service discussion", "channel": "BBC Radio 4" },
-  { "time": "12:57 PM", "title": "Weather – Latest weather forecast", "channel": "BBC Radio 4" },
-  { "time": "01:00 PM", "title": "World at One – News, analysis and comment", "channel": "BBC Radio 4" },
-  { "time": "01:45 PM", "title": "Understand – Rinsed: Water Works", "channel": "BBC Radio 4" },
+  { "time": "01:00 AM", "title": "Selection of BBC World Service Programmes – BBC Radio 4 joins the BBC World Service", "channel": "BBC Radio 4" },
 
-  { "time": "02:00 PM", "title": "The Archers", "channel": "BBC Radio 4" },
-  { "time": "02:15 PM", "title": "Takeover – Series 1 Episode 4", "channel": "BBC Radio 4" },
-  { "time": "03:00 PM", "title": "History's Heroes – The Sisters Who Took On A Dictator", "channel": "BBC Radio 4" },
-  { "time": "03:30 PM", "title": "Beyond Belief – One foot in the graveyard", "channel": "BBC Radio 4" },
-  { "time": "04:00 PM", "title": "Artworks – A Century in a Click: 100 Years of the Photobooth", "channel": "BBC Radio 4" },
-  { "time": "04:30 PM", "title": "What's Up Docs? – Are we getting enough calcium?", "channel": "BBC Radio 4" },
+  { "time": "05:00 AM", "title": "News Summary – National and international news from BBC Radio 4", "channel": "BBC Radio 4" },
+
+  { "time": "05:04 AM", "title": "BBC Inside Science – Should Pluto become a planet again?", "channel": "BBC Radio 4" },
+
+  { "time": "05:34 AM", "title": "Shipping Forecast – The latest weather reports and forecasts for UK shipping", "channel": "BBC Radio 4" },
+
+  { "time": "05:43 AM", "title": "Prayer for the Day – Integrity during hard times", "channel": "BBC Radio 4" },
+
+  { "time": "05:45 AM", "title": "Farming Today – Pig supply, Northumberland National Park and farm profitability", "channel": "BBC Radio 4" },
+
+  { "time": "06:00 AM", "title": "Today – News and current affairs including Sports Desk and Weather", "channel": "BBC Radio 4" },
+
+  { "time": "09:00 AM", "title": "Life Changing – The courage to ask for help", "channel": "BBC Radio 4" },
+
+  { "time": "09:30 AM", "title": "Intrigue – To Catch a King, 1. Kardo", "channel": "BBC Radio 4" },
+
+  { "time": "10:00 AM", "title": "Woman's Hour – Parental domestic homicide and author Eleanor Anstruther", "channel": "BBC Radio 4" },
+
+  { "time": "11:00 AM", "title": "File on 4 Investigates – Locked and Downloaded: The rise in 3D printed guns", "channel": "BBC Radio 4" },
+
+  { "time": "11:40 AM", "title": "This Week in History – May 11th to May 17th", "channel": "BBC Radio 4" },
+
+  { "time": "11:45 AM", "title": "Weimar: Life on the Edge of Catastrophe by Katja Hoyer – 1922-1924: A Slow Creep", "channel": "BBC Radio 4" },
+
+  { "time": "12:00 PM", "title": "News Summary – The latest national and international news", "channel": "BBC Radio 4" },
+
+  { "time": "12:04 PM", "title": "You and Yours – News and discussion of consumer affairs", "channel": "BBC Radio 4" },
+
+  { "time": "12:57 PM", "title": "Weather – The latest weather forecast", "channel": "BBC Radio 4" },
+
+  { "time": "01:00 PM", "title": "World at One – News, analysis and comment from BBC Radio 4", "channel": "BBC Radio 4" },
+
+  { "time": "01:45 PM", "title": "Understand – Rinsed, 3. Turd Nerds", "channel": "BBC Radio 4" },
+
+  { "time": "02:00 PM", "title": "The Archers – Ruth tries to stay positive", "channel": "BBC Radio 4" },
+
+  { "time": "02:15 PM", "title": "Drama on 4 – Bettaney", "channel": "BBC Radio 4" },
+
+  { "time": "03:00 PM", "title": "Money Box – The latest news from the world of personal finance", "channel": "BBC Radio 4" },
+
+  { "time": "03:30 PM", "title": "Illuminated – A Lemur’s Song", "channel": "BBC Radio 4" },
+
+  { "time": "04:00 PM", "title": "When It Hits the Fan – Who's in the news for all the wrong reasons?", "channel": "BBC Radio 4" },
+
+  { "time": "04:15 PM", "title": "The Media Show – The programme about a revolution in media", "channel": "BBC Radio 4" },
+
   { "time": "05:00 PM", "title": "PM – Full coverage of the day's news", "channel": "BBC Radio 4" },
 
-  { "time": "06:00 PM", "title": "Six O'Clock News – National and international news", "channel": "BBC Radio 4" },
-  { "time": "06:30 PM", "title": "Nature Table – Climate Change", "channel": "BBC Radio 4" },
-  { "time": "07:00 PM", "title": "The Archers", "channel": "BBC Radio 4" },
-  { "time": "07:15 PM", "title": "Front Row – Arts, literature, film and music magazine", "channel": "BBC Radio 4" },
+  { "time": "06:00 PM", "title": "Six O'Clock News – National and international news from BBC Radio 4", "channel": "BBC Radio 4" },
 
-  { "time": "08:00 PM", "title": "File on 4 Investigates – The rise in 3D printed guns", "channel": "BBC Radio 4" },
-  { "time": "08:40 PM", "title": "In Touch – News and information for blind and partially sighted people", "channel": "BBC Radio 4" },
-  { "time": "09:00 PM", "title": "Crossing Continents – Return to Khartoum: War, loss and hope", "channel": "BBC Radio 4" },
-  { "time": "09:30 PM", "title": "Great Lives – Tony Garnett picked by Harry Bradbeer", "channel": "BBC Radio 4" },
+  { "time": "06:30 PM", "title": "Stand-Up Specials – John Tothill Forgives Your Sins", "channel": "BBC Radio 4" },
 
-  { "time": "10:00 PM", "title": "The World Tonight – In depth reporting and analysis", "channel": "BBC Radio 4" },
-  { "time": "10:45 PM", "title": "Hunger and Thirst by Claire Fuller – The Kitchen Table", "channel": "BBC Radio 4" },
-  { "time": "11:00 PM", "title": "Uncanny – Cold Cases: The Haunting of HMS Asp", "channel": "BBC Radio 4" },
-  { "time": "11:30 PM", "title": "Soul Music – Songs My Mother Taught Me", "channel": "BBC Radio 4" }
+  { "time": "07:00 PM", "title": "The Archers – Adam is seeking support", "channel": "BBC Radio 4" },
+
+  { "time": "07:15 PM", "title": "Front Row – Mark Cousins on The Story of Documentary Film", "channel": "BBC Radio 4" },
+
+  { "time": "08:00 PM", "title": "AntiSocial – Michael, the movie", "channel": "BBC Radio 4" },
+
+  { "time": "08:45 PM", "title": "Human Intelligence – Collectors: Samuel Johnson", "channel": "BBC Radio 4" },
+
+  { "time": "09:00 PM", "title": "The Gift – Series 3, 2. Twins, Part 2", "channel": "BBC Radio 4" },
+
+  { "time": "09:30 PM", "title": "All in the Mind – Overcoming OCD", "channel": "BBC Radio 4" },
+
+  { "time": "10:00 PM", "title": "The World Tonight – In depth reporting and intelligent analysis", "channel": "BBC Radio 4" },
+
+  { "time": "10:45 PM", "title": "Hunger and Thirst by Claire Fuller – The Charcoal Sketch", "channel": "BBC Radio 4" },
+
+  { "time": "11:00 PM", "title": "Stand-Up Specials – Sarah Keyworth: Are You a Boy or a Girl?", "channel": "BBC Radio 4" },
+
+  { "time": "11:15 PM", "title": "The Skewer – Jon Holmes brings you the week's biggest stories", "channel": "BBC Radio 4" },
+
+  { "time": "11:30 PM", "title": "Today in Parliament – News, views and features from Parliament", "channel": "BBC Radio 4" }
 ];
