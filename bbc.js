@@ -214,4 +214,5 @@ window.SCHEDULE_DATA = [
   { "time": "10:45 PM", "title": "John of John by Douglas Stuart - Episode 9: A Naoi", "channel": "BBC Radio 4" },
 
   { "time": "11:00 PM", "title": "Radical with Amol Rajan - Should Businesses Have a Purpose Beyond Profit?", "channel": "BBC Radio 4" },
-  { "time": "11:30 PM", "title": "Today in Parliament - News, Views and Features from Westminster", "channel": "BBC Radio 4" },
+{ "time": "11:30 PM", "title": "Today in Parliament - News, Views and Features from Westminster", "channel": "BBC Radio 4" }
+];
