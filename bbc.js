@@ -52,7 +52,7 @@ window.SCHEDULE_DATA = [
   { "time": "07:30 PM", "title": "Radio 3 in Concert", "channel": "BBC Radio 3" },
   { "time": "09:45 PM", "title": "Between the Ears", "channel": "BBC Radio 3" },
   { "time": "10:00 PM", "title": "Night Tracks", "channel": "BBC Radio 3" },
-  { "time": "11:30 PM", "title": "'Round Midnight", "channel": "BBC Radio 3" }
+  { "time": "11:30 PM", "title": "'Round Midnight", "channel": "BBC Radio 3" },
 
   
 
