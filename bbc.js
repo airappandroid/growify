@@ -1,4 +1,4 @@
-window.SCHEDULE_DATA = [
+ window.SCHEDULE_DATA = [
   { "time": "1:00 AM", "title": "1Xtra's R&B Show with Chuckie - Blxst in conversation", "channel": "BBC Radio 1" },
   { "time": "2:30 AM", "title": "1Xtra's R&B Slow Jamz Mix with Chuckie - Janet Jackson, Summer Walker, Muni Long and more", "channel": "BBC Radio 1" },
   { "time": "3:00 AM", "title": "Radio 1's Chill Mix - Sammy Virji Chill Mix", "channel": "BBC Radio 1" },
