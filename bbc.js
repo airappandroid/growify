@@ -1,27 +1,17 @@
 window.SCHEDULE_DATA = [
   {
     "time": "01:00 AM",
-    "title": "1Xtra's R&B Show with Chuckie - Baby Rose in conversation",
+    "title": "BBC Introducing Rock on Radio 1 with Alyx Holcombe: HENKA Track of the Week",
     "channel": "BBC Radio 1"
   },
   {
-    "time": "02:30 AM",
-    "title": "1Xtra's R&B Slow Jamz Mix with Chuckie",
-    "channel": "BBC Radio 1"
-  },
-  {
-    "time": "03:00 AM",
-    "title": "Radio 1's Chill Mix - DJ Seinfeld",
-    "channel": "BBC Radio 1"
-  },
-  {
-    "time": "03:30 AM",
-    "title": "Radio 1's Chill Mix - Ezra Collective Chill Mix",
+    "time": "02:00 AM",
+    "title": "Radio 1 Anthems - Haim, Sam Smith, Usher and more",
     "channel": "BBC Radio 1"
   },
   {
     "time": "04:00 AM",
-    "title": "Radio 1's Workout Anthems",
+    "title": "Radio 1 Pop Anthems - Sugababes, Girls Aloud and more!",
     "channel": "BBC Radio 1"
   },
   {
@@ -36,7 +26,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "07:00 AM",
-    "title": "Radio 1 Breakfast with Greg James - The Pitbull Debrief",
+    "title": "Radio 1 Breakfast with Greg James - Is It Just Us?",
     "channel": "BBC Radio 1"
   },
   {
@@ -46,7 +36,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "10:33 AM",
-    "title": "Rickie, Melvin and Charlie - Rickie, Melvin OR Charlie?",
+    "title": "Rickie, Melvin and Charlie",
     "channel": "BBC Radio 1"
   },
   {
@@ -56,7 +46,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "01:00 PM",
-    "title": "Matt and Mollie - Don't Match Matt",
+    "title": "Matt and Mollie - Matt v Mollie",
     "channel": "BBC Radio 1"
   },
   {
@@ -66,7 +56,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "03:33 PM",
-    "title": "Going Home with Vick, Katie and Jamie on Radio 1 - Chaos on your way home!",
+    "title": "Going Home with Vick, Katie and Jamie on Radio 1 - Complete the Year Quiz",
     "channel": "BBC Radio 1"
   },
   {
@@ -81,17 +71,17 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "08:00 PM",
-    "title": "Radio 1's Future Artists with Sian Eleri - Live music from Alewya",
+    "title": "Radio 1's Future Artists with Sian Eleri - Future Flex from Jigitz",
     "channel": "BBC Radio 1"
   },
   {
     "time": "10:00 PM",
-    "title": "Radio 1's Power Down Playlist with Sian Eleri - with CassKidd: Comfort Blanket",
+    "title": "Radio 1's Power Down Playlist with Sian Eleri (with CassKidd: Airplane Mode)",
     "channel": "BBC Radio 1"
   },
   {
     "time": "11:00 PM",
-    "title": "Radio 1's Rock Show with Daniel P Carter - Sofia Isella in session",
+    "title": "Martha - K-LONE guest mix & 10 years of 1985 Music",
     "channel": "BBC Radio 1"
   },
 
@@ -99,27 +89,32 @@ window.SCHEDULE_DATA = [
 
   {
     "time": "12:00 AM",
-    "title": "Richie Anderson - Let’s start the week right!",
+    "title": "OJ Borg - Tuesday means OJ is back",
+    "channel": "BBC Radio 2"
+  },
+  {
+    "time": "02:30 AM",
+    "title": "One Hit Wonders with OJ Borg - Summer holidays - 90s",
     "channel": "BBC Radio 2"
   },
   {
     "time": "03:00 AM",
-    "title": "Alternative Sounds of the 90s with Dermot O'Leary - Dermot's Glastonbury/Festival Sunrise Mix",
+    "title": "Dance Sounds of the 90s with Vernon Kay - Pop Divas Go Dance!",
     "channel": "BBC Radio 2"
   },
   {
     "time": "04:00 AM",
-    "title": "Owain Wyn Evans - Never Growing Up",
+    "title": "Owain Wyn Evans - I'm so proud of you!",
     "channel": "BBC Radio 2"
   },
   {
     "time": "06:30 AM",
-    "title": "The Sara Cox Breakfast Show - Start your day with Sara Cox!",
+    "title": "The Sara Cox Breakfast Show - Sally Phillips pops in for a chat!",
     "channel": "BBC Radio 2"
   },
   {
     "time": "09:30 AM",
-    "title": "Vernon Kay - Sue Johnston chooses her Tracks Of My Years",
+    "title": "Vernon Kay - Who's up for Ten To The Top?",
     "channel": "BBC Radio 2"
   },
   {
@@ -129,12 +124,12 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "02:00 PM",
-    "title": "Trevor Nelson - DJ Spoony sits in: A new 5 Seconds",
+    "title": "Trevor Nelson - DJ Spoony sits in",
     "channel": "BBC Radio 2"
   },
   {
     "time": "04:00 PM",
-    "title": "Radio 2 Drivetime - with Ellie Taylor",
+    "title": "Radio 2 Drivetime with Ellie Taylor",
     "channel": "BBC Radio 2"
   },
   {
@@ -144,17 +139,17 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "07:30 PM",
-    "title": "Jo Whiley - Suki Waterhouse pops by for a chat!",
+    "title": "Jo Whiley - James King reviews all the latest film releases!",
     "channel": "BBC Radio 2"
   },
   {
     "time": "09:00 PM",
-    "title": "The Blues Show with Cerys Matthews - Shaun Keaveny sits in",
+    "title": "The Jazz Show with Jamie Cullum - Tara Clerkin Trio",
     "channel": "BBC Radio 2"
   },
   {
     "time": "10:00 PM",
-    "title": "The Good Groove with DJ Spoony - Melvin Odoom sits in: Dr Beat's locum is in the house!",
+    "title": "The Good Groove with DJ Spoony - Melvin Odoom sits in: Adrian Lester CBE is the Rewind Selector!",
     "channel": "BBC Radio 2"
   },
   
@@ -163,63 +158,62 @@ window.SCHEDULE_DATA = [
 
   {
     "time": "12:30 AM",
-    "title": "Through the Night - Louise Farrenc, Maria Herz and Ina Boyle",
+    "title": "Through the Night - Francesco Piemontesi plays piano sonatas by Schubert and Liszt",
     "channel": "BBC Radio 3"
   },
   {
     "time": "06:30 AM",
-    "title": "Radio 3 Breakfast - Start your day with classical music",
+    "title": "Radio 3 Breakfast - Brighten your day with classical music",
     "channel": "BBC Radio 3"
   },
   {
     "time": "09:30 AM",
-    "title": "Essential Classics - A feast of great music",
+    "title": "Essential Classics - Your perfect classical playlist",
     "channel": "BBC Radio 3"
   },
   {
     "time": "01:00 PM",
-    "title": "Classical Live - The Gesualdo Six live at Wigmore Hall",
+    "title": "Classical Live - The Royal Philharmonic Orchestra perform Mahler's First Symphony",
     "channel": "BBC Radio 3"
   },
   {
     "time": "04:00 PM",
-    "title": "Composer of the Week - Samuel Barber (1910-1981), Adagio for Strings",
+    "title": "Composer of the Week - Samuel Barber (1910-1981), Barber joins the Army",
     "channel": "BBC Radio 3"
   },
   {
     "time": "05:00 PM",
-    "title": "In Tune - Sean Shibe & Karim Sulayman in session",
+    "title": "In Tune - Julian Joseph in session",
     "channel": "BBC Radio 3"
   },
   {
     "time": "07:00 PM",
-    "title": "Classical Mixtape - Proms special: classical music and movies",
+    "title": "Classical Mixtape - Proms special: orchestral favourites",
     "channel": "BBC Radio 3"
   },
   {
     "time": "07:30 PM",
-    "title": "Radio 3 in Concert - Mahler's 5th Symphony",
+    "title": "Radio 3 in Concert - The dazzling cosmos of Scriabin’s The Divine Poem",
     "channel": "BBC Radio 3"
   },
   {
     "time": "09:45 PM",
-    "title": "The Essay - The Dawn of Music, A Secret Chord",
+    "title": "The Essay - The Dawn of Music, Whispers of Wood",
     "channel": "BBC Radio 3"
   },
   {
     "time": "10:00 PM",
-    "title": "Night Tracks - Immersive music for after-hours",
+    "title": "Night Tracks - Reflective music for the day’s end",
     "channel": "BBC Radio 3"
   },
   {
     "time": "11:30 PM",
-    "title": "'Round Midnight - China Moses’s Flowers",
+    "title": "'Round Midnight - New from Chassol",
     "channel": "BBC Radio 3"
   },
- 
 
 
-
+  
   {
     "time": "12:00 AM",
     "title": "BBC News - The latest five minute news bulletin from BBC World Service",
@@ -227,7 +221,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "12:06 AM",
-    "title": "The History Hour - Buildings of power and the Dada art movement",
+    "title": "The Arts Hour - Madonna on her album Confessions II and her relationship with dance",
     "channel": "BBC World Service"
   },
   {
@@ -247,7 +241,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "01:32 AM",
-    "title": "Discovery - Unstoppable: Tu Youyou (Pioneering female scientists)",
+    "title": "The Global Story - The air conditioning culture wars and record-breaking temperatures in France",
     "channel": "BBC World Service"
   },
   {
@@ -267,7 +261,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "02:32 AM",
-    "title": "CrowdScience - What are these strange rocks on a beach in Indonesia?",
+    "title": "Assignment - Euthanasia in Spain: Whose life is it anyway and the death of Noelia Castillo",
     "channel": "BBC World Service"
   },
   {
@@ -277,17 +271,12 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "03:06 AM",
-    "title": "The Inquiry - Is Kenya serious about ending femicide?",
+    "title": "Outlook - The prisoner who was forced to celebrate a World Cup victory: Miriam Lewin in 1978",
     "channel": "BBC World Service"
   },
   {
-    "time": "03:30 AM",
-    "title": "BBC News Summary - The latest two minute news summary from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "03:32 AM",
-    "title": "The Fifth Floor - Taiwan and Malaysia's luxury fruit growers and their relationship with China",
+    "time": "03:50 AM",
+    "title": "Witness History - The Kiss of Life photo that earned a Pulitzer Prize for an American lineman",
     "channel": "BBC World Service"
   },
   {
@@ -307,7 +296,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "04:32 AM",
-    "title": "The Conversation - Female filmmakers join forces (Festivals in India and Egypt)",
+    "title": "In the Studio - Jordanian director Zain Duraie discussing her debut project",
     "channel": "BBC World Service"
   },
   {
@@ -317,7 +306,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "05:06 AM",
-    "title": "Newsday - At least 27 killed in Bangkok club fire",
+    "title": "Newsday - UAE accuses Iran of a brazen attack on two tankers in the Strait of Hormuz",
     "channel": "BBC World Service"
   },
   {
@@ -327,7 +316,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "06:06 AM",
-    "title": "Newsday - An explosive fire at a Bangkok bar kills over twenty",
+    "title": "Newsday - Live news, business and sport from around the world",
     "channel": "BBC World Service"
   },
   {
@@ -337,7 +326,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "07:06 AM",
-    "title": "Newsday - Thai authorities investigate fire at the club",
+    "title": "Newsday - Live news, business and sport from around the world",
     "channel": "BBC World Service"
   },
   {
@@ -347,7 +336,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "08:06 AM",
-    "title": "The Interview - Patrick Tiernan: War risk, AI and drone warfare is being rewritten",
+    "title": "People Fixing The World - How to reuse and repair: finding new ways to keep old things in use",
     "channel": "BBC World Service"
   },
   {
@@ -357,12 +346,12 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "08:32 AM",
-    "title": "Business Daily - The BRIC architect's warning for the West with Jim O'Neill",
+    "title": "Business Daily - Follow the Money: The beef with US beef and rising prices over the past year",
     "channel": "BBC World Service"
   },
   {
     "time": "08:50 AM",
-    "title": "Witness History - The Kiss of Life photo that earned a Pulitzer Prize",
+    "title": "Witness History - Creating Canada’s largest territory Nunavut to reflect Inuit land rights",
     "channel": "BBC World Service"
   },
   {
@@ -382,7 +371,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "09:32 AM",
-    "title": "CrowdScience - What are these strange rocks on a beach in Indonesia?",
+    "title": "Assignment - Euthanasia in Spain: Whose life is it anyway and the death of Noelia Castillo",
     "channel": "BBC World Service"
   },
   {
@@ -392,7 +381,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "10:06 AM",
-    "title": "The History Hour - Buildings of power and the Dada art movement",
+    "title": "The Arts Hour - Madonna on her album Confessions II and her relationship with dance",
     "channel": "BBC World Service"
   },
   {
@@ -412,7 +401,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "11:32 AM",
-    "title": "The Global Story - Daily news analysis and deep dive stories",
+    "title": "The Global Story - In-depth analysis of major global events",
     "channel": "BBC World Service"
   },
   {
@@ -422,12 +411,12 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "12:06 PM",
-    "title": "Outlook - The prisoner Miriam Lewin forced to celebrate an Argentina World Cup victory",
+    "title": "Outlook - True stories of ordinary people and the extraordinary events shaping their lives",
     "channel": "BBC World Service"
   },
   {
     "time": "12:50 PM",
-    "title": "Witness History - The Kiss of Life photo that earned a Pulitzer Prize",
+    "title": "Witness History - Creating Canada’s largest territory Nunavut to reflect Inuit land rights",
     "channel": "BBC World Service"
   },
   {
@@ -447,7 +436,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "01:32 PM",
-    "title": "CrowdScience - What are these strange rocks on a beach in Indonesia?",
+    "title": "Discovery - Unstoppable: Jocelyn Bell Burnell and inspiring tales of pioneering female scientists",
     "channel": "BBC World Service"
   },
   {
@@ -467,7 +456,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "03:06 PM",
-    "title": "The Interview - Patrick Tiernan: War risk, AI and drone warfare is being rewritten",
+    "title": "People Fixing The World - How to reuse and repair: finding new ways to keep old things in use",
     "channel": "BBC World Service"
   },
   {
@@ -477,12 +466,12 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "03:32 PM",
-    "title": "Business Daily - The BRIC architect's warning for the West with Jim O'Neill",
+    "title": "Business Daily - Follow the Money: The beef with US beef and rising prices over the past year",
     "channel": "BBC World Service"
   },
   {
     "time": "03:50 PM",
-    "title": "World Business Express - Finance, economy and business news from BBC journalists",
+    "title": "World Business Express - Ethanol fuels row in India as motorists fume over mandatory 20% ethanol",
     "channel": "BBC World Service"
   },
   {
@@ -512,12 +501,12 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "06:06 PM",
-    "title": "Outlook - The prisoner Miriam Lewin forced to celebrate an Argentina World Cup victory",
+    "title": "Outlook - True stories of ordinary people and the extraordinary events shaping their lives",
     "channel": "BBC World Service"
   },
   {
     "time": "06:50 PM",
-    "title": "What in the World - Helping you work out what in the world is going on",
+    "title": "What in the World - Global analysis and exploring international questions",
     "channel": "BBC World Service"
   },
   {
@@ -537,7 +526,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "07:32 PM",
-    "title": "Sport Today - The story behind today's top sporting news, interviews and reports",
+    "title": "Sport Today - The stories behind today's top sporting news with global interviews",
     "channel": "BBC World Service"
   },
   {
@@ -547,7 +536,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "08:06 PM",
-    "title": "From Our Own Correspondent - Iran: the funeral of Ayatollah Ali Khamenei",
+    "title": "Assignment - Euthanasia in Spain: Whose life is it anyway and the death of Noelia Castillo",
     "channel": "BBC World Service"
   },
   {
@@ -557,7 +546,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "08:32 PM",
-    "title": "Discovery - Unstoppable: Jocelyn Bell Burnell (Pioneering female scientists)",
+    "title": "Tech Life - How tech is transforming the way the world works, learns and plays",
     "channel": "BBC World Service"
   },
   {
@@ -577,7 +566,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "10:06 PM",
-    "title": "The Interview - Patrick Tiernan: War risk, AI and drone warfare is being rewritten",
+    "title": "People Fixing The World - How to reuse and repair: finding new ways to keep old things in use",
     "channel": "BBC World Service"
   },
   {
@@ -587,7 +576,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "10:32 PM",
-    "title": "The Conversation - Female filmmakers join forces (Festivals in India and Egypt)",
+    "title": "In the Studio - Jordanian director Zain Duraie discussing her debut project",
     "channel": "BBC World Service"
   },
   {
@@ -620,13 +609,8 @@ window.SCHEDULE_DATA = [
     "channel": "BBC Radio 4"
   },
   {
-    "time": "12:15 AM",
-    "title": "Inside Health - Could CAR-T therapy transform autoimmune disease?",
-    "channel": "BBC Radio 4"
-  },
-  {
-    "time": "12:45 AM",
-    "title": "Bells on Sunday - The Church of Saints Peter and Paul in Courteenhall",
+    "time": "12:30 AM",
+    "title": "Cash Cow by Alev Scott - Episode 1: Investigation into the global fertility industry",
     "channel": "BBC Radio 4"
   },
   {
@@ -646,7 +630,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "05:04 AM",
-    "title": "Yesterday in Parliament - MPs waiting to question the new prime minister",
+    "title": "Yesterday in Parliament - MPs reflect on Ann Widdecombe's death, reported by Sean Curran",
     "channel": "BBC Radio 4"
   },
   {
@@ -661,42 +645,37 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "05:45 AM",
-    "title": "Farming Today - Support for Scottish pig farmers, English farm policy, milk yields",
-    "channel": "BBC Radio 4"
-  },
-  {
-    "time": "05:57 AM",
-    "title": "Weather - The latest weather reports and forecasts for farmers",
+    "title": "Farming Today - Wildfires on farms and England's environmental farm payments",
     "channel": "BBC Radio 4"
   },
   {
     "time": "06:00 AM",
-    "title": "Today - News and current affairs including Sports Desk and Weather",
+    "title": "Today - News and current affairs, including Sports Desk, Weather and Thought for the Day",
     "channel": "BBC Radio 4"
   },
   {
     "time": "09:00 AM",
-    "title": "Common Ground - Values: How divided are we by different political values?",
+    "title": "Ancient Lives with Mary Beard - Being Greek: The Greengrocer Who Saved Democracy",
     "channel": "BBC Radio 4"
   },
   {
     "time": "09:30 AM",
-    "title": "Politically - Reflections: Series 4, Jeremy Hunt",
+    "title": "Inside Health - Could we eliminate cervical cancer and the success of the HPV vaccine",
     "channel": "BBC Radio 4"
   },
   {
     "time": "10:00 AM",
-    "title": "Woman's Hour - Sarah Hadland, Men Fixated on Violence, Author Jennifer Saint",
+    "title": "Woman's Hour - Sally Phillips, Charlotte Jordan, Cohabiting Couples, and God of War",
     "channel": "BBC Radio 4"
   },
   {
     "time": "11:00 AM",
-    "title": "Church Going, with Giles Fraser - Episode 1: The current state of Christianity",
+    "title": "Screenshot - Hospital Dramas: Television’s long love affair with medical drama",
     "channel": "BBC Radio 4"
   },
   {
     "time": "11:45 AM",
-    "title": "Cash Cow by Alev Scott - Episode 1: The global fertility industry",
+    "title": "Cash Cow by Alev Scott - Episode 2: The history of breast-feeding",
     "channel": "BBC Radio 4"
   },
   {
@@ -706,7 +685,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "12:04 PM",
-    "title": "You and Yours - News and discussion of consumer affairs",
+    "title": "You and Yours - Call You & Yours: What are you donating to charity shops?",
     "channel": "BBC Radio 4"
   },
   {
@@ -721,42 +700,37 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "01:45 PM",
-    "title": "New Storytellers - New Storytellers 2026, Unzipping a Community",
+    "title": "New Storytellers - New Storytellers 2026: Proud, exploring identity after 14 years",
     "channel": "BBC Radio 4"
   },
   {
     "time": "02:00 PM",
-    "title": "The Archers - The Aldridges are left surprised",
+    "title": "The Archers - There’s a reunion for Fallon",
     "channel": "BBC Radio 4"
   },
   {
     "time": "02:15 PM",
-    "title": "Alone - Series 4, Episode 1: Best Upstairs Neighbour Ever",
-    "channel": "BBC Radio 4"
-  },
-  {
-    "time": "02:45 PM",
-    "title": "Opening Lines - Anna Christie: Episode 2 by John Yorke",
+    "title": "Our Friends in the North - Episode 8: 1987, award-winning series re-written for audio",
     "channel": "BBC Radio 4"
   },
   {
     "time": "03:00 PM",
-    "title": "A Good Read - Joanne Harris and Islam Issa discuss favourite books",
+    "title": "Lady Killers with Lucy Worsley - Lady on Trial, Trial by Media: Putting the media on trial",
     "channel": "BBC Radio 4"
   },
   {
     "time": "03:30 PM",
-    "title": "You're Dead to Me - Medieval saints: miracles, relics and pilgrimage",
+    "title": "Heart and Soul - War, God and the Islamic Republic: Iranians turning away from state religion",
     "channel": "BBC Radio 4"
   },
   {
     "time": "04:00 PM",
-    "title": "Currently - Decency Politics: What has happened to decency in our politics?",
+    "title": "Artworks - Where’s Michael Clark? Nick Grimshaw speaks to the innovative dancer",
     "channel": "BBC Radio 4"
   },
   {
     "time": "04:30 PM",
-    "title": "The Kitchen Cabinet - Series 53, Leicester at the Y Theatre",
+    "title": "What's Up Docs? - What can AI medicine do for you? Exploring AI use in medicine",
     "channel": "BBC Radio 4"
   },
   {
@@ -771,37 +745,37 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "06:30 PM",
-    "title": "I'm Sorry I Haven't A Clue - Series 85, 6. Yorkshire Sayings",
+    "title": "Meet David Sedaris - Series 9, Episode 3: Pussytoes essay from the master storyteller",
     "channel": "BBC Radio 4"
   },
   {
     "time": "07:00 PM",
-    "title": "The Archers - There’s a reunion for Fallon",
+    "title": "The Archers - Tempers flare for Kirsty",
     "channel": "BBC Radio 4"
   },
   {
     "time": "07:15 PM",
-    "title": "Front Row - Live magazine programme on arts, literature, film, media and music",
+    "title": "Front Row - Live magazine programme on the worlds of arts, literature, film, media and music",
     "channel": "BBC Radio 4"
   },
   {
     "time": "08:00 PM",
-    "title": "The Briefing Room - Relationship recession: Why are fewer people coupling?",
+    "title": "File on 4 Investigates - Epstein Files: Lutnick, the Royals and the British Whistleblower",
     "channel": "BBC Radio 4"
   },
   {
-    "time": "08:30 PM",
-    "title": "BBC Inside Science - Are we one step closer to creating life in a lab?",
+    "time": "08:40 PM",
+    "title": "In Touch - News, views and information for people who are blind or partially sighted",
     "channel": "BBC Radio 4"
   },
   {
     "time": "09:00 PM",
-    "title": "Common Ground - Values: How divided are we by different political values?",
+    "title": "The Day the Jellyfish Came - What jellyfish tell us about our changing oceans",
     "channel": "BBC Radio 4"
   },
   {
     "time": "09:30 PM",
-    "title": "Politically - Reflections: Series 4, Jeremy Hunt",
+    "title": "The Bottom Line - Imposter Syndrome: Why capable people feel like frauds",
     "channel": "BBC Radio 4"
   },
   {
@@ -811,12 +785,12 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "10:45 PM",
-    "title": "Kane by Edson Burton - Episode 1: A coming-of-age alternative world story",
+    "title": "Kane by Edson Burton - Episode 2: Coming-of-age story in a world without historical abolition",
     "channel": "BBC Radio 4"
   },
   {
     "time": "11:00 PM",
-    "title": "Limelight - Galapagos, 4. The Giant’s Pocket",
+    "title": "Uncanny - Summer Specials 2026: Cold Cases Live – The Enfield Poltergeist with Danny Robins",
     "channel": "BBC Radio 4"
   },
   {
