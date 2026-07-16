@@ -1,219 +1,215 @@
 window.SCHEDULE_DATA = [
   {
     "time": "01:00 AM",
-    "title": "Radio 1 Dance Drum & Bass Mix: Breakage (Mixed up D&B from Radio 1 Dance.)",
-    "channel": "BBC Radio 1"
-  },
-  {
-    "time": "01:30 AM",
-    "title": "Radio 1 Dance Drum & Bass Mix: Chilled D&B with LICIA (Experience the softer side of LICIA in this week's Chilled D&B Mix.)",
+    "title": "Radio 1 Dance Presents... Parklife Festival 2026: bullet tooth (bullet tooth brings his high energy garage sound to Parklife Festival 2026.)",
     "channel": "BBC Radio 1"
   },
   {
     "time": "02:00 AM",
-    "title": "Radio 1 Anthems: Rihanna, Lizzo, MGMT and more (Chelsea Little with big anthems and tunes you haven't heard in ages.)",
+    "title": "Radio 1 Anthems: Disclosure, Rizzle Kicks, Rita Ora and more (Chelsea Little with big anthems and tunes you haven't heard in ages.)",
     "channel": "BBC Radio 1"
   },
   {
     "time": "04:00 AM",
-    "title": "Radio 1 Pop Anthems: Sweet Female Attitude, Avril Lavigne, Hozier and more (Huge pop anthems from Radio 1.)",
+    "title": "Radio 1 Pop Anthems: Lady Gaga, Usher, Katy Perry and more (Huge pop anthems from Radio 1.)",
     "channel": "BBC Radio 1"
   },
   {
     "time": "05:00 AM",
-    "title": "Radio 1 Early Breakfast: with Dean McCullough (Dean has Radio 1's Early Breakfast.)",
+    "title": "Radio 1 Early Breakfast with Dean McCullough (Dean has Radio 1's Early Breakfast.)",
     "channel": "BBC Radio 1"
   },
   {
     "time": "06:58 AM",
-    "title": "Radio 1 Newsbeat (The latest news from around the UK and around the world.)",
+    "title": "Radio 1 Newsbeat 16/07/2026 (The latest news from around the UK and around the world.)",
     "channel": "BBC Radio 1"
   },
   {
     "time": "07:00 AM",
-    "title": "Radio 1 Breakfast with Greg James: Ask The Nation! (There's a big question that needs to entire nation to answer.)",
+    "title": "Radio 1 Breakfast with Greg James: Thurswaaayyyyy (Get your WAHEYS at the ready because it's time to celebrate Thursday.)",
     "channel": "BBC Radio 1"
   },
   {
     "time": "10:30 AM",
-    "title": "Radio 1 Newsbeat (The latest news from around the UK and around the world.)",
+    "title": "Radio 1 Newsbeat 16/07/2026 (The latest news from around the UK and around the world.)",
     "channel": "BBC Radio 1"
   },
   {
     "time": "10:33 AM",
-    "title": "Rickie, Melvin and Charlie: Mess with Melvin (Rickie and Charlie try and confuse Melvin with their strange facts from around the world.)",
+    "title": "Rickie, Melvin and Charlie 16/07/2026 (Big hits and the best new music.)",
     "channel": "BBC Radio 1"
   },
   {
     "time": "12:45 PM",
-    "title": "Newsbeat (The latest news from around the UK and around the world.)",
+    "title": "Newsbeat 16/07/2026 (The latest news from around the UK and around the world.)",
     "channel": "BBC Radio 1"
   },
   {
     "time": "01:00 PM",
-    "title": "Matt and Mollie: Mol’s Teaser (Mollie is back with another game, but can you answer quick enough for a podium finish?)",
+    "title": "Matt and Mollie: The Five to Two Quiz (Another caller takes on the Five to Two Quiz… at five to two!)",
+    "channel": "BBC Radio 1"
+  },
+  {
+    "time": "03:00 PM",
+    "title": "Radio 1 Pop Anthems with Matt and Mollie (Matt and Mollie with huge Pop Anthems.)",
     "channel": "BBC Radio 1"
   },
   {
     "time": "03:30 PM",
-    "title": "Radio 1 Newsbeat (The latest news from around the UK and around the world.)",
+    "title": "Radio 1 Newsbeat 16/07/2026 (The latest news from around the UK and around the world.)",
     "channel": "BBC Radio 1"
   },
   {
     "time": "03:33 PM",
-    "title": "Going Home with Vick, Katie and Jamie on Radio 1: Time for a midweek movie game! (Calling all film fans, it’s time for a midweek movie game.)",
+    "title": "Going Home with Vick, Katie and Jamie on Radio 1: Good tunes and big laughs for your home time (We bring you the tunes and laughs for your way home.)",
     "channel": "BBC Radio 1"
   },
   {
     "time": "05:45 PM",
-    "title": "Newsbeat (The latest news from around the UK and around the world.)",
+    "title": "Newsbeat 16/07/2026 (The latest news from around the UK and around the world.)",
     "channel": "BBC Radio 1"
   },
   {
     "time": "06:00 PM",
-    "title": "Radio 1's New Music Show with Jack Saunders: Keo Hottest Record (Keo are on the show for tonight's Hottest Record.)",
+    "title": "Radio 1's New Music Show with Jack Saunders: Chloé Caillet and Luke Alessi Hottest Record (Chloé Caillet and Luke Alessi have tonight's Hottest Record.)",
     "channel": "BBC Radio 1"
   },
   {
     "time": "08:00 PM",
-    "title": "Radio 1's Future Pop: with Jodie Bryant (Future massive pop songs with Jodie Bryant and Stella Lefty comes into the studio.)",
+    "title": "Radio 1's Rave-Up with Arielle Free: Arielle raves up your Thursday night! (Arielle raves up your Thursday night, with bbyclose in the Hero's Mix!)",
     "channel": "BBC Radio 1"
   },
   {
     "time": "10:00 PM",
-    "title": "Radio 1's Power Down Playlist with Sian Eleri: with CassKidd: Carefree Sounds (Laidback positivity for a calmer state of mind with CassKidd sitting in.)",
+    "title": "BBC Introducing on Radio 1 Dance with Jaguar... Reger Dancefloor Moment (Jaguar has a brand new Dancefloor Moment from Reger.)",
     "channel": "BBC Radio 1"
   },
   {
     "time": "11:00 PM",
-    "title": "Benji B: Kelela’s New Avatar (Kelela tells us about her new album, New Avatar.)",
+    "title": "The Residency on Radio 1 Dance: Chloé Caillet - French Touch (Dive into the sound of French Touch with Chloé Caillet, with a guest mix from Busy P.)",
     "channel": "BBC Radio 1"
   },
 
 
   
+ 
   {
     "time": "12:00 AM",
-    "title": "OJ Borg: Punderland XI: Archaeology (OJ is live through the night with an archaeological Punderland XI.)",
+    "title": "OJ Borg: Thursday means it’s nearly Friday (OJ is live through the night from Salford, for a ‘Hipster Friday’.)",
     "channel": "BBC Radio 2"
   },
   {
     "time": "03:00 AM",
-    "title": "Alternative Sounds of the 90s with Dermot O'Leary: 90s World Cup Mix Tape (A collection of 90s football songs from Black Grape, New Order, PWEI and Kirsty MacColl. (R))",
+    "title": "Sounds of the 90s with Fearne Cotton: Girlbands vs Boybands Mixtape (Spice Girls vs Take That. TLC vs *NSYNC. It’s the ultimate pop duel. (R))",
     "channel": "BBC Radio 2"
   },
   {
     "time": "04:00 AM",
-    "title": "Owain Wyn Evans: Walkies Gone Wrong (Welcome! It's Early Breakfast with Owain Wyn Evans, featuring Airdrum Anthems.)",
+    "title": "Owain Wyn Evans: Schools Out! (Welcome! It's Early Breakfast with Owain Wyn Evans, featuring Airdrum Anthems.)",
     "channel": "BBC Radio 2"
   },
   {
     "time": "06:30 AM",
-    "title": "The Sara Cox Breakfast Show: KT Tunstall and Jack Savoretti join Sara in the studio! (KT Tunstall and Jack Savoretti drop by to tell Sara about their new music!)",
+    "title": "The Sara Cox Breakfast Show: Start your day with Sara Cox! (Start your day the right way with Sara Cox at Breakfast on Radio 2!)",
     "channel": "BBC Radio 2"
   },
   {
     "time": "09:30 AM",
-    "title": "Vernon Kay: Good News Wednesday (Vernon hears about what's making you smile on Good News Wednesday.)",
+    "title": "Vernon Kay: Sir Nick Faldo calls in on British Open day! (Sir Nick Faldo previews The British Open golf tournament, plus there's more Ten To The Top)",
     "channel": "BBC Radio 2"
   },
   {
     "time": "12:00 PM",
-    "title": "Jeremy Vine (Jeremy and guests discuss the news headlines and talk to the people making them.)",
+    "title": "Jeremy Vine 16/07/2026 (Jeremy and guests discuss the news headlines and talk to the people making them.)",
     "channel": "BBC Radio 2"
   },
   {
     "time": "02:00 PM",
-    "title": "Trevor Nelson: DJ Spoony sits in: Midweek music to boost your mood! (DJ Spoony with great music from across the decades to get you through the afternoon.)",
+    "title": "Trevor Nelson: DJ Spoony sits in: Final Old-Skool Run of the week! (DJ Spoony plays the best music from across the decades to get you through the afternoon.)",
     "channel": "BBC Radio 2"
   },
   {
     "time": "04:00 PM",
-    "title": "Radio 2 Drivetime: with Ellie Taylor (Ellie Taylor plays amazing tunes, plus the latest news and travel to help you home.)",
+    "title": "Radio 2 Drivetime with Ellie Taylor (Ellie Taylor plays amazing tunes, plus the latest news and travel to help you home.)",
     "channel": "BBC Radio 2"
   },
   {
     "time": "07:00 PM",
-    "title": "Jo Whiley's Shiny Happy Playlist (Jo brings her Shiny Happy Playlist, 30 minutes of feelgood music.)",
+    "title": "Jo Whiley's Shiny Happy Playlist 16/07/2026 (Jo brings her Shiny Happy Playlist, 30 minutes of feelgood music.)",
     "channel": "BBC Radio 2"
   },
   {
     "time": "07:30 PM",
-    "title": "Jo Whiley: Sofa Session: Robyn (Robyn performs a session for Jo, featuring new tracks and a cover.)",
+    "title": "Jo Whiley: Anya Taylor-Joy pops by for a chat! (Anya Taylor-Joy chats to Jo about her new TV series, Lucky!)",
     "channel": "BBC Radio 2"
   },
   {
     "time": "09:00 PM",
-    "title": "The Folk Show with Mark Radcliffe: Acoustic music of all kinds (The best folk and acoustic music from Britain and beyond.)",
+    "title": "The Country Show with Darius Rucker (Just got an hour? All the country you need to know, right here right now!)",
     "channel": "BBC Radio 2"
   },
   {
     "time": "10:00 PM",
-    "title": "The Good Groove with DJ Spoony: Melvin Odoom sits in: Music Is the Answer! (Feelgood favourites, hidden gems and fresh new tunes to groove and soothe your soul.)",
+    "title": "The Good Groove with DJ Spoony: Melvin Odoom sits in: Melv in the mix! (Feelgood favourites, hidden gems and fresh new tunes to groove and soothe your soul.)",
     "channel": "BBC Radio 2"
   },
-  
 
   
+
 
   {
     "time": "12:30 AM",
-    "title": "Through the Night: Ligeti, Szymanowski and Stravinsky from Oslo (Fedor Rudin joins the Norwegian Radio Orchestra in Szymanowski's 2nd violin concerto.)",
+    "title": "Through the Night: Brahms from Budapest (The pianist Simon Trpčeski performs Brahms' second piano concerto.)",
     "channel": "BBC Radio 3"
   },
   {
     "time": "06:30 AM",
-    "title": "Radio 3 Breakfast: The best classical music wake-up call (Join Tom McKinney every Monday to Friday for Radio 3's Breakfast show.)",
+    "title": "Radio 3 Breakfast: Start the day on the right note with classical music (Join Tom McKinney every Monday to Friday for Radio 3's Breakfast show.)",
     "channel": "BBC Radio 3"
   },
   {
     "time": "09:30 AM",
-    "title": "Essential Classics: Great classical music for your morning (Georgia Mann plays the best in classical music.)",
+    "title": "Essential Classics: The best classical morning music (Georgia Mann plays the best in classical music.)",
     "channel": "BBC Radio 3"
   },
   {
     "time": "01:00 PM",
-    "title": "Classical Live: The Royal Philharmonic Orchestra performs Rachmaninoff's choral symphony, ‘The Bells’ (Live performance and exclusive concerts from home and abroad.)",
-    "channel": "BBC Radio 3"
-  },
-  {
-    "time": "03:00 PM",
-    "title": "Choral Evensong: Norwich Cathedral (From Norwich Cathedral.)",
+    "title": "Classical Live: Strauss's ‘An Alpine Symphony’ from the Royal Philharmonic Orchestra (Live performance and exclusive concerts from home and abroad.)",
     "channel": "BBC Radio 3"
   },
   {
     "time": "04:00 PM",
-    "title": "Composer of the Week: Samuel Barber (1910-1981), Barber’s operatic failure (4/5 Donald Macleod journeys through the 1960s, when Barber composes an Egyptian opera. (R))",
+    "title": "Composer of the Week: Samuel Barber (1910-1981), Relationships under strain (5/5 Donald Macleod delves into Samuel Barber’s final years of emotional turmoil. (R))",
     "channel": "BBC Radio 3"
   },
   {
     "time": "05:00 PM",
-    "title": "In Tune: Live music from Cellophonics (Cello quartet Cellophonics live in session.)",
+    "title": "In Tune: Peter Donohoe live in session (Legendary pianist Peter Donohoe is live in session.)",
     "channel": "BBC Radio 3"
   },
   {
     "time": "07:00 PM",
-    "title": "Classical Mixtape: Proms special: 2000 years of music (Take time out with 30-minutes of classical favourites, previewing this year's BBC Proms.)",
+    "title": "Classical Mixtape: Proms special: love stories and peaceful endings (Take time out with 30-minutes of classical favourites, previewing this year's BBC Proms.)",
     "channel": "BBC Radio 3"
   },
   {
     "time": "07:30 PM",
-    "title": "Radio 3 in Concert: BBC Singers at Norwich Cathedral (Music by Marsh, Panufnik, Gjeilo, McDowall, MacMillan and Parry.)",
+    "title": "Radio 3 in Concert: Bernstein's Chichester Psalms (BBC NOW and Tomas Djupsjöbacka celebrate the signing of the Declaration of Independence.)",
     "channel": "BBC Radio 3"
   },
   {
     "time": "09:45 PM",
-    "title": "The Essay: The Dawn of Music, Echoes of Stone and Bone (Brenna Hassett unearths our musical origins. Today, she's digging up some hard evidence.)",
+    "title": "The Essay: The Dawn of Music, Clammers of Clay (How did the invention of clay change our musical instruments? Brenna Hassett digs deeper.)",
     "channel": "BBC Radio 3"
   },
   {
     "time": "10:00 PM",
-    "title": "Night Tracks: A bewitching night time soundtrack (Hannah Peel with an adventurous, immersive soundtrack for late-night listening.)",
+    "title": "Night Tracks: Sublime sounds for nightfall (Hannah Peel with an adventurous, immersive soundtrack for late-night listening.)",
     "channel": "BBC Radio 3"
   },
   {
     "time": "11:30 PM",
-    "title": "'Round Midnight: Fresh from Gretchan Parlato (Soweto spins a track from the forward-facing American singer from her upcoming album.)",
+    "title": "'Round Midnight: Stratospheric sounds from Ferg’s Imaginary Big Band (Soweto shares a new track from the Leeds-based raucous experimental jazz ensemble.)",
     "channel": "BBC Radio 3"
   },
 
@@ -227,7 +223,17 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "12:06 AM",
-    "title": "World Questions: Czech Republic (The influence of Russian disinformation, the future of Czech radio and TV and the housing crisis)",
+    "title": "The Explanation: The Media Show (Where the world is explained. Making sense of the big stories - looking behind the spin)",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "12:30 AM",
+    "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "12:32 AM",
+    "title": "Happy News: The Happy Pod: Inviting strangers round for dinner (When Nidhi and Vik moved from India to Northern Ireland, they came up with an unusual way to expand their circle - hosting dinner parties made up of strangers.)",
     "channel": "BBC World Service"
   },
   {
@@ -247,7 +253,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "01:32 AM",
-    "title": "The Global Story: Are the tech billionaires taking over? (How a burgeoning class of billionaires envisions the future.)",
+    "title": "The Global Story: Jeffrey Epstein, Howard Lutnick, and the disgraced former prince (.)",
     "channel": "BBC World Service"
   },
   {
@@ -267,7 +273,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "02:32 AM",
-    "title": "The Climate Question: Can science fiction help us fight climate change? (The acclaimed US sci-fi author Kim Stanley Robinson talks to the Climate Question team)",
+    "title": "The Documentary: The Chinese Fentanyl King (How did a graduate from China’s top university become an alleged drug kingpin in Mexico?)",
     "channel": "BBC World Service"
   },
   {
@@ -277,12 +283,12 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "03:06 AM",
-    "title": "Outlook: The Taliban want to sack me - the ambassador who won't quit (Manizha Bakhtari was posted to Austria as Afghan ambassador. When the Taliban seized power she refused to budge and since 2021, remains the country's only female ambassador)",
+    "title": "Outlook: How the music of Puerto Rico held my life together (Pirúlo grew up surrounded by music. But when his family fell apart, the rhythms of Puerto Rico would both save him and put him on the road to stardom.)",
     "channel": "BBC World Service"
   },
   {
     "time": "03:50 AM",
-    "title": "Witness History: Creating Canada’s largest territory (In 1999, Canada’s map was redrawn to create Nunavut, a territory reflecting Inuit land rights. It followed more than 20 years of campaigning.)",
+    "title": "Witness History: Turkey’s failed coup (When a quiet neighbourhood in Istanbul found itself on the frontlines of Turkey’s 2016 coup attempt, its residents came out to defend it.)",
     "channel": "BBC World Service"
   },
   {
@@ -302,7 +308,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "04:32 AM",
-    "title": "The Documentary: How did we get here: Israel and the Palestinians (Jonny Dymond and guests explore the complicated back-story of the Middle East conflict)",
+    "title": "The Food Chain: The rise of eating alone (Whether by choice or by necessity, rising numbers of us are eating alone. Inspired by Food Chain listener Melanie, Ruth Alexander asks: is it lonely, liberating or a fact of life?)",
     "channel": "BBC World Service"
   },
   {
@@ -342,7 +348,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "08:06 AM",
-    "title": "The Interview: Jim Continenza, Kodak CEO: Reinventing a brand (Kodak chief executive Jim Continenza on how he helped rebuild the fallen photography giant as an industrial manufacturer after bankruptcy.)",
+    "title": "The Inquiry: Are we closer to gene therapy for sickle cell disease being accessible? (Gene therapy is a treatment option for sickle cell disease. What is stopping this treatment from reaching the millions who could benefit?)",
     "channel": "BBC World Service"
   },
   {
@@ -352,12 +358,12 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "08:32 AM",
-    "title": "Business Daily: Founders: Sumant Sinha's bet on a greener India (Entrepreneur Sumant Sinha explains how he built ReNew into one of India's largest renewable energy businesses and reflects on risk, leadership and India's energy transition.)",
+    "title": "Business Daily: Power Players: Can the Paramount–Warner merger survive? (Paramount and Warner Bros. Discovery want to combine in a $110 billion deal that would create a media giant. But why are 12 US states, regulators and writers trying to stop it?)",
     "channel": "BBC World Service"
   },
   {
     "time": "08:50 AM",
-    "title": "Witness History: Turkey’s failed coup (When a quiet neighbourhood in Istanbul found itself on the frontlines of Turkey’s 2016 coup attempt, its residents came out to defend it.)",
+    "title": "Witness History: Birkin bag: creating fashion’s iconic accessory (In 1985, one the world’s most recognisable fashion accessories was first launched, the Birkin bag. It was named after the singer and actor Jane Birkin who inspired the design.)",
     "channel": "BBC World Service"
   },
   {
@@ -377,7 +383,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "09:32 AM",
-    "title": "The Climate Question: Can science fiction help us fight climate change? (The acclaimed US sci-fi author Kim Stanley Robinson talks to the Climate Question team)",
+    "title": "The Documentary: The Chinese Fentanyl King (How did a graduate from China’s top university become an alleged drug kingpin in Mexico?)",
     "channel": "BBC World Service"
   },
   {
@@ -387,7 +393,17 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "10:06 AM",
-    "title": "World Questions: Czech Republic (The influence of Russian disinformation, the future of Czech radio and TV and the housing crisis)",
+    "title": "The Explanation: The Media Show (Where the world is explained. Making sense of the big stories - looking behind the spin)",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "10:30 AM",
+    "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "10:32 AM",
+    "title": "Over to You: BBC World Service cuts: What is being lost? (We discuss changes at the BBC World Service and the shows that will be lost.)",
     "channel": "BBC World Service"
   },
   {
@@ -407,7 +423,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "11:32 AM",
-    "title": "The Global Story",
+    "title": "The Global Story: The Global Story (.)",
     "channel": "BBC World Service"
   },
   {
@@ -417,12 +433,12 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "12:06 PM",
-    "title": "Outlook (True stories of ordinary people and the extraordinary events that have shaped their lives.)",
+    "title": "Outlook: I donated my eggs to a stranger on the train (What began as small talk about children on the Tube led Gini Bhogal to make an unusual promise, helping a stranger become a mother while keeping a secret from her own family.)",
     "channel": "BBC World Service"
   },
   {
     "time": "12:50 PM",
-    "title": "Witness History: Turkey’s failed coup (When a quiet neighbourhood in Istanbul found itself on the frontlines of Turkey’s 2016 coup attempt, its residents came out to defend it.)",
+    "title": "Witness History: Birkin bag: creating fashion’s iconic accessory (In 1985, one the world’s most recognisable fashion accessories was first launched, the Birkin bag. It was named after the singer and actor Jane Birkin who inspired the design.)",
     "channel": "BBC World Service"
   },
   {
@@ -442,7 +458,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "01:32 PM",
-    "title": "Tech Life: Meet the humanoid robots performing surgery (Humanoid robots have successfully performed surgery in an operating theatre for the first time. They were remotely controlled by surgeons. An expert involved talks to Tech Life.)",
+    "title": "Health Check: HIV fears due to Niger’s anti-gay laws (Organisations providing HIV services to gay men have had to close in Niger, as gay men there fear coming forward to be tested or treated.)",
     "channel": "BBC World Service"
   },
   {
@@ -462,7 +478,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "03:06 PM",
-    "title": "The Interview: Jim Continenza, Kodak CEO: Reinventing a brand (Kodak chief executive Jim Continenza on how he helped rebuild the fallen photography giant as an industrial manufacturer after bankruptcy.)",
+    "title": "The Inquiry: Are we closer to gene therapy for sickle cell disease being accessible? (Gene therapy is a treatment option for sickle cell disease. What is stopping this treatment from reaching the millions who could benefit?)",
     "channel": "BBC World Service"
   },
   {
@@ -472,7 +488,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "03:32 PM",
-    "title": "Business Daily: Founders: Sumant Sinha's bet on a greener India (Entrepreneur Sumant Sinha explains how he built ReNew into one of India's largest renewable energy businesses and reflects on risk, leadership and India's energy transition.)",
+    "title": "Business Daily: Power Players: Can the Paramount–Warner merger survive? (Paramount and Warner Bros. Discovery want to combine in a $110 billion deal that would create a media giant. But why are 12 US states, regulators and writers trying to stop it?)",
     "channel": "BBC World Service"
   },
   {
@@ -507,12 +523,12 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "06:06 PM",
-    "title": "Outlook (True stories of ordinary people and the extraordinary events that have shaped their lives.)",
+    "title": "Outlook: I donated my eggs to a stranger on the train (What began as small talk about children on the Tube led Gini Bhogal to make an unusual promise, helping a stranger become a mother while keeping a secret from her own family.)",
     "channel": "BBC World Service"
   },
   {
     "time": "06:50 PM",
-    "title": "What in the World",
+    "title": "What in the World: What in the World (We’re here to help you work out what in the world is going on)",
     "channel": "BBC World Service"
   },
   {
@@ -542,7 +558,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "08:06 PM",
-    "title": "The Climate Question: Can science fiction help us fight climate change? (The acclaimed US sci-fi author Kim Stanley Robinson talks to the Climate Question team)",
+    "title": "The Documentary: The Chinese Fentanyl King (How did a graduate from China’s top university become an alleged drug kingpin in Mexico?)",
     "channel": "BBC World Service"
   },
   {
@@ -552,7 +568,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "08:32 PM",
-    "title": "Health Check (Health issues and medical breakthroughs from around the world.)",
+    "title": "BBC Inside Science (A weekly show exploring science, its mysteries, and the debates it sparks.)",
     "channel": "BBC World Service"
   },
   {
@@ -572,7 +588,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "10:06 PM",
-    "title": "The Interview: Jim Continenza, Kodak CEO: Reinventing a brand (Kodak chief executive Jim Continenza on how he helped rebuild the fallen photography giant as an industrial manufacturer after bankruptcy.)",
+    "title": "The Inquiry: Are we closer to gene therapy for sickle cell disease being accessible? (Gene therapy is a treatment option for sickle cell disease. What is stopping this treatment from reaching the millions who could benefit?)",
     "channel": "BBC World Service"
   },
   {
@@ -582,7 +598,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "10:32 PM",
-    "title": "The Documentary: How did we get here: Israel and the Palestinians (Jonny Dymond and guests explore the complicated back-story of the Middle East conflict)",
+    "title": "The Food Chain: The rise of eating alone (Whether by choice or by necessity, rising numbers of us are eating alone. Inspired by Food Chain listener Melanie, Ruth Alexander asks: is it lonely, liberating or a fact of life?)",
     "channel": "BBC World Service"
   },
   {
@@ -615,7 +631,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "12:30 AM",
-    "title": "Cash Cow by Alev Scott: Episode 2 (2/5 Alev Scott discovers more about the history of breast-feeding.)",
+    "title": "Cash Cow by Alev Scott: Episode 3 (3/5 The fertility industry is founded on hope and desperation. Alev Scott visits a trade fair)",
     "channel": "BBC Radio 4"
   },
   {
@@ -635,7 +651,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "05:04 AM",
-    "title": "Yesterday in Parliament (News, views and features on today's stories in Parliament)",
+    "title": "Yesterday in Parliament (Sir Keir Starmer's last Prime Minister's Questions. Sean Curran reports.)",
     "channel": "BBC Radio 4"
   },
   {
@@ -650,7 +666,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "05:45 AM",
-    "title": "Farming Today: New UK Swiss trade deal, Farming in Protected Landscapes grants, deer control in Loch Lomond (Farmers welcome a new trade deal with Switzerland.)",
+    "title": "Farming Today: 'Critical situation' for chicken site as water restricted, farm payments for wildlife, the price of chocolate (Chicken processing plant closes due to a lack of water.)",
     "channel": "BBC Radio 4"
   },
   {
@@ -660,32 +676,27 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "09:00 AM",
-    "title": "Sideways: Small Giants (Shrinking down the things that matter most, to something we can hold in our hand.)",
+    "title": "Artworks: Who Did We Think We Were?, 2. The 1938 Empire Exhibition in Glasgow (Neil MacGregor on past expressions of British identity and how they shape our identity now)",
     "channel": "BBC Radio 4"
   },
   {
     "time": "09:30 AM",
-    "title": "Shadow World: Stolen Years, 3. Lucky Man (3/4 While Andrew Malkinson fights for compensation, police discover dramatic witness evidence.)",
+    "title": "Artworks: Art That Conquered the World, David (James Fox asks how Michelangelo's David became so famous.)",
     "channel": "BBC Radio 4"
   },
   {
     "time": "10:00 AM",
-    "title": "Woman's Hour: 'Leaning Out', Sarah Ruggins, Podcast on Asma al-Assad (Are younger women today less interested in promotion at work? We discuss.)",
+    "title": "Woman's Hour (Women's voices and women's lives - topical conversations to inform, challenge and inspire.)",
     "channel": "BBC Radio 4"
   },
   {
     "time": "11:00 AM",
-    "title": "File on 4 Investigates: Epstein Files: Lutnick, the Royals and the British Whistleblower (Trading influence: US Commerce Secretary Howard Lutnick, the Royals and the Epstein Files.)",
-    "channel": "BBC Radio 4"
-  },
-  {
-    "time": "11:40 AM",
-    "title": "This Week in History: July 13th - July 19th (Fascinating, surprising and eye-opening stories from the past, brought to life.)",
+    "title": "How Boarding Schools Shaped Britain: 2. Codes (Nicky Campbell explores the darker side of some boarding school experiences.)",
     "channel": "BBC Radio 4"
   },
   {
     "time": "11:45 AM",
-    "title": "Cash Cow by Alev Scott: Episode 3 (3/5 The fertility industry is founded on hope and desperation. Alev Scott visits a trade fair)",
+    "title": "Cash Cow by Alev Scott: Episode 4 (4/5 Alev Scott decides to pose as potential customer – for a younger woman’s eggs.)",
     "channel": "BBC Radio 4"
   },
   {
@@ -695,7 +706,12 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "12:04 PM",
-    "title": "You and Yours (News and discussion of consumer affairs)",
+    "title": "The Bottom Line: Twenty Years in Business (Evan Davis reflects on how the business landscape has changed since the show began in 2006)",
+    "channel": "BBC Radio 4"
+  },
+  {
+    "time": "12:32 PM",
+    "title": "Sliced Bread: Sliced Bread - Series 17, Kitchen Sponges, Cloths and Brushes (Which is the most hygienic for cleaning your kitchen?)",
     "channel": "BBC Radio 4"
   },
   {
@@ -710,37 +726,42 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "01:45 PM",
-    "title": "New Storytellers: New Storytellers 2026, Justice for Harry Stanley (3/5 A community revisits a traumatic event that took place one night in Hackney in 1999.)",
+    "title": "New Storytellers: New Storytellers, Minor Swing (4/5 Learning to live with jazz and a mother’s passion for Stéphane Grappelli’s music.)",
     "channel": "BBC Radio 4"
   },
   {
     "time": "02:00 PM",
-    "title": "The Archers (Tempers flare for Kirsty.)",
+    "title": "The Archers (Harrison struggles to take in what he’s missed.)",
     "channel": "BBC Radio 4"
   },
   {
     "time": "02:15 PM",
-    "title": "Drama on 4: Keeping the Wolf Out, The Magical Magyars (Philip Palmer's detective drama set in communist Hungary.)",
+    "title": "Drama on 4: Nothing Is Normal (New drama as a taxi driver is plying his trade in Tehran amidst the airstrikes.)",
     "channel": "BBC Radio 4"
   },
   {
     "time": "03:00 PM",
-    "title": "Money Box (The latest news from the world of personal finance)",
+    "title": "This Natural Life: Peter Lord (The Aardman Animations co-founder takes Martha Kearney to a magical mediaeval deer park.)",
+    "channel": "BBC Radio 4"
+  },
+  {
+    "time": "03:27 PM",
+    "title": "Radio 4 Appeal: Prison Radio Association (Louis Theroux makes the Radio 4 Appeal on behalf of the Prison Radio Association.)",
     "channel": "BBC Radio 4"
   },
   {
     "time": "03:30 PM",
-    "title": "The Art of Being a Zombie Ant Fungus (Cultural entomologist Bridget Nicholls investigates a bizarre natural phenomenon.)",
+    "title": "Feedback (Radio 4's forum for comments, queries, criticisms and congratulations.)",
     "channel": "BBC Radio 4"
   },
   {
     "time": "04:00 PM",
-    "title": "When It Hits the Fan (Who's in the news for all the wrong reasons? With David Yelland and Simon Lewis.)",
+    "title": "The Briefing Room (David Aaronovitch presents in-depth explainers on big issues in the news.)",
     "channel": "BBC Radio 4"
   },
   {
-    "time": "04:15 PM",
-    "title": "The Media Show (This is the programme about a revolution in media.)",
+    "time": "04:30 PM",
+    "title": "BBC Inside Science (A weekly programme looking at the science that's changing our world.)",
     "channel": "BBC Radio 4"
   },
   {
@@ -755,37 +776,37 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "06:30 PM",
-    "title": "Ivo Graham's Obsessions: Series 1, 5. Kat Sadler & Felix White (5/6 Kat Sadler and Felix White tell Ivo Graham all about their obsessions.)",
+    "title": "P.O.V.: Series 2, S2 E5: A Friendly Reshuffle (5/6 The internet's funniest video comedians, reshuffled into brilliant audio sketches.)",
     "channel": "BBC Radio 4"
   },
   {
     "time": "07:00 PM",
-    "title": "The Archers (Harrison struggles to take in what he’s missed.)",
+    "title": "The Archers (Helen provides a shoulder to cry on.)",
     "channel": "BBC Radio 4"
   },
   {
     "time": "07:15 PM",
-    "title": "Front Row: Heartstopper creator Alice Oseman (What made Heartstopper such a phenomenon with young people?)",
+    "title": "Front Row (Live magazine programme on the worlds of arts, literature, film, media and music.)",
     "channel": "BBC Radio 4"
   },
   {
     "time": "08:00 PM",
-    "title": "AntiSocial: Pink Pill: Has women's empowerment gone toxic? (A Love Island contestant sparks a row about how women should treat men.)",
+    "title": "When It Hits the Fan: PR's Rich Tapestry (David Yelland and Farzana Baduel on a PR coup one thousand years in the making.)",
     "channel": "BBC Radio 4"
   },
   {
-    "time": "08:45 PM",
-    "title": "Café Hope: Pigeon protection (How one woman is providing a safe haven for pigeons.)",
+    "time": "08:15 PM",
+    "title": "The Media Show: Iain Dale, on a life in the media and politics, TV production rights, Trump subpoenas NYT journalists, BBC Annual Report (Iain Dale on his life in the media & politics, BBC Annual Report & the future of TV rights)",
     "channel": "BBC Radio 4"
   },
   {
     "time": "09:00 PM",
-    "title": "Ancient Lives with Mary Beard: Being Greek, The Greengrocer Who Saved Democracy (Mary Beard meets Gerys the Greengrocer as he faces up to the army of Sparta.)",
+    "title": "Loose Ends: Nigel Harman, Daliso Chaponda, Nikki Smith, Liana Flores, Ibibio Sound Machine (Nigel Harman, Daliso Chaponda, Nikki Smith, Ibibio Sound Machine, Liana Flores.)",
     "channel": "BBC Radio 4"
   },
   {
-    "time": "09:30 PM",
-    "title": "Inside Health (Could we eliminate cervical cancer? Does the success of the HPV vaccine mean that cervical screening can be reduced?)",
+    "time": "09:45 PM",
+    "title": "The Cows Are Mad: 2. Hypothesis (A group of vets battle to stop a deadly new disease.)",
     "channel": "BBC Radio 4"
   },
   {
@@ -795,17 +816,12 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "10:45 PM",
-    "title": "Kane by Edson Burton: Episode 3 (3/5 A coming-of-age story set in an alternative world where slavery has never been abolished.)",
+    "title": "Kane by Edson Burton: Episode 4 (4/5 A coming of age story set in an alternative world where slavery has never been abolished.)",
     "channel": "BBC Radio 4"
   },
   {
     "time": "11:00 PM",
-    "title": "Sunil Patel: An Idiot's Guide To: Living Forever, 2: How to Find the Fountain of Youth (2/6 Sunil wants your blood.)",
-    "channel": "BBC Radio 4"
-  },
-  {
-    "time": "11:15 PM",
-    "title": "Damien Slash: The Damien Slash Mixtape. Series 4, Episode 3 (3/4 Fast-paced sketch show from character comedian Damien Slash (aka Daniel Barker).)",
+    "title": "Radical with Amol Rajan: The Best of Radical with Amol Rajan (Amol chooses five standout conversations from his time hosting Radical.)",
     "channel": "BBC Radio 4"
   },
   {
