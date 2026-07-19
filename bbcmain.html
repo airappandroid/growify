@@ -107,12 +107,36 @@ body {
     text-align: center;
 }
 .card:active { transform: scale(0.97); }
+
+.top-banner{
+    display:block;
+    width:100%;
+    padding:10px 14px 0;
+    text-decoration:none;
+}
+
+.top-banner img{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:14px;
+    box-shadow:0 4px 12px rgba(0,0,0,.35);
+}
+
+.top-banner:active{
+    opacity:.9;
+    transform:scale(.98);
+}
 </style>
 
 <!-- BBC Schedule Source -->
 <script src="https://airappandroid.github.io/growify/bbc.js"></script>
 </head>
 <body>
+
+<a href="go:BBC5E" class="top-banner">
+    <img src="https://res.cloudinary.com/dzczl0fzu/image/upload/v1784438231/ChatGPT_Image_Jul_19_2026_10_27_09_AM_dmjati.png" alt="BBC 5 Sports Extra">
+</a>
 
 <div class="section">
     <div class="title">📻 Popular Stations</div>
@@ -240,18 +264,21 @@ function getCurrentShow(channelName) {
 
     if (!list.length) return "Live";
 
-    for (let i = 0; i < list.length; i++) {
+    // पहला शो शुरू होने से पहले
+    if (nowMin < timeStringToMinutesUK(list[0].time)) {
+        return list[list.length - 1].title;
+    }
+
+    for (let i = 0; i < list.length - 1; i++) {
         const start = timeStringToMinutesUK(list[i].time);
-        const end = (i < list.length - 1)
-            ? timeStringToMinutesUK(list[i + 1].time)
-            : 1440;
+        const end = timeStringToMinutesUK(list[i + 1].time);
 
         if (nowMin >= start && nowMin < end) {
             return list[i].title;
         }
     }
 
-    // 🌙 after midnight fallback
+    // आखिरी शो
     return list[list.length - 1].title;
 }
 
