@@ -1,156 +1,146 @@
 window.SCHEDULE_DATA = [
   {
     "time": "01:00 AM",
-    "title": "1Xtra's R&B Show with Chuckie - Chuckie's Chamber: INTRO",
+    "title": "Danny Howard's Club Mix - Fleur Shore, Mellizos, Pawsa and Loads More!",
     "channel": "BBC Radio 1"
   },
   {
-    "time": "02:30 AM",
-    "title": "1Xtra's R&B Slow Jamz Mix with Chuckie - 90s R&B Slow Jamz hits",
-    "channel": "BBC Radio 1"
-  },
-  {
-    "time": "03:00 AM",
-    "title": "Radio 1's Chill Mix - kwn Chill Mix",
-    "channel": "BBC Radio 1"
-  },
-  {
-    "time": "03:30 AM",
-    "title": "Radio 1's Chill Mix - Lexa Gates",
+    "time": "02:00 AM",
+    "title": "Radio 1 Anthems - Major Lazer, The White Stripes, Beyonce and more",
     "channel": "BBC Radio 1"
   },
   {
     "time": "04:00 AM",
-    "title": "Radio 1's Workout Anthems - 19/06/2026",
+    "title": "Radio 1's Workout Anthems - Fatboy Slim, Peggy Gou, Chase & Status and more",
     "channel": "BBC Radio 1"
   },
   {
     "time": "05:00 AM",
-    "title": "Radio 1 Early Breakfast - with Dean McCullough",
+    "title": "Radio 1 Early Breakfast - with Sam Darlaston",
     "channel": "BBC Radio 1"
   },
   {
     "time": "06:58 AM",
-    "title": "Radio 1 Newsbeat - 20/07/2026",
+    "title": "Radio 1 Newsbeat - 24/07/2026",
     "channel": "BBC Radio 1"
   },
   {
     "time": "07:00 AM",
-    "title": "Radio 1 Breakfast with Greg James - 20/07/2026",
+    "title": "Radio 1 Breakfast with Greg James - Wrong-Uns",
+    "channel": "BBC Radio 1"
+  },
+  {
+    "time": "10:00 AM",
+    "title": "Radio 1 Anthems - with Nat and Vicky",
     "channel": "BBC Radio 1"
   },
   {
     "time": "11:00 AM",
-    "title": "Rickie, Melvin and Charlie - Rickie, Melvin OR Charlie?",
+    "title": "Radio 1's Group Chat with Nat and Vicky - Ready for the Weekend",
     "channel": "BBC Radio 1"
   },
   {
     "time": "12:45 PM",
-    "title": "Newsbeat - 20/07/2026",
+    "title": "Newsbeat - 24/07/2026",
     "channel": "BBC Radio 1"
   },
   {
     "time": "01:00 PM",
-    "title": "Matt and Mollie - Don't Match Matt",
+    "title": "Sam and Danni - 24/07/2026",
     "channel": "BBC Radio 1"
   },
   {
-    "time": "03:30 PM",
-    "title": "Radio 1 Newsbeat - 20/07/2026",
+    "time": "03:00 PM",
+    "title": "Radio 1 Dance Party Starters - with Sam and Danni",
     "channel": "BBC Radio 1"
   },
   {
-    "time": "03:33 PM",
-    "title": "Going Home with Vick, Katie and Jamie on Radio 1 - Chaos on your way home!",
+    "time": "04:00 PM",
+    "title": "The Official Chart on Radio 1 with Jack Saunders - 24/07/2026",
     "channel": "BBC Radio 1"
   },
   {
     "time": "05:45 PM",
-    "title": "Newsbeat - 20/07/2026",
+    "title": "Newsbeat - 24/07/2026",
     "channel": "BBC Radio 1"
   },
   {
     "time": "06:00 PM",
-    "title": "Radio 1's New Music Show with Jack Saunders - 20/07/2026",
+    "title": "Radio 1's Dance Party with Danny Howard - Rossi x bbyclose Hottest Record + Ellie Scougall Mini Mix",
     "channel": "BBC Radio 1"
   },
   {
     "time": "08:00 PM",
-    "title": "Radio 1's Future Artists with Sian Eleri - Finn Wolfhard",
+    "title": "Radio 1's Future Dance with Sarah Story - Martha sits in with RONI in the Peak Time Mix",
     "channel": "BBC Radio 1"
   },
   {
     "time": "10:00 PM",
-    "title": "Radio 1's Power Down Playlist with Sian Eleri - Comfort Blanket",
-    "channel": "BBC Radio 1"
-  },
-  {
-    "time": "11:00 PM",
-    "title": "Radio 1's Rock Show with Daniel P Carter - 20/07/2026",
+    "title": "Pete Tong's Essential History of Dance - Radio 1 Dance in Ibiza",
     "channel": "BBC Radio 1"
   },
 
 
   
- 
+
   {
     "time": "12:00 AM",
-    "title": "Richie Anderson - Let’s start the week right!",
+    "title": "OJ Borg - Friday means Ravio 2",
     "channel": "BBC Radio 2"
   },
   {
     "time": "03:00 AM",
-    "title": "Alternative Sounds of the 90s with Dermot O'Leary - Only 365 Sleeps 'til Glastonbury!",
+    "title": "Alternative Sounds of the 90s with Dermot O'Leary - Dermot's A-Z of Britpop. Part 1 A-M",
     "channel": "BBC Radio 2"
   },
   {
     "time": "04:00 AM",
-    "title": "Owain Wyn Evans - Making it personal",
+    "title": "Owain Wyn Evans - Getting the weekend started!",
     "channel": "BBC Radio 2"
   },
   {
     "time": "06:30 AM",
-    "title": "The Sara Cox Breakfast Show - Start your day with Sara Cox!",
+    "title": "The Sara Cox Breakfast Show - It's Fri-YAY with Sam Smith!",
     "channel": "BBC Radio 2"
   },
   {
     "time": "09:30 AM",
-    "title": "Vernon Kay - Les Dennis chooses his Tracks Of My Years",
+    "title": "Vernon Kay - Les Dennis's final two songs in this week’s Tracks Of My Years.",
     "channel": "BBC Radio 2"
   },
   {
     "time": "12:00 PM",
-    "title": "Jeremy Vine - 20/07/2026",
+    "title": "Jeremy Vine - 24/07/2026",
     "channel": "BBC Radio 2"
   },
   {
     "time": "02:00 PM",
-    "title": "Trevor Nelson - DJ Spoony sits in: A new 5 Seconds",
+    "title": "Trevor Nelson - DJ Spoony sits in: Funky Friday!",
     "channel": "BBC Radio 2"
   },
   {
     "time": "04:00 PM",
-    "title": "Radio 2 Drivetime - with Mark Goodier",
+    "title": "Radio 2 Drivetime - All Request Friday",
     "channel": "BBC Radio 2"
   },
   {
     "time": "07:00 PM",
-    "title": "Jo Whiley's Shiny Happy Playlist - 20/07/2026",
+    "title": "Michelle Visage - Party #203... step one: we can have lots of fun!",
     "channel": "BBC Radio 2"
   },
   {
-    "time": "07:30 PM",
-    "title": "Jo Whiley - The Latest New Releases",
+    "time": "08:30 PM",
+    "title": "Michelle Visage - Michelle Visage's Handbag Hits, Michelle's Mood is... SCHOOL'S OUT! Hits from Prince, Black Eyed Peas, Ariana Grande and more",
     "channel": "BBC Radio 2"
   },
   {
     "time": "09:00 PM",
-    "title": "The Blues Show with Cerys Matthews - 20/07/2026",
+    "title": "Sophie Ellis-Bextor's Kitchen Disco - School's Out!",
     "channel": "BBC Radio 2"
   },
   {
-    "time": "10:00 PM",
-    "title": "The Good Groove with DJ Spoony - Melvin Odoom sits in: Dr Beat's locum is in the house!",
+    "time": "11:00 PM",
+    "title": "The Rock Show with Shaun Keaveny - A little bit of Josh Homme...",
     "channel": "BBC Radio 2"
   },
   
@@ -159,52 +149,56 @@ window.SCHEDULE_DATA = [
 
   {
     "time": "12:30 AM",
-    "title": "Through the Night - Chopin Piano Concertos",
+    "title": "Through the Night - Sacra Partitura: the beginnings of Italian Baroque",
     "channel": "BBC Radio 3"
   },
   {
     "time": "06:30 AM",
-    "title": "Radio 3 Breakfast - Birdsong and Bach to banish those morning blues",
+    "title": "Radio 3 Breakfast - Wake up your senses with classical music",
     "channel": "BBC Radio 3"
   },
   {
     "time": "09:30 AM",
-    "title": "Essential Classics - The ideal mix of classical music",
+    "title": "Essential Classics - Relax into the day with classical",
     "channel": "BBC Radio 3"
   },
   {
     "time": "01:00 PM",
-    "title": "Classical Live - Ravel’s Piano Concerto at the BBC Proms",
+    "title": "Classical Live - Sibelius’s Violin Concerto from the BBC Proms",
     "channel": "BBC Radio 3"
   },
   {
     "time": "04:00 PM",
-    "title": "Composer of the Week - George Frideric Handel (1685-1759), The Art of Procuring a Patron",
+    "title": "Composer of the Week - George Frideric Handel (1685-1759), All for a Good Cause",
     "channel": "BBC Radio 3"
   },
   {
     "time": "05:00 PM",
-    "title": "In Tune - The 7am Choir from All Saints Cathedral, Nairobi perform live",
+    "title": "In Tune - Cellist Guy Johnston and historian Simon Schama",
     "channel": "BBC Radio 3"
   },
   {
     "time": "07:00 PM",
-    "title": "BBC Proms - 2026, Beethoven's Ninth Symphony",
+    "title": "Classical Mixtape - Half an hour of the finest classical music",
+    "channel": "BBC Radio 3"
+  },
+  {
+    "time": "07:30 PM",
+    "title": "BBC Proms - 2026, John Wilson conducts Respighi’s 'Roman Trilogy'",
     "channel": "BBC Radio 3"
   },
   {
     "time": "10:00 PM",
-    "title": "Night Tracks - Blissful sounds for night owls",
+    "title": "Late Junction - Yara Asmar and Quinie in session",
     "channel": "BBC Radio 3"
   },
   {
     "time": "11:30 PM",
-    "title": "'Round Midnight - Joy Guidry’s 4/4",
+    "title": "'Round Midnight - Knats in concert",
     "channel": "BBC Radio 3"
   },
 
   
-
 
   {
     "time": "12:00 AM",
@@ -213,7 +207,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "12:06 AM",
-    "title": "The History Hour - The Spanish Civil War and the Birkin bag",
+    "title": "Unexpected Elements - Bald caps, sparrow raps and lightning claps",
     "channel": "BBC World Service"
   },
   {
@@ -233,7 +227,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "01:32 AM",
-    "title": "Discovery - Unstoppable: Jocelyn Bell Burnell",
+    "title": "The Global Story - Trump v Carney round two",
     "channel": "BBC World Service"
   },
   {
@@ -253,7 +247,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "02:32 AM",
-    "title": "CrowdScience - Are there diseases in space?",
+    "title": "Tech Life - Smell the future",
     "channel": "BBC World Service"
   },
   {
@@ -263,17 +257,12 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "03:06 AM",
-    "title": "The Inquiry - Are we closer to gene therapy for sickle cell disease being accessible?",
+    "title": "Outlook - Keeper of secrets: The Chinese sociologist turned confidante",
     "channel": "BBC World Service"
   },
   {
-    "time": "03:30 AM",
-    "title": "BBC News Summary - The latest two minute news summary from BBC World Service.",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "03:32 AM",
-    "title": "The Fifth Floor - Belarus's university in exile",
+    "time": "03:50 AM",
+    "title": "Witness History - The first solar-powered flight around the world",
     "channel": "BBC World Service"
   },
   {
@@ -293,7 +282,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "04:32 AM",
-    "title": "The Conversation - Giving stature to women",
+    "title": "Heart and Soul - Searching for My Samurai Mother",
     "channel": "BBC World Service"
   },
   {
@@ -303,7 +292,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "05:06 AM",
-    "title": "Newsday - Spain wins the World Cup for a second time",
+    "title": "Newsday - Live news, business and sport from around the world.",
     "channel": "BBC World Service"
   },
   {
@@ -333,7 +322,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "08:06 AM",
-    "title": "The Interview - Maggie Haberman, US journalist: Trump tests limits",
+    "title": "The Interview - Rafael Grossi, IAEA: Nuclear back on the table?",
     "channel": "BBC World Service"
   },
   {
@@ -343,12 +332,12 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "08:32 AM",
-    "title": "Business Daily - The hidden cost of the gold rush",
+    "title": "Business Daily - Taking Stock: Is AI burning cash?",
     "channel": "BBC World Service"
   },
   {
     "time": "08:50 AM",
-    "title": "Witness History - Mexico’s ‘little old lady killer’",
+    "title": "Witness History - Creating Africa’s largest film festival",
     "channel": "BBC World Service"
   },
   {
@@ -368,7 +357,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "09:32 AM",
-    "title": "CrowdScience - Are there diseases in space?",
+    "title": "BBC Inside Science - Testing Testosterone Testing",
     "channel": "BBC World Service"
   },
   {
@@ -378,7 +367,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "10:06 AM",
-    "title": "The History Hour - The Spanish Civil War and the Birkin bag",
+    "title": "Unexpected Elements - Bald caps, sparrow raps and lightning claps",
     "channel": "BBC World Service"
   },
   {
@@ -408,12 +397,12 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "12:06 PM",
-    "title": "Outlook - \"Food is a Gift\" - How a recipe creator cooked through the tough times",
+    "title": "Outlook - Outlook Mixtape: Cut from a different cloth",
     "channel": "BBC World Service"
   },
   {
     "time": "12:50 PM",
-    "title": "Witness History - Mexico’s ‘little old lady killer’",
+    "title": "Witness History - Creating Africa’s largest film festival",
     "channel": "BBC World Service"
   },
   {
@@ -424,6 +413,16 @@ window.SCHEDULE_DATA = [
   {
     "time": "01:06 PM",
     "title": "The Newsroom - The world's Newsroom brings you global events as they happen",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "01:30 PM",
+    "title": "BBC News Summary - The latest two minute news summary from BBC World Service.",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "01:32 PM",
+    "title": "BBC Inside Science - Testing Testosterone Testing",
     "channel": "BBC World Service"
   },
   {
@@ -443,7 +442,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "03:06 PM",
-    "title": "The Interview - Maggie Haberman, US journalist: Trump tests limits",
+    "title": "The Interview - Rafael Grossi, IAEA: Nuclear back on the table?",
     "channel": "BBC World Service"
   },
   {
@@ -453,7 +452,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "03:32 PM",
-    "title": "Business Daily - The hidden cost of the gold rush",
+    "title": "Business Daily - Taking Stock: Is AI burning cash?",
     "channel": "BBC World Service"
   },
   {
@@ -468,7 +467,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "04:06 PM",
-    "title": "Outside Source - A vibrant account of the day’s events with explanation and reaction from those involved.",
+    "title": "Outside Source - A vibrant account of the day’s events with explanation and reaction",
     "channel": "BBC World Service"
   },
   {
@@ -478,7 +477,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "05:06 PM",
-    "title": "Outside Source - A vibrant account of the day’s events with explanation and reaction from those involved.",
+    "title": "Outside Source - A vibrant account of the day’s events with explanation and reaction",
     "channel": "BBC World Service"
   },
   {
@@ -488,7 +487,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "06:06 PM",
-    "title": "Outlook - \"Food is a Gift\" - How a recipe creator cooked through the tough times",
+    "title": "Outlook - Outlook Mixtape: Cut from a different cloth",
     "channel": "BBC World Service"
   },
   {
@@ -513,7 +512,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "07:32 PM",
-    "title": "Sport Today - BBC sports correspondents tell the story behind today's top sporting news",
+    "title": "Sport Today - Today's top sporting news, with interviews and reports from across the world",
     "channel": "BBC World Service"
   },
   {
@@ -523,7 +522,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "08:06 PM",
-    "title": "From Our Own Correspondent - Bangladesh's deadly measles outbreak",
+    "title": "BBC Conversations - How major news stories are affecting the lives of people around the world",
     "channel": "BBC World Service"
   },
   {
@@ -533,7 +532,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "08:32 PM",
-    "title": "Discovery - Unstoppable: Kura Paul-Burke",
+    "title": "CrowdScience - Is anything truly random?",
     "channel": "BBC World Service"
   },
   {
@@ -553,7 +552,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "10:06 PM",
-    "title": "The Interview - Maggie Haberman, US journalist: Trump tests limits",
+    "title": "The Interview - Rafael Grossi, IAEA: Nuclear back on the table?",
     "channel": "BBC World Service"
   },
   {
@@ -563,7 +562,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "10:32 PM",
-    "title": "The Conversation - Giving stature to women",
+    "title": "Heart and Soul - Searching for My Samurai Mother",
     "channel": "BBC World Service"
   },
   {
@@ -583,7 +582,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "11:32 PM",
-    "title": "World Business Report - The latest business and finance news from around the world, on the BBC.",
+    "title": "World Business Report - The latest business and finance news from around the world",
     "channel": "BBC World Service"
   },
 
@@ -592,212 +591,191 @@ window.SCHEDULE_DATA = [
 
   {
     "time": "12:00 AM",
-    "title": "Midnight News - National and international news from BBC Radio 4",
+    "title": "Midnight News - 24/07/2026",
     "channel": "BBC Radio 4"
   },
   {
-    "time": "12:15 AM",
-    "title": "Inside Health - Could we eliminate cervical cancer? Does the success of the HPV vaccine mean that cervical screening can be reduced?",
-    "channel": "BBC Radio 4"
-  },
-  {
-    "time": "12:45 AM",
-    "title": "Bells on Sunday - The church of St Chad in Pattingham, Staffordshire - Bells on Sunday comes from the Church of St Chad in Pattingham, Staffordshire.",
+    "time": "12:30 AM",
+    "title": "A Meditation on Mud by Rebecca Stott - Episode 4: Mud and War",
     "channel": "BBC Radio 4"
   },
   {
     "time": "12:48 AM",
-    "title": "Shipping Forecast - The latest weather reports and forecasts for UK shipping.",
+    "title": "Shipping Forecast - 24/07/2026",
     "channel": "BBC Radio 4"
   },
   {
     "time": "01:00 AM",
-    "title": "Selection of BBC World Service Programmes - BBC Radio 4 joins the BBC World Service.",
+    "title": "Selection of BBC World Service Programmes - 24/07/2026",
     "channel": "BBC Radio 4"
   },
   {
     "time": "05:00 AM",
-    "title": "News Summary - National and international news from BBC Radio 4",
+    "title": "News Summary - 24/07/2026",
     "channel": "BBC Radio 4"
   },
   {
     "time": "05:04 AM",
-    "title": "Last Word - Sam Neill: the silent child with a stutter who became a movie star - Matthew Bannister on two actors, a musician and a chef.",
+    "title": "The Briefing Room - Part 1: How's the government doing on immigration?",
     "channel": "BBC Radio 4"
   },
   {
     "time": "05:34 AM",
-    "title": "Shipping Forecast - The latest weather reports and forecasts for UK shipping.",
+    "title": "Shipping Forecast - 24/07/2026",
     "channel": "BBC Radio 4"
   },
   {
     "time": "05:43 AM",
-    "title": "Prayer for the Day - Return to the Present - A spiritual comment and prayer to start the day with Steve Taylor.",
+    "title": "Prayer for the Day - The Power of Idleness",
     "channel": "BBC Radio 4"
   },
   {
     "time": "05:45 AM",
-    "title": "Farming Today - Milk price glimmers, Andy Burnham's rural in-tray, Welsh farming policy. - Heatwaves in Europe hit milk production but could it mean better prices for farmers?",
-    "channel": "BBC Radio 4"
-  },
-  {
-    "time": "05:57 AM",
-    "title": "Weather - The latest weather reports and forecasts for farmers",
+    "title": "Farming Today - 24/07/26: Drought declared in North Wales, investing in water security, river pollution in Pembrokeshire.",
     "channel": "BBC Radio 4"
   },
   {
     "time": "06:00 AM",
-    "title": "Today - News and current affairs, including Sports Desk, Weather and Thought for the Day.",
+    "title": "Today - 24/07/2026",
     "channel": "BBC Radio 4"
   },
   {
     "time": "09:00 AM",
-    "title": "Common Ground - Class - Does social class affect how well we live together?",
-    "channel": "BBC Radio 4"
-  },
-  {
-    "time": "09:30 AM",
-    "title": "Politically - Reflections: Series 4, Caroline Lucas - 3/3 The former Green Party leader discusses power, getting arrested and listening to opponents",
+    "title": "Desert Island Discs - Shania Twain, musician",
     "channel": "BBC Radio 4"
   },
   {
     "time": "10:00 AM",
-    "title": "Woman's Hour - Andy Burnham’s intray, Dr Emma Chapman, Snail Mail - As Andy Burnham takes over as prime minister, what should he prioritise for women?",
+    "title": "Woman's Hour - 24/07/2026",
     "channel": "BBC Radio 4"
   },
   {
     "time": "11:00 AM",
-    "title": "Church Going, with Giles Fraser - Episode 2 - Giles Fraser is on a mission to work out the state of Christianity in this country.",
+    "title": "The Food Programme - What Happened Next?",
     "channel": "BBC Radio 4"
   },
   {
     "time": "11:45 AM",
-    "title": "A Meditation on Mud by Rebecca Stott - Episode 1: The walk - 1/5 A scientific, historical and cultural journey unearthing the meanings of mud.",
+    "title": "A Meditation on Mud by Rebecca Stott - Episode 5: Life and Death",
     "channel": "BBC Radio 4"
   },
   {
     "time": "12:00 PM",
-    "title": "News Summary - The latest national and international news from BBC Radio 4.",
+    "title": "News Summary - 24/07/2026",
     "channel": "BBC Radio 4"
   },
   {
     "time": "12:04 PM",
-    "title": "You and Yours - News and discussion of consumer affairs",
+    "title": "AntiSocial - 24/07/2026",
     "channel": "BBC Radio 4"
   },
   {
-    "time": "12:30 PM",
-    "title": "World at One - News, analysis and comment from BBC Radio 4",
+    "time": "12:57 PM",
+    "title": "Weather - 24/07/2026",
+    "channel": "BBC Radio 4"
+  },
+  {
+    "time": "01:00 PM",
+    "title": "World at One - 24/07/2026",
     "channel": "BBC Radio 4"
   },
   {
     "time": "01:45 PM",
-    "title": "Buried - Dead Rabbit, 1. Dead Rabbit - 1/11 Twenty dead animals left outside a school - but why? Journalists Dan and Lucy investigate.",
+    "title": "Buried - Dead Rabbit, 5. Final Day",
     "channel": "BBC Radio 4"
   },
   {
     "time": "02:00 PM",
-    "title": "The Archers - Opportunity knocks for Harrison.",
+    "title": "The Archers - 23/07/2026",
     "channel": "BBC Radio 4"
   },
   {
     "time": "02:15 PM",
-    "title": "Alone - Series 4, Episode 2 - The Longest Brief Thing - Things get fraught when Louisa befriends Nina, Morris’s sort of ex. Stars Angus Deayton.",
+    "title": "Limelight - Central Intelligence: Series 3, Episode 3",
     "channel": "BBC Radio 4"
   },
   {
     "time": "02:45 PM",
-    "title": "Opening Lines - They Shoot Horses, Don't They? - John Yorke explores Horace McCoy’s 1930s noir classic, They Shoot Horses, Don’t They?",
+    "title": "Living on the Edge - East Neuk",
     "channel": "BBC Radio 4"
   },
   {
     "time": "03:00 PM",
-    "title": "A Good Read - Cariad Lloyd and Geoff Dyer - Harriett Gilbert is with a comedian and a writer to talk favourite books.",
+    "title": "Gardeners' Question Time - East Renfrewshire: Balcony Brilliance, Reluctant Camellias and Making The Most Of Moss",
     "channel": "BBC Radio 4"
   },
   {
-    "time": "03:30 PM",
-    "title": "You're Dead to Me - Anne Bonny and Mary Read: real-life pirates of the Caribbean - Join Greg and his guests to learn about the infamous pirates Anne Bonny and Mary Read.",
+    "time": "03:45 PM",
+    "title": "Short Works - I, Pondweed by Rose Biggin",
     "channel": "BBC Radio 4"
   },
   {
     "time": "04:00 PM",
-    "title": "Currently - The Rebirth of Orgreave - Who benefits as a former mining site is regenerated?",
+    "title": "Last Word - 24/07/2026",
     "channel": "BBC Radio 4"
   },
   {
     "time": "04:30 PM",
-    "title": "The Kitchen Cabinet - Series 53, Exeter - 4/6 Jay Rayner and the panel visit Crediton, just outside Exeter to answer culinary questions.",
+    "title": "Sideways - Stick to the Script",
     "channel": "BBC Radio 4"
   },
   {
     "time": "05:00 PM",
-    "title": "PM - Full coverage of the day's news",
+    "title": "PM - 24/07/2026",
     "channel": "BBC Radio 4"
   },
   {
     "time": "06:00 PM",
-    "title": "Six O'Clock News - National and international news from BBC Radio 4",
+    "title": "Six O'Clock News - 24/07/2026",
     "channel": "BBC Radio 4"
   },
   {
     "time": "06:30 PM",
-    "title": "Just a Minute - Series 97, 1. How much wood would a woodchuck chuck? - 1/6 We're back with Paul Merton, Lucy Porter, Gyles Brandreth and Rachel Parris.",
+    "title": "Current-ish - Episode 1",
     "channel": "BBC Radio 4"
   },
   {
     "time": "07:00 PM",
-    "title": "The Archers - Chris has reservations about a loved one.",
+    "title": "The Archers - 24/07/2026",
     "channel": "BBC Radio 4"
   },
   {
     "time": "07:15 PM",
-    "title": "Front Row - Live magazine programme on the worlds of arts, literature, film, media and music.",
+    "title": "Screenshot - 24 Hour Movies",
     "channel": "BBC Radio 4"
   },
   {
     "time": "08:00 PM",
-    "title": "The Briefing Room - Will a devolution revolution help boost the economy? - Will moving power away from the centre to the English regions lead to economic growth?",
+    "title": "Any Questions? - Saqib Bhatti MP, Lord Falconer, Baroness Fox, Polly Mackenzie",
     "channel": "BBC Radio 4"
   },
   {
-    "time": "08:30 PM",
-    "title": "BBC Inside Science - How might we spot nukes in space? - What’s the point of having a treaty banning nukes in space if we can’t spot them?",
+    "time": "08:55 PM",
+    "title": "This Week in History - July 20th - July 26th",
     "channel": "BBC Radio 4"
   },
   {
     "time": "09:00 PM",
-    "title": "Common Ground - Class - Does social class affect how well we live together?",
-    "channel": "BBC Radio 4"
-  },
-  {
-    "time": "09:30 PM",
-    "title": "Politically - Reflections: Series 4, Caroline Lucas - 3/3 The former Green Party leader discusses power, getting arrested and listening to opponents",
+    "title": "Archive on 4 - A Brief History of Strangers",
     "channel": "BBC Radio 4"
   },
   {
     "time": "10:00 PM",
-    "title": "The World Tonight - In-depth reporting, intelligent analysis and breaking news from a global perspective.",
+    "title": "The World Tonight - 24/07/2026",
     "channel": "BBC Radio 4"
   },
   {
     "time": "10:45 PM",
-    "title": "Wild Dark Shore by Charlotte McConaghy - Episode 1 - 1/10 On the remote island of Shearwater, a family guards the world's largest seed bank.",
+    "title": "Wild Dark Shore by Charlotte McConaghy - Episode 5",
     "channel": "BBC Radio 4"
   },
   {
     "time": "11:00 PM",
-    "title": "Limelight - Galapagos, 5. Face to Face - 5/5 As Wales embraces independence, Bryony realises that Shapeshift has big plans for her.",
+    "title": "Americast - 24/07/2026",
     "channel": "BBC Radio 4"
   },
   {
     "time": "11:30 PM",
-    "title": "Naturebang - Octopuses and the Mind-Body Problem - What can an octopus teach us about our relationship between the mind and the body?",
+    "title": "A Good Read - Duncan Campbell and Mark Hodkinson",
     "channel": "BBC Radio 4"
   },
-  {
-    "time": "11:45 PM",
-    "title": "Today in Parliament - News, views and features on today's stories in Parliament",
-    "channel": "BBC Radio 4"
-  }
-];
