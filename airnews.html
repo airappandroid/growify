@@ -1,152 +1,178 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AIR Audio News Bulletin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>France Radio Home</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        body {
+            background-color: #0f172a;
+            color: #ffffff;
+            margin: 0;
+            padding: 16px;
+        }
+        h2 {
+            font-size: 18px;
+            color: #38bdf8;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        h2:first-of-type {
+            margin-top: 5px;
+        }
 
-<style>
-*{
-  -webkit-tap-highlight-color:transparent;
-  box-sizing:border-box;
-}
+        /* 1. Popular Stations Styling */
+        .station-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .station-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            color: #ffffff;
+        }
+        .station-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .station-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 11px;
+            color: #ffffff;
+            text-align: center;
+        }
+        
+        /* Photo Matching Colors */
+        .bg-inter { background-color: #e11d48; }
+        .bg-info { background-color: #eab308; color: #000000; font-weight: 800; }
+        .bg-ici { background-color: #3b82f6; }
+        .bg-culture { background-color: #7c3aed; }
+        .bg-musique { background-color: #be123c; }
+        .bg-mouv { background-color: #10b981; color: #000000; font-weight: 800; }
 
-body{
-  margin:0;
-  font-family:Roboto,system-ui,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
-  background:#1e1f22;   /* Home jaisa charcoal */
-  color:#e8e8e8;
-}
+        .station-name {
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .play-btn {
+            background-color: #0284c7;
+            color: #ffffff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
 
-/* ===== LANGUAGE TABS ===== */
-.lang-tabs{
-  display:flex;
-  gap:12px;
-  padding:14px;
-  background:#24262a;              /* slightly lighter than body */
-  position:sticky;
-  top:0;
-  z-index:10;
-  border-bottom:1px solid #33363c;
-}
-
-.lang-tabs button{
-  flex:1;
-  padding:11px 0;
-  font-size:14px;
-  font-weight:600;
-  border-radius:999px;
-  border:1px solid #33363c;
-  background:#2b2d31;              /* card tone */
-  color:#e8e8e8;
-  transition:transform .1s ease, opacity .1s ease, background .2s ease;
-}
-
-.lang-tabs button.active{
-  background:#4cc2ff;
-  color:#000;
-  border-color:#4cc2ff;
-}
-
-.lang-tabs button:active{
-  transform:scale(.97);
-  opacity:.85;
-}
-
-/* ===== CONTENT ===== */
-.content{display:none;padding:14px;}
-.content.active{display:block;}
-
-/* ===== BULLETIN CARD ===== */
-.bulletin{
-  border-radius:18px;
-  padding:14px;
-  margin-bottom:12px;
-  border:1px solid #33363c;
-  background:#2b2d31;              /* same as other cards */
-  box-shadow:0 2px 6px rgba(0,0,0,.25);
-}
-
-.bulletin a{
-  text-decoration:none;
-  color:#e8e8e8;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-}
-
-.bulletin-text{
-  flex:1;
-  min-width:0;
-}
-
-.bulletin-title{
-  font-size:15px;
-  font-weight:600;
-}
-
-.bulletin-time{
-  font-size:12px;
-  color:#b3b7bd;                   /* secondary text */
-  margin-top:6px;
-}
-
-/* ===== PLAY BUTTON ===== */
-.play-btn{
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:16px;
-  background:#4cc2ff;              /* same accent as home */
-  color:#000;
-  flex-shrink:0;
-  box-shadow:0 2px 6px rgba(0,0,0,.25);
-  transition:transform .1s ease, opacity .1s ease;
-}
-
-.play-btn:active{
-  transform:scale(.9);
-  opacity:.85;
-}
-
-</style>
+        /* 2. Categories Styling */
+        .category-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .category-card {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border: 1px solid #475569;
+            border-radius: 12px;
+            padding: 18px 12px;
+            text-align: center;
+            text-decoration: none;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .category-icon {
+            font-size: 26px;
+        }
+        .category-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="lang-tabs">
-    <button class="active" onclick="openTab('hindi',this)">हिन्दी</button>
-    <button onclick="openTab('english',this)">English</button>
-</div>
+    <!-- SECTION 1: POPULAR STATIONS -->
+    <h2>🔥 Popular Stations</h2>
+    <div class="station-list">
+        
+        <!-- France Inter -->
+        <a href="go:S1" class="station-card">
+            <div class="station-left">
+                <div class="station-logo bg-inter">inter</div>
+                <span class="station-name">France Inter</span>
+            </div>
+            <span class="play-btn">Play ▶</span>
+        </a>
 
-<!-- HINDI -->
-<div id="hindi" class="content active">
-    <div class="bulletin blt-hourly"><a href="go:H1"><div class="bulletin-text"><div class="bulletin-title">प्रतिघंटा समाचार</div><div class="bulletin-time">16 Feb | 9:00 AM</div></div><div class="play-btn">▶</div></a></div>
-    <div class="bulletin blt-morning"><a href="go:H2"><div class="bulletin-text"><div class="bulletin-title">समाचार प्रभात</div><div class="bulletin-time">16 Feb | 8:00 AM</div></div><div class="play-btn">▶</div></a></div>
-    <div class="bulletin blt-midday"><a href="go:H3"><div class="bulletin-text"><div class="bulletin-title">दोपहर समाचार</div><div class="bulletin-time">14 Feb | 2:15 PM</div></div><div class="play-btn">▶</div></a></div>
-    <div class="bulletin blt-evening"><a href="go:H4"><div class="bulletin-text"><div class="bulletin-title">समाचार संध्या</div><div class="bulletin-time">12 Feb | 8:45 PM</div></div><div class="play-btn">▶</div></a></div>
-</div>
+        <!-- franceinfo -->
+        <a href="go:S2" class="station-card">
+            <div class="station-left">
+                <div class="station-logo bg-info">info</div>
+                <span class="station-name">franceinfo</span>
+            </div>
+            <span class="play-btn">Play ▶</span>
+        </a>
 
-<!-- ENGLISH -->
-<div id="english" class="content">
-    <div class="bulletin blt-hourly"><a href="go:E1"><div class="bulletin-text"><div class="bulletin-title">Hourly News</div><div class="bulletin-time">16 Feb | 9:00 AM</div></div><div class="play-btn">▶</div></a></div>
-    <div class="bulletin blt-morning"><a href="go:E2"><div class="bulletin-text"><div class="bulletin-title">Morning News</div><div class="bulletin-time">16 Feb | 8:15 AM</div></div><div class="play-btn">▶</div></a></div>
-    <div class="bulletin blt-midday"><a href="go:E3"><div class="bulletin-text"><div class="bulletin-title">Mid-Day News</div><div class="bulletin-time">14 Feb | 2:00 PM</div></div><div class="play-btn">▶</div></a></div>
-    <div class="bulletin blt-evening"><a href="go:E4"><div class="bulletin-text"><div class="bulletin-title">Evening News</div><div class="bulletin-time">12 Feb | 9:00 PM</div></div><div class="play-btn">▶</div></a></div>
-</div>
+        <!-- HERE (ici) -->
+        <a href="go:S3" class="station-card">
+            <div class="station-left">
+                <div class="station-logo bg-ici">ici</div>
+                <span class="station-name">HERE (ici)</span>
+            </div>
+            <span class="play-btn">Play ▶</span>
+        </a>
 
-<script>
-function openTab(id,btn){
-    document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));
-    document.querySelectorAll('.lang-tabs button').forEach(b=>b.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    btn.classList.add('active');
-}
-</script>
+        <!-- France Culture -->
+        <a href="go:S4" class="station-card">
+            <div class="station-left">
+                <div class="station-logo bg-culture">culture</div>
+                <span class="station-name">France Culture</span>
+            </div>
+            <span class="play-btn">Play ▶</span>
+        </a>
+
+        <!-- France Musique -->
+        <a href="go:S5" class="station-card">
+            <div class="station-left">
+                <div class="station-logo bg-musique">musique</div>
+                <span class="station-name">France Musique</span>
+            </div>
+            <span class="play-btn">Play ▶</span>
+        </a>
+
+        <!-- Mouv' -->
+        <a href="go:S6" class="station-card">
+            <div class="station-left">
+                <div class="station-logo bg-mouv">MOUV'</div>
+                <span class="station-name">Mouv'</span>
+            </div>
+            <span class="play-btn">Play ▶</span>
+        </a>
+
+    </div>
+
+   
 
 </body>
 </html>
