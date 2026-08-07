@@ -82,7 +82,7 @@ window.SCHEDULE_DATA = [
  
 
 
- window.SCHEDULE_DATA = [
+ 
   {
     "time": "12:00 AM",
     "title": "OJ Borg - Connor Phillips sits in: Friday means Ravio 2",
