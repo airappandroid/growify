@@ -1,82 +1,97 @@
 window.SCHEDULE_DATA = [
   {
-    "time": "01:00 AM",
-    "title": "Radio 1's Live Lounge - Best of, Curveball Covers",
+    "time": "12:00 AM",
+    "title": "Radio 1's Essential Mix - Max Styler",
     "channel": "BBC Radio 1"
   },
   {
     "time": "02:00 AM",
-    "title": "Radio 1 Anthems - Robyn, Coldplay, Example and more",
+    "title": "Radio 1 Dance Presents... - SOSA at Ushuaïa Ibiza",
+    "channel": "BBC Radio 1"
+  },
+  {
+    "time": "03:00 AM",
+    "title": "Danny Howard's Club Mix - MK, Melon Bomb, Beth and more!",
     "channel": "BBC Radio 1"
   },
   {
     "time": "04:00 AM",
-    "title": "Radio 1's Workout Anthems - Calvin Harris, Sub Focus, Robin S and more",
+    "title": "Radio 1 Dance Party Starters - Kid Cudi & Steve Aoki, MK, Prospa",
     "channel": "BBC Radio 1"
   },
   {
     "time": "05:00 AM",
-    "title": "Radio 1 Early Breakfast - with Beth Wallace",
+    "title": "Radio 1's Happy Anthems - Harry Styles, Ariana Grande and Lewis Capaldi",
     "channel": "BBC Radio 1"
   },
   {
-    "time": "06:58 AM",
-    "title": "Radio 1 Newsbeat - The latest News from around the UK",
+    "time": "06:00 AM",
+    "title": "Radio 1 Weekend Early Breakfast with Oré Olukoga",
     "channel": "BBC Radio 1"
   },
   {
     "time": "07:00 AM",
-    "title": "Radio 1 Breakfast with Greg James - Wrong-Uns!",
+    "title": "Radio 1 Weekend Breakfast with James Cusack",
     "channel": "BBC Radio 1"
   },
   {
     "time": "10:00 AM",
-    "title": "Radio 1 Anthems - with Nat and Vicky",
+    "title": "Radio 1 Anthems with James Cusack",
+    "channel": "BBC Radio 1"
+  },
+  {
+    "time": "10:30 AM",
+    "title": "Radio 1 Newsbeat - 08/08/2026",
+    "channel": "BBC Radio 1"
+  },
+  {
+    "time": "10:32 AM",
+    "title": "Radio 1 Anthems with Nat and Vicky",
     "channel": "BBC Radio 1"
   },
   {
     "time": "11:00 AM",
-    "title": "Radio 1's Group Chat with Nat and Vicky - Ready for the Weekend",
-    "channel": "BBC Radio 1"
-  },
-  {
-    "time": "12:45 PM",
-    "title": "Newsbeat - The latest News from around the UK",
+    "title": "Radio 1's Group Chat with Nat and Vicky - Main Character Energy",
     "channel": "BBC Radio 1"
   },
   {
     "time": "01:00 PM",
-    "title": "Sam and Danni - James Cusack sits in",
-    "channel": "BBC Radio 1"
-  },
-  {
-    "time": "03:00 PM",
-    "title": "Radio 1 Dance Party Starters - with James Cusack",
+    "title": "Sam and Danni - Mylo and Rosie sit in",
     "channel": "BBC Radio 1"
   },
   {
     "time": "04:00 PM",
-    "title": "The Official Chart on Radio 1 with Jack Saunders - 07/08/2026",
+    "title": "Radio 1's Dance Anthems - Classic dance anthems with Charlie Hedges",
     "channel": "BBC Radio 1"
   },
   {
-    "time": "05:45 PM",
-    "title": "Newsbeat - The latest News from around the UK",
+    "time": "05:00 PM",
+    "title": "Radio 1's Dance Anthems - Classic dance anthems with Charlie Hedges",
     "channel": "BBC Radio 1"
   },
   {
     "time": "06:00 PM",
-    "title": "Radio 1's Dance Party with Danny Howard - Arielle Free sits in",
+    "title": "Radio 1's Dance Anthems - Today's dance anthems with Charlie Hedges",
     "channel": "BBC Radio 1"
   },
   {
-    "time": "08:00 PM",
-    "title": "Radio 1's Future Dance with Sarah Story - Matty Chiabi sits in: Cam Stockman from Ibiza",
+    "time": "07:00 PM",
+    "title": "Radio 1's Soundsystem Party with Jeremiah: Tyla Party Starter",
     "channel": "BBC Radio 1"
   },
   {
-    "time": "10:00 PM",
-    "title": "Pete Tong - Welcome to Global Dance HQ",
+    "time": "09:00 PM",
+    "title": "Radio 1's Rap Show with Kenny Allstar",
+    "channel": "BBC Radio 1"
+  },
+  {
+    "time": "10:30 PM",
+    "title": "Radio 1's Rap Mixtape - Jamaican Independence Day",
+    "channel": "BBC Radio 1"
+  },
+  {
+    "time": "11:00 PM",
+    "title": "Radio 1's Drum & Bass Show with Charlie Tee",
     "channel": "BBC Radio 1"
   },
  
@@ -85,110 +100,136 @@ window.SCHEDULE_DATA = [
  
   {
     "time": "12:00 AM",
-    "title": "OJ Borg - Connor Phillips sits in: Friday means Ravio 2",
+    "title": "Romesh Ranganathan: For the Love of Hip-Hop - The Miseducation of Lauryn Hill",
+    "channel": "BBC Radio 2"
+  },
+  {
+    "time": "01:00 AM",
+    "title": "Tony Blackburn's Sounds of Soul - Caught Up In The Rapture",
+    "channel": "BBC Radio 2"
+  },
+  {
+    "time": "02:00 AM",
+    "title": "Pick of the Pops - 1982",
     "channel": "BBC Radio 2"
   },
   {
     "time": "03:00 AM",
-    "title": "Alternative Sounds of the 90s with Dermot O'Leary - Best of the Guests with Kylie, Alex James and David Gray",
+    "title": "Pick of the Pops - 1996",
     "channel": "BBC Radio 2"
   },
   {
     "time": "04:00 AM",
-    "title": "Owain Wyn Evans - It's Friday, baby!",
+    "title": "Radio 2 Unwinds with Angela Griffin - The Poolside Unwinds Mix Vol. 2",
     "channel": "BBC Radio 2"
   },
   {
-    "time": "06:30 AM",
-    "title": "The Sara Cox Breakfast Show - Shaggy is here for Fri-YAY!",
+    "time": "05:00 AM",
+    "title": "Tracks of My Years - Sara Cox",
     "channel": "BBC Radio 2"
   },
   {
-    "time": "09:30 AM",
-    "title": "Vernon Kay - Phil Collins selects his two final songs in Tracks Of My Years",
+    "time": "06:00 AM",
+    "title": "Sounds of the 60s with Tony Blackburn - Twistin' the Night Away",
     "channel": "BBC Radio 2"
   },
   {
-    "time": "12:00 PM",
-    "title": "Jeremy Vine - Jeremy & guests discuss the news headlines",
+    "time": "08:00 AM",
+    "title": "Dermot O'Leary - Joel Dommett is joined by Mo Gilligan",
     "channel": "BBC Radio 2"
   },
   {
-    "time": "02:00 PM",
-    "title": "Trevor Nelson - DJ Spoony sits in: Funky Friday!",
+    "time": "10:00 AM",
+    "title": "Romesh Ranganathan - With Ricky Wilson",
     "channel": "BBC Radio 2"
   },
   {
-    "time": "04:00 PM",
-    "title": "Radio 2 Drivetime - All Request Friday",
+    "time": "01:00 PM",
+    "title": "Emma Willis - Ellie Taylor sits in with Gary Wilmot",
     "channel": "BBC Radio 2"
   },
   {
-    "time": "07:00 PM",
-    "title": "Michelle Visage - Party #205...yo! Pump up the jam, pump it up",
+    "time": "03:00 PM",
+    "title": "Rylan On Saturday - Abigail's Party",
     "channel": "BBC Radio 2"
   },
   {
-    "time": "08:30 PM",
-    "title": "Michelle Visage - Michelle Visage's Handbag Hits, Michelle's Mood is... HOLI-HOLIDAY! Sunny hits from Madonna, Sash!, Katy Perry, Vengaboys and more",
+    "time": "06:00 PM",
+    "title": "Sounds of the 80s with Gary Davies - True Confessions - with co-hosts Bananarama!",
     "channel": "BBC Radio 2"
   },
   {
-    "time": "09:00 PM",
-    "title": "Sophie Ellis-Bextor's Kitchen Disco - Celebrating Dolly Parton!",
+    "time": "08:00 PM",
+    "title": "Sounds of the 90s with Fearne Cotton - Elizabeth Day counts down the ultimate 90s 'fails'...",
+    "channel": "BBC Radio 2"
+  },
+  {
+    "time": "10:00 PM",
+    "title": "Dance Sounds of the 90s with Vernon Kay - Made in the UK",
     "channel": "BBC Radio 2"
   },
   {
     "time": "11:00 PM",
-    "title": "The Rock Show with Shaun Keaveny - Rick Astley sits in ...",
+    "title": "Alternative Sounds of the 90s with Dermot O'Leary - Dermot's Dream 90s Festival: Sunday",
     "channel": "BBC Radio 2"
   },
+
 
 
 
   {
     "time": "12:30 AM",
-    "title": "Through the Night - Choral music from Sweden",
+    "title": "Through the Night - BBC Proms 2024: First Night",
     "channel": "BBC Radio 3"
   },
   {
     "time": "06:30 AM",
-    "title": "Radio 3 Breakfast - Launch the day with classical music",
+    "title": "Radio 3 Breakfast - Cellist Sheku Kanneh-Mason with a special selection of music for summer",
     "channel": "BBC Radio 3"
   },
   {
-    "time": "09:30 AM",
-    "title": "Essential Classics - Relax into the day with classical",
+    "time": "09:00 AM",
+    "title": "Saturday Morning - Composer Thomas Ades plus a National Youth Orchestra studio takeover!",
+    "channel": "BBC Radio 3"
+  },
+  {
+    "time": "12:00 PM",
+    "title": "Earlier... with Jools Holland - Jools and guests share their musical favourites",
     "channel": "BBC Radio 3"
   },
   {
     "time": "01:00 PM",
-    "title": "Classical Live - Dvořák's 7th Symphony from the BBC Proms",
+    "title": "Key Changes: Radio 3's Essential History of Classical Music - 1794: Les enfants de la patrie",
+    "channel": "BBC Radio 3"
+  },
+  {
+    "time": "02:00 PM",
+    "title": "Record Review - BBC Proms Composer: Haydn with Nigel Simeone and Andrew McGregor",
     "channel": "BBC Radio 3"
   },
   {
     "time": "04:00 PM",
-    "title": "Composer of the Week - Schikaneder and the Freemasons",
+    "title": "Sound of Cinema - Edith is joined by composer Harry Escott and writer Helen Oxenbury",
     "channel": "BBC Radio 3"
   },
   {
     "time": "05:00 PM",
-    "title": "In Tune - Callum Smart and Richard Uttley",
+    "title": "BBC Proms - 2026, Proms Across the UK: Russian Classics",
     "channel": "BBC Radio 3"
   },
   {
-    "time": "07:00 PM",
-    "title": "BBC Proms - 2026, Rossini’s 'Stabat Mater'",
+    "time": "07:30 PM",
+    "title": "BBC Proms - 2026, Berlioz’s ‘Symphonie fantastique’",
     "channel": "BBC Radio 3"
   },
   {
-    "time": "10:00 PM",
-    "title": "Late Junction - Recovered memories and explosive sound",
+    "time": "09:40 PM",
+    "title": "BBC Proms - 2026, Proms Across the UK: Steve Reich at 90",
     "channel": "BBC Radio 3"
   },
   {
-    "time": "11:30 PM",
-    "title": "'Round Midnight - Frida Touray’s Mixtape",
+    "time": "11:00 PM",
+    "title": "New Music Show - Gerald Barry's La Plus Forte",
     "channel": "BBC Radio 3"
   },
   
@@ -196,394 +237,372 @@ window.SCHEDULE_DATA = [
 
   {
     "time": "12:00 AM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
     "channel": "BBC World Service"
   },
   {
     "time": "12:06 AM",
-    "title": "Unexpected Elements - Someone's always watching",
+    "title": "BBC Conversations - Ariana Grande and the public scrutiny of women",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "12:30 AM",
+    "title": "BBC News Summary - The latest news summary from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "12:32 AM",
+    "title": "The Documentary - The teenagers who wired Romania",
     "channel": "BBC World Service"
   },
   {
     "time": "01:00 AM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
     "channel": "BBC World Service"
   },
   {
     "time": "01:06 AM",
-    "title": "The Newsroom - The world's Newsroom brings you global events as they happen",
+    "title": "The Newsroom - Global events as they happen",
     "channel": "BBC World Service"
   },
   {
     "time": "01:30 AM",
-    "title": "BBC News Summary - The latest two minute news summary from BBC World Service",
+    "title": "BBC News Summary - The latest news summary from BBC World Service",
     "channel": "BBC World Service"
   },
   {
     "time": "01:32 AM",
-    "title": "The Global Story - Will Hamas actually disarm?",
+    "title": "The Global Story - Is it OK to talk about Ariana Grande's body?",
     "channel": "BBC World Service"
   },
   {
     "time": "02:00 AM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
     "channel": "BBC World Service"
   },
   {
     "time": "02:06 AM",
-    "title": "The Newsroom - The world's Newsroom brings you global events as they happen",
+    "title": "The Newsroom - Global events as they happen",
     "channel": "BBC World Service"
   },
   {
     "time": "02:30 AM",
-    "title": "BBC News Summary - The latest two minute news summary from BBC World Service",
+    "title": "BBC News Summary - The latest news summary from BBC World Service",
     "channel": "BBC World Service"
   },
   {
     "time": "02:32 AM",
-    "title": "Tech Life - The future of flying?",
+    "title": "Americast - Why the Democrats may never be the same again",
     "channel": "BBC World Service"
   },
   {
     "time": "03:00 AM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
     "channel": "BBC World Service"
   },
   {
     "time": "03:06 AM",
-    "title": "Outlook - The animals that set my mind free",
+    "title": "Outlook - Outlook Mixtape: Eureka! part 2",
     "channel": "BBC World Service"
   },
   {
     "time": "03:50 AM",
-    "title": "Witness History - When Taiwan’s ‘White Terror’ ended",
+    "title": "Witness History - The origins of the all-inclusive holiday",
     "channel": "BBC World Service"
   },
   {
     "time": "04:00 AM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
     "channel": "BBC World Service"
   },
   {
     "time": "04:06 AM",
-    "title": "The Newsroom - The world's Newsroom brings you global events as they happen",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "04:30 AM",
-    "title": "BBC News Summary - The latest two minute news summary from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "04:32 AM",
-    "title": "Heart and Soul - A Singer’s Search for Peace",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "05:00 AM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "05:06 AM",
-    "title": "Newsday - Meta fined $567m in child safety ruling",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "06:00 AM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "06:06 AM",
-    "title": "Newsday - Live news, business and sport from around the world",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "07:00 AM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "07:06 AM",
-    "title": "Newsday - Live news, business and sport from around the world",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "08:00 AM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "08:06 AM",
-    "title": "The Interview - Carlos Acosta, dancer: Ballet is for everyone",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "08:30 AM",
-    "title": "BBC News Summary - The latest two minute news summary from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "08:32 AM",
-    "title": "Business Daily - Taking Stock: Global trade's new reality",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "08:50 AM",
-    "title": "Witness History - The origins of the all-inclusive holiday",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "09:00 AM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "09:06 AM",
-    "title": "The Newsroom - The world's Newsroom brings you global events as they happen",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "09:30 AM",
-    "title": "BBC News Summary - The latest two minute news summary from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "09:32 AM",
-    "title": "BBC Inside Science - The state of our substrate: What is drought doing to our soil?",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "10:00 AM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "10:06 AM",
     "title": "Unexpected Elements - Someone's always watching",
     "channel": "BBC World Service"
   },
   {
+    "time": "05:00 AM",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "05:06 AM",
+    "title": "The Newsroom - Global events as they happen",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "05:30 AM",
+    "title": "BBC News Summary - The latest news summary from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "05:32 AM",
+    "title": "Dear Daughter - Surviving my daughter’s killing",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "05:50 AM",
+    "title": "More or Less - How much of all the money in the world does Elon Musk have?",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "06:00 AM",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "06:06 AM",
+    "title": "Weekend - A review of the week with the latest news",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "07:00 AM",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "07:06 AM",
+    "title": "Weekend - A review of the week with the latest news",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "08:00 AM",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "08:06 AM",
+    "title": "Weekend - A review of the week with the latest news",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "09:00 AM",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "09:06 AM",
+    "title": "BBC Conversations - Ariana Grande and the public scrutiny of women",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "09:30 AM",
+    "title": "BBC News Summary - The latest news summary from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "09:32 AM",
+    "title": "Americast - Why the Democrats may never be the same again",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "10:00 AM",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "10:06 AM",
+    "title": "Not by the Playbook - Behind the scenes",
+    "channel": "BBC World Service"
+  },
+  {
     "time": "11:00 AM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
     "channel": "BBC World Service"
   },
   {
     "time": "11:06 AM",
-    "title": "The Newsroom - The world's Newsroom brings you global events as they happen",
+    "title": "The Newsroom - Global events as they happen",
     "channel": "BBC World Service"
   },
   {
     "time": "11:30 AM",
-    "title": "BBC News Summary - The latest two minute news summary from BBC World Service",
+    "title": "BBC News Summary - The latest news summary from BBC World Service",
     "channel": "BBC World Service"
   },
   {
     "time": "11:32 AM",
-    "title": "The Global Story - Daily deep dive into global news stories",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "12:00 PM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "12:06 PM",
-    "title": "Outlook - Outlook Mixtape: Eureka! part 2",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "12:50 PM",
-    "title": "Witness History - The origins of the all-inclusive holiday",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "01:00 PM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "01:06 PM",
-    "title": "The Newsroom - The world's Newsroom brings you global events as they happen",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "01:30 PM",
-    "title": "BBC News Summary - The latest two minute news summary from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "01:32 PM",
-    "title": "BBC Inside Science - The state of our substrate: What is drought doing to our soil?",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "02:00 PM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "02:06 PM",
-    "title": "Newshour - Interviews, news and analysis of the day’s global events",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "03:00 PM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "03:06 PM",
-    "title": "The Interview - Carlos Acosta, dancer: Ballet is for everyone",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "03:30 PM",
-    "title": "BBC News Summary - The latest two minute news summary from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "03:32 PM",
-    "title": "Business Daily - Taking Stock: Global trade's new reality",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "03:50 PM",
-    "title": "World Business Express - Finance, economy and business news from BBC journalists around the world",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "04:00 PM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "04:06 PM",
-    "title": "Outside Source - A vibrant account of the day’s events with explanation and reaction",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "05:00 PM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "05:06 PM",
-    "title": "Outside Source - A vibrant account of the day’s events with explanation and reaction",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "06:00 PM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "06:06 PM",
-    "title": "Outlook - Outlook Mixtape: Eureka! part 2",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "06:50 PM",
-    "title": "What in the World - We’re here to help you work out what in the world is going on",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "07:00 PM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "07:06 PM",
-    "title": "The Newsroom - The world's Newsroom brings you global events as they happen",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "07:30 PM",
-    "title": "BBC News Summary - The latest two minute news summary from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "07:32 PM",
-    "title": "Sport Today - The story behind today's top sporting news, interviews and reports",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "08:00 PM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "08:06 PM",
-    "title": "BBC Conversations - How major news stories are affecting the lives of people around the world",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "08:30 PM",
-    "title": "BBC News Summary - The latest two minute news summary from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "08:32 PM",
-    "title": "CrowdScience - Why is TB still killing people?",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "09:00 PM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "09:06 PM",
-    "title": "Newshour - Interviews, news and analysis of the day’s global events",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "10:00 PM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "10:06 PM",
-    "title": "The Interview - Carlos Acosta, dancer: Ballet is for everyone",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "10:30 PM",
-    "title": "BBC News Summary - The latest two minute news summary from BBC World Service",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "10:32 PM",
     "title": "Heart and Soul - A Singer’s Search for Peace",
     "channel": "BBC World Service"
   },
   {
+    "time": "12:00 PM",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "12:06 PM",
+    "title": "The Documentary - The engineers: Flying at the edge",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "01:00 PM",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "01:06 PM",
+    "title": "Newshour - Interviews, news and analysis of global events",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "02:00 PM",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "02:06 PM",
+    "title": "The History Hour - Taiwan's White Terror and the making of City of God",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "03:00 PM",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "03:06 PM",
+    "title": "Unexpected Elements - Someone's always watching",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "04:00 PM",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "04:06 PM",
+    "title": "BBC Conversations - Ariana Grande and the public scrutiny of women",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "04:30 PM",
+    "title": "BBC News Summary - The latest news summary from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "04:32 PM",
+    "title": "The Documentary - How did we get here: Israel and the Palestinians",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "05:00 PM",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "05:06 PM",
+    "title": "From Our Own Correspondent - China's alleged 'Fentanyl King' and the Mexican cartels",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "05:30 PM",
+    "title": "BBC News Summary - The latest news summary from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "05:32 PM",
+    "title": "The Conversation - Kickstarting girls' careers in construction",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "06:00 PM",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "06:06 PM",
+    "title": "The Newsroom - Global events as they happen",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "06:30 PM",
+    "title": "BBC News Summary - The latest news summary from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "06:32 PM",
+    "title": "Dear Daughter - Surviving my daughter’s killing",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "06:50 PM",
+    "title": "Sporting Witness - The first time women played basketball at the Olympics",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "07:00 PM",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "07:06 PM",
+    "title": "The Inquiry - Is Indigenous education at risk?",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "07:30 PM",
+    "title": "BBC News Summary - The latest news summary from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "07:32 PM",
+    "title": "Happy News - The Happy Pod: The baby saved by surgery in the womb",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "08:00 PM",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "08:06 PM",
+    "title": "The Arts Hour - Samantha Morton on her role in The Odyssey",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "09:00 PM",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "09:06 PM",
+    "title": "Newshour - Interviews, news and analysis of global events",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "10:00 PM",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
+    "channel": "BBC World Service"
+  },
+  {
+    "time": "10:06 PM",
+    "title": "Not by the Playbook - Behind the scenes",
+    "channel": "BBC World Service"
+  },
+  {
     "time": "11:00 PM",
-    "title": "BBC News - The latest five minute news bulletin from BBC World Service",
+    "title": "BBC News - The latest news bulletin from BBC World Service",
     "channel": "BBC World Service"
   },
   {
     "time": "11:06 PM",
-    "title": "The Newsroom - The world's Newsroom brings you global events as they happen",
+    "title": "The Newsroom - Global events as they happen",
     "channel": "BBC World Service"
   },
   {
     "time": "11:30 PM",
-    "title": "BBC News Summary - The latest two minute news summary from BBC World Service",
+    "title": "BBC News Summary - The latest news summary from BBC World Service",
     "channel": "BBC World Service"
   },
   {
     "time": "11:32 PM",
-    "title": "World Business Report - The latest business and finance news from around the world",
+    "title": "Americast - Why the Democrats may never be the same again",
     "channel": "BBC World Service"
   },
 
 
-
   
- 
   {
     "time": "12:00 AM",
     "title": "Midnight News - National and international news from BBC Radio 4",
@@ -591,7 +610,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "12:30 AM",
-    "title": "Tony Hawks Is Giving Nothing Away - 4. Money Mindsets",
+    "title": "Tony Hawks Is Giving Nothing Away - 5. Finding Balance",
     "channel": "BBC Radio 4"
   },
   {
@@ -601,17 +620,12 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "01:00 AM",
-    "title": "Selection of BBC World Service Programmes - BBC Radio 4 joins the BBC World Service",
+    "title": "Selection of BBC World Service Programmes",
     "channel": "BBC Radio 4"
   },
   {
-    "time": "05:00 AM",
+    "time": "05:30 AM",
     "title": "News Summary - National and international news from BBC Radio 4",
-    "channel": "BBC Radio 4"
-  },
-  {
-    "time": "05:04 AM",
-    "title": "The Briefing Room - Part 1: How do we reform social care?",
     "channel": "BBC Radio 4"
   },
   {
@@ -621,37 +635,67 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "05:43 AM",
-    "title": "Prayer for the Day - Go the extra mile",
+    "title": "Prayer for the Day - What’s in a name?",
     "channel": "BBC Radio 4"
   },
   {
     "time": "05:45 AM",
-    "title": "Farming Today - Resilient crops for a changing climate, planting in a drought, Sheeted Somerset cattle",
+    "title": "Living on the Edge - Corsewall",
     "channel": "BBC Radio 4"
   },
   {
     "time": "06:00 AM",
+    "title": "News and Papers - National and international news from BBC Radio 4",
+    "channel": "BBC Radio 4"
+  },
+  {
+    "time": "06:07 AM",
+    "title": "This Natural Life - Tracey Emin",
+    "channel": "BBC Radio 4"
+  },
+  {
+    "time": "06:30 AM",
+    "title": "Farming Today - Farming Today This Week: Bluetongue cases continue to rise",
+    "channel": "BBC Radio 4"
+  },
+  {
+    "time": "06:57 AM",
+    "title": "Weather - The latest weather reports and forecast",
+    "channel": "BBC Radio 4"
+  },
+  {
+    "time": "07:00 AM",
     "title": "Today - News and current affairs, including Sports Desk, Weather and Thought for the Day",
     "channel": "BBC Radio 4"
   },
   {
     "time": "09:00 AM",
-    "title": "Desert Island Discs - Emma Grede, businesswoman",
+    "title": "Artworks - What Happened to Counter-Culture?, 3. Beauty in the Streets",
+    "channel": "BBC Radio 4"
+  },
+  {
+    "time": "09:30 AM",
+    "title": "What's Up Docs? - How hydrated should you really be?",
     "channel": "BBC Radio 4"
   },
   {
     "time": "10:00 AM",
-    "title": "Woman's Hour - Women's voices and women's lives, topical conversations to inform and inspire",
+    "title": "You're Dead to Me - Emperor Constantine the Great: Christianity and the Roman Empire",
+    "channel": "BBC Radio 4"
+  },
+  {
+    "time": "10:30 AM",
+    "title": "The Kitchen Cabinet - Series 53, Chelsea",
     "channel": "BBC Radio 4"
   },
   {
     "time": "11:00 AM",
-    "title": "The Food Programme - The Dark Arts of Affinage",
+    "title": "Radical - Votes for Six-Year-Olds: Could Child Suffrage Revive Democracy?",
     "channel": "BBC Radio 4"
   },
   {
-    "time": "11:45 AM",
-    "title": "Tony Hawks Is Giving Nothing Away - 5. Finding Balance",
+    "time": "11:30 AM",
+    "title": "From Our Own Correspondent - China's alleged 'Fentanyl King' and the Mexican cartels",
     "channel": "BBC Radio 4"
   },
   {
@@ -661,7 +705,12 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "12:04 PM",
-    "title": "AntiSocial - Peace talks for the culture wars",
+    "title": "Sliced Bread - Toast - Series 7, EasyCinema",
+    "channel": "BBC Radio 4"
+  },
+  {
+    "time": "12:30 PM",
+    "title": "Current-ish - Exam results, early release, and the possible end of two marriages",
     "channel": "BBC Radio 4"
   },
   {
@@ -671,52 +720,52 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "01:00 PM",
-    "title": "World at One - News, analysis and comment from BBC Radio 4",
+    "title": "News - National and international news from BBC Radio 4",
     "channel": "BBC Radio 4"
   },
   {
-    "time": "01:45 PM",
-    "title": "The Bare Necessities - 5. From Tree to Sea",
+    "time": "01:10 PM",
+    "title": "Any Questions? - Hamish Falconer MP, Andrew Rosindell MP, Lord Willetts, Munira Wilson MP",
     "channel": "BBC Radio 4"
   },
   {
-    "time": "02:00 PM",
-    "title": "The Archers - One resident faces an emergency dash",
-    "channel": "BBC Radio 4"
-  },
-  {
-    "time": "02:15 PM",
-    "title": "Limelight - Central Intelligence: Series 3, Episode 5",
+    "time": "02:05 PM",
+    "title": "Any Answers? - Listeners respond to the issues raised in Any Questions?",
     "channel": "BBC Radio 4"
   },
   {
     "time": "02:45 PM",
-    "title": "Living on the Edge - Corsewall lighthouse with keeper Barry Miller",
+    "title": "The Archers - Keira makes a surprising discovery",
     "channel": "BBC Radio 4"
   },
   {
     "time": "03:00 PM",
-    "title": "Gardeners' Question Time - Horticultural programme featuring a group of gardening experts",
-    "channel": "BBC Radio 4"
-  },
-  {
-    "time": "03:45 PM",
-    "title": "Short Works - Parys, Anglesey by Fflur Dafydd",
+    "title": "Fork in the Road - August in Manchester",
     "channel": "BBC Radio 4"
   },
   {
     "time": "04:00 PM",
-    "title": "Last Word - Radio 4's weekly obituary programme",
-    "channel": "BBC Radio 4"
-  },
-  {
-    "time": "04:30 PM",
-    "title": "Sideways - Good Vibes Only",
+    "title": "Woman's Hour - Weekend Woman’s Hour: Listener week",
     "channel": "BBC Radio 4"
   },
   {
     "time": "05:00 PM",
-    "title": "PM - Former neo-Nazi withdraws as Tory council candidate",
+    "title": "PM - Full coverage of the day's news",
+    "channel": "BBC Radio 4"
+  },
+  {
+    "time": "05:30 PM",
+    "title": "Sliced Bread - Sliced Bread - Series 17, Pillows",
+    "channel": "BBC Radio 4"
+  },
+  {
+    "time": "05:54 PM",
+    "title": "Shipping Forecast - The latest weather reports and forecasts for UK shipping",
+    "channel": "BBC Radio 4"
+  },
+  {
+    "time": "05:57 PM",
+    "title": "Weather - The latest weather reports and forecast",
     "channel": "BBC Radio 4"
   },
   {
@@ -725,58 +774,48 @@ window.SCHEDULE_DATA = [
     "channel": "BBC Radio 4"
   },
   {
-    "time": "06:30 PM",
-    "title": "Current-ish - Episode 3",
+    "time": "06:15 PM",
+    "title": "Loose Ends - Stuart Maconie and guests from Fleadh Cheoil na hÉireann",
     "channel": "BBC Radio 4"
   },
   {
     "time": "07:00 PM",
-    "title": "The Archers - Keira makes a surprising discovery",
+    "title": "Last Word: Doing Death Differently - Lay this body down",
     "channel": "BBC Radio 4"
   },
   {
     "time": "07:15 PM",
-    "title": "Screenshot - Male Friendship: changing ideas about masculinity and vulnerability",
+    "title": "Changing the Odds - Episode 2: Gibraltar - Online betting's birthplace",
     "channel": "BBC Radio 4"
   },
   {
     "time": "08:00 PM",
-    "title": "Any Questions? - Hamish Falconer MP, Andrew Rosindell MP, Lord Willetts, Munira Wilson MP",
-    "channel": "BBC Radio 4"
-  },
-  {
-    "time": "08:55 PM",
-    "title": "This Week in History - Fascinating, surprising and eye-opening stories from the past",
+    "title": "Archive on 4 - Writing Our Mothers",
     "channel": "BBC Radio 4"
   },
   {
     "time": "09:00 PM",
-    "title": "Natalie Haynes Stands Up for the Classics - Series 12, Nero",
-    "channel": "BBC Radio 4"
-  },
-  {
-    "time": "09:30 PM",
-    "title": "Shadow World - Breakin' the Cycle, 2. A Hood Story",
+    "title": "Understand - Ten Fights That Made the Green Movement: Omnibus 1",
     "channel": "BBC Radio 4"
   },
   {
     "time": "10:00 PM",
-    "title": "The World Tonight - In depth reporting, intelligent analysis and breaking news",
+    "title": "News - National and international news from BBC Radio 4",
     "channel": "BBC Radio 4"
   },
   {
-    "time": "10:45 PM",
-    "title": "The Vicar of Wakefield by Oliver Goldsmith - Episode Five",
+    "time": "10:15 PM",
+    "title": "The Food Programme - The Dark Arts of Affinage",
     "channel": "BBC Radio 4"
   },
   {
     "time": "11:00 PM",
-    "title": "Americast - Insights and analysis on what's happening inside Trump's White House",
+    "title": "Olga Koch: OK Computer - Series 2, 2. Intelligence",
     "channel": "BBC Radio 4"
   },
   {
     "time": "11:30 PM",
-    "title": "The Ocean Within Us - Humans are around 70% water, but where is it all?",
+    "title": "Brain of Britain - Heat 2, 2026",
     "channel": "BBC Radio 4"
   }
 ];
