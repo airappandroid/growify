@@ -1,4 +1,4 @@
-window.SCHEDULE_DATA = [
+ window.SCHEDULE_DATA = [
   {
     "time": "12:00 AM",
     "title": "Radio 1 Dance Drum & Bass Mix - Ghost In Real Life",
