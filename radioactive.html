@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0f172a;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #ffffff;
+    }
+    .card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      padding: 40px 25px;
+      width: 90%;
+      max-width: 350px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+    
+    /* Live Blinking Indicator */
+    .live-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #ff3b30;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      background-color: #ff3b30;
+      border-radius: 50%;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+
+    .logo {
+      width: 130px;
+      height: 130px;
+      background: #334155;
+      border-radius: 25px;
+      margin: 0 auto 20px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      border: 4px solid #38bdf8;
+      box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2);
+    }
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    h1 {
+      font-size: 20px;
+      margin-bottom: 25px;
+      color: #ffffff;
+    }
+
+    /* Animated Play Button with Ripple Pulse */
+    .play-btn {
+      display: inline-block;
+      text-decoration: none;
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      color: white;
+      padding: 16px 52px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 30px;
+      transition: transform 0.2s;
+      animation: pulse-glow 2s infinite;
+    }
+    .play-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Pulse Glow Animation */
+    @keyframes pulse-glow {
+      0% {
+        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 18px rgba(56, 189, 248, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0);
+      }
+    }
+
+    .desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #94a3b8;
+      text-align: justify;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <!-- Live Blink Indicator -->
+    <div class="live-status">
+      <span class="dot"></span> Live Now
+    </div>
+
+    <div class="logo">
+      <!-- ইয়াত আপোনাৰ ল'গ'ৰ লিংক দিয়ক -->
+      <img src="https://play-lh.googleusercontent.com/tzNY4c7DV9XCLnxKC4FbKYl5GvH8XPRbYykx0xDqC7a5EZKxIV9zZt5Yz1F3rHz1729Sk3UnfvWmOnP2atAH=w480-h960-rw" alt="Logo">
+    </div>
+
+    <h1>Radio Active Bhagalpur 90.4 FM</h1>
+
+    <!-- Animated Play Button -->
+    <a href="go:L1" class="play-btn">Play</a>
+
+    <p class="desc">
+      Radio Active is Bhagalpur’s first FM Radio Station, operated under parent organization “LOKHIT”. Launched in 2011, the station is a platform for different communities to converge/ unite, share ideas, encourage creative expressions, raise issues (civic and social rights), promote local talent, local business, foster local traditions, sensitize on issues of importance.
+    </p>
+  </div>
+
+</body>
+</html>
