@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0f172a;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #ffffff;
+    }
+    .card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      padding: 35px 20px;
+      width: 90%;
+      max-width: 350px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+    
+    /* Live Blinking Indicator */
+    .live-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #ff3b30;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      background-color: #ff3b30;
+      border-radius: 50%;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+
+    .logo {
+      width: 120px;
+      height: 120px;
+      background: #334155;
+      border-radius: 25px;
+      margin: 0 auto 18px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      border: 4px solid #38bdf8;
+      box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2);
+    }
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    h1 {
+      font-size: 20px;
+      margin-bottom: 22px;
+      color: #ffffff;
+    }
+
+    /* Animated Play Button with Ripple Pulse */
+    .play-btn {
+      display: inline-block;
+      text-decoration: none;
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      color: white;
+      padding: 15px 48px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 25px;
+      transition: transform 0.2s;
+      animation: pulse-glow 2s infinite;
+    }
+    .play-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Pulse Glow Animation */
+    @keyframes pulse-glow {
+      0% {
+        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 18px rgba(56, 189, 248, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0);
+      }
+    }
+
+    /* Responsive Banner Styling */
+    .banner-container {
+      width: 100%;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      margin-top: 5px;
+    }
+    .banner-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+      aspect-ratio: 1 / 1; /* Keep 1080x1080 square proportion */
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <!-- Live Blink Indicator -->
+    <div class="live-status">
+      <span class="dot"></span> Live Now
+    </div>
+
+    <div class="logo">
+      <!-- ইয়াত আপোনাৰ ল'গ'ৰ ডাইৰেক্ট URL লিংক দিয়ক -->
+      <img src="https://play-lh.googleusercontent.com/yKla4oTRxir_J7C_2de5q_1CkXdMBc3trUbrwmQSk9JoQPOEs3JwF1ktwB5VryGLznVcsL5yI-ZBJ47oTFaW3w=w480-h960-rw" alt="Logo">
+    </div>
+
+    <h1>Radio Active 89.6 FM Godda</h1>
+
+    <!-- Animated Play Button -->
+    <a href="go:L1" class="play-btn">Play</a>
+
+    <!-- 1080x1080 Banner Section -->
+    <div class="banner-container">
+      <!-- `https://via.placeholder.com/1080` ৰ ঠাইত আপোনাৰ 1080x1080 বেনাৰৰ ডাইৰেক্ট URL লিংক বহাওক -->
+      <img src="https://www.appcreator24.com/srv/imgs/temp/7ovph51yle_1.png?ts=1786674417" alt="Radio Active Banner">
+    </div>
+  </div>
+
+</body>
+</html>
