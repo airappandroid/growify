@@ -1,149 +1,244 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rajpal Yadav Financial Support Case - Full Report</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Squad Announcement: IND vs AFG T20I Series</title>
+  <style>
+    :root {
+      --primary: #0f5132;
+      --primary-glow: #198754;
+      --accent: #ffb703;
+      --bg: #0b0f19;
+      --surface: #131b2e;
+      --surface-card: #1c2640;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.08);
+      --badge-live: #ef4444;
+    }
 
-<style>
-body{
-    margin:0;
-    padding:0;
-    background:#0f0f0f;
-    font-family:Arial, Helvetica, sans-serif;
-    color:#ffffff;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-.container{
-    max-width:700px;
-    margin:auto;
-    padding:20px;
-}
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 16px 14px 40px 14px;
+      line-height: 1.65;
+    }
 
-h1{
-    text-align:center;
-    font-size:26px;
-    margin-bottom:5px;
-}
+    /* Top Category Tag */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
 
-.date{
-    text-align:center;
-    font-size:14px;
-    color:#bbbbbb;
-    margin-bottom:20px;
-}
+    .category-pill {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(255, 183, 3, 0.15);
+      color: var(--accent);
+    }
 
-.card{
-    background:#1a1a1a;
-    padding:18px;
-    border-radius:12px;
-    margin-bottom:15px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.6);
-}
+    /* Article Header */
+    .article-header {
+      margin-bottom: 18px;
+    }
 
-.card h2{
-    font-size:18px;
-    margin-bottom:10px;
-}
+    .article-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      line-height: 1.35;
+      color: #ffffff;
+      margin-bottom: 10px;
+      letter-spacing: -0.2px;
+    }
 
-.card p, .card li{
-    font-size:15px;
-    line-height:1.6;
-    color:#e0e0e0;
-}
+    .meta-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
 
-.highlight{
-    color:#4da6ff;
-    font-weight:bold;
-}
+    .meta-info span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
 
-ul{
-    padding-left:18px;
-}
-</style>
+    /* Series Info Card */
+    .series-banner {
+      background: linear-gradient(135deg, #064e3b, #0d3829);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 6px 18px rgba(6, 78, 59, 0.3);
+    }
+
+    .series-banner-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #a7f3d0;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .series-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .series-venue {
+      font-size: 0.8rem;
+      color: #cbd5e1;
+      margin-top: 2px;
+    }
+
+    /* Article Content */
+    .article-body p {
+      font-size: 0.92rem;
+      color: #cbd5e1;
+      margin-bottom: 14px;
+    }
+
+    .highlight-card {
+      background: var(--surface-card);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 10px 10px 0;
+      padding: 12px 14px;
+      margin: 18px 0;
+    }
+
+    .highlight-card h4 {
+      font-size: 0.88rem;
+      color: var(--accent);
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .highlight-card p {
+      font-size: 0.85rem;
+      color: var(--text-main);
+      margin-bottom: 0;
+    }
+
+    /* Squad Breakdown Section */
+    .squad-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin: 16px 0;
+    }
+
+    .squad-category {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .squad-players {
+      font-size: 0.9rem;
+      color: #f1f5f9;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .squad-players:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 20px 0 8px 0;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
+  <!-- Top Category Bar -->
+  <div class="top-bar">
+    <span class="category-pill">Official Announcement</span>
+  </div>
 
-<h1>राजपाल यादव केस: 9 करोड़ विवाद और बॉलीवुड का एकजुट सपोर्ट</h1>
-<div class="date">Article Post Date: 11/2/2026</div>
+  <!-- Article Header -->
+  <div class="article-header">
+    <h1 class="article-title">BCCI Confirms 15-Member Squad for Upcoming 3-Match T20I Series Against Afghanistan</h1>
+    <div class="meta-info">
+      <span>📍 BCCI HQ, Mumbai</span>
+      <span>•</span>
+      <span>⏱️ 2 min read</span>
+      <span>•</span>
+      <span>Today</span>
+    </div>
+  </div>
 
-<div class="card">
-<h2>1️⃣ पूरा मामला क्या है?</h2>
-<p>
-यह मामला साल <span class="highlight">2010</span> में लिए गए लगभग <span class="highlight">₹5 करोड़</span> के लोन से शुरू हुआ था।  
-ब्याज और पेनल्टी जुड़ने के बाद यह रकम बढ़कर लगभग <span class="highlight">₹9 करोड़</span> हो गई।  
-चेक बाउंस और भुगतान न होने के कारण कोर्ट केस चला और बाद में तिहाड़ जेल में सरेंडर करना पड़ा।
-</p>
-</div>
+  <!-- Series Info Banner -->
+  <div class="series-banner">
+    <div class="series-banner-header">
+      <span>Afghanistan Tour of India</span>
+      <span style="color: #fef08a;">3-Match T20I Series</span>
+    </div>
+    <div class="series-title">India vs Afghanistan</div>
+    <div class="series-venue">📍 Arun Jaitley Stadium, Delhi (Sep 13, Sep 15, Sep 17)</div>
+  </div>
 
-<div class="card">
-<h2>2️⃣ जेल और कानूनी स्थिति</h2>
-<p>
-लंबे समय से चल रहे कानूनी विवाद के बाद अदालत ने सख्त रुख अपनाया।  
-हाल ही में बेल हियरिंग हुई/होने वाली है।  
-मैनेजर के अनुसार इंडस्ट्री सपोर्ट के कारण जल्द राहत मिलने की उम्मीद है।
-</p>
-</div>
+  <!-- Main Article Body -->
+  <article class="article-body">
+    <p>
+      <strong>MUMBAI:</strong> The Board of Control for Cricket in India (BCCI) Senior Men's Selection Committee has officially announced a balanced 15-member squad for the upcoming three-match T20 International series against Afghanistan.
+    </p>
 
-<div class="card">
-<h2>3️⃣ अब तक घोषित बड़ी आर्थिक मदद</h2>
-<ul>
-<li><span class="highlight">₹1.11 करोड़</span> – राव इंद्रजीत सिंह यादव (GemTunes Music)</li>
-<li><span class="highlight">₹11 लाख</span> – तेज प्रताप यादव</li>
-<li><span class="highlight">₹11 लाख</span> – मीका सिंह</li>
-<li><span class="highlight">₹10 लाख</span> – केआरके (Kamaal R Khan)</li>
-</ul>
-<p>
-अब तक पब्लिकली घोषित रकम लगभग <span class="highlight">₹1.43 करोड़</span> के आसपास है।
-</p>
-</div>
+    <p>
+      All three matches of the high-octane bilateral series are scheduled to take place at the Arun Jaitley Stadium in Delhi under lights, starting Sunday, September 13.
+    </p>
 
-<div class="card">
-<h2>4️⃣ वर्क ऑफर और एडवांस पेमेंट के जरिए मदद</h2>
-<ul>
-<li>सोनू सूद – फिल्म में साइन कर साइनिंग अमाउंट देने की घोषणा</li>
-<li>गुरु रंधावा – वीडियो प्रोजेक्ट के लिए एडवांस पेमेंट</li>
-<li>सलमान खान – संपर्क कर फाइनेंशियल हेल्प का वादा</li>
-<li>अजय देवगन – सपोर्ट और मदद की पुष्टि</li>
-<li>वरुण धवन – सपोर्ट का आश्वासन</li>
-<li>डेविड धवन – संपर्क और सहायता का भरोसा</li>
-</ul>
-<p>
-इनमें से अधिकतर ने पब्लिकली अमाउंट घोषित नहीं किया है।
-</p>
-</div>
+    <div class="highlight-card">
+      <h4>⚡ Key Squad Takeaways</h4>
+      <p>The squad features an explosive mix of experienced core players alongside standout young performers, prioritizing aggressive batting and multi-dimensional spin-bowling all-rounders.</p>
+    </div>
 
-<div class="card">
-<h2>5️⃣ इंडस्ट्री का सामूहिक समर्थन</h2>
-<p>
-गुरमीत चौधरी, नवाजुद्दीन सिद्दीकी (कुछ रिपोर्ट्स में नाम),  
-और FWICE यूनियन ने भी इंडस्ट्री से एकजुट होने की अपील की है।  
-राजपाल की पत्नी राधा यादव ने कहा कि "इंडस्ट्री रॉक की तरह साथ खड़ी है"।
-</p>
-</div>
+    <h2 class="section-subtitle">Official 15-Member India Squad</h2>
+    
+    <div class="squad-card">
+      <div class="squad-category">Batters & Wicketkeepers</div>
+      <div class="squad-players">Top-order heavy dynamic hitters, specialized powerplay stroke-makers, and explosive middle-order finishers.</div>
 
-<div class="card">
-<h2>6️⃣ अभी कितना बाकी है?</h2>
-<p>
-कुल देनदारी लगभग <span class="highlight">₹9 करोड़</span> है।  
-घोषित रकम के बाद भी काफी राशि बाकी है।  
-हालांकि यह मदद कोर्ट में पॉजिटिव इम्पैक्ट डाल सकती है और इमीडिएट राहत दे रही है।
-</p>
-</div>
+      <div class="squad-category">All-Rounders</div>
+      <div class="squad-players">Hard-hitting pace bowling all-rounders and crafty left-arm spin options designed to control the middle overs.</div>
 
-<div class="card">
-<h2>7️⃣ आगे क्या?</h2>
-<p>
-अगर इंडस्ट्री सपोर्ट जारी रहता है और नए प्रोजेक्ट्स मिलते हैं,  
-तो धीरे-धीरे पूरा कर्ज चुकाया जा सकता है।  
-मैनेजर के अनुसार जल्द रिहाई की उम्मीद जताई जा रही है।
-</p>
-</div>
+      <div class="squad-category">Bowlers (Pace & Spin)</div>
+      <div class="squad-players">High-speed frontline seamers with proven death-over yorker execution, backed by wicket-taking wrist spinners.</div>
+    </div>
 
-</div>
+    <h2 class="section-subtitle">Series Context & Preparation</h2>
+    <p>
+      With conditions in Delhi expected to favor fast-paced scoring and quality spin play, team management is eager to test tactical variations against a battle-tested Afghanistan lineup renowned for their world-class T20 talent.
+    </p>
+  </article>
 
 </body>
 </html>
