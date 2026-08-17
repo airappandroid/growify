@@ -259,15 +259,124 @@
     .nav-btn.active .icon {
       transform: translateY(-2px);
     }
+
+    /* Privacy Policy Modal Pop-up */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .modal-card {
+      background: var(--surface-card);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 440px;
+      max-height: 82vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+      animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes scaleUp {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 4px;
+    }
+
+    .modal-body {
+      padding: 18px;
+      overflow-y: auto;
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+
+    .modal-body p {
+      margin-bottom: 12px;
+    }
+
+    .modal-body p:last-child {
+      margin-bottom: 0;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .modal-footer {
+      padding: 14px 18px;
+      border-top: 1px solid var(--border);
+      background: rgba(11, 15, 25, 0.4);
+    }
+
+    .modal-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #064e3b, #047857);
+      color: #ffffff;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(6, 78, 59, 0.35);
+    }
+
+    .modal-btn:active {
+      transform: scale(0.98);
+    }
   </style>
 </head>
 <body>
 
-  <!-- 1. Live Score Section (Tab 1) -->
+  <!-- 1. Live Score Section -->
   <main id="tab-score" class="tab-content active">
-    <!-- Quick Access Dual Banner (Audio & Quiz) -->
+    <!-- Quick Access Dual Banner -->
     <div class="banner-grid">
-      <!-- Live Radio -->
+      <!-- Live Commentary -->
       <a href="go:commentary" class="action-banner banner-audio">
         <div class="banner-top">
           <div class="pulse-indicator"></div>
@@ -279,7 +388,7 @@
         </div>
       </a>
 
-      <!-- Trivia Quiz with Fan Badges -->
+      <!-- Trivia Quiz -->
       <a href="go:quiz" class="action-banner banner-quiz">
         <div class="banner-top">
           <span style="font-size: 0.7rem; color: #fde68a; font-weight: bold;">FAN IQ</span>
@@ -287,7 +396,7 @@
         </div>
         <div>
           <div class="banner-title">Cricket Quiz</div>
-          <div class="banner-sub">Earn Fan Badges</div>
+          <div class="banner-sub">Earn Badges</div>
         </div>
       </a>
     </div>
@@ -303,7 +412,7 @@
     </div>
   </main>
 
-  <!-- 2. Match Schedule Section (Tab 2) -->
+  <!-- 2. Match Schedule Section -->
   <main id="tab-schedule" class="tab-content">
     <div class="section-title">📅 Match Schedule</div>
 
@@ -358,7 +467,7 @@
     </div>
   </main>
 
-  <!-- Floating Bottom Navigation -->
+  <!-- Modern Bottom Navigation Bar -->
   <nav class="bottom-nav">
     <button class="nav-btn active" onclick="switchTab('tab-score', this)">
       <span class="icon">🏏</span>
@@ -376,12 +485,31 @@
       <span>Fixtures</span>
     </button>
 
-    <!-- AppCreator24 Quiz Section Link -->
-    <a href="go:quiz" class="nav-btn">
-      <span class="icon">🏆</span>
-      <span>Quiz</span>
-    </a>
+    <!-- Privacy Policy Pop-up Trigger Button -->
+    <button class="nav-btn" onclick="openPrivacyModal()">
+      <span class="icon">🔒</span>
+      <span>Privacy</span>
+    </button>
   </nav>
+
+  <!-- Privacy Policy Modal Pop-up -->
+  <div id="privacy-modal" class="modal-overlay" onclick="closePrivacyModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-title">🔒 Privacy Policy</div>
+        <button class="close-btn" onclick="closePrivacyModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Cricket Commentary App</strong> provides live cricket scores, audio commentary, fixtures, schedules, and cricket news.</p>
+        <p>The app may collect and use your device ID and related advertising data to serve personalized ads through third-party advertising services.</p>
+        <p>We do not sell your personal information, and third-party services may have their own privacy policies.</p>
+        <p>By using the app, you agree to this Privacy Policy.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn" onclick="closePrivacyModal()">I Agree & Close</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     function switchTab(tabId, btn) {
@@ -391,6 +519,16 @@
       document.getElementById(tabId).classList.add('active');
       btn.classList.add('active');
       window.scrollTo(0, 0);
+    }
+
+    function openPrivacyModal() {
+      document.getElementById('privacy-modal').classList.add('active');
+    }
+
+    function closePrivacyModal(e) {
+      if (!e || e.target === document.getElementById('privacy-modal') || e.target.classList.contains('close-btn') || e.target.classList.contains('modal-btn')) {
+        document.getElementById('privacy-modal').classList.remove('active');
+      }
     }
   </script>
 </body>
