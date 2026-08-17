@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cricket Quiz & Fan Titles</title>
+  <style>
+    :root {
+      --primary: #0f5132;
+      --primary-glow: #198754;
+      --accent: #ffb703;
+      --bg: #0b0f19;
+      --surface: #131b2e;
+      --surface-card: #1c2640;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.08);
+      --correct: #10b981;
+      --wrong: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 16px 14px 40px 14px;
+      min-height: 100vh;
+    }
+
+    /* Top Bar */
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .quiz-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(255, 183, 3, 0.15);
+      color: var(--accent);
+    }
+
+    /* Progress Bar */
+    .progress-wrapper {
+      margin-bottom: 20px;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 8px;
+      background: var(--surface);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 20%;
+      background: linear-gradient(90deg, var(--primary-glow), var(--accent));
+      transition: width 0.3s ease;
+      border-radius: 10px;
+    }
+
+    /* Question Card */
+    .quiz-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      margin-bottom: 18px;
+    }
+
+    .question-text {
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.45;
+      color: #ffffff;
+      margin-bottom: 18px;
+    }
+
+    /* Options */
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: #e2e8f0;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.15s ease;
+    }
+
+    .option-btn:active {
+      transform: scale(0.98);
+    }
+
+    .option-btn.correct {
+      background: rgba(16, 185, 129, 0.18) !important;
+      border-color: var(--correct) !important;
+      color: #6ee7b7 !important;
+    }
+
+    .option-btn.wrong {
+      background: rgba(239, 68, 68, 0.18) !important;
+      border-color: var(--wrong) !important;
+      color: #fca5a5 !important;
+    }
+
+    .option-btn.disabled {
+      pointer-events: none;
+      opacity: 0.75;
+    }
+
+    /* Trivia Insight Box */
+    .trivia-box {
+      display: none;
+      background: rgba(15, 81, 50, 0.25);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      padding: 12px 14px;
+      margin-top: 16px;
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      line-height: 1.45;
+    }
+
+    .trivia-box strong {
+      color: var(--accent);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .action-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #064e3b, #047857);
+      color: #ffffff;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 14px;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(6, 78, 59, 0.35);
+      display: none;
+    }
+
+    .action-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Result & Badge Screen */
+    .result-container {
+      display: none;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 26px 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      text-align: center;
+    }
+
+    .badge-icon {
+      font-size: 3.2rem;
+      margin-bottom: 8px;
+      filter: drop-shadow(0 4px 10px rgba(255, 183, 3, 0.4));
+    }
+
+    .fan-title-tag {
+      display: inline-block;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--accent);
+      background: rgba(255, 183, 3, 0.12);
+      border: 1px solid rgba(255, 183, 3, 0.3);
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .score-circle {
+      width: 90px;
+      height: 90px;
+      background: radial-gradient(circle, #047857, #062c1e);
+      border: 3px solid var(--accent);
+      border-radius: 50%;
+      margin: 0 auto 14px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #ffffff;
+    }
+
+    .score-circle span {
+      font-size: 0.68rem;
+      color: #a7f3d0;
+      font-weight: 600;
+    }
+
+    .result-desc {
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      line-height: 1.45;
+      margin-bottom: 22px;
+    }
+
+    /* Share Button */
+    .share-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      color: #ffffff;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .share-btn:active {
+      transform: scale(0.98);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="quiz-header">
+    <div class="quiz-title">🏆 Cricket IQ & Fan Titles</div>
+    <span class="badge-pill" id="score-counter">Score: 0</span>
+  </div>
+
+  <!-- Quiz Screen -->
+  <div id="quiz-screen">
+    <div class="progress-wrapper">
+      <div class="progress-meta">
+        <span id="question-count">Question 1 of 5</span>
+        <span style="color: var(--accent); font-weight: 700;">Unlock Fan Badge</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div id="progress-fill" class="progress-bar-fill"></div>
+      </div>
+    </div>
+
+    <div class="quiz-card">
+      <div id="question-text" class="question-text">Loading question...</div>
+      <div id="options-container" class="options-grid"></div>
+      
+      <div id="trivia-box" class="trivia-box">
+        <strong>💡 Did You Know?</strong>
+        <span id="trivia-fact"></span>
+      </div>
+    </div>
+
+    <button id="next-btn" class="action-btn" onclick="nextQuestion()">Next Question →</button>
+  </div>
+
+  <!-- Result Screen with Fan Titles -->
+  <div id="result-screen" class="result-container">
+    <div id="badge-icon" class="badge-icon">👑</div>
+    <div id="fan-title" class="fan-title-tag">Cricket Genius</div>
+
+    <div class="score-circle">
+      <div id="final-score">0/5</div>
+      <span>SCORE</span>
+    </div>
+
+    <p id="result-desc" class="result-desc">You are an absolute master of cricket trivia!</p>
+
+    <!-- WhatsApp Share Button -->
+    <button class="share-btn" onclick="shareTitle()">
+      <span>💬 Share Badge on WhatsApp</span>
+    </button>
+
+    <button class="action-btn" style="display: block; background: var(--surface); border-color: var(--border); color: #cbd5e1;" onclick="restartQuiz()">
+      🔄 Play Again
+    </button>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Who holds the record for the fastest century in ODI cricket history (in 31 balls)?",
+        options: ["Chris Gayle", "AB de Villiers", "Shahid Afridi", "Corey Anderson"],
+        correct: 1,
+        trivia: "AB de Villiers smashed a 31-ball hundred against West Indies at Johannesburg in 2015."
+      },
+      {
+        question: "Which cricket stadium is the largest in the world by seating capacity?",
+        options: ["Melbourne Cricket Ground", "Eden Gardens", "Narendra Modi Stadium", "Lord's"],
+        correct: 2,
+        trivia: "Narendra Modi Stadium in Ahmedabad has a massive seating capacity of over 132,000 spectators."
+      },
+      {
+        question: "Who was the first batsman to hit six sixes in an over in T20 International cricket?",
+        options: ["Kieron Pollard", "Yuvraj Singh", "Herschelle Gibbs", "Rinku Singh"],
+        correct: 1,
+        trivia: "Yuvraj Singh achieved this historic feat off Stuart Broad in the 2007 ICC T20 World Cup."
+      },
+      {
+        question: "What is the highest individual score by a batsman in a single Test innings?",
+        options: ["Brian Lara (400*)", "Matthew Hayden (380)", "Virender Sehwag (319)", "Don Bradman (334)"],
+        correct: 0,
+        trivia: "Brian Lara scored an unbeaten 400 against England at St John's, Antigua in 2004."
+      },
+      {
+        question: "Which country won the inaugural ICC Men's T20 World Cup in 2007?",
+        options: ["Pakistan", "India", "Australia", "Sri Lanka"],
+        correct: 1,
+        trivia: "India led by MS Dhoni defeated Pakistan by 5 runs in a thrilling final in Johannesburg."
+      }
+    ];
+
+    let currentIdx = 0;
+    let score = 0;
+    let earnedTitle = "";
+
+    function loadQuestion() {
+      const q = questions[currentIdx];
+      document.getElementById('question-text').innerText = q.question;
+      document.getElementById('question-count').innerText = `Question ${currentIdx + 1} of ${questions.length}`;
+      document.getElementById('progress-fill').style.width = `${((currentIdx + 1) / questions.length) * 100}%`;
+      
+      const optContainer = document.getElementById('options-container');
+      optContainer.innerHTML = '';
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = `<span>${opt}</span><span>→</span>`;
+        btn.onclick = () => selectOption(idx, btn);
+        optContainer.appendChild(btn);
+      });
+
+      document.getElementById('trivia-box').style.display = 'none';
+      document.getElementById('next-btn').style.display = 'none';
+    }
+
+    function selectOption(selectedIdx, selectedBtn) {
+      const q = questions[currentIdx];
+      const buttons = document.querySelectorAll('.option-btn');
+
+      buttons.forEach((btn, idx) => {
+        btn.classList.add('disabled');
+        if (idx === q.correct) {
+          btn.classList.add('correct');
+          btn.innerHTML = `<span>${q.options[idx]}</span><span>✓</span>`;
+        }
+      });
+
+      if (selectedIdx === q.correct) {
+        score++;
+        document.getElementById('score-counter').innerText = `Score: ${score}`;
+      } else {
+        selectedBtn.classList.add('wrong');
+        selectedBtn.innerHTML = `<span>${q.options[selectedIdx]}</span><span>✗</span>`;
+      }
+
+      document.getElementById('trivia-fact').innerText = q.trivia;
+      document.getElementById('trivia-box').style.display = 'block';
+      document.getElementById('next-btn').style.display = 'block';
+    }
+
+    function nextQuestion() {
+      currentIdx++;
+      if (currentIdx < questions.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('quiz-screen').style.display = 'none';
+      document.getElementById('result-screen').style.display = 'block';
+      document.getElementById('final-score').innerText = `${score}/${questions.length}`;
+
+      const iconEl = document.getElementById('badge-icon');
+      const titleEl = document.getElementById('fan-title');
+      const descEl = document.getElementById('result-desc');
+
+      if (score === 5) {
+        earnedTitle = "👑 Cricket Genius & Legend";
+        iconEl.innerText = "👑";
+        titleEl.innerText = earnedTitle;
+        descEl.innerText = "Flawless performance! You know the cricket world inside out.";
+      } else if (score === 4) {
+        earnedTitle = "🏆 Pro Cricket Analyst";
+        iconEl.innerText = "🏆";
+        titleEl.innerText = earnedTitle;
+        descEl.innerText = "Superb knowledge! You're one step away from a perfect score.";
+      } else if (score === 3) {
+        earnedTitle = "🎖️ True Cricket Fan";
+        iconEl.innerText = "🎖️";
+        titleEl.innerText = earnedTitle;
+        descEl.innerText = "Great effort! A solid foundation of cricket facts.";
+      } else {
+        earnedTitle = "🧢 Rookie Supporter";
+        iconEl.innerText = "🧢";
+        titleEl.innerText = earnedTitle;
+        descEl.innerText = "Keep practicing and testing your cricket trivia!";
+      }
+    }
+
+    function shareTitle() {
+      const shareText = `🏏 I scored ${score}/5 in the Cricket Trivia Quiz and earned the title "${earnedTitle}"! 🏆 Test your cricket knowledge now!`;
+      const whatsappURL = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+      window.open(whatsappURL, '_blank');
+    }
+
+    function restartQuiz() {
+      currentIdx = 0;
+      score = 0;
+      document.getElementById('score-counter').innerText = `Score: 0`;
+      document.getElementById('result-screen').style.display = 'none';
+      document.getElementById('quiz-screen').style.display = 'block';
+      loadQuestion();
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
