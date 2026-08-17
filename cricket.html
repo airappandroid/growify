@@ -1,60 +1,423 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body { margin:0; background:#000; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cricket Central</title>
+  <style>
+    :root {
+      --primary: #0f5132;
+      --primary-glow: #198754;
+      --accent: #ffb703;
+      --bg: #0b0f19;
+      --surface: #131b2e;
+      --surface-card: #1c2640;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.08);
+      --badge-live: #ef4444;
+    }
 
-.top-ad {
-  height:50px;
-  background:#111;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-iframe {
-  width:100%;
-  height:calc(100vh - 100px);
-  border:0;
-  display:block;
-}
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 12px 12px 85px 12px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-.loader {
-  position:fixed;
-  top:100px;
-  left:0;
-  width:100%;
-  height:calc(100vh - 100px);
-  background:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
+    /* Tab Content Animation */
+    .tab-content {
+      display: none;
+      animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-.spinner {
-  width:40px;
-  height:40px;
-  border:4px solid rgba(255,255,255,0.2);
-  border-top:4px solid #fff;
-  border-radius:50%;
-  animation:spin 1s linear infinite;
-}
+    .tab-content.active {
+      display: block;
+    }
 
-@keyframes spin { to { transform:rotate(360deg); } }
-</style>
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Live Audio Quick Banner */
+    .live-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, #064e3b, #047857);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 14px 18px;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(6, 78, 59, 0.35);
+      transition: transform 0.15s ease;
+    }
+
+    .live-banner:active {
+      transform: scale(0.98);
+    }
+
+    .banner-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pulse-indicator {
+      width: 10px;
+      height: 10px;
+      background-color: #ef4444;
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      70% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+
+    .banner-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #ffffff;
+      letter-spacing: 0.2px;
+    }
+
+    .banner-sub {
+      font-size: 0.75rem;
+      color: #a7f3d0;
+      margin-top: 1px;
+    }
+
+    .banner-action {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    /* Live Score Iframe Box */
+    .score-container {
+      width: 100%;
+      height: calc(100vh - 170px);
+      min-height: 520px;
+      background: var(--surface);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .score-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* Sleek Cards */
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #ffffff;
+      letter-spacing: 0.3px;
+    }
+
+    .custom-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      transition: all 0.15s ease;
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .custom-card:active {
+      transform: scale(0.98);
+      border-color: rgba(255, 255, 255, 0.25);
+      background: #232f4e;
+    }
+
+    /* Match Schedule Items */
+    .match-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .pill-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: rgba(255, 183, 3, 0.15);
+      color: var(--accent);
+    }
+
+    .match-date {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .match-teams {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .match-venue {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Clickable News Items */
+    .news-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+
+    .news-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .read-more {
+      color: var(--accent);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Modern Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 12px;
+      left: 14px;
+      right: 14px;
+      height: 62px;
+      background: rgba(19, 27, 46, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    .nav-btn {
+      flex: 1;
+      border: none;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      gap: 3px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn .icon {
+      font-size: 1.25rem;
+      transition: transform 0.2s;
+    }
+
+    .nav-btn.active {
+      color: var(--accent);
+    }
+
+    .nav-btn.active .icon {
+      transform: translateY(-2px);
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="top-ad">
-  <!-- AdMob 320x100 code here -->
-</div>
+  <!-- 1. Live Score Section -->
+  <main id="tab-score" class="tab-content active">
+    <!-- Live Commentary Redirect Banner -->
+    <a href="go:commentary" class="live-banner">
+      <div class="banner-left">
+        <div class="pulse-indicator"></div>
+        <div>
+          <div class="banner-title">Live Audio Commentary</div>
+          <div class="banner-sub">Ball-by-ball radio coverage</div>
+        </div>
+      </div>
+      <div class="banner-action">Listen ▶</div>
+    </a>
 
-<div class="loader" id="loader">
-  <div class="spinner"></div>
-</div>
+    <!-- Embedded Live Scoreboard -->
+    <div class="score-container">
+      <iframe 
+        src="https://cricketingfacts.com/project/cricket-live-score-3/" 
+        loading="lazy" 
+        allow="autoplay"
+        title="Live Score Feed">
+      </iframe>
+    </div>
+  </main>
 
-<iframe src="https://cricketingfacts.com/project/cricket-live-score-3/"
-        onload="document.getElementById('loader').style.display='none'">
-</iframe>
+  <!-- 2. Match Schedule Section -->
+  <main id="tab-schedule" class="tab-content">
+    <div class="section-title">📅 Upcoming Fixtures</div>
 
+    <div class="custom-card">
+      <div class="match-meta">
+        <span class="pill-badge">T20 Series</span>
+        <span class="match-date">Tomorrow • 07:00 PM</span>
+      </div>
+      <div class="match-teams">India vs Australia</div>
+      <div class="match-venue">📍 Melbourne Cricket Ground</div>
+    </div>
+
+    <div class="custom-card">
+      <div class="match-meta">
+        <span class="pill-badge">ODI Match</span>
+        <span class="match-date">Aug 20 • 03:30 PM</span>
+      </div>
+      <div class="match-teams">England vs South Africa</div>
+      <div class="match-venue">📍 Lord's, London</div>
+    </div>
+
+    <div class="custom-card">
+      <div class="match-meta">
+        <span class="pill-badge">Asia Cup</span>
+        <span class="match-date">Aug 24 • 07:30 PM</span>
+      </div>
+      <div class="match-teams">India vs Pakistan</div>
+      <div class="match-venue">📍 Dubai International Stadium</div>
+    </div>
+
+    <div class="custom-card">
+      <div class="match-meta">
+        <span class="pill-badge">Test Series</span>
+        <span class="match-date">Aug 28 • 09:30 AM</span>
+      </div>
+      <div class="match-teams">New Zealand vs Sri Lanka</div>
+      <div class="match-venue">📍 Basin Reserve, Wellington</div>
+    </div>
+  </main>
+
+  <!-- 3. Cricket News Section (Clickable Links to AppCreator24 Sections) -->
+  <main id="tab-news" class="tab-content">
+    <div class="section-title">📰 Latest Cricket Updates</div>
+
+    <!-- News 1 -->
+    <a href="go:news1" class="custom-card">
+      <div class="news-title">Squad Announced for Upcoming World Championship Series</div>
+      <div class="news-footer">
+        <span>Sports Desk • 1 hr ago</span>
+        <span class="read-more">Read More →</span>
+      </div>
+    </a>
+
+    <!-- News 2 -->
+    <a href="go:news2" class="custom-card">
+      <div class="news-title">New Playing Conditions & Strategic Timeouts Approved for Premier League</div>
+      <div class="news-footer">
+        <span>Cricket Special • 3 hrs ago</span>
+        <span class="read-more">Read More →</span>
+      </div>
+    </a>
+
+    <!-- News 3 -->
+    <a href="go:news3" class="custom-card">
+      <div class="news-title">Sensational Century Seals Historic Chase in Final Over Thriller</div>
+      <div class="news-footer">
+        <span>Match Report • 5 hrs ago</span>
+        <span class="read-more">Read More →</span>
+      </div>
+    </a>
+
+    <!-- News 4 -->
+    <a href="go:news4" class="custom-card">
+      <div class="news-title">ICC Rankings Update: Fast Bowlers Surge to Career-High Ratings</div>
+      <div class="news-footer">
+        <span>Global Desk • 8 hrs ago</span>
+        <span class="read-more">Read More →</span>
+      </div>
+    </a>
+  </main>
+
+  <!-- Floating Bottom Navigation -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" onclick="switchTab('tab-score', this)">
+      <span class="icon">🏏</span>
+      <span>Scores</span>
+    </button>
+
+    <a href="go:commentary" class="nav-btn">
+      <span class="icon">🎙️</span>
+      <span>Audio</span>
+    </a>
+
+    <button class="nav-btn" onclick="switchTab('tab-schedule', this)">
+      <span class="icon">📅</span>
+      <span>Fixtures</span>
+    </button>
+
+    <button class="nav-btn" onclick="switchTab('tab-news', this)">
+      <span class="icon">📰</span>
+      <span>News</span>
+    </button>
+  </nav>
+
+  <script>
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+      window.scrollTo(0, 0);
+    }
+  </script>
 </body>
 </html>
