@@ -182,6 +182,11 @@
       color: var(--accent);
     }
 
+    .pill-badge.live {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+    }
+
     .match-date {
       font-size: 0.75rem;
       color: var(--text-muted);
@@ -202,7 +207,7 @@
       gap: 4px;
     }
 
-    /* Clickable News Items */
+    /* News Items */
     .news-title {
       font-size: 0.95rem;
       font-weight: 600;
@@ -304,52 +309,65 @@
     </div>
   </main>
 
-  <!-- 2. Match Schedule Section -->
+  <!-- 2. Match Schedule Section (Updated from Image) -->
   <main id="tab-schedule" class="tab-content">
-    <div class="section-title">📅 Upcoming Fixtures</div>
+    <div class="section-title">📅 Match Schedule</div>
 
+    <!-- Match 1: 1st Test -->
     <div class="custom-card">
       <div class="match-meta">
-        <span class="pill-badge">T20 Series</span>
-        <span class="match-date">Tomorrow • 07:00 PM</span>
+        <span class="pill-badge live">1st Test • Live</span>
+        <span class="match-date">15 Aug - 19 Aug 2026</span>
       </div>
-      <div class="match-teams">India vs Australia</div>
-      <div class="match-venue">📍 Melbourne Cricket Ground</div>
+      <div class="match-teams">India vs Sri Lanka</div>
+      <div class="match-venue">📍 Galle International Stadium, Galle</div>
     </div>
 
+    <!-- Match 2: 2nd Test -->
     <div class="custom-card">
       <div class="match-meta">
-        <span class="pill-badge">ODI Match</span>
-        <span class="match-date">Aug 20 • 03:30 PM</span>
+        <span class="pill-badge">2nd Test</span>
+        <span class="match-date">Sun, 23 Aug • 10:00 AM (IST)</span>
       </div>
-      <div class="match-teams">England vs South Africa</div>
-      <div class="match-venue">📍 Lord's, London</div>
+      <div class="match-teams">Sri Lanka vs India</div>
+      <div class="match-venue">📍 Sinhalese Sports Club, Colombo</div>
     </div>
 
+    <!-- Match 3: 1st T20I -->
     <div class="custom-card">
       <div class="match-meta">
-        <span class="pill-badge">Asia Cup</span>
-        <span class="match-date">Aug 24 • 07:30 PM</span>
+        <span class="pill-badge">1st T20I</span>
+        <span class="match-date">Sun, 13 Sep • 07:00 PM (IST)</span>
       </div>
-      <div class="match-teams">India vs Pakistan</div>
-      <div class="match-venue">📍 Dubai International Stadium</div>
+      <div class="match-teams">Afghanistan vs India</div>
+      <div class="match-venue">📍 Arun Jaitley Stadium, Delhi</div>
     </div>
 
+    <!-- Match 4: 2nd T20I -->
     <div class="custom-card">
       <div class="match-meta">
-        <span class="pill-badge">Test Series</span>
-        <span class="match-date">Aug 28 • 09:30 AM</span>
+        <span class="pill-badge">2nd T20I</span>
+        <span class="match-date">Tue, 15 Sep • 07:00 PM (IST)</span>
       </div>
-      <div class="match-teams">New Zealand vs Sri Lanka</div>
-      <div class="match-venue">📍 Basin Reserve, Wellington</div>
+      <div class="match-teams">Afghanistan vs India</div>
+      <div class="match-venue">📍 Arun Jaitley Stadium, Delhi</div>
+    </div>
+
+    <!-- Match 5: 3rd T20I -->
+    <div class="custom-card">
+      <div class="match-meta">
+        <span class="pill-badge">3rd T20I</span>
+        <span class="match-date">Thu, 17 Sep • 07:00 PM (IST)</span>
+      </div>
+      <div class="match-teams">Afghanistan vs India</div>
+      <div class="match-venue">📍 Arun Jaitley Stadium, Delhi</div>
     </div>
   </main>
 
-  <!-- 3. Cricket News Section (Clickable Links to AppCreator24 Sections) -->
+  <!-- 3. Cricket News Section -->
   <main id="tab-news" class="tab-content">
     <div class="section-title">📰 Latest Cricket Updates</div>
 
-    <!-- News 1 -->
     <a href="go:news1" class="custom-card">
       <div class="news-title">Squad Announced for Upcoming World Championship Series</div>
       <div class="news-footer">
@@ -358,7 +376,6 @@
       </div>
     </a>
 
-    <!-- News 2 -->
     <a href="go:news2" class="custom-card">
       <div class="news-title">New Playing Conditions & Strategic Timeouts Approved for Premier League</div>
       <div class="news-footer">
@@ -367,7 +384,6 @@
       </div>
     </a>
 
-    <!-- News 3 -->
     <a href="go:news3" class="custom-card">
       <div class="news-title">Sensational Century Seals Historic Chase in Final Over Thriller</div>
       <div class="news-footer">
@@ -376,7 +392,6 @@
       </div>
     </a>
 
-    <!-- News 4 -->
     <a href="go:news4" class="custom-card">
       <div class="news-title">ICC Rankings Update: Fast Bowlers Surge to Career-High Ratings</div>
       <div class="news-footer">
