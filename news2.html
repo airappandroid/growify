@@ -1,153 +1,223 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI कंटेंट पर नए सरकारी नियम</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Match Report: SL vs IND 1st Test</title>
+  <style>
+    :root {
+      --primary: #0f5132;
+      --primary-glow: #198754;
+      --accent: #ffb703;
+      --bg: #0b0f19;
+      --surface: #131b2e;
+      --surface-card: #1c2640;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.08);
+      --badge-live: #ef4444;
+    }
 
-<style>
-body {
-    margin: 0;
-    padding: 0;
-    background: #0f0f0f;
-    font-family: Arial, sans-serif;
-    color: #ffffff;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-.container {
-    max-width: 420px;
-    margin: auto;
-    padding: 16px;
-}
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 16px 14px 40px 14px;
+      line-height: 1.65;
+    }
 
-h1 {
-    text-align: center;
-    font-size: 22px;
-    margin-bottom: 20px;
-    line-height: 1.4;
-}
+    /* Top Category Tag */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
 
-.card {
-    background: #1c1c1c;
-    border-radius: 14px;
-    padding: 16px;
-    margin-bottom: 16px;
-    box-shadow: 0 0 12px rgba(0,0,0,0.4);
-}
+    .category-pill {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(255, 183, 3, 0.15);
+      color: var(--accent);
+    }
 
-.card h2 {
-    font-size: 17px;
-    margin-bottom: 10px;
-    color: #ffd369;
-}
+    /* Article Header */
+    .article-header {
+      margin-bottom: 18px;
+    }
 
-.card p {
-    font-size: 14px;
-    line-height: 1.6;
-    margin: 0;
-}
+    .article-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      line-height: 1.35;
+      color: #ffffff;
+      margin-bottom: 10px;
+      letter-spacing: -0.2px;
+    }
 
-.card ul {
-    padding-left: 18px;
-    font-size: 14px;
-    line-height: 1.6;
-}
+    .meta-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
 
-.footer {
-    text-align: center;
-    font-size: 13px;
-    opacity: 0.7;
-    margin-top: 20px;
-}
-</style>
+    .meta-info span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Match Snapshot Scorecard Box */
+    .score-banner {
+      background: linear-gradient(135deg, #064e3b, #0d3829);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 6px 18px rgba(6, 78, 59, 0.3);
+    }
+
+    .score-banner-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #a7f3d0;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .match-scores {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .team-score-item {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .team-score-item small {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #cbd5e1;
+    }
+
+    /* Article Content */
+    .article-body p {
+      font-size: 0.92rem;
+      color: #cbd5e1;
+      margin-bottom: 14px;
+    }
+
+    .highlight-card {
+      background: var(--surface-card);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 10px 10px 0;
+      padding: 12px 14px;
+      margin: 18px 0;
+    }
+
+    .highlight-card h4 {
+      font-size: 0.88rem;
+      color: var(--accent);
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .highlight-card p {
+      font-size: 0.85rem;
+      color: var(--text-main);
+      margin-bottom: 0;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 20px 0 8px 0;
+    }
+  </style>
 </head>
-
 <body>
-<div class="container">
 
-<h1>
-AI कंटेंट के नए सरकारी नियम  
-<br>फेक न्यूज़ और डीपफेक पर सख्ती
-</h1><p>10 Feb 2026</p>
+  <!-- Top Category Bar -->
+  <div class="top-bar">
+    <span class="category-pill">Test Cricket</span>
+  </div>
 
-<div class="card">
-<h2>🔹 AI कंटेंट लेबल करना अनिवार्य</h2>
-<p>
-अब सोशल मीडिया पर जो भी फोटो, वीडियो या आवाज़ AI से बनाई गई होगी,  
-उसे साफ़-साफ़ <b>“AI Generated / Synthetic Content”</b> लिखकर दिखाना ज़रूरी होगा।
-</p>
-</div>
+  <!-- Article Header -->
+  <div class="article-header">
+    <h1 class="article-title">SL vs IND 1st Test: India in Command at Galle After Massive First-Innings Total</h1>
+    <div class="meta-info">
+      <span>📍 Galle Stadium</span>
+      <span>•</span>
+      <span>⏱️ 3 min read</span>
+      <span>•</span>
+      <span>Today</span>
+    </div>
+  </div>
 
-<div class="card">
-<h2>🔹 डीपफेक क्या है?</h2>
-<p>
-जब किसी असली इंसान की शक्ल या आवाज़ को AI की मदद से  
-नकली वीडियो या ऑडियो में बदल दिया जाता है,  
-उसे <b>डीपफेक</b> कहा जाता है।
-</p>
-</div>
+  <!-- Match Score Box -->
+  <div class="score-banner">
+    <div class="score-banner-header">
+      <span>1st Test • Day 2 Stumps</span>
+      <span style="color: #fef08a;">India on Top</span>
+    </div>
+    <div class="match-scores">
+      <div class="team-score-item">
+        IND: 460/9
+        <small>1st Innings</small>
+      </div>
+      <div style="font-size: 0.8rem; color: #a7f3d0;">VS</div>
+      <div class="team-score-item" style="text-align: right;">
+        SL: Yet to Bat
+        <small>Trailing by 460</small>
+      </div>
+    </div>
+  </div>
 
-<div class="card">
-<h2>⏱️ 3 घंटे में कंटेंट हटाना होगा</h2>
-<p>
-अगर कोई AI या फेक कंटेंट:
-</p>
-<ul>
-<li>भ्रामक है</li>
-<li>किसी की इज्ज़त या सुरक्षा को नुकसान पहुँचाता है</li>
-<li>सरकारी आदेश के खिलाफ है</li>
-</ul>
-<p>
-तो सोशल मीडिया प्लेटफॉर्म को <b>सिर्फ 3 घंटे</b> में उसे हटाना होगा।
-</p>
-</div>
+  <!-- Main Article Body -->
+  <article class="article-body">
+    <p>
+      <strong>GALLE:</strong> India firmly seized control of the opening Test match against Sri Lanka, posting a formidable first-innings total of 460/9 before stumps on Day 2 at the Galle International Stadium.
+    </p>
 
-<div class="card">
-<h2>🚫 किन कंटेंट पर सबसे ज़्यादा सख्ती?</h2>
-<ul>
-<li>किसी व्यक्ति का फेक वीडियो या फोटो</li>
-<li>महिलाओं या बच्चों से जुड़ा शोषण</li>
-<li>निजी तस्वीरों का गलत इस्तेमाल</li>
-<li>हिंसा या नफरत फैलाने वाला कंटेंट</li>
-</ul>
-</div>
+    <p>
+      The Indian batting lineup displayed supreme authority on a turning Galle surface, putting constant pressure on the hosts' bowling attack right from the opening session.
+    </p>
 
-<div class="card">
-<h2>👁️ सोशल मीडिया कंपनियों की ज़िम्मेदारी</h2>
-<ul>
-<li>AI कंटेंट पहचानने के टूल लगाने होंगे</li>
-<li>यूज़र से पूछना होगा – कंटेंट AI से बना है या नहीं</li>
-<li>नियम तोड़ने वालों पर कार्रवाई करनी होगी</li>
-<li>यूज़र्स को हर 3 महीने में नियम बताने होंगे</li>
-</ul>
-</div>
+    <div class="highlight-card">
+      <h4>🏏 Key Match Highlights</h4>
+      <p>Top order set the platform with a 150+ opening stand, followed by crucial middle-order contributions to push past the 450-run mark.</p>
+    </div>
 
-<div class="card">
-<h2>📅 नियम कब से लागू होंगे?</h2>
-<p>
-ये नए नियम  
-<b>20 फरवरी 2026</b> से पूरे भारत में लागू होंगे।
-</p>
-</div>
+    <h2 class="section-subtitle">Top-Order Dominance Sets the Stage</h2>
+    <p>
+      Capitalizing on excellent batting conditions on Day 1 and early Day 2, the Indian top order executed clear plans against Sri Lanka’s spin arsenal. Crisp footwork and aggressive strike rotation prevented the Lankan spinners from settling into tight bowling rhythms.
+    </p>
 
-<div class="card">
-<h2>🤔 ये नियम क्यों ज़रूरी थे?</h2>
-<p>
-AI के ज़रिए आजकल बहुत आसानी से  
-नकली खबरें, झूठे वीडियो और गलत जानकारी फैलाई जा रही है।  
-इन नियमों का मकसद है:
-</p>
-<ul>
-<li>आम लोगों को धोखे से बचाना</li>
-<li>नकली खबरों पर रोक</li>
-<li>डिजिटल दुनिया को सुरक्षित बनाना</li>
-</ul>
-</div>
+    <h2 class="section-subtitle">Spinners Face Uphill Battle</h2>
+    <p>
+      Despite relentless efforts and late wickets towards the second session, the Sri Lankan bowling unit conceded key boundaries in the third session. With 460 runs on the board, the pitch is already showing signs of variable bounce, placing massive pressure on Sri Lanka's top order for Day 3.
+    </p>
+  </article>
 
-<div class="footer">
-सच को पहचानना अब पहले से ज़्यादा ज़रूरी है
-</div>
-
-</div>
 </body>
 </html>
