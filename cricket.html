@@ -119,7 +119,7 @@
       margin-top: 1px;
     }
 
-    /* Live Score Iframe Box */
+    /* Live Score Iframe Box (Modified to crop the top header) */
     .score-container {
       width: 100%;
       height: calc(100vh - 160px);
@@ -129,11 +129,15 @@
       overflow: hidden;
       border: 1px solid var(--border);
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+      position: relative;
     }
 
     .score-container iframe {
+      position: absolute;
+      top: -48px;
+      left: 0;
       width: 100%;
-      height: 100%;
+      height: calc(100% + 48px);
       border: none;
       display: block;
     }
@@ -507,7 +511,7 @@
     <!-- Embedded Live Scoreboard -->
     <div class="score-container">
       <iframe 
-        src="https://cricketingfacts.com/project/cricket-live-score-3/" 
+        src="https://cricketfastliveline.in/live-score/eng-vs-pak-1st-match-test-pakistan-tour-of-england-2026/a-rz--cricket--7j2048731334771359748" 
         loading="lazy" 
         allow="autoplay"
         title="Live Score Feed">
