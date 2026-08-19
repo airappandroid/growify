@@ -26,12 +26,22 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    body {
+    html, body {
+      height: 100%;
+      height: 100dvh;
       background-color: var(--bg);
       color: var(--text-main);
-      padding: 10px 10px 85px 10px;
-      min-height: 100vh;
-      overflow-x: hidden;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Main Scrollable Area */
+    .app-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 10px 15px 10px;
+      -webkit-overflow-scrolling: touch;
     }
 
     /* Tab Content Animation */
@@ -49,7 +59,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Compact Dual Action Banners */
+    /* Action Banners */
     .banner-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -119,27 +129,42 @@
       margin-top: 1px;
     }
 
-    /* Live Score Iframe Box (Modified to crop the top header) */
+    /* Scorecard Container */
     .score-container {
       width: 100%;
-      height: calc(100vh - 160px);
-      min-height: 500px;
-      background: var(--surface);
+      height: 380px;
+      background: #000000;
       border-radius: 14px;
       overflow: hidden;
+      position: relative;
       border: 1px solid var(--border);
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
-      position: relative;
+      margin-bottom: 10px;
     }
 
     .score-container iframe {
       position: absolute;
-      top: -48px;
+      top: -65px;
       left: 0;
       width: 100%;
-      height: calc(100% + 48px);
+      height: 480px;
       border: none;
       display: block;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* 'Share' বাটন ঢাকি ৰখাৰ Overlay */
+    .share-mask {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 115px;
+      height: 42px;
+      background-color: #000000;
+      z-index: 5;
+      border-top-right-radius: 14px;
+      pointer-events: none;
     }
 
     /* Section Titles */
@@ -151,10 +176,9 @@
       align-items: center;
       gap: 8px;
       color: #ffffff;
-      letter-spacing: 0.3px;
     }
 
-    /* Sub Navigation Pills */
+    /* Sub Navigation */
     .sub-nav {
       display: flex;
       gap: 8px;
@@ -162,10 +186,6 @@
       overflow-x: auto;
       padding-bottom: 4px;
       scrollbar-width: none;
-    }
-
-    .sub-nav::-webkit-scrollbar {
-      display: none;
     }
 
     .sub-btn {
@@ -178,7 +198,6 @@
       font-weight: 600;
       cursor: pointer;
       white-space: nowrap;
-      transition: all 0.2s ease;
     }
 
     .sub-btn.active {
@@ -203,7 +222,6 @@
       border-radius: 14px;
       overflow: hidden;
       margin-bottom: 14px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     }
 
     .data-table {
@@ -220,7 +238,6 @@
       font-weight: 600;
       text-transform: uppercase;
       font-size: 0.68rem;
-      letter-spacing: 0.5px;
       border-bottom: 1px solid var(--border);
     }
 
@@ -228,10 +245,6 @@
       padding: 10px 12px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       color: var(--text-main);
-    }
-
-    .data-table tr:last-child td {
-      border-bottom: none;
     }
 
     .rank-badge {
@@ -263,16 +276,13 @@
       color: var(--accent);
     }
 
-    /* Cricket Fact Card */
+    /* Trivia & Cards */
     .fact-card {
       background: linear-gradient(145deg, #1e1b4b, #172554);
       border: 1px solid rgba(129, 140, 248, 0.3);
       border-radius: 14px;
       padding: 12px 14px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
       margin-top: 14px;
-      margin-bottom: 10px;
-      position: relative;
     }
 
     .fact-header {
@@ -283,9 +293,6 @@
     }
 
     .fact-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
       background: rgba(255, 183, 3, 0.15);
       color: var(--accent);
       font-size: 0.7rem;
@@ -293,8 +300,6 @@
       padding: 3px 8px;
       border-radius: 16px;
       text-transform: uppercase;
-      letter-spacing: 0.4px;
-      border: 1px solid rgba(255, 183, 3, 0.3);
     }
 
     .btn-next-fact {
@@ -306,88 +311,25 @@
       font-size: 0.68rem;
       font-weight: 600;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 3px;
-      transition: background 0.2s ease;
-    }
-
-    .btn-next-fact:active {
-      transform: scale(0.95);
-      background: rgba(255, 255, 255, 0.25);
     }
 
     .fact-text {
       font-size: 0.84rem;
       line-height: 1.45;
       color: #f8fafc;
-      font-weight: 500;
-      transition: opacity 0.15s ease;
     }
 
-    /* Video Highlights Card */
-    .video-card {
-      background: var(--surface-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 10px;
-      margin-bottom: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-
-    .video-wrapper {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-      border-radius: 10px;
-      background: #000;
-    }
-
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    .video-meta {
-      margin-top: 8px;
-    }
-
-    .video-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #ffffff;
-      line-height: 1.35;
-      margin-bottom: 3px;
-    }
-
-    .video-sub {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-    }
-
-    /* Match Schedule Cards */
     .custom-card {
       background: var(--surface-card);
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 12px 14px;
       margin-bottom: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      transition: all 0.15s ease;
-      display: block;
-      text-decoration: none;
-      color: inherit;
     }
 
     .match-meta {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       margin-bottom: 6px;
     }
 
@@ -396,8 +338,6 @@
       font-weight: 700;
       padding: 2px 7px;
       border-radius: 5px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
       background: rgba(255, 183, 3, 0.15);
       color: var(--accent);
     }
@@ -422,28 +362,61 @@
     .match-venue {
       font-size: 0.78rem;
       color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 4px;
+    }
+
+    /* Video Highlights */
+    .video-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px;
+      margin-bottom: 12px;
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-top: 8px;
+    }
+
+    .video-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
     }
 
     /* Bottom Navigation Bar */
     .bottom-nav {
-      position: fixed;
-      bottom: 10px;
-      left: 12px;
-      right: 12px;
-      height: 60px;
-      background: rgba(19, 27, 46, 0.88);
+      flex-shrink: 0;
+      height: 58px;
+      margin: 0 10px 10px 10px;
+      background: rgba(19, 27, 46, 0.96);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 18px;
       display: flex;
       align-items: center;
       justify-content: space-around;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55);
-      z-index: 999;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+      z-index: 99999;
     }
 
     .nav-btn {
@@ -460,402 +433,180 @@
       text-decoration: none;
       cursor: pointer;
       gap: 2px;
-      transition: all 0.2s ease;
     }
 
     .nav-btn .icon {
       font-size: 1.15rem;
-      transition: transform 0.2s;
     }
 
     .nav-btn.active {
       color: var(--accent);
     }
-
-    .nav-btn.active .icon {
-      transform: translateY(-2px);
-    }
   </style>
 </head>
 <body>
 
-  <!-- 1. Live Scores Section (Tab 1) -->
-  <main id="tab-score" class="tab-content active">
-    <!-- Compact Dual Banners -->
-    <div class="banner-grid">
-      <!-- Live Radio -->
-      <a href="go:commentary" class="action-banner banner-audio">
-        <div class="banner-top">
-          <div class="pulse-indicator"></div>
-          <span style="font-size: 0.95rem;">🎙️</span>
-        </div>
-        <div>
-          <div class="banner-title">Live Radio</div>
-          <div class="banner-sub">Commentary</div>
-        </div>
-      </a>
+  <div class="app-body">
+    <!-- Tab 1: Scores -->
+    <main id="tab-score" class="tab-content active">
+      <div class="banner-grid">
+        <a href="go:commentary" class="action-banner banner-audio">
+          <div class="banner-top">
+            <div class="pulse-indicator"></div>
+            <span style="font-size: 0.95rem;">🎙️</span>
+          </div>
+          <div>
+            <div class="banner-title">Live Radio</div>
+            <div class="banner-sub">Commentary</div>
+          </div>
+        </a>
 
-      <!-- Trivia Quiz -->
-      <a href="go:quiz" class="action-banner banner-quiz">
-        <div class="banner-top">
-          <span style="font-size: 0.62rem; color: #fde68a; font-weight: 700;">FAN IQ</span>
-          <span style="font-size: 0.95rem;">🏆</span>
-        </div>
-        <div>
-          <div class="banner-title">Cricket Quiz</div>
-          <div class="banner-sub">Earn Badges</div>
-        </div>
-      </a>
-    </div>
-
-    <!-- Embedded Live Scoreboard -->
-    <div class="score-container">
-      <iframe 
-        src="https://cricketfastliveline.in/live-score/eng-vs-pak-1st-match-test-pakistan-tour-of-england-2026/a-rz--cricket--7j2048731334771359748" 
-        loading="lazy" 
-        allow="autoplay"
-        title="Live Score Feed">
-      </iframe>
-    </div>
-  </main>
-
-  <!-- 2. ICC Rankings & Standings Section (Tab 2) -->
-  <main id="tab-rankings" class="tab-content">
-    <div class="section-title">🏆 Rankings & Standings</div>
-
-    <!-- Sub Navigation for Formats -->
-    <div class="sub-nav">
-      <button class="sub-btn active" onclick="switchRanking('sub-wtc', this)">WTC Table</button>
-      <button class="sub-btn" onclick="switchRanking('sub-test', this)">Test</button>
-      <button class="sub-btn" onclick="switchRanking('sub-odi', this)">ODI</button>
-      <button class="sub-btn" onclick="switchRanking('sub-t20', this)">T20I</button>
-    </div>
-
-    <!-- WTC Points Table -->
-    <div id="sub-wtc" class="rank-category active">
-      <div class="table-container">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Team</th>
-              <th>M</th>
-              <th>W</th>
-              <th>L</th>
-              <th>PCT (%)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="rank-badge rank-1">1</span></td>
-              <td class="team-cell">🇦🇺 Australia</td>
-              <td>12</td>
-              <td>8</td>
-              <td>3</td>
-              <td class="highlight-pct">62.5%</td>
-            </tr>
-            <tr>
-              <td><span class="rank-badge rank-2">2</span></td>
-              <td class="team-cell">🇮🇳 India</td>
-              <td>14</td>
-              <td>8</td>
-              <td>5</td>
-              <td class="highlight-pct">58.9%</td>
-            </tr>
-            <tr>
-              <td><span class="rank-badge rank-3">3</span></td>
-              <td class="team-cell">🇿🇦 South Africa</td>
-              <td>8</td>
-              <td>4</td>
-              <td>3</td>
-              <td class="highlight-pct">54.2%</td>
-            </tr>
-            <tr>
-              <td><span class="rank-badge">4</span></td>
-              <td class="team-cell">🇳🇿 New Zealand</td>
-              <td>11</td>
-              <td>5</td>
-              <td>6</td>
-              <td class="highlight-pct">50.0%</td>
-            </tr>
-            <tr>
-              <td><span class="rank-badge">5</span></td>
-              <td class="team-cell">🇱🇰 Sri Lanka</td>
-              <td>9</td>
-              <td>4</td>
-              <td>5</td>
-              <td class="highlight-pct">44.4%</td>
-            </tr>
-            <tr>
-              <td><span class="rank-badge">6</span></td>
-              <td class="team-cell">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</td>
-              <td>16</td>
-              <td>8</td>
-              <td>7</td>
-              <td class="highlight-pct">43.8%</td>
-            </tr>
-            <tr>
-              <td><span class="rank-badge">7</span></td>
-              <td class="team-cell">🇧🇩 Bangladesh</td>
-              <td>8</td>
-              <td>3</td>
-              <td>5</td>
-              <td class="highlight-pct">37.5%</td>
-            </tr>
-          </tbody>
-        </table>
+        <a href="go:quiz" class="action-banner banner-quiz">
+          <div class="banner-top">
+            <span style="font-size: 0.62rem; color: #fde68a; font-weight: 700;">FAN IQ</span>
+            <span style="font-size: 0.95rem;">🏆</span>
+          </div>
+          <div>
+            <div class="banner-title">Cricket Quiz</div>
+            <div class="banner-sub">Earn Badges</div>
+          </div>
+        </a>
       </div>
-    </div>
 
-    <!-- ICC Test Rankings -->
-    <div id="sub-test" class="rank-category">
-      <div class="table-container">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Pos</th>
-              <th>Team</th>
-              <th>Matches</th>
-              <th>Rating</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="rank-badge rank-1">1</span></td>
-              <td class="team-cell">🇦🇺 Australia</td>
-              <td>30</td>
-              <td class="highlight-pct">124</td>
-            </tr>
-            <tr>
-              <td><span class="rank-badge rank-2">2</span></td>
-              <td class="team-cell">🇮🇳 India</td>
-              <td>32</td>
-              <td class="highlight-pct">120</td>
-            </tr>
-            <tr>
-              <td><span class="rank-badge rank-3">3</span></td>
-              <td class="team-cell">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</td>
-              <td>38</td>
-              <td class="highlight-pct">108</td>
-            </tr>
-            <tr>
-              <td><span class="rank-badge">4</span></td>
-              <td class="team-cell">🇿🇦 South Africa</td>
-              <td>23</td>
-              <td class="highlight-pct">104</td>
-            </tr>
-            <tr>
-              <td><span class="rank-badge">5</span></td>
-              <td class="team-cell">🇳🇿 New Zealand</td>
-              <td>26</td>
-              <td class="highlight-pct">102</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- ICC ODI Rankings -->
-    <div id="sub-odi" class="rank-category">
-      <div class="table-container">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Pos</th>
-              <th>Team</th>
-              <th>Matches</th>
-              <th>Rating</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="rank-badge rank-1">1</span></td>
-              <td class="team-cell">🇮🇳 India</td>
-              <td>42</td>
-              <td class="highlight-pct">118</td>
-            </tr>
-            <tr>
-              <td><span class="rank-badge rank-2">2</span></td>
-              <td class="team-cell">🇦🇺 Australia</td>
-              <td>35</td>
-              <td class="highlight-pct">113</td>
-            </tr>
-            <tr>
-              <td><span class="rank-badge rank-3">3</span></td>
-              <td class="team-cell">🇿🇦 South Africa</td>
-              <td>31</td>
-              <td class="highlight-pct">105</td>
-            </tr>
-            <tr>
-              <td><span class="rank-badge">4</span></td>
-              <td class="team-cell">🇵🇰 Pakistan</td>
-              <td>33</td>
-              <td class="highlight-pct">104</td>
-            </tr>
-            <tr>
-              <td><span class="rank-badge">5</span></td>
-              <td class="team-cell">🇳🇿 New Zealand</td>
-              <td>36</td>
-              <td class="highlight-pct">101</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- ICC T20I Rankings -->
-    <div id="sub-t20" class="rank-category">
-      <div class="table-container">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Pos</th>
-              <th>Team</th>
-              <th>Matches</th>
-              <th>Rating</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="rank-badge rank-1">1</span></td>
-              <td class="team-cell">🇮🇳 India</td>
-              <td>64</td>
-              <td class="highlight-pct">267</td>
-            </tr>
-            <tr>
-              <td><span class="rank-badge rank-2">2</span></td>
-              <td class="team-cell">🇦🇺 Australia</td>
-              <td>45</td>
-              <td class="highlight-pct">256</td>
-            </tr>
-            <tr>
-              <td><span class="rank-badge rank-3">3</span></td>
-              <td class="team-cell">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</td>
-              <td>44</td>
-              <td class="highlight-pct">253</td>
-            </tr>
-            <tr>
-              <td><span class="rank-badge">4</span></td>
-              <td class="team-cell">🌴 West Indies</td>
-              <td>48</td>
-              <td class="highlight-pct">250</td>
-            </tr>
-            <tr>
-              <td><span class="rank-badge">5</span></td>
-              <td class="team-cell">🇿🇦 South Africa</td>
-              <td>46</td>
-              <td class="highlight-pct">245</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Cricket Trivia Fact Card -->
-    <div class="fact-card">
-      <div class="fact-header">
-        <span class="fact-badge">💡 Cricket Trivia</span>
-        <button type="button" class="btn-next-fact" onclick="showNextFact()">
-          <span>Next Fact</span> 🔄
-        </button>
-      </div>
-      <div id="cricket-fact" class="fact-text">
-        Sanath Jayasuriya has more ODI wickets (323) than legendary leg-spinner Shane Warne (293)!
-      </div>
-    </div>
-  </main>
-
-  <!-- 3. Match Schedule Section (Tab 3) -->
-  <main id="tab-schedule" class="tab-content">
-    <div class="section-title">📅 Match Schedule</div>
-
-    <div class="custom-card">
-      <div class="match-meta">
-        <span class="pill-badge live">1st Test • Live</span>
-        <span class="match-date">15 Aug - 19 Aug 2026</span>
-      </div>
-      <div class="match-teams">India vs Sri Lanka</div>
-      <div class="match-venue">📍 Galle International Stadium, Galle</div>
-    </div>
-
-    <div class="custom-card">
-      <div class="match-meta">
-        <span class="pill-badge">2nd Test</span>
-        <span class="match-date">Sun, 23 Aug • 10:00 AM (IST)</span>
-      </div>
-      <div class="match-teams">Sri Lanka vs India</div>
-      <div class="match-venue">📍 Sinhalese Sports Club, Colombo</div>
-    </div>
-
-    <div class="custom-card">
-      <div class="match-meta">
-        <span class="pill-badge">1st T20I</span>
-        <span class="match-date">Sun, 13 Sep • 07:00 PM (IST)</span>
-      </div>
-      <div class="match-teams">Afghanistan vs India</div>
-      <div class="match-venue">📍 Arun Jaitley Stadium, Delhi</div>
-    </div>
-  </main>
-
-  <!-- 4. Video Clips & Highlights Section (Tab 4) -->
-  <main id="tab-videos" class="tab-content">
-    <div class="section-title">🎬 Highlights & Clips</div>
-
-   <!-- Video Card 1 -->
-    <div class="video-card">
-      <div class="video-wrapper">
-         <iframe 
-          src="https://www.youtube.com/embed/JWKPutfTgEw?si=maS0a0uXKcnedb1z&amp;start=41" 
-          title="Best Catches and Moments" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-          allowfullscreen>
-        </iframe>
-      </div>
-      <div class="video-meta">
-        <div class="video-title">🔥 India Sets A Massive Target Of 372 Runs | Hindi</div>
-        <div class="video-sub">1st Test Day 4 | Highlights | SL vs IND 2026</div>
-      </div>
-    </div>
-
-    <!-- Video Card 2 -->
-    <div class="video-card">
-      <div class="video-wrapper">
+      <!-- Iframe Box with Share Button Mask -->
+      <div class="score-container">
+        <div class="share-mask"></div>
         <iframe 
-          src="https://www.youtube-nocookie.com/embed/videoseries?list=PL4la2g0L5s4H13B6Uu2oA8R5mO1d_y2Qx" 
-          title="Best Catches and Moments" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-          allowfullscreen>
+          src="https://www.sandbrix.com/en/live-score/england-vs-pakistan/england-vs-pakistan/95253/live" 
+          sandbox="allow-scripts allow-same-origin"
+          scrolling="no"
+          loading="lazy" 
+          title="Live Score Feed">
         </iframe>
       </div>
-      <div class="video-meta">
-        <div class="video-title">🧤 Unbelievable Catches & Fielding Masterclass</div>
-        <div class="video-sub">Top 10 jaw-dropping catches in international cricket</div>
-      </div>
-    </div>
-  </main>
+    </main>
 
-  <!-- Modern Bottom Navigation Bar -->
+    <!-- Tab 2: Rankings -->
+    <main id="tab-rankings" class="tab-content">
+      <div class="section-title">🏆 Rankings & Standings</div>
+
+      <div class="sub-nav">
+        <button class="sub-btn active" onclick="switchRanking('sub-wtc', this)">WTC Table</button>
+        <button class="sub-btn" onclick="switchRanking('sub-test', this)">Test</button>
+        <button class="sub-btn" onclick="switchRanking('sub-odi', this)">ODI</button>
+        <button class="sub-btn" onclick="switchRanking('sub-t20', this)">T20I</button>
+      </div>
+
+      <div id="sub-wtc" class="rank-category active">
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr><th>#</th><th>Team</th><th>M</th><th>W</th><th>L</th><th>PCT (%)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="rank-badge rank-1">1</span></td><td>🇦🇺 Australia</td><td>12</td><td>8</td><td>3</td><td class="highlight-pct">62.5%</td></tr>
+              <tr><td><span class="rank-badge rank-2">2</span></td><td>🇮🇳 India</td><td>14</td><td>8</td><td>5</td><td class="highlight-pct">58.9%</td></tr>
+              <tr><td><span class="rank-badge rank-3">3</span></td><td>🇿🇦 South Africa</td><td>8</td><td>4</td><td>3</td><td class="highlight-pct">54.2%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="sub-test" class="rank-category">
+        <div class="table-container">
+          <table class="data-table">
+            <thead><tr><th>Pos</th><th>Team</th><th>Rating</th></tr></thead>
+            <tbody>
+              <tr><td><span class="rank-badge rank-1">1</span></td><td>🇦🇺 Australia</td><td>124</td></tr>
+              <tr><td><span class="rank-badge rank-2">2</span></td><td>🇮🇳 India</td><td>120</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="sub-odi" class="rank-category">
+        <div class="table-container">
+          <table class="data-table">
+            <thead><tr><th>Pos</th><th>Team</th><th>Rating</th></tr></thead>
+            <tbody>
+              <tr><td><span class="rank-badge rank-1">1</span></td><td>🇮🇳 India</td><td>118</td></tr>
+              <tr><td><span class="rank-badge rank-2">2</span></td><td>🇦🇺 Australia</td><td>113</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="sub-t20" class="rank-category">
+        <div class="table-container">
+          <table class="data-table">
+            <thead><tr><th>Pos</th><th>Team</th><th>Rating</th></tr></thead>
+            <tbody>
+              <tr><td><span class="rank-badge rank-1">1</span></td><td>🇮🇳 India</td><td>267</td></tr>
+              <tr><td><span class="rank-badge rank-2">2</span></td><td>🇦🇺 Australia</td><td>256</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="fact-card">
+        <div class="fact-header">
+          <span class="fact-badge">💡 Cricket Trivia</span>
+          <button type="button" class="btn-next-fact" onclick="showNextFact()">Next 🔄</button>
+        </div>
+        <div id="cricket-fact" class="fact-text">
+          Sanath Jayasuriya has more ODI wickets (323) than legendary leg-spinner Shane Warne (293)!
+        </div>
+      </div>
+    </main>
+
+    <!-- Tab 3: Fixtures -->
+    <main id="tab-schedule" class="tab-content">
+      <div class="section-title">📅 Match Schedule</div>
+      <div class="custom-card">
+        <div class="match-meta">
+          <span class="pill-badge live">1st Test • Live</span>
+          <span class="match-date">15 Aug - 19 Aug 2026</span>
+        </div>
+        <div class="match-teams">India vs Sri Lanka</div>
+        <div class="match-venue">📍 Galle International Stadium, Galle</div>
+      </div>
+    </main>
+
+    <!-- Tab 4: Videos -->
+    <main id="tab-videos" class="tab-content">
+      <div class="section-title">🎬 Highlights & Clips</div>
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe 
+            src="https://www.youtube.com/embed/JWKPutfTgEw?si=maS0a0uXKcnedb1z&amp;start=41" 
+            title="Best Moments" 
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="video-title">🔥 India Sets A Massive Target Of 372 Runs</div>
+        <div class="video-sub">SL vs IND Highlights</div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Bottom Navigation Bar -->
   <nav class="bottom-nav">
     <button class="nav-btn active" onclick="switchTab('tab-score', this)">
       <span class="icon">🏏</span>
       <span>Scores</span>
     </button>
-
     <a href="go:commentary" class="nav-btn">
       <span class="icon">🎙️</span>
       <span>Audio</span>
     </a>
-
     <button class="nav-btn" onclick="switchTab('tab-rankings', this)">
       <span class="icon">🏆</span>
       <span>Rankings</span>
     </button>
-
     <button class="nav-btn" onclick="switchTab('tab-schedule', this)">
       <span class="icon">📅</span>
       <span>Fixtures</span>
     </button>
-
     <button class="nav-btn" onclick="switchTab('tab-videos', this)">
       <span class="icon">🎬</span>
       <span>Videos</span>
@@ -863,17 +614,14 @@
   </nav>
 
   <script>
-    // Tab Navigation Switcher
     function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
       document.getElementById(tabId).classList.add('active');
       btn.classList.add('active');
-      window.scrollTo(0, 0);
     }
 
-    // Rankings Category Switcher
     function switchRanking(catId, btn) {
       document.querySelectorAll('.rank-category').forEach(cat => cat.classList.remove('active'));
       document.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active'));
@@ -882,29 +630,16 @@
       btn.classList.add('active');
     }
 
-    // Cricket Trivia Facts List
     var facts = [
-      "Sanath Jayasuriya has more ODI wickets (323) than legendary leg-spinner Shane Warne (293)!",
-      "Chris Gayle is the only batsman in Test history to hit a SIX off the very first ball of a Test match.",
-      "Sachin Tendulkar once played as a substitute fielder for Pakistan in 1987, before his India debut.",
-      "MS Dhoni is the only captain to win all 3 ICC white-ball trophies: T20 World Cup, ODI World Cup, and Champions Trophy.",
-      "Shoaib Akhtar bowled the fastest official delivery at 161.3 km/h (100.2 mph) against England in 2003.",
-      "Rohit Sharma is the only cricketer in the world with 3 double centuries in ODI cricket.",
-      "Sir Don Bradman needed just 4 runs in his final innings to finish with a Test average of 100, but got out for a duck!"
+      "Sanath Jayasuriya has more ODI wickets (323) than Shane Warne (293)!",
+      "Chris Gayle is the only batsman to hit a SIX off the 1st ball of a Test match.",
+      "Rohit Sharma is the only cricketer with 3 double centuries in ODI cricket."
     ];
-
     var factIndex = 0;
 
     function showNextFact() {
       factIndex = (factIndex + 1) % facts.length;
-      var el = document.getElementById('cricket-fact');
-      if (el) {
-        el.style.opacity = '0';
-        setTimeout(function() {
-          el.innerText = facts[factIndex];
-          el.style.opacity = '1';
-        }, 120);
-      }
+      document.getElementById('cricket-fact').innerText = facts[factIndex];
     }
   </script>
 </body>
