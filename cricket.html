@@ -145,10 +145,10 @@
       white-space: nowrap;
     }
 
-    /* Scorecard Container (উচ্চতা বৃদ্ধি কৰা হ'ল) */
+    /* Scorecard Container */
     .score-container {
       width: 100%;
-      height: 580px;
+      height: 576px;
       background: #000000;
       border-radius: 14px;
       overflow: hidden;
@@ -170,7 +170,7 @@
       user-select: none;
     }
 
-    /* 'Share' বাটন ঢাকি ৰখাৰ Overlay */
+    /* 'Share' বাটন ঢাকি ৰখাৰ Mask */
     .share-mask {
       position: absolute;
       top: 0;
@@ -180,6 +180,18 @@
       background-color: #000000;
       z-index: 5;
       border-top-right-radius: 14px;
+      pointer-events: none;
+    }
+
+    /* Live, Scorecard, Commentary আদি অপশন ঢাকি ৰখাৰ Mask */
+    .nav-mask {
+      position: absolute;
+      top: 390px;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background-color: #000000;
+      z-index: 5;
       pointer-events: none;
     }
 
@@ -407,9 +419,10 @@
         </div>
       </a>
 
-      <!-- Score Feed Iframe -->
+      <!-- Score Feed Container -->
       <div class="score-container">
         <div class="share-mask"></div>
+        <div class="nav-mask"></div>
         <iframe 
           src="https://www.sandbrix.com/en/live-score/england-vs-pakistan/england-vs-pakistan/95253/live" 
           sandbox="allow-scripts allow-same-origin"
@@ -420,7 +433,7 @@
       </div>
     </main>
 
-    <!-- Tab 2: Fixtures (Team Filter যুক্ত কৰা অংশ) -->
+    <!-- Tab 2: Fixtures -->
     <main id="tab-schedule" class="tab-content">
       <div class="section-title">📅 Match Schedule</div>
 
