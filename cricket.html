@@ -145,10 +145,10 @@
       white-space: nowrap;
     }
 
-    /* Scorecard Container */
+    /* Scorecard Container (উচ্চতা বৃদ্ধি কৰা হ'ল) */
     .score-container {
       width: 100%;
-      height: 380px;
+      height: 580px;
       background: #000000;
       border-radius: 14px;
       overflow: hidden;
@@ -163,13 +163,14 @@
       top: -65px;
       left: 0;
       width: 100%;
-      height: 480px;
+      height: 620px;
       border: none;
       display: block;
       pointer-events: none;
       user-select: none;
     }
 
+    /* 'Share' বাটন ঢাকি ৰখাৰ Overlay */
     .share-mask {
       position: absolute;
       top: 0;
@@ -419,7 +420,7 @@
       </div>
     </main>
 
-    <!-- Tab 2: Fixtures (Improved with Team Filter) -->
+    <!-- Tab 2: Fixtures (Team Filter যুক্ত কৰা অংশ) -->
     <main id="tab-schedule" class="tab-content">
       <div class="section-title">📅 Match Schedule</div>
 
@@ -439,7 +440,7 @@
       <!-- Fixtures Match List -->
       <div id="fixtures-list">
         
-        <!-- 1. Sri Lanka vs India 2nd Test -->
+        <!-- Sri Lanka vs India 2nd Test -->
         <div class="custom-card fixture-card" data-teams="india sri-lanka">
           <div class="match-meta">
             <span class="pill-badge upcoming">2nd Test</span>
@@ -449,7 +450,7 @@
           <div class="match-venue">📍 SSC Ground, Colombo</div>
         </div>
 
-        <!-- 2. England vs Pakistan 1st Test -->
+        <!-- England vs Pakistan 1st Test -->
         <div class="custom-card fixture-card" data-teams="england pakistan">
           <div class="match-meta">
             <span class="pill-badge live">1st Test</span>
@@ -459,7 +460,7 @@
           <div class="match-venue">📍 Headingley, Leeds</div>
         </div>
 
-        <!-- 3. Australia vs Bangladesh 2nd Test -->
+        <!-- Australia vs Bangladesh 2nd Test -->
         <div class="custom-card fixture-card" data-teams="australia bangladesh">
           <div class="match-meta">
             <span class="pill-badge upcoming">2nd Test</span>
@@ -469,7 +470,7 @@
           <div class="match-venue">📍 Great Barrier Reef Arena, Mackay</div>
         </div>
 
-        <!-- 4. England vs Pakistan 2nd Test -->
+        <!-- England vs Pakistan 2nd Test -->
         <div class="custom-card fixture-card" data-teams="england pakistan">
           <div class="match-meta">
             <span class="pill-badge upcoming">2nd Test</span>
@@ -479,7 +480,7 @@
           <div class="match-venue">📍 Lord's, London</div>
         </div>
 
-        <!-- 5. England vs Pakistan 3rd Test -->
+        <!-- England vs Pakistan 3rd Test -->
         <div class="custom-card fixture-card" data-teams="england pakistan">
           <div class="match-meta">
             <span class="pill-badge upcoming">3rd Test</span>
@@ -489,7 +490,7 @@
           <div class="match-venue">📍 Edgbaston, Birmingham</div>
         </div>
 
-        <!-- 6. Afghanistan vs India 1st T20I -->
+        <!-- Afghanistan vs India 1st T20I -->
         <div class="custom-card fixture-card" data-teams="afghanistan india">
           <div class="match-meta">
             <span class="pill-badge upcoming">1st T20I</span>
@@ -499,7 +500,7 @@
           <div class="match-venue">📍 Arun Jaitley Stadium, Delhi</div>
         </div>
 
-        <!-- 7. Australia in Zimbabwe 1st ODI -->
+        <!-- Australia in Zimbabwe 1st ODI -->
         <div class="custom-card fixture-card" data-teams="australia">
           <div class="match-meta">
             <span class="pill-badge upcoming">1st ODI</span>
@@ -509,7 +510,7 @@
           <div class="match-venue">📍 Harare Sports Club, Harare</div>
         </div>
 
-        <!-- 8. England vs Sri Lanka 1st T20I -->
+        <!-- England vs Sri Lanka 1st T20I -->
         <div class="custom-card fixture-card" data-teams="england sri-lanka">
           <div class="match-meta">
             <span class="pill-badge upcoming">1st T20I</span>
@@ -519,7 +520,7 @@
           <div class="match-venue">📍 Sophia Gardens, Cardiff</div>
         </div>
 
-        <!-- 9. Bangladesh vs India ODI/T20I -->
+        <!-- Bangladesh vs India ODI/T20I -->
         <div class="custom-card fixture-card" data-teams="bangladesh india">
           <div class="match-meta">
             <span class="pill-badge upcoming">ODI / T20I</span>
@@ -529,7 +530,7 @@
           <div class="match-venue">📍 SBNCS, Mirpur, Dhaka</div>
         </div>
 
-        <!-- 10. India vs West Indies 1st ODI -->
+        <!-- India vs West Indies 1st ODI -->
         <div class="custom-card fixture-card" data-teams="india west-indies">
           <div class="match-meta">
             <span class="pill-badge upcoming">1st ODI</span>
@@ -539,7 +540,7 @@
           <div class="match-venue">📍 Eden Gardens, Kolkata</div>
         </div>
 
-        <!-- 11. Australia in South Africa 1st ODI -->
+        <!-- Australia in South Africa 1st ODI -->
         <div class="custom-card fixture-card" data-teams="australia">
           <div class="match-meta">
             <span class="pill-badge upcoming">1st ODI</span>
@@ -549,7 +550,7 @@
           <div class="match-venue">📍 Wanderers Stadium, Johannesburg</div>
         </div>
 
-        <!-- 12. India vs West Indies 2nd ODI -->
+        <!-- India vs West Indies 2nd ODI -->
         <div class="custom-card fixture-card" data-teams="india west-indies">
           <div class="match-meta">
             <span class="pill-badge upcoming">2nd ODI</span>
@@ -559,7 +560,7 @@
           <div class="match-venue">📍 PCA Stadium, Mohali</div>
         </div>
 
-        <!-- 13. India vs West Indies 3rd ODI -->
+        <!-- India vs West Indies 3rd ODI -->
         <div class="custom-card fixture-card" data-teams="india west-indies">
           <div class="match-meta">
             <span class="pill-badge upcoming">3rd ODI</span>
@@ -569,7 +570,7 @@
           <div class="match-venue">📍 Narendra Modi Stadium, Ahmedabad</div>
         </div>
 
-        <!-- 14. Pakistan vs England ODI Tri-Series -->
+        <!-- Pakistan vs England ODI Tri-Series -->
         <div class="custom-card fixture-card" data-teams="pakistan england">
           <div class="match-meta">
             <span class="pill-badge upcoming">Tri-Series ODI</span>
@@ -579,7 +580,7 @@
           <div class="match-venue">📍 Rawalpindi Cricket Stadium</div>
         </div>
 
-        <!-- 15. Sri Lanka vs England ODI Tri-Series -->
+        <!-- Sri Lanka vs England ODI Tri-Series -->
         <div class="custom-card fixture-card" data-teams="sri-lanka england">
           <div class="match-meta">
             <span class="pill-badge upcoming">Tri-Series ODI</span>
@@ -589,7 +590,7 @@
           <div class="match-venue">📍 Rawalpindi Cricket Stadium</div>
         </div>
 
-        <!-- 16. New Zealand vs India 1st T20I -->
+        <!-- New Zealand vs India 1st T20I -->
         <div class="custom-card fixture-card" data-teams="india">
           <div class="match-meta">
             <span class="pill-badge upcoming">1st T20I</span>
@@ -599,7 +600,7 @@
           <div class="match-venue">📍 Hagley Oval, Christchurch</div>
         </div>
 
-        <!-- 17. Pakistan vs Sri Lanka ODI Tri-Series -->
+        <!-- Pakistan vs Sri Lanka ODI Tri-Series -->
         <div class="custom-card fixture-card" data-teams="pakistan sri-lanka">
           <div class="match-meta">
             <span class="pill-badge upcoming">Tri-Series ODI</span>
@@ -609,7 +610,7 @@
           <div class="match-venue">📍 Gaddafi Stadium, Lahore</div>
         </div>
 
-        <!-- 18. Afghanistan vs Bangladesh ODI Series -->
+        <!-- Afghanistan vs Bangladesh ODI Series -->
         <div class="custom-card fixture-card" data-teams="afghanistan bangladesh">
           <div class="match-meta">
             <span class="pill-badge upcoming">1st ODI</span>
@@ -619,7 +620,7 @@
           <div class="match-venue">📍 Sharjah Cricket Stadium</div>
         </div>
 
-        <!-- 19. England in Australia 1st ODI -->
+        <!-- England in Australia 1st ODI -->
         <div class="custom-card fixture-card" data-teams="england australia">
           <div class="match-meta">
             <span class="pill-badge upcoming">1st ODI</span>
@@ -697,7 +698,6 @@
       document.getElementById(tabId).classList.add('active');
       btn.classList.add('active');
 
-      // Re-apply India filter if opening schedule tab
       if (tabId === 'tab-schedule') {
         const activePill = document.querySelector('.team-pill.active') || document.querySelector('.team-pill');
         if (activePill) {
@@ -709,13 +709,11 @@
 
     // Schedule Team Filter Logic
     function filterSchedule(teamCode, pillBtn) {
-      // 1. Update Active Filter Pill
       document.querySelectorAll('.team-pill').forEach(btn => btn.classList.remove('active'));
       if (pillBtn) {
         pillBtn.classList.add('active');
       }
 
-      // 2. Filter Match Cards
       const cards = document.querySelectorAll('.fixture-card');
       let visibleCount = 0;
 
@@ -729,7 +727,6 @@
         }
       });
 
-      // 3. Toggle "No Matches" message
       const noMatchDiv = document.getElementById('no-matches');
       if (noMatchDiv) {
         noMatchDiv.style.display = (visibleCount === 0) ? 'block' : 'none';
