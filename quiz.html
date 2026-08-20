@@ -279,7 +279,7 @@
 
   <!-- Header -->
   <div class="quiz-header">
-    <div class="quiz-title">🏆 Cricket IQ & Fan Titles</div>
+    <div class="quiz-title">🏆 Cricket IQ: PAK vs ENG</div>
     <span class="badge-pill" id="score-counter">Score: 0</span>
   </div>
 
@@ -333,34 +333,34 @@
   <script>
     const questions = [
       {
-        question: "Who bowled the fastest recorded delivery in international cricket history (161.3 km/h)?",
-        options: ["Brett Lee", "Shoaib Akhtar", "Shaun Tait", "Mitchell Starc"],
+        question: "Who was the captain of Pakistan when they defeated England in the final to win the 1992 Cricket World Cup?",
+        options: ["Wasim Akram", "Imran Khan", "Javed Miandad", "Inzamam-ul-Haq"],
         correct: 1,
-        trivia: "Shoaib Akhtar delivered the fastest ball at 161.3 km/h (100.2 mph) against England in the 2003 World Cup."
+        trivia: "Imran Khan led Pakistan to their historic 1992 World Cup triumph, beating England by 22 runs at the MCG."
       },
       {
-        question: "Which cricketer is the only player to score 100 international centuries across all formats?",
-        options: ["Virat Kohli", "Ricky Ponting", "Sachin Tendulkar", "Jacques Kallis"],
-        correct: 2,
-        trivia: "Sachin Tendulkar holds this legendary record with 51 centuries in Tests and 49 in ODIs."
-      },
-      {
-        question: "Who was the first batsman in T20I history to score a half-century in just 9 balls?",
-        options: ["Dipendra Singh Airee", "Yuvraj Singh", "Chris Gayle", "Abhishek Sharma"],
+        question: "Which team did England defeat in Melbourne to lift the ICC Men's T20 World Cup 2022 trophy?",
+        options: ["Pakistan", "India", "New Zealand", "South Africa"],
         correct: 0,
-        trivia: "Nepal's Dipendra Singh Airee smashed a 9-ball fifty against Mongolia at the 2023 Asian Games."
+        trivia: "England defeated Pakistan by 5 wickets in the 2022 T20 World Cup final with Ben Stokes hitting the winning runs."
       },
       {
-        question: "Who is the only batsman in ODI cricket history to score three double centuries?",
-        options: ["Virender Sehwag", "Chris Gayle", "Martin Guptill", "Rohit Sharma"],
+        question: "In the 2016 Lord's Test against England, which Pakistan captain famously celebrated his century with push-ups?",
+        options: ["Younis Khan", "Azhar Ali", "Misbah-ul-Haq", "Sarfaraz Ahmed"],
+        correct: 2,
+        trivia: "Misbah-ul-Haq did 10 push-ups at Lord's after scoring a magnificent hundred at the age of 42 as a tribute to the army fitness camp."
+      },
+      {
+        question: "Who was named the 'Player of the Match' in the iconic 1992 World Cup Final between Pakistan and England?",
+        options: ["Imran Khan", "Derek Pringle", "Mushtaq Ahmed", "Wasim Akram"],
         correct: 3,
-        trivia: "Rohit Sharma scored 209, 264 (highest individual ODI score), and 208* in ODIs."
+        trivia: "Wasim Akram turned the final with his memorable swing bowling (3/49) and a quickfire 33 off just 18 balls."
       },
       {
-        question: "Who became the first player in international cricket history to be dismissed 'Timed Out'?",
-        options: ["Sourav Ganguly", "Angelo Mathews", "Shakib Al Hasan", "Steve Smith"],
+        question: "Which English batsman scored a blistering triple century (317 runs) against Pakistan in the 2024 Multan Test?",
+        options: ["Joe Root", "Harry Brook", "Ben Duckett", "Zak Crawley"],
         correct: 1,
-        trivia: "Angelo Mathews was timed out in the 2023 ICC World Cup match against Bangladesh in Delhi."
+        trivia: "Harry Brook smashed 317 off 322 balls against Pakistan in Multan in October 2024."
       }
     ];
 
@@ -436,7 +436,7 @@
         earnedTitle = "👑 Cricket Genius & Legend";
         iconEl.innerText = "👑";
         titleEl.innerText = earnedTitle;
-        descEl.innerText = "Flawless performance! You know the cricket world inside out.";
+        descEl.innerText = "Flawless performance! You know PAK vs ENG cricket history inside out.";
       } else if (score === 4) {
         earnedTitle = "🏆 Pro Cricket Analyst";
         iconEl.innerText = "🏆";
@@ -446,7 +446,7 @@
         earnedTitle = "🎖️ True Cricket Fan";
         iconEl.innerText = "🎖️";
         titleEl.innerText = earnedTitle;
-        descEl.innerText = "Great effort! A solid foundation of cricket facts.";
+        descEl.innerText = "Great effort! A solid foundation of classic cricket trivia.";
       } else {
         earnedTitle = "🧢 Rookie Supporter";
         iconEl.innerText = "🧢";
@@ -456,7 +456,7 @@
     }
 
     function shareTitle() {
-      const shareText = `🏏 I scored ${score}/5 in the Cricket Trivia Quiz and earned the title "${earnedTitle}"! 🏆 Test your cricket knowledge now!`;
+      const shareText = `🏏 I scored ${score}/5 in the Pakistan vs England Cricket Quiz and earned the title "${earnedTitle}"! 🏆 Test your cricket knowledge now!`;
       const whatsappURL = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
       window.open(whatsappURL, '_blank');
     }
