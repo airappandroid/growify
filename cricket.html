@@ -60,15 +60,15 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Single Live Radio Action Banner */
+    /* Compact Live Radio Action Banner */
     .action-banner {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 14px;
-      border-radius: 12px;
+      padding: 7px 12px;
+      border-radius: 10px;
       text-decoration: none;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
       transition: transform 0.15s ease;
       margin-bottom: 10px;
       width: 100%;
@@ -86,47 +86,18 @@
     .banner-info {
       display: flex;
       flex-direction: column;
-      gap: 2px;
-    }
-
-    .banner-top-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .pulse-indicator {
-      width: 7px;
-      height: 7px;
-      background-color: #ef4444;
-      border-radius: 50%;
-      box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
-      animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-      70% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-    }
-
-    .banner-tag {
-      font-size: 0.65rem;
-      font-weight: 700;
-      color: #a7f3d0;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      gap: 1px;
     }
 
     .banner-title {
       font-weight: 800;
-      font-size: 0.88rem;
+      font-size: 0.82rem;
       color: #ffffff;
       line-height: 1.2;
     }
 
     .banner-sub {
-      font-size: 0.70rem;
+      font-size: 0.68rem;
       color: #d1fae5;
       opacity: 0.9;
     }
@@ -134,15 +105,50 @@
     .listen-btn-pill {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
       background: rgba(255, 255, 255, 0.16);
       border: 1px solid rgba(255, 255, 255, 0.25);
       color: #ffffff;
       font-weight: 700;
-      font-size: 0.78rem;
-      padding: 6px 12px;
-      border-radius: 20px;
+      font-size: 0.72rem;
+      padding: 5px 10px;
+      border-radius: 16px;
       white-space: nowrap;
+    }
+
+    /* Match Dropdown Selector */
+    .match-dropdown-wrapper {
+      margin-bottom: 10px;
+    }
+
+    .match-select {
+      width: 100%;
+      padding: 10px 14px;
+      background-color: var(--surface-card);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffb703' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 14px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .match-select:focus {
+      border-color: var(--accent);
+    }
+
+    .match-select option {
+      background-color: var(--surface);
+      color: var(--text-main);
+      font-size: 0.85rem;
     }
 
     /* Scorecard Container */
@@ -404,26 +410,38 @@
   <div class="app-body">
     <!-- Tab 1: Scores -->
     <main id="tab-score" class="tab-content active">
-      <!-- Live Radio Banner -->
+      <!-- Live Radio Compact Banner -->
       <a href="go:commentary" class="action-banner banner-audio">
         <div class="banner-info">
-          <div class="banner-top-row">
-            <div class="pulse-indicator"></div>
-            <span class="banner-tag">Live Radio</span>
-          </div>
           <div class="banner-title">Ball by Ball Commentary</div>
-          <div class="banner-sub">Listen to live coverage</div>
+          <div class="banner-sub">Listen to live coverage (ENG vs PAK)</div>
         </div>
         <div class="listen-btn-pill">
           <span>🎙️ Listen</span>
         </div>
       </a>
 
+      <!-- Match Select Dropdown -->
+      <div class="match-dropdown-wrapper">
+        <select class="match-select" onchange="changeLiveScore(this.value)">
+          <option value="https://www.sandbrix.com/en/live-score/england-vs-pakistan/england-vs-pakistan/95253/live">
+            🔴 Live: 🏴󠁧󠁢󠁥󠁮󠁧󠁿 ENG vs 🇵🇰 PAK (1st Test)
+          </option>
+          <option value="https://www.sandbrix.com/en/live-score/india-vs-sri-lanka/india-vs-sri-lanka/95254/live">
+            Upcoming: 🇮🇳 IND vs 🇱🇰 SL (2nd Test)
+          </option>
+          <option value="https://www.sandbrix.com/en/live-score/australia-vs-bangladesh/australia-vs-bangladesh/95255/live">
+            Upcoming: 🇦🇺 AUS vs 🇧🇩 BAN (2nd Test)
+          </option>
+        </select>
+      </div>
+
       <!-- Score Feed Container -->
       <div class="score-container">
         <div class="share-mask"></div>
         <div class="nav-mask"></div>
         <iframe 
+          id="score-iframe"
           src="https://www.sandbrix.com/en/live-score/england-vs-pakistan/england-vs-pakistan/95253/live" 
           sandbox="allow-scripts allow-same-origin"
           scrolling="no"
@@ -703,6 +721,14 @@
   </nav>
 
   <script>
+    // Live Match Switch Logic
+    function changeLiveScore(newUrl) {
+      const iframe = document.getElementById('score-iframe');
+      if (iframe && newUrl) {
+        iframe.src = newUrl;
+      }
+    }
+
     // Tab Switch Logic
     function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
