@@ -43,7 +43,6 @@
       -webkit-overflow-scrolling: touch;
     }
 
-    /* High-Performance Card Container */
     .match-card {
       width: 100%;
       max-width: 420px;
@@ -70,7 +69,6 @@
       border-radius: 10px;
     }
 
-    /* Top Audio Commentary Banner */
     .audio-stream-card {
       display: flex;
       align-items: center;
@@ -78,7 +76,7 @@
       background: linear-gradient(135deg, rgba(99, 102, 241, 0.16), rgba(168, 85, 247, 0.16));
       border: 1px solid rgba(168, 85, 247, 0.3);
       border-radius: 14px;
-      padding: 19px 12px;
+      padding: 12px;
       margin-bottom: 12px;
       text-decoration: none;
       color: #fff;
@@ -165,6 +163,12 @@
       letter-spacing: 0.8px;
       color: #fda4af;
       text-transform: uppercase;
+    }
+
+    .live-badge.stumps {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: rgba(245, 158, 11, 0.35);
+      color: #fbbf24;
     }
 
     .pulse-dot {
@@ -306,17 +310,14 @@
       background: rgba(245, 158, 11, 0.08);
       border: 1px solid rgba(245, 158, 11, 0.2);
       border-radius: 10px;
-      padding: 9px 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      padding: 10px 12px;
       margin-bottom: 10px;
     }
 
     .commentary-action {
       display: flex;
-      align-items: center;
-      gap: 7px;
+      align-items: flex-start;
+      gap: 8px;
     }
 
     .ball-badge {
@@ -327,6 +328,14 @@
       padding: 2px 5px;
       border-radius: 4px;
       text-transform: uppercase;
+      white-space: nowrap;
+      margin-top: 1px;
+    }
+
+    .commentary-text-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
     }
 
     .commentary-text {
@@ -336,9 +345,11 @@
     }
 
     .commentary-sub {
-      font-size: 0.7rem;
-      color: #d97706;
+      font-size: 0.72rem;
+      color: #fde68a;
       font-weight: 500;
+      line-height: 1.35;
+      white-space: pre-line;
     }
 
     .match-note {
@@ -411,6 +422,7 @@
     const API_URL = 'https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a46abf321dc815bb318261b';
 
     function getTeamScore(team, prefix) {
+      if (!team) return { runs: 0, wkts: 0, ovs: '0.0', batted: false };
       const s1 = team[`${prefix}_1_score`];
       const s2 = team[`${prefix}_2_score`];
       if (s2 && s2.overs) return { runs: s2.runs, wkts: s2.wickets, ovs: s2.overs, batted: true };
@@ -432,9 +444,13 @@
         const scoreA = getTeamScore(teamA, 'a');
         const scoreB = getTeamScore(teamB, 'b');
 
-        const session = (m.now.day && m.now.sessionCount) 
+        const session = (m.now && m.now.day && m.now.sessionCount) 
           ? `Day ${m.now.day} • Session ${m.now.sessionCount}` 
           : '';
+
+        const isStumps = (m.status || '').toLowerCase() === 'stumps';
+        const commentary = m.lastCommentary;
+        const hasCommentary = commentary && (commentary.primaryText || commentary.secondaryText);
 
         card.innerHTML = `
           <!-- Deep link trigger for Commentary -->
@@ -453,8 +469,8 @@
 
           <div class="header-bar">
             <span class="format-tag">${m.format}</span>
-            <div class="live-badge">
-              <span class="pulse-dot"></span>
+            <div class="live-badge ${isStumps ? 'stumps' : ''}">
+              ${!isStumps ? '<span class="pulse-dot"></span>' : ''}
               ${m.status}
             </div>
           </div>
@@ -462,10 +478,10 @@
           ${session ? `<div class="session-info">${session}</div>` : ''}
 
           <div class="teams-wrap">
-            <!-- Team A -->
+            <!-- Team A (Sri Lanka) -->
             <div class="team-row ${currentBatting === 'a' ? 'active' : ''}">
               <div class="team-left">
-                <div class="team-avatar">${teamA.shortName.substring(0, 2)}</div>
+                <div class="team-avatar">${teamA.shortName ? teamA.shortName.substring(0, 2) : 'A'}</div>
                 <div class="team-meta">
                   <span class="team-name">${teamA.name}</span>
                   <span class="team-sub">${teamA.shortName}</span>
@@ -480,10 +496,10 @@
               </div>
             </div>
 
-            <!-- Team B -->
+            <!-- Team B (India) -->
             <div class="team-row ${currentBatting === 'b' ? 'active' : ''}">
               <div class="team-left">
-                <div class="team-avatar">${teamB.shortName.substring(0, 2)}</div>
+                <div class="team-avatar">${teamB.shortName ? teamB.shortName.substring(0, 2) : 'B'}</div>
                 <div class="team-meta">
                   <span class="team-name">${teamB.name}</span>
                   <span class="team-sub">${teamB.shortName}</span>
@@ -502,21 +518,23 @@
           <div class="metrics-grid">
             <div class="metric-card">
               <span class="metric-title">CRR</span>
-              <span class="metric-val">${m.now.run_rate || '0.00'}</span>
+              <span class="metric-val">${m.now?.run_rate || '0.00'}</span>
             </div>
             <div class="metric-card">
               <span class="metric-title">Overs Left</span>
-              <span class="metric-val">${m.now.overLeft || '-'}</span>
+              <span class="metric-val">${m.now?.overLeft || '-'}</span>
             </div>
           </div>
 
-          ${m.lastCommentary && m.lastCommentary.primaryText ? `
+          ${hasCommentary ? `
             <div class="commentary-banner">
               <div class="commentary-action">
-                <span class="ball-badge">LIVE UPDATE</span>
-                <span class="commentary-text">${m.lastCommentary.primaryText}</span>
+                <span class="ball-badge">${isStumps ? 'STUMPS' : 'LIVE UPDATE'}</span>
+                <div class="commentary-text-wrap">
+                  ${commentary.primaryText ? `<span class="commentary-text">${commentary.primaryText}</span>` : ''}
+                  ${commentary.secondaryText ? `<span class="commentary-sub">${commentary.secondaryText}</span>` : ''}
+                </div>
               </div>
-              ${m.lastCommentary.secondaryText ? `<span class="commentary-sub">${m.lastCommentary.secondaryText}</span>` : ''}
             </div>
           ` : ''}
 
@@ -533,7 +551,7 @@
           </div>
 
           <div class="footer">
-            <span>Live Sync: Active</span>
+            <span>Status: ${m.status.toUpperCase()}</span>
             <span>Update: ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>
           </div>
         `;
