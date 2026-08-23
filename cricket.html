@@ -862,37 +862,37 @@
       btn.classList.add('active');
     }
 
-    // Quiz Questions & Logic
+    // Quiz Questions & Logic (IND vs SL in Hindi)
     const questions = [
       {
-        question: "Who was the captain of Pakistan when they defeated England in the final to win the 1992 Cricket World Cup?",
-        options: ["Wasim Akram", "Imran Khan", "Javed Miandad", "Inzamam-ul-Haq"],
+        question: "2011 आईसीसी क्रिकेट विश्व कप फाइनल में श्रीलंका के खिलाफ विजयी छक्का किस भारतीय कप्तान ने लगाया था?",
+        options: ["विराट कोहली", "एम एस धोनी", "सचिन तेंदुलकर", "रोहित शर्मा"],
         correct: 1,
-        trivia: "Imran Khan led Pakistan to their historic 1992 World Cup triumph, beating England by 22 runs at the MCG."
+        trivia: "एम एस धोनी ने नुवान कुलसेकरा की गेंद पर ऐतिहासिक छक्का लगाकर भारत को 28 साल बाद विश्व कप जिताया था।"
       },
       {
-        question: "Which team did England defeat in Melbourne to lift the ICC Men's T20 World Cup 2022 trophy?",
-        options: ["Pakistan", "India", "New Zealand", "South Africa"],
-        correct: 0,
-        trivia: "England defeated Pakistan by 5 wickets in the 2022 T20 World Cup final with Ben Stokes hitting the winning runs."
+        question: "2014 में कोलकाता के ईडन गार्डन्स में श्रीलंका के खिलाफ एकदिवसीय (ODI) क्रिकेट में 264 रनों का सर्वोच्च व्यक्तिगत स्कोर किसने बनाया था?",
+        options: ["वीरेंद्र सहवाग", "रोहित शर्मा", "शिखर धवन", "युवराज सिंह"],
+        correct: 1,
+        trivia: "रोहित शर्मा ने श्रीलंका के खिलाफ 173 गेंदों में 264 रनों की ऐतिहासिक पारी खेली थी, जो आज भी एक विश्व रिकॉर्ड है।"
       },
       {
-        question: "In the 2016 Lord's Test against England, which Pakistan captain famously celebrated his century with push-ups?",
-        options: ["Younis Khan", "Azhar Ali", "Misbah-ul-Haq", "Sarfaraz Ahmed"],
+        question: "एशिया कप 2023 के फाइनल में श्रीलंका के खिलाफ घातक गेंदबाजी करते हुए 6 विकेट (6/21) किस भारतीय तेज गेंदबाज ने लिए थे?",
+        options: ["जसप्रीत बुमराह", "मोहम्मद शमी", "मोहम्मद सिराज", "हार्दिक पांड्या"],
         correct: 2,
-        trivia: "Misbah-ul-Haq did 10 push-ups at Lord's after scoring a magnificent hundred at the age of 42 as a tribute to the army fitness camp."
+        trivia: "मोहम्मद सिराज के 6 विकेटों की बदौलत श्रीलंका की टीम सिर्फ 50 रनों पर सिमट गई थी और भारत ने 10 विकेट से मैच जीत लिया था।"
       },
       {
-        question: "Who was named the 'Player of the Match' in the iconic 1992 World Cup Final between Pakistan and England?",
-        options: ["Imran Khan", "Derek Pringle", "Mushtaq Ahmed", "Wasim Akram"],
-        correct: 3,
-        trivia: "Wasim Akram turned the final with his memorable swing bowling (3/49) and a quickfire 33 off just 18 balls."
+        question: "2014 आईसीसी पुरुष टी20 विश्व कप फाइनल (ढाका) में भारत को 6 विकेट से हराकर किस टीम ने खिताब जीता था?",
+        options: ["श्रीलंका", "पाकिस्तान", "ऑस्ट्रेलिया", "वेस्टइंडीज"],
+        correct: 0,
+        trivia: "श्रीलंका ने भारत द्वारा दिए गए 131 रनों के लक्ष्य को हासिल कर कुमार संगकारा (52*) की पारी के दम पर 2014 का टी20 विश्व कप जीता था।"
       },
       {
-        question: "Which English batsman scored a blistering triple century (317 runs) against Pakistan in the 2024 Multan Test?",
-        options: ["Joe Root", "Harry Brook", "Ben Duckett", "Zak Crawley"],
+        question: "श्रीलंका के खिलाफ एक टेस्ट मैच की पारी में 7 विकेट (7/51) लेने वाले पहले भारतीय तेज गेंदबाज कौन थे?",
+        options: ["कपिल देव", "जवागल श्रीनाथ", "ईशांत शर्मा", "जहीर खान"],
         correct: 1,
-        trivia: "Harry Brook smashed 317 off 322 balls against Pakistan in Multan in October 2024."
+        trivia: "जवागल श्रीनाथ ने 1999 के एशियन टेस्ट चैंपियनशिप मैच में श्रीलंका के खिलाफ पहली पारी में 5 और दूसरी पारी में 8 (कुल 13 विकेट) लेकर इतिहास रचा था।"
       }
     ];
 
@@ -968,7 +968,7 @@
         earnedTitle = "Cricket Genius & Legend";
         iconEl.innerText = "👑";
         titleEl.innerText = earnedTitle;
-        descEl.innerText = "Flawless performance! You know PAK vs ENG cricket history inside out.";
+        descEl.innerText = "Flawless performance! You know IND vs SL cricket history inside out.";
       } else if (score === 4) {
         earnedTitle = "Pro Cricket Analyst";
         iconEl.innerText = "🏆";
@@ -988,7 +988,7 @@
     }
 
     function shareTitle() {
-      const shareText = `I scored ${score}/5 in the Cricket Quiz and earned the title "${earnedTitle}"! Test your cricket knowledge now!`;
+      const shareText = `I scored ${score}/5 in the IND vs SL Cricket Quiz and earned the title "${earnedTitle}"! Test your cricket knowledge now!`;
       const whatsappURL = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
       window.open(whatsappURL, '_blank');
     }
