@@ -549,7 +549,7 @@
 
           <!-- Footer Sync -->
           <div class="footer">
-            <span>Auto Refresh: 10s</span>
+            <span>Auto Refresh: 1m</span>
             <span>Last Synced: ${new Date().toLocaleTimeString()}</span>
           </div>
         `;
@@ -559,7 +559,7 @@
     }
 
     loadScorecard();
-    setInterval(loadScorecard, 10000);
+    setInterval(loadScorecard, 60000);
   </script>
 </body>
 </html>
