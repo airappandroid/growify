@@ -373,6 +373,7 @@
       border: 1px solid rgba(255, 255, 255, 0.18);
       box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.4);
       transition: all 0.2s ease;
+      cursor: pointer;
     }
 
     .scorecard-btn:active {
@@ -412,7 +413,6 @@
 
   <script>
     const API_URL = 'https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a46abf321dc815bb318261b';
-    const SCORECARD_URL = 'scorecard.html'; 
 
     function getTeamScore(team, prefix) {
       const s1 = team[`${prefix}_1_score`];
@@ -441,7 +441,7 @@
           : '';
 
         card.innerHTML = `
-          <!-- Deep link trigger for App WebView -->
+          <!-- Deep link trigger for Commentary -->
           <a href="go:commentary" class="audio-stream-card">
             <div class="audio-left">
               <div class="audio-title">Listen to Ball By Ball Commentary</div>
@@ -526,9 +526,9 @@
 
           ${m.announcement1 ? `<div class="match-note">${m.announcement1}</div>` : ''}
 
-          <!-- Scorecard Button -->
+          <!-- Deep link trigger for Scorecard -->
           <div class="btn-container">
-            <a href="${SCORECARD_URL}" target="_blank" class="scorecard-btn">
+            <a href="go:card" class="scorecard-btn">
               <span>View Full Scorecard</span>
               <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
