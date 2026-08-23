@@ -1,129 +1,307 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>बांग्लादेश चुनाव में BNP की भारी जीत</title>
-
-<style>
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #0e0e0e;
-    color: #ffffff;
-    line-height: 1.7;
-}
-
-.container {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-}
-
-.header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.header h1 {
-    font-size: 28px;
-    margin-bottom: 8px;
-}
-
-.date {
-    font-size: 14px;
-    color: #cccccc;
-}
-
-.card {
-    background: #1a1a1a;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 0 15px rgba(255,255,255,0.05);
-}
-
-.card h2 {
-    margin-top: 0;
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
-ul {
-    padding-left: 20px;
-}
-
-@media (max-width: 600px) {
-    .header h1 {
-        font-size: 22px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Team India Match Schedule</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #070a12;
+      --card-bg: rgba(18, 24, 38, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent-blue: #38bdf8;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-red: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
     }
-    .card {
-        padding: 16px;
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
-}
-</style>
+
+    body {
+      background: radial-gradient(circle at 50% 0%, #172554 0%, var(--bg-dark) 70%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text-main);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Page Header */
+    .header-box {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 16px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+    }
+
+    .header-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .header-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    /* Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 6px;
+      margin-top: 12px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .filter-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-btn {
+      flex: 1;
+      padding: 7px 12px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .filter-btn.active {
+      background: var(--accent-blue);
+      color: #000;
+      border-color: var(--accent-blue);
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.35);
+    }
+
+    /* Fixture Cards */
+    .schedule-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .match-item {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      transition: transform 0.2s ease;
+    }
+
+    .match-item:active {
+      transform: scale(0.99);
+    }
+
+    .match-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .date-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+    }
+
+    .format-pill {
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .pill-t20i { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .pill-odi { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .pill-test { background: rgba(244, 63, 94, 0.15); color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.3); }
+
+    .match-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.35;
+    }
+
+    .match-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 8px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .venue-info {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .time-info {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--accent-green);
+      background: rgba(16, 185, 129, 0.1);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
+  <div class="container">
+    <!-- Header -->
+    <div class="header-box">
+      <div class="header-title">Team India Fixtures</div>
+      <div class="header-sub">Upcoming Matches (IST)</div>
 
-    <div class="header">
-        <h1>बांग्लादेश चुनाव में BNP की भारी जीत</h1>
-        <div class="date">13 फरवरी 2026</div>
+      <!-- Filters -->
+      <div class="filter-tabs">
+        <button class="filter-btn active" onclick="filterSchedule('ALL', this)">All</button>
+        <button class="filter-btn" onclick="filterSchedule('T20I', this)">T20I</button>
+        <button class="filter-btn" onclick="filterSchedule('ODI', this)">ODI</button>
+        <button class="filter-btn" onclick="filterSchedule('TEST', this)">Test</button>
+      </div>
     </div>
 
-    <div class="card">
-        <h2>चुनाव परिणाम का सार</h2>
-        <p>
-            बांग्लादेश के हालिया संसदीय चुनाव में बांग्लादेश नेशनलिस्ट पार्टी (BNP) ने
-            भारी जीत दर्ज की है। शुरुआती और अनौपचारिक परिणामों के अनुसार पार्टी ने
-            स्पष्ट बहुमत हासिल कर लिया है, जिससे सरकार बनाने का रास्ता साफ हो गया है।
-        </p>
-    </div>
+    <!-- Match List -->
+    <div class="schedule-list" id="scheduleContainer"></div>
+  </div>
 
-    <div class="card">
-        <h2>BNP की जीत कितनी बड़ी?</h2>
-        <ul>
-            <li>दो-तिहाई के करीब सीटें जीतने का दावा</li>
-            <li>मुख्य विपक्षी दलों को सीमित सफलता</li>
-            <li>देशभर में मजबूत समर्थन</li>
-        </ul>
-    </div>
+  <script>
+    const fixtures = [
+      { date: "13 Sep 2026", match: "India vs Afghanistan — 1st T20I", venue: "Delhi", time: "7:00 PM", format: "T20I" },
+      { date: "15 Sep 2026", match: "India vs Afghanistan — 2nd T20I", venue: "Delhi", time: "7:00 PM", format: "T20I" },
+      { date: "17 Sep 2026", match: "India vs Afghanistan — 3rd T20I", venue: "Delhi", time: "7:00 PM", format: "T20I" },
+      { date: "27 Sep 2026", match: "India vs West Indies — 1st ODI", venue: "Thiruvananthapuram", time: "2:00 PM", format: "ODI" },
+      { date: "30 Sep 2026", match: "India vs West Indies — 2nd ODI", venue: "Guwahati", time: "2:00 PM", format: "ODI" },
+      { date: "3 Oct 2026", match: "India vs West Indies — 3rd ODI", venue: "New Chandigarh", time: "2:00 PM", format: "ODI" },
+      { date: "6 Oct 2026", match: "India vs West Indies — 1st T20I", venue: "Lucknow", time: "7:00 PM", format: "T20I" },
+      { date: "9 Oct 2026", match: "India vs West Indies — 2nd T20I", venue: "Ranchi", time: "7:00 PM", format: "T20I" },
+      { date: "11 Oct 2026", match: "India vs West Indies — 3rd T20I", venue: "Indore", time: "7:00 PM", format: "T20I" },
+      { date: "14 Oct 2026", match: "India vs West Indies — 4th T20I", venue: "Hyderabad", time: "7:00 PM", format: "T20I" },
+      { date: "17 Oct 2026", match: "India vs West Indies — 5th T20I", venue: "Bengaluru", time: "7:00 PM", format: "T20I" },
+      { date: "22 Oct 2026", match: "India vs New Zealand — 1st T20I", venue: "Christchurch", time: "12:30 PM", format: "T20I" },
+      { date: "24 Oct 2026", match: "India vs New Zealand — 2nd T20I", venue: "Christchurch", time: "12:30 PM", format: "T20I" },
+      { date: "27 Oct 2026", match: "India vs New Zealand — 3rd T20I", venue: "Wellington", time: "12:30 PM", format: "T20I" },
+      { date: "30 Oct 2026", match: "India vs New Zealand — 4th T20I", venue: "Auckland", time: "12:30 PM", format: "T20I" },
+      { date: "1 Nov 2026", match: "India vs New Zealand — 5th T20I", venue: "Hamilton", time: "12:30 PM", format: "T20I" },
+      { date: "4 Nov 2026", match: "India vs New Zealand — 1st ODI", venue: "Auckland", time: "7:30 AM", format: "ODI" },
+      { date: "7 Nov 2026", match: "India vs New Zealand — 2nd ODI", venue: "Wellington", time: "7:30 AM", format: "ODI" },
+      { date: "10 Nov 2026", match: "India vs New Zealand — 3rd ODI", venue: "Hamilton", time: "7:30 AM", format: "ODI" },
+      { date: "13 Nov 2026", match: "India vs New Zealand — 4th ODI", venue: "Mount Maunganui", time: "7:30 AM", format: "ODI" },
+      { date: "15 Nov 2026", match: "India vs New Zealand — 5th ODI", venue: "Mount Maunganui", time: "7:30 AM", format: "ODI" },
+      { date: "19–23 Nov 2026", match: "India vs New Zealand — 1st Test", venue: "Wellington", time: "3:30 AM", format: "TEST" },
+      { date: "27 Nov–1 Dec 2026", match: "India vs New Zealand — 2nd Test", venue: "Christchurch", time: "3:30 AM", format: "TEST" },
+      { date: "13 Dec 2026", match: "India vs Sri Lanka — 1st ODI", venue: "Delhi", time: "2:00 PM", format: "ODI" },
+      { date: "16 Dec 2026", match: "India vs Sri Lanka — 2nd ODI", venue: "Bengaluru", time: "2:00 PM", format: "ODI" },
+      { date: "19 Dec 2026", match: "India vs Sri Lanka — 3rd ODI", venue: "Ahmedabad", time: "2:00 PM", format: "ODI" },
+      { date: "22 Dec 2026", match: "India vs Sri Lanka — 1st T20I", venue: "Rajkot", time: "7:00 PM", format: "T20I" },
+      { date: "24 Dec 2026", match: "India vs Sri Lanka — 2nd T20I", venue: "Cuttack", time: "7:00 PM", format: "T20I" },
+      { date: "27 Dec 2026", match: "India vs Sri Lanka — 3rd T20I", venue: "Pune", time: "7:00 PM", format: "T20I" },
+      { date: "3 Jan 2027", match: "India vs Zimbabwe — 1st ODI", venue: "Kolkata", time: "2:00 PM", format: "ODI" },
+      { date: "6 Jan 2027", match: "India vs Zimbabwe — 2nd ODI", venue: "Hyderabad", time: "2:00 PM", format: "ODI" },
+      { date: "9 Jan 2027", match: "India vs Zimbabwe — 3rd ODI", venue: "Mumbai", time: "2:00 PM", format: "ODI" },
+      { date: "21–25 Jan 2027", match: "India vs Australia — 1st Test", venue: "Nagpur", time: "9:30 AM", format: "TEST" },
+      { date: "29 Jan–2 Feb 2027", match: "India vs Australia — 2nd Test", venue: "Chennai", time: "9:30 AM", format: "TEST" },
+      { date: "11–15 Feb 2027", match: "India vs Australia — 3rd Test", venue: "Guwahati", time: "9:00 AM", format: "TEST" },
+      { date: "19–23 Feb 2027", match: "India vs Australia — 4th Test", venue: "Ranchi", time: "9:30 AM", format: "TEST" },
+      { date: "27 Feb–3 Mar 2027", match: "India vs Australia — 5th Test", venue: "Ahmedabad", time: "9:30 AM", format: "TEST" }
+    ];
 
-    <div class="card">
-        <h2>राजनीतिक पृष्ठभूमि</h2>
-        <p>
-            यह चुनाव देश में बड़े राजनीतिक बदलाव और पिछले कुछ वर्षों की अस्थिरता
-            के बाद हुआ है। जनता परिवर्तन चाहती थी, और यह परिणाम उसी इच्छा को दर्शाता है।
-        </p>
-    </div>
+    function renderMatches(list) {
+      const container = document.getElementById('scheduleContainer');
+      container.innerHTML = list.map(item => {
+        let pillClass = 'pill-t20i';
+        if (item.format === 'ODI') pillClass = 'pill-odi';
+        if (item.format === 'TEST') pillClass = 'pill-test';
 
-    <div class="card">
-        <h2>संभावित प्रधानमंत्री</h2>
-        <p>
-            पार्टी नेतृत्व के अनुसार BNP के शीर्ष नेता सरकार का नेतृत्व कर सकते हैं।
-            आने वाले दिनों में औपचारिक घोषणा की संभावना है।
-        </p>
-    </div>
+        return `
+          <div class="match-item">
+            <div class="match-top">
+              <span class="date-badge">${item.date}</span>
+              <span class="format-pill ${pillClass}">${item.format}</span>
+            </div>
+            <div class="match-title">${item.match}</div>
+            <div class="match-bottom">
+              <div class="venue-info">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                  <circle cx="12" cy="9" r="2.5"/>
+                </svg>
+                <span>${item.venue}</span>
+              </div>
+              <div class="time-info">${item.time} IST</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
 
-    <div class="card">
-        <h2>देश और क्षेत्र पर प्रभाव</h2>
-        <p>
-            इस चुनाव परिणाम का असर सिर्फ बांग्लादेश तक सीमित नहीं रहेगा।
-            दक्षिण एशिया की राजनीति, व्यापार संबंधों और कूटनीति पर भी इसका प्रभाव पड़ सकता है।
-        </p>
-    </div>
+    function filterSchedule(format, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
 
-    <div class="card">
-        <h2>आगे क्या?</h2>
-        <p>
-            अब सबकी नजर नई सरकार के गठन और उसकी नीतियों पर है।
-            आर्थिक सुधार, रोजगार और अंतरराष्ट्रीय संबंध मुख्य प्राथमिकताएं मानी जा रही हैं।
-        </p>
-    </div>
+      if (format === 'ALL') {
+        renderMatches(fixtures);
+      } else {
+        const filtered = fixtures.filter(f => f.format === format);
+        renderMatches(filtered);
+      }
+    }
 
-</div>
-
+    // Initial render
+    renderMatches(fixtures);
+  </script>
 </body>
 </html>
