@@ -10,10 +10,9 @@
   <style>
     :root {
       --bg-dark: #070a12;
-      --card-surface: rgba(15, 23, 42, 0.75);
-      --card-border: rgba(255, 255, 255, 0.08);
+      --card-surface: #111a2e;
+      --card-border: rgba(255, 255, 255, 0.07);
       --accent-green: #10b981;
-      --green-glow: rgba(16, 185, 129, 0.25);
       --accent-cyan: #38bdf8;
       --accent-amber: #f59e0b;
       --accent-red: #f43f5e;
@@ -30,13 +29,17 @@
     }
 
     body {
-      background: radial-gradient(circle at 50% 0%, #0f172a 0%, var(--bg-dark) 75%);
+      background-color: var(--bg-dark);
+      background-image: radial-gradient(circle at 50% 0%, #131f38 0%, var(--bg-dark) 65%);
+      background-attachment: fixed;
       min-height: 100vh;
-      padding: 16px 12px;
+      padding: 10px 12px;
       font-family: 'Plus Jakarta Sans', sans-serif;
       color: var(--text-main);
       display: flex;
       justify-content: center;
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
     }
 
     .container {
@@ -44,17 +47,20 @@
       max-width: 480px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 10px;
+      transform: translateZ(0);
     }
 
+    /* Optimized Card with Hardware Acceleration & Content Visibility */
     .card {
       background: var(--card-surface);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 16px;
-      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 14px 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      content-visibility: auto;
+      contain: layout style paint;
+      transform: translateZ(0);
     }
 
     /* Header & Overview */
@@ -62,9 +68,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 12px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      margin-bottom: 12px;
     }
 
     .badge-format {
@@ -72,8 +78,8 @@
       font-weight: 800;
       letter-spacing: 1px;
       text-transform: uppercase;
-      padding: 4px 10px;
-      background: rgba(255, 255, 255, 0.05);
+      padding: 3px 9px;
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 20px;
       color: var(--text-muted);
@@ -90,7 +96,7 @@
       color: var(--accent-red);
       background: rgba(244, 63, 94, 0.1);
       border: 1px solid rgba(244, 63, 94, 0.25);
-      padding: 4px 10px;
+      padding: 3px 9px;
       border-radius: 20px;
     }
 
@@ -99,14 +105,12 @@
       height: 6px;
       background: var(--accent-red);
       border-radius: 50%;
-      box-shadow: 0 0 8px var(--accent-red);
       animation: pulse 1.5s infinite;
     }
 
     @keyframes pulse {
-      0% { transform: scale(0.9); opacity: 0.6; }
+      0%, 100% { transform: scale(0.9); opacity: 0.6; }
       50% { transform: scale(1.3); opacity: 1; }
-      100% { transform: scale(0.9); opacity: 0.6; }
     }
 
     .team-summary {
@@ -116,16 +120,16 @@
     }
 
     .team-title {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 800;
       color: #fff;
       letter-spacing: -0.3px;
     }
 
     .team-subtitle {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--text-muted);
-      margin-top: 2px;
+      margin-top: 1px;
     }
 
     .score-stats {
@@ -134,15 +138,14 @@
 
     .score-highlight {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       font-weight: 700;
       color: var(--accent-green);
       letter-spacing: -0.5px;
-      text-shadow: 0 0 16px var(--green-glow);
     }
 
     .runrate-sub {
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
       margin-top: 2px;
     }
@@ -152,12 +155,12 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
-      letter-spacing: 1px;
+      letter-spacing: 0.8px;
       text-transform: uppercase;
       color: var(--accent-cyan);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     /* Tables */
@@ -169,7 +172,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
     }
 
     th {
@@ -178,8 +181,8 @@
       font-weight: 700;
       color: var(--text-sub);
       text-transform: uppercase;
-      letter-spacing: 0.6px;
-      padding: 6px 4px 10px;
+      letter-spacing: 0.5px;
+      padding: 4px 4px 8px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
@@ -189,11 +192,11 @@
     }
 
     td {
-      padding: 10px 4px;
+      padding: 9px 4px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       color: var(--text-muted);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       text-align: right;
     }
 
@@ -204,21 +207,21 @@
     .player-col {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 1px;
     }
 
     .player-name {
       font-weight: 700;
       color: #fff;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .role-badge {
-      font-size: 0.62rem;
-      padding: 1px 5px;
+      font-size: 0.6rem;
+      padding: 1px 4px;
       border-radius: 4px;
       background: rgba(56, 189, 248, 0.15);
       color: var(--accent-cyan);
@@ -226,7 +229,7 @@
     }
 
     .dismissal-text {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--text-sub);
       font-style: italic;
     }
@@ -251,9 +254,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.78rem;
-      padding-top: 10px;
-      margin-top: 4px;
+      font-size: 0.75rem;
+      padding-top: 8px;
+      margin-top: 2px;
       color: var(--text-muted);
       border-top: 1px dashed rgba(255, 255, 255, 0.08);
     }
@@ -268,21 +271,20 @@
     .ytb-chip {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 6px 10px;
-      border-radius: 10px;
-      font-size: 0.75rem;
+      padding: 5px 9px;
+      border-radius: 8px;
+      font-size: 0.72rem;
       color: var(--text-muted);
       display: flex;
       align-items: center;
-      gap: 6px;
     }
 
     /* Partnerships */
     .pship-card {
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      margin-bottom: 12px;
+      gap: 5px;
+      margin-bottom: 10px;
     }
 
     .pship-card:last-child {
@@ -292,43 +294,43 @@
     .pship-header {
       display: flex;
       justify-content: space-between;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 600;
     }
 
     .pship-stats {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--text-muted);
     }
 
     .progress-track {
-      height: 6px;
+      height: 5px;
       width: 100%;
       background: rgba(255, 255, 255, 0.05);
-      border-radius: 6px;
+      border-radius: 4px;
       overflow: hidden;
     }
 
     .progress-fill {
       height: 100%;
       background: linear-gradient(90deg, var(--accent-cyan), #818cf8);
-      border-radius: 6px;
+      border-radius: 4px;
     }
 
     /* Fall of Wickets */
     .fow-chips {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
     }
 
     .fow-pill {
-      background: rgba(0, 0, 0, 0.25);
+      background: rgba(0, 0, 0, 0.2);
       border: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 6px 12px;
-      border-radius: 10px;
-      font-size: 0.75rem;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 0.72rem;
       color: var(--text-muted);
     }
 
@@ -341,14 +343,14 @@
     .footer {
       display: flex;
       justify-content: space-between;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       color: var(--text-sub);
-      padding: 4px 6px;
+      padding: 4px 6px 12px;
     }
 
     .loader {
       text-align: center;
-      padding: 40px 0;
+      padding: 30px 0;
       color: var(--text-muted);
     }
   </style>
