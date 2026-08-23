@@ -2,1010 +2,552 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Cricket Central</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Live Match Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #059669;
-      --primary-glow: #10b981;
-      --accent: #f59e0b;
-      --accent-gradient: linear-gradient(135deg, #f59e0b, #d97706);
-      --bg: #090d16;
-      --surface: #111827;
-      --surface-card: #1f2937;
-      --text-main: #f9fafb;
-      --text-muted: #9ca3af;
-      --border: rgba(255, 255, 255, 0.08);
-      --correct: #10b981;
-      --wrong: #ef4444;
-      --radius-lg: 16px;
-      --radius-md: 12px;
-      --radius-sm: 8px;
+      --bg-dark: #090d16;
+      --card-bg: rgba(18, 24, 38, 0.8);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent-green: #10b981;
+      --green-glow: rgba(16, 185, 129, 0.25);
+      --accent-red: #f43f5e;
+      --accent-amber: #f59e0b;
+      --accent-purple: #a855f7;
+      --text-main: #f8fafc;
+      --text-muted: #64748b;
+      --text-sub: #94a3b8;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
 
-    html, body {
-      height: 100%;
-      height: 100dvh;
-      background-color: var(--bg);
-      color: var(--text-main);
-      overflow: hidden;
+    body {
+      background: radial-gradient(circle at 50% 0%, #172554 0%, #090d16 65%);
+      min-height: 100vh;
       display: flex;
-      flex-direction: column;
-    }
-
-    /* Main Scrollable Area */
-    .app-body {
-      flex: 1;
-      overflow-y: auto;
-      padding: 12px 12px 80px 12px;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    /* Tab Transitions */
-    .tab-content {
-      display: none;
-      animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Section Title */
-    .section-title {
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin: 6px 0 14px 2px;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 10px 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       color: var(--text-main);
-      letter-spacing: -0.2px;
     }
 
-    /* Live Radio Banner */
-    .action-banner {
+    .match-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--card-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 16px 16px 14px;
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .match-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 160px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.8), transparent);
+      border-radius: 10px;
+    }
+
+    /* Top Audio Commentary Banner */
+    .audio-stream-card {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 16px;
-      border-radius: var(--radius-lg);
-      text-decoration: none;
-      background: linear-gradient(135deg, #064e3b, #047857);
-      border: 1px solid rgba(52, 211, 153, 0.25);
-      box-shadow: 0 4px 20px rgba(4, 120, 87, 0.25);
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.18), rgba(168, 85, 247, 0.18));
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-radius: 16px;
+      padding: 10px 14px;
       margin-bottom: 14px;
-      transition: transform 0.15s ease;
+      text-decoration: none;
+      color: #fff;
+      box-shadow: 0 8px 20px -6px rgba(168, 85, 247, 0.25);
+      transition: all 0.2s ease;
+      gap: 10px;
+      cursor: pointer;
     }
 
-    .action-banner:active {
+    .audio-stream-card:active {
       transform: scale(0.98);
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.28), rgba(168, 85, 247, 0.28));
     }
 
-    .banner-info {
+    .audio-left {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 2px;
     }
 
-    .banner-title {
+    .audio-title {
+      font-size: 0.78rem;
       font-weight: 800;
-      font-size: 0.95rem;
-      color: #ffffff;
-      line-height: 1.2;
+      color: #f8fafc;
+      letter-spacing: 0.2px;
     }
 
-    .banner-sub {
-      font-size: 0.75rem;
-      color: #a7f3d0;
+    .audio-sub {
+      font-size: 0.68rem;
+      color: #cbd5e1;
       font-weight: 500;
     }
 
-    .listen-btn-pill {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+    .listen-now-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, #a855f7, #6366f1);
       color: #ffffff;
-      font-weight: 700;
-      font-size: 0.8rem;
-      padding: 6px 14px;
-      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.4px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      padding: 7px 12px;
+      border-radius: 10px;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    /* Score Feed Container */
-    .score-wrapper {
-      width: 100%;
-      height: 580px;
-      background: #000000;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      position: relative;
-      border: 1px solid var(--border);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    .listen-now-btn svg {
+      width: 13px;
+      height: 13px;
+      fill: currentColor;
     }
 
-    .score-wrapper iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
-
-    /* Fixture Match Cards */
-    .fixture-card {
-      background: var(--surface-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 14px 16px;
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 10px;
     }
 
-    .match-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
-    .pill-badge {
-      font-size: 0.68rem;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: var(--radius-sm);
+    .format-tag {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      background: rgba(59, 130, 246, 0.15);
-      color: #60a5fa;
-      border: 1px solid rgba(59, 130, 246, 0.25);
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 30px;
+      color: var(--text-sub);
     }
 
-    .pill-badge.t20 {
-      background: rgba(245, 158, 11, 0.15);
-      color: #fbbf24;
-      border: 1px solid rgba(245, 158, 11, 0.25);
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(244, 63, 94, 0.12);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      padding: 4px 10px;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      color: #fda4af;
+      text-transform: uppercase;
     }
 
-    .pill-badge.odi {
-      background: rgba(16, 185, 129, 0.15);
-      color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.25);
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      background-color: var(--accent-red);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent-red);
+      animation: pulse 1.4s infinite;
     }
 
-    .match-date {
-      font-size: 0.76rem;
-      color: var(--text-muted);
-      font-weight: 500;
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 0.7; }
+      50% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(0.95); opacity: 0.7; }
     }
 
-    .match-teams {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 6px;
-      letter-spacing: -0.2px;
-    }
-
-    .match-venue {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      line-height: 1.3;
-    }
-
-    /* Video Highlights */
-    .video-card {
-      background: var(--surface-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 10px;
+    .session-info {
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #38bdf8;
+      letter-spacing: 0.3px;
       margin-bottom: 12px;
     }
 
-    .video-wrapper {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      background: #000;
+    .teams-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
     }
 
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    .video-title {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: #ffffff;
-      margin-top: 8px;
-      line-height: 1.3;
-    }
-
-    .video-sub {
-      font-size: 0.74rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    /* Quiz Specific Styles */
-    .quiz-header {
+    .team-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border);
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 16px;
+      transition: all 0.3s ease;
     }
 
-    .quiz-title {
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: #ffffff;
+    .team-row.active {
+      background: linear-gradient(90deg, rgba(16, 185, 129, 0.08), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(16, 185, 129, 0.3);
     }
 
-    .badge-pill {
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 20px;
-      background: rgba(245, 158, 11, 0.15);
-      color: var(--accent);
-      border: 1px solid rgba(245, 158, 11, 0.3);
-    }
-
-    .progress-wrapper {
-      margin-bottom: 16px;
-    }
-
-    .progress-meta {
+    .team-left {
       display: flex;
-      justify-content: space-between;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .progress-bar-bg {
-      width: 100%;
-      height: 6px;
-      background: var(--surface-card);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .progress-bar-fill {
-      height: 100%;
-      width: 20%;
-      background: var(--accent-gradient);
-      transition: width 0.3s ease;
-      border-radius: 10px;
-    }
-
-    .quiz-card {
-      background: var(--surface-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 18px 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
-      margin-bottom: 16px;
-    }
-
-    .question-text {
-      font-size: 1rem;
-      font-weight: 700;
-      line-height: 1.45;
-      color: #ffffff;
-      margin-bottom: 16px;
-    }
-
-    .options-grid {
-      display: flex;
-      flex-direction: column;
+      align-items: center;
       gap: 10px;
     }
 
-    .option-btn {
-      width: 100%;
-      text-align: left;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: #e2e8f0;
-      padding: 13px 15px;
-      border-radius: var(--radius-md);
+    .team-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.75rem;
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .team-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .team-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .team-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .team-right {
+      text-align: right;
+    }
+
+    .score-highlight {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent-green);
+      letter-spacing: -0.5px;
+      text-shadow: 0 0 12px var(--green-glow);
+    }
+
+    .overs-highlight {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .yet-to-bat {
       font-size: 0.88rem;
       font-weight: 600;
-      cursor: pointer;
+      color: #64748b;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .metric-card {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 8px 12px;
+      border-radius: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: all 0.15s ease;
     }
 
-    .option-btn:active {
-      transform: scale(0.98);
-    }
-
-    .option-btn.correct {
-      background: rgba(16, 185, 129, 0.18) !important;
-      border-color: var(--correct) !important;
-      color: #6ee7b7 !important;
-    }
-
-    .option-btn.wrong {
-      background: rgba(239, 68, 68, 0.18) !important;
-      border-color: var(--wrong) !important;
-      color: #fca5a5 !important;
-    }
-
-    .option-btn.disabled {
-      pointer-events: none;
-      opacity: 0.75;
-    }
-
-    .trivia-box {
-      display: none;
-      background: rgba(5, 150, 105, 0.15);
-      border-left: 4px solid var(--accent);
-      border-radius: 0 var(--radius-md) var(--radius-md) 0;
-      padding: 12px 14px;
-      margin-top: 16px;
-      font-size: 0.82rem;
-      color: #e2e8f0;
-      line-height: 1.45;
-    }
-
-    .trivia-box strong {
-      color: var(--accent);
-      display: block;
-      margin-bottom: 2px;
-      font-size: 0.85rem;
-    }
-
-    .action-btn {
-      width: 100%;
-      background: linear-gradient(135deg, #064e3b, #047857);
-      color: #ffffff;
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      padding: 13px;
-      border-radius: var(--radius-md);
-      font-size: 0.92rem;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 6px 16px rgba(6, 78, 59, 0.35);
-      display: none;
-    }
-
-    .action-btn:active {
-      transform: scale(0.98);
-    }
-
-    /* Result Screen */
-    .result-container {
-      display: none;
-      background: var(--surface-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 24px 18px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      text-align: center;
-    }
-
-    .badge-icon {
-      font-size: 2.8rem;
-      margin-bottom: 8px;
-    }
-
-    .fan-title-tag {
-      display: inline-block;
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--accent);
-      background: rgba(245, 158, 11, 0.12);
-      border: 1px solid rgba(245, 158, 11, 0.3);
-      padding: 6px 16px;
-      border-radius: 20px;
-      margin-bottom: 14px;
-    }
-
-    .score-circle {
-      width: 84px;
-      height: 84px;
-      background: radial-gradient(circle, #047857, #062c1e);
-      border: 3px solid var(--accent);
-      border-radius: 50%;
-      margin: 0 auto 14px auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      font-weight: 900;
-      color: #ffffff;
-    }
-
-    .score-circle span {
-      font-size: 0.65rem;
-      color: #a7f3d0;
-      font-weight: 600;
-    }
-
-    .result-desc {
-      font-size: 0.85rem;
-      color: #cbd5e1;
-      line-height: 1.45;
-      margin-bottom: 20px;
-    }
-
-    .share-btn {
-      width: 100%;
-      background: linear-gradient(135deg, #25d366, #128c7e);
-      color: #ffffff;
-      border: none;
-      padding: 13px;
-      border-radius: var(--radius-md);
-      font-size: 0.92rem;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
-      margin-bottom: 10px;
-    }
-
-    .share-btn:active {
-      transform: scale(0.98);
-    }
-
-    /* Bottom Navigation */
-    .bottom-nav {
-      position: fixed;
-      bottom: 10px;
-      left: 12px;
-      right: 12px;
-      height: 60px;
-      background: rgba(17, 24, 39, 0.9);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-      z-index: 1000;
-      padding: 0 4px;
-    }
-
-    .nav-btn {
-      flex: 1;
-      border: none;
-      background: transparent;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    .metric-title {
+      font-size: 0.7rem;
       color: var(--text-muted);
-      font-size: 0.72rem;
       font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .metric-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .commentary-banner {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(245, 158, 11, 0.02));
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .commentary-action {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ball-badge {
+      background: var(--accent-amber);
+      color: #000;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 5px;
+      text-transform: uppercase;
+    }
+
+    .commentary-text {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #fbbf24;
+    }
+
+    .commentary-sub {
+      font-size: 0.72rem;
+      color: #d97706;
+      font-weight: 500;
+    }
+
+    .match-note {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-sub);
+      margin-bottom: 12px;
+    }
+
+    .btn-container {
+      margin-bottom: 12px;
+    }
+
+    .scorecard-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 11px 16px;
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      color: #ffffff;
       text-decoration: none;
-      cursor: pointer;
-      gap: 4px;
-      padding: 6px 0;
-      transition: color 0.15s ease;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.4);
+      transition: all 0.2s ease;
     }
 
-    .nav-btn svg {
-      width: 20px;
-      height: 20px;
+    .scorecard-btn:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+    }
+
+    .scorecard-btn svg {
+      width: 16px;
+      height: 16px;
       stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
     }
 
-    .nav-btn.active {
-      color: var(--accent);
+    .footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    .loader {
+      text-align: center;
+      padding: 30px 0;
+      color: var(--text-sub);
+      font-size: 0.85rem;
     }
   </style>
 </head>
 <body>
 
-  <div class="app-body">
-    <!-- Tab 1: Scores -->
-    <main id="tab-score" class="tab-content active">
-      <a href="go:commentary" class="action-banner">
-        <div class="banner-info">
-          <div class="banner-title">Ball by Ball Commentary</div>
-          <div class="banner-sub">Listen to live audio coverage</div>
-        </div>
-        <div class="listen-btn-pill">Listen</div>
-      </a>
-
-      <div class="score-wrapper">
-        <iframe 
-          id="score-iframe" 
-          src="https://cricketingfacts.com/project/cricket-live-score-3/" 
-          loading="lazy" 
-          title="Live Cricket Score">
-        </iframe>
-      </div>
-    </main>
-
-    <!-- Tab 2: Quiz -->
-    <main id="tab-quiz" class="tab-content">
-      <div class="quiz-header">
-        <div class="quiz-title">Cricket IQ Challenge</div>
-        <span class="badge-pill" id="score-counter">Score: 0</span>
-      </div>
-
-      <!-- Quiz Screen -->
-      <div id="quiz-screen">
-        <div class="progress-wrapper">
-          <div class="progress-meta">
-            <span id="question-count">Question 1 of 5</span>
-            <span style="color: var(--accent); font-weight: 700;">Unlock Fan Badge</span>
-          </div>
-          <div class="progress-bar-bg">
-            <div id="progress-fill" class="progress-bar-fill"></div>
-          </div>
-        </div>
-
-        <div class="quiz-card">
-          <div id="question-text" class="question-text">Loading question...</div>
-          <div id="options-container" class="options-grid"></div>
-          
-          <div id="trivia-box" class="trivia-box">
-            <strong>Did You Know?</strong>
-            <span id="trivia-fact"></span>
-          </div>
-        </div>
-
-        <button id="next-btn" class="action-btn" onclick="nextQuestion()">Next Question →</button>
-      </div>
-
-      <!-- Result Screen -->
-      <div id="result-screen" class="result-container">
-        <div id="badge-icon" class="badge-icon">👑</div>
-        <div id="fan-title" class="fan-title-tag">Cricket Genius</div>
-
-        <div class="score-circle">
-          <div id="final-score">0/5</div>
-          <span>SCORE</span>
-        </div>
-
-        <p id="result-desc" class="result-desc">You are an absolute master of cricket trivia!</p>
-
-        <button class="share-btn" onclick="shareTitle()">Share Badge on WhatsApp</button>
-        <button class="action-btn" style="display: block; background: var(--surface); border-color: var(--border); color: #cbd5e1;" onclick="restartQuiz()">Play Again</button>
-      </div>
-    </main>
-
-    <!-- Tab 3: Fixtures (India All Upcoming Matches) -->
-    <main id="tab-schedule" class="tab-content">
-      <div class="section-title">India Match Schedule (IST)</div>
-
-      <div id="fixtures-list">
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge">2nd Test</span>
-            <span class="match-date">23–27 Aug • 10:00 AM IST</span>
-          </div>
-          <div class="match-teams">Sri Lanka vs India</div>
-          <div class="match-venue">Sinhalese Sports Club, Colombo</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge t20">1st T20I</span>
-            <span class="match-date">13 Sep • 07:00 PM IST</span>
-          </div>
-          <div class="match-teams">Afghanistan vs India</div>
-          <div class="match-venue">Arun Jaitley Stadium, Delhi</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge t20">2nd T20I</span>
-            <span class="match-date">15 Sep • 07:00 PM IST</span>
-          </div>
-          <div class="match-teams">Afghanistan vs India</div>
-          <div class="match-venue">Arun Jaitley Stadium, Delhi</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge t20">3rd T20I</span>
-            <span class="match-date">17 Sep • 07:00 PM IST</span>
-          </div>
-          <div class="match-teams">Afghanistan vs India</div>
-          <div class="match-venue">Arun Jaitley Stadium, Delhi</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge odi">1st ODI</span>
-            <span class="match-date">27 Sep • 02:00 PM IST</span>
-          </div>
-          <div class="match-teams">India vs West Indies</div>
-          <div class="match-venue">Greenfield International Stadium, Thiruvananthapuram</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge odi">2nd ODI</span>
-            <span class="match-date">30 Sep • 02:00 PM IST</span>
-          </div>
-          <div class="match-teams">India vs West Indies</div>
-          <div class="match-venue">Barsapara Cricket Stadium, Guwahati</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge odi">3rd ODI</span>
-            <span class="match-date">03 Oct • 02:00 PM IST</span>
-          </div>
-          <div class="match-teams">India vs West Indies</div>
-          <div class="match-venue">Maharaja Yadavindra Singh Stadium, Mullanpur</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge t20">1st T20I</span>
-            <span class="match-date">06 Oct • 07:00 PM IST</span>
-          </div>
-          <div class="match-teams">India vs West Indies</div>
-          <div class="match-venue">BRSABV Ekana Stadium, Lucknow</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge t20">2nd T20I</span>
-            <span class="match-date">09 Oct • 07:00 PM IST</span>
-          </div>
-          <div class="match-teams">India vs West Indies</div>
-          <div class="match-venue">JSCA Stadium, Ranchi</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge t20">3rd T20I</span>
-            <span class="match-date">11 Oct • 07:00 PM IST</span>
-          </div>
-          <div class="match-teams">India vs West Indies</div>
-          <div class="match-venue">Holkar Cricket Stadium, Indore</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge t20">4th T20I</span>
-            <span class="match-date">14 Oct • 07:00 PM IST</span>
-          </div>
-          <div class="match-teams">India vs West Indies</div>
-          <div class="match-venue">Rajiv Gandhi Stadium, Hyderabad</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge t20">5th T20I</span>
-            <span class="match-date">16 Oct • 07:00 PM IST</span>
-          </div>
-          <div class="match-teams">India vs West Indies</div>
-          <div class="match-venue">M. Chinnaswamy Stadium, Bengaluru</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge t20">1st T20I</span>
-            <span class="match-date">22 Oct • 12:30 PM IST</span>
-          </div>
-          <div class="match-teams">New Zealand vs India</div>
-          <div class="match-venue">Hagley Oval, Christchurch</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge t20">2nd T20I</span>
-            <span class="match-date">24 Oct • 12:30 PM IST</span>
-          </div>
-          <div class="match-teams">New Zealand vs India</div>
-          <div class="match-venue">Hagley Oval, Christchurch</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge t20">3rd T20I</span>
-            <span class="match-date">27 Oct • 12:30 PM IST</span>
-          </div>
-          <div class="match-teams">New Zealand vs India</div>
-          <div class="match-venue">Sky Stadium, Wellington</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge t20">4th T20I</span>
-            <span class="match-date">30 Oct • 12:30 PM IST</span>
-          </div>
-          <div class="match-teams">New Zealand vs India</div>
-          <div class="match-venue">Eden Park, Auckland</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge t20">5th T20I</span>
-            <span class="match-date">01 Nov • 12:30 PM IST</span>
-          </div>
-          <div class="match-teams">New Zealand vs India</div>
-          <div class="match-venue">Seddon Park, Hamilton</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge odi">1st ODI</span>
-            <span class="match-date">04 Nov • 07:30 AM IST</span>
-          </div>
-          <div class="match-teams">New Zealand vs India</div>
-          <div class="match-venue">Eden Park, Auckland</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge odi">2nd ODI</span>
-            <span class="match-date">07 Nov • 07:30 AM IST</span>
-          </div>
-          <div class="match-teams">New Zealand vs India</div>
-          <div class="match-venue">Sky Stadium, Wellington</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge odi">3rd ODI</span>
-            <span class="match-date">10 Nov • 07:30 AM IST</span>
-          </div>
-          <div class="match-teams">New Zealand vs India</div>
-          <div class="match-venue">Seddon Park, Hamilton</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge odi">4th ODI</span>
-            <span class="match-date">13 Nov • 07:30 AM IST</span>
-          </div>
-          <div class="match-teams">New Zealand vs India</div>
-          <div class="match-venue">Bay Oval, Mount Maunganui</div>
-        </div>
-
-        <div class="fixture-card">
-          <div class="match-meta">
-            <span class="pill-badge odi">5th ODI</span>
-            <span class="match-date">15 Nov • 07:30 AM IST</span>
-          </div>
-          <div class="match-teams">New Zealand vs India</div>
-          <div class="match-venue">Bay Oval, Mount Maunganui</div>
-        </div>
-      </div>
-    </main>
-
-    <!-- Tab 4: Videos -->
-    <main id="tab-videos" class="tab-content">
-      <div class="section-title">Highlights & Clips</div>
-
-      <div class="video-card">
-        <div class="video-wrapper">
-          <iframe 
-            src="https://www.youtube.com/embed/d3pVlJm-ZwU?si=HkFfMc0sqoqJcUpx&amp;start=39" 
-            title="Best Moments" 
-            allowfullscreen>
-          </iframe>
-        </div>
-        <div class="video-title">India Leads The Series 1-0 With A Massive Win</div>
-        <div class="video-sub">SL vs IND Highlights</div>
-      </div>
-
-      <div class="video-card">
-        <div class="video-wrapper">
-          <iframe 
-            src="https://www.youtube.com/embed/JWKPutfTgEw?si=maS0a0uXKcnedb1z&amp;start=41" 
-            title="Match Highlights" 
-            allowfullscreen>
-          </iframe>
-        </div>
-        <div class="video-title">India Sets A Massive Target Of 372 Runs</div>
-        <div class="video-sub">SL vs IND Highlights</div>
-      </div>
-    </main>
+  <div class="match-card" id="matchWidget">
+    <div class="loader">Loading Live Match Data...</div>
   </div>
 
-  <!-- Bottom Navigation -->
-  <nav class="bottom-nav">
-    <button class="nav-btn active" onclick="switchTab('tab-score', this)">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-      <span>Scores</span>
-    </button>
-    <button class="nav-btn" onclick="switchTab('tab-quiz', this)">
-      <svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
-      <span>Quiz</span>
-    </button>
-    <button class="nav-btn" onclick="switchTab('tab-schedule', this)">
-      <svg viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-      <span>Fixtures</span>
-    </button>
-    <button class="nav-btn" onclick="switchTab('tab-videos', this)">
-      <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-      <span>Videos</span>
-    </button>
-  </nav>
-
   <script>
-    // Tab Switch Logic
-    function switchTab(tabId, btn) {
-      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    const API_URL = 'https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a46abf321dc815bb318261b';
+    const SCORECARD_URL = 'scorecard.html'; 
 
-      document.getElementById(tabId).classList.add('active');
-      btn.classList.add('active');
+    function getTeamScore(team, prefix) {
+      const s1 = team[`${prefix}_1_score`];
+      const s2 = team[`${prefix}_2_score`];
+      if (s2 && s2.overs) return { runs: s2.runs, wkts: s2.wickets, ovs: s2.overs, batted: true };
+      if (s1 && s1.overs) return { runs: s1.runs, wkts: s1.wickets, ovs: s1.overs, batted: true };
+      return { runs: 0, wkts: 0, ovs: '0.0', batted: false };
     }
 
-    // Quiz Questions & Logic (IND vs SL in Hindi)
-    const questions = [
-      {
-        question: "2011 आईसीसी क्रिकेट विश्व कप फाइनल में श्रीलंका के खिलाफ विजयी छक्का किस भारतीय कप्तान ने लगाया था?",
-        options: ["विराट कोहली", "एम एस धोनी", "सचिन तेंदुलकर", "रोहित शर्मा"],
-        correct: 1,
-        trivia: "एम एस धोनी ने नुवान कुलसेकरा की गेंद पर ऐतिहासिक छक्का लगाकर भारत को 28 साल बाद विश्व कप जिताया था।"
-      },
-      {
-        question: "2014 में कोलकाता के ईडन गार्डन्स में श्रीलंका के खिलाफ एकदिवसीय (ODI) क्रिकेट में 264 रनों का सर्वोच्च व्यक्तिगत स्कोर किसने बनाया था?",
-        options: ["वीरेंद्र सहवाग", "रोहित शर्मा", "शिखर धवन", "युवराज सिंह"],
-        correct: 1,
-        trivia: "रोहित शर्मा ने श्रीलंका के खिलाफ 173 गेंदों में 264 रनों की ऐतिहासिक पारी खेली थी, जो आज भी एक विश्व रिकॉर्ड है।"
-      },
-      {
-        question: "एशिया कप 2023 के फाइनल में श्रीलंका के खिलाफ घातक गेंदबाजी करते हुए 6 विकेट (6/21) किस भारतीय तेज गेंदबाज ने लिए थे?",
-        options: ["जसप्रीत बुमराह", "मोहम्मद शमी", "मोहम्मद सिराज", "हार्दिक पांड्या"],
-        correct: 2,
-        trivia: "मोहम्मद सिराज के 6 विकेटों की बदौलत श्रीलंका की टीम सिर्फ 50 रनों पर सिमट गई थी और भारत ने 10 विकेट से मैच जीत लिया था।"
-      },
-      {
-        question: "2014 आईसीसी पुरुष टी20 विश्व कप फाइनल (ढाका) में भारत को 6 विकेट से हराकर किस टीम ने खिताब जीता था?",
-        options: ["श्रीलंका", "पाकिस्तान", "ऑस्ट्रेलिया", "वेस्टइंडीज"],
-        correct: 0,
-        trivia: "श्रीलंका ने भारत द्वारा दिए गए 131 रनों के लक्ष्य को हासिल कर कुमार संगकारा (52*) की पारी के दम पर 2014 का टी20 विश्व कप जीता था।"
-      },
-      {
-        question: "श्रीलंका के खिलाफ एक टेस्ट मैच की पारी में 7 विकेट (7/51) लेने वाले पहले भारतीय तेज गेंदबाज कौन थे?",
-        options: ["कपिल देव", "जवागल श्रीनाथ", "ईशांत शर्मा", "जहीर खान"],
-        correct: 1,
-        trivia: "जवागल श्रीनाथ ने 1999 के एशियन टेस्ट चैंपियनशिप मैच में श्रीलंका के खिलाफ पहली पारी में 5 और दूसरी पारी में 8 (कुल 13 विकेट) लेकर इतिहास रचा था।"
+    async function loadCricketData() {
+      const card = document.getElementById('matchWidget');
+      try {
+        const req = await fetch(API_URL);
+        const res = await req.json();
+        const m = res.responseData.result;
+
+        const currentBatting = m.settingObj?.currentTeam || '';
+        const teamA = m.teams.a;
+        const teamB = m.teams.b;
+
+        const scoreA = getTeamScore(teamA, 'a');
+        const scoreB = getTeamScore(teamB, 'b');
+
+        const session = (m.now.day && m.now.sessionCount) 
+          ? `Day ${m.now.day} • Session ${m.now.sessionCount}` 
+          : '';
+
+        card.innerHTML = `
+          <!-- Deep link trigger for App WebView -->
+          <a href="go:commentary" class="audio-stream-card">
+            <div class="audio-left">
+              <div class="audio-title">Listen to Ball By Ball Commentary</div>
+              <div class="audio-sub">Listen to live audio coverage</div>
+            </div>
+            <div class="listen-now-btn">
+              <svg viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              <span>Listen Now</span>
+            </div>
+          </a>
+
+          <div class="header-bar">
+            <span class="format-tag">${m.format}</span>
+            <div class="live-badge">
+              <span class="pulse-dot"></span>
+              ${m.status}
+            </div>
+          </div>
+
+          ${session ? `<div class="session-info">${session}</div>` : ''}
+
+          <div class="teams-wrap">
+            <!-- Team A -->
+            <div class="team-row ${currentBatting === 'a' ? 'active' : ''}">
+              <div class="team-left">
+                <div class="team-avatar">${teamA.shortName.substring(0, 2)}</div>
+                <div class="team-meta">
+                  <span class="team-name">${teamA.name}</span>
+                  <span class="team-sub">${teamA.shortName}</span>
+                </div>
+              </div>
+              <div class="team-right">
+                ${scoreA.batted 
+                  ? `<div class="score-highlight">${scoreA.runs}/${scoreA.wkts}</div>
+                     <div class="overs-highlight">${scoreA.ovs} Ov</div>`
+                  : `<span class="yet-to-bat">Yet to Bat</span>`
+                }
+              </div>
+            </div>
+
+            <!-- Team B -->
+            <div class="team-row ${currentBatting === 'b' ? 'active' : ''}">
+              <div class="team-left">
+                <div class="team-avatar">${teamB.shortName.substring(0, 2)}</div>
+                <div class="team-meta">
+                  <span class="team-name">${teamB.name}</span>
+                  <span class="team-sub">${teamB.shortName}</span>
+                </div>
+              </div>
+              <div class="team-right">
+                ${scoreB.batted 
+                  ? `<div class="score-highlight">${scoreB.runs}/${scoreB.wkts}</div>
+                     <div class="overs-highlight">${scoreB.ovs} Ov</div>`
+                  : `<span class="yet-to-bat">Yet to Bat</span>`
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <span class="metric-title">CRR</span>
+              <span class="metric-val">${m.now.run_rate || '0.00'}</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-title">Overs Left</span>
+              <span class="metric-val">${m.now.overLeft || '-'}</span>
+            </div>
+          </div>
+
+          ${m.lastCommentary && m.lastCommentary.primaryText ? `
+            <div class="commentary-banner">
+              <div class="commentary-action">
+                <span class="ball-badge">Last Ball</span>
+                <span class="commentary-text">${m.lastCommentary.primaryText}</span>
+              </div>
+              ${m.lastCommentary.secondaryText ? `<span class="commentary-sub">${m.lastCommentary.secondaryText}</span>` : ''}
+            </div>
+          ` : ''}
+
+          ${m.announcement1 ? `<div class="match-note">${m.announcement1}</div>` : ''}
+
+          <!-- Scorecard Button -->
+          <div class="btn-container">
+            <a href="${SCORECARD_URL}" target="_blank" class="scorecard-btn">
+              <span>View Full Scorecard</span>
+              <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+
+          <div class="footer">
+            <span>Live Sync: Active</span>
+            <span>Update: ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>
+          </div>
+        `;
+      } catch (e) {
+        console.error('Data Sync Error:', e);
       }
-    ];
-
-    let currentIdx = 0;
-    let score = 0;
-    let earnedTitle = "";
-
-    function loadQuestion() {
-      const q = questions[currentIdx];
-      document.getElementById('question-text').innerText = q.question;
-      document.getElementById('question-count').innerText = `Question ${currentIdx + 1} of ${questions.length}`;
-      document.getElementById('progress-fill').style.width = `${((currentIdx + 1) / questions.length) * 100}%`;
-      
-      const optContainer = document.getElementById('options-container');
-      optContainer.innerHTML = '';
-
-      q.options.forEach((opt, idx) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.innerHTML = `<span>${opt}</span><span>→</span>`;
-        btn.onclick = () => selectOption(idx, btn);
-        optContainer.appendChild(btn);
-      });
-
-      document.getElementById('trivia-box').style.display = 'none';
-      document.getElementById('next-btn').style.display = 'none';
     }
 
-    function selectOption(selectedIdx, selectedBtn) {
-      const q = questions[currentIdx];
-      const buttons = document.querySelectorAll('.option-btn');
-
-      buttons.forEach((btn, idx) => {
-        btn.classList.add('disabled');
-        if (idx === q.correct) {
-          btn.classList.add('correct');
-          btn.innerHTML = `<span>${q.options[idx]}</span><span>✓</span>`;
-        }
-      });
-
-      if (selectedIdx === q.correct) {
-        score++;
-        document.getElementById('score-counter').innerText = `Score: ${score}`;
-      } else {
-        selectedBtn.classList.add('wrong');
-        selectedBtn.innerHTML = `<span>${q.options[selectedIdx]}</span><span>✗</span>`;
-      }
-
-      document.getElementById('trivia-fact').innerText = q.trivia;
-      document.getElementById('trivia-box').style.display = 'block';
-      document.getElementById('next-btn').style.display = 'block';
-    }
-
-    function nextQuestion() {
-      currentIdx++;
-      if (currentIdx < questions.length) {
-        loadQuestion();
-      } else {
-        showResult();
-      }
-    }
-
-    function showResult() {
-      document.getElementById('quiz-screen').style.display = 'none';
-      document.getElementById('result-screen').style.display = 'block';
-      document.getElementById('final-score').innerText = `${score}/${questions.length}`;
-
-      const iconEl = document.getElementById('badge-icon');
-      const titleEl = document.getElementById('fan-title');
-      const descEl = document.getElementById('result-desc');
-
-      if (score === 5) {
-        earnedTitle = "Cricket Genius & Legend";
-        iconEl.innerText = "👑";
-        titleEl.innerText = earnedTitle;
-        descEl.innerText = "Flawless performance! You know IND vs SL cricket history inside out.";
-      } else if (score === 4) {
-        earnedTitle = "Pro Cricket Analyst";
-        iconEl.innerText = "🏆";
-        titleEl.innerText = earnedTitle;
-        descEl.innerText = "Superb knowledge! You're one step away from a perfect score.";
-      } else if (score === 3) {
-        earnedTitle = "True Cricket Fan";
-        iconEl.innerText = "🎖️";
-        titleEl.innerText = earnedTitle;
-        descEl.innerText = "Great effort! A solid foundation of classic cricket trivia.";
-      } else {
-        earnedTitle = "Rookie Supporter";
-        iconEl.innerText = "🧢";
-        titleEl.innerText = earnedTitle;
-        descEl.innerText = "Keep practicing and testing your cricket trivia!";
-      }
-    }
-
-    function shareTitle() {
-      const shareText = `I scored ${score}/5 in the IND vs SL Cricket Quiz and earned the title "${earnedTitle}"! Test your cricket knowledge now!`;
-      const whatsappURL = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
-      window.open(whatsappURL, '_blank');
-    }
-
-    function restartQuiz() {
-      currentIdx = 0;
-      score = 0;
-      document.getElementById('score-counter').innerText = `Score: 0`;
-      document.getElementById('result-screen').style.display = 'none';
-      document.getElementById('quiz-screen').style.display = 'block';
-      loadQuestion();
-    }
-
-    // Initialize Quiz on load
-    window.addEventListener('DOMContentLoaded', () => {
-      loadQuestion();
-    });
+    loadCricketData();
+    setInterval(loadCricketData, 5000);
   </script>
 </body>
 </html>
