@@ -1,909 +1,563 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-318F2F7JXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-318F2F7JXX');
-</script> 
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AIR Radio</title>
-
-<style>*{
-  -webkit-tap-highlight-color:transparent;
-  box-sizing:border-box
-}
-
-a{text-decoration:none;color:inherit}
-a:active,a:focus{outline:none}
-
-html {
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* ===== BASE ===== */
-body{
-  margin:0;
-  font-family:Roboto,system-ui,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
-  background:#1e1f22;            /* charcoal base */
-  color:#e8e8e8;
-}
-/* ===== TOP MOBILE AD (320x100) ===== */
-.top-ad{
-  width:100%;
-  padding:8px 10px 0;
-  display:flex;
-  justify-content:center;
-  background:#1e1f22;
-}
-
-.top-ad img{
-  width:100%;
-  max-width:320px;   /* Ad width */
-  height:auto;       /* Keeps 320x100 ratio */
-  border-radius:12px;
-  display:block;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-}
-
-
-/* ===== LAYOUT ===== */
-.container{padding:10px 14px 14px}
-
-.section-title{
-  font-size:17px;
-  font-weight:800;
-  letter-spacing:.4px;
-  margin:18px 0 10px;
-  color:#ffffff;
-}
-
-/* ===== QUICK BUTTONS ONE ROW ===== */
-.quick-buttons{
-  display:flex;
-  gap:8px;
-  margin-bottom:14px;
-}
-
-.quick-buttons a{
-  flex:1;
-  min-width:0;
-  text-decoration:none;
-}
-
-.qbtn{
-  padding:10px 6px;
-  border-radius:16px;
-  background:#2b2d31;
-  border:1px solid #33363c;
-  text-align:center;
-  font-size:12px;
-  font-weight:700;
-  color:#e8e8e8;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-  transition:transform .1s ease, opacity .1s ease;
-  height:100%;
-}
-
-.qbtn:active{
-  transform:scale(.96);
-  opacity:.85;
-}
-
-/* ICON STYLE */
-.icon{
-  margin-bottom:4px;
-}
-
-.icon svg{
-  width:20px;
-  height:20px;
-  fill:#4cc2ff;
-}
-
-/* TEXT WRAP */
-.label{
-  line-height:1.15;
-  word-break:break-word;
-}
-
-/* ===== CARD COMMON ===== */
-.card{
-  background:#2b2d31;
-  border-radius:22px;
-  padding:14px;
-  margin-bottom:14px;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-  border:1px solid #33363c;
-}
-
-/* ===== POPULAR STATIONS ===== */
-#stations{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.station{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:11px 12px;
-  border-radius:18px;
-  background:#2b2d31;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-  border:1px solid #33363c;
-}
-
-.station-name{
-  font-size:15px;
-  font-weight:600;
-  margin-bottom:6px;
-}
-.station-info{
-  flex:1;
-  min-width:0;
-}
-
-.program-row{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.program{
-  font-size:12px;
-  font-weight:500;
-  color:#b3b7bd;
-  line-height:1.3;
-}
-
-/* LIVE DOT */
-.live-dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#00e676;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-  flex-shrink:0;
-}
-
-/* PLAY BUTTON */
-.play{
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#4cc2ff;
-  color:#000;
-  font-size:14px;
-  font-weight:700;
-  flex-shrink:0;
-  text-decoration:none;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-  transition:transform .1s ease, opacity .1s ease;
-}
-
-.play:active{
-  transform:scale(.9);
-  opacity:.85;
-}
-
-
-/* ===== CRICKET CARD ===== */
-.cricket-card{
-  background:#2b2d31;
-  padding:10px 12px 12px;
-}
-
-/* TITLE */
-.cricket-title{
-  font-size:18px;
-  font-weight:800;
-  margin-bottom:12px;
-}
-
-/* BUTTON ROW */
-.cricket-buttons{
-  display:flex;
-  gap:12px;
-  margin-bottom:18px;
-}
-
-.cricket-buttons a{
-  flex:1 1 0;
-  min-width:0;
-  text-decoration:none;
-}
-
-/* COMMON BUTTON */
-.cbtn{
-  position:relative;
-  padding:14px 12px;
-  border-radius:20px;
-  text-align:center;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-  border:1px solid transparent;
-}
-
-.cbtn b{
-  display:block;
-  font-size:14px;
-  font-weight:800;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.cbtn small{
-  display:block;
-  font-size:12px;
-  margin-top:4px;
-  opacity:.9;
-}
-
-/* 🔴 LIVE COMMENTARY */
-.cbtn.commentary{
-  background:linear-gradient(135deg,#b71c1c,#ff3b3b);
-  border-color:#ff6b6b;
-  color:#ffffff;
-}
-  .cbtn.commentary:active{
-  transform:scale(.95);
-  opacity:.8;
-}
-
-/* 🔵 LIVE SCORE */
-.cbtn.score{
-  background:linear-gradient(135deg,#0d47a1,#1e88e5);
-  border-color:#64b5f6;
-  color:#ffffff;
-}
-.cbtn.score:active{
-  transform:scale(.95);
-  opacity:.8;
-}
-
-/* UPCOMING */
-.upcoming-title{
-  font-size:15px;
-  font-weight:800;
- margin:14px 0 8px;
-}
-
-/* MATCH CARD */
-.match{
-  background:#24262a;
-  border-radius:14px;
-  padding:11px 12px;
-  margin-bottom:8px;
-  border:1px solid #33363c;
-}
-
-.match-name{
-  font-size:13px;
-  font-weight:600;
-}
-
-.match-time{
-  font-size:11px;
-  color:#b3b7bd;
-  margin-top:3px;
-}
-/* ===== NEWS WITH READ BUTTON ===== */
-
-.news-item{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  padding:10px 0;
-}
-
-.news-text{
-  flex:1;
-  min-width:0;
-}
-
-.news-title{
-  font-size:15px;
-  font-weight:600;
-  line-height:1.3;
-}
-
-.news-desc{
-  font-size:13px;
-  color:#b3b7bd;
-  margin-top:4px;
-  line-height:1.4;
-}
-
-.news-date{
-  font-size:11px;
-  color:#8a8f98;
-  margin-top:4px;
-  font-weight:500;
-}
-
-/* READ pill button */
-.news-read{
-  background:#4cc2ff;
-  color:#000;
-  font-size:11px;
-  font-weight:700;
-  padding:6px 12px;
-  border-radius:999px;
-  text-decoration:none;
-  flex-shrink:0;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-  transition:transform .1s ease, opacity .1s ease;
-}
-
-.news-read:active{
-  transform:scale(.95);
-  opacity:.8;
-}
-.news-divider{
-  height:1px;
-  background:#3a3d42;
-  margin:8px 0;
-  opacity:.6;
-}
-/* ===== PODCAST SECTION (PLAY BUTTON ONLY CLICKABLE) ===== */
-
-.podcast{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  padding:10px 12px;
-  line-height:1.3;
-}
-
-.podcast-text{
-  flex:1;
-  min-width:0;
-}
-
-/* Podcast Title */
-.podcast .station-name{
-  font-size:14px;
-  font-weight:600;
-  margin-bottom:4px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-/* Last Updated Text */
-.updated{
-  font-size:10px;
-  color:#4cc2ff;
-  margin-top:2px;
-  font-weight:500;
-}
-
-/* Play Icon Button (ONLY clickable area) */
-.podcast-play{
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  background:#4cc2ff;
-  color:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:15px;
-  font-weight:700;
-  flex-shrink:0;
-  text-decoration:none;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-  transition:transform .1s ease, opacity .1s ease;
-}
-
-/* Touch feedback */
-.podcast-play:active{
-  transform:scale(.9);
-  opacity:.85;
-}
-/* ===== POPULAR STATES (MATCHING EXISTING UI) ===== */
-
-.state-grid{
-  display:grid;
-  grid-template-columns:repeat(2, 1fr);
-  gap:10px;
-  margin-bottom:10px;
-}
-
-.state-item{
-  background:#24262a;
-  border:1px solid #33363c;
-  border-radius:16px;
-  padding:12px 10px;
-  text-align:center;
-  font-size:14px;
-  font-weight:600;
-  color:#e8e8e8;
-  text-decoration:none;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-  transition:transform .1s ease, opacity .1s ease;
-}
-
-.state-item:active{
-  transform:scale(.96);
-  opacity:.85;
-}
-
-.view-all-states{
-  display:block;
-  text-align:center;
-  font-size:13px;
-  font-weight:700;
-  color:#4cc2ff;
-  text-decoration:none;
-  margin-top:6px;
-}
-/* ===== TOGGLE SYSTEM ===== */
-.content-toggles{
-  display:flex;
-  gap:8px;
-  margin:6px 0 14px;
-}
-
-.toggle-btn{
-  flex:1;
-  padding:10px 6px;
-  border-radius:14px;
-  border:1px solid #33363c;
-  background:#2b2d31;
-  color:#e8e8e8;
-  font-size:12px;
-  font-weight:700;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:4px;
-}
-.ticon svg{
-  width:20px;
-  height:20px;
-  fill:#4cc2ff;
-}
-.toggle-btn.active .ticon svg{
-  fill:#000;
-}
-.toggle-btn.active{
-  background:#4cc2ff;
-  color:#000;
-  border-color:#4cc2ff;
-}
-
-.toggle-section{
-  display:none;
-}
-
-.back-home{
-  font-size:13px;
-  color:#4cc2ff;
-  font-weight:700;
-  margin-bottom:8px;
-  cursor:pointer;
-}
-
-</style>
-</head>
-
-<body>
-<!-- TOP AD BANNER -->
-  <a href="go:FMR"> 
-<div class="top-ad">
-  <img src="https://res.cloudinary.com/dzczl0fzu/image/upload/v1770229131/IMG_20260204_234716_446_vdl3zo.jpg" alt="AIR Banner">
-</div></a>
-
-   
-<div class="container">
-
-<!-- QUICK -->
-<div class="quick-buttons">
-
-  <!-- AIR RADIO -->
-  <a href="go:S201">
-    <div class="qbtn">
-      <div class="icon">
-        <!-- Radio SVG -->
-        <svg viewBox="0 0 24 24">
-          <path d="M3 10v8a2 2 0 002 2h14a2 2 0 002-2v-8H3zm16 8H5v-6h14v6zM7 4l10 4H7V4zm2 9h3v3H9v-3zm7 1a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/>
-        </svg>
-      </div>
-      <div class="label">AIR</div>
-    </div>
-  </a>
-
-  <!-- FM RADIO -->
-  <a href="go:S202">
-    <div class="qbtn">
-      <div class="icon">
-        <!-- Signal SVG -->
-        <svg viewBox="0 0 24 24">
-          <path d="M12 3a9 9 0 019 9h-2a7 7 0 00-14 0H3a9 9 0 019-9zm0 6a3 3 0 013 3h-2a1 1 0 00-2 0H9a3 3 0 013-3zm-1 8h2v4h-2z"/>
-        </svg>
-      </div>
-      <div class="label">FM</div>
-    </div>
-  </a>
-
-  <!-- AIR NEWS -->
-  <a href="go:sec123">
-    <div class="qbtn">
-      <div class="icon">
-        <!-- Newspaper SVG -->
-        <svg viewBox="0 0 24 24">
-          <path d="M4 4h14v16H4zM6 7h10v2H6zM6 11h10v2H6zM6 15h6v2H6zM20 8v8a2 2 0 01-2 2v-2V8z"/>
-        </svg>
-      </div>
-      <div class="label">News</div>
-    </div>
-  </a>
-
-  <!-- LIVE NEWS -->
-  <a href="go:S501">
-    <div class="qbtn">
-      <div class="icon">
-        <!-- Live Broadcast SVG -->
-        <svg viewBox="0 0 24 24">
-          <path d="M3 6h18v12H3zM10 9l5 3-5 3zM8 20h8v-2H8z"/>
-        </svg>
-      </div>
-      <div class="label">Live</div>
-    </div>
-  </a>
-
-</div>
-<div class="content-toggles">
-  
-  <button class="toggle-btn" onclick="openSection('cricketSection', this)">
-    <span class="ticon">
-      <!-- Cricket SVG -->
-      <svg viewBox="0 0 24 24">
-        <path d="M14 2l8 8-2 2-8-8 2-2zM2 14l8 8 2-2-8-8-2 2z"/>
-      </svg>
-    </span>
-    <span>Cricket</span>
-  </button>
-
-  <button class="toggle-btn" onclick="openSection('newsSection', this)">
-    <span class="ticon">
-      <!-- News SVG -->
-      <svg viewBox="0 0 24 24">
-        <path d="M4 4h14v16H4zM6 7h10v2H6zM6 11h10v2H6zM6 15h6v2H6zM20 8v8a2 2 0 01-2 2V8z"/>
-      </svg>
-    </span>
-    <span>Read News</span>
-  </button>
-
-  <button class="toggle-btn" onclick="openSection('podcastSection', this)">
-    <span class="ticon">
-      <!-- Podcast SVG -->
-      <svg viewBox="0 0 24 24">
-        <path d="M12 3a6 6 0 00-6 6v3a6 6 0 0012 0V9a6 6 0 00-6-6zm-1 14h2v4h-2z"/>
-      </svg>
-    </span>
-    <span>Podcasts</span>
-  </button>
-
-</div>
-
-
-<!--Popular Stations-->
-<div id="homeContent">
-
-<h2 class="section-title">🔥 Popular Stations</h2>
-<div id="stations"></div>
-
-<!--Popular States--->
-
-<h2 class="section-title">📍 Popular States</h2>
-
-<div class="card">
-  <div class="state-grid">
-
-    <a href="go:DELHI" class="state-item">Delhi</a>
-    <a href="go:UP" class="state-item">Uttar Pradesh</a>
-
-    <a href="go:MH" class="state-item">Maharashtra</a>
-    <a href="go:BIHAR" class="state-item">Bihar</a>
-
-    <a href="go:WB" class="state-item">West Bengal</a>
-    <a href="go:TN" class="state-item">Tamil Nadu</a>
-
-  </div>
-
-  <a href="go:S201" class="view-all-states">View All States →</a>
-</div>
-</div>
-
-
-<!-- 🏏 CRICKET HUB -->
-<div id="cricketSection" class="toggle-section">
-<div class="back-home" onclick="goHome()">← Back to Home</div>
-
-<h2 class="section-title">🏏 Cricket Hub</h2>
-
-<div class="card cricket-card">
-
-  <div class="cricket-buttons">
-
-    <!-- LIVE COMMENTARY -->
-    <a href="go:S401">
-      <div class="cbtn commentary">
-        <b>Commentary</b>
-        <small>On Match Days</small>
-        
-      </div>
-    </a>
-
-    <!-- LIVE SCORE -->
-    <a href="go:S402">
-      <div class="cbtn score">
-        <b>Score</b>
-        <small>Cricket Updates</small>
-      </div>
-    </a>
-
-  </div>
-
-  <!-- UPCOMING -->
-  <div class="upcoming-title">📅 Upcoming Matches</div>
-
-<div class="match">
-    <div class="match-name">India vs South Africa (T20-WC)</div>
-    <div class="match-time">4 Feb 2026 | 7:00 PM</div>
-</div>
-   
-<div class="match">
-    <div class="match-name">India vs America (T20-WC)</div>
-    <div class="match-time">7 Feb 2026 | 7:00 PM</div>
-  </div>
-
-<div class="match">
-    <div class="match-name">India vs Namibia (T20-WC)</div>
-    <div class="match-time">12 Feb 2026 | 7:00 PM</div>
-  </div>
-   
-</div>
-</div>
-
-<!-- NEWS -->  
-<div id="newsSection" class="toggle-section">
-<div class="back-home" onclick="goHome()">← Back to Home</div>
-
-<h2 class="section-title">📰 News Articles</h2>
-<div class="card news-list">
-
-<div class="news-item">
-    <div class="news-text">
-      <div class="news-title">🤯 भारत-अमेरिका डील में बड़ा ट्विस्ट!</div>
-      <div class="news-desc">टैरिफ घटे… लेकिन कहानी यहीं खत्म नहीं</div>
-      <div class="news-date">4 Feb 2026</div>
-    </div>
-    <a href="go:news5" class="news-read">READ</a>
-  </div>
- <div class="news-divider"></div>
-   
-<div class="news-item">
-    <div class="news-text">
-      <div class="news-title">🚨 India-Pakistan मैच पर बड़ा संकट</div>
-      <div class="news-desc">ICC ने दिया सख्त संकेत</div>
-      <div class="news-date">3 Feb 2026</div>
-    </div>
-    <a href="go:news4" class="news-read">READ</a>
-  </div>
- <div class="news-divider"></div>
-   
-<div class="news-item">
-    <div class="news-text">
-      <div class="news-title">🎭 Parliament में बड़ा पॉलिटिकल ड्रामा</div>
-      <div class="news-desc">एक किताब का जिक्र और हंगामा शुरू</div>
-      <div class="news-date">2 Feb 2026</div>
-    </div>
-    <a href="go:news3" class="news-read">READ</a>
-  </div>
- <div class="news-divider"></div>
-   
-<div class="news-item">
-    <div class="news-text">
-      <div class="news-title">💸 सैलरी, टैक्स और EMI — सब पर असर!</div>
-      <div class="news-desc">बजट 2026 ने क्या बदल दिया?</div>
-      <div class="news-date">1 Feb 2026</div>
-    </div>
-    <a href="go:news2" class="news-read">READ</a>
-  </div>
-   <div class="news-divider"></div>
-
-<div class="news-item">
-    <div class="news-text">
-      <div class="news-title">🌍 पाकिस्तान PM बोले — सिर झुकाना पड़ता है</div>
-      <div class="news-desc">कर्ज पर ऐसा बयान क्यों?</div>
-      <div class="news-date">31 Jan 2026</div>
-    </div>
-    <a href="go:news1" class="news-read">READ</a>
-  </div>
-   
-</div>
-</div>
-
-<!-- PODCAST -->
-<div id="podcastSection" class="toggle-section">
-<div class="back-home" onclick="goHome()">← Back to Home</div>
-
-<h2 class="section-title">🎧 Podcasts</h2>
-
-<div class="card podcast">
-  <div class="podcast-text">
-    <div class="station-name">DB दिनभर – हर दिन, हर बड़ी खबर</div>
-    <div class="updated">Last updated: 4 Feb 2026 · 9:15 PM</div>
-  </div>
-  <a href="go:DB" class="podcast-play">▶</a>
-</div>
-   
-<div class="card podcast">
-  <div class="podcast-text">
-    <div class="station-name">BBC दिनभर: पूरा दिन,पूरी ख़बर</div>
-    <div class="updated">Last updated: 4 Feb 2026 · 9:30 PM</div>
-  </div>
-  <a href="go:S301" class="podcast-play">▶</a>
-</div>
-
-
-<div class="card podcast">
-  <div class="podcast-text">
-    <div class="station-name">प्रधानमंत्री के साथ मन की बात</div>
-    <div class="updated">Last updated: 25 Jan 2026 · 12:10 PM</div>
-  </div>
-  <a href="go:MANN" class="podcast-play">▶</a>
-</div>
-</div>
-
-<!-- JS : POPULAR STATIONS ONLY -->
-
-<script src="https://airappandroid.github.io/allindiaradio/schedule.js"></script>
-
-<script>
-/* Fallback safety */
-if (!window.SCHEDULE_DATA) window.SCHEDULE_DATA = [];
-
-const popularStations = [
-  { name:"FM Rainbow", code:"FMR" },
-  { name:"Vividh Bharati", code:"VV" },
-  { name:"FM Gold", code:"FMG" },
-  { name:"Indraprastha", code:"INDRA" }
-];
-
-const lastProgram = {};
-
-function timeToMinutes(t){
-  if(!t) return 0;
-
-  // 24hr format support
-  if(!t.includes(" ")){
-    let [h,m] = t.split(":").map(Number);
-    return h*60+m;
-  }
-
-  const [a,b] = t.split(" ");
-  let [h,m] = a.split(":").map(Number);
-  if(b==="PM" && h!==12) h+=12;
-  if(b==="AM" && h===12) h=0;
-  return h*60+m;
-}
-
-function getCurrentProgram(channel){
-  if(!window.SCHEDULE_DATA.length) return lastProgram[channel] || "Live Broadcast";
-
-  const now = new Date();
-  const nowMin = now.getHours()*60 + now.getMinutes();
-
-  const list = window.SCHEDULE_DATA
-    .filter(p =>
-      p.channel &&
-      p.channel.toLowerCase().includes(channel.toLowerCase().trim())
-    )
-    .map(p => ({...p, min: timeToMinutes(p.time)}))
-    .sort((a,b)=>a.min-b.min);
-
-  for(let i=0;i<list.length;i++){
-    const cur=list[i], next=list[i+1];
-    if(nowMin>=cur.min && (!next || nowMin<next.min)){
-      lastProgram[channel] = cur.title;
-      return cur.title;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Live Cricket Scorecard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #070a12;
+      --card-surface: rgba(15, 23, 42, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent-green: #10b981;
+      --green-glow: rgba(16, 185, 129, 0.25);
+      --accent-cyan: #38bdf8;
+      --accent-amber: #f59e0b;
+      --accent-red: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-sub: #64748b;
     }
-  }
-  return lastProgram[channel] || "Live Broadcast";
-}
 
-function renderStations(){
-  const box = document.getElementById("stations");
-  box.innerHTML = "";
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-  popularStations.forEach(st=>{
-    const div = document.createElement("div");
-    div.className = "station";
+    body {
+      background: radial-gradient(circle at 50% 0%, #0f172a 0%, var(--bg-dark) 75%);
+      min-height: 100vh;
+      padding: 16px 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+    }
 
-    div.innerHTML = `
-      <div class="station-info">
-        <div class="station-name">${st.name}</div>
-        <div class="program-row">
-          <span class="live-dot"></span>
-          <div class="program" data-channel="${st.name}">
-            ${getCurrentProgram(st.name)}
+    .container {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--card-surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    /* Header & Overview */
+    .match-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 14px;
+    }
+
+    .badge-format {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      color: var(--text-muted);
+    }
+
+    .badge-live {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--accent-red);
+      background: rgba(244, 63, 94, 0.1);
+      border: 1px solid rgba(244, 63, 94, 0.25);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .live-pulse {
+      width: 6px;
+      height: 6px;
+      background: var(--accent-red);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-red);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.9); opacity: 0.6; }
+      50% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.6; }
+    }
+
+    .team-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .team-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.3px;
+    }
+
+    .team-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .score-stats {
+      text-align: right;
+    }
+
+    .score-highlight {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-green);
+      letter-spacing: -0.5px;
+      text-shadow: 0 0 16px var(--green-glow);
+    }
+
+    .runrate-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Section Headings */
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      margin-bottom: 12px;
+    }
+
+    /* Tables */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+
+    th {
+      text-align: right;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 6px 4px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    th:first-child, td:first-child {
+      text-align: left;
+      padding-left: 0;
+    }
+
+    td {
+      padding: 10px 4px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      text-align: right;
+    }
+
+    td:first-child {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .player-col {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .player-name {
+      font-weight: 700;
+      color: #fff;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .role-badge {
+      font-size: 0.62rem;
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    .dismissal-text {
+      font-size: 0.72rem;
+      color: var(--text-sub);
+      font-style: italic;
+    }
+
+    .not-out-tag {
+      color: var(--accent-green);
+      font-weight: 600;
+    }
+
+    .bold-white {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .wicket-bold {
+      color: var(--accent-amber);
+      font-weight: 700;
+    }
+
+    /* Extras */
+    .extras-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      padding-top: 10px;
+      margin-top: 4px;
+      color: var(--text-muted);
+      border-top: 1px dashed rgba(255, 255, 255, 0.08);
+    }
+
+    /* Yet to Bat */
+    .ytb-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .ytb-chip {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Partnerships */
+    .pship-card {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .pship-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .pship-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .pship-stats {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .progress-track {
+      height: 6px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-cyan), #818cf8);
+      border-radius: 6px;
+    }
+
+    /* Fall of Wickets */
+    .fow-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .fow-pill {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .fow-pill span {
+      color: var(--accent-amber);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--text-sub);
+      padding: 4px 6px;
+    }
+
+    .loader {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="scorecardRoot">
+    <div class="card loader">Syncing match scorecard...</div>
+  </div>
+
+  <script>
+    const API_URL = 'https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=6a46abf321dc815bb318261b&inningsNumber=1&battingTeam=b';
+
+    async function loadScorecard() {
+      const root = document.getElementById('scorecardRoot');
+      try {
+        const response = await fetch(API_URL);
+        const json = await response.json();
+        const res = json.responseData.result;
+        const inn = res.innings_batting_order[0];
+
+        // 1. Batting Table
+        let battingHtml = '';
+        inn.player_batting_order.forEach(p => {
+          const b = p.batting;
+          const dismissal = b.dismissed 
+            ? `<span class="dismissal-text">${b.out_str}</span>` 
+            : `<span class="dismissal-text not-out-tag">not out</span>`;
+
+          const captain = p.isCaptain ? `<span class="role-badge">C</span>` : '';
+          const wk = p.isWicketKeeper ? `<span class="role-badge">WK</span>` : '';
+
+          battingHtml += `
+            <tr>
+              <td>
+                <div class="player-col">
+                  <span class="player-name">${p.name} ${captain}${wk}</span>
+                  ${dismissal}
+                </div>
+              </td>
+              <td class="bold-white">${b.runs}</td>
+              <td>${b.balls}</td>
+              <td>${b.fours}</td>
+              <td>${b.sixes}</td>
+              <td>${b.strike_rate.toFixed(1)}</td>
+            </tr>
+          `;
+        });
+
+        // 2. Bowling Table
+        let bowlingHtml = '';
+        inn.player_bowling_order.forEach(p => {
+          const bw = p.bowling;
+          bowlingHtml += `
+            <tr>
+              <td><span class="player-name">${p.name}</span></td>
+              <td>${bw.overs}</td>
+              <td>${bw.maiden_overs}</td>
+              <td>${bw.runs}</td>
+              <td class="wicket-bold">${bw.wickets}</td>
+              <td>${bw.economy}</td>
+            </tr>
+          `;
+        });
+
+        // 3. Fall of Wickets
+        let fowHtml = '';
+        if (inn.fall_of_wickets && inn.fall_of_wickets.length > 0) {
+          fowHtml = inn.fall_of_wickets.map(item => `<div class="fow-pill">${item}</div>`).join('');
+        }
+
+        // 4. Yet to Bat
+        let ytbHtml = '';
+        if (inn.yet_to_bat && inn.yet_to_bat.length > 0) {
+          ytbHtml = inn.yet_to_bat.map(p => `
+            <div class="ytb-chip">
+              <span>${p.name}</span>
+            </div>
+          `).join('');
+        }
+
+        // 5. Partnerships
+        let pshipHtml = '';
+        if (inn.partnerships && inn.partnerships.length > 0) {
+          pshipHtml = inn.partnerships.map(ps => {
+            const fillWidth = Math.min((ps.runs / (inn.runs || 1)) * 120, 100);
+            return `
+              <div class="pship-card">
+                <div class="pship-header">
+                  <span>${ps.player_a} & ${ps.player_b}</span>
+                  <span class="pship-stats">${ps.runs} <span style="font-size: 0.68rem; color: var(--text-sub);">(${ps.balls}b)</span></span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill" style="width: ${fillWidth}%"></div>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+
+        root.innerHTML = `
+          <!-- Overview Card -->
+          <div class="card">
+            <div class="match-header">
+              <span class="badge-format">${res.format} Match</span>
+              <div class="badge-live">
+                <span class="live-pulse"></span>
+                ${res.status}
+              </div>
+            </div>
+
+            <div class="team-summary">
+              <div>
+                <div class="team-title">${inn.teamName}</div>
+                <div class="team-subtitle">1st Innings</div>
+              </div>
+              <div class="score-stats">
+                <div class="score-highlight">${inn.runs}/${inn.wickets}</div>
+                <div class="runrate-sub">${inn.overs} Ov • CRR ${inn.run_rate}</div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <a href="go:${st.code}" class="play">▶</a>
-    `;
 
-    box.appendChild(div);
-  });
-}
+          <!-- Batting Scorecard -->
+          <div class="card">
+            <div class="section-title">Batting</div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Batter</th>
+                    <th>R</th>
+                    <th>B</th>
+                    <th>4s</th>
+                    <th>6s</th>
+                    <th>SR</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${battingHtml}
+                </tbody>
+              </table>
+            </div>
 
-/* 🔄 Only update program text (no DOM rebuild) */
-function updateProgramsOnly(){
-  document.querySelectorAll(".program").forEach(el=>{
-    const channel = el.getAttribute("data-channel");
-    el.textContent = getCurrentProgram(channel);
-  });
-}
+            <div class="extras-box">
+              <span>Extras (b ${inn.bye}, lb ${inn.legbye}, w ${inn.wide}, nb ${inn.noball})</span>
+              <span class="bold-white">${inn.extras}</span>
+            </div>
+          </div>
 
-/* Initial render */
-renderStations();
+          <!-- Yet to Bat -->
+          ${ytbHtml ? `
+            <div class="card">
+              <div class="section-title">Yet to Bat</div>
+              <div class="ytb-grid">${ytbHtml}</div>
+            </div>
+          ` : ''}
 
-/* Update every 60 seconds */
-setInterval(updateProgramsOnly, 60000);
+          <!-- Bowling Scorecard -->
+          <div class="card">
+            <div class="section-title">Bowling</div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Bowler</th>
+                    <th>O</th>
+                    <th>M</th>
+                    <th>R</th>
+                    <th>W</th>
+                    <th>Econ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${bowlingHtml}
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-/* Extra safety refresh after schedule loads */
-setTimeout(updateProgramsOnly, 4000);
-function openSection(id, btn){
-  document.getElementById("homeContent").style.display = "none";
+          <!-- Partnerships -->
+          ${pshipHtml ? `
+            <div class="card">
+              <div class="section-title">Partnerships</div>
+              ${pshipHtml}
+            </div>
+          ` : ''}
 
-  document.querySelectorAll('.toggle-section').forEach(sec=>{
-    sec.style.display = "none";
-  });
+          <!-- Fall of Wickets -->
+          ${fowHtml ? `
+            <div class="card">
+              <div class="section-title">Fall of Wickets</div>
+              <div class="fow-chips">${fowHtml}</div>
+            </div>
+          ` : ''}
 
-  document.querySelectorAll('.toggle-btn').forEach(b=>{
-    b.classList.remove('active');
-  });
+          <!-- Footer Sync -->
+          <div class="footer">
+            <span>Auto Refresh: 10s</span>
+            <span>Last Synced: ${new Date().toLocaleTimeString()}</span>
+          </div>
+        `;
+      } catch (error) {
+        console.error('Scorecard sync error:', error);
+      }
+    }
 
-  document.getElementById(id).style.display = "block";
-  btn.classList.add('active');
-
-  window.scrollTo({top:0, behavior:"smooth"});
-}
-
-function goHome(){
-  document.getElementById("homeContent").style.display = "block";
-
-  document.querySelectorAll('.toggle-section').forEach(sec=>{
-    sec.style.display = "none";
-  });
-
-  document.querySelectorAll('.toggle-btn').forEach(b=>{
-    b.classList.remove('active');
-  });
-
-  window.scrollTo({top:0, behavior:"smooth"});
-}
-
-</script>
-
+    loadScorecard();
+    setInterval(loadScorecard, 10000);
+  </script>
 </body>
 </html>
