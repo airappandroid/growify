@@ -404,11 +404,100 @@
       color: var(--text-muted);
     }
 
+    .privacy-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      font-family: inherit;
+      text-decoration: underline;
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: color 0.2s;
+    }
+
+    .privacy-btn:hover {
+      color: #38bdf8;
+    }
+
     .loader {
       text-align: center;
       padding: 30px 0;
       color: var(--text-sub);
       font-size: 0.82rem;
+    }
+
+    /* Modal Popup Styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #111a2e;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      max-width: 380px;
+      width: 100%;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 8px;
+    }
+
+    .modal-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    .modal-close {
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+      color: #94a3b8;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-body {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .modal-line {
+      font-size: 0.75rem;
+      color: #cbd5e1;
+      line-height: 1.45;
     }
   </style>
 </head>
@@ -418,8 +507,38 @@
     <div class="loader">Loading Live Match Data...</div>
   </div>
 
+  <!-- Privacy Policy Popup Modal -->
+  <div class="modal-overlay" id="privacyModal" onclick="handleBackdropClick(event)">
+    <div class="modal-card">
+      <div class="modal-header">
+        <span class="modal-title">Privacy Policy</span>
+        <button class="modal-close" onclick="closePrivacyModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-line">1. <strong>CricVoice: Live Cricket Score</strong> does not collect or store personal identifiable user data.</div>
+        <div class="modal-line">2. Anonymous device diagnostics and crash logs may be collected solely to improve app stability.</div>
+        <div class="modal-line">3. Third-party advertising partners (such as Google AdMob) may use standard device IDs to serve ads.</div>
+        <div class="modal-line">4. For support or privacy questions, contact us directly at <strong>aminurmarch4@gmail.com</strong>.</div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const API_URL = 'https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a46abf321dc815bb318261b';
+
+    function openPrivacyModal() {
+      document.getElementById('privacyModal').classList.add('active');
+    }
+
+    function closePrivacyModal() {
+      document.getElementById('privacyModal').classList.remove('active');
+    }
+
+    function handleBackdropClick(event) {
+      if (event.target.id === 'privacyModal') {
+        closePrivacyModal();
+      }
+    }
 
     function getTeamScore(team, prefix) {
       if (!team) return { runs: 0, wkts: 0, ovs: '0.0', batted: false };
@@ -478,7 +597,7 @@
           ${session ? `<div class="session-info">${session}</div>` : ''}
 
           <div class="teams-wrap">
-            <!-- Team A (Sri Lanka) -->
+            <!-- Team A -->
             <div class="team-row ${currentBatting === 'a' ? 'active' : ''}">
               <div class="team-left">
                 <div class="team-avatar">${teamA.shortName ? teamA.shortName.substring(0, 2) : 'A'}</div>
@@ -496,7 +615,7 @@
               </div>
             </div>
 
-            <!-- Team B (India) -->
+            <!-- Team B -->
             <div class="team-row ${currentBatting === 'b' ? 'active' : ''}">
               <div class="team-left">
                 <div class="team-avatar">${teamB.shortName ? teamB.shortName.substring(0, 2) : 'B'}</div>
@@ -552,7 +671,7 @@
 
           <div class="footer">
             <span>Status: ${m.status.toUpperCase()}</span>
-            <span>Update: ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>
+            <button class="privacy-btn" onclick="openPrivacyModal()">Privacy Policy</button>
           </div>
         `;
       } catch (e) {
