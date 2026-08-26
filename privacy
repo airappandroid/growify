@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Privacy Policy - CricVoice: Live Cricket Score</title>
+    <style>
+        :root {
+            --bg-body: #060a12;
+            --bg-card: #0d1527;
+            --bg-subtle: rgba(255, 255, 255, 0.03);
+            --bg-active: rgba(56, 189, 248, 0.08);
+            
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            
+            --accent-cyan: #38bdf8;
+            --accent-gold: #fbbf24;
+            --accent-emerald: #10b981;
+            
+            --border-soft: rgba(255, 255, 255, 0.07);
+            --border-active: rgba(56, 189, 248, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 16px 10px;
+            min-height: 100vh;
+        }
+
+        .policy-card {
+            width: 100%;
+            max-width: 520px;
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--border-soft);
+            overflow: hidden;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Header */
+        .card-head {
+            background: linear-gradient(180deg, #131c31 0%, var(--bg-card) 100%);
+            padding: 18px 20px 14px;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .head-tag {
+            display: inline-block;
+            font-size: 10.5px;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 6px;
+        }
+
+        .policy-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.3;
+            letter-spacing: -0.2px;
+        }
+
+        /* Meta Information Strip */
+        .meta-strip {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.25);
+            border-bottom: 1px solid var(--border-soft);
+            font-size: 12px;
+        }
+
+        .meta-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meta-label {
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+
+        .meta-value {
+            color: var(--text-main);
+            font-weight: 700;
+            text-align: right;
+        }
+
+        /* Content Body */
+        .policy-body {
+            padding: 18px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .intro-text {
+            color: var(--text-main);
+            font-size: 13px;
+            line-height: 1.55;
+            background: var(--bg-subtle);
+            padding: 12px;
+            border-radius: 10px;
+            border-left: 3px solid var(--accent-cyan);
+        }
+
+        .section-box {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .section-title {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-title span.num {
+            color: var(--accent-cyan);
+        }
+
+        .sub-block {
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 10px 12px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .sub-block strong {
+            color: #f1f5f9;
+            font-size: 12.5px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        li {
+            position: relative;
+            padding-left: 16px;
+            font-size: 12.5px;
+        }
+
+        li::before {
+            content: "•";
+            position: absolute;
+            left: 2px;
+            color: var(--accent-cyan);
+            font-weight: bold;
+        }
+
+        /* Contact Box */
+        .contact-box {
+            background: rgba(56, 189, 248, 0.06);
+            border: 1px solid var(--border-active);
+            padding: 14px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .contact-link {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: 700;
+            word-break: break-all;
+        }
+
+        /* Footer */
+        .card-footer {
+            padding: 14px 16px;
+            border-top: 1px solid var(--border-soft);
+            background: rgba(0, 0, 0, 0.3);
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+    </style>
+</head>
+<body>
+
+<div class="policy-card">
+    <!-- Header -->
+    <div class="card-head">
+        <span class="head-tag">Official Legal Document</span>
+        <h1 class="policy-title">Privacy Policy</h1>
+    </div>
+
+    <!-- Meta Information Strip -->
+    <div class="meta-strip">
+        <div class="meta-item">
+            <span class="meta-label">App Name:</span>
+            <span class="meta-value">CricVoice: Live Cricket Score</span>
+        </div>
+        <div class="meta-item">
+            <span class="meta-label">Developer / Company:</span>
+            <span class="meta-value">Radio Active Bhagalpur</span>
+        </div>
+        <div class="meta-item">
+            <span class="meta-label">Effective Date:</span>
+            <span class="meta-value">August 24, 2026</span>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="policy-body">
+        <div class="intro-text">
+            <strong>Radio Active Bhagalpur</strong> operates the <strong>CricVoice: Live Cricket Score</strong> mobile application (the "Service"). This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
+        </div>
+
+        <!-- 1. Information Collection and Use -->
+        <div class="section-box">
+            <div class="section-title"><span class="num">1.</span> Information Collection and Use</div>
+            <p>We do not require users to register an account or provide personally identifiable information (such as your name, address, or phone number) to use the core features of CricVoice: Live Cricket Score.</p>
+            
+            <div class="sub-block">
+                <strong>Non-Personal & Device Data:</strong>
+                <span>We may collect non-personal diagnostic and usage data automatically, including device model, operating system version, unique device identifiers, and anonymous crash logs to improve app stability and performance.</span>
+            </div>
+
+            <div class="sub-block">
+                <strong>Foreground Service & Audio/Media Playback:</strong>
+                <span>The app may use foreground services to deliver live audio commentary or live score notifications even when the app is running in the background or the screen is locked.</span>
+            </div>
+        </div>
+
+        <!-- 2. Third-Party Services & Advertising -->
+        <div class="section-box">
+            <div class="section-title"><span class="num">2.</span> Third-Party Services & Advertising</div>
+            <p>We may display third-party advertisements (such as Google AdMob) to support the application. These third-party vendors may use cookies, device identifiers, or similar technologies to serve ads based on your visits to this and other apps/sites.</p>
+            <p>Third-party service providers used by the app include:</p>
+            <ul>
+                <li>Google Play Services</li>
+                <li>Google AdMob / Firebase Analytics</li>
+            </ul>
+            <p>We do not control the data practices of these third-party services. We encourage you to review their respective privacy policies.</p>
+        </div>
+
+        <!-- 3. Live Scores and Data Sources -->
+        <div class="section-box">
+            <div class="section-title"><span class="num">3.</span> Live Scores and Data Sources</div>
+            <p>The live cricket scores, schedules, and audio commentary streams provided within CricVoice: Live Cricket Score are fetched from publicly available sources or third-party APIs for informational and entertainment purposes only.</p>
+        </div>
+
+        <!-- 4. Children’s Privacy -->
+        <div class="section-box">
+            <div class="section-title"><span class="num">4.</span> Children’s Privacy</div>
+            <p>CricVoice: Live Cricket Score does not knowingly collect personally identifiable information from children under the age of 13. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact us so that we can take necessary actions.</p>
+        </div>
+
+        <!-- 5. Security of Data -->
+        <div class="section-box">
+            <div class="section-title"><span class="num">5.</span> Security of Data</div>
+            <p>The security of your data is important to us, but remember that no method of transmission over the Internet or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your data, we cannot guarantee its absolute security.</p>
+        </div>
+
+        <!-- 6. Changes to This Privacy Policy -->
+        <div class="section-box">
+            <div class="section-title"><span class="num">6.</span> Changes to This Privacy Policy</div>
+            <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page with an updated "Effective Date".</p>
+        </div>
+
+        <!-- 7. Contact Us -->
+        <div class="section-box">
+            <div class="section-title"><span class="num">7.</span> Contact Us</div>
+            <p>If you have any questions or suggestions about this Privacy Policy, please contact us at:</p>
+            
+            <div class="contact-box">
+                <div><strong>Developer:</strong> Radio Active Bhagalpur</div>
+                <div><strong>Email:</strong> <a href="mailto:aminurmarch4@gmail.com" class="contact-link">aminurmarch4@gmail.com</a></div>
+            </div>
+        </div>
+    </div>
+
+   
+</div>
+
+</body>
+</html>
