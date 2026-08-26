@@ -204,7 +204,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 11px 13px;
+      padding: 10px 12px;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.04);
       border-radius: 14px;
@@ -251,22 +251,40 @@
       color: var(--text-muted);
     }
 
+    /* Score Styling for Multiple Innings */
     .team-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 3px;
       text-align: right;
+    }
+
+    .score-line {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
     }
 
     .score-highlight {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 1.2rem;
       font-weight: 700;
-      color: var(--accent-green);
       letter-spacing: -0.5px;
+    }
+
+    .score-highlight.active-score {
+      font-size: 1.15rem;
+      color: var(--accent-amber);
+    }
+
+    .score-highlight.past-score {
+      font-size: 0.95rem;
+      color: #e2e8f0;
     }
 
     .overs-highlight {
       font-size: 0.72rem;
       color: var(--text-muted);
-      margin-top: 1px;
     }
 
     .yet-to-bat {
@@ -540,13 +558,44 @@
       }
     }
 
-    function getTeamScore(team, prefix) {
-      if (!team) return { runs: 0, wkts: 0, ovs: '0.0', batted: false };
+    function getTeamInnings(team, prefix) {
+      if (!team) return { inn1: null, inn2: null, hasBatted: false };
       const s1 = team[`${prefix}_1_score`];
       const s2 = team[`${prefix}_2_score`];
-      if (s2 && s2.overs) return { runs: s2.runs, wkts: s2.wickets, ovs: s2.overs, batted: true };
-      if (s1 && s1.overs) return { runs: s1.runs, wkts: s1.wickets, ovs: s1.overs, batted: true };
-      return { runs: 0, wkts: 0, ovs: '0.0', batted: false };
+
+      const isValid1 = s1 && (s1.overs !== undefined || s1.runs !== undefined);
+      const isValid2 = s2 && (s2.overs !== undefined || s2.runs !== undefined);
+
+      return {
+        inn1: isValid1 ? { runs: s1.runs ?? 0, wkts: s1.wickets ?? 0, ovs: s1.overs ?? '0.0', isDec: s1.isDeclared } : null,
+        inn2: isValid2 ? { runs: s2.runs ?? 0, wkts: s2.wickets ?? 0, ovs: s2.overs ?? '0.0', isDec: s2.isDeclared } : null,
+        hasBatted: isValid1 || isValid2
+      };
+    }
+
+    function renderScores(teamData) {
+      if (!teamData || !teamData.hasBatted) {
+        return `<span class="yet-to-bat">Yet to Bat</span>`;
+      }
+      let html = '';
+      if (teamData.inn1) {
+        const dec = teamData.inn1.isDec ? ' d.' : '';
+        const isCurrent = !teamData.inn2;
+        html += `
+          <div class="score-line">
+            <span class="score-highlight ${isCurrent ? 'active-score' : 'past-score'}">${teamData.inn1.runs}-${teamData.inn1.wkts}</span>
+            <span class="overs-highlight">${teamData.inn1.ovs}${dec}</span>
+          </div>`;
+      }
+      if (teamData.inn2) {
+        const dec = teamData.inn2.isDec ? ' d.' : '';
+        html += `
+          <div class="score-line second-inn">
+            <span class="score-highlight active-score">${teamData.inn2.runs}-${teamData.inn2.wkts}</span>
+            <span class="overs-highlight">${teamData.inn2.ovs}${dec}</span>
+          </div>`;
+      }
+      return html;
     }
 
     async function loadCricketData() {
@@ -560,8 +609,8 @@
         const teamA = m.teams.a;
         const teamB = m.teams.b;
 
-        const scoreA = getTeamScore(teamA, 'a');
-        const scoreB = getTeamScore(teamB, 'b');
+        const scoreA = getTeamInnings(teamA, 'a');
+        const scoreB = getTeamInnings(teamB, 'b');
 
         const session = (m.now && m.now.day && m.now.sessionCount) 
           ? `Day ${m.now.day} • Session ${m.now.sessionCount}` 
@@ -607,11 +656,7 @@
                 </div>
               </div>
               <div class="team-right">
-                ${scoreA.batted 
-                  ? `<div class="score-highlight">${scoreA.runs}/${scoreA.wkts}</div>
-                     <div class="overs-highlight">${scoreA.ovs} Ov</div>`
-                  : `<span class="yet-to-bat">Yet to Bat</span>`
-                }
+                ${renderScores(scoreA)}
               </div>
             </div>
 
@@ -625,11 +670,7 @@
                 </div>
               </div>
               <div class="team-right">
-                ${scoreB.batted 
-                  ? `<div class="score-highlight">${scoreB.runs}/${scoreB.wkts}</div>
-                     <div class="overs-highlight">${scoreB.ovs} Ov</div>`
-                  : `<span class="yet-to-bat">Yet to Bat</span>`
-                }
+                ${renderScores(scoreB)}
               </div>
             </div>
           </div>
