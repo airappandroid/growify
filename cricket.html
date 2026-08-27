@@ -472,13 +472,13 @@
         </div>
 
         <div class="match-toggle-container">
-            <button class="toggle-btn active" id="btnMatch1" onclick="switchMatch('m1')">IND vs SL</button>
-            <button class="toggle-btn" id="btnMatch2" onclick="switchMatch('m2')">PAK vs ENG</button>
+            <button class="toggle-btn" id="btnMatch1" onclick="switchMatch('m1')">IND vs SL</button>
+            <button class="toggle-btn active" id="btnMatch2" onclick="switchMatch('m2')">PAK vs ENG</button>
         </div>
     </div>
 
     <!-- Match 1 View -->
-    <div class="match-view" id="view_m1">
+    <div class="match-view hidden" id="view_m1">
         <div class="day-session" id="m1_daySession">Loading session info...</div>
 
         <div class="team-row" id="m1_teamARow">
@@ -538,7 +538,7 @@
     </div>
 
     <!-- Match 2 View -->
-    <div class="match-view hidden" id="view_m2">
+    <div class="match-view" id="view_m2">
         <div class="day-session" id="m2_daySession">Loading session info...</div>
 
         <div class="team-row" id="m2_teamARow">
@@ -602,7 +602,7 @@
     const MATCH_1_API = "https://match1.aminurmarch.workers.dev/mini-match-card?matchId=6a46abf321dc815bb318261b";
     const MATCH_2_API = "https://match1.aminurmarch.workers.dev/mini-match-card?matchId=69bd420b1dbf177ca4e58e72";
 
-    let currentActiveMatch = 'm1';
+    let currentActiveMatch = 'm2';
     let matchFormats = { m1: 'TEST MATCH', m2: 'TEST MATCH' };
 
     function switchMatch(matchKey) {
