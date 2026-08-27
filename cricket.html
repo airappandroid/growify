@@ -9,15 +9,14 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
-        html, body {
+        body {
             min-height: 100vh;
             width: 100vw;
-            overflow-x: hidden;
-            background-color: #030712;
+            background-color: #020617;
             display: flex;
             justify-content: center;
             align-items: flex-start;
@@ -25,39 +24,41 @@
             margin: 0;
         }
 
-        /* Premium Main Container */
+        /* Ultra-Premium Glass Card */
         .score-card {
-            background: linear-gradient(165deg, #0f172a 0%, #060b16 100%);
+            background: linear-gradient(180deg, #090e1a 0%, #030712 100%);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-top: none;
-            border-radius: 0 0 20px 20px;
+            border-radius: 0 0 24px 24px;
             width: 100%;
-            max-width: 410px;
-            padding: 10px 12px 14px 12px;
+            max-width: 420px;
+            padding: 12px 14px 16px 14px;
             color: #ffffff;
-            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.9), 0 0 20px rgba(14, 165, 233, 0.05);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.9), 
+                        0 0 30px rgba(14, 165, 233, 0.04),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
             contain: content;
         }
 
-        /* Top Audio Action Bar */
+        /* Modern Audio Action Bar */
         .audio-bar {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.12), rgba(30, 41, 59, 0.5));
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(15, 23, 42, 0.6) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 14px;
             padding: 8px 12px;
             text-decoration: none;
-            backdrop-filter: blur(10px);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 4px 12px rgba(0, 0, 0, 0.3);
             transition: transform 0.15s ease, border-color 0.2s;
         }
 
         .audio-bar:active {
-            transform: scale(0.98);
+            transform: scale(0.985);
             border-color: #38bdf8;
         }
 
@@ -68,9 +69,10 @@
         }
 
         .audio-icon-box {
-            width: 32px;
-            height: 32px;
-            background: rgba(56, 189, 248, 0.18);
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(14, 165, 233, 0.08));
+            border: 1px solid rgba(56, 189, 248, 0.3);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -79,8 +81,8 @@
         }
 
         .audio-icon-box svg {
-            width: 16px;
-            height: 16px;
+            width: 17px;
+            height: 17px;
             fill: #38bdf8;
         }
 
@@ -91,10 +93,10 @@
         }
 
         .audio-main-text {
-            font-size: 12.5px;
+            font-size: 13px;
             font-weight: 700;
-            color: #f8fafc;
-            letter-spacing: 0.2px;
+            color: #ffffff;
+            letter-spacing: 0.1px;
         }
 
         .audio-sub-text {
@@ -103,17 +105,18 @@
         }
 
         .audio-cta-btn {
-            background: linear-gradient(135deg, #38bdf8, #0284c7);
+            background: linear-gradient(135deg, #0284c7, #0369a1);
             color: #ffffff;
             font-size: 11px;
             font-weight: 700;
-            padding: 6px 11px;
-            border-radius: 18px;
+            padding: 6px 12px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             gap: 5px;
             white-space: nowrap;
-            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4);
         }
 
         .audio-cta-btn svg {
@@ -127,92 +130,95 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2px 2px 0 2px;
+            padding: 2px 4px 0 4px;
         }
 
         .match-type {
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: #94a3b8;
+            letter-spacing: 1px;
+            color: #64748b;
         }
 
         .live-badge {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 5px;
-            background: rgba(239, 68, 68, 0.15);
+            background: rgba(239, 68, 68, 0.12);
             color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 10px;
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            padding: 2.5px 7px;
+            border-radius: 20px;
+            font-size: 9.5px;
             font-weight: 800;
-            letter-spacing: 0.4px;
+            letter-spacing: 0.8px;
         }
 
         .pulse-dot {
-            width: 6px;
-            height: 6px;
+            width: 5.5px;
+            height: 5.5px;
             background-color: #ef4444;
             border-radius: 50%;
-            box-shadow: 0 0 6px #ef4444;
-            animation: pulse 1.4s infinite;
+            box-shadow: 0 0 8px #ef4444;
+            animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
         @keyframes pulse {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(1.3); }
-            100% { opacity: 1; transform: scale(1); }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.3); }
         }
 
         .day-session {
-            font-size: 11.5px;
+            font-size: 12px;
             color: #38bdf8;
             font-weight: 700;
-            padding-left: 2px;
-            margin-top: -2px;
+            padding-left: 4px;
+            margin-top: -4px;
+            letter-spacing: 0.2px;
         }
 
-        /* Team Row Styling */
+        /* Team Row Elements */
         .team-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 9px 12px;
-            border-radius: 12px;
+            padding: 10px 12px;
+            border-radius: 14px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: background 0.25s, border-color 0.25s;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
 
         .team-row.active {
-            background: linear-gradient(90deg, rgba(56, 189, 248, 0.1) 0%, rgba(15, 23, 42, 0.3) 100%);
-            border: 1px solid rgba(56, 189, 248, 0.4);
-            box-shadow: inset 3px 0 0 #38bdf8;
+            background: linear-gradient(90deg, rgba(14, 165, 233, 0.15) 0%, rgba(15, 23, 42, 0.3) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            box-shadow: inset 3.5px 0 0 #38bdf8, 0 4px 16px rgba(0, 0, 0, 0.3);
         }
 
         .team-identity {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .team-logo {
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             object-fit: cover;
-            border: 1.5px solid rgba(255, 255, 255, 0.15);
-            background: #0f172a;
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            background: #0b1329;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
             flex-shrink: 0;
         }
 
         .team-name {
-            font-size: 14px;
+            font-size: 14.5px;
             font-weight: 600;
             color: #f8fafc;
+            letter-spacing: 0.2px;
         }
 
         .scores {
@@ -221,54 +227,58 @@
         }
 
         .main-score {
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 800;
             color: #ffffff;
-            line-height: 1.2;
+            letter-spacing: -0.2px;
+            line-height: 1.15;
         }
 
         .sub-score {
             font-size: 10.5px;
             color: #94a3b8;
-            margin-top: 2px;
+            margin-top: 3px;
+            font-weight: 500;
         }
 
-        /* Badges */
+        /* Status Badges */
         .declared, .follon {
-            font-size: 9.5px;
-            padding: 1px 5px;
-            border-radius: 3px;
+            font-size: 9px;
+            padding: 1.5px 5px;
+            border-radius: 4px;
             font-weight: 800;
             margin-left: 4px;
             display: inline-block;
-            vertical-align: middle;
+            vertical-align: 1px;
+            text-transform: uppercase;
         }
 
         .declared { 
-            background: rgba(234, 179, 8, 0.2); 
+            background: rgba(234, 179, 8, 0.15); 
             color: #facc15; 
-            border: 1px solid rgba(234, 179, 8, 0.4);
+            border: 1px solid rgba(234, 179, 8, 0.35);
         }
         
         .follon { 
-            background: rgba(244, 63, 94, 0.2); 
+            background: rgba(244, 63, 94, 0.15); 
             color: #fb7185; 
-            border: 1px solid rgba(244, 63, 94, 0.4);
+            border: 1px solid rgba(244, 63, 94, 0.35);
         }
 
         /* Announcement Status Banner */
         .announcement-banner {
-            background: rgba(16, 185, 129, 0.08);
-            border: 1px solid rgba(16, 185, 129, 0.25);
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.08) 0%, rgba(6, 78, 59, 0.15) 50%, rgba(16, 185, 129, 0.08) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.22);
             color: #34d399;
             text-align: center;
-            padding: 7px 9px;
-            border-radius: 9px;
-            font-size: 11.5px;
+            padding: 8px 10px;
+            border-radius: 10px;
+            font-size: 12px;
             font-weight: 700;
+            letter-spacing: 0.3px;
         }
 
-        /* Stats Grid */
+        /* Modern Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -276,24 +286,25 @@
         }
 
         .stat-box {
-            background: rgba(0, 0, 0, 0.35);
-            padding: 7px 9px;
-            border-radius: 9px;
+            background: rgba(15, 23, 42, 0.45);
+            padding: 8px 10px;
+            border-radius: 11px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
         }
 
         .stat-label {
-            font-size: 10px;
+            font-size: 9.5px;
             color: #64748b;
             text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 0.4px;
+            font-weight: 800;
+            letter-spacing: 0.6px;
         }
 
         .stat-value {
-            font-size: 13.5px;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 800;
             color: #f1f5f9;
             margin-top: 2px;
             font-variant-numeric: tabular-nums;
@@ -301,10 +312,12 @@
 
         /* Commentary Card */
         .commentary-card {
-            background: rgba(255, 255, 255, 0.025);
+            background: rgba(15, 23, 42, 0.35);
             border-left: 3px solid #38bdf8;
-            padding: 8px 10px;
-            border-radius: 7px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-left: 3.5px solid #38bdf8;
+            padding: 9px 12px;
+            border-radius: 10px;
             display: flex;
             flex-direction: column;
             gap: 4px;
@@ -317,52 +330,41 @@
         }
 
         .commentary-primary {
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 12.5px;
+            font-weight: 700;
             color: #38bdf8;
+            letter-spacing: 0.2px;
         }
 
         .commentary-over-run {
             font-size: 10px;
             color: #94a3b8;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2px 6px;
-            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-weight: 600;
             font-variant-numeric: tabular-nums;
         }
 
         .commentary-secondary {
-            font-size: 10.5px;
+            font-size: 11px;
             color: #cbd5e1;
             display: flex;
             justify-content: space-between;
             border-top: 1px dashed rgba(255, 255, 255, 0.08);
-            padding-top: 4px;
+            padding-top: 5px;
+            line-height: 1.4;
             white-space: pre-line;
         }
 
-        /* Responsive Settings for Small Phones (360px or less) */
+        /* Mobile Optimization */
         @media (max-width: 360px) {
-            .score-card {
-                padding: 8px 10px 12px 10px;
-                gap: 6px;
-            }
-            .team-row {
-                padding: 7px 9px;
-            }
-            .audio-bar {
-                padding: 6px 10px;
-            }
-            .team-name {
-                font-size: 13px;
-            }
-            .main-score {
-                font-size: 15px;
-            }
-            .team-logo {
-                width: 28px;
-                height: 28px;
-            }
+            .score-card { padding: 10px 10px 14px 10px; gap: 8px; }
+            .team-row { padding: 8px 10px; }
+            .audio-bar { padding: 7px 10px; }
+            .team-name { font-size: 13.5px; }
+            .main-score { font-size: 15.5px; }
+            .team-logo { width: 30px; height: 30px; }
         }
     </style>
 </head>
@@ -402,7 +404,7 @@
     <!-- Match Stage -->
     <div class="day-session" id="daySession">Loading session info...</div>
 
-    <!-- Team A (Sri Lanka) -->
+    <!-- Team A -->
     <div class="team-row" id="teamARow">
         <div class="team-identity">
             <img src="https://i.ibb.co/zVc6D7zf/images.jpg" alt="Sri Lanka" class="team-logo" loading="lazy">
@@ -414,7 +416,7 @@
         </div>
     </div>
 
-    <!-- Team B (India) -->
+    <!-- Team B -->
     <div class="team-row" id="teamBRow">
         <div class="team-identity">
             <img src="https://i.ibb.co/1G0vgbw0/images.png" alt="India" class="team-logo" loading="lazy">
@@ -426,7 +428,7 @@
         </div>
     </div>
 
-    <!-- Announcement -->
+    <!-- Announcement Banner -->
     <div class="announcement-banner" id="announcement">
         Fetching live updates...
     </div>
