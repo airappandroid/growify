@@ -404,6 +404,39 @@
             line-height: 1.4;
             white-space: pre-line;
         }
+
+        /* Full Scorecard Action Button */
+        .full-card-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.12) 0%, rgba(15, 23, 42, 0.6) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #38bdf8;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 9px 14px;
+            border-radius: 12px;
+            letter-spacing: 0.3px;
+            text-align: center;
+            transition: transform 0.15s ease, border-color 0.2s, background 0.2s;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        .full-card-btn:active {
+            transform: scale(0.985);
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.25) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border-color: #38bdf8;
+            color: #ffffff;
+        }
+
+        .full-card-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
     </style>
 </head>
 <body>
@@ -444,7 +477,7 @@
         </div>
     </div>
 
-
+    <!-- Match 1 View -->
     <div class="match-view" id="view_m1">
         <div class="day-session" id="m1_daySession">Loading session info...</div>
 
@@ -494,9 +527,17 @@
             </div>
             <div class="commentary-secondary" id="m1_commSecondary"></div>
         </div>
+
+        <!-- Match 1 Full Scorecard Button -->
+        <a href="go:card" class="full-card-btn" id="m1_fullCardBtn">
+            <span>Full Scorecard</span>
+            <svg viewBox="0 0 24 24">
+                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+            </svg>
+        </a>
     </div>
 
-
+    <!-- Match 2 View -->
     <div class="match-view hidden" id="view_m2">
         <div class="day-session" id="m2_daySession">Loading session info...</div>
 
@@ -546,6 +587,14 @@
             </div>
             <div class="commentary-secondary" id="m2_commSecondary"></div>
         </div>
+
+        <!-- Match 2 Full Scorecard Button -->
+        <a href="go:card1" class="full-card-btn" id="m2_fullCardBtn">
+            <span>Full Scorecard</span>
+            <svg viewBox="0 0 24 24">
+                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+            </svg>
+        </a>
     </div>
 </div>
 
