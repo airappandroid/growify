@@ -150,6 +150,7 @@
             font-size: 9.5px;
             font-weight: 800;
             letter-spacing: 0.8px;
+            transition: all 0.3s ease;
         }
 
         .pulse-dot {
@@ -463,9 +464,9 @@
 
     <div class="card-header">
         <div class="header-left">
-            <div class="live-badge">
-                <span class="pulse-dot"></span>
-                <span>LIVE</span>
+            <div class="live-badge" id="headerLiveBadge">
+                <span class="pulse-dot" id="headerPulseDot"></span>
+                <span id="headerLiveText">LIVE</span>
             </div>
             <span class="match-type" id="headerMatchFormat">TEST MATCH</span>
         </div>
@@ -605,6 +606,31 @@
 
     let currentActiveMatch = 'm2';
     let matchFormats = { m1: 'TEST MATCH', m2: 'TEST MATCH' };
+    let matchStatuses = { 
+        m1: { isLive: true, label: 'LIVE' }, 
+        m2: { isLive: true, label: 'LIVE' } 
+    };
+
+    function updateBadgeDisplay(matchKey) {
+        const status = matchStatuses[matchKey] || { isLive: true, label: 'LIVE' };
+        const badge = document.getElementById("headerLiveBadge");
+        const dot = document.getElementById("headerPulseDot");
+        const text = document.getElementById("headerLiveText");
+
+        text.textContent = status.label;
+
+        if (status.isLive) {
+            dot.style.display = "inline-block";
+            badge.style.background = "rgba(239, 68, 68, 0.12)";
+            badge.style.color = "#f87171";
+            badge.style.borderColor = "rgba(239, 68, 68, 0.35)";
+        } else {
+            dot.style.display = "none";
+            badge.style.background = "rgba(100, 116, 139, 0.2)";
+            badge.style.color = "#94a3b8";
+            badge.style.borderColor = "rgba(148, 163, 184, 0.3)";
+        }
+    }
 
     function switchMatch(matchKey) {
         currentActiveMatch = matchKey;
@@ -616,6 +642,7 @@
         document.getElementById("view_m2").classList.toggle("hidden", matchKey !== 'm2');
 
         document.getElementById("headerMatchFormat").textContent = matchFormats[matchKey] || "LIVE MATCH";
+        updateBadgeDisplay(matchKey);
     }
 
     async function fetchScore(apiUrl, prefix) {
@@ -635,19 +662,39 @@
     function renderMatch(res, p) {
         const formatStr = `${(res.format || 'Test').toUpperCase()} MATCH`;
         matchFormats[p] = formatStr;
+
+        // মেচ সমাপ্ত বা ড্ৰ হৈছে নেকি পৰীক্ষা কৰাৰ লজিক
+        const announcement = (res.announcement1 || "").toLowerCase();
+        const status = (res.status || "").toLowerCase();
+        
+        const isMatchEnded = status === "completed" || 
+                             status === "result" || 
+                             announcement.includes("draw") || 
+                             announcement.includes("drawn") || 
+                             announcement.includes("won") || 
+                             announcement.includes("tied");
+
+        matchStatuses[p] = {
+            isLive: !isMatchEnded,
+            label: isMatchEnded ? "RESULT" : "LIVE"
+        };
+
         if (currentActiveMatch === p) {
             document.getElementById("headerMatchFormat").textContent = formatStr;
+            updateBadgeDisplay(p);
         }
 
-        document.getElementById(`${p}_daySession`).textContent = `Day ${res.now?.day || '1'} • Session ${res.now?.sessionCount || '1'}`;
+        document.getElementById(`${p}_daySession`).textContent = isMatchEnded 
+            ? "Match Ended" 
+            : `Day ${res.now?.day || '1'} • Session ${res.now?.sessionCount || '1'}`;
+            
         document.getElementById(`${p}_announcement`).textContent = res.announcement1 || "Live Action";
 
-        // Team A
+        // Team A Data
         const teamA = res.teams?.a;
         if (teamA) {
             document.getElementById(`${p}_teamAName`).textContent = teamA.name || "Team A";
             
-            // Only update logo if valid URL comes from API
             if (teamA.logo && teamA.logo.startsWith("http")) {
                 document.getElementById(`${p}_teamALogo`).src = teamA.logo;
             }
@@ -663,12 +710,11 @@
             }
         }
 
-        // Team B
+        // Team B Data
         const teamB = res.teams?.b;
         if (teamB) {
             document.getElementById(`${p}_teamBName`).textContent = teamB.name || "Team B";
             
-            // Only update logo if valid URL comes from API
             if (teamB.logo && teamB.logo.startsWith("http")) {
                 document.getElementById(`${p}_teamBLogo`).src = teamB.logo;
             }
@@ -684,14 +730,14 @@
             }
         }
 
-        // Active Batting Team Highlight
+        // Active Batting Team Highlight (মেচ শেষ হ'লে বৰ্ডাৰ হাইলাইট আঁতৰি যাব)
         const curTeam = res.settingObj?.currentTeam;
-        document.getElementById(`${p}_teamARow`).classList.toggle("active", curTeam === "a");
-        document.getElementById(`${p}_teamBRow`).classList.toggle("active", curTeam === "b");
+        document.getElementById(`${p}_teamARow`).classList.toggle("active", !isMatchEnded && curTeam === "a");
+        document.getElementById(`${p}_teamBRow`).classList.toggle("active", !isMatchEnded && curTeam === "b");
 
         // Stats Matrix
         document.getElementById(`${p}_crrVal`).textContent = `${res.now?.run_rate || '0.00'} CRR`;
-        document.getElementById(`${p}_overLeftVal`).textContent = `${res.now?.overLeft || '0.0'} Overs`;
+        document.getElementById(`${p}_overLeftVal`).textContent = isMatchEnded ? "0.0 Overs" : `${res.now?.overLeft || '0.0'} Overs`;
 
         // Commentary
         if (res.lastCommentary) {
