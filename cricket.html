@@ -9,48 +9,48 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Non-scrollable viewport setup - Fixed Top Alignment */
         html, body {
             min-height: 100vh;
             width: 100vw;
             overflow-x: hidden;
-            background-color: #060911;
+            background-color: #030712;
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* ওপৰৰ খালী ঠাই আঁতৰাবলৈ flex-start কৰা হৈছে */
-            padding-top: 10px;        /* ওপৰত প্ৰয়োজনীয় সামান্য ব্যৱধান */
+            align-items: flex-start;
+            padding: 8px 0;
         }
 
+        /* Premium Main Container */
         .score-card {
-            background: radial-gradient(circle at top right, #131c2e, #090e18 80%);
+            background: linear-gradient(165deg, #0f172a 0%, #060b16 100%);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
+            border-radius: 22px;
             width: 94%;
             max-width: 410px;
-            padding: 14px 14px;
+            padding: 13px;
             color: #ffffff;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.9), 0 0 20px rgba(14, 165, 233, 0.05);
             display: flex;
             flex-direction: column;
-            gap: 9px;
+            gap: 8px;
+            contain: content; /* Fast loading rendering optimization */
         }
 
-        /* Premium Top Audio Button */
+        /* Top Audio Action Bar */
         .audio-bar {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: linear-gradient(135deg, rgba(24, 40, 70, 0.7), rgba(12, 22, 40, 0.8));
-            border: 1px solid rgba(56, 189, 248, 0.35);
-            border-radius: 12px;
-            padding: 8px 12px;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.12), rgba(30, 41, 59, 0.5));
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 14px;
+            padding: 8px 11px;
             text-decoration: none;
-            color: #ffffff;
-            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.08);
+            backdrop-filter: blur(10px);
             transition: transform 0.15s ease, border-color 0.2s;
         }
 
@@ -68,7 +68,7 @@
         .audio-icon-box {
             width: 32px;
             height: 32px;
-            background: rgba(56, 189, 248, 0.15);
+            background: rgba(56, 189, 248, 0.18);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -77,8 +77,8 @@
         }
 
         .audio-icon-box svg {
-            width: 17px;
-            height: 17px;
+            width: 16px;
+            height: 16px;
             fill: #38bdf8;
         }
 
@@ -101,24 +101,23 @@
         }
 
         .audio-cta-btn {
-            background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-            color: #04101e;
+            background: linear-gradient(135deg, #38bdf8, #0284c7);
+            color: #ffffff;
             font-size: 11px;
-            font-weight: 800;
-            padding: 6px 10px;
-            border-radius: 18px;
+            font-weight: 700;
+            padding: 6px 11px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
             white-space: nowrap;
-            flex-shrink: 0;
-            box-shadow: 0 2px 10px rgba(14, 165, 233, 0.35);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.35);
         }
 
         .audio-cta-btn svg {
-            width: 11px;
-            height: 11px;
-            fill: #04101e;
+            width: 10px;
+            height: 10px;
+            fill: #ffffff;
         }
 
         /* Match Header */
@@ -126,29 +125,29 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 4px;
+            padding: 2px 2px 0 2px;
         }
 
         .match-type {
-            font-size: 10.5px;
-            font-weight: 700;
+            font-size: 11px;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: #8da2c0;
+            letter-spacing: 0.9px;
+            color: #94a3b8;
         }
 
         .live-badge {
             display: flex;
             align-items: center;
             gap: 5px;
-            background: rgba(239, 68, 68, 0.12);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.25);
-            padding: 2px 7px;
-            border-radius: 14px;
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 2px 8px;
+            border-radius: 12px;
             font-size: 10px;
             font-weight: 800;
-            letter-spacing: 0.4px;
+            letter-spacing: 0.5px;
         }
 
         .pulse-dot {
@@ -156,114 +155,134 @@
             height: 6px;
             background-color: #ef4444;
             border-radius: 50%;
+            box-shadow: 0 0 6px #ef4444;
             animation: pulse 1.4s infinite;
         }
 
         @keyframes pulse {
             0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(1.2); }
+            50% { opacity: 0.4; transform: scale(1.3); }
             100% { opacity: 1; transform: scale(1); }
         }
 
         .day-session {
-            font-size: 11px;
+            font-size: 11.5px;
             color: #38bdf8;
             font-weight: 700;
-            margin-top: -4px;
+            padding-left: 2px;
+            margin-top: -3px;
         }
 
-        /* Team Row */
+        /* Team Row Styling */
         .team-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 10px;
-            border-radius: 11px;
-            background: rgba(255, 255, 255, 0.025);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            transition: all 0.25s ease;
+            padding: 9px 12px;
+            border-radius: 13px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.25s, border-color 0.25s;
         }
 
         .team-row.active {
-            background: rgba(56, 189, 248, 0.07);
-            border-color: rgba(56, 189, 248, 0.3);
+            background: linear-gradient(90deg, rgba(56, 189, 248, 0.1) 0%, rgba(15, 23, 42, 0.3) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            box-shadow: inset 3px 0 0 #38bdf8;
         }
 
         .team-identity {
             display: flex;
             align-items: center;
-            gap: 9px;
+            gap: 10px;
         }
 
         .team-logo {
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: #151e2e;
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            background: #0f172a;
             flex-shrink: 0;
         }
 
         .team-name {
-            font-size: 14px;
+            font-size: 14.5px;
             font-weight: 600;
-            color: #f1f5f9;
+            color: #f8fafc;
+            letter-spacing: 0.2px;
         }
 
         .scores {
             text-align: right;
+            font-variant-numeric: tabular-nums;
         }
 
         .main-score {
-            font-size: 16px;
-            font-weight: 700;
+            font-size: 16.5px;
+            font-weight: 800;
             color: #ffffff;
-            line-height: 1.2;
+            line-height: 1.15;
+            letter-spacing: 0.3px;
         }
 
         .sub-score {
             font-size: 10px;
             color: #94a3b8;
-            margin-top: 1px;
+            margin-top: 2px;
+            font-weight: 500;
         }
 
+        /* Badges */
         .declared, .follon {
             font-size: 9px;
-            padding: 1px 4px;
-            border-radius: 3px;
-            font-weight: 700;
-            margin-left: 3px;
+            padding: 1px 5px;
+            border-radius: 4px;
+            font-weight: 800;
+            margin-left: 4px;
+            display: inline-block;
+            vertical-align: middle;
         }
 
-        .declared { background: rgba(234, 179, 8, 0.25); color: #facc15; }
-        .follon { background: rgba(244, 63, 94, 0.25); color: #fb7185; }
+        .declared { 
+            background: rgba(234, 179, 8, 0.2); 
+            color: #facc15; 
+            border: 1px solid rgba(234, 179, 8, 0.4);
+        }
+        
+        .follon { 
+            background: rgba(244, 63, 94, 0.2); 
+            color: #fb7185; 
+            border: 1px solid rgba(244, 63, 94, 0.4);
+        }
 
-        /* Announcement Banner */
+        /* Announcement Status Banner */
         .announcement-banner {
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.22);
-            color: #4ade80;
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            color: #34d399;
             text-align: center;
-            padding: 7px;
-            border-radius: 9px;
+            padding: 7px 10px;
+            border-radius: 10px;
             font-size: 12px;
             font-weight: 700;
+            letter-spacing: 0.2px;
         }
 
         /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 7px;
+            gap: 8px;
         }
 
         .stat-box {
-            background: rgba(0, 0, 0, 0.25);
-            padding: 6px 8px;
-            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 7px 8px;
+            border-radius: 10px;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
         .stat-label {
@@ -271,25 +290,26 @@
             color: #64748b;
             text-transform: uppercase;
             font-weight: 700;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
         }
 
         .stat-value {
-            font-size: 13px;
+            font-size: 13.5px;
             font-weight: 700;
             color: #f1f5f9;
             margin-top: 1px;
+            font-variant-numeric: tabular-nums;
         }
 
-        /* Commentary Box */
+        /* Commentary Card */
         .commentary-card {
-            background: rgba(255, 255, 255, 0.035);
+            background: rgba(255, 255, 255, 0.025);
             border-left: 3px solid #38bdf8;
-            padding: 7px 10px;
-            border-radius: 7px;
+            padding: 8px 10px;
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            gap: 4px;
         }
 
         .commentary-top {
@@ -308,17 +328,18 @@
             font-size: 10px;
             color: #94a3b8;
             background: rgba(255, 255, 255, 0.05);
-            padding: 1px 5px;
+            padding: 1px 6px;
             border-radius: 4px;
+            font-variant-numeric: tabular-nums;
         }
 
         .commentary-secondary {
-            font-size: 10px;
+            font-size: 10.5px;
             color: #cbd5e1;
             display: flex;
             justify-content: space-between;
-            border-top: 1px dashed rgba(255, 255, 255, 0.06);
-            padding-top: 3px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.08);
+            padding-top: 4px;
             white-space: pre-line;
         }
     </style>
@@ -362,7 +383,7 @@
     <!-- Team A (Sri Lanka) -->
     <div class="team-row" id="teamARow">
         <div class="team-identity">
-            <img src="https://i.ibb.co/zVc6D7zf/images.jpg" alt="Sri Lanka" class="team-logo">
+            <img src="https://i.ibb.co/zVc6D7zf/images.jpg" alt="Sri Lanka" class="team-logo" loading="lazy">
             <span class="team-name" id="teamAName">Sri Lanka</span>
         </div>
         <div class="scores">
@@ -374,7 +395,7 @@
     <!-- Team B (India) -->
     <div class="team-row" id="teamBRow">
         <div class="team-identity">
-            <img src="https://i.ibb.co/1G0vgbw0/images.png" alt="India" class="team-logo">
+            <img src="https://i.ibb.co/1G0vgbw0/images.png" alt="India" class="team-logo" loading="lazy">
             <span class="team-name" id="teamBName">India</span>
         </div>
         <div class="scores">
@@ -400,7 +421,7 @@
         </div>
     </div>
 
-    <!-- Commentary / Over Break -->
+    <!-- Commentary -->
     <div class="commentary-card" id="commCard">
         <div class="commentary-top">
             <span class="commentary-primary" id="commPrimary"></span>
@@ -428,40 +449,39 @@
     }
 
     function renderData(res) {
-        // Match Header
-        document.getElementById("matchFormat").innerText = `${(res.format || 'Test').toUpperCase()} MATCH • LIVE`;
-        document.getElementById("daySession").innerText = `Day ${res.now?.day || '1'} • Session ${res.now?.sessionCount || '1'}`;
-        document.getElementById("announcement").innerText = res.announcement1 || "Live Action";
+        document.getElementById("matchFormat").textContent = `${(res.format || 'Test').toUpperCase()} MATCH • LIVE`;
+        document.getElementById("daySession").textContent = `Day ${res.now?.day || '1'} • Session ${res.now?.sessionCount || '1'}`;
+        document.getElementById("announcement").textContent = res.announcement1 || "Live Action";
 
-        // Team A (Sri Lanka)
+        // Team A
         const teamA = res.teams?.a;
         if (teamA) {
-            document.getElementById("teamAName").innerText = teamA.name;
+            document.getElementById("teamAName").textContent = teamA.name;
 
             if (teamA.a_2_score && teamA.a_2_score.runs !== undefined) {
                 let badge = teamA.a_2_score.follon ? '<span class="follon">F/O</span>' : (teamA.a_2_score.declare ? '<span class="declared">d</span>' : '');
                 document.getElementById("teamAScoreMain").innerHTML = `${teamA.a_2_score.runs}/${teamA.a_2_score.wickets} ${badge}`;
-                document.getElementById("teamAScoreSub").innerText = `1st: ${teamA.a_1_score?.runs || 0} (${teamA.a_1_score?.overs || 0} ov) • ${teamA.a_2_score.overs} ov`;
+                document.getElementById("teamAScoreSub").textContent = `1st: ${teamA.a_1_score?.runs || 0} (${teamA.a_1_score?.overs || 0} ov) • ${teamA.a_2_score.overs} ov`;
             } else if (teamA.a_1_score) {
                 let badge = teamA.a_1_score.declare ? '<span class="declared">d</span>' : '';
                 document.getElementById("teamAScoreMain").innerHTML = `${teamA.a_1_score.runs}/${teamA.a_1_score.wickets} ${badge}`;
-                document.getElementById("teamAScoreSub").innerText = `${teamA.a_1_score.overs} ov`;
+                document.getElementById("teamAScoreSub").textContent = `${teamA.a_1_score.overs} ov`;
             }
         }
 
-        // Team B (India)
+        // Team B
         const teamB = res.teams?.b;
         if (teamB) {
-            document.getElementById("teamBName").innerText = teamB.name;
+            document.getElementById("teamBName").textContent = teamB.name;
 
             if (teamB.b_2_score && teamB.b_2_score.runs !== undefined) {
                 let badge = teamB.b_2_score.follon ? '<span class="follon">F/O</span>' : (teamB.b_2_score.declare ? '<span class="declared">d</span>' : '');
                 document.getElementById("teamBScoreMain").innerHTML = `${teamB.b_2_score.runs}/${teamB.b_2_score.wickets} ${badge}`;
-                document.getElementById("teamBScoreSub").innerText = `1st: ${teamB.b_1_score?.runs || 0} (${teamB.b_1_score?.overs || 0} ov) • ${teamB.b_2_score.overs} ov`;
+                document.getElementById("teamBScoreSub").textContent = `1st: ${teamB.b_1_score?.runs || 0} (${teamB.b_1_score?.overs || 0} ov) • ${teamB.b_2_score.overs} ov`;
             } else if (teamB.b_1_score) {
                 let badge = teamB.b_1_score.declare ? '<span class="declared">d</span>' : '';
                 document.getElementById("teamBScoreMain").innerHTML = `${teamB.b_1_score.runs}/${teamB.b_1_score.wickets} ${badge}`;
-                document.getElementById("teamBScoreSub").innerText = `${teamB.b_1_score.overs} ov`;
+                document.getElementById("teamBScoreSub").textContent = `${teamB.b_1_score.overs} ov`;
             }
         }
 
@@ -471,26 +491,23 @@
         document.getElementById("teamBRow").classList.toggle("active", curTeam === "b");
 
         // Stats Matrix
-        document.getElementById("crrVal").innerText = `${res.now?.run_rate || '0.00'} CRR`;
-        document.getElementById("overLeftVal").innerText = `${res.now?.overLeft || '0.0'} Overs`;
+        document.getElementById("crrVal").textContent = `${res.now?.run_rate || '0.00'} CRR`;
+        document.getElementById("overLeftVal").textContent = `${res.now?.overLeft || '0.0'} Overs`;
 
-        // Commentary Section & Filter
+        // Commentary
         if (res.lastCommentary) {
             let primary = (res.lastCommentary.primaryText || "").trim();
-            if (primary.toLowerCase() === "ball start") {
-                primary = "";
-            }
+            if (primary.toLowerCase() === "ball start") primary = "";
 
-            document.getElementById("commPrimary").innerText = primary;
-            document.getElementById("commTertiary").innerText = res.lastCommentary.tertiaryText || "";
-            document.getElementById("commSecondary").innerText = res.lastCommentary.secondaryText || "";
+            document.getElementById("commPrimary").textContent = primary;
+            document.getElementById("commTertiary").textContent = res.lastCommentary.tertiaryText || "";
+            document.getElementById("commSecondary").textContent = res.lastCommentary.secondaryText || "";
 
             const hasSecondary = !!res.lastCommentary.secondaryText;
             document.getElementById("commSecondary").style.display = hasSecondary ? "flex" : "none";
         }
     }
 
-    // Auto-update every 5 seconds
     fetchLiveScore();
     setInterval(fetchLiveScore, 5000);
 </script>
