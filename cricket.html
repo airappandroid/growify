@@ -21,23 +21,25 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding: 8px 0;
+            padding: 0; /* ওপৰৰ সকলো খালী ঠাই আঁতৰোৱা হৈছে */
+            margin: 0;
         }
 
         /* Premium Main Container */
         .score-card {
             background: linear-gradient(165deg, #0f172a 0%, #060b16 100%);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 22px;
-            width: 94%;
+            border-top: none; /* ওপৰৰ কাষলৈ সম্পূৰ্ণ মিলি যোৱাৰ বাবে */
+            border-radius: 0 0 20px 20px;
+            width: 100%;
             max-width: 410px;
-            padding: 13px;
+            padding: 10px 12px 14px 12px;
             color: #ffffff;
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.9), 0 0 20px rgba(14, 165, 233, 0.05);
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.9), 0 0 20px rgba(14, 165, 233, 0.05);
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            contain: content; /* Fast loading rendering optimization */
+            gap: 7px;
+            contain: content;
         }
 
         /* Top Audio Action Bar */
@@ -47,8 +49,8 @@
             justify-content: space-between;
             background: linear-gradient(135deg, rgba(14, 165, 233, 0.12), rgba(30, 41, 59, 0.5));
             border: 1px solid rgba(56, 189, 248, 0.3);
-            border-radius: 14px;
-            padding: 8px 11px;
+            border-radius: 12px;
+            padding: 7px 11px;
             text-decoration: none;
             backdrop-filter: blur(10px);
             transition: transform 0.15s ease, border-color 0.2s;
@@ -62,12 +64,12 @@
         .audio-left {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 9px;
         }
 
         .audio-icon-box {
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             background: rgba(56, 189, 248, 0.18);
             border-radius: 50%;
             display: flex;
@@ -77,8 +79,8 @@
         }
 
         .audio-icon-box svg {
-            width: 16px;
-            height: 16px;
+            width: 15px;
+            height: 15px;
             fill: #38bdf8;
         }
 
@@ -89,27 +91,27 @@
         }
 
         .audio-main-text {
-            font-size: 12.5px;
+            font-size: 12px;
             font-weight: 700;
             color: #f8fafc;
             letter-spacing: 0.2px;
         }
 
         .audio-sub-text {
-            font-size: 10px;
+            font-size: 9.5px;
             color: #94a3b8;
         }
 
         .audio-cta-btn {
             background: linear-gradient(135deg, #38bdf8, #0284c7);
             color: #ffffff;
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 700;
-            padding: 6px 11px;
-            border-radius: 20px;
+            padding: 5px 10px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
             white-space: nowrap;
             box-shadow: 0 4px 12px rgba(14, 165, 233, 0.35);
         }
@@ -125,14 +127,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2px 2px 0 2px;
+            padding: 1px 2px 0 2px;
         }
 
         .match-type {
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.9px;
+            letter-spacing: 0.8px;
             color: #94a3b8;
         }
 
@@ -143,16 +145,16 @@
             background: rgba(239, 68, 68, 0.15);
             color: #f87171;
             border: 1px solid rgba(239, 68, 68, 0.3);
-            padding: 2px 8px;
+            padding: 2px 7px;
             border-radius: 12px;
-            font-size: 10px;
+            font-size: 9.5px;
             font-weight: 800;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.4px;
         }
 
         .pulse-dot {
-            width: 6px;
-            height: 6px;
+            width: 5.5px;
+            height: 5.5px;
             background-color: #ef4444;
             border-radius: 50%;
             box-shadow: 0 0 6px #ef4444;
@@ -166,7 +168,7 @@
         }
 
         .day-session {
-            font-size: 11.5px;
+            font-size: 11px;
             color: #38bdf8;
             font-weight: 700;
             padding-left: 2px;
@@ -178,8 +180,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 9px 12px;
-            border-radius: 13px;
+            padding: 8px 11px;
+            border-radius: 12px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
             transition: background 0.25s, border-color 0.25s;
@@ -194,12 +196,12 @@
         .team-identity {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 9px;
         }
 
         .team-logo {
-            width: 34px;
-            height: 34px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             object-fit: cover;
             border: 1.5px solid rgba(255, 255, 255, 0.15);
@@ -208,10 +210,9 @@
         }
 
         .team-name {
-            font-size: 14.5px;
+            font-size: 14px;
             font-weight: 600;
             color: #f8fafc;
-            letter-spacing: 0.2px;
         }
 
         .scores {
@@ -220,27 +221,25 @@
         }
 
         .main-score {
-            font-size: 16.5px;
+            font-size: 16px;
             font-weight: 800;
             color: #ffffff;
             line-height: 1.15;
-            letter-spacing: 0.3px;
         }
 
         .sub-score {
-            font-size: 10px;
+            font-size: 9.5px;
             color: #94a3b8;
             margin-top: 2px;
-            font-weight: 500;
         }
 
         /* Badges */
         .declared, .follon {
-            font-size: 9px;
-            padding: 1px 5px;
-            border-radius: 4px;
+            font-size: 8.5px;
+            padding: 1px 4px;
+            border-radius: 3px;
             font-weight: 800;
-            margin-left: 4px;
+            margin-left: 3px;
             display: inline-block;
             vertical-align: middle;
         }
@@ -263,38 +262,37 @@
             border: 1px solid rgba(16, 185, 129, 0.25);
             color: #34d399;
             text-align: center;
-            padding: 7px 10px;
-            border-radius: 10px;
-            font-size: 12px;
+            padding: 6px 8px;
+            border-radius: 9px;
+            font-size: 11.5px;
             font-weight: 700;
-            letter-spacing: 0.2px;
         }
 
         /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 7px;
         }
 
         .stat-box {
             background: rgba(0, 0, 0, 0.35);
-            padding: 7px 8px;
-            border-radius: 10px;
+            padding: 6px 8px;
+            border-radius: 9px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
         .stat-label {
-            font-size: 9px;
+            font-size: 8.5px;
             color: #64748b;
             text-transform: uppercase;
             font-weight: 700;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.4px;
         }
 
         .stat-value {
-            font-size: 13.5px;
+            font-size: 13px;
             font-weight: 700;
             color: #f1f5f9;
             margin-top: 1px;
@@ -305,11 +303,11 @@
         .commentary-card {
             background: rgba(255, 255, 255, 0.025);
             border-left: 3px solid #38bdf8;
-            padding: 8px 10px;
-            border-radius: 8px;
+            padding: 7px 9px;
+            border-radius: 7px;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
         }
 
         .commentary-top {
@@ -319,27 +317,27 @@
         }
 
         .commentary-primary {
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 600;
             color: #38bdf8;
         }
 
         .commentary-over-run {
-            font-size: 10px;
+            font-size: 9.5px;
             color: #94a3b8;
             background: rgba(255, 255, 255, 0.05);
-            padding: 1px 6px;
+            padding: 1px 5px;
             border-radius: 4px;
             font-variant-numeric: tabular-nums;
         }
 
         .commentary-secondary {
-            font-size: 10.5px;
+            font-size: 10px;
             color: #cbd5e1;
             display: flex;
             justify-content: space-between;
             border-top: 1px dashed rgba(255, 255, 255, 0.08);
-            padding-top: 4px;
+            padding-top: 3px;
             white-space: pre-line;
         }
     </style>
