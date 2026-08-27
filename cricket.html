@@ -13,15 +13,16 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Non-scrollable viewport setup */
+        /* Non-scrollable viewport setup - Fixed Top Alignment */
         html, body {
-            height: 100vh;
+            min-height: 100vh;
             width: 100vw;
-            overflow: hidden;
+            overflow-x: hidden;
             background-color: #060911;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* ওপৰৰ খালী ঠাই আঁতৰাবলৈ flex-start কৰা হৈছে */
+            padding-top: 10px;        /* ওপৰত প্ৰয়োজনীয় সামান্য ব্যৱধান */
         }
 
         .score-card {
