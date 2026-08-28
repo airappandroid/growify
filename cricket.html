@@ -52,18 +52,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 8px;
+            padding: 10px;
         }
 
         .app-container {
             width: 100%;
             max-width: 440px;
-            height: 100%;
-            max-height: 98vh;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
-            gap: 6px;
+            gap: 8px;
         }
 
         /* Top Audio Commentary Banner */
@@ -79,7 +76,6 @@
             color: inherit;
             box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
             cursor: pointer;
-            margin-bottom: 0;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -164,10 +160,10 @@
 
         /* Match Summary Card */
         .match-card {
-            padding: 11px 14px;
+            padding: 12px 14px;
             display: flex;
             flex-direction: column;
-            gap: 7px;
+            gap: 8px;
         }
 
         .match-meta-pill {
@@ -385,7 +381,7 @@
 
         /* Pitch Action Card */
         .pitch-card {
-            padding: 8px 12px;
+            padding: 9px 12px;
             display: flex;
             flex-direction: column;
             gap: 6px;
@@ -420,7 +416,7 @@
         }
 
         .pro-table td {
-            padding: 4px 4px;
+            padding: 5px 4px;
             text-align: right;
             color: #e2e8f0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
@@ -442,9 +438,8 @@
             font-weight: 700;
         }
 
-        /* Bottom Full Scorecard CTA Button */
+        /* Compact Scorecard CTA Button right below the table */
         .cta-btn {
-            margin-top: auto;
             background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: #ffffff;
@@ -670,7 +665,7 @@
         </div>
     </div>
 
-    <!-- Full Scorecard CTA Button -->
+    <!-- Full Scorecard CTA Button (Directly attached below cards) -->
     <button class="cta-btn" onclick="openScorecard()">
         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
@@ -862,7 +857,7 @@
             secText.style.display = 'none';
         }
 
-        // Batters On Crease (Clean look - No * and No Green Dots)
+        // Batters On Crease
         const activeBatters = (currentInning.player_batting_order || []).filter(p => !p.batting.dismissed);
         const battersTbody = document.querySelector('#currentBattersTable tbody');
         battersTbody.innerHTML = '';
