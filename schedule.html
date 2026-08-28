@@ -230,7 +230,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* Match Footer (Venue & IST Time) */
+        /* Match Footer */
         .match-footer {
             display: flex;
             justify-content: space-between;
@@ -279,7 +279,6 @@
 <body>
 
 <div class="schedule-app">
-    <!-- Header -->
     <div class="header">
         <div class="header-left">
             <img src="https://flagcdn.com/w80/in.png" alt="India" class="team-flag-main">
@@ -291,7 +290,6 @@
         <div class="time-badge">IST (UTC+5:30)</div>
     </div>
 
-    <!-- Filters -->
     <div class="filter-wrapper">
         <button class="filter-btn active" onclick="filterMatches('ALL')">All Matches</button>
         <button class="filter-btn" onclick="filterMatches('T20I')">T20Is</button>
@@ -299,7 +297,6 @@
         <button class="filter-btn" onclick="filterMatches('TEST')">Tests</button>
     </div>
 
-    <!-- Matches Container -->
     <div class="matches-list" id="matchesContainer"></div>
 </div>
 
@@ -651,7 +648,8 @@
             card.className = "match-card";
             card.innerHTML = `
                 <div class="match-meta-top">
-                    <span class="format-badge ${badgeClass}">${m.matchTitle} • ${m.format}</span>
+                    <!-- Clean match title without repetition -->
+                    <span class="format-badge ${badgeClass}">${m.matchTitle}</span>
                     <span class="match-date">${m.date}</span>
                 </div>
 
