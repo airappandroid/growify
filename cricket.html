@@ -877,13 +877,28 @@
             battersTbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 6px;">Innings Break</td></tr>`;
         }
 
-        // Current Bowler
+        // Current Bowler (Real-time dynamic detection)
         const bowlers = currentInning.player_bowling_order || [];
         const liveBowlerTbody = document.querySelector('#currentBowlerTable tbody');
         liveBowlerTbody.innerHTML = '';
 
-        if (bowlers.length > 0) {
-            const currentBowler = bowlers[bowlers.length - 1];
+        let currentBowler = null;
+
+        // 1. is_bowling ফ্লেগ আছে নেকি পৰীক্ষা
+        currentBowler = bowlers.find(p => p.bowling?.is_bowling === true || p.bowling?.is_bowling === "true" || p.is_bowling);
+
+        // 2. miniCard.now ডাটাৰ পৰা পৰীক্ষা
+        if (!currentBowler && now.bowler) {
+            const bName = typeof now.bowler === 'object' ? now.bowler.name : now.bowler;
+            currentBowler = bowlers.find(p => p.name.toLowerCase().includes(String(bName).toLowerCase()) || (now.bowler_id && (p.id == now.bowler_id || p.player_id == now.bowler_id)));
+        }
+
+        // 3. Fallback: তালিকাত শেষত বলাৰজন
+        if (!currentBowler && bowlers.length > 0) {
+            currentBowler = bowlers[bowlers.length - 1];
+        }
+
+        if (currentBowler) {
             const bw = currentBowler.bowling;
             const row = document.createElement('tr');
             row.innerHTML = `
