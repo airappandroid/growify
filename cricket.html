@@ -142,7 +142,7 @@
             white-space: nowrap;
         }
 
-        /* Optimized Solid Surface Cards */
+        /* Solid Surface Cards */
         .glass-card {
             background: var(--surface-1);
             border: 1px solid var(--surface-border);
@@ -451,7 +451,7 @@
             transform: scale(0.97);
         }
 
-        /* High Performance Hardware Accelerated Modal */
+        /* Modal Full Scorecard */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -590,7 +590,7 @@
         </div>
     </a>
 
-    <!-- Match Summary Card (Static Layout with Dynamic Elements) -->
+    <!-- Match Summary Card -->
     <div class="glass-card match-card" id="matchSummaryCard">
         <div class="match-meta-pill">
             <span id="matchFormatText">MATCH</span>
@@ -616,9 +616,9 @@
             <span class="lead-text" id="matchLeadText">Connecting to feed...</span>
             <div class="right-badges">
                 <span class="crr-badge">CRR: <span class="num" id="matchCrr">0.00</span></span>
-                <div class="live-tag">
-                    <div class="live-pulse"></div>
-                    <span>LIVE</span>
+                <div class="live-tag" id="liveStatusBadge">
+                    <div class="live-pulse" id="livePulseDot"></div>
+                    <span id="liveStatusText">LIVE</span>
                 </div>
             </div>
         </div>
@@ -760,7 +760,7 @@
         return `${team} ${innNumber}`;
     }
 
-    // In-place Batting Table Updater (Reflow-free)
+    // In-place Batting Table Updater
     function updateBattingTable(tbody, batters, isDetailed = false) {
         if (!batters || batters.length === 0) {
             tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 6px;">${isDetailed ? 'No Batters' : 'Innings Break'}</td></tr>`;
@@ -818,7 +818,7 @@
         });
     }
 
-    // In-place Bowling Table Updater (Reflow-free)
+    // In-place Bowling Table Updater
     function updateBowlingTable(tbody, bowlers) {
         if (!bowlers || bowlers.length === 0) {
             tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 6px;">-</td></tr>`;
@@ -927,7 +927,34 @@
         const now = miniCard.now || {};
 
         document.getElementById('matchFormatText').textContent = `${miniCard.format || 'TEST'} MATCH`;
-        document.getElementById('matchDaySessionText').textContent = `Day ${now.day || '1'} • Session ${now.sessionCount || '1'}`;
+
+        // Match Status Detection (Stumps / Breaks / Finished / Live)
+        const rawStatus = `${miniCard.announcement1 || ''} ${miniCard.status || ''} ${miniCard.state || ''} ${now.status || ''}`.toLowerCase();
+        const isStumps = rawStatus.includes('stump');
+        const isBreak = rawStatus.includes('tea') || rawStatus.includes('lunch') || rawStatus.includes('dinner') || rawStatus.includes('break') || rawStatus.includes('delay');
+        const isComplete = rawStatus.includes('won') || rawStatus.includes('tied') || rawStatus.includes('drawn') || rawStatus.includes('complete');
+
+        const liveText = document.getElementById('liveStatusText');
+        const livePulse = document.getElementById('livePulseDot');
+        const daySessionText = document.getElementById('matchDaySessionText');
+
+        if (isStumps) {
+            liveText.textContent = 'STUMPS';
+            livePulse.style.display = 'none';
+            daySessionText.textContent = `Day ${now.day || '1'} • Stumps`;
+        } else if (isBreak) {
+            liveText.textContent = 'BREAK';
+            livePulse.style.display = 'inline-block';
+            daySessionText.textContent = `Day ${now.day || '1'} • Break`;
+        } else if (isComplete) {
+            liveText.textContent = 'FINISHED';
+            livePulse.style.display = 'none';
+            daySessionText.textContent = 'MATCH ENDED';
+        } else {
+            liveText.textContent = 'LIVE';
+            livePulse.style.display = 'inline-block';
+            daySessionText.textContent = `Day ${now.day || '1'} • Session ${now.sessionCount || '1'}`;
+        }
 
         const a1 = formatScore(teamA.a_1_score);
         const a2 = formatScore(teamA.a_2_score);
@@ -964,13 +991,16 @@
         const subInfo = document.getElementById('actionSubInfo');
 
         overBadge.textContent = `OV ${currentInning.overs || '0.0'}`;
-        subInfo.textContent = now.overLeft ? `${now.overLeft} ovs left today` : `Session ${now.sessionCount || 1}`;
+        subInfo.textContent = isStumps ? 'Day Ended' : (now.overLeft ? `${now.overLeft} ovs left today` : `Session ${now.sessionCount || 1}`);
 
-        const text = comm.primaryText || 'In Progress';
+        const text = comm.primaryText || (isStumps ? 'Stumps - Day Ended' : 'In Progress');
         mainText.textContent = text;
 
         chip.className = 'event-chip';
-        if (text.toLowerCase().includes('out') || text.toLowerCase().includes('wicket')) {
+        if (isStumps) {
+            chip.classList.add('chip-default');
+            chip.textContent = 'STUMPS';
+        } else if (text.toLowerCase().includes('out') || text.toLowerCase().includes('wicket')) {
             chip.classList.add('chip-wicket');
             chip.textContent = 'WICKET';
         } else if (text.toLowerCase().includes('four') || text.includes('4') || text.toLowerCase().includes('six') || text.includes('6')) {
@@ -1023,7 +1053,6 @@
 
         const tabsContainer = document.getElementById('modalInningsTabs');
         
-        // Rebuild tabs only when required (opening or count change)
         if (rebuildTabs || tabsContainer.children.length !== inningsList.length) {
             tabsContainer.innerHTML = '';
             inningsList.forEach((inn, idx) => {
@@ -1041,7 +1070,6 @@
 
         const activeInning = inningsList[selectedModalInningIdx];
 
-        // Smooth in-place updates without scroll jumps
         updateBattingTable(document.querySelector('#modalBattingTable tbody'), activeInning.player_batting_order || [], true);
         updateBowlingTable(document.querySelector('#modalBowlingTable tbody'), activeInning.player_bowling_order || []);
 
