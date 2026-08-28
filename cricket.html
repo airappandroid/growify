@@ -513,7 +513,7 @@
                 <div class="stat-value" id="m1_crrVal">--</div>
             </div>
             <div class="stat-box">
-                <div class="stat-label">Overs</div>
+                <div class="stat-label">Overs Left</div>
                 <div class="stat-value" id="m1_overLeftVal">--</div>
             </div>
         </div>
@@ -572,7 +572,7 @@
                 <div class="stat-value" id="m2_crrVal">--</div>
             </div>
             <div class="stat-box">
-                <div class="stat-label">Overs</div>
+                <div class="stat-label">Overs Left</div>
                 <div class="stat-value" id="m2_overLeftVal">--</div>
             </div>
         </div>
@@ -596,7 +596,7 @@
 
 <script>
     const MATCH_1_API = "https://match1.aminurmarch.workers.dev/mini-match-card?matchId=6a46abf321dc815bb318261b";
-    const MATCH_2_API = "https://cdelivery.aminurmarch.workers.dev/?team=a_1&matchId=69bd420b1dbf177ca4e58e72";
+    const MATCH_2_API = "https://match1.aminurmarch.workers.dev/mini-match-card?matchId=69bd420b1dbf177ca4e58e72";
 
     let currentActiveMatch = 'm2';
     let matchFormats = { m1: 'TEST MATCH', m2: 'TEST MATCH' };
@@ -662,8 +662,6 @@
                 result = data.responseData;
             } else if (data?.result) {
                 result = data.result;
-            } else if (data?.teams || data?.match || data?.ballByballs) {
-                result = data;
             }
 
             if (result) {
@@ -675,98 +673,7 @@
     }
 
     function renderMatch(res, p) {
-        // নতুন cdelivery API ফৰ্মেট ধৰা পেলোৱাৰ লজিক
-        if (res.match || res.ballByballs || res.batsman || res.bowler) {
-            renderDeliveryApiMatch(res, p);
-            return;
-        }
-
-        // পুৰণি mini-match-card ফৰ্মেট
-        renderStandardApiMatch(res, p);
-    }
-
-    // নতুন API (cdelivery) ৰেণ্ডাৰিং লজিক
-    function renderDeliveryApiMatch(res, p) {
-        const formatStr = "TEST MATCH";
-        matchFormats[p] = formatStr;
-        matchStatuses[p] = { isLive: true, label: "LIVE" };
-
-        if (currentActiveMatch === p) {
-            document.getElementById("headerMatchFormat").textContent = formatStr;
-            updateBadgeDisplay(p);
-        }
-
-        const battingTeam = res.batting_team || 'a';
-        const currentInnings = res.innings || '1';
-        document.getElementById(`${p}_daySession`).textContent = `Innings ${currentInnings} • Live Action`;
-
-        const matchData = res.match || {};
-        const runs = matchData.runs ?? 0;
-        const wickets = matchData.wicket ?? 0;
-        const latestBall = res.ballByballs?.[0];
-        const overStr = latestBall?.over_str ? `${latestBall.over_str} ov` : `${res.over || 0} ov`;
-
-        if (battingTeam === 'a') {
-            document.getElementById(`${p}_teamAScoreMain`).textContent = `${runs}/${wickets}`;
-            document.getElementById(`${p}_teamAScoreSub`).textContent = overStr;
-            document.getElementById(`${p}_teamARow`).classList.add("active");
-            document.getElementById(`${p}_teamBRow`).classList.remove("active");
-        } else {
-            document.getElementById(`${p}_teamBScoreMain`).textContent = `${runs}/${wickets}`;
-            document.getElementById(`${p}_teamBScoreSub`).textContent = overStr;
-            document.getElementById(`${p}_teamBRow`).classList.add("active");
-            document.getElementById(`${p}_teamARow`).classList.remove("active");
-        }
-
-        // বলাৰ আৰু বেটছমেনৰ তথ্য
-        const b1 = res.batsman?.[0];
-        const b2 = res.batsman?.[1];
-        const bw = res.bowler?.[0];
-
-        let bowlTxt = "";
-        if (bw) {
-            bowlTxt = `${bw.key}: ${bw.bowling.wickets}/${bw.bowling.runs} (${bw.bowling.overs} ov)`;
-            document.getElementById(`${p}_announcement`).textContent = `Bowling: ${bowlTxt}`;
-        } else {
-            document.getElementById(`${p}_announcement`).textContent = "Live Cricket Action";
-        }
-
-        document.getElementById(`${p}_crrVal`).textContent = `${matchData.current_run_rate || '0.00'} CRR`;
-        document.getElementById(`${p}_overLeftVal`).textContent = `${latestBall?.over_str || res.over || '0.0'} Overs`;
-
-        // বল-বাই-বল কমেন্ট্ৰি
-        if (latestBall) {
-            const cleanComment = (latestBall.comment || "").replace(/<[^>]*>/g, '');
-            document.getElementById(`${p}_commPrimary`).textContent = cleanComment;
-            document.getElementById(`${p}_commTertiary`).textContent = `Ov ${latestBall.over_str || ''}`;
-        } else {
-            document.getElementById(`${p}_commPrimary`).textContent = "Live Commentary";
-            document.getElementById(`${p}_commTertiary`).textContent = "";
-        }
-
-        // ক্ৰীজত থকা বেটছমেনৰ স্ক’ৰ
-        let batsmenHtml = "";
-        if (b1) {
-            batsmenHtml += `<div>🏏 ${b1.key}: <b>${b1.batting.runs}</b> (${b1.batting.balls}) [4s:${b1.batting.fours} 6s:${b1.batting.sixes}]</div>`;
-        }
-        if (b2) {
-            batsmenHtml += `<div>🏏 ${b2.key}: <b>${b2.batting.runs}</b> (${b2.batting.balls}) [4s:${b2.batting.fours} 6s:${b2.batting.sixes}]</div>`;
-        }
-        if (bw) {
-            batsmenHtml += `<div style="margin-top: 3px; color: #94a3b8;">🎯 ${bowlTxt}</div>`;
-        }
-
-        const secElem = document.getElementById(`${p}_commSecondary`);
-        if (batsmenHtml) {
-            secElem.innerHTML = batsmenHtml;
-            secElem.style.display = "flex";
-        } else {
-            secElem.style.display = "none";
-        }
-    }
-
-    // ষ্টেণ্ডাৰ্ড API ৰেণ্ডাৰিং লজিক
-    function renderStandardApiMatch(res, p) {
+        // Format & Status
         const formatStr = `${(res.format || 'Test').toUpperCase()} MATCH`;
         matchFormats[p] = formatStr;
 
@@ -790,13 +697,19 @@
             updateBadgeDisplay(p);
         }
 
-        document.getElementById(`${p}_daySession`).textContent = isMatchEnded 
-            ? "Match Ended" 
-            : `Day ${res.now?.day || '1'} • Session ${res.now?.sessionCount || '1'}`;
+        // Day & Session / Innings Break
+        const isBreak = res.lastCommentary?.primaryText?.toLowerCase() === "innings break";
+        if (isMatchEnded) {
+            document.getElementById(`${p}_daySession`).textContent = "Match Ended";
+        } else if (isBreak) {
+            document.getElementById(`${p}_daySession`).textContent = `Innings Break • Day ${res.now?.day || '1'} (Session ${res.now?.sessionCount || '1'})`;
+        } else {
+            document.getElementById(`${p}_daySession`).textContent = `Day ${res.now?.day || '1'} • Session ${res.now?.sessionCount || '1'}`;
+        }
             
         document.getElementById(`${p}_announcement`).textContent = res.announcement1 || "Live Action";
 
-        // Team A Data
+        // Team A Details
         const teamA = res.teams?.a;
         if (teamA) {
             document.getElementById(`${p}_teamAName`).textContent = teamA.name || "Team A";
@@ -814,7 +727,7 @@
             }
         }
 
-        // Team B Data
+        // Team B Details
         const teamB = res.teams?.b;
         if (teamB) {
             document.getElementById(`${p}_teamBName`).textContent = teamB.name || "Team B";
@@ -832,23 +745,32 @@
             }
         }
 
+        // Active Team Border
         const curTeam = res.settingObj?.currentTeam;
         document.getElementById(`${p}_teamARow`).classList.toggle("active", !isMatchEnded && curTeam === "a");
         document.getElementById(`${p}_teamBRow`).classList.toggle("active", !isMatchEnded && curTeam === "b");
 
-        document.getElementById(`${p}_crrVal`).textContent = `${res.now?.run_rate || '0.00'} CRR`;
+        // CRR & Overs
+        const crr = res.now?.run_rate ? `${res.now.run_rate} CRR` : '--';
+        document.getElementById(`${p}_crrVal`).textContent = crr;
         document.getElementById(`${p}_overLeftVal`).textContent = isMatchEnded ? "0.0 Overs" : `${res.now?.overLeft || '0.0'} Overs`;
 
+        // Commentary
         if (res.lastCommentary) {
             let primary = (res.lastCommentary.primaryText || "").trim();
             if (primary.toLowerCase() === "ball start") primary = "";
 
-            document.getElementById(`${p}_commPrimary`).textContent = primary;
+            document.getElementById(`${p}_commPrimary`).textContent = primary || "Live Updates";
             document.getElementById(`${p}_commTertiary`).textContent = res.lastCommentary.tertiaryText || "";
-            document.getElementById(`${p}_commSecondary`).textContent = res.lastCommentary.secondaryText || "";
 
             const hasSecondary = !!res.lastCommentary.secondaryText;
-            document.getElementById(`${p}_commSecondary`).style.display = hasSecondary ? "flex" : "none";
+            const secElem = document.getElementById(`${p}_commSecondary`);
+            if (hasSecondary) {
+                secElem.textContent = res.lastCommentary.secondaryText;
+                secElem.style.display = "flex";
+            } else {
+                secElem.style.display = "none";
+            }
         }
     }
 
@@ -857,7 +779,6 @@
         fetchScore(MATCH_2_API, 'm2');
     }
 
-    // ৫ ছেকেণ্ডৰ মূৰে মূৰে অটো-আপডেট আৰু পেজ ভিজিবিলিটি মেনেজমেন্ট
     let updateInterval = null;
 
     function startPolling() {
