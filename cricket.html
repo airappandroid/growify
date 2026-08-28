@@ -762,6 +762,63 @@
         }
     }
 
+    // Dynamic Live Bowler Finder
+    function getActiveBowler(bowlers, miniCard, now, currentInning) {
+        if (!bowlers || bowlers.length === 0) return null;
+
+        // 1. API Flag Check
+        let found = bowlers.find(p => 
+            p.bowling?.is_bowling === true || 
+            p.bowling?.is_bowling === "true" || 
+            p.bowling?.isBowling === true || 
+            p.is_bowling === true || 
+            p.is_current === true
+        );
+        if (found) return found;
+
+        // 2. Commentary Parsing (e.g. "Shaheen Afridi to Joe Root" or "Naseem to Brook")
+        const commText = miniCard?.lastCommentary?.primaryText || '';
+        if (commText && commText.toLowerCase().includes(' to ')) {
+            const commBowler = commText.split(/ to /i)[0].trim().toLowerCase();
+            found = bowlers.find(p => {
+                const fName = p.name.toLowerCase();
+                const parts = fName.split(' ');
+                const lName = parts[parts.length - 1];
+                return fName.includes(commBowler) || commBowler.includes(fName) || commBowler.includes(lName) || (parts[0] && commBowler.includes(parts[0]));
+            });
+            if (found) return found;
+        }
+
+        // 3. Now / MiniCard Bowler Objects or IDs
+        const bowlerId = now?.bowler_id || now?.bowlerId || miniCard?.bowler_id || miniCard?.bowlerId;
+        if (bowlerId) {
+            found = bowlers.find(p => p.id == bowlerId || p.player_id == bowlerId || p.bowler_id == bowlerId);
+            if (found) return found;
+        }
+
+        const bNameProp = now?.bowler || miniCard?.bowler || miniCard?.currentBowler;
+        if (bNameProp) {
+            const bName = (typeof bNameProp === 'object' ? (bNameProp.name || '') : String(bNameProp)).toLowerCase().trim();
+            if (bName) {
+                found = bowlers.find(p => p.name.toLowerCase().includes(bName) || bName.includes(p.name.toLowerCase()));
+                if (found) return found;
+            }
+        }
+
+        // 4. Over decimal match (e.g., if total over is 45.4, find bowler whose over ends in .4)
+        const currentOverStr = String(currentInning?.overs || '');
+        if (currentOverStr.includes('.')) {
+            const ballPart = currentOverStr.split('.')[1];
+            if (ballPart && ballPart !== '0' && ballPart !== '6') {
+                found = bowlers.find(p => String(p.bowling?.overs || '').endsWith('.' + ballPart));
+                if (found) return found;
+            }
+        }
+
+        // 5. Fallback: Last bowler
+        return bowlers[bowlers.length - 1];
+    }
+
     function renderMainScreen(data) {
         const miniCard = data?.miniMatchCard?.responseData?.result;
         const inningsList = data?.scorecard?.responseData?.result?.innings_batting_order;
@@ -877,26 +934,12 @@
             battersTbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 6px;">Innings Break</td></tr>`;
         }
 
-        // Current Bowler (Real-time dynamic detection)
+        // Current Bowler (Dynamic Detection)
         const bowlers = currentInning.player_bowling_order || [];
         const liveBowlerTbody = document.querySelector('#currentBowlerTable tbody');
         liveBowlerTbody.innerHTML = '';
 
-        let currentBowler = null;
-
-        // 1. is_bowling ফ্লেগ আছে নেকি পৰীক্ষা
-        currentBowler = bowlers.find(p => p.bowling?.is_bowling === true || p.bowling?.is_bowling === "true" || p.is_bowling);
-
-        // 2. miniCard.now ডাটাৰ পৰা পৰীক্ষা
-        if (!currentBowler && now.bowler) {
-            const bName = typeof now.bowler === 'object' ? now.bowler.name : now.bowler;
-            currentBowler = bowlers.find(p => p.name.toLowerCase().includes(String(bName).toLowerCase()) || (now.bowler_id && (p.id == now.bowler_id || p.player_id == now.bowler_id)));
-        }
-
-        // 3. Fallback: তালিকাত শেষত বলাৰজন
-        if (!currentBowler && bowlers.length > 0) {
-            currentBowler = bowlers[bowlers.length - 1];
-        }
+        const currentBowler = getActiveBowler(bowlers, miniCard, now, currentInning);
 
         if (currentBowler) {
             const bw = currentBowler.bowling;
