@@ -316,35 +316,6 @@
             color: var(--accent);
         }
 
-        /* Striker & Bowler Badges */
-        .bat-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 2px;
-            background: rgba(56, 189, 248, 0.15);
-            border: 1px solid rgba(56, 189, 248, 0.4);
-            border-radius: 3px;
-            padding: 0.5px 3.5px;
-            font-size: 8px;
-            font-weight: 800;
-            color: #38bdf8;
-            vertical-align: middle;
-        }
-
-        .ball-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 2px;
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            border-radius: 3px;
-            padding: 0.5px 3.5px;
-            font-size: 8px;
-            font-weight: 800;
-            color: #f87171;
-            vertical-align: middle;
-        }
-
         .meta-summary-row {
             display: flex;
             justify-content: space-between;
@@ -425,7 +396,6 @@
 
     async function loadScorecard() {
         try {
-            // cache: "no-store" আৰু Timestamp ব্যৱহাৰ কৰা হৈছে যাতে সদায় সতেজ ডাটা পোৱা যায়
             const response = await fetch(`${API_URL}&_t=${Date.now()}`, { cache: "no-store" });
             if (!response.ok) return;
             const resData = await response.json();
@@ -493,26 +463,10 @@
         const isFollon = inn.follon ? "Follow-On" : "";
         const statusBadge = isFollon || (inn.declare ? "Declared" : "Innings Detail");
 
-        // ১. সক্ৰিয় বেটাৰ চিনাক্তকৰণ
-        const notOutList = (inn.player_batting_order || []).filter(p => !p.batting?.dismissed);
-        let activeStrikerId = null;
-
-        if (isCurrentInning && !inn.declare && inn.wickets < 10 && notOutList.length > 0) {
-            const explicitStriker = notOutList.find(p => p.batting?.isStriker);
-            // API-ৰ পৰা explicit নহ'লে শেষত নট-আউট হোৱাজন বা প্ৰথমজনক ডিফল্ট কৰা হয়
-            activeStrikerId = explicitStriker 
-                ? (explicitStriker.playerId || explicitStriker.key) 
-                : (notOutList[notOutList.length - 1]?.playerId || notOutList[0]?.playerId);
-        }
-
         // Batting HTML
         const battingHTML = (inn.player_batting_order || []).map(p => {
             const b = p.batting || {};
             const isNotOut = !b.dismissed;
-            const pId = p.playerId || p.key;
-            const isStriker = isCurrentInning && (pId === activeStrikerId);
-
-            let batSymbol = isStriker ? `<span class="bat-badge">🏏 BAT</span>` : '';
             let rowClass = (isCurrentInning && isNotOut) ? 'class="active-player-row"' : '';
             let dismissal = isNotOut ? '<span class="not-out">not out</span>' : (b.out_str || "out");
 
@@ -522,7 +476,6 @@
                         <div class="player-info">
                             <div class="player-name-wrapper">
                                 <span class="player-name">${p.fullname || p.name}</span>
-                                ${batSymbol}
                             </div>
                             <span class="player-dismissal">${dismissal}</span>
                         </div>
@@ -536,43 +489,16 @@
             `;
         }).join("");
 
-        // ২. বৰ্তমান বলিং কৰি থকা বলাৰ চিনাক্তকৰণ (Incomplete Over / Fractional Check)
-        const bowlers = inn.player_bowling_order || [];
-        let activeBowlerId = null;
-
-        if (isCurrentInning && !inn.declare && inn.wickets < 10 && bowlers.length > 0) {
-            const explicitBowler = bowlers.find(p => p.bowling?.isCurrentBowler);
-            
-            if (explicitBowler) {
-                activeBowlerId = explicitBowler.playerId || explicitBowler.key;
-            } else {
-                // যিজন বলাৰৰ অভাৰ চলি আছে (যেনে: 18.2, 5.1 ইত্যাদি য'ত .0 নহয়)
-                const currentActiveBowler = bowlers.find(p => {
-                    const ov = String(p.bowling?.overs || "");
-                    return ov.includes(".") && !ov.endsWith(".0");
-                });
-
-                activeBowlerId = currentActiveBowler 
-                    ? (currentActiveBowler.playerId || currentActiveBowler.key) 
-                    : (bowlers[bowlers.length - 1]?.playerId || bowlers[bowlers.length - 1]?.key);
-            }
-        }
-
         // Bowling HTML
+        const bowlers = inn.player_bowling_order || [];
         const bowlingHTML = bowlers.map(p => {
             const b = p.bowling || {};
-            const pId = p.playerId || p.key;
-            const isBowler = isCurrentInning && (pId === activeBowlerId);
-
-            let ballSymbol = isBowler ? `<span class="ball-badge">🔴 BOWL</span>` : '';
-            let rowClass = isBowler ? 'class="active-player-row"' : '';
 
             return `
-                <tr ${rowClass}>
+                <tr>
                     <td>
                         <div class="player-name-wrapper">
                             <span class="player-name">${p.fullname || p.name}</span>
-                            ${ballSymbol}
                         </div>
                     </td>
                     <td class="highlight-val">${b.overs ?? '0.0'}</td>
@@ -652,10 +578,7 @@
         `;
     }
 
-    // প্ৰথম লোড
     loadScorecard();
-
-    // প্ৰতি ৫ ছেকেণ্ডৰ মূৰে মূৰে স্বয়ংক্ৰিয়ভাৱে লাইভ ডাটা আপডেট হ'ব
     setInterval(loadScorecard, 5000);
 </script>
 
