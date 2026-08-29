@@ -28,6 +28,7 @@
             border-radius: 14px;
             padding: 14px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
         }
 
         /* Match Top Banner */
@@ -73,31 +74,33 @@
             text-align: center;
         }
 
-        /* Tabs */
+        /* Tabs (Horizontal Scrollable) */
         .tabs-container {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             overflow-x: auto;
-            padding-bottom: 8px;
-            margin-bottom: 10px;
-            scrollbar-width: none;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+            scrollbar-width: none; /* Firefox */
+            -webkit-overflow-scrolling: touch; /* Smooth iOS/Android Touch */
         }
 
         .tabs-container::-webkit-scrollbar {
-            display: none;
+            display: none; /* Chrome, Safari, Edge */
         }
 
         .tab-btn {
             background: #1e293b;
             color: #94a3b8;
             border: 1px solid #283548;
-            padding: 6px 12px;
-            border-radius: 16px;
-            font-size: 11.5px;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             white-space: nowrap;
-            transition: all 0.2s;
+            flex-shrink: 0; /* বুটাম কেতিয়াও চুটি হৈ নাযায় */
+            transition: all 0.2s ease-in-out;
         }
 
         .tab-btn.active {
@@ -282,7 +285,7 @@
 
                 // বৰ্তমান চলি থকা ইনিংছৰ নম্বৰ নিৰ্বাচন
                 if (matchData.innings.length > 0) {
-                    activeInningIndex = matchData.innings.length - 1; // শেহতীয়া ইনিংছটো ডিফল্টভাৱে খুলিব
+                    activeInningIndex = matchData.innings.length - 1;
                 }
 
                 renderInningTabs();
@@ -307,6 +310,13 @@
                     renderInningDetails(idx);
                 };
                 tabs.appendChild(btn);
+
+                // যদি এইটো বৰ্তমানৰ এক্টিভ টেব হয়, তেন্তে স্বয়ংক্ৰিয়ভাৱে সেইটোলৈ স্ক্ৰল হ'ব
+                if (idx === activeInningIndex) {
+                    setTimeout(() => {
+                        btn.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
+                    }, 50);
+                }
             });
         }
 
