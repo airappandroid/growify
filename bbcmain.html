@@ -1,96 +1,178 @@
- <!DOCTYPE html> 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Radio App</title>
 
 <style>
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    padding: 0;
+}
 
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(180deg, #0f172a, #0b1220);
-    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #090d16;
+    color: #ffffff;
+    min-height: 100vh;
+    padding-bottom: 24px;
+    -webkit-font-smoothing: antialiased;
 }
 
-.section { padding: 14px; }
+.container {
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.section {
+    padding: 0 16px;
+    margin-top: 20px;
+}
 
 .title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 14px;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: #f1f5f9;
+    margin-bottom: 12px;
 }
 
-.station-card {
-    background: linear-gradient(145deg, #1e293b, #162033);
+/* Top Banner */
+.top-banner {
+    display: block;
+    padding: 12px 16px 0;
+    text-decoration: none;
+}
+
+.top-banner img {
+    display: block;
+    width: 100%;
+    height: auto;
     border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 14px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.top-banner:active img {
+    transform: scale(0.985);
+    transition: transform 0.1s ease;
+}
+
+/* Station Card */
+.station-card {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.75) 0%, rgba(15, 23, 42, 0.85) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     text-decoration: none;
-    color: white;
+    color: #ffffff;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    transition: transform 0.12s ease, border-color 0.12s ease;
 }
 
-.station-card:active { transform: scale(0.98); }
+.station-card:active {
+    transform: scale(0.98);
+    border-color: rgba(59, 130, 246, 0.4);
+}
 
-.station-info { max-width: 80%; }
-.station-name { font-weight: bold; font-size: 16px; margin-bottom: 6px; }
+.station-info {
+    flex: 1;
+    min-width: 0;
+    padding-right: 14px;
+}
 
+.station-name {
+    font-weight: 700;
+    font-size: 15.5px;
+    color: #ffffff;
+    margin-bottom: 5px;
+    letter-spacing: -0.2px;
+}
+
+/* সম্পূৰ্ণ প্ৰগ্ৰাম নাম দেখুৱাবলৈ সংশোধিত CSS */
 .playing-row {
-    font-size: 13px;
+    font-size: 12.5px;
+    color: #94a3b8;
     display: flex;
-    align-items: center; /* vertical center */
-    opacity: 0.95;
+    align-items: flex-start; /* যাতে ডটটো প্ৰথম লাইনৰ লগত মিলি থাকে */
+    line-height: 1.4;
+    word-break: break-word;
+    white-space: normal; /* সম্পূৰ্ণ টেক্সট দেখুৱাব */
 }
 
-
-.live-dot {
+/* লাইভ পালচিং ডট */
+.live-indicator {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 10px;
     height: 10px;
-    min-width: 10px;
-    min-height: 10px;
-    background: #22c55e;
-    border-radius: 50%;
     margin-right: 8px;
-    display: inline-block;
-    vertical-align: middle;
+    margin-top: 3px; /* টেক্সটৰ প্ৰথম লাইনৰ উচ্চতাৰ লগত মিলাই ৰখা হৈছে */
+    flex-shrink: 0;
 }
 
-
-.program-title {
-    font-weight: bold;
+.live-dot {
+    width: 7px;
+    height: 7px;
+    background-color: #22c55e;
+    border-radius: 50%;
 }
 
+.live-pulse {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(34, 197, 94, 0.6);
+    border-radius: 50%;
+    animation: pulse 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.8); opacity: 0.9; }
+    100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Play Button */
 .play-btn {
-    width: 42px;
-    height: 42px;
-    min-width: 42px;
-    border-radius: 14px;
-    background: linear-gradient(145deg, #3b82f6, #2563eb);
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.35);
-    transition: transform 0.08s ease, box-shadow 0.08s ease;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+    transition: transform 0.1s ease;
     text-decoration: none;
+    flex-shrink: 0;
 }
 
 .play-btn:active {
-    transform: scale(0.92);
+    transform: scale(0.9);
 }
 
 .play-btn::before {
     content: "";
-    border-left: 12px solid white;
-    border-top: 7px solid transparent;
-    border-bottom: 7px solid transparent;
-    margin-left: 3px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6px 0 6px 10px;
+    border-color: transparent transparent transparent #ffffff;
+    margin-left: 2px;
 }
 
-
+/* Quick Access Grid */
 .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -98,136 +180,147 @@ body {
 }
 
 .card {
-    background: #1e293b;
-    border-radius: 12px;
-    padding: 14px;
+    background: linear-gradient(145deg, #1e293b, #151f30);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 13px 12px;
     text-decoration: none;
-    color: white;
-    font-size: 14px;
+    color: #e2e8f0;
+    font-size: 13.5px;
+    font-weight: 600;
     text-align: center;
-}
-.card:active { transform: scale(0.97); }
-
-.top-banner{
-    display:block;
-    width:100%;
-    padding:10px 14px 0;
-    text-decoration:none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: transform 0.1s ease, background 0.12s ease;
 }
 
-.top-banner img{
-    display:block;
-    width:100%;
-    height:auto;
-    border-radius:14px;
-    box-shadow:0 4px 12px rgba(0,0,0,.35);
+.card:active {
+    transform: scale(0.97);
+    background: #273549;
 }
 
-.top-banner:active{
-    opacity:.9;
-    transform:scale(.98);
+/* News Card Highlight */
+.news-card {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(20, 30, 48, 0.9));
+    border: 1px solid rgba(59, 130, 246, 0.25);
 }
 </style>
 
-<!-- BBC Schedule Source -->
-<script src="https://airappandroid.github.io/growify/bbc.js"></script>
+<script src="https://airappandroid.github.io/growify/bbc.js" defer></script>
 </head>
 <body>
 
-<a href="go:BBC5E" class="top-banner">
-    <img src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/HQHt11787246574.png" alt="BBC 5 Sports Extra">
-</a>
-
-<div class="section">
-    <div class="title">📻 Popular Stations</div>
-
-    <!-- BBC Radio 1 -->
-    <div class="station-card">
-        <div class="station-info">
-            <div class="station-name">BBC Radio 1</div>
-            <div class="playing-row">
-                <div class="live-dot"></div>
-                <span id="bbc1">Loading...</span>
-            </div>
-        </div>
-        <a href="go:BBC1" class="play-btn"></a>
-    </div>
-
-    <!-- BBC Radio 2 -->
-    <div class="station-card">
-        <div class="station-info">
-            <div class="station-name">BBC Radio 2</div>
-            <div class="playing-row">
-                <div class="live-dot"></div>
-                <span id="bbc2">Loading...</span>
-            </div>
-        </div>
-        <a href="go:BBC2" class="play-btn"></a>
-    </div>
-
-    <!-- BBC Radio 3 -->
-    <div class="station-card">
-        <div class="station-info">
-            <div class="station-name">BBC Radio 3</div>
-            <div class="playing-row">
-                <div class="live-dot"></div>
-                <span id="bbc3">Loading...</span>
-            </div>
-        </div>
-        <a href="go:BBC3" class="play-btn"></a>
-    </div>
-
-    <!-- BBC Radio 4 -->
-    <div class="station-card">
-        <div class="station-info">
-            <div class="station-name">BBC Radio 4</div>
-            <div class="playing-row">
-                <div class="live-dot"></div>
-                <span id="bbc4">Loading...</span>
-            </div>
-        </div>
-        <a href="go:BBC4" class="play-btn"></a>
-    </div>
-    
-    <!-- BBC World Service -->
-    <div class="station-card">
-        <div class="station-info">
-            <div class="station-name">BBC World Service</div>
-            <div class="playing-row">
-                <div class="live-dot"></div>
-                <span id="bbcws">Loading...</span>
-            </div>
-        </div>
-        <a href="go:BBCWS" class="play-btn"></a>
-    </div>
-</div>
-<div class="section">
-    <div class="title">⚡ Quick Access</div>
-    <div class="grid">
-        <a href="go:BBC" class="card">🇬🇧 BBC Radio</a>
-        <a href="go:UKR" class="card">📻 UK Radio</a>
-        <a href="go:NEWS" class="card">📰 News Radio</a>
-        <a href="go:SPO" class="card">🏀 Sports Radio</a>
-    </div>
-</div>
-
-<div class="section">
-    <div class="title">🕒 Latest Updates</div>
-
-    <a href="go:5MIN" class="station-card news">
-        <div class="station-info">
-            <div class="station-name">📰 5 Min News Brief</div>
-            <div class="playing-row" style="opacity:0.8">
-                <span>Updated: 29 August 2026, 4:00 AM</span>
-            </div>
-        </div>
-        <div class="play-btn"></div>
+<div class="container">
+    <a href="go:BBC5E" class="top-banner">
+        <img src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/HQHt11787246574.png" alt="BBC 5 Sports Extra" fetchpriority="high" decoding="async">
     </a>
-</div>
 
+    <div class="section">
+        <div class="title">📻 Popular Stations</div>
+
+        <!-- BBC Radio 1 -->
+        <div class="station-card">
+            <div class="station-info">
+                <div class="station-name">BBC Radio 1</div>
+                <div class="playing-row">
+                    <span class="live-indicator">
+                        <span class="live-pulse"></span>
+                        <span class="live-dot"></span>
+                    </span>
+                    <span id="bbc1">Loading...</span>
+                </div>
+            </div>
+            <a href="go:BBC1" class="play-btn"></a>
+        </div>
+
+        <!-- BBC Radio 2 -->
+        <div class="station-card">
+            <div class="station-info">
+                <div class="station-name">BBC Radio 2</div>
+                <div class="playing-row">
+                    <span class="live-indicator">
+                        <span class="live-pulse"></span>
+                        <span class="live-dot"></span>
+                    </span>
+                    <span id="bbc2">Loading...</span>
+                </div>
+            </div>
+            <a href="go:BBC2" class="play-btn"></a>
+        </div>
+
+        <!-- BBC Radio 3 -->
+        <div class="station-card">
+            <div class="station-info">
+                <div class="station-name">BBC Radio 3</div>
+                <div class="playing-row">
+                    <span class="live-indicator">
+                        <span class="live-pulse"></span>
+                        <span class="live-dot"></span>
+                    </span>
+                    <span id="bbc3">Loading...</span>
+                </div>
+            </div>
+            <a href="go:BBC3" class="play-btn"></a>
+        </div>
+
+        <!-- BBC Radio 4 -->
+        <div class="station-card">
+            <div class="station-info">
+                <div class="station-name">BBC Radio 4</div>
+                <div class="playing-row">
+                    <span class="live-indicator">
+                        <span class="live-pulse"></span>
+                        <span class="live-dot"></span>
+                    </span>
+                    <span id="bbc4">Loading...</span>
+                </div>
+            </div>
+            <a href="go:BBC4" class="play-btn"></a>
+        </div>
+
+        <!-- BBC World Service -->
+        <div class="station-card">
+            <div class="station-info">
+                <div class="station-name">BBC World Service</div>
+                <div class="playing-row">
+                    <span class="live-indicator">
+                        <span class="live-pulse"></span>
+                        <span class="live-dot"></span>
+                    </span>
+                    <span id="bbcws">Loading...</span>
+                </div>
+            </div>
+            <a href="go:BBCWS" class="play-btn"></a>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="title">⚡ Quick Access</div>
+        <div class="grid">
+            <a href="go:BBC" class="card">🇬🇧 BBC Radio</a>
+            <a href="go:UKR" class="card">📻 UK Radio</a>
+            <a href="go:NEWS" class="card">📰 News Radio</a>
+            <a href="go:SPO" class="card">🏀 Sports Radio</a>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="title">🕒 Latest Updates</div>
+        <a href="go:5MIN" class="station-card news-card">
+            <div class="station-info">
+                <div class="station-name">📰 5 Min News Brief</div>
+                <div class="playing-row">
+                    <span>Updated: 29 August 2026, 4:00 AM</span>
+                </div>
+            </div>
+            <div class="play-btn"></div>
+        </a>
+    </div>
+</div>
 
 <script>
-// 🇬🇧 UK current time in minutes
 function getUKMinutesNow() {
     const parts = new Intl.DateTimeFormat('en-GB', {
         timeZone: 'Europe/London',
@@ -236,14 +329,13 @@ function getUKMinutesNow() {
         hour12: false
     }).formatToParts(new Date());
 
-    const h = parseInt(parts.find(p => p.type === 'hour').value);
-    const m = parseInt(parts.find(p => p.type === 'minute').value);
+    const h = parseInt(parts.find(p => p.type === 'hour').value, 10);
+    const m = parseInt(parts.find(p => p.type === 'minute').value, 10);
     return h * 60 + m;
 }
 
-// convert "01:30 AM" → minutes
 function timeStringToMinutesUK(timeStr) {
-    let [time, period] = timeStr.split(" ");
+    const [time, period] = timeStr.split(" ");
     let [h, m] = time.split(":").map(Number);
 
     if (period === "PM" && h !== 12) h += 12;
@@ -252,19 +344,16 @@ function timeStringToMinutesUK(timeStr) {
     return h * 60 + m;
 }
 
-// 🔥 MAIN LOGIC (midnight safe)
 function getCurrentShow(channelName) {
     if (typeof SCHEDULE_DATA === "undefined") return "Loading...";
 
     const nowMin = getUKMinutesNow();
-
     const list = SCHEDULE_DATA
         .filter(p => p.channel.toLowerCase().includes(channelName.toLowerCase()))
         .sort((a, b) => timeStringToMinutesUK(a.time) - timeStringToMinutesUK(b.time));
 
     if (!list.length) return "Live";
 
-    // पहला शो शुरू होने से पहले
     if (nowMin < timeStringToMinutesUK(list[0].time)) {
         return list[list.length - 1].title;
     }
@@ -278,16 +367,22 @@ function getCurrentShow(channelName) {
         }
     }
 
-    // आखिरी शो
     return list[list.length - 1].title;
 }
 
 function updatePrograms() {
-    document.getElementById("bbc1").innerText = getCurrentShow("Radio 1");
-    document.getElementById("bbc2").innerText = getCurrentShow("Radio 2");
-    document.getElementById("bbc3").innerText = getCurrentShow("Radio 3");
-    document.getElementById("bbc4").innerText = getCurrentShow("Radio 4");
-    document.getElementById("bbcws").innerText = getCurrentShow("BBC World Service");
+    const stations = [
+        { id: "bbc1", name: "Radio 1" },
+        { id: "bbc2", name: "Radio 2" },
+        { id: "bbc3", name: "Radio 3" },
+        { id: "bbc4", name: "Radio 4" },
+        { id: "bbcws", name: "BBC World Service" }
+    ];
+
+    stations.forEach(st => {
+        const el = document.getElementById(st.id);
+        if (el) el.innerText = getCurrentShow(st.name);
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -295,3 +390,5 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(updatePrograms, 60000);
 });
 </script>
+</body>
+</html>
