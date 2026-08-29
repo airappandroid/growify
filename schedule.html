@@ -2,698 +2,306 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>India Cricket Schedule</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Match Schedule</title>
     <style>
-        :root {
-            --bg-base: #020617;
-            --card-bg: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(3, 7, 18, 0.98) 100%);
-            --accent: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.25);
-            --border: rgba(255, 255, 255, 0.08);
-            --border-highlight: rgba(56, 189, 248, 0.3);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-            --t20-badge: #38bdf8;
-            --odi-badge: #fbbf24;
-            --test-badge: #f87171;
-        }
-
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
-            -webkit-tap-highlight-color: transparent;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         body {
-            min-height: 100vh;
-            width: 100vw;
-            background-color: var(--bg-base);
+            background-color: #0b0f19;
+            color: #f1f5f9;
+            padding: 12px;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            padding: 14px 8px;
-            color: var(--text-primary);
         }
 
-        .schedule-app {
+        .schedule-container {
             width: 100%;
-            max-width: 500px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            max-width: 550px;
         }
 
-        /* App Header */
-        .header {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 14px 16px;
+        /* Top Banner */
+        .page-header {
+            background: #161f30;
+            border: 1px solid #283548;
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         }
 
-        .header-left {
+        .header-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #38bdf8;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
         }
 
-        .team-flag-main {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
-            object-fit: cover;
-        }
-
-        .header-title-box h1 {
-            font-size: 15px;
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: 0.2px;
-        }
-
-        .header-title-box span {
-            font-size: 10.5px;
-            color: var(--text-secondary);
-        }
-
-        .time-badge {
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            color: var(--accent);
-            padding: 4px 8px;
-            border-radius: 10px;
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
+        .match-count {
+            background: #1e293b;
+            color: #94a3b8;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            border: 1px solid #334155;
         }
 
         /* Filter Tabs */
-        .filter-wrapper {
+        .filter-tabs {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 4px;
             scrollbar-width: none;
-            padding-bottom: 2px;
         }
 
-        .filter-wrapper::-webkit-scrollbar {
+        .filter-tabs::-webkit-scrollbar {
             display: none;
         }
 
-        .filter-btn {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            font-size: 11px;
-            font-weight: 700;
+        .tab-btn {
+            background: #161f30;
+            color: #94a3b8;
+            border: 1px solid #283548;
             padding: 6px 14px;
-            border-radius: 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
             cursor: pointer;
             white-space: nowrap;
             transition: all 0.2s ease;
         }
 
-        .filter-btn.active {
-            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+        .tab-btn.active {
+            background: #2563eb;
             color: #ffffff;
-            border-color: var(--accent);
-            box-shadow: 0 4px 12px var(--accent-glow);
+            border-color: #3b82f6;
         }
 
-        /* Matches List */
-        .matches-list {
+        /* Match List Cards */
+        .match-list {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
 
-        /* Match Card */
         .match-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 12px 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.8);
+            background: #161f30;
+            border: 1px solid #283548;
+            border-radius: 12px;
+            padding: 14px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             transition: transform 0.15s ease, border-color 0.2s ease;
         }
 
         .match-card:hover {
-            border-color: var(--border-highlight);
+            border-color: #38bdf8;
         }
 
-        .match-meta-top {
+        .card-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .match-no {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 600;
         }
 
         .format-badge {
-            font-size: 9.5px;
-            font-weight: 800;
-            padding: 2.5px 7px;
-            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
             text-transform: uppercase;
+            padding: 2px 7px;
+            border-radius: 6px;
             letter-spacing: 0.5px;
         }
 
-        .badge-t20 {
-            background: rgba(56, 189, 248, 0.12);
-            color: var(--t20-badge);
+        .format-t20i {
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
             border: 1px solid rgba(56, 189, 248, 0.3);
         }
 
-        .badge-odi {
-            background: rgba(251, 191, 36, 0.12);
-            color: var(--odi-badge);
-            border: 1px solid rgba(251, 191, 36, 0.3);
+        .format-odi {
+            background: rgba(52, 211, 153, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.3);
         }
 
-        .badge-test {
-            background: rgba(248, 113, 113, 0.12);
-            color: var(--test-badge);
+        .format-test {
+            background: rgba(248, 113, 113, 0.15);
+            color: #f87171;
             border: 1px solid rgba(248, 113, 113, 0.3);
         }
 
-        .match-date {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--text-secondary);
+        .match-title-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 10px;
+            line-height: 1.3;
         }
 
-        /* Teams Display */
-        .match-teams {
+        .card-bottom {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 12px;
-            padding: 8px 12px;
-        }
-
-        .team-unit {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .team-flag {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .team-name {
-            font-size: 13px;
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        .vs-text {
-            font-size: 10px;
-            font-weight: 800;
-            color: var(--text-muted);
-            letter-spacing: 0.5px;
-        }
-
-        /* Match Footer */
-        .match-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 4px;
-            border-top: 1px dashed rgba(255, 255, 255, 0.06);
-            gap: 8px;
-        }
-
-        .venue-info {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 10.5px;
-            color: #cbd5e1;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .venue-info svg {
-            width: 12px;
-            height: 12px;
-            fill: #38bdf8;
-            flex-shrink: 0;
-        }
-
-        .ist-time {
+            flex-direction: column;
+            gap: 6px;
+            border-top: 1px solid #232e42;
+            padding-top: 9px;
             font-size: 11.5px;
-            font-weight: 800;
-            color: #34d399;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-variant-numeric: tabular-nums;
         }
 
-        .ist-time svg {
-            width: 11px;
-            height: 11px;
-            fill: #34d399;
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #cbd5e1;
+        }
+
+        .info-item.venue {
+            color: #94a3b8;
+        }
+
+        .date-time-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .time-badge {
+            background: #1e293b;
+            color: #38bdf8;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
         }
     </style>
 </head>
 <body>
 
-<div class="schedule-app">
-    <div class="header">
-        <div class="header-left">
-            <img src="https://flagcdn.com/w80/in.png" alt="India" class="team-flag-main">
-            <div class="header-title-box">
-                <h1>Team India Matches</h1>
-                <span>Upcoming Series Schedule</span>
-            </div>
+    <div class="schedule-container">
+        <!-- Header -->
+        <div class="page-header">
+            <span class="header-title">🏏 India Fixtures</span>
+            <span class="match-count" id="count-badge">38 Matches</span>
         </div>
-        <div class="time-badge">IST (UTC+5:30)</div>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <button class="tab-btn active" onclick="filterSchedule('ALL')">All</button>
+            <button class="tab-btn" onclick="filterSchedule('T20I')">T20I</button>
+            <button class="tab-btn" onclick="filterSchedule('ODI')">ODI</button>
+            <button class="tab-btn" onclick="filterSchedule('TEST')">Test</button>
+        </div>
+
+        <!-- Dynamic Match List -->
+        <div class="match-list" id="match-list-container"></div>
     </div>
 
-    <div class="filter-wrapper">
-        <button class="filter-btn active" onclick="filterMatches('ALL')">All Matches</button>
-        <button class="filter-btn" onclick="filterMatches('T20I')">T20Is</button>
-        <button class="filter-btn" onclick="filterMatches('ODI')">ODIs</button>
-        <button class="filter-btn" onclick="filterMatches('TEST')">Tests</button>
-    </div>
+    <script>
+        const matches = [
+            { id: 1, name: "Afghanistan vs India — 1st T20I", date: "13 Sep 2026", stadium: "Arun Jaitley Stadium, Delhi", time: "7:00 PM", format: "T20I" },
+            { id: 2, name: "Afghanistan vs India — 2nd T20I", date: "15 Sep 2026", stadium: "Arun Jaitley Stadium, Delhi", time: "7:00 PM", format: "T20I" },
+            { id: 3, name: "Afghanistan vs India — 3rd T20I", date: "17 Sep 2026", stadium: "Arun Jaitley Stadium, Delhi", time: "7:00 PM", format: "T20I" },
+            { id: 4, name: "India vs West Indies — 1st ODI", date: "27 Sep 2026", stadium: "Greenfield International Stadium, Thiruvananthapuram", time: "2:00 PM", format: "ODI" },
+            { id: 5, name: "India vs TBC — 2nd Quarter-Final", date: "28 Sep 2026", stadium: "Korogi Sports Park, Nisshin", time: "2:00 PM", format: "T20I" },
+            { id: 6, name: "India vs West Indies — 2nd ODI", date: "30 Sep 2026", stadium: "Barsapara Cricket Stadium, Guwahati", time: "2:00 PM", format: "ODI" },
+            { id: 7, name: "India vs West Indies — 3rd ODI", date: "3 Oct 2026", stadium: "Maharaja Yadavindra Singh Stadium, Mullanpur", time: "2:00 PM", format: "ODI" },
+            { id: 8, name: "India vs West Indies — 1st T20I", date: "6 Oct 2026", stadium: "Ekana Cricket Stadium, Lucknow", time: "7:00 PM", format: "T20I" },
+            { id: 9, name: "India vs West Indies — 2nd T20I", date: "9 Oct 2026", stadium: "JSCA International Stadium, Ranchi", time: "7:00 PM", format: "T20I" },
+            { id: 10, name: "India vs West Indies — 3rd T20I", date: "11 Oct 2026", stadium: "Holkar Stadium, Indore", time: "7:00 PM", format: "T20I" },
+            { id: 11, name: "India vs West Indies — 4th T20I", date: "14 Oct 2026", stadium: "Rajiv Gandhi International Stadium, Hyderabad", time: "7:00 PM", format: "T20I" },
+            { id: 12, name: "India vs West Indies — 5th T20I", date: "17 Oct 2026", stadium: "M. Chinnaswamy Stadium, Bengaluru", time: "7:00 PM", format: "T20I" },
+            { id: 13, name: "New Zealand vs India — 1st T20I", date: "22 Oct 2026", stadium: "Hagley Oval, Christchurch", time: "12:30 PM", format: "T20I" },
+            { id: 14, name: "New Zealand vs India — 2nd T20I", date: "24 Oct 2026", stadium: "Hagley Oval, Christchurch", time: "12:30 PM", format: "T20I" },
+            { id: 15, name: "New Zealand vs India — 3rd T20I", date: "27 Oct 2026", stadium: "Sky Stadium, Wellington", time: "12:30 PM", format: "T20I" },
+            { id: 16, name: "New Zealand vs India — 4th T20I", date: "30 Oct 2026", stadium: "Eden Park, Auckland", time: "12:30 PM", format: "T20I" },
+            { id: 17, name: "New Zealand vs India — 5th T20I", date: "1 Nov 2026", stadium: "Seddon Park, Hamilton", time: "12:30 PM", format: "T20I" },
+            { id: 18, name: "New Zealand vs India — 1st ODI", date: "4 Nov 2026", stadium: "Eden Park, Auckland", time: "7:30 AM", format: "ODI" },
+            { id: 19, name: "New Zealand vs India — 2nd ODI", date: "7 Nov 2026", stadium: "Sky Stadium, Wellington", time: "7:30 AM", format: "ODI" },
+            { id: 20, name: "New Zealand vs India — 3rd ODI", date: "10 Nov 2026", stadium: "Seddon Park, Hamilton", time: "7:30 AM", format: "ODI" },
+            { id: 21, name: "New Zealand vs India — 4th ODI", date: "13 Nov 2026", stadium: "Bay Oval, Mount Maunganui", time: "7:30 AM", format: "ODI" },
+            { id: 22, name: "New Zealand vs India — 5th ODI", date: "15 Nov 2026", stadium: "Bay Oval, Mount Maunganui", time: "7:30 AM", format: "ODI" },
+            { id: 23, name: "New Zealand vs India — 1st Test", date: "19–23 Nov 2026", stadium: "Basin Reserve, Wellington", time: "3:30 AM", format: "Test" },
+            { id: 24, name: "New Zealand vs India — 2nd Test", date: "27 Nov–1 Dec 2026", stadium: "Hagley Oval, Christchurch", time: "3:30 AM", format: "Test" },
+            { id: 25, name: "India vs Sri Lanka — 1st ODI", date: "13 Dec 2026", stadium: "Arun Jaitley Stadium, Delhi", time: "2:00 PM", format: "ODI" },
+            { id: 26, name: "India vs Sri Lanka — 2nd ODI", date: "16 Dec 2026", stadium: "M. Chinnaswamy Stadium, Bengaluru", time: "2:00 PM", format: "ODI" },
+            { id: 27, name: "India vs Sri Lanka — 3rd ODI", date: "19 Dec 2026", stadium: "Narendra Modi Stadium, Ahmedabad", time: "2:00 PM", format: "ODI" },
+            { id: 28, name: "India vs Sri Lanka — 1st T20I", date: "22 Dec 2026", stadium: "Niranjan Shah Stadium, Rajkot", time: "7:00 PM", format: "T20I" },
+            { id: 29, name: "India vs Sri Lanka — 2nd T20I", date: "24 Dec 2026", stadium: "Barabati Stadium, Cuttack", time: "7:00 PM", format: "T20I" },
+            { id: 30, name: "India vs Sri Lanka — 3rd T20I", date: "27 Dec 2026", stadium: "MCA Stadium, Pune", time: "7:00 PM", format: "T20I" },
+            { id: 31, name: "India vs Zimbabwe — 1st ODI", date: "3 Jan 2027", stadium: "Eden Gardens, Kolkata", time: "2:00 PM", format: "ODI" },
+            { id: 32, name: "India vs Zimbabwe — 2nd ODI", date: "6 Jan 2027", stadium: "Rajiv Gandhi International Stadium, Hyderabad", time: "2:00 PM", format: "ODI" },
+            { id: 33, name: "India vs Zimbabwe — 3rd ODI", date: "9 Jan 2027", stadium: "Wankhede Stadium, Mumbai", time: "2:00 PM", format: "ODI" },
+            { id: 34, name: "India vs Australia — 1st Test", date: "21–25 Jan 2027", stadium: "VCA Stadium, Nagpur", time: "9:30 AM", format: "Test" },
+            { id: 35, name: "India vs Australia — 2nd Test", date: "29 Jan–2 Feb 2027", stadium: "MA Chidambaram Stadium, Chennai", time: "9:30 AM", format: "Test" },
+            { id: 36, name: "India vs Australia — 3rd Test", date: "11–15 Feb 2027", stadium: "Barsapara Cricket Stadium, Guwahati", time: "9:00 AM", format: "Test" },
+            { id: 37, name: "India vs Australia — 4th Test", date: "19–23 Feb 2027", stadium: "JSCA International Stadium, Ranchi", time: "9:30 AM", format: "Test" },
+            { id: 38, name: "India vs Australia — 5th Test", date: "27 Feb–3 Mar 2027", stadium: "Narendra Modi Stadium, Ahmedabad", time: "9:30 AM", format: "Test" }
+        ];
 
-    <div class="matches-list" id="matchesContainer"></div>
-</div>
+        function renderMatches(list) {
+            const container = document.getElementById("match-list-container");
+            container.innerHTML = "";
 
-<script>
-    const matchesData = [
-        {
-            format: "T20I",
-            matchTitle: "1st T20I",
-            date: "Sun, 13 Sep 2026",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "Afghanistan", flag: "https://flagcdn.com/w80/af.png" },
-            venue: "Arun Jaitley Stadium, Delhi",
-            timeIST: "7:00 PM IST"
-        },
-        {
-            format: "T20I",
-            matchTitle: "2nd T20I",
-            date: "Tue, 15 Sep 2026",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "Afghanistan", flag: "https://flagcdn.com/w80/af.png" },
-            venue: "Arun Jaitley Stadium, Delhi",
-            timeIST: "7:00 PM IST"
-        },
-        {
-            format: "T20I",
-            matchTitle: "3rd T20I",
-            date: "Thu, 17 Sep 2026",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "Afghanistan", flag: "https://flagcdn.com/w80/af.png" },
-            venue: "Arun Jaitley Stadium, Delhi",
-            timeIST: "7:00 PM IST"
-        },
-        {
-            format: "ODI",
-            matchTitle: "1st ODI",
-            date: "Sun, 27 Sep 2026",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "West Indies", flag: "https://flagcdn.com/w80/jm.png" },
-            venue: "Greenfield Stadium, Thiruvananthapuram",
-            timeIST: "2:00 PM IST"
-        },
-        {
-            format: "ODI",
-            matchTitle: "2nd ODI",
-            date: "Wed, 30 Sep 2026",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "West Indies", flag: "https://flagcdn.com/w80/jm.png" },
-            venue: "Barsapara Cricket Stadium, Guwahati",
-            timeIST: "2:00 PM IST"
-        },
-        {
-            format: "ODI",
-            matchTitle: "3rd ODI",
-            date: "Sat, 03 Oct 2026",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "West Indies", flag: "https://flagcdn.com/w80/jm.png" },
-            venue: "Maharaja Yadavindra Singh Stadium, Mullanpur",
-            timeIST: "2:00 PM IST"
-        },
-        {
-            format: "T20I",
-            matchTitle: "1st T20I",
-            date: "Tue, 06 Oct 2026",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "West Indies", flag: "https://flagcdn.com/w80/jm.png" },
-            venue: "Ekana Cricket Stadium, Lucknow",
-            timeIST: "7:00 PM IST"
-        },
-        {
-            format: "T20I",
-            matchTitle: "2nd T20I",
-            date: "Fri, 09 Oct 2026",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "West Indies", flag: "https://flagcdn.com/w80/jm.png" },
-            venue: "JSCA Stadium Complex, Ranchi",
-            timeIST: "7:00 PM IST"
-        },
-        {
-            format: "T20I",
-            matchTitle: "3rd T20I",
-            date: "Sun, 11 Oct 2026",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "West Indies", flag: "https://flagcdn.com/w80/jm.png" },
-            venue: "Holkar Stadium, Indore",
-            timeIST: "7:00 PM IST"
-        },
-        {
-            format: "T20I",
-            matchTitle: "4th T20I",
-            date: "Wed, 14 Oct 2026",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "West Indies", flag: "https://flagcdn.com/w80/jm.png" },
-            venue: "India Tour of West Indies Venue",
-            timeIST: "7:00 PM IST"
-        },
-        {
-            format: "T20I",
-            matchTitle: "5th T20I",
-            date: "Sat, 17 Oct 2026",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "West Indies", flag: "https://flagcdn.com/w80/jm.png" },
-            venue: "M.Chinnaswamy Stadium, Bengaluru",
-            timeIST: "7:00 PM IST"
-        },
-        {
-            format: "T20I",
-            matchTitle: "1st T20I",
-            date: "Thu, 22 Oct 2026",
-            teamA: { name: "New Zealand", flag: "https://flagcdn.com/w80/nz.png" },
-            teamB: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            venue: "Hagley Oval, Christchurch",
-            timeIST: "12:30 PM IST"
-        },
-        {
-            format: "T20I",
-            matchTitle: "2nd T20I",
-            date: "Sat, 24 Oct 2026",
-            teamA: { name: "New Zealand", flag: "https://flagcdn.com/w80/nz.png" },
-            teamB: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            venue: "Hagley Oval, Christchurch",
-            timeIST: "12:30 PM IST"
-        },
-        {
-            format: "T20I",
-            matchTitle: "3rd T20I",
-            date: "Tue, 27 Oct 2026",
-            teamA: { name: "New Zealand", flag: "https://flagcdn.com/w80/nz.png" },
-            teamB: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            venue: "Sky Stadium, Wellington",
-            timeIST: "12:30 PM IST"
-        },
-        {
-            format: "T20I",
-            matchTitle: "4th T20I",
-            date: "Fri, 30 Oct 2026",
-            teamA: { name: "New Zealand", flag: "https://flagcdn.com/w80/nz.png" },
-            teamB: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            venue: "Eden Park, Auckland",
-            timeIST: "12:30 PM IST"
-        },
-        {
-            format: "T20I",
-            matchTitle: "5th T20I",
-            date: "Sun, 01 Nov 2026",
-            teamA: { name: "New Zealand", flag: "https://flagcdn.com/w80/nz.png" },
-            teamB: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            venue: "New Zealand Venue",
-            timeIST: "12:30 PM IST"
-        },
-        {
-            format: "ODI",
-            matchTitle: "1st ODI",
-            date: "Wed, 04 Nov 2026",
-            teamA: { name: "New Zealand", flag: "https://flagcdn.com/w80/nz.png" },
-            teamB: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            venue: "Eden Park, Auckland",
-            timeIST: "7:30 AM IST"
-        },
-        {
-            format: "ODI",
-            matchTitle: "2nd ODI",
-            date: "Sat, 07 Nov 2026",
-            teamA: { name: "New Zealand", flag: "https://flagcdn.com/w80/nz.png" },
-            teamB: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            venue: "Sky Stadium, Wellington",
-            timeIST: "7:30 AM IST"
-        },
-        {
-            format: "ODI",
-            matchTitle: "3rd ODI",
-            date: "Tue, 10 Nov 2026",
-            teamA: { name: "New Zealand", flag: "https://flagcdn.com/w80/nz.png" },
-            teamB: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            venue: "Seddon Park, Hamilton",
-            timeIST: "7:30 AM IST"
-        },
-        {
-            format: "ODI",
-            matchTitle: "4th ODI",
-            date: "Fri, 13 Nov 2026",
-            teamA: { name: "New Zealand", flag: "https://flagcdn.com/w80/nz.png" },
-            teamB: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            venue: "Bay Oval, Mount Maunganui",
-            timeIST: "7:30 AM IST"
-        },
-        {
-            format: "ODI",
-            matchTitle: "5th ODI",
-            date: "Sun, 15 Nov 2026",
-            teamA: { name: "New Zealand", flag: "https://flagcdn.com/w80/nz.png" },
-            teamB: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            venue: "Bay Oval, Mount Maunganui",
-            timeIST: "7:30 AM IST"
-        },
-        {
-            format: "TEST",
-            matchTitle: "1st Test",
-            date: "19 Nov - 23 Nov 2026",
-            teamA: { name: "New Zealand", flag: "https://flagcdn.com/w80/nz.png" },
-            teamB: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            venue: "Basin Reserve, Wellington",
-            timeIST: "3:30 AM IST"
-        },
-        {
-            format: "TEST",
-            matchTitle: "2nd Test",
-            date: "27 Nov - 01 Dec 2026",
-            teamA: { name: "New Zealand", flag: "https://flagcdn.com/w80/nz.png" },
-            teamB: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            venue: "Hagley Oval, Christchurch",
-            timeIST: "3:30 AM IST"
-        },
-        {
-            format: "ODI",
-            matchTitle: "1st ODI",
-            date: "Sun, 13 Dec 2026",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "Sri Lanka", flag: "https://flagcdn.com/w80/lk.png" },
-            venue: "Arun Jaitley Stadium, Delhi",
-            timeIST: "2:00 PM IST"
-        },
-        {
-            format: "ODI",
-            matchTitle: "2nd ODI",
-            date: "Wed, 16 Dec 2026",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "Sri Lanka", flag: "https://flagcdn.com/w80/lk.png" },
-            venue: "M.Chinnaswamy Stadium, Bengaluru",
-            timeIST: "2:00 PM IST"
-        },
-        {
-            format: "ODI",
-            matchTitle: "3rd ODI",
-            date: "Sat, 19 Dec 2026",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "Sri Lanka", flag: "https://flagcdn.com/w80/lk.png" },
-            venue: "Narendra Modi Stadium, Ahmedabad",
-            timeIST: "2:00 PM IST"
-        },
-        {
-            format: "T20I",
-            matchTitle: "1st T20I",
-            date: "Tue, 22 Dec 2026",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "Sri Lanka", flag: "https://flagcdn.com/w80/lk.png" },
-            venue: "Niranjan Shah Stadium, Rajkot",
-            timeIST: "7:00 PM IST"
-        },
-        {
-            format: "T20I",
-            matchTitle: "2nd T20I",
-            date: "Thu, 24 Dec 2026",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "Sri Lanka", flag: "https://flagcdn.com/w80/lk.png" },
-            venue: "Sri Lanka Tour of India Venue",
-            timeIST: "7:00 PM IST"
-        },
-        {
-            format: "T20I",
-            matchTitle: "3rd T20I",
-            date: "Sun, 27 Dec 2026",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "Sri Lanka", flag: "https://flagcdn.com/w80/lk.png" },
-            venue: "MCA Stadium, Pune",
-            timeIST: "7:00 PM IST"
-        },
-        {
-            format: "ODI",
-            matchTitle: "1st ODI",
-            date: "Sun, 03 Jan 2027",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "Zimbabwe", flag: "https://flagcdn.com/w80/zw.png" },
-            venue: "Eden Gardens, Kolkata",
-            timeIST: "2:00 PM IST"
-        },
-        {
-            format: "ODI",
-            matchTitle: "2nd ODI",
-            date: "Wed, 06 Jan 2027",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "Zimbabwe", flag: "https://flagcdn.com/w80/zw.png" },
-            venue: "Rajiv Gandhi Intl Stadium, Hyderabad",
-            timeIST: "2:00 PM IST"
-        },
-        {
-            format: "ODI",
-            matchTitle: "3rd ODI",
-            date: "Sat, 09 Jan 2027",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "Zimbabwe", flag: "https://flagcdn.com/w80/zw.png" },
-            venue: "Wankhede Stadium, Mumbai",
-            timeIST: "2:00 PM IST"
-        },
-        {
-            format: "TEST",
-            matchTitle: "1st Test",
-            date: "21 Jan - 25 Jan 2027",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "Australia", flag: "https://flagcdn.com/w80/au.png" },
-            venue: "VCA Stadium, Nagpur",
-            timeIST: "9:30 AM IST"
-        },
-        {
-            format: "TEST",
-            matchTitle: "2nd Test",
-            date: "29 Jan - 02 Feb 2027",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "Australia", flag: "https://flagcdn.com/w80/au.png" },
-            venue: "MA Chidambaram Stadium, Chennai",
-            timeIST: "9:30 AM IST"
-        },
-        {
-            format: "TEST",
-            matchTitle: "3rd Test",
-            date: "11 Feb - 15 Feb 2027",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "Australia", flag: "https://flagcdn.com/w80/au.png" },
-            venue: "Barsapara Cricket Stadium, Guwahati",
-            timeIST: "9:00 AM IST"
-        },
-        {
-            format: "TEST",
-            matchTitle: "4th Test",
-            date: "19 Feb - 23 Feb 2027",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "Australia", flag: "https://flagcdn.com/w80/au.png" },
-            venue: "JSCA Stadium Complex, Ranchi",
-            timeIST: "9:30 AM IST"
-        },
-        {
-            format: "TEST",
-            matchTitle: "5th Test",
-            date: "27 Feb - 03 Mar 2027",
-            teamA: { name: "India", flag: "https://flagcdn.com/w80/in.png" },
-            teamB: { name: "Australia", flag: "https://flagcdn.com/w80/au.png" },
-            venue: "Narendra Modi Stadium, Ahmedabad",
-            timeIST: "9:30 AM IST"
+            list.forEach(m => {
+                const formatClass = m.format.toLowerCase() === 'test' ? 'format-test' : (m.format.toLowerCase() === 'odi' ? 'format-odi' : 'format-t20i');
+                
+                const card = document.createElement("div");
+                card.className = "match-card";
+                card.innerHTML = `
+                    <div class="card-top">
+                        <span class="match-no">MATCH #${m.id}</span>
+                        <span class="format-badge ${formatClass}">${m.format}</span>
+                    </div>
+                    <div class="match-title-text">${m.name}</div>
+                    <div class="card-bottom">
+                        <div class="date-time-row">
+                            <span class="info-item">📅 ${m.date}</span>
+                            <span class="time-badge">⏰ ${m.time} IST</span>
+                        </div>
+                        <div class="info-item venue">📍 ${m.stadium}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            document.getElementById("count-badge").textContent = `${list.length} Matches`;
         }
-    ];
 
-    function renderMatches(list) {
-        const container = document.getElementById("matchesContainer");
-        container.innerHTML = "";
+        function filterSchedule(type) {
+            // Tab Active Switch
+            const buttons = document.querySelectorAll(".tab-btn");
+            buttons.forEach(btn => {
+                btn.classList.toggle("active", btn.textContent.toUpperCase() === type);
+            });
 
-        list.forEach(m => {
-            const badgeClass = m.format === 'T20I' ? 'badge-t20' : (m.format === 'ODI' ? 'badge-odi' : 'badge-test');
-
-            const card = document.createElement("div");
-            card.className = "match-card";
-            card.innerHTML = `
-                <div class="match-meta-top">
-                    <!-- Clean match title without repetition -->
-                    <span class="format-badge ${badgeClass}">${m.matchTitle}</span>
-                    <span class="match-date">${m.date}</span>
-                </div>
-
-                <div class="match-teams">
-                    <div class="team-unit">
-                        <img src="${m.teamA.flag}" class="team-flag" alt="${m.teamA.name}">
-                        <span class="team-name">${m.teamA.name}</span>
-                    </div>
-                    <span class="vs-text">VS</span>
-                    <div class="team-unit">
-                        <span class="team-name">${m.teamB.name}</span>
-                        <img src="${m.teamB.flag}" class="team-flag" alt="${m.teamB.name}">
-                    </div>
-                </div>
-
-                <div class="match-footer">
-                    <div class="venue-info">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                        <span>${m.venue}</span>
-                    </div>
-                    <div class="ist-time">
-                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-                        <span>${m.timeIST}</span>
-                    </div>
-                </div>
-            `;
-            container.appendChild(card);
-        });
-    }
-
-    function filterMatches(format) {
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.textContent.toUpperCase().includes(format) || (format === 'ALL' && btn.textContent.includes('All')));
-        });
-
-        if (format === 'ALL') {
-            renderMatches(matchesData);
-        } else {
-            renderMatches(matchesData.filter(m => m.format === format));
+            if (type === 'ALL') {
+                renderMatches(matches);
+            } else {
+                const filtered = matches.filter(m => m.format.toUpperCase() === type);
+                renderMatches(filtered);
+            }
         }
-    }
 
-    renderMatches(matchesData);
-</script>
-
+        // প্ৰথমবাৰ সম্পূৰ্ণ সূচী লোড হ'ব
+        renderMatches(matches);
+    </script>
 </body>
 </html>
