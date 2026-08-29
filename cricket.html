@@ -31,20 +31,27 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
 
-        /* Top Commentary Button */
+       /* Top Commentary Button (Updated & Attractive) */
         .btn-commentary {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #1e293b;
-            border: 1px solid #38bdf8;
-            border-radius: 10px;
-            padding: 9px 12px;
-            margin-bottom: 14px;
+            background: linear-gradient(135deg, #1e293b, #111c2e);
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            border-radius: 12px;
+            padding: 11px 14px;
+            margin-bottom: 16px;
             cursor: pointer;
             text-decoration: none;
-            gap: 8px;
-            transition: transform 0.1s ease, background-color 0.2s;
+            gap: 10px;
+            box-shadow: 0 4px 14px rgba(56, 189, 248, 0.12);
+            transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .btn-commentary:hover {
+            border-color: #38bdf8;
+            box-shadow: 0 4px 18px rgba(56, 189, 248, 0.25);
+            transform: translateY(-1px);
         }
 
         .btn-commentary:active {
@@ -58,28 +65,30 @@
         }
 
         .commentary-title {
-            font-size: 12px;
+            font-size: 13.5px;
             font-weight: 700;
             color: #38bdf8;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
+            letter-spacing: 0.2px;
         }
 
         .commentary-sub {
-            font-size: 10.5px;
+            font-size: 11.5px;
             color: #94a3b8;
-            margin-top: 1px;
+            margin-top: 3px;
         }
 
         .listen-badge {
-            background: #0284c7;
+            background: linear-gradient(135deg, #0284c7, #0ea5e9);
             color: #ffffff;
-            font-size: 11px;
+            font-size: 11.5px;
             font-weight: 600;
-            padding: 4px 8px;
-            border-radius: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
             white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(14, 165, 233, 0.35);
         }
 
         .card-header {
