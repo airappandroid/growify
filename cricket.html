@@ -739,9 +739,15 @@
 </div>
 
 <script>
-    const API_URL = 'https://cricvoice.aminurmarch.workers.dev/?matchId=69bd420b1dbf177ca4e58e72';
+    // ==========================================
+    // ১. মেচ আইডি (ইয়াত নিজৰ matchId আপডেট কৰক)
+    // ==========================================
+    const MATCH_ID = '69bd420b1dbf177ca4e58e72';
+    const API_URL = `https://cricvoice.aminurmarch.workers.dev/?matchId=${encodeURIComponent(MATCH_ID)}`;
+
     let fullMatchData = null;
     let selectedModalInningIdx = -1;
+    let pollTimer = null;
 
     function getTeamLogoUrl(teamName) {
         const name = (teamName || '').toLowerCase();
@@ -928,7 +934,6 @@
 
         document.getElementById('matchFormatText').textContent = `${miniCard.format || 'TEST'} MATCH`;
 
-        // Match Status Detection (Stumps / Breaks / Finished / Live)
         const rawStatus = `${miniCard.announcement1 || ''} ${miniCard.status || ''} ${miniCard.state || ''} ${now.status || ''}`.toLowerCase();
         const isStumps = rawStatus.includes('stump');
         const isBreak = rawStatus.includes('tea') || rawStatus.includes('lunch') || rawStatus.includes('dinner') || rawStatus.includes('break') || rawStatus.includes('delay');
@@ -981,7 +986,6 @@
         document.getElementById('matchLeadText').textContent = miniCard.announcement1 || '';
         document.getElementById('matchCrr').textContent = now.run_rate || '0.00';
 
-        // Recent Action Capsule
         const currentInning = inningsList[inningsList.length - 1];
         const comm = miniCard.lastCommentary || {};
         const chip = document.getElementById('actionChipTag');
@@ -1021,11 +1025,9 @@
             secText.style.display = 'none';
         }
 
-        // Batters on Crease
         const activeBatters = (currentInning.player_batting_order || []).filter(p => !p.batting.dismissed);
         updateBattingTable(document.querySelector('#currentBattersTable tbody'), activeBatters, false);
 
-        // Current Bowler
         const activeBowler = getActiveBowler(currentInning.player_bowling_order || [], miniCard, now, currentInning);
         updateBowlingTable(document.querySelector('#currentBowlerTable tbody'), activeBowler ? [activeBowler] : []);
     }
@@ -1069,7 +1071,6 @@
         }
 
         const activeInning = inningsList[selectedModalInningIdx];
-
         updateBattingTable(document.querySelector('#modalBattingTable tbody'), activeInning.player_batting_order || [], true);
         updateBowlingTable(document.querySelector('#modalBowlingTable tbody'), activeInning.player_bowling_order || []);
 
@@ -1082,12 +1083,18 @@
         }
     }
 
+    // ==========================================
+    // ২. নিৰাপদ ডাটা ফেচিং আৰু ৫ ছেকেণ্ডৰ Polling
+    // ==========================================
     async function fetchScores() {
         try {
             const response = await fetch(API_URL);
+            if (!response.ok) return;
+
             const data = await response.json();
+            if (data.statusCode === 0) return;
+
             fullMatchData = data;
-            
             renderMainScreen(data);
             if (document.getElementById('scorecardModal').style.display === 'flex') {
                 renderModalScorecard(data, false);
@@ -1097,8 +1104,31 @@
         }
     }
 
-    fetchScores();
-    setInterval(fetchScores, 4000);
+    function startPolling() {
+        if (!pollTimer) {
+            fetchScores();
+            pollTimer = setInterval(fetchScores, 4000); // প্ৰতি ৫ ছেকেণ্ডৰ মূৰে মূৰে আপডেট
+        }
+    }
+
+    function stopPolling() {
+        if (pollTimer) {
+            clearInterval(pollTimer);
+            pollTimer = null;
+        }
+    }
+
+    // স্ক্ৰীণ/টেব মিনিমাইজ থাকিলে Polling বন্ধ ৰাখিব
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stopPolling();
+        } else {
+            startPolling();
+        }
+    });
+
+    // প্ৰথমবাৰ আৰম্ভণি
+    startPolling();
 </script>
 
 </body>
