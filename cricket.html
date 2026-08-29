@@ -838,7 +838,6 @@
         return '';
     }
 
-    // মেচৰ সময় উলিওৱাৰ সহায়ক ফাংচন
     function formatMatchStartTime(miniCard) {
         let statusStr = miniCard?.status || miniCard?.announcement1 || miniCard?.stateTitle || '';
         if (statusStr && (statusStr.includes('PM') || statusStr.includes('AM') || statusStr.toLowerCase().includes('start'))) {
@@ -862,6 +861,79 @@
         return 'Match starts at 5:30 PM (IST)';
     }
 
+    // বৰ্তমানৰ সক্ৰিয় বলাৰ নিৰ্ণয়ৰ ফাংচন
+    function getActiveBowler(bowlers, miniCard, now, currentInning) {
+        const activeBowlerId = now?.bowler_id || now?.current_bowler_id || miniCard?.bowler_id || miniCard?.now?.bowler?.id;
+        const activeBowlerName = now?.bowler_name || now?.current_bowler || (typeof now?.bowler === 'string' ? now.bowler : now?.bowler?.name);
+
+        if (bowlers && bowlers.length > 0) {
+            // ১. ID ৰ দ্বাৰা বিচৰা
+            if (activeBowlerId) {
+                const foundById = bowlers.find(p => p.id == activeBowlerId || p.player_id == activeBowlerId || p.key == activeBowlerId);
+                if (foundById) return foundById;
+            }
+
+            // ২. Name ৰ দ্বাৰা বিচৰা
+            if (activeBowlerName) {
+                const cleanTarget = activeBowlerName.toLowerCase().trim();
+                const foundByName = bowlers.find(p => {
+                    const fName = (p.name || '').toLowerCase();
+                    return fName.includes(cleanTarget) || cleanTarget.includes(fName);
+                });
+                if (foundByName) return foundByName;
+            }
+
+            // ৩. Bowling ফ্লেগ পৰীক্ষা
+            let found = bowlers.find(p => 
+                p.bowling?.is_bowling === true || 
+                p.bowling?.is_bowling === "true" || 
+                p.bowling?.is_bowler === true ||
+                p.bowling?.isBowling === true || 
+                p.is_bowling === true || 
+                p.is_bowler === true ||
+                p.is_current === true ||
+                p.is_current_bowler === true
+            );
+            if (found) return found;
+
+            // ৪. Commentary ৰ পৰা অভাৰ নম্বৰ ফিল্টাৰ কৰি বিচৰা
+            const commText = (miniCard?.lastCommentary?.primaryText || '').trim();
+            if (commText && / to /i.test(commText)) {
+                let commBowler = commText.split(/ to /i)[0].replace(/^[\d\.\s]+/, '').trim().toLowerCase();
+                if (commBowler) {
+                    found = bowlers.find(p => {
+                        const fName = (p.name || '').toLowerCase();
+                        if (!fName) return false;
+                        const parts = fName.split(' ');
+                        const lName = parts[parts.length - 1];
+                        const firstName = parts[0];
+                        return fName.includes(commBowler) || 
+                               commBowler.includes(fName) || 
+                               (lName && commBowler.includes(lName)) || 
+                               (firstName && commBowler.includes(firstName));
+                    });
+                    if (found) return found;
+                }
+            }
+        }
+
+        // ৫. API ৰ `now.bowler` অবজেক্টৰ পৰা পোনপটীয়া ডাটা
+        if (now?.bowler && typeof now.bowler === 'object' && (now.bowler.name || now.bowler.runs !== undefined)) {
+            return {
+                name: now.bowler.name || activeBowlerName || 'Current Bowler',
+                bowling: {
+                    overs: now.bowler.overs ?? now.bowler.o ?? now.overs ?? '-',
+                    maiden_overs: now.bowler.maidens ?? now.bowler.m ?? '0',
+                    runs: now.bowler.runs ?? now.bowler.r ?? '0',
+                    wickets: now.bowler.wickets ?? now.bowler.w ?? '0',
+                    economy: now.bowler.economy ?? now.bowler.eco ?? '-'
+                }
+            };
+        }
+
+        return (bowlers && bowlers.length > 0) ? bowlers[bowlers.length - 1] : null;
+    }
+
     function renderMainScreen(data) {
         const miniCard = data?.miniMatchCard?.responseData?.result;
         if (!miniCard) return;
@@ -880,7 +952,6 @@
         const isStumps = rawStatus.includes('stump');
         const isBreak = rawStatus.includes('tea') || rawStatus.includes('lunch') || rawStatus.includes('dinner') || rawStatus.includes('break') || rawStatus.includes('delay');
 
-        // মেচ আৰম্ভ নোহোৱাৰ অৱস্থা নিৰ্ণয়
         const isUpcoming = !isComplete && !isStumps && !isBreak && (
             rawStatus.includes('preview') || 
             rawStatus.includes('starts') || 
@@ -917,7 +988,6 @@
             daySessionText.textContent = now.day ? `Day ${now.day} • Session ${now.sessionCount || '1'}` : (miniCard.status || 'LIVE');
         }
 
-        // স্কোৰ ফৰ্মেটিং
         const a1 = formatScore(teamA.a_1_score || teamA.score);
         const a2 = formatScore(teamA.a_2_score);
         const b1 = formatScore(teamB.b_1_score || teamB.score);
@@ -929,7 +999,6 @@
         document.getElementById('teamBName').textContent = teamB.name || 'Team B';
         document.getElementById('teamBScore').innerHTML = (b1 + (b2 ? ` & ${b2}` : '')) || (isUpcoming ? 'Yet to Bat' : '0/0 (0.0)');
 
-        // ল'গ' বা এভাটাৰ
         const logoA = getTeamLogoUrl(teamA.name);
         const logoB = getTeamLogoUrl(teamB.name);
         
@@ -941,11 +1010,9 @@
         if (logoB) avatarB.innerHTML = `<img src="${logoB}" alt="${teamB.name}">`;
         else avatarB.textContent = teamB.shortName || (teamB.name ? teamB.name.charAt(0) : 'B');
 
-        // মেচ লিড বা সময় প্ৰদৰ্শন
         document.getElementById('matchLeadText').textContent = isUpcoming ? upcomingTimeText : (miniCard.announcement1 || miniCard.status || '');
         document.getElementById('matchCrr').textContent = isUpcoming ? '0.00' : (now.run_rate || '0.00');
 
-        // কমেন্ট্ৰী আৰু একশ্যন কাৰ্ড
         const currentInning = inningsList.length > 0 ? inningsList[inningsList.length - 1] : null;
         const comm = miniCard.lastCommentary || {};
         const chip = document.getElementById('actionChipTag');
@@ -992,19 +1059,28 @@
             }
         }
 
-        // বেটাৰ আৰু বলাৰ টেবুল
+        // বেটাৰ আৰু বলাৰ টেবুল ৰেণ্ডাৰিং
         if (isUpcoming) {
             document.querySelector('#currentBattersTable tbody').innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 8px;">Match yet to start</td></tr>`;
             document.querySelector('#currentBowlerTable tbody').innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 8px;">Toss / Lineups pending</td></tr>`;
-        } else if (currentInning && currentInning.player_batting_order && currentInning.player_batting_order.length > 0) {
-            const activeBatters = (currentInning.player_batting_order || []).filter(p => !p.batting?.dismissed);
-            updateBattingTable(document.querySelector('#currentBattersTable tbody'), activeBatters, false);
-
-            const activeBowler = getActiveBowler(currentInning.player_bowling_order || [], miniCard, now, currentInning);
-            updateBowlingTable(document.querySelector('#currentBowlerTable tbody'), activeBowler ? [activeBowler] : []);
         } else {
-            document.querySelector('#currentBattersTable tbody').innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--primary); padding: 6px;">Match Starting Shortly...</td></tr>`;
-            document.querySelector('#currentBowlerTable tbody').innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 6px;">Waiting for first ball</td></tr>`;
+            // ১. বেটাৰ টেবুল
+            if (currentInning && currentInning.player_batting_order && currentInning.player_batting_order.length > 0) {
+                const activeBatters = (currentInning.player_batting_order || []).filter(p => !p.batting?.dismissed);
+                updateBattingTable(document.querySelector('#currentBattersTable tbody'), activeBatters, false);
+            } else {
+                document.querySelector('#currentBattersTable tbody').innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--primary); padding: 6px;">Match Starting Shortly...</td></tr>`;
+            }
+
+            // ২. বলাৰ টেবুল (ৰিয়েল-টাইম সমাধান)
+            const bowlingList = currentInning?.player_bowling_order || [];
+            const activeBowler = getActiveBowler(bowlingList, miniCard, now, currentInning);
+
+            if (activeBowler) {
+                updateBowlingTable(document.querySelector('#currentBowlerTable tbody'), [activeBowler]);
+            } else {
+                document.querySelector('#currentBowlerTable tbody').innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 6px;">Waiting for first ball</td></tr>`;
+            }
         }
     }
 
@@ -1104,33 +1180,6 @@
             row.querySelector('.p-w').textContent = bw.wickets ?? '-';
             row.querySelector('.p-eco').textContent = bw.economy ?? '-';
         });
-    }
-
-    function getActiveBowler(bowlers, miniCard, now, currentInning) {
-        if (!bowlers || bowlers.length === 0) return null;
-
-        let found = bowlers.find(p => 
-            p.bowling?.is_bowling === true || 
-            p.bowling?.is_bowling === "true" || 
-            p.bowling?.isBowling === true || 
-            p.is_bowling === true || 
-            p.is_current === true
-        );
-        if (found) return found;
-
-        const commText = miniCard?.lastCommentary?.primaryText || '';
-        if (commText && commText.toLowerCase().includes(' to ')) {
-            const commBowler = commText.split(/ to /i)[0].trim().toLowerCase();
-            found = bowlers.find(p => {
-                const fName = (p.name || '').toLowerCase();
-                const parts = fName.split(' ');
-                const lName = parts[parts.length - 1];
-                return fName.includes(commBowler) || commBowler.includes(fName) || commBowler.includes(lName) || (parts[0] && commBowler.includes(parts[0]));
-            });
-            if (found) return found;
-        }
-
-        return bowlers[bowlers.length - 1];
     }
 
     function openScorecard() {
