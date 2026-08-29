@@ -20,6 +20,9 @@ body {
     min-height: 100vh;
     padding-bottom: 24px;
     -webkit-font-smoothing: antialiased;
+    /* স্ক্ৰ’লিং স্মুথ কৰাৰ বাবে */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .container {
@@ -29,11 +32,11 @@ body {
 
 .section {
     padding: 0 16px;
-    margin-top: 20px;
+    margin-top: 18px;
 }
 
 .title {
-    font-size: 17px;
+    font-size: 16.5px;
     font-weight: 700;
     letter-spacing: -0.3px;
     color: #f1f5f9;
@@ -51,73 +54,70 @@ body {
     display: block;
     width: 100%;
     height: auto;
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    border: 1px solid #1e293b;
+    will-change: transform;
 }
 
 .top-banner:active img {
     transform: scale(0.985);
-    transition: transform 0.1s ease;
 }
 
-/* Station Card */
+/* 60FPS Smooth Station Card */
 .station-card {
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.75) 0%, rgba(15, 23, 42, 0.85) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 16px;
-    padding: 14px 16px;
-    margin-bottom: 10px;
+    /* লেগ আঁতৰাবলৈ ব্লুৰৰ পৰিৱৰ্তে স্মুথ চলিড গ্রেডিয়েণ্ট ব্যৱহাৰ কৰা হৈছে */
+    background: linear-gradient(145deg, #182234 0%, #0f172a 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 13px 15px;
+    margin-bottom: 9px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     text-decoration: none;
     color: #ffffff;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-    transition: transform 0.12s ease, border-color 0.12s ease;
+    transform: translateZ(0); /* GPU Acceleration */
 }
 
 .station-card:active {
-    transform: scale(0.98);
-    border-color: rgba(59, 130, 246, 0.4);
+    transform: scale(0.985);
+    background: #1e293b;
 }
 
 .station-info {
     flex: 1;
     min-width: 0;
-    padding-right: 14px;
+    padding-right: 12px;
 }
 
 .station-name {
     font-weight: 700;
-    font-size: 15.5px;
+    font-size: 15px;
     color: #ffffff;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
     letter-spacing: -0.2px;
 }
 
-/* সম্পূৰ্ণ প্ৰগ্ৰাম নাম দেখুৱাবলৈ সংশোধিত CSS */
 .playing-row {
-    font-size: 12.5px;
+    font-size: 12px;
     color: #94a3b8;
     display: flex;
-    align-items: flex-start; /* যাতে ডটটো প্ৰথম লাইনৰ লগত মিলি থাকে */
-    line-height: 1.4;
+    align-items: flex-start;
+    line-height: 1.35;
     word-break: break-word;
-    white-space: normal; /* সম্পূৰ্ণ টেক্সট দেখুৱাব */
+    white-space: normal;
 }
 
-/* লাইভ পালচিং ডট */
+/* লাইভ অপ্টিমাইজড ডট (Zero CPU Overload) */
 .live-indicator {
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 10px;
-    height: 10px;
-    margin-right: 8px;
-    margin-top: 3px; /* টেক্সটৰ প্ৰথম লাইনৰ উচ্চতাৰ লগত মিলাই ৰখা হৈছে */
+    width: 9px;
+    height: 9px;
+    margin-right: 7px;
+    margin-top: 3px;
     flex-shrink: 0;
 }
 
@@ -126,40 +126,41 @@ body {
     height: 7px;
     background-color: #22c55e;
     border-radius: 50%;
+    z-index: 2;
 }
 
 .live-pulse {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgba(34, 197, 94, 0.6);
+    background-color: rgba(34, 197, 94, 0.7);
     border-radius: 50%;
-    animation: pulse 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    animation: pulse 2s infinite ease-out;
+    transform: translateZ(0);
 }
 
 @keyframes pulse {
-    0% { transform: scale(0.8); opacity: 0.9; }
+    0% { transform: scale(1); opacity: 0.8; }
     100% { transform: scale(2.2); opacity: 0; }
 }
 
 /* Play Button */
 .play-btn {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    background: #2563eb;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
-    transition: transform 0.1s ease;
     text-decoration: none;
     flex-shrink: 0;
+    transform: translateZ(0);
 }
 
 .play-btn:active {
-    transform: scale(0.9);
+    transform: scale(0.92);
 }
 
 .play-btn::before {
@@ -167,7 +168,7 @@ body {
     width: 0;
     height: 0;
     border-style: solid;
-    border-width: 6px 0 6px 10px;
+    border-width: 5.5px 0 5.5px 9px;
     border-color: transparent transparent transparent #ffffff;
     margin-left: 2px;
 }
@@ -176,35 +177,34 @@ body {
 .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 9px;
 }
 
 .card {
-    background: linear-gradient(145deg, #1e293b, #151f30);
+    background: #141e30;
     border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 14px;
-    padding: 13px 12px;
+    border-radius: 12px;
+    padding: 12px 10px;
     text-decoration: none;
     color: #e2e8f0;
-    font-size: 13.5px;
+    font-size: 13px;
     font-weight: 600;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    transition: transform 0.1s ease, background 0.12s ease;
+    transform: translateZ(0);
 }
 
 .card:active {
     transform: scale(0.97);
-    background: #273549;
+    background: #1c2a42;
 }
 
-/* News Card Highlight */
+/* News Card */
 .news-card {
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(20, 30, 48, 0.9));
-    border: 1px solid rgba(59, 130, 246, 0.25);
+    border-color: rgba(59, 130, 246, 0.35);
 }
 </style>
 
