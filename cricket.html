@@ -142,6 +142,45 @@
             white-space: nowrap;
         }
 
+        /* Match Switcher Tabs */
+        .match-switcher-bar {
+            display: flex;
+            gap: 8px;
+            padding: 2px 0;
+        }
+
+        .match-switcher-tab {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: var(--surface-1);
+            border: 1px solid var(--surface-border);
+            color: var(--text-sub);
+            padding: 8px 10px;
+            border-radius: 10px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .match-switcher-tab.active {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(30, 58, 138, 0.35) 100%);
+            border-color: var(--accent);
+            color: #ffffff;
+            box-shadow: 0 2px 10px var(--accent-glow);
+        }
+
+        .tab-live-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--danger);
+            animation: pulse-ring 1.5s infinite;
+        }
+
         /* Solid Surface Cards */
         .glass-card {
             background: var(--surface-1);
@@ -569,7 +608,6 @@
 <body>
 
 <div class="app-container">
-    <!-- Top Audio Commentary Trigger -->
     <a href="go:commentary" class="audio-btn-banner" onclick="window.location.href='go:commentary'">
         <div class="audio-left">
             <div class="audio-icon-box">
@@ -590,7 +628,17 @@
         </div>
     </a>
 
-    <!-- Match Summary Card -->
+    <div class="match-switcher-bar">
+        <button class="match-switcher-tab active" id="tabMatch1" onclick="switchMatch('69bd420b1dbf177ca4e58e72', this)">
+            <span class="tab-live-dot"></span>
+            <span>ENG vs PAK</span>
+        </button>
+        <button class="match-switcher-tab" id="tabMatch2" onclick="switchMatch('6a7bc35078dcf0657031d0c0', this)">
+            <span class="tab-live-dot"></span>
+            <span>SA vs ZIM</span>
+        </button>
+    </div>
+
     <div class="glass-card match-card" id="matchSummaryCard">
         <div class="match-meta-pill">
             <span id="matchFormatText">MATCH</span>
@@ -624,22 +672,20 @@
         </div>
     </div>
 
-    <!-- Recent Action Capsule -->
     <div class="action-capsule" id="actionCapsuleBox">
         <div class="action-header">
             <div class="action-badge-group">
-                <span class="over-badge num" id="actionOverBadge">LIVE BALL</span>
-                <span class="event-chip chip-default" id="actionChipTag">LIVE</span>
+                <span class="over-badge num" id="actionOverBadge">LIVE</span>
+                <span class="event-chip chip-default" id="actionChipTag">INFO</span>
             </div>
-            <span class="time-rem" id="actionSubInfo">Live</span>
+            <span class="time-rem" id="actionSubInfo">Match Feed</span>
         </div>
         <div class="commentary-body">
-            <div class="main-comm-text" id="actionMainText">Ball Start</div>
+            <div class="main-comm-text" id="actionMainText">Loading data...</div>
             <div class="secondary-comm-text" id="actionSecText" style="display: none;"></div>
         </div>
     </div>
 
-    <!-- Pitch Action Card -->
     <div class="glass-card pitch-card">
         <div>
             <div class="section-hdr">
@@ -684,7 +730,6 @@
         </div>
     </div>
 
-    <!-- Full Scorecard CTA Button -->
     <button class="cta-btn" onclick="openScorecard()">
         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
@@ -693,7 +738,6 @@
     </button>
 </div>
 
-<!-- Modal Full Scorecard -->
 <div class="modal-overlay" id="scorecardModal">
     <div class="modal-sheet">
         <div class="modal-head">
@@ -740,19 +784,39 @@
 
 <script>
     // ==========================================
-    // ১. মেচ আইডি (ইয়াত নিজৰ matchId আপডেট কৰক)
+    // ১. মেচ কনফিগাৰেশ্যন
     // ==========================================
-    const MATCH_ID = '69bd420b1dbf177ca4e58e72';
-    const API_URL = `https://cricvoice.aminurmarch.workers.dev/?matchId=${encodeURIComponent(MATCH_ID)}`;
+    let currentMatchId = '69bd420b1dbf177ca4e58e72';
+    const API_BASE = 'https://cricvoice.aminurmarch.workers.dev/?matchId=';
 
     let fullMatchData = null;
     let selectedModalInningIdx = -1;
     let pollTimer = null;
 
+    // মেচ চুইচিং ফাংচন
+    function switchMatch(matchId, btnEl) {
+        if (currentMatchId === matchId) return;
+        currentMatchId = matchId;
+
+        document.querySelectorAll('.match-switcher-tab').forEach(btn => btn.classList.remove('active'));
+        if (btnEl) btnEl.classList.add('active');
+
+        // UI ৰিছেট আৰু লোডিং বাৰ্তা
+        selectedModalInningIdx = -1;
+        document.getElementById('matchLeadText').textContent = 'Loading Match Data...';
+        document.getElementById('actionMainText').textContent = 'Fetching latest match info...';
+        document.querySelector('#currentBattersTable tbody').innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 6px;">Loading Batters...</td></tr>`;
+        document.querySelector('#currentBowlerTable tbody').innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 6px;">Loading Bowler...</td></tr>`;
+
+        fetchScores();
+    }
+
     function getTeamLogoUrl(teamName) {
         const name = (teamName || '').toLowerCase();
         if (name.includes('england') || name.includes('eng')) return 'https://static.cricbuzz.com/a/img/v1/0x0/i1/c776237/england.jpg';
         if (name.includes('pakistan') || name.includes('pak')) return 'https://static.cricbuzz.com/a/img/v1/0x0/i1/c776308/pakistan.jpg';
+        if (name.includes('south africa') || name.includes('sa')) return 'https://static.cricbuzz.com/a/img/v1/0x0/i1/c776287/south-africa.jpg';
+        if (name.includes('zimbabwe') || name.includes('zim')) return 'https://static.cricbuzz.com/a/img/v1/0x0/i1/c776198/zimbabwe.jpg';
         return '';
     }
 
@@ -766,7 +830,185 @@
         return `${team} ${innNumber}`;
     }
 
-    // In-place Batting Table Updater
+    function formatScore(scoreObj) {
+        if (!scoreObj) return '';
+        if (typeof scoreObj === 'string') return scoreObj;
+        if (scoreObj.runs !== undefined) {
+            return `<span class="num">${scoreObj.runs}/${scoreObj.wickets ?? 0}</span> <small class="num">(${scoreObj.overs ?? '0.0'})</small>`;
+        }
+        return '';
+    }
+
+    // মেচৰ সময় উলিওৱাৰ সহায়ক ফাংচন
+    function formatMatchStartTime(miniCard) {
+        let statusStr = miniCard?.status || miniCard?.announcement1 || miniCard?.stateTitle || '';
+        if (statusStr && (statusStr.includes('PM') || statusStr.includes('AM') || statusStr.toLowerCase().includes('start'))) {
+            return statusStr;
+        }
+
+        const ts = miniCard?.matchStartTimestamp || miniCard?.startDate || miniCard?.header?.matchStartTimestamp;
+        if (ts) {
+            const d = new Date(Number(ts));
+            if (!isNaN(d.getTime())) {
+                const timeStr = d.toLocaleTimeString('en-US', {
+                    timeZone: 'Asia/Kolkata',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                });
+                return `Match starts at ${timeStr} (IST)`;
+            }
+        }
+
+        return 'Match starts at 5:30 PM (IST)';
+    }
+
+    function renderMainScreen(data) {
+        const miniCard = data?.miniMatchCard?.responseData?.result;
+        if (!miniCard) return;
+
+        const teamA = miniCard.teams?.a || {};
+        const teamB = miniCard.teams?.b || {};
+        const now = miniCard.now || {};
+
+        document.getElementById('matchFormatText').textContent = `${miniCard.format || 'CRICKET'} MATCH`;
+
+        const rawStatus = `${miniCard.announcement1 || ''} ${miniCard.status || ''} ${miniCard.state || ''} ${now.status || ''}`.toLowerCase();
+        const inningsList = data?.scorecard?.responseData?.result?.innings_batting_order || [];
+        const hasScores = !!(teamA.score || teamA.a_1_score || teamB.score || teamB.b_1_score);
+
+        const isComplete = rawStatus.includes('won') || rawStatus.includes('tied') || rawStatus.includes('drawn') || rawStatus.includes('complete');
+        const isStumps = rawStatus.includes('stump');
+        const isBreak = rawStatus.includes('tea') || rawStatus.includes('lunch') || rawStatus.includes('dinner') || rawStatus.includes('break') || rawStatus.includes('delay');
+
+        // মেচ আৰম্ভ নোহোৱাৰ অৱস্থা নিৰ্ণয়
+        const isUpcoming = !isComplete && !isStumps && !isBreak && (
+            rawStatus.includes('preview') || 
+            rawStatus.includes('starts') || 
+            rawStatus.includes('upcoming') || 
+            rawStatus.includes('scheduled') || 
+            miniCard.state === 'preview' ||
+            (!hasScores && inningsList.length === 0)
+        );
+
+        const liveText = document.getElementById('liveStatusText');
+        const livePulse = document.getElementById('livePulseDot');
+        const daySessionText = document.getElementById('matchDaySessionText');
+        const upcomingTimeText = formatMatchStartTime(miniCard);
+
+        if (isUpcoming) {
+            liveText.textContent = 'UPCOMING';
+            livePulse.style.display = 'none';
+            daySessionText.textContent = '5:30 PM (IST)';
+        } else if (isStumps) {
+            liveText.textContent = 'STUMPS';
+            livePulse.style.display = 'none';
+            daySessionText.textContent = `Day ${now.day || '1'} • Stumps`;
+        } else if (isBreak) {
+            liveText.textContent = 'BREAK';
+            livePulse.style.display = 'inline-block';
+            daySessionText.textContent = `Break`;
+        } else if (isComplete) {
+            liveText.textContent = 'FINISHED';
+            livePulse.style.display = 'none';
+            daySessionText.textContent = 'MATCH ENDED';
+        } else {
+            liveText.textContent = 'LIVE';
+            livePulse.style.display = 'inline-block';
+            daySessionText.textContent = now.day ? `Day ${now.day} • Session ${now.sessionCount || '1'}` : (miniCard.status || 'LIVE');
+        }
+
+        // স্কোৰ ফৰ্মেটিং
+        const a1 = formatScore(teamA.a_1_score || teamA.score);
+        const a2 = formatScore(teamA.a_2_score);
+        const b1 = formatScore(teamB.b_1_score || teamB.score);
+        const b2 = formatScore(teamB.b_2_score);
+
+        document.getElementById('teamAName').textContent = teamA.name || 'Team A';
+        document.getElementById('teamAScore').innerHTML = (a1 + (a2 ? ` & ${a2}` : '')) || (isUpcoming ? 'Yet to Bat' : '0/0 (0.0)');
+        
+        document.getElementById('teamBName').textContent = teamB.name || 'Team B';
+        document.getElementById('teamBScore').innerHTML = (b1 + (b2 ? ` & ${b2}` : '')) || (isUpcoming ? 'Yet to Bat' : '0/0 (0.0)');
+
+        // ল'গ' বা এভাটাৰ
+        const logoA = getTeamLogoUrl(teamA.name);
+        const logoB = getTeamLogoUrl(teamB.name);
+        
+        const avatarA = document.getElementById('teamAAvatar');
+        if (logoA) avatarA.innerHTML = `<img src="${logoA}" alt="${teamA.name}">`;
+        else avatarA.textContent = teamA.shortName || (teamA.name ? teamA.name.charAt(0) : 'A');
+
+        const avatarB = document.getElementById('teamBAvatar');
+        if (logoB) avatarB.innerHTML = `<img src="${logoB}" alt="${teamB.name}">`;
+        else avatarB.textContent = teamB.shortName || (teamB.name ? teamB.name.charAt(0) : 'B');
+
+        // মেচ লিড বা সময় প্ৰদৰ্শন
+        document.getElementById('matchLeadText').textContent = isUpcoming ? upcomingTimeText : (miniCard.announcement1 || miniCard.status || '');
+        document.getElementById('matchCrr').textContent = isUpcoming ? '0.00' : (now.run_rate || '0.00');
+
+        // কমেন্ট্ৰী আৰু একশ্যন কাৰ্ড
+        const currentInning = inningsList.length > 0 ? inningsList[inningsList.length - 1] : null;
+        const comm = miniCard.lastCommentary || {};
+        const chip = document.getElementById('actionChipTag');
+        const mainText = document.getElementById('actionMainText');
+        const secText = document.getElementById('actionSecText');
+        const overBadge = document.getElementById('actionOverBadge');
+        const subInfo = document.getElementById('actionSubInfo');
+
+        chip.className = 'event-chip';
+
+        if (isUpcoming) {
+            overBadge.textContent = 'SCHEDULED';
+            subInfo.textContent = 'Match Timing';
+            mainText.textContent = upcomingTimeText;
+            chip.classList.add('chip-default');
+            chip.textContent = 'UPCOMING';
+            secText.style.display = 'none';
+        } else {
+            overBadge.textContent = currentInning ? `OV ${currentInning.overs || '0.0'}` : (now.overs ? `OV ${now.overs}` : '0.0');
+            subInfo.textContent = isStumps ? 'Day Ended' : (now.overLeft ? `${now.overLeft} ovs left` : (miniCard.status || 'Match Live'));
+
+            const text = comm.primaryText || miniCard.announcement1 || miniCard.status || 'Match in progress';
+            mainText.textContent = text;
+
+            if (isStumps) {
+                chip.classList.add('chip-default');
+                chip.textContent = 'STUMPS';
+            } else if (text.toLowerCase().includes('out') || text.toLowerCase().includes('wicket')) {
+                chip.classList.add('chip-wicket');
+                chip.textContent = 'WICKET';
+            } else if (text.toLowerCase().includes('four') || text.includes('4') || text.toLowerCase().includes('six') || text.includes('6')) {
+                chip.classList.add('chip-boundary');
+                chip.textContent = 'BOUNDARY';
+            } else {
+                chip.classList.add('chip-default');
+                chip.textContent = 'LIVE';
+            }
+
+            if (comm.secondaryText || comm.tertiaryText) {
+                secText.style.display = 'flex';
+                secText.textContent = [comm.secondaryText, comm.tertiaryText].filter(Boolean).join(' • ');
+            } else {
+                secText.style.display = 'none';
+            }
+        }
+
+        // বেটাৰ আৰু বলাৰ টেবুল
+        if (isUpcoming) {
+            document.querySelector('#currentBattersTable tbody').innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 8px;">Match yet to start</td></tr>`;
+            document.querySelector('#currentBowlerTable tbody').innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 8px;">Toss / Lineups pending</td></tr>`;
+        } else if (currentInning && currentInning.player_batting_order && currentInning.player_batting_order.length > 0) {
+            const activeBatters = (currentInning.player_batting_order || []).filter(p => !p.batting?.dismissed);
+            updateBattingTable(document.querySelector('#currentBattersTable tbody'), activeBatters, false);
+
+            const activeBowler = getActiveBowler(currentInning.player_bowling_order || [], miniCard, now, currentInning);
+            updateBowlingTable(document.querySelector('#currentBowlerTable tbody'), activeBowler ? [activeBowler] : []);
+        } else {
+            document.querySelector('#currentBattersTable tbody').innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--primary); padding: 6px;">Match Starting Shortly...</td></tr>`;
+            document.querySelector('#currentBowlerTable tbody').innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 6px;">Waiting for first ball</td></tr>`;
+        }
+    }
+
     function updateBattingTable(tbody, batters, isDetailed = false) {
         if (!batters || batters.length === 0) {
             tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 6px;">${isDetailed ? 'No Batters' : 'Innings Break'}</td></tr>`;
@@ -824,7 +1066,6 @@
         });
     }
 
-    // In-place Bowling Table Updater
     function updateBowlingTable(tbody, bowlers) {
         if (!bowlers || bowlers.length === 0) {
             tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 6px;">-</td></tr>`;
@@ -866,7 +1107,6 @@
         });
     }
 
-    // Dynamic Live Bowler Finder
     function getActiveBowler(bowlers, miniCard, now, currentInning) {
         if (!bowlers || bowlers.length === 0) return null;
 
@@ -891,145 +1131,7 @@
             if (found) return found;
         }
 
-        const bowlerId = now?.bowler_id || now?.bowlerId || miniCard?.bowler_id || miniCard?.bowlerId;
-        if (bowlerId) {
-            found = bowlers.find(p => p.id == bowlerId || p.player_id == bowlerId || p.bowler_id == bowlerId);
-            if (found) return found;
-        }
-
-        const bNameProp = now?.bowler || miniCard?.bowler || miniCard?.currentBowler;
-        if (bNameProp) {
-            const bName = (typeof bNameProp === 'object' ? (bNameProp.name || '') : String(bNameProp)).toLowerCase().trim();
-            if (bName) {
-                found = bowlers.find(p => p.name.toLowerCase().includes(bName) || bName.includes(p.name.toLowerCase()));
-                if (found) return found;
-            }
-        }
-
-        const currentOverStr = String(currentInning?.overs || '');
-        if (currentOverStr.includes('.')) {
-            const ballPart = currentOverStr.split('.')[1];
-            if (ballPart && ballPart !== '0' && ballPart !== '6') {
-                found = bowlers.find(p => String(p.bowling?.overs || '').endsWith('.' + ballPart));
-                if (found) return found;
-            }
-        }
-
         return bowlers[bowlers.length - 1];
-    }
-
-    function formatScore(scoreObj) {
-        if (!scoreObj || scoreObj.runs === undefined) return '';
-        return `<span class="num">${scoreObj.runs}/${scoreObj.wickets}</span> <small class="num">(${scoreObj.overs})</small>`;
-    }
-
-    function renderMainScreen(data) {
-        const miniCard = data?.miniMatchCard?.responseData?.result;
-        const inningsList = data?.scorecard?.responseData?.result?.innings_batting_order;
-        if (!miniCard || !inningsList || inningsList.length === 0) return;
-
-        const teamA = miniCard.teams?.a || {};
-        const teamB = miniCard.teams?.b || {};
-        const now = miniCard.now || {};
-
-        document.getElementById('matchFormatText').textContent = `${miniCard.format || 'TEST'} MATCH`;
-
-        const rawStatus = `${miniCard.announcement1 || ''} ${miniCard.status || ''} ${miniCard.state || ''} ${now.status || ''}`.toLowerCase();
-        const isStumps = rawStatus.includes('stump');
-        const isBreak = rawStatus.includes('tea') || rawStatus.includes('lunch') || rawStatus.includes('dinner') || rawStatus.includes('break') || rawStatus.includes('delay');
-        const isComplete = rawStatus.includes('won') || rawStatus.includes('tied') || rawStatus.includes('drawn') || rawStatus.includes('complete');
-
-        const liveText = document.getElementById('liveStatusText');
-        const livePulse = document.getElementById('livePulseDot');
-        const daySessionText = document.getElementById('matchDaySessionText');
-
-        if (isStumps) {
-            liveText.textContent = 'STUMPS';
-            livePulse.style.display = 'none';
-            daySessionText.textContent = `Day ${now.day || '1'} • Stumps`;
-        } else if (isBreak) {
-            liveText.textContent = 'BREAK';
-            livePulse.style.display = 'inline-block';
-            daySessionText.textContent = `Day ${now.day || '1'} • Break`;
-        } else if (isComplete) {
-            liveText.textContent = 'FINISHED';
-            livePulse.style.display = 'none';
-            daySessionText.textContent = 'MATCH ENDED';
-        } else {
-            liveText.textContent = 'LIVE';
-            livePulse.style.display = 'inline-block';
-            daySessionText.textContent = `Day ${now.day || '1'} • Session ${now.sessionCount || '1'}`;
-        }
-
-        const a1 = formatScore(teamA.a_1_score);
-        const a2 = formatScore(teamA.a_2_score);
-        const b1 = formatScore(teamB.b_1_score);
-        const b2 = formatScore(teamB.b_2_score);
-
-        document.getElementById('teamAName').textContent = teamA.name || 'Team A';
-        document.getElementById('teamAScore').innerHTML = a1 + (a2 ? ` & ${a2}` : '');
-        
-        document.getElementById('teamBName').textContent = teamB.name || 'Team B';
-        document.getElementById('teamBScore').innerHTML = b1 + (b2 ? ` & ${b2}` : '');
-
-        const logoA = getTeamLogoUrl(teamA.name);
-        const logoB = getTeamLogoUrl(teamB.name);
-        
-        const avatarA = document.getElementById('teamAAvatar');
-        if (logoA && !avatarA.querySelector('img')) avatarA.innerHTML = `<img src="${logoA}" alt="${teamA.name}">`;
-        else if (!logoA) avatarA.textContent = teamA.shortName || 'A';
-
-        const avatarB = document.getElementById('teamBAvatar');
-        if (logoB && !avatarB.querySelector('img')) avatarB.innerHTML = `<img src="${logoB}" alt="${teamB.name}">`;
-        else if (!logoB) avatarB.textContent = teamB.shortName || 'B';
-
-        document.getElementById('matchLeadText').textContent = miniCard.announcement1 || '';
-        document.getElementById('matchCrr').textContent = now.run_rate || '0.00';
-
-        const currentInning = inningsList[inningsList.length - 1];
-        const comm = miniCard.lastCommentary || {};
-        const chip = document.getElementById('actionChipTag');
-        const mainText = document.getElementById('actionMainText');
-        const secText = document.getElementById('actionSecText');
-        const overBadge = document.getElementById('actionOverBadge');
-        const subInfo = document.getElementById('actionSubInfo');
-
-        overBadge.textContent = `OV ${currentInning.overs || '0.0'}`;
-        subInfo.textContent = isStumps ? 'Day Ended' : (now.overLeft ? `${now.overLeft} ovs left today` : `Session ${now.sessionCount || 1}`);
-
-        const text = comm.primaryText || (isStumps ? 'Stumps - Day Ended' : 'In Progress');
-        mainText.textContent = text;
-
-        chip.className = 'event-chip';
-        if (isStumps) {
-            chip.classList.add('chip-default');
-            chip.textContent = 'STUMPS';
-        } else if (text.toLowerCase().includes('out') || text.toLowerCase().includes('wicket')) {
-            chip.classList.add('chip-wicket');
-            chip.textContent = 'WICKET';
-        } else if (text.toLowerCase().includes('four') || text.includes('4') || text.toLowerCase().includes('six') || text.includes('6')) {
-            chip.classList.add('chip-boundary');
-            chip.textContent = 'BOUNDARY';
-        } else if (comm.isDone === "true") {
-            chip.classList.add('chip-default');
-            chip.textContent = 'OVER END';
-        } else {
-            chip.classList.add('chip-default');
-            chip.textContent = 'LIVE BALL';
-        }
-
-        if (comm.secondaryText || comm.tertiaryText) {
-            secText.style.display = 'flex';
-            secText.textContent = [comm.secondaryText, comm.tertiaryText].filter(Boolean).join(' • ');
-        } else {
-            secText.style.display = 'none';
-        }
-
-        const activeBatters = (currentInning.player_batting_order || []).filter(p => !p.batting.dismissed);
-        updateBattingTable(document.querySelector('#currentBattersTable tbody'), activeBatters, false);
-
-        const activeBowler = getActiveBowler(currentInning.player_bowling_order || [], miniCard, now, currentInning);
-        updateBowlingTable(document.querySelector('#currentBowlerTable tbody'), activeBowler ? [activeBowler] : []);
     }
 
     function openScorecard() {
@@ -1047,7 +1149,13 @@
 
     function renderModalScorecard(data, rebuildTabs = false) {
         const inningsList = data?.scorecard?.responseData?.result?.innings_batting_order;
-        if (!inningsList || inningsList.length === 0) return;
+        if (!inningsList || inningsList.length === 0) {
+            document.getElementById('modalInningsTabs').innerHTML = '';
+            document.querySelector('#modalBattingTable tbody').innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 12px;">Scorecard not available yet</td></tr>`;
+            document.querySelector('#modalBowlingTable tbody').innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 12px;">-</td></tr>`;
+            document.getElementById('modalFow').textContent = '-';
+            return;
+        }
 
         if (selectedModalInningIdx < 0 || selectedModalInningIdx >= inningsList.length) {
             selectedModalInningIdx = inningsList.length - 1;
@@ -1084,11 +1192,12 @@
     }
 
     // ==========================================
-    // ২. নিৰাপদ ডাটা ফেচিং আৰু ৫ ছেকেণ্ডৰ Polling
+    // ২. ডাটা ফেচিং আৰু স্বয়ংক্ৰিয় Polling
     // ==========================================
     async function fetchScores() {
         try {
-            const response = await fetch(API_URL);
+            const url = `${API_BASE}${encodeURIComponent(currentMatchId)}`;
+            const response = await fetch(url);
             if (!response.ok) return;
 
             const data = await response.json();
@@ -1107,7 +1216,7 @@
     function startPolling() {
         if (!pollTimer) {
             fetchScores();
-            pollTimer = setInterval(fetchScores, 4000); // প্ৰতি ৫ ছেকেণ্ডৰ মূৰে মূৰে আপডেট
+            pollTimer = setInterval(fetchScores, 4000);
         }
     }
 
@@ -1118,7 +1227,6 @@
         }
     }
 
-    // স্ক্ৰীণ/টেব মিনিমাইজ থাকিলে Polling বন্ধ ৰাখিব
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
             stopPolling();
@@ -1127,7 +1235,7 @@
         }
     });
 
-    // প্ৰথমবাৰ আৰম্ভণি
+    // আৰম্ভণি
     startPolling();
 </script>
 
