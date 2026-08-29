@@ -819,15 +819,26 @@
         return '';
     }
 
-    function getCleanInningsTitle(inning) {
-        const team = inning.teamName || 'Team';
-        const key = (inning.key || '').toLowerCase();
-        let innNumber = '1st Innings';
-        if (key.includes('2') || key.endsWith('_2')) innNumber = '2nd Innings';
-        else if (key.includes('3') || key.endsWith('_3')) innNumber = '3rd Innings';
-        else if (key.includes('4') || key.endsWith('_4')) innNumber = '4th Innings';
-        return `${team} ${innNumber}`;
+   function getCleanInningsTitle(inning) {
+    const team = inning.teamName || 'Team';
+    const format = (fullMatchData?.miniMatchCard?.responseData?.result?.format || '').toUpperCase();
+    
+    // যদি T20 বা ODI হয় (টেষ্ট মেচ নহয়), তেন্তে কেৱল "Team Innings" দেখুৱাব
+    const isLimitedOvers = format.includes('T20') || format.includes('ODI') || !format.includes('TEST');
+    
+    if (isLimitedOvers) {
+        return `${team} Innings`;
     }
+
+    // টেষ্ট মেচৰ বাবে 1st, 2nd Innings যোগ কৰিব
+    const key = (inning.key || '').toLowerCase();
+    let innNumber = '1st Innings';
+    if (key.includes('2') || key.endsWith('_2')) innNumber = '2nd Innings';
+    else if (key.includes('3') || key.endsWith('_3')) innNumber = '3rd Innings';
+    else if (key.includes('4') || key.endsWith('_4')) innNumber = '4th Innings';
+    
+    return `${team} ${innNumber}`;
+}
 
     function formatScore(scoreObj) {
         if (!scoreObj) return '';
