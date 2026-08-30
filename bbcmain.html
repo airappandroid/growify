@@ -62,6 +62,139 @@ body {
     transform: scale(0.985);
 }
 
+/* Compact & Balanced Cricket Score Strip */
+.cricket-strip {
+    display: block;
+    margin: 10px 16px 0;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #152033 0%, #0e1627 100%);
+    border: 1px solid rgba(59, 130, 246, 0.32);
+    border-radius: 12px;
+    text-decoration: none;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transform: translateZ(0);
+    transition: all 0.2s ease;
+}
+
+.cricket-strip:active {
+    transform: scale(0.985);
+    background: #1a273e;
+}
+
+.strip-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-bottom: 5px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(239, 68, 68, 0.16);
+    border: 1px solid rgba(239, 68, 68, 0.45);
+    padding: 1.5px 6px;
+    border-radius: 4px;
+    font-size: 9.5px;
+    font-weight: 800;
+    color: #f87171;
+    letter-spacing: 0.4px;
+    flex-shrink: 0;
+}
+
+.live-badge .dot {
+    width: 5px;
+    height: 5px;
+    background-color: #ef4444;
+    border-radius: 50%;
+    animation: blink 1.2s infinite ease-in-out;
+    display: none;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(0.8); }
+}
+
+.strip-status {
+    font-size: 11px;
+    font-weight: 500;
+    color: #cbd5e1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: right;
+    letter-spacing: -0.1px;
+}
+
+.strip-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.strip-scores {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    flex: 1;
+}
+
+.strip-team {
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+    white-space: nowrap;
+}
+
+.team-code {
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 12px;
+}
+
+/* Single line clean score format */
+.team-runs {
+    color: #38bdf8;
+    font-size: 11.5px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.strip-divider {
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+/* Compact Scorecard Pill Button */
+.strip-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 3px 8px;
+    background: rgba(37, 99, 235, 0.18);
+    border: 1px solid rgba(59, 130, 246, 0.45);
+    border-radius: 14px;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #60a5fa;
+    flex-shrink: 0;
+}
+
+.cricket-strip:active .strip-action {
+    background: #2563eb;
+    color: #ffffff;
+}
+
 /* 60FPS Smooth Station Card */
 .station-card {
     background: linear-gradient(145deg, #182234 0%, #0f172a 100%);
@@ -74,7 +207,7 @@ body {
     align-items: center;
     text-decoration: none;
     color: #ffffff;
-    transform: translateZ(0); /* GPU Acceleration */
+    transform: translateZ(0);
 }
 
 .station-card:active {
@@ -226,8 +359,37 @@ body {
 <body>
 
 <div class="container">
+    <!-- Top Banner -->
     <a href="go:BBC5E" class="top-banner">
         <img src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/HQHt11787246574.png" alt="BBC 5 Sports Extra" fetchpriority="high" decoding="async">
+    </a>
+
+    <!-- Cricket Live Score Strip (go:card) -->
+    <a href="go:card" class="cricket-strip" id="cricketStrip">
+        <div class="strip-top">
+            <div class="live-badge">
+                <span class="dot"></span>
+                <span id="matchBadge">LIVE</span>
+            </div>
+            <div class="strip-status" id="matchNote">Loading match status...</div>
+        </div>
+        <div class="strip-body">
+            <div class="strip-scores">
+                <div class="strip-team">
+                    <span class="team-code" id="teamACode">ENG</span>
+                    <span class="team-runs" id="teamAScore">--</span>
+                </div>
+                <span class="strip-divider">vs</span>
+                <div class="strip-team">
+                    <span class="team-code" id="teamBCode">PAK</span>
+                    <span class="team-runs" id="teamBScore">--</span>
+                </div>
+            </div>
+            <div class="strip-action">
+                <span>Scorecard</span>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+        </div>
     </a>
 
     <div class="section">
@@ -334,6 +496,47 @@ body {
 </div>
 
 <script>
+/* ================= Live Cricket Score Fetcher ================= */
+const matchId = "95254";
+const denoProxyUrl = `https://cricvoice.aminurmarch.deno.net/?matchId=${matchId}`;
+
+async function fetchCricketScore() {
+    try {
+        const res = await fetch(denoProxyUrl);
+        if (!res.ok) return;
+        const data = await res.json();
+        
+        if (data && data.data && data.data.length > 0) {
+            const match = data.data[0].livescore;
+            if (!match) return;
+
+            const teamA = match.teama;
+            const teamB = match.teamb;
+
+            if (teamA) {
+                document.getElementById('teamACode').textContent = teamA.short_name || "ENG";
+                document.getElementById('teamAScore').textContent = teamA.scores || "--";
+            }
+
+            if (teamB) {
+                document.getElementById('teamBCode').textContent = teamB.short_name || "PAK";
+                document.getElementById('teamBScore').textContent = teamB.scores || "--";
+            }
+
+            const statusNote = match.status_note || match.live || match.equation || match.status_str || "";
+            if (statusNote) {
+                document.getElementById('matchNote').textContent = statusNote;
+            }
+
+            const badgeText = match.game_state_str || match.status_str || "LIVE";
+            document.getElementById('matchBadge').textContent = badgeText.toUpperCase();
+        }
+    } catch (err) {
+        console.error("Error fetching live score:", err);
+    }
+}
+
+/* ================= UK Time & Radio Program Schedule ================= */
 function getUKMinutesNow() {
     const parts = new Intl.DateTimeFormat('en-GB', {
         timeZone: 'Europe/London',
@@ -398,9 +601,13 @@ function updatePrograms() {
     });
 }
 
+/* ================= Initialization ================= */
 document.addEventListener("DOMContentLoaded", () => {
     updatePrograms();
     setInterval(updatePrograms, 60000);
+
+    fetchCricketScore();
+    setInterval(fetchCricketScore, 15000);
 });
 </script>
 </body>
