@@ -66,7 +66,7 @@ body {
 .cricket-strip {
     display: block;
     margin: 10px 16px 0;
-    padding: 8px 12px;
+    padding: 10px 12px;
     background: linear-gradient(135deg, #152033 0%, #0e1627 100%);
     border: 1px solid rgba(59, 130, 246, 0.32);
     border-radius: 12px;
@@ -82,14 +82,12 @@ body {
     background: #1a273e;
 }
 
+/* Top Row: Live Badge + Scorecard Button */
 .strip-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 6px;
-    margin-bottom: 5px;
-    padding-bottom: 4px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 6px;
 }
 
 .live-badge {
@@ -98,7 +96,7 @@ body {
     gap: 4px;
     background: rgba(239, 68, 68, 0.16);
     border: 1px solid rgba(239, 68, 68, 0.45);
-    padding: 1.5px 6px;
+    padding: 2px 6px;
     border-radius: 4px;
     font-size: 9.5px;
     font-weight: 800;
@@ -121,37 +119,65 @@ body {
     50% { opacity: 0.3; transform: scale(0.8); }
 }
 
-.strip-status {
+/* Scorecard Action Button */
+.strip-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2.5px 8px;
+    background: rgba(37, 99, 235, 0.2);
+    border: 1px solid rgba(59, 130, 246, 0.45);
+    border-radius: 12px;
     font-size: 10px;
+    font-weight: 700;
+    color: #60a5fa;
+    flex-shrink: 0;
+}
+
+.cricket-strip:active .strip-action {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+/* Middle Row: Match Status Full Line */
+.strip-status {
+    font-size: 11px;
     font-weight: 500;
     color: #cbd5e1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: right;
+    line-height: 1.35;
+    margin-bottom: 7px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    word-break: break-word;
     letter-spacing: -0.1px;
 }
 
+/* Bottom Row: Full Scores */
 .strip-body {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 6px;
+    width: 100%;
 }
 
 .strip-scores {
     display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: flex-start;
+    gap: 8px;
+    width: 100%;
     white-space: nowrap;
-    overflow: hidden;
-    flex: 1;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.strip-scores::-webkit-scrollbar {
+    display: none;
 }
 
 .strip-team {
     display: flex;
     align-items: baseline;
-    gap: 3px;
+    gap: 4px;
     white-space: nowrap;
 }
 
@@ -161,7 +187,6 @@ body {
     font-size: 12px;
 }
 
-/* Single line clean score format */
 .team-runs {
     color: #38bdf8;
     font-size: 11.5px;
@@ -171,28 +196,9 @@ body {
 
 .strip-divider {
     color: #64748b;
-    font-size: 10px;
-    font-weight: 600;
-}
-
-/* Compact Scorecard Pill Button */
-.strip-action {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    padding: 3px 8px;
-    background: rgba(37, 99, 235, 0.18);
-    border: 1px solid rgba(59, 130, 246, 0.45);
-    border-radius: 14px;
     font-size: 10.5px;
     font-weight: 700;
-    color: #60a5fa;
-    flex-shrink: 0;
-}
-
-.cricket-strip:active .strip-action {
-    background: #2563eb;
-    color: #ffffff;
+    padding: 0 2px;
 }
 
 /* Station Card */
@@ -370,8 +376,12 @@ body {
                 <span class="dot"></span>
                 <span id="matchBadge">LIVE</span>
             </div>
-            <div class="strip-status" id="matchNote">Loading match status...</div>
+            <div class="strip-action">
+                <span>Scorecard</span>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
         </div>
+        <div class="strip-status" id="matchNote">Loading match status...</div>
         <div class="strip-body">
             <div class="strip-scores">
                 <div class="strip-team">
@@ -383,10 +393,6 @@ body {
                     <span class="team-code" id="teamBCode">PAK</span>
                     <span class="team-runs" id="teamBScore">--</span>
                 </div>
-            </div>
-            <div class="strip-action">
-                <span>Scorecard</span>
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </div>
         </div>
     </a>
