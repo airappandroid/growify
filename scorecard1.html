@@ -45,6 +45,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 8px;
         }
 
         .status-badge {
@@ -55,6 +56,7 @@
             text-transform: uppercase;
             padding: 2px 7px;
             border-radius: 10px;
+            flex-shrink: 0;
         }
 
         .match-sub {
@@ -82,7 +84,7 @@
             padding-bottom: 6px;
             margin-bottom: 12px;
             scrollbar-width: none; /* Firefox */
-            -webkit-overflow-scrolling: touch; /* Smooth iOS/Android Touch */
+            -webkit-overflow-scrolling: touch;
         }
 
         .tabs-container::-webkit-scrollbar {
@@ -99,7 +101,7 @@
             font-weight: 600;
             cursor: pointer;
             white-space: nowrap;
-            flex-shrink: 0; /* বুটাম কেতিয়াও চুটি হৈ নাযায় */
+            flex-shrink: 0;
             transition: all 0.2s ease-in-out;
         }
 
@@ -132,20 +134,29 @@
             margin: 12px 0 6px 0;
         }
 
+        /* Responsive Table Wrapper */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 10px;
+        }
+
         /* Tables */
         table {
             width: 100%;
             border-collapse: collapse;
             font-size: 11.5px;
-            margin-bottom: 10px;
+            min-width: 320px;
         }
 
         th {
             color: #64748b;
             font-weight: 600;
             text-align: right;
-            padding: 5px 3px;
+            padding: 6px 4px;
             border-bottom: 1px solid #232e42;
+            white-space: nowrap;
         }
 
         th:first-child {
@@ -153,14 +164,16 @@
         }
 
         td {
-            padding: 6px 3px;
+            padding: 6px 4px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
             text-align: right;
             color: #cbd5e1;
+            white-space: nowrap;
         }
 
         td:first-child {
             text-align: left;
+            white-space: normal;
         }
 
         .player-name {
@@ -224,6 +237,22 @@
             font-size: 12.5px;
             color: #94a3b8;
         }
+
+        .retry-btn {
+            margin-top: 10px;
+            background: #2563eb;
+            color: #ffffff;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .retry-btn:hover {
+            background: #1d4ed8;
+        }
     </style>
 </head>
 <body>
@@ -250,19 +279,22 @@
 
     <script>
         const currentMatchId = "95254";
-        const scorecardProxyUrl = `https://scorecard.aminurmarch.deno.net?matchId=${currentMatchId}`;
+        const scorecardProxyUrl = `https://cricvoice2.aminurmarch.workers.dev/?matchId=${currentMatchId}`;
         
         let matchData = null;
         let activeInningIndex = 0;
 
         async function loadScorecard() {
+            const container = document.getElementById("content-container");
+            container.innerHTML = `<div id="loading">Fetching scorecard data...</div>`;
+
             try {
                 const res = await fetch(scorecardProxyUrl);
-                if (!res.ok) throw new Error("Network response failed");
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                 const json = await res.json();
 
-                // JSON গাঠনি অনুযায়ী ডাটা লোড
-                if (json.data && json.data.length > 0 && json.data[0].scoreCard) {
+                // JSON গাঠনি অনুসৰি ডাটা লোড
+                if (json.data && Array.isArray(json.data) && json.data.length > 0 && json.data[0].scoreCard) {
                     matchData = json.data[0].scoreCard;
                 } else if (json.scoreCard) {
                     matchData = json.scoreCard;
@@ -270,29 +302,39 @@
                     matchData = json;
                 }
 
-                if (!matchData || !matchData.innings || matchData.innings.length === 0) {
-                    document.getElementById("content-container").innerHTML = `<div id="loading">No scorecard details available.</div>`;
+                if (!matchData || !Array.isArray(matchData.innings) || matchData.innings.length === 0) {
+                    container.innerHTML = `<div id="loading">No scorecard details available.</div>`;
                     return;
                 }
 
-                // বেনাৰৰ তথ্য আপডেট
-                document.getElementById("header-match").textContent = `${matchData.subtitle || ''} • ${matchData.short_title || matchData.title}`;
+                // হেডাৰৰ তথ্য সুৰক্ষিতভাৱে আপডেট
+                const subTitle = matchData.subtitle ? `${matchData.subtitle} • ` : '';
+                const mainTitle = matchData.short_title || matchData.title || 'Scorecard';
+                document.getElementById("header-match").textContent = `${subTitle}${mainTitle}`;
                 document.getElementById("header-status").textContent = matchData.game_state_str || matchData.status_str || "Live";
-                if (matchData.venue) {
-                    document.getElementById("header-venue").textContent = `📍 ${matchData.venue.name || ''}, ${matchData.venue.location || ''}`;
+                
+                if (matchData.venue && (matchData.venue.name || matchData.venue.location)) {
+                    const venueParts = [matchData.venue.name, matchData.venue.location].filter(Boolean);
+                    document.getElementById("header-venue").textContent = `📍 ${venueParts.join(', ')}`;
+                } else {
+                    document.getElementById("header-venue").textContent = `📍 Venue details unavailable`;
                 }
+
                 document.getElementById("header-note").textContent = matchData.status_note || matchData.live || "Match in progress";
 
-                // বৰ্তমান চলি থকা ইনিংছৰ নম্বৰ নিৰ্বাচন
-                if (matchData.innings.length > 0) {
-                    activeInningIndex = matchData.innings.length - 1;
-                }
+                // বৰ্তমান চলি থকা ইনিংছ নিৰ্বাচন
+                activeInningIndex = matchData.innings.length - 1;
 
                 renderInningTabs();
                 renderInningDetails(activeInningIndex);
             } catch (err) {
                 console.error("Scorecard fetch error:", err);
-                document.getElementById("content-container").innerHTML = `<div id="error-msg">Failed to load scorecard data.</div>`;
+                container.innerHTML = `
+                    <div id="error-msg">
+                        Failed to load scorecard data.<br>
+                        <button class="retry-btn" onclick="loadScorecard()">Retry</button>
+                    </div>
+                `;
             }
         }
 
@@ -303,7 +345,7 @@
             matchData.innings.forEach((inn, idx) => {
                 const btn = document.createElement("button");
                 btn.className = `tab-btn ${idx === activeInningIndex ? 'active' : ''}`;
-                btn.textContent = inn.name || `Inning ${inn.number}`;
+                btn.textContent = inn.name || `Inning ${inn.number || idx + 1}`;
                 btn.onclick = () => {
                     activeInningIndex = idx;
                     renderInningTabs();
@@ -311,7 +353,6 @@
                 };
                 tabs.appendChild(btn);
 
-                // যদি এইটো বৰ্তমানৰ এক্টিভ টেব হয়, তেন্তে স্বয়ংক্ৰিয়ভাৱে সেইটোলৈ স্ক্ৰল হ'ব
                 if (idx === activeInningIndex) {
                     setTimeout(() => {
                         btn.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
@@ -332,34 +373,40 @@
                 batHtml += `
                     <tr>
                         <td>
-                            <span class="player-name">${b.name}</span>
-                            <span class="player-role">${b.role_str || ''}</span>
+                            <span class="player-name">${b.name || 'Unknown'}</span>
+                            ${b.role_str ? `<span class="player-role">${b.role_str}</span>` : ''}
                             <div class="out-desc">${b.how_out || 'not out'}</div>
                         </td>
-                        <td class="num-bold">${b.runs}</td>
-                        <td>${b.balls_faced}</td>
-                        <td>${b.fours}</td>
-                        <td>${b.sixes}</td>
-                        <td>${b.strike_rate}</td>
+                        <td class="num-bold">${b.runs ?? 0}</td>
+                        <td>${b.balls_faced ?? 0}</td>
+                        <td>${b.fours ?? 0}</td>
+                        <td>${b.sixes ?? 0}</td>
+                        <td>${b.strike_rate || '0.00'}</td>
                     </tr>
                 `;
             });
 
             // ২. বেটিং নকৰা খেলুৱৈ (Did Not Bat)
             let dnbHtml = "";
-            if (inn.did_not_bat && inn.did_not_bat.length > 0) {
-                const names = inn.did_not_bat.map(p => p.name).join(", ");
-                dnbHtml = `
-                    <div class="info-card">
-                        <div style="font-size: 11px; color: #64748b; margin-bottom: 2px;">YET TO BAT</div>
-                        <div class="dnb-text">${names}</div>
-                    </div>
-                `;
+            if (Array.isArray(inn.did_not_bat) && inn.did_not_bat.length > 0) {
+                const names = inn.did_not_bat
+                    .map(p => (typeof p === 'object' && p !== null ? (p.name || '') : p))
+                    .filter(Boolean)
+                    .join(", ");
+
+                if (names) {
+                    dnbHtml = `
+                        <div class="info-card">
+                            <div style="font-size: 11px; color: #64748b; margin-bottom: 2px;">YET TO BAT</div>
+                            <div class="dnb-text">${names}</div>
+                        </div>
+                    `;
+                }
             }
 
             // ৩. এক্সট্ৰা (Extras)
             const ext = inn.extra_runs || {};
-            const extDetails = `(b ${ext.byes || 0}, lb ${ext.legbyes || 0}, w ${ext.wides || 0}, nb ${ext.noballs || 0}, p ${ext.penalty || 0})`;
+            const extDetails = `(b ${ext.byes ?? 0}, lb ${ext.legbyes ?? 0}, w ${ext.wides ?? 0}, nb ${ext.noballs ?? 0}, p ${ext.penalty ?? 0})`;
             const eq = inn.equations || {};
 
             // ৪. বলিং তালিকা
@@ -367,22 +414,22 @@
             (inn.bowlers || []).forEach(bw => {
                 bowlHtml += `
                     <tr>
-                        <td><span class="player-name">${bw.name}</span></td>
-                        <td>${bw.overs}</td>
-                        <td>${bw.maidens}</td>
-                        <td>${bw.runs_conceded}</td>
-                        <td class="num-bold">${bw.wickets}</td>
-                        <td>${bw.noballs || 0}</td>
-                        <td>${bw.wides || 0}</td>
-                        <td>${bw.econ}</td>
+                        <td><span class="player-name">${bw.name || 'Unknown'}</span></td>
+                        <td>${bw.overs ?? 0}</td>
+                        <td>${bw.maidens ?? 0}</td>
+                        <td>${bw.runs_conceded ?? 0}</td>
+                        <td class="num-bold">${bw.wickets ?? 0}</td>
+                        <td>${bw.noballs ?? 0}</td>
+                        <td>${bw.wides ?? 0}</td>
+                        <td>${bw.econ || '0.00'}</td>
                     </tr>
                 `;
             });
 
             // ৫. উইকেট পতন (Fall of Wickets)
             let fowHtml = "";
-            if (inn.fows && inn.fows.length > 0) {
-                const fowList = inn.fows.map(f => `<span><b>${f.score_at_dismissal}-${f.number}</b> (${f.name}, ${f.overs_at_dismissal} ov)</span>`).join(" • ");
+            if (Array.isArray(inn.fows) && inn.fows.length > 0) {
+                const fowList = inn.fows.map(f => `<span><b>${f.score_at_dismissal ?? 0}-${f.number ?? ''}</b> (${f.name || ''}, ${f.overs_at_dismissal ?? 0} ov)</span>`).join(" • ");
                 fowHtml = `
                     <div class="section-label">Fall of Wickets</div>
                     <div class="info-card fow-text">${fowList}</div>
@@ -392,35 +439,37 @@
             container.innerHTML = `
                 <!-- Inning Score Banner -->
                 <div class="inning-summary">
-                    <span>${inn.name}</span>
-                    <span style="color: #38bdf8;">${inn.scores_full || inn.scores}</span>
+                    <span>${inn.name || 'Innings'}</span>
+                    <span style="color: #38bdf8;">${inn.scores_full || inn.scores || '-'}</span>
                 </div>
 
                 <!-- Batting -->
                 <div class="section-label">Batting</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Batter</th>
-                            <th>R</th>
-                            <th>B</th>
-                            <th>4s</th>
-                            <th>6s</th>
-                            <th>SR</th>
-                        </tr>
-                    </thead>
-                    <tbody>${batHtml}</tbody>
-                </table>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Batter</th>
+                                <th>R</th>
+                                <th>B</th>
+                                <th>4s</th>
+                                <th>6s</th>
+                                <th>SR</th>
+                            </tr>
+                        </thead>
+                        <tbody>${batHtml || '<tr><td colspan="6" style="text-align:center;">No batting data available</td></tr>'}</tbody>
+                    </table>
+                </div>
 
                 <!-- Extras & Total -->
                 <div class="info-card">
                     <div class="info-row">
                         <span>Extras ${extDetails}</span>
-                        <span class="num-bold">${ext.total || 0}</span>
+                        <span class="num-bold">${ext.total ?? 0}</span>
                     </div>
                     <div class="info-row" style="border-top: 1px solid #232e42; padding-top: 5px; margin-top: 4px;">
                         <span>Total (Run Rate: ${eq.runrate || '-'})</span>
-                        <span class="num-bold" style="color: #38bdf8;">${inn.scores_full || inn.scores}</span>
+                        <span class="num-bold" style="color: #38bdf8;">${inn.scores_full || inn.scores || '-'}</span>
                     </div>
                 </div>
 
@@ -428,21 +477,23 @@
 
                 <!-- Bowling -->
                 <div class="section-label">Bowling</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Bowler</th>
-                            <th>O</th>
-                            <th>M</th>
-                            <th>R</th>
-                            <th>W</th>
-                            <th>NB</th>
-                            <th>WD</th>
-                            <th>ECO</th>
-                        </tr>
-                    </thead>
-                    <tbody>${bowlHtml}</tbody>
-                </table>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Bowler</th>
+                                <th>O</th>
+                                <th>M</th>
+                                <th>R</th>
+                                <th>W</th>
+                                <th>NB</th>
+                                <th>WD</th>
+                                <th>ECO</th>
+                            </tr>
+                        </thead>
+                        <tbody>${bowlHtml || '<tr><td colspan="8" style="text-align:center;">No bowling data available</td></tr>'}</tbody>
+                    </table>
+                </div>
 
                 <!-- FOW -->
                 ${fowHtml}
