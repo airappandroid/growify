@@ -528,13 +528,26 @@ async function fetchCricketScore() {
                 document.getElementById('teamBScore').textContent = teamB.scores || "--";
             }
 
+            // Status Note
             const statusNote = match.status_note || match.live || match.equation || match.status_str || "";
             if (statusNote) {
                 document.getElementById('matchNote').textContent = statusNote;
             }
 
-            const badgeText = match.game_state_str || match.status_str || "LIVE";
-            document.getElementById('matchBadge').textContent = badgeText.toUpperCase();
+            // --- Badge Logic Fix ---
+            const gameState = (match.game_state_str || "").toLowerCase();
+            const statusStr = (match.status_str || "").toLowerCase();
+            let badgeText = "LIVE";
+
+            if (statusStr.includes("completed") || statusStr.includes("finished") || match.status === 2 || gameState === "default") {
+                badgeText = "COMPLETED";
+            } else if (gameState && gameState !== "default") {
+                badgeText = match.game_state_str.toUpperCase();
+            } else if (statusStr) {
+                badgeText = match.status_str.toUpperCase();
+            }
+
+            document.getElementById('matchBadge').textContent = badgeText;
         }
     } catch (err) {
         console.error("Error fetching live score:", err);
