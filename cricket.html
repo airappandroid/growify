@@ -31,7 +31,7 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
 
-       /* Top Commentary Button (Updated & Attractive) */
+        /* Top Commentary Button */
         .btn-commentary {
             display: flex;
             align-items: center;
@@ -46,6 +46,10 @@
             gap: 10px;
             box-shadow: 0 4px 14px rgba(56, 189, 248, 0.12);
             transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .btn-commentary:active {
+            transform: scale(0.98);
         }
 
         .commentary-text {
@@ -162,6 +166,7 @@
             border-radius: 50%;
             background-color: #1e293b;
             object-fit: cover;
+            display: none; /* ইমেজ লোড নোহোৱালৈকে লুকুৱাই ৰখা হৈছে */
         }
 
         .team-name {
@@ -302,69 +307,93 @@
 
     <script>
         const matchId = "95254";
-        const denoProxyUrl = `https://cricvoice.aminurmarch.deno.net/?matchId=${matchId}`;
+        const cloudflareProxyUrl = `https://cricvoice.aminurmarch.workers.dev/=${matchId}`;
 
         async function fetchLiveScore() {
             try {
-                const response = await fetch(denoProxyUrl);
+                const response = await fetch(cloudflareProxyUrl);
                 if (!response.ok) return;
 
                 const result = await response.json();
                 
-                if (result && result.data && result.data.length > 0) {
+                if (result?.data?.length > 0) {
                     const match = result.data[0];
-                    const live = match.livescore;
+                    const live = match?.livescore;
 
+                    if (!live) return;
+
+                    // Match Title/Subtitle
                     if (live.subtitle && live.short_title) {
                         document.getElementById("match-info").textContent = `${live.subtitle} • ${live.short_title}`;
                     }
+
+                    // Match State / Status
                     if (live.game_state_str || live.status_str) {
                         document.getElementById("match-status").textContent = live.game_state_str || live.status_str;
                     }
 
+                    // Venue Info
                     if (live.venue) {
-                        document.getElementById("venue-info").textContent = `📍 ${live.venue.name || ''}, ${live.venue.location || ''}`;
+                        const venueName = live.venue.name || '';
+                        const venueLoc = live.venue.location ? `, ${live.venue.location}` : '';
+                        document.getElementById("venue-info").textContent = `📍 ${venueName}${venueLoc}`;
                     }
 
-                    if (match.latest_ball_score !== undefined) {
+                    // Latest Ball
+                    if (match.latest_ball_score !== undefined && match.latest_ball_score !== null) {
                         document.getElementById("latest-ball").textContent = match.latest_ball_score;
                     }
 
+                    // Team A Info
                     if (live.teama) {
                         document.getElementById("team-a-name").textContent = live.teama.name || "Team A";
+                        
+                        const logoA = document.getElementById("team-a-logo");
                         if (live.teama.logo_url) {
-                            document.getElementById("team-a-logo").src = live.teama.logo_url;
-                            document.getElementById("team-a-logo").alt = live.teama.short_name || "";
+                            logoA.src = live.teama.logo_url;
+                            logoA.alt = live.teama.short_name || "";
+                            logoA.style.display = "block";
                         }
+                        
                         document.getElementById("team-a-runs").textContent = live.teama.scores || "-";
                         document.getElementById("team-a-overs").textContent = live.teama.overs ? `(${live.teama.overs} ov)` : "";
                     }
 
+                    // Team B Info
                     if (live.teamb) {
                         document.getElementById("team-b-name").textContent = live.teamb.name || "Team B";
+                        
+                        const logoB = document.getElementById("team-b-logo");
                         if (live.teamb.logo_url) {
-                            document.getElementById("team-b-logo").src = live.teamb.logo_url;
-                            document.getElementById("team-b-logo").alt = live.teamb.short_name || "";
+                            logoB.src = live.teamb.logo_url;
+                            logoB.alt = live.teamb.short_name || "";
+                            logoB.style.display = "block";
                         }
+                        
                         document.getElementById("team-b-runs").textContent = live.teamb.scores || "-";
                         document.getElementById("team-b-overs").textContent = live.teamb.overs ? `(${live.teamb.overs} ov)` : "";
                     }
 
+                    // Match Status Note
                     if (live.status_note || live.live) {
                         document.getElementById("status-box").textContent = live.status_note || live.live;
                     }
 
-                    if (live.toss && live.toss.text) {
+                    // Toss Info
+                    if (live.toss?.text) {
                         document.getElementById("toss-info").textContent = `Toss: ${live.toss.text}`;
                     }
                 }
             } catch (error) {
                 console.error("Error fetching live score:", error);
+            } finally {
+                // Request overlapping নহ'বলৈ প্ৰতি ৪ ছেকেণ্ডৰ মূৰে মূৰে কল হ'ব
+                setTimeout(fetchLiveScore, 4000);
             }
         }
 
+        // প্ৰথমবাৰ ডাটা ফেচ কৰা
         fetchLiveScore();
-        setInterval(fetchLiveScore, 4000);
     </script>
 </body>
 </html>
