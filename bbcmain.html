@@ -195,7 +195,7 @@ body {
     color: #ffffff;
 }
 
-/* 60FPS Smooth Station Card */
+/* Station Card */
 .station-card {
     background: linear-gradient(145deg, #182234 0%, #0f172a 100%);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -205,7 +205,6 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    text-decoration: none;
     color: #ffffff;
     transform: translateZ(0);
 }
@@ -483,26 +482,26 @@ body {
 
     <div class="section">
         <div class="title">🕒 Latest Updates</div>
-        <a href="go:5MIN" class="station-card news-card">
+        <div class="station-card news-card">
             <div class="station-info">
                 <div class="station-name">📰 5 Min News Brief</div>
                 <div class="playing-row">
                     <span>Updated: 30 August 2026, 5:00 AM</span>
                 </div>
             </div>
-            <div class="play-btn"></div>
-        </a>
+            <a href="go:5MIN" class="play-btn"></a>
+        </div>
     </div>
 </div>
 
 <script>
 /* ================= Live Cricket Score Fetcher ================= */
 const matchId = "95254";
-const denoProxyUrl = `https://cricvoice.aminurmarch.deno.net/?matchId=${matchId}`;
+const cloudflareProxyUrl = `https://cricvoice.aminurmarch.workers.dev/?matchId=${matchId}`;
 
 async function fetchCricketScore() {
     try {
-        const res = await fetch(denoProxyUrl);
+        const res = await fetch(cloudflareProxyUrl);
         if (!res.ok) return;
         const data = await res.json();
         
@@ -551,8 +550,13 @@ function getUKMinutesNow() {
 }
 
 function timeStringToMinutesUK(timeStr) {
-    const [time, period] = timeStr.split(" ");
-    let [h, m] = time.split(":").map(Number);
+    if (!timeStr) return 0;
+    const match = String(timeStr).trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
+    if (!match) return 0;
+
+    let h = parseInt(match[1], 10);
+    const m = parseInt(match[2], 10);
+    const period = match[3] ? match[3].toUpperCase() : null;
 
     if (period === "PM" && h !== 12) h += 12;
     if (period === "AM" && h === 12) h = 0;
@@ -561,17 +565,17 @@ function timeStringToMinutesUK(timeStr) {
 }
 
 function getCurrentShow(channelName) {
-    if (typeof SCHEDULE_DATA === "undefined") return "Loading...";
+    if (typeof SCHEDULE_DATA === "undefined" || !Array.isArray(SCHEDULE_DATA)) return "Loading...";
 
     const nowMin = getUKMinutesNow();
     const list = SCHEDULE_DATA
-        .filter(p => p.channel.toLowerCase().includes(channelName.toLowerCase()))
+        .filter(p => p && p.channel && p.channel.toLowerCase().includes(channelName.toLowerCase()))
         .sort((a, b) => timeStringToMinutesUK(a.time) - timeStringToMinutesUK(b.time));
 
     if (!list.length) return "Live";
 
     if (nowMin < timeStringToMinutesUK(list[0].time)) {
-        return list[list.length - 1].title;
+        return list[list.length - 1].title || "Live";
     }
 
     for (let i = 0; i < list.length - 1; i++) {
@@ -579,13 +583,14 @@ function getCurrentShow(channelName) {
         const end = timeStringToMinutesUK(list[i + 1].time);
 
         if (nowMin >= start && nowMin < end) {
-            return list[i].title;
+            return list[i].title || "Live";
         }
     }
 
-    return list[list.length - 1].title;
+    return list[list.length - 1].title || "Live";
 }
 
+let scheduleAttempts = 0;
 function updatePrograms() {
     const stations = [
         { id: "bbc1", name: "Radio 1" },
@@ -594,6 +599,17 @@ function updatePrograms() {
         { id: "bbc4", name: "Radio 4" },
         { id: "bbcws", name: "BBC World Service" }
     ];
+
+    if (typeof SCHEDULE_DATA === "undefined") {
+        scheduleAttempts++;
+        if (scheduleAttempts > 5) {
+            stations.forEach(st => {
+                const el = document.getElementById(st.id);
+                if (el && el.innerText === "Loading...") el.innerText = "Live";
+            });
+        }
+        return;
+    }
 
     stations.forEach(st => {
         const el = document.getElementById(st.id);
