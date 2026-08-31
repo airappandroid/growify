@@ -6,521 +6,553 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AIR Radio</title>
 
-<style>*{
-  -webkit-tap-highlight-color:transparent;
-  box-sizing:border-box
+<style>
+:root {
+  --bg-main: #0c0e14;
+  --card-bg: rgba(23, 27, 38, 0.85);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --accent-cyan: #00f2fe;
+  --accent-blue: #4facfe;
+  --accent-gradient: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --live-green: #10b981;
 }
 
-a{text-decoration:none;color:inherit}
-a:active,a:focus{outline:none}
+*{
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
+}
+a:active, a:focus{ outline: none; }
 
 html {
   touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
 }
 
-/* ===== BASE ===== */
+/* ===== BASE THEME ===== */
 body{
-  margin:0;
-  font-family:Roboto,system-ui,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
-  background:#1e1f22;               /* charcoal base */
-  color:#e8e8e8;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-primary);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(79, 172, 254, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(0, 242, 254, 0.05) 0px, transparent 50%);
+  background-attachment: fixed;
+  min-height: 100vh;
 }
+
 /* ===== TOP MOBILE AD (320x100) ===== */
 .top-ad{
-  width:100%;
-  padding:8px 10px 0;
-  display:flex;
-  justify-content:center;
-  background:#1e1f22;
+  width: 100%;
+  padding: 12px 14px 4px;
+  display: flex;
+  justify-content: center;
 }
 
 .top-ad img{
-  width:100%;
-  max-width:320px;   /* Ad width */
-  height:auto;       /* Keeps 320x100 ratio */
-  border-radius:12px;
-  display:block;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+  border-radius: 16px;
+  display: block;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--card-border);
 }
-
 
 /* ===== LAYOUT ===== */
-.container{padding:10px 14px 14px}
+.container{
+  padding: 10px 16px 28px;
+}
 
 .section-title{
-  font-size:17px;
-  font-weight:800;
-  letter-spacing:.4px;
-  margin:18px 0 10px;
-  color:#ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  margin: 24px 0 12px;
+  color: #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-/* ===== QUICK BUTTONS ONE ROW ===== */
+/* ===== QUICK NAVIGATION ===== */
 .quick-buttons{
-  display:flex;
-  gap:8px;
-  margin-bottom:14px;
-}
-.quick-buttons > *{
-  flex:1;
-}
-.quick-buttons a{
-  flex:1;
-  min-width:0;
-  text-decoration:none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 18px;
 }
 
-.qbtn{
-  padding:10px 6px;
-  border-radius:16px;
-  background:#2b2d31;
-  border:1px solid #33363c;
-  text-align:center;
-  font-size:12px;
-  font-weight:700;
-  color:#e8e8e8;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-  transition:transform .1s ease, opacity .1s ease;
-  height:100%;
+.qbtn, .toggle-btn{
+  padding: 12px 4px;
+  border-radius: 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
 }
 
-.qbtn:active{
-  transform:scale(.96);
-  opacity:.85;
+.qbtn:active, .toggle-btn:active{
+  transform: scale(0.94);
+  background: rgba(255, 255, 255, 0.08);
 }
 
-/* ICON STYLE */
-.icon{
-  margin-bottom:4px;
+.icon svg, .ticon svg{
+  width: 22px;
+  height: 22px;
+  fill: var(--accent-cyan);
+  filter: drop-shadow(0 2px 6px rgba(0, 242, 254, 0.3));
 }
 
-.icon svg{
-  width:20px;
-  height:20px;
-  fill:#4cc2ff;
+.toggle-btn.active{
+  background: var(--accent-gradient);
+  color: #050b14;
+  border-color: transparent;
+  box-shadow: 0 4px 16px rgba(0, 242, 254, 0.4);
 }
 
-/* TEXT WRAP */
-.label{
-  line-height:1.15;
-  word-break:break-word;
+.toggle-btn.active .ticon svg{
+  fill: #050b14;
+  filter: none;
 }
 
-/* ===== CARD COMMON ===== */
-.card{
-  background:#2b2d31;
-  border-radius:22px;
-  padding:14px;
-  margin-bottom:14px;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-  border:1px solid #33363c;
+.toggle-section{
+  display: none;
 }
 
-/* ===== POPULAR STATIONS ===== */
+/* ===== POPULAR STATIONS WITH LOGOS ===== */
 #stations{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .station{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:11px 12px;
-  border-radius:18px;
-  background:#2b2d31;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-  border:1px solid #33363c;
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 18px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  transition: all .2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.station::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: var(--accent-gradient);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+.station:active{
+  transform: scale(0.98);
+  border-color: rgba(0, 242, 254, 0.3);
+}
+
+.station:active::before {
+  opacity: 1;
+}
+
+/* Station Logo Style */
+.station-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 13px;
+  object-fit: cover;
+  background: #1a1e29;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-right: 12px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.station-info{
+  flex: 1;
+  min-width: 0;
+  padding-right: 10px;
+}
+
+.station-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 3px;
 }
 
 .station-name{
-  font-size:15px;
-  font-weight:600;
-  margin-bottom:6px;
-}
-.station-info{
-  flex:1;
-  min-width:0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: .2px;
 }
 
 .program-row{
-  display:flex;
-  align-items:center;
-  gap:8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
 }
 
 .program{
-  font-size:12px;
-  font-weight:500;
-  color:#b3b7bd;
-  line-height:1.3;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  line-height: 1.35;
+  word-break: break-word;
 }
 
-/* LIVE DOT */
+/* ANIMATED PULSING LIVE DOT */
+.live-dot-wrapper {
+  margin-top: 4px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .live-dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#00e676;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-  flex-shrink:0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--live-green);
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  
+}
+
+@keyframes livePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
 }
 
 /* PLAY BUTTON */
 .play{
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#4cc2ff;
-  color:#000;
-  font-size:14px;
-  font-weight:700;
-  flex-shrink:0;
-  text-decoration:none;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-  transition:transform .1s ease, opacity .1s ease;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-gradient);
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(0, 242, 254, 0.35);
+  transition: all .2s ease;
+}
+
+.play svg {
+  width: 14px;
+  height: 14px;
+  fill: #060e18;
+  margin-left: 2px;
 }
 
 .play:active{
-  transform:scale(.9);
-  opacity:.85;
-}
-
-
-/* ===== CRICKET CARD ===== */
-.cricket-card{
-  background:#2b2d31;
-  padding:14px;
-}
-
-/* TITLE */
-.cricket-title{
-  font-size:18px;
-  font-weight:800;
-  margin-bottom:12px;
-}
-
-/* BUTTON ROW */
-.cricket-buttons{
-  display:flex;
-  gap:12px;
-  margin-bottom:12px;
-}
-
-.cricket-buttons a{
-  flex:1 1 0;
-  min-width:0;
-  text-decoration:none;
-}
-
-/* COMMON BUTTON */
-.cbtn{
-  position:relative;
-  padding:14px 12px;
-  border-radius:20px;
-  text-align:center;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-  border:1px solid transparent;
-}
-
-.cbtn b{
-  display:block;
-  font-size:14px;
-  font-weight:800;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.cbtn small{
-  display:block;
-  font-size:12px;
-  margin-top:4px;
-  opacity:.9;
-}
-
-/* 🔴 LIVE COMMENTARY */
-.cbtn.commentary{
-  background:linear-gradient(135deg,#b71c1c,#ff3b3b);
-  border-color:#ff6b6b;
-  color:#ffffff;
-}
-.cbtn.commentary:active{
-  transform:scale(.95);
-  opacity:.8;
-}
-
-/* 🔵 LIVE SCORE */
-.cbtn.score{
-  background:linear-gradient(135deg,#0d47a1,#1e88e5);
-  border-color:#64b5f6;
-  color:#ffffff;
-}
-.cbtn.score:active{
-  transform:scale(.95);
-  opacity:.8;
-}
-
-/* BACK TO HOME BUTTON */
-.back-home-btn{
-  display:block;
-  width:100%;
-  padding:14px;
-  margin-top:8px;
-  border-radius:16px;
-  background:#24262a;
-  border:1px solid #33363c;
-  color:#4cc2ff;
-  font-size:16px;       /* Increased size */
-  font-weight:800;      /* Extra bold */
-  letter-spacing:.3px;  /* Slight spacing for clarity */
-  text-align:center;
-  cursor:pointer;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-  transition:transform .1s ease, opacity .1s ease;
-}
-
-.back-home-btn:active{
-  transform:scale(.97);
-  opacity:.85;
+  transform: scale(0.88);
 }
 
 /* ===== POPULAR STATES ===== */
+.states-container{
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 16px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+}
 
 .state-grid{
-  display:grid;
-  grid-template-columns:repeat(2, 1fr);
-  gap:10px;
-  margin-bottom:10px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
 .state-item{
-  background:#24262a;
-  border:1px solid #33363c;
-  border-radius:16px;
-  padding:12px 10px;
-  text-align:center;
-  font-size:14px;
-  font-weight:600;
-  color:#e8e8e8;
-  text-decoration:none;
-  box-shadow:0 2px 4px rgba(0,0,0,.25);
-  transition:transform .1s ease, opacity .1s ease;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 11px 12px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all .2s ease;
+}
+
+.state-item::after {
+  content: "›";
+  font-size: 16px;
+  color: var(--text-muted);
 }
 
 .state-item:active{
-  transform:scale(.96);
-  opacity:.85;
+  transform: scale(0.96);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(0, 242, 254, 0.3);
 }
 
 .view-all-states{
-  display:block;
-  text-align:center;
-  font-size:13px;
-  font-weight:700;
-  color:#4cc2ff;
-  text-decoration:none;
-  margin-top:6px;
-}
-/* ===== TOGGLE SYSTEM ===== */
-.content-toggles{
-  display:flex;
-  gap:8px;
-  margin:6px 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  padding: 6px 0;
 }
 
-.toggle-btn{
-  flex:1;
-  padding:10px 6px;
-  border-radius:14px;
-  border:1px solid #33363c;
-  background:#2b2d31;
-  color:#e8e8e8;
-  font-size:12px;
-  font-weight:700;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:4px;
-}
-.ticon svg{
-  width:20px;
-  height:20px;
-  fill:#4cc2ff;
-}
-.toggle-btn.active .ticon svg{
-  fill:#000;
-}
-.toggle-btn.active{
-  background:#4cc2ff;
-  color:#000;
-  border-color:#4cc2ff;
+/* ===== CRICKET HUB ===== */
+.cricket-card{
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 18px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-.toggle-section{
-  display:none;
+.cricket-buttons{
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
 }
 
+.cricket-buttons a{
+  flex: 1;
+  min-width: 0;
+}
+
+.cbtn{
+  padding: 15px 12px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  transition: transform .15s ease;
+}
+
+.cbtn b{
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cbtn small{
+  display: block;
+  font-size: 11px;
+  margin-top: 3px;
+  opacity: .9;
+}
+
+.cbtn.commentary{
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.35);
+}
+
+.cbtn.score{
+  background: linear-gradient(135deg, #0284c7, #0ea5e9);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(2, 132, 199, 0.35);
+}
+
+.cbtn:active{
+  transform: scale(0.95);
+}
+
+.back-home-btn{
+  display: block;
+  width: 100%;
+  padding: 13px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--card-border);
+  color: var(--accent-cyan);
+  font-size: 13.5px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+}
+
+.back-home-btn:active{
+  transform: scale(0.97);
+}
 </style>
 </head>
 
 <body>
-<!-- TOP AD BANNER -->
-  <a href="http://play.google.com/store/apps/details?id=com.cricwave.livecricket" target="_blank" rel="noopener noreferrer"> 
-<div class="top-ad">
-  <img src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/gVkZQ1787940599.png" alt="AIR Banner">
-</div></a>
 
-   
+<!-- TOP AD BANNER -->
+<a href="http://play.google.com/store/apps/details?id=com.cricwave.livecricket" target="_blank" rel="noopener noreferrer"> 
+  <div class="top-ad">
+    <img src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/gVkZQ1787940599.png" alt="AIR Banner">
+  </div>
+</a>
+
 <div class="container">
 
-<!-- QUICK -->
-<div class="quick-buttons">
-
-  <!-- AIR RADIO -->
-  <a href="go:S201">
-    <div class="qbtn">
-      <div class="icon">
-        <!-- Radio SVG -->
-        <svg viewBox="0 0 24 24">
-          <path d="M3 10v8a2 2 0 002 2h14a2 2 0 002-2v-8H3zm16 8H5v-6h14v6zM7 4l10 4H7V4zm2 9h3v3H9v-3zm7 1a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/>
-        </svg>
-      </div>
-      <div class="label">AIR</div>
-    </div>
-  </a>
-
-  <!-- FM RADIO -->
-  <a href="go:S202">
-    <div class="qbtn">
-      <div class="icon">
-        <!-- Signal SVG -->
-        <svg viewBox="0 0 24 24">
-          <path d="M12 3a9 9 0 019 9h-2a7 7 0 00-14 0H3a9 9 0 019-9zm0 6a3 3 0 013 3h-2a1 1 0 00-2 0H9a3 3 0 013-3zm-1 8h2v4h-2z"/>
-        </svg>
-      </div>
-      <div class="label">FM</div>
-    </div>
-  </a>
-
-  <!-- LIVE NEWS -->
-  <a href="go:S501">
-    <div class="qbtn">
-      <div class="icon">
-        <!-- Live Broadcast SVG -->
-        <svg viewBox="0 0 24 24">
-          <path d="M3 6h18v12H3zM10 9l5 3-5 3zM8 20h8v-2H8z"/>
-        </svg>
-      </div>
-      <div class="label">Live</div>
-    </div>
-  </a>
-
-<button class="toggle-btn" onclick="openSection('cricketSection', this)">
-  <span class="ticon">
-    <svg viewBox="0 0 24 24">
-      <path d="M14 2l8 8-2 2-8-8 2-2zM2 14l8 8 2-2-8-8-2 2z"/>
-    </svg>
-  </span>
-  <span>Cricket</span>
-</button>
-
-</div>
-
-<!--Popular Stations-->
-<div id="homeContent">
-
-<h2 class="section-title">🔥 Popular Stations</h2>
-<div id="stations"></div>
-
-<!--Popular States--->
-
-<h2 class="section-title">📍 Popular States</h2>
-
-<div class="card">
-  <div class="state-grid">
-
-    <a href="go:DELHI" class="state-item">Delhi</a>
-    <a href="go:UP" class="state-item">Uttar Pradesh</a>
-
-    <a href="go:MH" class="state-item">Maharashtra</a>
-    <a href="go:BIHAR" class="state-item">Bihar</a>
-
-    <a href="go:WB" class="state-item">West Bengal</a>
-    <a href="go:TN" class="state-item">Tamil Nadu</a>
-
-  </div>
-
-  <a href="go:S201" class="view-all-states">View All States →</a>
-</div>
-</div>
-
-
-<!-- 🏏 CRICKET HUB -->
-<div id="cricketSection" class="toggle-section">
-
-<h2 class="section-title">🏏 Cricket Hub</h2>
-
-<div class="card cricket-card">
-
-  <div class="cricket-buttons">
-
-    <!-- LIVE COMMENTARY -->
-    <a href="go:S401">
-      <div class="cbtn commentary">
-        <b>Commentary</b>
-        <small>On Match Days</small>
+  <!-- QUICK NAVIGATION -->
+  <div class="quick-buttons">
+    <a href="go:S201">
+      <div class="qbtn">
+        <div class="icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 10v8a2 2 0 002 2h14a2 2 0 002-2v-8H3zm16 8H5v-6h14v6zM7 4l10 4H7V4zm2 9h3v3H9v-3zm7 1a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/>
+          </svg>
+        </div>
+        <div>AIR</div>
       </div>
     </a>
 
-    <!-- LIVE SCORE -->
-    <a href="go:S402">
-      <div class="cbtn score">
-        <b>Score</b>
-        <small>Cricket Updates</small>
+    <a href="go:S202">
+      <div class="qbtn">
+        <div class="icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 3a9 9 0 019 9h-2a7 7 0 00-14 0H3a9 9 0 019-9zm0 6a3 3 0 013 3h-2a1 1 0 00-2 0H9a3 3 0 013-3zm-1 8h2v4h-2z"/>
+          </svg>
+        </div>
+        <div>FM</div>
       </div>
     </a>
 
+    <a href="go:S501">
+      <div class="qbtn">
+        <div class="icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 6h18v12H3zM10 9l5 3-5 3zM8 20h8v-2H8z"/>
+          </svg>
+        </div>
+        <div>Live</div>
+      </div>
+    </a>
+
+    <div class="toggle-btn" onclick="openSection('cricketSection', this)">
+      <div class="ticon">
+        <svg viewBox="0 0 24 24">
+          <path d="M14 2l8 8-2 2-8-8 2-2zM2 14l8 8 2-2-8-8-2 2z"/>
+        </svg>
+      </div>
+      <div>Cricket</div>
+    </div>
   </div>
 
-  <!-- BACK TO HOME BUTTON -->
-  <div class="back-home-btn" onclick="goHome()">← Back to Home</div>
+  <!-- HOME CONTENT -->
+  <div id="homeContent">
+    <div class="section-title">🔥 Popular Stations</div>
+    <div id="stations"></div>
+
+    <div class="section-title">📍 Popular States</div>
+    <div class="states-container">
+      <div class="state-grid">
+        <a href="go:DELHI" class="state-item">Delhi</a>
+        <a href="go:UP" class="state-item">Uttar Pradesh</a>
+        <a href="go:MH" class="state-item">Maharashtra</a>
+        <a href="go:BIHAR" class="state-item">Bihar</a>
+        <a href="go:WB" class="state-item">West Bengal</a>
+        <a href="go:TN" class="state-item">Tamil Nadu</a>
+      </div>
+      <a href="go:S201" class="view-all-states">View All States &nbsp;→</a>
+    </div>
+  </div>
+
+  <!-- CRICKET HUB -->
+  <div id="cricketSection" class="toggle-section">
+    <div class="section-title">🏏 Cricket Hub</div>
+    <div class="cricket-card">
+      <div class="cricket-buttons">
+        <a href="go:S401">
+          <div class="cbtn commentary">
+            <b>Commentary</b>
+            <small>On Match Days</small>
+          </div>
+        </a>
+        <a href="go:S402">
+          <div class="cbtn score">
+            <b>Score</b>
+            <small>Cricket Updates</small>
+          </div>
+        </a>
+      </div>
+      <div class="back-home-btn" onclick="goHome()">← Back to Home</div>
+    </div>
+  </div>
 
 </div>
-</div>
-  
-<!-- JS : POPULAR STATIONS ONLY -->
 
+<!-- JS : SCRIPT & LOGIC -->
 <script src="https://airappandroid.github.io/allindiaradio/schedule.js"></script>
 
 <script>
-/* Fallback safety */
 if (!window.SCHEDULE_DATA) window.SCHEDULE_DATA = [];
 
+/* ষ্টেচন আৰু সংশ্লিষ্ট ল’গ’ লিংক */
 const popularStations = [
-  { name:"FM Rainbow", code:"FMR" },
-  { name:"Vividh Bharati", code:"VV" },
-  { name:"FM Gold", code:"FMG" },
-  { name:"Indraprastha", code:"INDRA" }
+  { 
+    name: "FM Rainbow", 
+    code: "FMR", 
+    logo: "https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/images%20(2).jpg" 
+  },
+  { 
+    name: "Vividh Bharati", 
+    code: "VV", 
+    logo: "https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/images.jpg" 
+  },
+  { 
+    name: "FM Gold", 
+    code: "FMG", 
+    logo: "https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/images%20(1).jpg" 
+  },
+  { 
+    name: "Indraprastha", 
+    code: "INDRA", 
+    logo: "https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/images%20(3).jpg" 
+  }
 ];
 
 const lastProgram = {};
 
 function timeToMinutes(t){
   if(!t) return 0;
-
-  // 24hr format support
   if(!t.includes(" ")){
     let [h,m] = t.split(":").map(Number);
     return h*60+m;
   }
-
   const [a,b] = t.split(" ");
   let [h,m] = a.split(":").map(Number);
   if(b==="PM" && h!==12) h+=12;
@@ -561,23 +593,31 @@ function renderStations(){
     div.className = "station";
 
     div.innerHTML = `
+      <img class="station-logo" src="${st.logo}" alt="${st.name}" loading="lazy" decoding="async" onerror="this.src='https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/gVkZQ1787940599.png'">
       <div class="station-info">
-        <div class="station-name">${st.name}</div>
+        <div class="station-header">
+          <div class="station-name">${st.name}</div>
+        </div>
         <div class="program-row">
-          <span class="live-dot"></span>
+          <div class="live-dot-wrapper">
+            <span class="live-dot"></span>
+          </div>
           <div class="program" data-channel="${st.name}">
             ${getCurrentProgram(st.name)}
           </div>
         </div>
       </div>
-      <a href="go:${st.code}" class="play">▶</a>
+      <a href="go:${st.code}" class="play">
+        <svg viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+      </a>
     `;
 
     box.appendChild(div);
   });
 }
 
-/* 🔄 Only update program text (no DOM rebuild) */
 function updateProgramsOnly(){
   document.querySelectorAll(".program").forEach(el=>{
     const channel = el.getAttribute("data-channel");
@@ -585,45 +625,33 @@ function updateProgramsOnly(){
   });
 }
 
-/* Initial render */
 renderStations();
-
-/* Update every 60 seconds */
 setInterval(updateProgramsOnly, 60000);
-
-/* Extra safety refresh after schedule loads */
 setTimeout(updateProgramsOnly, 4000);
+
 function openSection(id, btn){
   document.getElementById("homeContent").style.display = "none";
-
   document.querySelectorAll('.toggle-section').forEach(sec=>{
     sec.style.display = "none";
   });
-
   document.querySelectorAll('.toggle-btn').forEach(b=>{
     b.classList.remove('active');
   });
-
   document.getElementById(id).style.display = "block";
   btn.classList.add('active');
-
   window.scrollTo({top:0, behavior:"smooth"});
 }
 
 function goHome(){
   document.getElementById("homeContent").style.display = "block";
-
   document.querySelectorAll('.toggle-section').forEach(sec=>{
     sec.style.display = "none";
   });
-
   document.querySelectorAll('.toggle-btn').forEach(b=>{
     b.classList.remove('active');
   });
-
   window.scrollTo({top:0, behavior:"smooth"});
 }
-
 </script>
 
 </body>
