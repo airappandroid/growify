@@ -99,8 +99,9 @@
             font-weight: 500;
         }
 
+        /* Dynamic Status Badge */
         .status-badge {
-            background-color: #ef4444;
+            background-color: #64748b;
             color: #ffffff;
             font-size: 11px;
             font-weight: 700;
@@ -108,6 +109,15 @@
             padding: 3px 8px;
             border-radius: 12px;
             letter-spacing: 0.5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .status-badge.live {
+            background-color: #ef4444;
+        }
+
+        .status-badge.completed {
+            background-color: #10b981;
         }
 
         .sub-header {
@@ -166,7 +176,7 @@
             border-radius: 50%;
             background-color: #1e293b;
             object-fit: cover;
-            display: none; /* ইমেজ লোড নোহোৱালৈকে লুকুৱাই ৰখা হৈছে */
+            display: none;
         }
 
         .team-name {
@@ -190,16 +200,31 @@
             color: #94a3b8;
         }
 
+        /* Dynamic Status Box */
         .status-box {
-            background-color: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.25);
-            color: #f87171;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
             border-radius: 10px;
             padding: 10px;
             font-size: 13px;
             text-align: center;
             margin-top: 14px;
             line-height: 1.4;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .status-box.live {
+            background-color: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.25);
+            color: #f87171;
+        }
+
+        .status-box.completed {
+            background-color: rgba(56, 189, 248, 0.1);
+            border-color: rgba(56, 189, 248, 0.25);
+            color: #38bdf8;
         }
 
         .footer-note {
@@ -253,13 +278,13 @@
         <!-- Header -->
         <div class="card-header">
             <span class="match-info" id="match-info">Loading...</span>
-            <span class="status-badge" id="match-status">Live</span>
+            <span class="status-badge" id="match-status">...</span>
         </div>
 
         <!-- Venue & Latest Ball -->
         <div class="sub-header">
             <span class="venue" id="venue-info">📍 Fetching venue...</span>
-            <div class="last-ball-badge">
+            <div class="last-ball-badge" id="last-ball-container">
                 <span>Last Ball:</span>
                 <span class="ball-circle" id="latest-ball">-</span>
             </div>
@@ -307,11 +332,14 @@
 
     <script>
         const matchId = "95254";
-        const cloudflareProxyUrl = `https://cricvoice.aminurmarch.workers.dev/=${matchId}`;
+        let isMatchEnded = false;
 
         async function fetchLiveScore() {
+            // কেচিং এৰাবলৈ timestamp যোগ কৰা হৈছে
+            const cloudflareProxyUrl = `https://cricvoice.aminurmarch.workers.dev/=${matchId}&_t=${Date.now()}`;
+
             try {
-                const response = await fetch(cloudflareProxyUrl);
+                const response = await fetch(cloudflareProxyUrl, { cache: "no-store" });
                 if (!response.ok) return;
 
                 const result = await response.json();
@@ -322,29 +350,54 @@
 
                     if (!live) return;
 
-                    // Match Title/Subtitle
-                    if (live.subtitle && live.short_title) {
-                        document.getElementById("match-info").textContent = `${live.subtitle} • ${live.short_title}`;
+                    // ১. মেচ টাইটেল
+                    const subTitle = live.subtitle ? `${live.subtitle} • ` : '';
+                    const shortTitle = live.short_title || match.short_title || match.title || 'Match';
+                    document.getElementById("match-info").textContent = `${subTitle}${shortTitle}`;
+
+                    // ২. মেচ ষ্টেটাছ নিৰ্ধাৰণ (Live / Completed / Scheduled)
+                    const rawStatus = (live.status_str || live.game_state_str || match.status_str || match.status || "").toLowerCase();
+                    const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || rawStatus.includes("ended") || live.game_state === 3 || match.game_state === 3;
+                    const isLive = rawStatus.includes("live") || rawStatus.includes("in progress") || live.game_state === 2 || match.game_state === 2;
+
+                    isMatchEnded = isCompleted;
+
+                    const statusBadge = document.getElementById("match-status");
+                    const statusBox = document.getElementById("status-box");
+
+                    if (isCompleted) {
+                        statusBadge.textContent = live.status_str || live.game_state_str || "Finished";
+                        statusBadge.className = "status-badge completed";
+                        statusBox.className = "status-box completed";
+                    } else if (isLive) {
+                        statusBadge.textContent = live.status_str || live.game_state_str || "Live";
+                        statusBadge.className = "status-badge live";
+                        statusBox.className = "status-box live";
+                    } else {
+                        statusBadge.textContent = live.status_str || live.game_state_str || "Upcoming";
+                        statusBadge.className = "status-badge";
+                        statusBox.className = "status-box";
                     }
 
-                    // Match State / Status
-                    if (live.game_state_str || live.status_str) {
-                        document.getElementById("match-status").textContent = live.game_state_str || live.status_str;
-                    }
+                    // ৩. মেচৰ ফলাফল বা ষ্টেটাছ ন'ট
+                    const resultNote = live.status_note || live.result || match.status_note || match.result || live.live || (isCompleted ? "Match Finished" : "Match in progress");
+                    statusBox.textContent = resultNote;
 
-                    // Venue Info
+                    // ৪. ভেনিউ
                     if (live.venue) {
                         const venueName = live.venue.name || '';
                         const venueLoc = live.venue.location ? `, ${live.venue.location}` : '';
                         document.getElementById("venue-info").textContent = `📍 ${venueName}${venueLoc}`;
                     }
 
-                    // Latest Ball
-                    if (match.latest_ball_score !== undefined && match.latest_ball_score !== null) {
+                    // ৫. সৰ্বশেষ বল (Last Ball)
+                    if (match.latest_ball_score !== undefined && match.latest_ball_score !== null && match.latest_ball_score !== "") {
                         document.getElementById("latest-ball").textContent = match.latest_ball_score;
+                    } else if (isCompleted) {
+                        document.getElementById("latest-ball").textContent = "✓";
                     }
 
-                    // Team A Info
+                    // ৬. Team A
                     if (live.teama) {
                         document.getElementById("team-a-name").textContent = live.teama.name || "Team A";
                         
@@ -359,7 +412,7 @@
                         document.getElementById("team-a-overs").textContent = live.teama.overs ? `(${live.teama.overs} ov)` : "";
                     }
 
-                    // Team B Info
+                    // ৭. Team B
                     if (live.teamb) {
                         document.getElementById("team-b-name").textContent = live.teamb.name || "Team B";
                         
@@ -374,25 +427,22 @@
                         document.getElementById("team-b-overs").textContent = live.teamb.overs ? `(${live.teamb.overs} ov)` : "";
                     }
 
-                    // Match Status Note
-                    if (live.status_note || live.live) {
-                        document.getElementById("status-box").textContent = live.status_note || live.live;
-                    }
-
-                    // Toss Info
+                    // ৮. টছৰ বিৱৰণ
                     if (live.toss?.text) {
                         document.getElementById("toss-info").textContent = `Toss: ${live.toss.text}`;
+                    } else {
+                        document.getElementById("toss-info").style.display = "none";
                     }
                 }
             } catch (error) {
                 console.error("Error fetching live score:", error);
             } finally {
-                // Request overlapping নহ'বলৈ প্ৰতি ৪ ছেকেণ্ডৰ মূৰে মূৰে কল হ'ব
-                setTimeout(fetchLiveScore, 4000);
+                // মেচ শেষ হ'লে প্ৰতি ৩০ ছেকেণ্ডৰ মূৰত আৰু চলি থাকিলে ৪ ছেকেণ্ডৰ মূৰত আপডেট হ'ব
+                const nextInterval = isMatchEnded ? 30000 : 4000;
+                setTimeout(fetchLiveScore, nextInterval);
             }
         }
 
-        // প্ৰথমবাৰ ডাটা ফেচ কৰা
         fetchLiveScore();
     </script>
 </body>
