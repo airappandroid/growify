@@ -49,7 +49,7 @@
         }
 
         .status-badge {
-            background-color: #ef4444;
+            background-color: #64748b;
             color: #ffffff;
             font-size: 10px;
             font-weight: 700;
@@ -57,6 +57,15 @@
             padding: 2px 7px;
             border-radius: 10px;
             flex-shrink: 0;
+            transition: background-color 0.3s ease;
+        }
+
+        .status-badge.live {
+            background-color: #ef4444;
+        }
+
+        .status-badge.completed {
+            background-color: #10b981;
         }
 
         .match-sub {
@@ -66,14 +75,27 @@
         }
 
         .status-text {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            color: #f87171;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #f1f5f9;
             padding: 6px 10px;
             border-radius: 6px;
             font-size: 11.5px;
             margin-top: 8px;
             text-align: center;
+            font-weight: 500;
+        }
+
+        .status-text.live {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+        }
+
+        .status-text.completed {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: rgba(56, 189, 248, 0.2);
+            color: #38bdf8;
         }
 
         /* Tabs (Horizontal Scrollable) */
@@ -83,12 +105,12 @@
             overflow-x: auto;
             padding-bottom: 6px;
             margin-bottom: 12px;
-            scrollbar-width: none; /* Firefox */
+            scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
         }
 
         .tabs-container::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Edge */
+            display: none;
         }
 
         .tab-btn {
@@ -142,7 +164,6 @@
             margin-bottom: 10px;
         }
 
-        /* Tables */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -194,7 +215,6 @@
             line-height: 1.2;
         }
 
-        /* Not Out Highlight */
         .out-desc.not-out {
             color: #22c55e;
             font-weight: 600;
@@ -205,7 +225,6 @@
             color: #ffffff;
         }
 
-        /* Extras & Totals Box */
         .info-card {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid #232e42;
@@ -267,7 +286,7 @@
         <div class="match-card-header">
             <div class="match-title">
                 <span id="header-match">Match Scorecard</span>
-                <span class="status-badge" id="header-status">Live</span>
+                <span class="status-badge" id="header-status">...</span>
             </div>
             <div class="match-sub" id="header-venue">📍 -</div>
             <div class="status-text" id="header-note">Loading match details...</div>
@@ -282,7 +301,8 @@
 
     <script>
         const currentMatchId = "95254";
-        const scorecardProxyUrl = `https://cricvoice2.aminurmarch.workers.dev/?matchId=${currentMatchId}`;
+        // কেচিং এৰাবলৈ timestamp যোগ কৰা হৈছে
+        const scorecardProxyUrl = `https://cricvoice2.aminurmarch.workers.dev/?matchId=${currentMatchId}&_t=${Date.now()}`;
         
         let matchData = null;
         let activeInningIndex = 0;
@@ -292,11 +312,10 @@
             container.innerHTML = `<div id="loading">Fetching scorecard data...</div>`;
 
             try {
-                const res = await fetch(scorecardProxyUrl);
+                const res = await fetch(scorecardProxyUrl, { cache: "no-store" });
                 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                 const json = await res.json();
 
-                // JSON গাঠনি অনুসৰি ডাটা লোড
                 if (json.data && Array.isArray(json.data) && json.data.length > 0 && json.data[0].scoreCard) {
                     matchData = json.data[0].scoreCard;
                 } else if (json.scoreCard) {
@@ -310,12 +329,38 @@
                     return;
                 }
 
-                // হেডাৰৰ তথ্য সুৰক্ষিতভাৱে আপডেট
+                // হেডাৰৰ তথ্য
                 const subTitle = matchData.subtitle ? `${matchData.subtitle} • ` : '';
                 const mainTitle = matchData.short_title || matchData.title || 'Scorecard';
                 document.getElementById("header-match").textContent = `${subTitle}${mainTitle}`;
-                document.getElementById("header-status").textContent = matchData.game_state_str || matchData.status_str || "Live";
+
+                // মেচ ষ্টেটাছ পৰীক্ষা (Live / Completed / Upcoming)
+                const rawStatus = (matchData.status_str || matchData.game_state_str || matchData.status || "").toLowerCase();
+                const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || rawStatus.includes("ended") || matchData.game_state === 3;
+                const isLive = rawStatus.includes("live") || rawStatus.includes("in progress") || matchData.game_state === 2;
+
+                const badgeEl = document.getElementById("header-status");
+                const noteEl = document.getElementById("header-note");
+
+                if (isCompleted) {
+                    badgeEl.textContent = matchData.status_str || matchData.game_state_str || "Finished";
+                    badgeEl.className = "status-badge completed";
+                    noteEl.className = "status-text completed";
+                } else if (isLive) {
+                    badgeEl.textContent = matchData.status_str || matchData.game_state_str || "Live";
+                    badgeEl.className = "status-badge live";
+                    noteEl.className = "status-text live";
+                } else {
+                    badgeEl.textContent = matchData.status_str || matchData.game_state_str || "Scheduled";
+                    badgeEl.className = "status-badge";
+                    noteEl.className = "status-text";
+                }
+
+                // ফলাফল বা ষ্টেটাছ ন'ট
+                const statusNote = matchData.status_note || matchData.result || matchData.status_text || matchData.live || (isCompleted ? "Match Finished" : "Match in progress");
+                noteEl.textContent = statusNote;
                 
+                // ভেনিউ
                 if (matchData.venue && (matchData.venue.name || matchData.venue.location)) {
                     const venueParts = [matchData.venue.name, matchData.venue.location].filter(Boolean);
                     document.getElementById("header-venue").textContent = `📍 ${venueParts.join(', ')}`;
@@ -323,9 +368,7 @@
                     document.getElementById("header-venue").textContent = `📍 Venue details unavailable`;
                 }
 
-                document.getElementById("header-note").textContent = matchData.status_note || matchData.live || "Match in progress";
-
-                // বৰ্তমান চলি থকা ইনিংছ নিৰ্বাচন
+                // সৰ্বশেষ ইনিংছ নিৰ্বাচন
                 activeInningIndex = matchData.innings.length - 1;
 
                 renderInningTabs();
@@ -370,7 +413,7 @@
 
             const container = document.getElementById("content-container");
 
-            // ১. বেটিং তালিকা (Not Out সেউজীয়া ৰং কৰা হৈছে)
+            // বেটিং তালিকা
             let batHtml = "";
             (inn.batsmen || []).forEach(b => {
                 const isNotOut = !b.how_out || b.how_out.toLowerCase().includes('not out');
@@ -392,7 +435,7 @@
                 `;
             });
 
-            // ২. বেটিং নকৰা খেলুৱৈ (Did Not Bat)
+            // বেটিং নকৰা খেলুৱৈ
             let dnbHtml = "";
             if (Array.isArray(inn.did_not_bat) && inn.did_not_bat.length > 0) {
                 const names = inn.did_not_bat
@@ -410,12 +453,12 @@
                 }
             }
 
-            // ৩. এক্সট্ৰা (Extras)
+            // এক্সট্ৰা
             const ext = inn.extra_runs || {};
             const extDetails = `(b ${ext.byes ?? 0}, lb ${ext.legbyes ?? 0}, w ${ext.wides ?? 0}, nb ${ext.noballs ?? 0}, p ${ext.penalty ?? 0})`;
             const eq = inn.equations || {};
 
-            // ৪. বলিং তালিকা
+            // বলিং তালিকা
             let bowlHtml = "";
             (inn.bowlers || []).forEach(bw => {
                 bowlHtml += `
@@ -432,7 +475,7 @@
                 `;
             });
 
-            // ৫. উইকেট পতন (Fall of Wickets)
+            // উইকেট পতন
             let fowHtml = "";
             if (Array.isArray(inn.fows) && inn.fows.length > 0) {
                 const fowList = inn.fows.map(f => `<span><b>${f.score_at_dismissal ?? 0}-${f.number ?? ''}</b> (${f.name || ''}, ${f.overs_at_dismissal ?? 0} ov)</span>`).join(" • ");
@@ -501,7 +544,6 @@
             `;
         }
 
-        // পেজ লোড হ'লে ফেচ আৰম্ভ হ'ব
         loadScorecard();
     </script>
 </body>
