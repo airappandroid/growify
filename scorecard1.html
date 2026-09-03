@@ -49,23 +49,35 @@
         }
 
         .status-badge {
-            background-color: #64748b;
-            color: #ffffff;
+            background-color: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.4);
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
             padding: 2px 7px;
             border-radius: 10px;
             flex-shrink: 0;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .status-badge.live {
             background-color: #ef4444;
+            border-color: #ef4444;
+            color: #ffffff;
+            animation: pulse 1.5s infinite;
         }
 
         .status-badge.completed {
             background-color: #10b981;
+            border-color: #10b981;
+            color: #ffffff;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
         }
 
         .match-sub {
@@ -75,9 +87,9 @@
         }
 
         .status-text {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #f1f5f9;
+            background: rgba(59, 130, 246, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            color: #93c5fd;
             padding: 6px 10px;
             border-radius: 6px;
             font-size: 11.5px;
@@ -256,6 +268,36 @@
             color: #cbd5e1;
         }
 
+        /* Upcoming Match Card */
+        .upcoming-card {
+            text-align: center;
+            padding: 24px 14px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed #283548;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
+
+        .upcoming-teams {
+            font-size: 15px;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 6px;
+        }
+
+        .upcoming-time {
+            font-size: 13px;
+            color: #38bdf8;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .upcoming-note {
+            font-size: 11.5px;
+            color: #94a3b8;
+            line-height: 1.4;
+        }
+
         #loading, #error-msg {
             text-align: center;
             padding: 24px;
@@ -285,10 +327,10 @@
     <div class="scorecard-app">
         <div class="match-card-header">
             <div class="match-title">
-                <span id="header-match">Match Scorecard</span>
-                <span class="status-badge" id="header-status">...</span>
+                <span id="header-match">ENG-W vs IRE-W</span>
+                <span class="status-badge" id="header-status">SCHEDULED</span>
             </div>
-            <div class="match-sub" id="header-venue">📍 -</div>
+            <div class="match-sub" id="header-venue">📍 County Ground, Derby</div>
             <div class="status-text" id="header-note">Loading match details...</div>
         </div>
 
@@ -300,76 +342,119 @@
     </div>
 
     <script>
-        const currentMatchId = "95254";
-        // কেচিং এৰাবলৈ timestamp যোগ কৰা হৈছে
-        const scorecardProxyUrl = `https://cricvoice2.aminurmarch.workers.dev/?matchId=${currentMatchId}&_t=${Date.now()}`;
+        const currentMatchId = "95251";
+        const scorecardProxyUrl = `https://cricvoice2.aminurmarch.workers.dev/?matchId=${currentMatchId}`;
         
         let matchData = null;
         let activeInningIndex = 0;
 
+        // ইউকে সময় নিৰ্ণয় কৰাৰ ফাংচন
+        function getMatchUKTime(data) {
+            let dateObj;
+            if (data.timestamp_start) {
+                dateObj = new Date(data.timestamp_start * 1000);
+            } else if (data.date_start_ist) {
+                dateObj = new Date(data.date_start_ist.replace(" ", "T") + "+05:30");
+            } else if (data.date_start) {
+                dateObj = new Date(data.date_start.replace(" ", "T") + "Z");
+            }
+
+            if (!dateObj || isNaN(dateObj.getTime())) return "1:00 PM";
+
+            return new Intl.DateTimeFormat('en-GB', {
+                timeZone: 'Europe/London',
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            }).format(dateObj).toUpperCase();
+        }
+
         async function loadScorecard() {
             const container = document.getElementById("content-container");
-            container.innerHTML = `<div id="loading">Fetching scorecard data...</div>`;
 
             try {
-                const res = await fetch(scorecardProxyUrl, { cache: "no-store" });
+                // সদায় সতেজ ডাটা পাবলৈ timestamp যোগ কৰা হৈছে
+                const res = await fetch(`${scorecardProxyUrl}&_t=${Date.now()}`, { cache: "no-store" });
                 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                 const json = await res.json();
 
-                if (json.data && Array.isArray(json.data) && json.data.length > 0 && json.data[0].scoreCard) {
-                    matchData = json.data[0].scoreCard;
+                if (json.data && Array.isArray(json.data) && json.data.length > 0) {
+                    matchData = json.data[0].scoreCard || json.data[0].livescore || json.data[0];
                 } else if (json.scoreCard) {
                     matchData = json.scoreCard;
+                } else if (json.livescore) {
+                    matchData = json.livescore;
                 } else {
                     matchData = json;
                 }
 
-                if (!matchData || !Array.isArray(matchData.innings) || matchData.innings.length === 0) {
-                    container.innerHTML = `<div id="loading">No scorecard details available.</div>`;
+                if (!matchData) {
+                    container.innerHTML = `<div id="loading">No match details available.</div>`;
                     return;
                 }
 
-                // হেডাৰৰ তথ্য
+                // ১. হেডাৰ আৰু টাইটেল
                 const subTitle = matchData.subtitle ? `${matchData.subtitle} • ` : '';
-                const mainTitle = matchData.short_title || matchData.title || 'Scorecard';
+                const mainTitle = matchData.short_title || matchData.title || 'ENG-W vs IRE-W';
                 document.getElementById("header-match").textContent = `${subTitle}${mainTitle}`;
 
-                // মেচ ষ্টেটাছ পৰীক্ষা (Live / Completed / Upcoming)
-                const rawStatus = (matchData.status_str || matchData.game_state_str || matchData.status || "").toLowerCase();
-                const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || rawStatus.includes("ended") || matchData.game_state === 3;
-                const isLive = rawStatus.includes("live") || rawStatus.includes("in progress") || matchData.game_state === 2;
+                // ২. ভেনিউ
+                if (matchData.venue && (matchData.venue.name || matchData.venue.country)) {
+                    const venueParts = [matchData.venue.name, matchData.venue.country].filter(Boolean);
+                    document.getElementById("header-venue").textContent = `📍 ${venueParts.join(', ')}`;
+                }
+
+                // ৩. ষ্টেটাছ আৰু UK Time লজিক
+                const rawStatus = (matchData.status_str || matchData.game_state_str || "").toLowerCase();
+                const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || matchData.status === 2;
+                const isLive = rawStatus.includes("live") || matchData.status === 3;
 
                 const badgeEl = document.getElementById("header-status");
                 const noteEl = document.getElementById("header-note");
 
+                const ukTime = getMatchUKTime(matchData);
+                const venueName = matchData.venue && matchData.venue.name ? matchData.venue.name : "Derby";
+
                 if (isCompleted) {
-                    badgeEl.textContent = matchData.status_str || matchData.game_state_str || "Finished";
+                    badgeEl.textContent = "COMPLETED";
                     badgeEl.className = "status-badge completed";
                     noteEl.className = "status-text completed";
+                    noteEl.textContent = matchData.status_note || matchData.result || "Match Finished";
                 } else if (isLive) {
-                    badgeEl.textContent = matchData.status_str || matchData.game_state_str || "Live";
+                    badgeEl.textContent = "LIVE";
                     badgeEl.className = "status-badge live";
                     noteEl.className = "status-text live";
+                    noteEl.textContent = matchData.status_note || matchData.live || matchData.equation || "Match in progress";
                 } else {
-                    badgeEl.textContent = matchData.status_str || matchData.game_state_str || "Scheduled";
+                    badgeEl.textContent = "SCHEDULED";
                     badgeEl.className = "status-badge";
                     noteEl.className = "status-text";
+                    noteEl.textContent = `${matchData.subtitle || "2nd Match"} • Starts at ${ukTime} UK Time (${venueName})`;
                 }
 
-                // ফলাফল বা ষ্টেটাছ ন'ট
-                const statusNote = matchData.status_note || matchData.result || matchData.status_text || matchData.live || (isCompleted ? "Match Finished" : "Match in progress");
-                noteEl.textContent = statusNote;
-                
-                // ভেনিউ
-                if (matchData.venue && (matchData.venue.name || matchData.venue.location)) {
-                    const venueParts = [matchData.venue.name, matchData.venue.location].filter(Boolean);
-                    document.getElementById("header-venue").textContent = `📍 ${venueParts.join(', ')}`;
-                } else {
-                    document.getElementById("header-venue").textContent = `📍 Venue details unavailable`;
+                // ৪. ইনিংছ পৰীক্ষা (যদি খেলখন এতিয়াও আৰম্ভ হোৱা নাই)
+                if (!Array.isArray(matchData.innings) || matchData.innings.length === 0) {
+                    document.getElementById("tabs-container").innerHTML = "";
+                    const teamA = (matchData.teama && matchData.teama.name) || "England Women";
+                    const teamB = (matchData.teamb && matchData.teamb.name) || "Ireland Women";
+                    
+                    container.innerHTML = `
+                        <div class="upcoming-card">
+                            <div class="upcoming-teams">${teamA} vs ${teamB}</div>
+                            <div class="upcoming-time">Starts at ${ukTime} UK Time</div>
+                            <div class="upcoming-note">
+                                Match scheduled at ${venueName}.<br>
+                                Live scorecard and ball-by-ball updates will appear here automatically once the match begins.
+                            </div>
+                        </div>
+                    `;
+                    return;
                 }
 
-                // সৰ্বশেষ ইনিংছ নিৰ্বাচন
-                activeInningIndex = matchData.innings.length - 1;
+                // ইনিংছ থাকিলে টেব দেখুৱাওক
+                if (activeInningIndex >= matchData.innings.length) {
+                    activeInningIndex = matchData.innings.length - 1;
+                }
 
                 renderInningTabs();
                 renderInningDetails(activeInningIndex);
@@ -453,7 +538,7 @@
                 }
             }
 
-            // এক্সট্ৰা
+            // অতিৰিক্ত ৰাণ
             const ext = inn.extra_runs || {};
             const extDetails = `(b ${ext.byes ?? 0}, lb ${ext.legbyes ?? 0}, w ${ext.wides ?? 0}, nb ${ext.noballs ?? 0}, p ${ext.penalty ?? 0})`;
             const eq = inn.equations || {};
@@ -544,7 +629,9 @@
             `;
         }
 
+        // প্ৰাৰম্ভিক লোড আৰু প্ৰতি ২০ ছেকেণ্ডৰ মূৰে মূৰে অটো-আপডেইট
         loadScorecard();
+        setInterval(loadScorecard, 20000);
     </script>
 </body>
 </html>
