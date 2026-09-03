@@ -94,13 +94,13 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    background: rgba(239, 68, 68, 0.16);
-    border: 1px solid rgba(239, 68, 68, 0.45);
+    background: rgba(59, 130, 246, 0.16);
+    border: 1px solid rgba(59, 130, 246, 0.45);
     padding: 2px 6px;
     border-radius: 4px;
     font-size: 9.5px;
     font-weight: 800;
-    color: #f87171;
+    color: #60a5fa;
     letter-spacing: 0.4px;
     flex-shrink: 0;
 }
@@ -372,25 +372,25 @@ body {
     <!-- Cricket Live Score Strip (go:card) -->
     <a href="go:card" class="cricket-strip" id="cricketStrip">
         <div class="strip-top">
-            <div class="live-badge">
-                <span class="dot"></span>
-                <span id="matchBadge">LIVE</span>
+            <div class="live-badge" id="badgeContainer">
+                <span class="dot" id="liveDot"></span>
+                <span id="matchBadge">SCHEDULED</span>
             </div>
             <div class="strip-action">
                 <span>Scorecard</span>
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </div>
         </div>
-        <div class="strip-status" id="matchNote">Loading match status...</div>
+        <div class="strip-status" id="matchNote">2nd Match • Starts at 1:00 PM UK Time (County Ground, Derby)</div>
         <div class="strip-body">
             <div class="strip-scores">
                 <div class="strip-team">
-                    <span class="team-code" id="teamACode">ENG</span>
+                    <span class="team-code" id="teamACode">ENG-W</span>
                     <span class="team-runs" id="teamAScore">--</span>
                 </div>
                 <span class="strip-divider">vs</span>
                 <div class="strip-team">
-                    <span class="team-code" id="teamBCode">PAK</span>
+                    <span class="team-code" id="teamBCode">IRE-W</span>
                     <span class="team-runs" id="teamBScore">--</span>
                 </div>
             </div>
@@ -487,22 +487,44 @@ body {
     </div>
 
    <div class="section">
-    <div class="title">🕒 Latest Updates</div>
-    <div class="station-card news-card">
-        <div class="station-info">
-            <div class="station-name">📰 5 Min News Brief</div>
-            <div class="playing-row">
-                <span>Updated: 3 September 2026, 4:00 AM</span>
+        <div class="title">🕒 Latest Updates</div>
+        <div class="station-card news-card">
+            <div class="station-info">
+                <div class="station-name">📰 5 Min News Brief</div>
+                <div class="playing-row">
+                    <span>Updated: 3 September 2026, 4:00 AM</span>
+                </div>
             </div>
+            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/d6c814-w1msm0v6pkyxlqb/vf_w1msm0v6pkyxlqb_0c2819bd-73e0-43d3-aec2-03cc88d401b1.ism/dash/vf_w1msm0v6pkyxlqb_0c2819bd-73e0-43d3-aec2-03cc88d401b1-audio_eng_1=96000-3.m3u8" class="play-btn"></a>
         </div>
-        <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/d6c814-w1msm0v6pkyxlqb/vf_w1msm0v6pkyxlqb_0c2819bd-73e0-43d3-aec2-03cc88d401b1.ism/dash/vf_w1msm0v6pkyxlqb_0c2819bd-73e0-43d3-aec2-03cc88d401b1-audio_eng_1=96000-3.m3u8" class="play-btn"></a>
     </div>
 </div>
 
 <script>
 /* ================= Live Cricket Score Fetcher ================= */
-const matchId = "95254";
+const matchId = "95251";
 const cloudflareProxyUrl = `https://cricvoice.aminurmarch.workers.dev/?matchId=${matchId}`;
+
+// ইউকে সময় (BST/GMT) ৰূপান্তৰ কৰাৰ ফাংচন
+function getMatchUKTime(match) {
+    let dateObj;
+    if (match.timestamp_start) {
+        dateObj = new Date(match.timestamp_start * 1000);
+    } else if (match.date_start_ist) {
+        dateObj = new Date(match.date_start_ist.replace(" ", "T") + "+05:30");
+    } else if (match.date_start) {
+        dateObj = new Date(match.date_start.replace(" ", "T") + "Z");
+    }
+
+    if (!dateObj || isNaN(dateObj.getTime())) return "1:00 PM";
+
+    return new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/London',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+    }).format(dateObj).toUpperCase();
+}
 
 async function fetchCricketScore() {
     try {
@@ -517,36 +539,56 @@ async function fetchCricketScore() {
             const teamA = match.teama;
             const teamB = match.teamb;
 
+            // দল দুটাৰ নাম আৰু স্ক'ৰ
             if (teamA) {
-                document.getElementById('teamACode').textContent = teamA.short_name || "ENG";
-                document.getElementById('teamAScore').textContent = teamA.scores || "--";
+                document.getElementById('teamACode').textContent = teamA.short_name || "ENG-W";
+                document.getElementById('teamAScore').textContent = teamA.scores || teamA.scores_full || "--";
             }
 
             if (teamB) {
-                document.getElementById('teamBCode').textContent = teamB.short_name || "PAK";
-                document.getElementById('teamBScore').textContent = teamB.scores || "--";
+                document.getElementById('teamBCode').textContent = teamB.short_name || "IRE-W";
+                document.getElementById('teamBScore').textContent = teamB.scores || teamB.scores_full || "--";
             }
 
-            // Status Note
-            const statusNote = match.status_note || match.live || match.equation || match.status_str || "";
-            if (statusNote) {
-                document.getElementById('matchNote').textContent = statusNote;
-            }
-
-            // --- Badge Logic Fix ---
-            const gameState = (match.game_state_str || "").toLowerCase();
+            // ষ্টেটাছ ন'ট আৰু সময় নিৰ্ণয়
+            let statusText = match.status_note || match.live || match.equation || "";
             const statusStr = (match.status_str || "").toLowerCase();
-            let badgeText = "LIVE";
+            const badgeContainer = document.getElementById('badgeContainer');
+            const badgeEl = document.getElementById('matchBadge');
+            const dotEl = document.getElementById('liveDot');
 
-            if (statusStr.includes("completed") || statusStr.includes("finished") || match.status === 2 || gameState === "default") {
-                badgeText = "COMPLETED";
-            } else if (gameState && gameState !== "default") {
-                badgeText = match.game_state_str.toUpperCase();
-            } else if (statusStr) {
-                badgeText = match.status_str.toUpperCase();
+            // খেলখন লাইভ হোৱা নাই (Scheduled)
+            if (statusStr.includes("scheduled") || match.status === 1) {
+                const ukTime = getMatchUKTime(match);
+                const venueName = match.venue && match.venue.name ? match.venue.name : "Derby";
+                const subTitle = match.subtitle || "Match";
+                
+                document.getElementById('matchNote').textContent = `${subTitle} • Starts at ${ukTime} UK Time (${venueName})`;
+                
+                badgeEl.textContent = "SCHEDULED";
+                badgeContainer.style.background = "rgba(59, 130, 246, 0.16)";
+                badgeContainer.style.borderColor = "rgba(59, 130, 246, 0.45)";
+                badgeContainer.style.color = "#60a5fa";
+                if (dotEl) dotEl.style.display = "none";
+
+            } else if (statusStr.includes("completed") || statusStr.includes("finished") || match.status === 2) {
+                // খেল সম্পূৰ্ণ হ'লে
+                document.getElementById('matchNote').textContent = statusText || match.status_note || "Match Ended";
+                badgeEl.textContent = "COMPLETED";
+                badgeContainer.style.background = "rgba(148, 163, 184, 0.16)";
+                badgeContainer.style.borderColor = "rgba(148, 163, 184, 0.4)";
+                badgeContainer.style.color = "#94a3b8";
+                if (dotEl) dotEl.style.display = "none";
+
+            } else {
+                // খেল লাইভ চলি থাকিলে
+                document.getElementById('matchNote').textContent = statusText || "Match in progress";
+                badgeEl.textContent = "LIVE";
+                badgeContainer.style.background = "rgba(239, 68, 68, 0.16)";
+                badgeContainer.style.borderColor = "rgba(239, 68, 68, 0.45)";
+                badgeContainer.style.color = "#f87171";
+                if (dotEl) dotEl.style.display = "inline-block";
             }
-
-            document.getElementById('matchBadge').textContent = badgeText;
         }
     } catch (err) {
         console.error("Error fetching live score:", err);
