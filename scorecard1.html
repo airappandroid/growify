@@ -180,7 +180,7 @@
             width: 100%;
             border-collapse: collapse;
             font-size: 11.5px;
-            min-width: 320px;
+            min-width: 360px; /* কলামসমূহ সংকুচিত হোৱা ৰোধ কৰিবলৈ */
         }
 
         th {
@@ -207,6 +207,12 @@
         td:first-child {
             text-align: left;
             white-space: normal;
+        }
+
+        /* শেষৰ কলামৰ (SR আৰু ECO) আখৰ কটা যোৱা ৰোধ কৰিবলৈ পেডিং */
+        th:last-child,
+        td:last-child {
+            padding-right: 10px;
         }
 
         .player-name {
@@ -348,7 +354,7 @@
         let matchData = null;
         let activeInningIndex = 0;
 
-        // ইউকে সময় নিৰ্ণয় কৰাৰ ফাংচন
+        // ইউকে সময় নিৰ্ণয় কৰাৰ ফাংচন
         function getMatchUKTime(data) {
             let dateObj;
             if (data.timestamp_start) {
@@ -373,7 +379,7 @@
             const container = document.getElementById("content-container");
 
             try {
-                // সদায় সতেজ ডাটা পাবলৈ timestamp যোগ কৰা হৈছে
+                // সদায় সতেজ ডাটা পাবলৈ timestamp যোগ কৰা হৈছে
                 const res = await fetch(`${scorecardProxyUrl}&_t=${Date.now()}`, { cache: "no-store" });
                 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                 const json = await res.json();
@@ -432,7 +438,7 @@
                     noteEl.textContent = `${matchData.subtitle || "2nd Match"} • Starts at ${ukTime} UK Time (${venueName})`;
                 }
 
-                // ৪. ইনিংছ পৰীক্ষা (যদি খেলখন এতিয়াও আৰম্ভ হোৱা নাই)
+                // ৪. ইনিংছ পৰীক্ষা (যদি খেলখন এতিয়াও আৰম্ভ হোৱা নাই)
                 if (!Array.isArray(matchData.innings) || matchData.innings.length === 0) {
                     document.getElementById("tabs-container").innerHTML = "";
                     const teamA = (matchData.teama && matchData.teama.name) || "England Women";
