@@ -288,13 +288,13 @@
 
         <!-- Header -->
         <div class="card-header">
-            <span class="match-info" id="match-info">Loading...</span>
+            <span class="match-info" id="match-info">India Women vs Hong Kong Women T20</span>
             <span class="status-badge" id="match-status">SCHEDULED</span>
         </div>
 
         <!-- Venue & Latest Ball -->
         <div class="sub-header">
-            <span class="venue" id="venue-info">📍 Fetching venue...</span>
+            <span class="venue" id="venue-info">📍 Dubai International Cricket Stadium, Dubai</span>
             <div class="last-ball-badge" id="last-ball-container" style="display: none;">
                 <span>Last Ball:</span>
                 <span class="ball-circle" id="latest-ball">-</span>
@@ -305,7 +305,7 @@
         <div class="team-row">
             <div class="team-details">
                 <img class="team-logo" id="team-a-logo" src="" alt="" style="display: none;">
-                <span class="team-name" id="team-a-name">England Women</span>
+                <span class="team-name" id="team-a-name">India Women</span>
             </div>
             <div class="team-score">
                 <div class="runs" id="team-a-runs">--</div>
@@ -317,7 +317,7 @@
         <div class="team-row">
             <div class="team-details">
                 <img class="team-logo" id="team-b-logo" src="" alt="" style="display: none;">
-                <span class="team-name" id="team-b-name">Ireland Women</span>
+                <span class="team-name" id="team-b-name">Hong Kong Women</span>
             </div>
             <div class="team-score">
                 <div class="runs" id="team-b-runs">--</div>
@@ -327,7 +327,7 @@
 
         <!-- Status Message -->
         <div class="status-box" id="status-box">
-            Updating match details...
+            Starts at 8:00 PM IST Today
         </div>
 
         <!-- Toss Details -->
@@ -336,16 +336,16 @@
         </div>
 
         <!-- Bottom Full Scorecard Button -->
-        <button class="btn-card" onclick="window.location.href='go:card'">
+        <button class="btn-card" onclick="window.location.href='go:card1'">
             Full Score Card
         </button>
     </div>
 
     <script>
-        const matchId = "95251";
+        const matchId = "98315";
         let isMatchLive = false;
 
-        // ভাৰতীয় সময় (IST) নিৰ্ধাৰণ কৰাৰ ফাংচন
+        // ভাৰতীয় সময় (IST) নিৰ্ধাৰণ কৰাৰ ফাংচন
         function getMatchISTTime(match) {
             let dateObj;
             if (match.date_start_ist) {
@@ -356,7 +356,7 @@
                 dateObj = new Date(match.date_start.replace(" ", "T") + "Z");
             }
 
-            if (!dateObj || isNaN(dateObj.getTime())) return "5:30 PM IST";
+            if (!dateObj || isNaN(dateObj.getTime())) return "8:00 PM IST";
 
             const timeStr = new Intl.DateTimeFormat('en-IN', {
                 timeZone: 'Asia/Kolkata',
@@ -385,7 +385,7 @@
 
                     // ১. মেচ টাইটেল
                     const subTitle = live.subtitle ? `${live.subtitle} • ` : '';
-                    const shortTitle = live.short_title || match.short_title || live.title || 'ENG-W vs IRE-W';
+                    const shortTitle = live.short_title || match.short_title || live.title || 'IND-W vs HK-W T20';
                     document.getElementById("match-info").textContent = `${subTitle}${shortTitle}`;
 
                     // ২. মেচ ষ্টেটাছ নিৰ্ধাৰণ (Live / Completed / Scheduled)
@@ -398,7 +398,7 @@
                     const statusBadge = document.getElementById("match-status");
                     const statusBox = document.getElementById("status-box");
                     const istTime = getMatchISTTime(live);
-                    const venueName = (live.venue && live.venue.name) ? live.venue.name : "Derby";
+                    const venueName = (live.venue && live.venue.name) ? live.venue.name : "Dubai";
 
                     if (isCompleted) {
                         statusBadge.textContent = "COMPLETED";
@@ -414,7 +414,7 @@
                         statusBadge.textContent = "SCHEDULED";
                         statusBadge.className = "status-badge";
                         statusBox.className = "status-box";
-                        statusBox.textContent = `${live.subtitle || "Match"} • Starts at ${istTime} (${venueName})`;
+                        statusBox.textContent = `${live.subtitle || "T20"} • Starts at ${istTime} Today (${venueName})`;
                     }
 
                     // ৩. ভেনিউ
@@ -432,9 +432,9 @@
                         lastBallContainer.style.display = "none";
                     }
 
-                    // ৫. Team A (England Women)
+                    // ৫. Team A (India Women)
                     if (live.teama) {
-                        document.getElementById("team-a-name").textContent = live.teama.name || "England Women";
+                        document.getElementById("team-a-name").textContent = live.teama.name || "India Women";
                         
                         const logoA = document.getElementById("team-a-logo");
                         if (live.teama.logo_url) {
@@ -447,9 +447,9 @@
                         document.getElementById("team-a-overs").textContent = live.teama.overs ? `(${live.teama.overs} ov)` : "";
                     }
 
-                    // ৬. Team B (Ireland Women)
+                    // ৬. Team B (Hong Kong Women)
                     if (live.teamb) {
-                        document.getElementById("team-b-name").textContent = live.teamb.name || "Ireland Women";
+                        document.getElementById("team-b-name").textContent = live.teamb.name || "Hong Kong Women";
                         
                         const logoB = document.getElementById("team-b-logo");
                         if (live.teamb.logo_url) {
