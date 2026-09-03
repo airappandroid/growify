@@ -15,7 +15,7 @@
         body {
             background-color: #0b0f19;
             color: #f1f5f9;
-            padding: 10px;
+            padding: 8px;
             display: flex;
             justify-content: center;
         }
@@ -26,7 +26,7 @@
             background: #161f30;
             border: 1px solid #283548;
             border-radius: 14px;
-            padding: 14px;
+            padding: 12px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             overflow: hidden;
         }
@@ -168,7 +168,7 @@
             margin: 12px 0 6px 0;
         }
 
-        /* Responsive Table Wrapper */
+        /* Responsive Table */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
@@ -179,49 +179,47 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 11.5px;
-            min-width: 360px; /* কলামসমূহ সংকুচিত হোৱা ৰোধ কৰিবলৈ */
+            font-size: 11px;
         }
 
         th {
             color: #64748b;
             font-weight: 600;
             text-align: right;
-            padding: 6px 4px;
+            padding: 6px 3px;
             border-bottom: 1px solid #232e42;
             white-space: nowrap;
+            font-size: 10.5px;
         }
 
         th:first-child {
             text-align: left;
+            padding-left: 2px;
         }
 
         td {
-            padding: 6px 4px;
+            padding: 6px 3px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
             text-align: right;
             color: #cbd5e1;
             white-space: nowrap;
+            font-size: 11px;
         }
 
         td:first-child {
             text-align: left;
             white-space: normal;
-        }
-
-        /* শেষৰ কলামৰ (SR আৰু ECO) আখৰ কটা যোৱা ৰোধ কৰিবলৈ পেডিং */
-        th:last-child,
-        td:last-child {
-            padding-right: 10px;
+            padding-left: 2px;
         }
 
         .player-name {
             font-weight: 600;
             color: #f1f5f9;
+            word-break: break-word;
         }
 
         .player-role {
-            font-size: 10px;
+            font-size: 9.5px;
             color: #38bdf8;
             margin-left: 2px;
         }
@@ -231,6 +229,7 @@
             color: #64748b;
             margin-top: 1px;
             line-height: 1.2;
+            word-break: break-word;
         }
 
         .out-desc.not-out {
@@ -326,6 +325,24 @@
         .retry-btn:hover {
             background: #1d4ed8;
         }
+
+        /* মোবাইল স্ক্ৰিনৰ বাবে বিশেষ ব্যৱস্থা */
+        @media (max-width: 480px) {
+            body {
+                padding: 4px;
+            }
+            .scorecard-app {
+                padding: 10px 8px;
+                border-radius: 10px;
+            }
+            th, td {
+                padding: 5px 2px;
+                font-size: 10.5px;
+            }
+            th {
+                font-size: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -354,7 +371,6 @@
         let matchData = null;
         let activeInningIndex = 0;
 
-        // ইউকে সময় নিৰ্ণয় কৰাৰ ফাংচন
         function getMatchUKTime(data) {
             let dateObj;
             if (data.timestamp_start) {
@@ -379,7 +395,6 @@
             const container = document.getElementById("content-container");
 
             try {
-                // সদায় সতেজ ডাটা পাবলৈ timestamp যোগ কৰা হৈছে
                 const res = await fetch(`${scorecardProxyUrl}&_t=${Date.now()}`, { cache: "no-store" });
                 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                 const json = await res.json();
@@ -399,18 +414,18 @@
                     return;
                 }
 
-                // ১. হেডাৰ আৰু টাইটেল
+                // হেডাৰ আৰু টাইটেল
                 const subTitle = matchData.subtitle ? `${matchData.subtitle} • ` : '';
                 const mainTitle = matchData.short_title || matchData.title || 'ENG-W vs IRE-W';
                 document.getElementById("header-match").textContent = `${subTitle}${mainTitle}`;
 
-                // ২. ভেনিউ
+                // ভেনিউ
                 if (matchData.venue && (matchData.venue.name || matchData.venue.country)) {
                     const venueParts = [matchData.venue.name, matchData.venue.country].filter(Boolean);
                     document.getElementById("header-venue").textContent = `📍 ${venueParts.join(', ')}`;
                 }
 
-                // ৩. ষ্টেটাছ আৰু UK Time লজিক
+                // ষ্টেটাছ লজিক
                 const rawStatus = (matchData.status_str || matchData.game_state_str || "").toLowerCase();
                 const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || matchData.status === 2;
                 const isLive = rawStatus.includes("live") || matchData.status === 3;
@@ -438,7 +453,7 @@
                     noteEl.textContent = `${matchData.subtitle || "2nd Match"} • Starts at ${ukTime} UK Time (${venueName})`;
                 }
 
-                // ৪. ইনিংছ পৰীক্ষা (যদি খেলখন এতিয়াও আৰম্ভ হোৱা নাই)
+                // ইনিংছ পৰীক্ষা
                 if (!Array.isArray(matchData.innings) || matchData.innings.length === 0) {
                     document.getElementById("tabs-container").innerHTML = "";
                     const teamA = (matchData.teama && matchData.teama.name) || "England Women";
@@ -457,7 +472,6 @@
                     return;
                 }
 
-                // ইনিংছ থাকিলে টেব দেখুৱাওক
                 if (activeInningIndex >= matchData.innings.length) {
                     activeInningIndex = matchData.innings.length - 1;
                 }
@@ -635,7 +649,6 @@
             `;
         }
 
-        // প্ৰাৰম্ভিক লোড আৰু প্ৰতি ২০ ছেকেণ্ডৰ মূৰে মূৰে অটো-আপডেইট
         loadScorecard();
         setInterval(loadScorecard, 20000);
     </script>
