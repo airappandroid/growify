@@ -101,23 +101,34 @@
 
         /* Dynamic Status Badge */
         .status-badge {
-            background-color: #64748b;
-            color: #ffffff;
+            background-color: rgba(59, 130, 246, 0.16);
+            border: 1px solid rgba(59, 130, 246, 0.45);
+            color: #60a5fa;
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
             padding: 3px 8px;
             border-radius: 12px;
             letter-spacing: 0.5px;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .status-badge.live {
             background-color: #ef4444;
+            border-color: #ef4444;
+            color: #ffffff;
+            animation: blink 1.2s infinite ease-in-out;
         }
 
         .status-badge.completed {
             background-color: #10b981;
+            border-color: #10b981;
+            color: #ffffff;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
         .sub-header {
@@ -176,7 +187,7 @@
             border-radius: 50%;
             background-color: #1e293b;
             object-fit: cover;
-            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .team-name {
@@ -202,9 +213,9 @@
 
         /* Dynamic Status Box */
         .status-box {
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #cbd5e1;
+            background-color: rgba(59, 130, 246, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            color: #93c5fd;
             border-radius: 10px;
             padding: 10px;
             font-size: 13px;
@@ -278,13 +289,13 @@
         <!-- Header -->
         <div class="card-header">
             <span class="match-info" id="match-info">Loading...</span>
-            <span class="status-badge" id="match-status">...</span>
+            <span class="status-badge" id="match-status">SCHEDULED</span>
         </div>
 
         <!-- Venue & Latest Ball -->
         <div class="sub-header">
             <span class="venue" id="venue-info">📍 Fetching venue...</span>
-            <div class="last-ball-badge" id="last-ball-container">
+            <div class="last-ball-badge" id="last-ball-container" style="display: none;">
                 <span>Last Ball:</span>
                 <span class="ball-circle" id="latest-ball">-</span>
             </div>
@@ -293,24 +304,24 @@
         <!-- Team 1 -->
         <div class="team-row">
             <div class="team-details">
-                <img class="team-logo" id="team-a-logo" src="" alt="">
-                <span class="team-name" id="team-a-name">Team A</span>
+                <img class="team-logo" id="team-a-logo" src="" alt="" style="display: none;">
+                <span class="team-name" id="team-a-name">England Women</span>
             </div>
             <div class="team-score">
-                <div class="runs" id="team-a-runs">-</div>
-                <div class="overs" id="team-a-overs">-</div>
+                <div class="runs" id="team-a-runs">--</div>
+                <div class="overs" id="team-a-overs"></div>
             </div>
         </div>
 
         <!-- Team 2 -->
         <div class="team-row">
             <div class="team-details">
-                <img class="team-logo" id="team-b-logo" src="" alt="">
-                <span class="team-name" id="team-b-name">Team B</span>
+                <img class="team-logo" id="team-b-logo" src="" alt="" style="display: none;">
+                <span class="team-name" id="team-b-name">Ireland Women</span>
             </div>
             <div class="team-score">
-                <div class="runs" id="team-b-runs">-</div>
-                <div class="overs" id="team-b-overs">-</div>
+                <div class="runs" id="team-b-runs">--</div>
+                <div class="overs" id="team-b-overs"></div>
             </div>
         </div>
 
@@ -320,7 +331,7 @@
         </div>
 
         <!-- Toss Details -->
-        <div class="footer-note" id="toss-info">
+        <div class="footer-note" id="toss-info" style="display: none;">
             Toss: -
         </div>
 
@@ -331,12 +342,34 @@
     </div>
 
     <script>
-        const matchId = "95254";
-        let isMatchEnded = false;
+        const matchId = "95251";
+        let isMatchLive = false;
+
+        // ভাৰতীয় সময় (IST) নিৰ্ধাৰণ কৰাৰ ফাংচন
+        function getMatchISTTime(match) {
+            let dateObj;
+            if (match.date_start_ist) {
+                dateObj = new Date(match.date_start_ist.replace(" ", "T") + "+05:30");
+            } else if (match.timestamp_start) {
+                dateObj = new Date(match.timestamp_start * 1000);
+            } else if (match.date_start) {
+                dateObj = new Date(match.date_start.replace(" ", "T") + "Z");
+            }
+
+            if (!dateObj || isNaN(dateObj.getTime())) return "5:30 PM IST";
+
+            const timeStr = new Intl.DateTimeFormat('en-IN', {
+                timeZone: 'Asia/Kolkata',
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            }).format(dateObj).toUpperCase();
+
+            return `${timeStr} IST`;
+        }
 
         async function fetchLiveScore() {
-            // কেচিং এৰাবলৈ timestamp যোগ কৰা হৈছে
-            const cloudflareProxyUrl = `https://cricvoice.aminurmarch.workers.dev/=${matchId}&_t=${Date.now()}`;
+            const cloudflareProxyUrl = `https://cricvoice.aminurmarch.workers.dev/?matchId=${matchId}&_t=${Date.now()}`;
 
             try {
                 const response = await fetch(cloudflareProxyUrl, { cache: "no-store" });
@@ -352,54 +385,56 @@
 
                     // ১. মেচ টাইটেল
                     const subTitle = live.subtitle ? `${live.subtitle} • ` : '';
-                    const shortTitle = live.short_title || match.short_title || match.title || 'Match';
+                    const shortTitle = live.short_title || match.short_title || live.title || 'ENG-W vs IRE-W';
                     document.getElementById("match-info").textContent = `${subTitle}${shortTitle}`;
 
                     // ২. মেচ ষ্টেটাছ নিৰ্ধাৰণ (Live / Completed / Scheduled)
-                    const rawStatus = (live.status_str || live.game_state_str || match.status_str || match.status || "").toLowerCase();
-                    const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || rawStatus.includes("ended") || live.game_state === 3 || match.game_state === 3;
-                    const isLive = rawStatus.includes("live") || rawStatus.includes("in progress") || live.game_state === 2 || match.game_state === 2;
+                    const rawStatus = (live.status_str || live.game_state_str || match.status_str || "").toLowerCase();
+                    const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || rawStatus.includes("ended") || live.status === 2;
+                    const isLive = rawStatus.includes("live") || rawStatus.includes("in progress") || live.status === 3;
 
-                    isMatchEnded = isCompleted;
+                    isMatchLive = isLive;
 
                     const statusBadge = document.getElementById("match-status");
                     const statusBox = document.getElementById("status-box");
+                    const istTime = getMatchISTTime(live);
+                    const venueName = (live.venue && live.venue.name) ? live.venue.name : "Derby";
 
                     if (isCompleted) {
-                        statusBadge.textContent = live.status_str || live.game_state_str || "Finished";
+                        statusBadge.textContent = "COMPLETED";
                         statusBadge.className = "status-badge completed";
                         statusBox.className = "status-box completed";
+                        statusBox.textContent = live.status_note || live.result || "Match Finished";
                     } else if (isLive) {
-                        statusBadge.textContent = live.status_str || live.game_state_str || "Live";
+                        statusBadge.textContent = "LIVE";
                         statusBadge.className = "status-badge live";
                         statusBox.className = "status-box live";
+                        statusBox.textContent = live.status_note || live.live || live.equation || "Match in progress";
                     } else {
-                        statusBadge.textContent = live.status_str || live.game_state_str || "Upcoming";
+                        statusBadge.textContent = "SCHEDULED";
                         statusBadge.className = "status-badge";
                         statusBox.className = "status-box";
+                        statusBox.textContent = `${live.subtitle || "Match"} • Starts at ${istTime} (${venueName})`;
                     }
 
-                    // ৩. মেচৰ ফলাফল বা ষ্টেটাছ ন'ট
-                    const resultNote = live.status_note || live.result || match.status_note || match.result || live.live || (isCompleted ? "Match Finished" : "Match in progress");
-                    statusBox.textContent = resultNote;
-
-                    // ৪. ভেনিউ
+                    // ৩. ভেনিউ
                     if (live.venue) {
-                        const venueName = live.venue.name || '';
-                        const venueLoc = live.venue.location ? `, ${live.venue.location}` : '';
-                        document.getElementById("venue-info").textContent = `📍 ${venueName}${venueLoc}`;
+                        const loc = live.venue.location ? `, ${live.venue.location}` : (live.venue.country ? `, ${live.venue.country}` : '');
+                        document.getElementById("venue-info").textContent = `📍 ${venueName}${loc}`;
                     }
 
-                    // ৫. সৰ্বশেষ বল (Last Ball)
-                    if (match.latest_ball_score !== undefined && match.latest_ball_score !== null && match.latest_ball_score !== "") {
+                    // ৪. সৰ্বশেষ বল (Last Ball)
+                    const lastBallContainer = document.getElementById("last-ball-container");
+                    if (isLive && match.latest_ball_score !== undefined && match.latest_ball_score !== null && match.latest_ball_score !== "") {
                         document.getElementById("latest-ball").textContent = match.latest_ball_score;
-                    } else if (isCompleted) {
-                        document.getElementById("latest-ball").textContent = "✓";
+                        lastBallContainer.style.display = "flex";
+                    } else {
+                        lastBallContainer.style.display = "none";
                     }
 
-                    // ৬. Team A
+                    // ৫. Team A (England Women)
                     if (live.teama) {
-                        document.getElementById("team-a-name").textContent = live.teama.name || "Team A";
+                        document.getElementById("team-a-name").textContent = live.teama.name || "England Women";
                         
                         const logoA = document.getElementById("team-a-logo");
                         if (live.teama.logo_url) {
@@ -408,13 +443,13 @@
                             logoA.style.display = "block";
                         }
                         
-                        document.getElementById("team-a-runs").textContent = live.teama.scores || "-";
+                        document.getElementById("team-a-runs").textContent = live.teama.scores || live.teama.scores_full || "--";
                         document.getElementById("team-a-overs").textContent = live.teama.overs ? `(${live.teama.overs} ov)` : "";
                     }
 
-                    // ৭. Team B
+                    // ৬. Team B (Ireland Women)
                     if (live.teamb) {
-                        document.getElementById("team-b-name").textContent = live.teamb.name || "Team B";
+                        document.getElementById("team-b-name").textContent = live.teamb.name || "Ireland Women";
                         
                         const logoB = document.getElementById("team-b-logo");
                         if (live.teamb.logo_url) {
@@ -423,22 +458,23 @@
                             logoB.style.display = "block";
                         }
                         
-                        document.getElementById("team-b-runs").textContent = live.teamb.scores || "-";
+                        document.getElementById("team-b-runs").textContent = live.teamb.scores || live.teamb.scores_full || "--";
                         document.getElementById("team-b-overs").textContent = live.teamb.overs ? `(${live.teamb.overs} ov)` : "";
                     }
 
-                    // ৮. টছৰ বিৱৰণ
-                    if (live.toss?.text) {
-                        document.getElementById("toss-info").textContent = `Toss: ${live.toss.text}`;
+                    // ৭. টছৰ বিৱৰণ
+                    const tossEl = document.getElementById("toss-info");
+                    if (live.toss && live.toss.text) {
+                        tossEl.textContent = `Toss: ${live.toss.text}`;
+                        tossEl.style.display = "block";
                     } else {
-                        document.getElementById("toss-info").style.display = "none";
+                        tossEl.style.display = "none";
                     }
                 }
             } catch (error) {
                 console.error("Error fetching live score:", error);
             } finally {
-                // মেচ শেষ হ'লে প্ৰতি ৩০ ছেকেণ্ডৰ মূৰত আৰু চলি থাকিলে ৪ ছেকেণ্ডৰ মূৰত আপডেট হ'ব
-                const nextInterval = isMatchEnded ? 30000 : 4000;
+                const nextInterval = isMatchLive ? 5000 : 15000;
                 setTimeout(fetchLiveScore, nextInterval);
             }
         }
