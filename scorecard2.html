@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Live Scorecard</title>
+    <title>Live Scorecard - IND-W vs HK-W</title>
     <style>
         :root {
             --bg-base: #020617;
@@ -65,14 +65,27 @@
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            background: rgba(239, 68, 68, 0.12);
-            border: 1px solid rgba(239, 68, 68, 0.35);
+            background: rgba(59, 130, 246, 0.12);
+            border: 1px solid rgba(59, 130, 246, 0.35);
             padding: 3px 8px;
             border-radius: 20px;
             font-size: 9.5px;
             font-weight: 800;
             letter-spacing: 0.6px;
+            color: #60a5fa;
+            transition: all 0.3s ease;
+        }
+
+        .match-badge.live {
+            background: rgba(239, 68, 68, 0.12);
+            border-color: rgba(239, 68, 68, 0.35);
             color: #f87171;
+        }
+
+        .match-badge.completed {
+            background: rgba(52, 211, 153, 0.12);
+            border-color: rgba(52, 211, 153, 0.35);
+            color: var(--success);
         }
 
         .live-dot {
@@ -82,6 +95,7 @@
             border-radius: 50%;
             box-shadow: 0 0 8px var(--danger);
             animation: pulse 1.5s infinite;
+            display: none;
         }
 
         @keyframes pulse {
@@ -97,6 +111,21 @@
             border: 1px solid var(--border);
             padding: 3px 8px;
             border-radius: 12px;
+        }
+
+        /* Match Information Bar */
+        .match-meta-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .match-title-text {
+            font-weight: 700;
+            color: var(--accent);
         }
 
         /* Tabs */
@@ -269,10 +298,6 @@
             border-bottom: none;
         }
 
-        tr.active-player-row {
-            background: rgba(56, 189, 248, 0.08);
-        }
-
         .player-info {
             display: flex;
             flex-direction: column;
@@ -353,6 +378,35 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
+        /* Scheduled / Upcoming Card */
+        .scheduled-card {
+            text-align: center;
+            padding: 30px 14px;
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px dashed var(--border);
+            border-radius: 14px;
+        }
+
+        .sched-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .sched-time {
+            font-size: 13.5px;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .sched-venue {
+            font-size: 11.5px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
         .shimmer {
             height: 160px;
             border-radius: 12px;
@@ -370,29 +424,72 @@
 <body>
 
 <div class="scorecard-app">
+    <!-- Top Bar -->
     <div class="top-bar">
-        <div class="match-badge">
-            <span class="live-dot"></span>
-            <span>LIVE SCORECARD</span>
+        <div class="match-badge" id="matchBadge">
+            <span class="live-dot" id="liveDot"></span>
+            <span id="badgeText">SCHEDULED</span>
         </div>
         <div class="refresh-status" id="refreshTimer">
             <span id="updateTime">Syncing...</span>
         </div>
     </div>
 
+    <!-- Match Information Row -->
+    <div class="match-meta-bar">
+        <span class="match-title-text" id="matchHeader">IND-W vs HK-W T20</span>
+        <span id="venueHeader">📍 Dubai</span>
+    </div>
+
+    <!-- Innings Navigation Tabs -->
     <div class="tabs-wrapper" id="inningsTabs"></div>
 
+    <!-- Dynamic Scorecard View -->
     <div id="contentView">
         <div class="shimmer"></div>
     </div>
 </div>
 
 <script>
-    const API_URL = "https://match1.aminurmarch.workers.dev/scoreCard?matchId=69bd420b1dbf177ca4e58e72";
+    const matchId = "98315";
+    const API_URL = `https://cricvoice2.aminurmarch.workers.dev/?matchId=${matchId}`;
     
-    let inningsData = [];
+    let matchData = null;
     let selectedInningIndex = -1;
     let isInitialLoad = true;
+
+    // ভাৰতীয় সময় (IST) নিৰ্ধাৰণ ফাংচন
+    function getISTTimeString(dateStr, timestamp) {
+        let dateObj;
+        if (dateStr) {
+            dateObj = new Date(dateStr.replace(" ", "T") + "+05:30");
+        } else if (timestamp) {
+            dateObj = new Date(timestamp * 1000);
+        }
+
+        if (!dateObj || isNaN(dateObj.getTime())) return "8:00 PM IST";
+
+        const timeStr = new Intl.DateTimeFormat('en-IN', {
+            timeZone: 'Asia/Kolkata',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        }).format(dateObj).toUpperCase();
+
+        return `${timeStr} IST`;
+    }
+
+    function updateLastRefresh() {
+        const d = new Date();
+        const time = d.toLocaleTimeString('en-IN', { 
+            timeZone: 'Asia/Kolkata',
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit',
+            hour12: true 
+        });
+        document.getElementById("updateTime").textContent = `Sync: ${time} IST`;
+    }
 
     async function loadScorecard() {
         try {
@@ -400,132 +497,187 @@
             if (!response.ok) return;
             const resData = await response.json();
 
-            if (resData?.statusCode === 1 && resData?.responseData?.result?.innings_batting_order) {
-                inningsData = resData.responseData.result.innings_batting_order;
-                
-                if (inningsData.length > 0) {
-                    if (isInitialLoad || selectedInningIndex === -1) {
-                        selectedInningIndex = inningsData.length - 1;
-                        isInitialLoad = false;
-                    }
-
-                    renderTabs();
-                    renderScorecard(selectedInningIndex);
-                    updateLastRefresh();
-                }
+            // JSON ডাটা চিনাক্তকৰণ
+            if (resData?.data && Array.isArray(resData.data) && resData.data.length > 0) {
+                matchData = resData.data[0].scoreCard || resData.data[0].livescore || resData.data[0];
+            } else if (resData?.scoreCard) {
+                matchData = resData.scoreCard;
+            } else if (resData?.livescore) {
+                matchData = resData.livescore;
+            } else {
+                matchData = resData;
             }
+
+            if (!matchData) return;
+
+            // মেচ টাইটেল আৰু ভেনিউ
+            const mainTitle = matchData.short_title || matchData.title || 'India Women vs Hong Kong Women T20';
+            const subTitle = matchData.subtitle ? `${matchData.subtitle} • ` : '';
+            document.getElementById("matchHeader").textContent = `${subTitle}${mainTitle}`;
+
+            const venueName = matchData.venue?.name || matchData.venue?.location || 'Dubai International Cricket Stadium, Dubai';
+            document.getElementById("venueHeader").textContent = `📍 ${venueName.split(',')[0]}`;
+
+            // ষ্টেটাছ পৰীক্ষা (Live / Completed / Scheduled)
+            const rawStatus = (matchData.status_str || matchData.game_state_str || "").toLowerCase();
+            const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || matchData.status === 2;
+            const isLive = rawStatus.includes("live") || matchData.status === 3;
+
+            const badgeEl = document.getElementById("matchBadge");
+            const badgeText = document.getElementById("badgeText");
+            const dotEl = document.getElementById("liveDot");
+
+            if (isLive) {
+                badgeText.textContent = "LIVE";
+                badgeEl.className = "match-badge live";
+                dotEl.style.display = "inline-block";
+            } else if (isCompleted) {
+                badgeText.textContent = "COMPLETED";
+                badgeEl.className = "match-badge completed";
+                dotEl.style.display = "none";
+            } else {
+                badgeText.textContent = "SCHEDULED";
+                badgeEl.className = "match-badge";
+                dotEl.style.display = "none";
+            }
+
+            const innings = matchData.innings || [];
+
+            // মেচ আৰম্ভ নোহোৱালৈকে অনুসূচী কাৰ্ড (Scheduled Card)
+            if (!Array.isArray(innings) || innings.length === 0) {
+                document.getElementById("inningsTabs").innerHTML = "";
+                const istTime = getISTTimeString(matchData.date_start_ist, matchData.timestamp_start);
+                const teamA = matchData.teama?.name || "India Women";
+                const teamB = matchData.teamb?.name || "Hong Kong Women";
+
+                document.getElementById("contentView").innerHTML = `
+                    <div class="scheduled-card">
+                        <div class="sched-title">${teamA} vs ${teamB} T20</div>
+                        <div class="sched-time">Starts at ${istTime} Today</div>
+                        <div class="sched-venue">
+                            Venue: ${venueName}<br>
+                            Live scores, commentary, and scorecard updates will be refreshed automatically here once the match begins.
+                        </div>
+                    </div>
+                `;
+                updateLastRefresh();
+                return;
+            }
+
+            // সৰ্বশেষ ইনিংছ লোড কৰক
+            if (isInitialLoad || selectedInningIndex === -1 || selectedInningIndex >= innings.length) {
+                selectedInningIndex = innings.length - 1;
+                isInitialLoad = false;
+            }
+
+            renderTabs(innings);
+            renderScorecard(innings[selectedInningIndex]);
+            updateLastRefresh();
+
         } catch (err) {
             console.error("Scorecard Load Error:", err);
         }
     }
 
-    function updateLastRefresh() {
-        const d = new Date();
-        const time = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        document.getElementById("updateTime").textContent = `Sync: ${time}`;
-    }
-
-    function renderTabs() {
+    function renderTabs(innings) {
         const tabContainer = document.getElementById("inningsTabs");
         tabContainer.innerHTML = "";
 
-        inningsData.forEach((inn, idx) => {
-            const isLatest = (idx === inningsData.length - 1);
+        innings.forEach((inn, idx) => {
+            const isLatest = (idx === innings.length - 1);
             const btn = document.createElement("button");
             btn.className = `tab-btn ${idx === selectedInningIndex ? 'active' : ''}`;
             
-            const isSecond = inn.key && inn.key.endsWith("_2");
-            const suffix = isSecond ? "2nd Inn" : "1st Inn";
-            const team = inn.teamName || "Team";
+            const innName = inn.name || inn.short_name || `Inning ${inn.number || idx + 1}`;
             
             btn.innerHTML = `
                 ${isLatest ? '<span class="current-indicator"></span>' : ''}
-                <span>${team} ${suffix}</span>
+                <span>${innName}</span>
             `;
 
             btn.onclick = () => {
                 selectedInningIndex = idx;
-                renderTabs();
-                renderScorecard(idx);
+                renderTabs(innings);
+                renderScorecard(innings[idx]);
             };
             tabContainer.appendChild(btn);
         });
     }
 
-    function renderScorecard(idx) {
-        const inn = inningsData[idx];
+    function renderScorecard(inn) {
         if (!inn) return;
 
-        const isCurrentInning = (idx === inningsData.length - 1);
         const container = document.getElementById("contentView");
 
-        const isDeclared = inn.declare ? " (d)" : "";
-        const isFollon = inn.follon ? "Follow-On" : "";
-        const statusBadge = isFollon || (inn.declare ? "Declared" : "Innings Detail");
-
-        // Batting HTML
-        const battingHTML = (inn.player_batting_order || []).map(p => {
-            const b = p.batting || {};
-            const isNotOut = !b.dismissed;
-            let rowClass = (isCurrentInning && isNotOut) ? 'class="active-player-row"' : '';
-            let dismissal = isNotOut ? '<span class="not-out">not out</span>' : (b.out_str || "out");
+        // বেটিং তালিকা
+        const batsmen = inn.batsmen || [];
+        const battingHTML = batsmen.map(b => {
+            const isNotOut = !b.how_out || b.how_out.toLowerCase().includes('not out');
+            let dismissal = isNotOut ? '<span class="not-out">not out</span>' : (b.how_out || "out");
 
             return `
-                <tr ${rowClass}>
+                <tr>
                     <td>
                         <div class="player-info">
                             <div class="player-name-wrapper">
-                                <span class="player-name">${p.fullname || p.name}</span>
+                                <span class="player-name">${b.name || 'Unknown'}</span>
                             </div>
                             <span class="player-dismissal">${dismissal}</span>
                         </div>
                     </td>
                     <td class="highlight-val">${b.runs ?? 0}</td>
-                    <td>${b.balls ?? 0}</td>
+                    <td>${b.balls_faced ?? 0}</td>
                     <td>${b.fours ?? 0}</td>
                     <td>${b.sixes ?? 0}</td>
-                    <td>${b.strike_rate ?? '0.0'}</td>
+                    <td>${b.strike_rate || '0.00'}</td>
                 </tr>
             `;
-        }).join("");
+        }).join("") || '<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">No batting data available</td></tr>';
 
-        // Bowling HTML
-        const bowlers = inn.player_bowling_order || [];
-        const bowlingHTML = bowlers.map(p => {
-            const b = p.bowling || {};
-
+        // বলিং তালিকা
+        const bowlers = inn.bowlers || [];
+        const bowlingHTML = bowlers.map(bw => {
             return `
                 <tr>
                     <td>
                         <div class="player-name-wrapper">
-                            <span class="player-name">${p.fullname || p.name}</span>
+                            <span class="player-name">${bw.name || 'Unknown'}</span>
                         </div>
                     </td>
-                    <td class="highlight-val">${b.overs ?? '0.0'}</td>
-                    <td>${b.maiden_overs ?? 0}</td>
-                    <td>${b.runs ?? 0}</td>
-                    <td class="wickets-val">${b.wickets ?? 0}</td>
-                    <td>${b.economy ?? '0.0'}</td>
+                    <td class="highlight-val">${bw.overs ?? '0.0'}</td>
+                    <td>${bw.maidens ?? 0}</td>
+                    <td>${bw.runs_conceded ?? 0}</td>
+                    <td class="wickets-val">${bw.wickets ?? 0}</td>
+                    <td>${bw.econ || '0.00'}</td>
                 </tr>
             `;
-        }).join("");
+        }).join("") || '<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">No bowling data available</td></tr>';
 
-        // Fall of Wickets
-        const fowList = (inn.fall_of_wickets && inn.fall_of_wickets.length > 0)
-            ? inn.fall_of_wickets.map(item => `<span class="fow-item">${item}</span>`).join(" ")
-            : '<span style="color:var(--text-muted)">No wickets fallen</span>';
+        // Fall of wickets
+        let fowList = '<span style="color:var(--text-muted)">No wickets fallen</span>';
+        if (Array.isArray(inn.fows) && inn.fows.length > 0) {
+            fowList = inn.fows.map(f => {
+                const wkt = `${f.score_at_dismissal ?? 0}-${f.number ?? ''}`;
+                return `<span class="fow-item"><b>${wkt}</b> (${f.name || ''}, ${f.overs_at_dismissal ?? 0} ov)</span>`;
+            }).join(" ");
+        }
 
-        const extrasDetail = `b ${inn.bye || 0}, lb ${inn.legbye || 0}, w ${inn.wide || 0}, nb ${inn.noball || 0}`;
+        // অতিৰিক্ত ৰাণ
+        const ext = inn.extra_runs || {};
+        const extrasDetail = `b ${ext.byes ?? 0}, lb ${ext.legbyes ?? 0}, w ${ext.wides ?? 0}, nb ${ext.noballs ?? 0}`;
+        const totalExtras = ext.total ?? 0;
+        const totalScore = inn.scores_full || inn.scores || "-";
+        const runRate = inn.equations?.runrate ? `${inn.equations.runrate} CRR` : "";
 
         container.innerHTML = `
             <div class="hero-banner">
                 <div class="hero-team">
-                    <span class="hero-team-name">${inn.teamName}</span>
-                    <span class="hero-status-tag">${statusBadge}</span>
+                    <span class="hero-team-name">${inn.name || 'Innings'}</span>
+                    <span class="hero-status-tag">${runRate}</span>
                 </div>
                 <div class="hero-score-box">
-                    <div class="hero-score-main">${inn.runs}/${inn.wickets}${isDeclared}</div>
-                    <div class="hero-score-sub">${inn.overs} Overs • ${inn.run_rate || '0.00'} CRR</div>
+                    <div class="hero-score-main">${totalScore}</div>
+                    <div class="hero-score-sub">${matchData?.status_note || matchData?.status_str || ''}</div>
                 </div>
             </div>
 
@@ -546,11 +698,11 @@
                 </table>
                 <div class="meta-summary-row">
                     <span>Extras (${extrasDetail})</span>
-                    <span class="highlight-val">${inn.extras || 0}</span>
+                    <span class="highlight-val">${totalExtras}</span>
                 </div>
                 <div class="meta-summary-row total-row">
-                    <span>TOTAL (${inn.overs} Ov, RR ${inn.run_rate || '0.00'})</span>
-                    <span>${inn.runs}/${inn.wickets}</span>
+                    <span>TOTAL</span>
+                    <span>${totalScore}</span>
                 </div>
             </div>
 
@@ -578,6 +730,7 @@
         `;
     }
 
+    // প্ৰতি ৫ ছেকেণ্ডত স্বয়ংক্ৰিয় আপডেট
     loadScorecard();
     setInterval(loadScorecard, 5000);
 </script>
