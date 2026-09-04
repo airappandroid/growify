@@ -61,6 +61,152 @@ body{
   border: 1px solid var(--card-border);
 }
 
+/* ===== LIVE CRICKET SCORE STRIP ===== */
+.cricket-strip-container {
+  padding: 8px 16px 4px;
+}
+
+.cricket-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.cricket-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent-gradient);
+}
+
+.cs-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.cs-tour {
+  color: var(--accent-cyan);
+  max-width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cs-status-tag {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--live-green);
+  text-transform: uppercase;
+}
+
+.cs-match-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cs-team {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.cs-team.right {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.cs-flag {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #232733;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cs-team-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-team-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.cs-team-score {
+  font-size: 12px;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.cs-vs {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--text-muted);
+  padding: 0 10px;
+}
+
+/* BOTTOM BAR: NOTE (LEFT) & SCORECARD BUTTON (RIGHT) */
+.cs-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 5px 8px;
+  border-radius: 8px;
+  margin-top: 2px;
+}
+
+.cs-note {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  text-align: left;
+  line-height: 1.3;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cs-btn-card {
+  font-size: 11px;
+  font-weight: 700;
+  color: #060e18;
+  background: var(--accent-gradient);
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .1s ease;
+  flex-shrink: 0;
+}
+
+.cs-btn-card:active {
+  transform: scale(0.94);
+}
+
 /* ===== LAYOUT ===== */
 .container{
   padding: 10px 16px 24px;
@@ -132,7 +278,6 @@ body{
   position: relative;
 }
 
-/* Station Logo */
 .station-logo {
   width: 46px;
   height: 46px;
@@ -178,7 +323,6 @@ body{
   word-break: break-word;
 }
 
-/* HARDWARE-ACCELERATED LIVE DOT & PULSE ANIMATION */
 .live-dot-wrapper {
   margin-top: 5px;
   flex-shrink: 0;
@@ -205,22 +349,14 @@ body{
   height: 100%;
   border-radius: 50%;
   background: var(--live-green);
-  pointer-events: none;
-  
+  animation: live-pulse 1.6s infinite ease-out;
 }
 
 @keyframes live-pulse {
-  0% {
-    transform: scale(1);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(2.4);
-    opacity: 0;
-  }
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.4); opacity: 0; }
 }
 
-/* PLAY BUTTON */
 .play{
   width: 38px;
   height: 38px;
@@ -299,11 +435,17 @@ body{
 
 <body>
 
+<!-- TOP AD -->
 <a href="go:S401">
   <div class="top-ad">
     <img src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/file_0000000021e08211b4960dad0c90dbff.jpg" alt="AIR Banner">
   </div>
 </a>
+
+<!-- LIVE CRICKET SCORE STRIP -->
+<div class="cricket-strip-container" id="cricketSection" style="display: none;">
+  <div class="cricket-card" id="cricketCard"></div>
+</div>
 
 <div class="container">
 
@@ -365,6 +507,82 @@ body{
 <script id="schedule-script" src="https://airappandroid.github.io/allindiaradio/schedule.js"></script>
 
 <script>
+/* ===== LIVE CRICKET SCORE FETCH & AUTO UPDATE ===== */
+const matchId = "98315";
+
+async function fetchLiveScore() {
+  const cloudflareProxyUrl = `https://cricvoice.aminurmarch.workers.dev/?matchId=${matchId}&_t=${Date.now()}`;
+  try {
+    const response = await fetch(cloudflareProxyUrl);
+    if (!response.ok) return;
+
+    const data = await response.json();
+    if (data && data.data && data.data.length > 0) {
+      renderCricketStrip(data.data[0].livescore);
+    }
+  } catch (error) {
+    console.error("Live Cricket Score Error:", error);
+  }
+}
+
+function renderCricketStrip(scoreData) {
+  if (!scoreData) return;
+
+  const section = document.getElementById("cricketSection");
+  const card = document.getElementById("cricketCard");
+
+  const tournament = scoreData.competition ? (scoreData.competition.abbr || scoreData.competition.title) : "Cricket";
+  const teamA = scoreData.teama || {};
+  const teamB = scoreData.teamb || {};
+  
+  const teamAScore = teamA.scores_full || teamA.scores || "";
+  const teamBScore = teamB.scores_full || teamB.scores || "";
+  
+  let statusText = scoreData.status_str || "Scheduled";
+  let noteText = scoreData.status_note || scoreData.result || scoreData.subtitle || "";
+
+  card.innerHTML = `
+    <div class="cs-meta">
+      <span class="cs-tour">${tournament}</span>
+      <span class="cs-status-tag">
+        <span class="live-dot" style="width: 6px; height: 6px;"></span>
+        ${statusText}
+      </span>
+    </div>
+
+    <div class="cs-match-row">
+      <div class="cs-team">
+        <img class="cs-flag" src="${teamA.logo_url || ''}" alt="${teamA.short_name || 'Team A'}" onerror="this.style.opacity='0'">
+        <div class="cs-team-info">
+          <span class="cs-team-name">${teamA.short_name || teamA.name || 'Team A'}</span>
+          ${teamAScore ? `<span class="cs-team-score">${teamAScore}</span>` : ''}
+        </div>
+      </div>
+
+      <div class="cs-vs">VS</div>
+
+      <div class="cs-team right">
+        <img class="cs-flag" src="${teamB.logo_url || ''}" alt="${teamB.short_name || 'Team B'}" onerror="this.style.opacity='0'">
+        <div class="cs-team-info">
+          <span class="cs-team-name">${teamB.short_name || teamB.name || 'Team B'}</span>
+          ${teamBScore ? `<span class="cs-team-score">${teamBScore}</span>` : ''}
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-bottom-bar">
+      <div class="cs-note">${noteText}</div>
+      <a href="go:card1" class="cs-btn-card">Scorecard</a>
+    </div>
+  `;
+
+  section.style.display = "block";
+}
+
+fetchLiveScore();
+setInterval(fetchLiveScore, 120000);
+
+/* ===== RADIO DATA & SCHEDULE ===== */
 if (!window.SCHEDULE_DATA) window.SCHEDULE_DATA = [];
 
 const popularStations = [
@@ -427,7 +645,6 @@ function getCurrentProgram(channel){
 
   if(!list.length) return lastProgram[channel] || "Live Broadcast";
 
-  // প্ৰথম প্ৰগ্ৰাম আৰম্ভ হোৱাৰ আগৰ সময় হ'লে অন্তিম প্ৰগ্ৰামটো নিৰ্বাচন কৰিব
   if(nowMin < list[0].min){
     const prevShow = list[list.length - 1].title;
     lastProgram[channel] = prevShow;
@@ -485,16 +702,13 @@ function updateProgramsOnly(){
   });
 }
 
-// প্ৰাৰম্ভিক ৰেণ্ডাৰ
 renderStations();
 
-// অনুসূচী স্ক্ৰিপ্ট লোড হোৱাৰ লগে লগে তথ্য আপডেট হ'ব
 const scheduleScript = document.getElementById("schedule-script");
 if (scheduleScript) {
   scheduleScript.addEventListener("load", updateProgramsOnly);
 }
 
-// প্ৰতি মিনিটত স্বয়ংক্ৰিয় আপডেট
 setInterval(updateProgramsOnly, 60000);
 </script>
 
