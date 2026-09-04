@@ -518,23 +518,57 @@
             const venueName = matchData.venue?.name || matchData.venue?.location || 'Dubai International Cricket Stadium, Dubai';
             document.getElementById("venueHeader").textContent = `📍 ${venueName.split(',')[0]}`;
 
-            // ষ্টেটাছ পৰীক্ষা (Live / Completed / Scheduled)
-            const rawStatus = (matchData.status_str || matchData.game_state_str || "").toLowerCase();
-            const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || matchData.status === 2;
-            const isLive = rawStatus.includes("live") || matchData.status === 3;
+            // ষ্টেটাছ বিশ্লেষণ (Completed / Live / Scheduled)
+            const rawStatus = (
+                matchData.status_str || 
+                matchData.game_state_str || 
+                matchData.state || 
+                (typeof matchData.status === 'string' ? matchData.status : '') || 
+                ""
+            ).toLowerCase();
+
+            const statusNote = (matchData.status_note || matchData.result || "").toLowerCase();
+            const statusCode = Number(matchData.status);
+
+            // সমাপ্তি নিশ্চিত কৰিবলৈ কীৱৰ্ড পৰীক্ষা
+            const completionKeywords = [
+                "complete", "completed", "finish", "finished", 
+                "ended", "result", "closed", "concluded", "stumps", 
+                "won by", "won the match", "beat", "tied", "draw", 
+                "abandoned", "no result"
+            ];
+            const hasCompletedText = completionKeywords.some(kw => rawStatus.includes(kw) || statusNote.includes(kw));
+
+            // মেচ সমাপ্তিৰ স্থিতি নিৰ্ধাৰণ (status == 2 বা ফলাফল থাকিলে)
+            const isCompleted = (
+                statusCode === 2 || 
+                statusCode === 4 || 
+                Boolean(matchData.winning_team_id && matchData.winning_team_id !== 0) ||
+                Boolean(matchData.winner_id && matchData.winner_id !== 0) ||
+                hasCompletedText
+            );
+
+            // মেচ লাইভ হোৱাৰ স্থিতি (কেৱল যদি সমাপ্ত হোৱা নাই)
+            const isLive = !isCompleted && (
+                statusCode === 3 || 
+                rawStatus.includes("live") || 
+                rawStatus.includes("in progress") ||
+                rawStatus.includes("running")
+            );
 
             const badgeEl = document.getElementById("matchBadge");
             const badgeText = document.getElementById("badgeText");
             const dotEl = document.getElementById("liveDot");
 
-            if (isLive) {
-                badgeText.textContent = "LIVE";
-                badgeEl.className = "match-badge live";
-                dotEl.style.display = "inline-block";
-            } else if (isCompleted) {
+            // বেজ আপডেট (প্ৰথমে Completed পৰীক্ষা কৰা হৈছে)
+            if (isCompleted) {
                 badgeText.textContent = "COMPLETED";
                 badgeEl.className = "match-badge completed";
                 dotEl.style.display = "none";
+            } else if (isLive) {
+                badgeText.textContent = "LIVE";
+                badgeEl.className = "match-badge live";
+                dotEl.style.display = "inline-block";
             } else {
                 badgeText.textContent = "SCHEDULED";
                 badgeEl.className = "match-badge";
@@ -730,9 +764,9 @@
         `;
     }
 
-    // প্ৰতি ৫ ছেকেণ্ডত স্বয়ংক্ৰিয় আপডেট
+    // প্ৰতি ৫ ছেকেণ্ডত স্বয়ংক্ৰিয় আপডেট
     loadScorecard();
-    setInterval(loadScorecard, 5000);
+    setInterval(loadScorecard, 60000);
 </script>
 
 </body>
