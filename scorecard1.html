@@ -273,7 +273,7 @@
             color: #cbd5e1;
         }
 
-        /* Upcoming Match Card */
+        /* Upcoming / Finished Card */
         .upcoming-card {
             text-align: center;
             padding: 24px 14px;
@@ -326,7 +326,6 @@
             background: #1d4ed8;
         }
 
-        /* মোবাইল স্ক্ৰিনৰ বাবে বিশেষ ব্যৱস্থা */
         @media (max-width: 480px) {
             body {
                 padding: 4px;
@@ -399,17 +398,25 @@
                 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                 const json = await res.json();
 
+                // মূল ডাটা অবজেক্ট নিৰ্ধাৰণ
+                let rootData = {};
                 if (json.data && Array.isArray(json.data) && json.data.length > 0) {
-                    matchData = json.data[0].scoreCard || json.data[0].livescore || json.data[0];
-                } else if (json.scoreCard) {
-                    matchData = json.scoreCard;
-                } else if (json.livescore) {
-                    matchData = json.livescore;
+                    rootData = json.data[0];
+                } else if (json.data && typeof json.data === "object") {
+                    rootData = json.data;
                 } else {
-                    matchData = json;
+                    rootData = json;
                 }
 
-                if (!matchData) {
+                // মূল ডাটা আৰু scoreCard/livescore একত্ৰিত (Merge) কৰা যাতে status/result নোহোৱা নহয়
+                const childData = rootData.scoreCard || rootData.livescore || {};
+                matchData = {
+                    ...rootData,
+                    ...childData,
+                    innings: childData.innings || rootData.innings || []
+                };
+
+                if (!matchData || Object.keys(matchData).length === 0) {
                     container.innerHTML = `<div id="loading">No match details available.</div>`;
                     return;
                 }
@@ -425,10 +432,44 @@
                     document.getElementById("header-venue").textContent = `📍 ${venueParts.join(', ')}`;
                 }
 
-                // ষ্টেটাছ লজিক
-                const rawStatus = (matchData.status_str || matchData.game_state_str || "").toLowerCase();
-                const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || matchData.status === 2;
-                const isLive = rawStatus.includes("live") || matchData.status === 3;
+                // উন্নত ষ্টেটাছ নিৰ্ধাৰণ লজিক
+                const statusNum = Number(matchData.status ?? matchData.status_id ?? 0);
+                const gameStateNum = Number(matchData.game_state ?? matchData.game_state_id ?? 0);
+
+                const statusStr = (matchData.status_str || "").toLowerCase();
+                const gameStateStr = (matchData.game_state_str || "").toLowerCase();
+                const statusNote = (matchData.status_note || "").toLowerCase();
+                const resultText = (matchData.result || matchData.match_result || "").toLowerCase();
+                const stateStr = (matchData.state || matchData.match_state || "").toLowerCase();
+
+                // মেচ শেষ হোৱাৰ সম্ভাৱ্য শব্দসমূহ
+                const completedKeywords = [
+                    "complete", "finish", "result", "ended", "close", "concluded",
+                    "won", "beat", "defeat", "drawn", "tie", "abandon", "no result"
+                ];
+
+                const hasCompletedKeyword = completedKeywords.some(k => 
+                    statusStr.includes(k) || 
+                    gameStateStr.includes(k) || 
+                    stateStr.includes(k) || 
+                    resultText.includes(k) || 
+                    statusNote.includes(k)
+                );
+
+                // মেচ সমাপ্ত হোৱাৰ চৰ্ত (EntitySport: status 2 বা 4, gameState 12)
+                const isCompleted = statusNum === 2 || 
+                                    statusNum === 4 || 
+                                    gameStateNum === 12 || 
+                                    Boolean(matchData.result && matchData.result.trim().length > 0) ||
+                                    Boolean(matchData.winner || matchData.winning_team_id) ||
+                                    hasCompletedKeyword;
+
+                // লাইভ হোৱাৰ চৰ্ত (যদি মেচ ইতিমধ্যে সমাপ্ত হোৱা নাই)
+                const liveKeywords = ["live", "in progress", "ongoing", "current"];
+                const hasLiveKeyword = liveKeywords.some(k => 
+                    statusStr.includes(k) || gameStateStr.includes(k) || stateStr.includes(k)
+                );
+                const isLive = !isCompleted && (statusNum === 3 || hasLiveKeyword);
 
                 const badgeEl = document.getElementById("header-status");
                 const noteEl = document.getElementById("header-note");
@@ -437,10 +478,11 @@
                 const venueName = matchData.venue && matchData.venue.name ? matchData.venue.name : "Derby";
 
                 if (isCompleted) {
-                    badgeEl.textContent = "COMPLETED";
+                    const isAbandoned = statusNum === 4 || statusStr.includes("abandon") || statusNote.includes("abandon");
+                    badgeEl.textContent = isAbandoned ? "ABANDONED" : "COMPLETED";
                     badgeEl.className = "status-badge completed";
                     noteEl.className = "status-text completed";
-                    noteEl.textContent = matchData.status_note || matchData.result || "Match Finished";
+                    noteEl.textContent = matchData.status_note || matchData.result || (isAbandoned ? "Match Abandoned" : "Match Finished");
                 } else if (isLive) {
                     badgeEl.textContent = "LIVE";
                     badgeEl.className = "status-badge live";
@@ -450,22 +492,21 @@
                     badgeEl.textContent = "SCHEDULED";
                     badgeEl.className = "status-badge";
                     noteEl.className = "status-text";
-                    noteEl.textContent = `${matchData.subtitle || "2nd Match"} • Starts at ${ukTime} UK Time (${venueName})`;
+                    noteEl.textContent = `${matchData.subtitle || "Match"} • Starts at ${ukTime} UK Time (${venueName})`;
                 }
 
                 // ইনিংছ পৰীক্ষা
                 if (!Array.isArray(matchData.innings) || matchData.innings.length === 0) {
                     document.getElementById("tabs-container").innerHTML = "";
-                    const teamA = (matchData.teama && matchData.teama.name) || "England Women";
-                    const teamB = (matchData.teamb && matchData.teamb.name) || "Ireland Women";
+                    const teamA = (matchData.teama && matchData.teama.name) || matchData.team_a || "England Women";
+                    const teamB = (matchData.teamb && matchData.teamb.name) || matchData.team_b || "Ireland Women";
                     
                     container.innerHTML = `
                         <div class="upcoming-card">
                             <div class="upcoming-teams">${teamA} vs ${teamB}</div>
-                            <div class="upcoming-time">Starts at ${ukTime} UK Time</div>
+                            <div class="upcoming-time">${isCompleted ? (matchData.status_note || matchData.result || "Match Finished") : `Starts at ${ukTime} UK Time`}</div>
                             <div class="upcoming-note">
-                                Match scheduled at ${venueName}.<br>
-                                Live scorecard and ball-by-ball updates will appear here automatically once the match begins.
+                                ${isCompleted ? 'Detailed scorecard is not available for this match.' : `Match scheduled at ${venueName}.<br>Live scorecard and ball-by-ball updates will appear here automatically once the match begins.`}
                             </div>
                         </div>
                     `;
