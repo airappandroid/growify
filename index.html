@@ -81,12 +81,12 @@ body{
 /* ===== QUICK NAVIGATION ===== */
 .quick-buttons{
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   margin-bottom: 16px;
 }
 
-.qbtn, .toggle-btn{
+.qbtn{
   padding: 12px 4px;
   border-radius: 14px;
   background: var(--card-bg);
@@ -104,29 +104,15 @@ body{
   transition: transform .1s ease, background .15s ease;
 }
 
-.qbtn:active, .toggle-btn:active{
+.qbtn:active{
   transform: scale(0.95);
   background: #1f2330;
 }
 
-.icon svg, .ticon svg{
+.icon svg{
   width: 22px;
   height: 22px;
   fill: var(--accent-cyan);
-}
-
-.toggle-btn.active{
-  background: var(--accent-gradient);
-  color: #050b14;
-  border-color: transparent;
-}
-
-.toggle-btn.active .ticon svg{
-  fill: #050b14;
-}
-
-.toggle-section{
-  display: none;
 }
 
 /* ===== POPULAR STATIONS ===== */
@@ -192,7 +178,7 @@ body{
   word-break: break-word;
 }
 
-/* HARDWARE-ACCELERATED LIVE DOT */
+/* HARDWARE-ACCELERATED LIVE DOT & PULSE ANIMATION */
 .live-dot-wrapper {
   margin-top: 5px;
   flex-shrink: 0;
@@ -209,6 +195,7 @@ body{
   height: 7px;
   border-radius: 50%;
   background: var(--live-green);
+  z-index: 1;
 }
 
 .live-dot-wrapper::after {
@@ -219,15 +206,16 @@ body{
   border-radius: 50%;
   background: var(--live-green);
   pointer-events: none;
+  
 }
 
-@keyframes pulseScale {
+@keyframes live-pulse {
   0% {
     transform: scale(1);
     opacity: 0.8;
   }
   100% {
-    transform: scale(2.8);
+    transform: scale(2.4);
     opacity: 0;
   }
 }
@@ -306,87 +294,11 @@ body{
   color: var(--accent-cyan);
   padding: 4px 0;
 }
-
-/* ===== CRICKET HUB ===== */
-.cricket-card{
-  background: var(--card-bg);
-  border-radius: 16px;
-  padding: 16px;
-  border: 1px solid var(--card-border);
-}
-
-.cricket-buttons{
-  display: flex;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.cricket-buttons a{
-  flex: 1;
-  min-width: 0;
-}
-
-.cbtn{
-  padding: 14px 10px;
-  border-radius: 14px;
-  text-align: center;
-  transition: transform .1s ease;
-}
-
-.cbtn b{
-  display: block;
-  font-size: 13.5px;
-  font-weight: 800;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.cbtn small{
-  display: block;
-  font-size: 11px;
-  margin-top: 3px;
-  opacity: .9;
-}
-
-.cbtn.commentary{
-  background: linear-gradient(135deg, #dc2626, #ef4444);
-  color: #ffffff;
-}
-
-.cbtn.score{
-  background: linear-gradient(135deg, #0284c7, #0ea5e9);
-  color: #ffffff;
-}
-
-.cbtn:active{
-  transform: scale(0.96);
-}
-
-.back-home-btn{
-  display: block;
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  background: #11131a;
-  border: 1px solid var(--card-border);
-  color: var(--accent-cyan);
-  font-size: 13.5px;
-  font-weight: 700;
-  text-align: center;
-  cursor: pointer;
-  transition: transform .1s ease;
-}
-
-.back-home-btn:active{
-  transform: scale(0.97);
-}
 </style>
 </head>
 
 <body>
 
-<!-- TOP AD BANNER -->
 <a href="go:S401">
   <div class="top-ad">
     <img src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/file_0000000021e08211b4960dad0c90dbff.jpg" alt="AIR Banner">
@@ -395,7 +307,6 @@ body{
 
 <div class="container">
 
-  <!-- QUICK NAVIGATION -->
   <div class="quick-buttons">
     <a href="go:S201">
       <div class="qbtn">
@@ -404,7 +315,7 @@ body{
             <path d="M3 10v8a2 2 0 002 2h14a2 2 0 002-2v-8H3zm16 8H5v-6h14v6zM7 4l10 4H7V4zm2 9h3v3H9v-3zm7 1a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/>
           </svg>
         </div>
-        <div>AIR</div>
+        <div>AIR Radio</div>
       </div>
     </a>
 
@@ -415,7 +326,7 @@ body{
             <path d="M12 3a9 9 0 019 9h-2a7 7 0 00-14 0H3a9 9 0 019-9zm0 6a3 3 0 013 3h-2a1 1 0 00-2 0H9a3 3 0 013-3zm-1 8h2v4h-2z"/>
           </svg>
         </div>
-        <div>FM</div>
+        <div>FM Radio</div>
       </div>
     </a>
 
@@ -426,21 +337,11 @@ body{
             <path d="M3 6h18v12H3zM10 9l5 3-5 3zM8 20h8v-2H8z"/>
           </svg>
         </div>
-        <div>Live</div>
+        <div>Live News</div>
       </div>
     </a>
-
-    <div class="toggle-btn" onclick="openSection('cricketSection', this)">
-      <div class="ticon">
-        <svg viewBox="0 0 24 24">
-          <path d="M14 2l8 8-2 2-8-8 2-2zM2 14l8 8 2-2-8-8-2 2z"/>
-        </svg>
-      </div>
-      <div>Cricket</div>
-    </div>
   </div>
 
-  <!-- HOME CONTENT -->
   <div id="homeContent">
     <div class="section-title">🔥 Popular Stations</div>
     <div id="stations"></div>
@@ -459,32 +360,9 @@ body{
     </div>
   </div>
 
-  <!-- CRICKET HUB -->
-  <div id="cricketSection" class="toggle-section">
-    <div class="section-title">🏏 Cricket Hub</div>
-    <div class="cricket-card">
-      <div class="cricket-buttons">
-        <a href="go:S401">
-          <div class="cbtn commentary">
-            <b>Commentary</b>
-            <small>On Match Days</small>
-          </div>
-        </a>
-        <a href="go:S402">
-          <div class="cbtn score">
-            <b>Score</b>
-            <small>Cricket Updates</small>
-          </div>
-        </a>
-      </div>
-      <div class="back-home-btn" onclick="goHome()">← Back to Home</div>
-    </div>
-  </div>
-
 </div>
 
-<!-- JS : SCRIPT & LOGIC -->
-<script src="https://airappandroid.github.io/allindiaradio/schedule.js"></script>
+<script id="schedule-script" src="https://airappandroid.github.io/allindiaradio/schedule.js"></script>
 
 <script>
 if (!window.SCHEDULE_DATA) window.SCHEDULE_DATA = [];
@@ -516,22 +394,28 @@ const lastProgram = {};
 
 function timeToMinutes(t){
   if(!t) return 0;
+  t = t.trim();
   if(!t.includes(" ")){
-    let [h,m] = t.split(":").map(Number);
-    return h*60+m;
+    let [h, m] = t.split(":").map(Number);
+    return (h || 0) * 60 + (m || 0);
   }
-  const [a,b] = t.split(" ");
-  let [h,m] = a.split(":").map(Number);
-  if(b==="PM" && h!==12) h+=12;
-  if(b==="AM" && h===12) h=0;
-  return h*60+m;
+  const parts = t.split(/\s+/);
+  let [h, m] = parts[0].split(":").map(Number);
+  const meridiem = (parts[1] || "").toUpperCase();
+  h = h || 0;
+  m = m || 0;
+  if(meridiem === "PM" && h !== 12) h += 12;
+  if(meridiem === "AM" && h === 12) h = 0;
+  return h * 60 + m;
 }
 
 function getCurrentProgram(channel){
-  if(!window.SCHEDULE_DATA.length) return lastProgram[channel] || "Live Broadcast";
+  if(!window.SCHEDULE_DATA || !window.SCHEDULE_DATA.length) {
+    return lastProgram[channel] || "Live Broadcast";
+  }
 
   const now = new Date();
-  const nowMin = now.getHours()*60 + now.getMinutes();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
 
   const list = window.SCHEDULE_DATA
     .filter(p =>
@@ -539,11 +423,20 @@ function getCurrentProgram(channel){
       p.channel.toLowerCase().includes(channel.toLowerCase().trim())
     )
     .map(p => ({...p, min: timeToMinutes(p.time)}))
-    .sort((a,b)=>a.min-b.min);
+    .sort((a,b) => a.min - b.min);
 
-  for(let i=0;i<list.length;i++){
-    const cur=list[i], next=list[i+1];
-    if(nowMin>=cur.min && (!next || nowMin<next.min)){
+  if(!list.length) return lastProgram[channel] || "Live Broadcast";
+
+  // প্ৰথম প্ৰগ্ৰাম আৰম্ভ হোৱাৰ আগৰ সময় হ'লে অন্তিম প্ৰগ্ৰামটো নিৰ্বাচন কৰিব
+  if(nowMin < list[0].min){
+    const prevShow = list[list.length - 1].title;
+    lastProgram[channel] = prevShow;
+    return prevShow;
+  }
+
+  for(let i = 0; i < list.length; i++){
+    const cur = list[i], next = list[i + 1];
+    if(nowMin >= cur.min && (!next || nowMin < next.min)){
       lastProgram[channel] = cur.title;
       return cur.title;
     }
@@ -592,33 +485,17 @@ function updateProgramsOnly(){
   });
 }
 
+// প্ৰাৰম্ভিক ৰেণ্ডাৰ
 renderStations();
+
+// অনুসূচী স্ক্ৰিপ্ট লোড হোৱাৰ লগে লগে তথ্য আপডেট হ'ব
+const scheduleScript = document.getElementById("schedule-script");
+if (scheduleScript) {
+  scheduleScript.addEventListener("load", updateProgramsOnly);
+}
+
+// প্ৰতি মিনিটত স্বয়ংক্ৰিয় আপডেট
 setInterval(updateProgramsOnly, 60000);
-setTimeout(updateProgramsOnly, 4000);
-
-function openSection(id, btn){
-  document.getElementById("homeContent").style.display = "none";
-  document.querySelectorAll('.toggle-section').forEach(sec=>{
-    sec.style.display = "none";
-  });
-  document.querySelectorAll('.toggle-btn').forEach(b=>{
-    b.classList.remove('active');
-  });
-  document.getElementById(id).style.display = "block";
-  btn.classList.add('active');
-  window.scrollTo({top:0, behavior:"smooth"});
-}
-
-function goHome(){
-  document.getElementById("homeContent").style.display = "block";
-  document.querySelectorAll('.toggle-section').forEach(sec=>{
-    sec.style.display = "none";
-  });
-  document.querySelectorAll('.toggle-btn').forEach(b=>{
-    b.classList.remove('active');
-  });
-  window.scrollTo({top:0, behavior:"smooth"});
-}
 </script>
 
 </body>
