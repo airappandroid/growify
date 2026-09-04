@@ -224,41 +224,114 @@ body{
   gap: 8px;
 }
 
-/* ===== QUICK NAVIGATION ===== */
-.quick-buttons{
+/* ===== MODERN QUICK NAVIGATION ===== */
+.quick-buttons {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-.qbtn{
-  padding: 12px 4px;
-  border-radius: 14px;
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  text-align: center;
-  font-size: 12px;
-  font-weight: 700;
-  color: #cbd5e1;
+.qbtn-card {
+  position: relative;
+  background: linear-gradient(165deg, rgba(26, 30, 42, 0.85) 0%, rgba(15, 18, 25, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
+  padding: 14px 6px 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
   cursor: pointer;
-  transition: transform .1s ease, background .15s ease;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.qbtn:active{
-  transform: scale(0.95);
-  background: #1f2330;
+.qbtn-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
 }
 
-.icon svg{
+.qbtn-card:active {
+  transform: scale(0.94);
+}
+
+.qbtn-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.qbtn-card:active .qbtn-icon-wrapper {
+  transform: scale(1.08);
+}
+
+.qbtn-icon-wrapper svg {
   width: 22px;
   height: 22px;
-  fill: var(--accent-cyan);
+}
+
+.qbtn-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: 0.2px;
+}
+
+/* 1. AIR Radio - Cyan Glow Accent */
+.qbtn-air .qbtn-icon-wrapper {
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.18), rgba(0, 145, 234, 0.05));
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 229, 255, 0.15);
+}
+.qbtn-air svg {
+  fill: #00e5ff;
+  filter: drop-shadow(0 2px 6px rgba(0, 229, 255, 0.45));
+}
+.qbtn-air:active {
+  border-color: rgba(0, 229, 255, 0.45);
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.25);
+}
+
+/* 2. FM Radio - Violet Glow Accent */
+.qbtn-fm .qbtn-icon-wrapper {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(126, 34, 206, 0.05));
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  box-shadow: 0 4px 14px rgba(168, 85, 247, 0.15);
+}
+.qbtn-fm svg {
+  fill: #c084fc;
+  filter: drop-shadow(0 2px 6px rgba(168, 85, 247, 0.45));
+}
+.qbtn-fm:active {
+  border-color: rgba(168, 85, 247, 0.45);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.25);
+}
+
+/* 3. Live News - Coral Glow Accent */
+.qbtn-news .qbtn-icon-wrapper {
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.18), rgba(225, 29, 72, 0.05));
+  border: 1px solid rgba(244, 63, 94, 0.25);
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.15);
+}
+.qbtn-news svg {
+  fill: #fb7185;
+  filter: drop-shadow(0 2px 6px rgba(244, 63, 94, 0.45));
+}
+.qbtn-news:active {
+  border-color: rgba(244, 63, 94, 0.45);
+  box-shadow: 0 0 16px rgba(244, 63, 94, 0.25);
 }
 
 /* ===== POPULAR STATIONS ===== */
@@ -349,12 +422,6 @@ body{
   height: 100%;
   border-radius: 50%;
   background: var(--live-green);
- 
-}
-
-@keyframes live-pulse {
-  0% { transform: scale(1); opacity: 0.8; }
-  100% { transform: scale(2.4); opacity: 0; }
 }
 
 .play{
@@ -435,14 +502,12 @@ body{
 
 <body>
 
-<!-- TOP AD -->
 <a href="go:S401">
   <div class="top-ad">
     <img src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/file_0000000021e08211b4960dad0c90dbff.jpg" alt="AIR Banner">
   </div>
 </a>
 
-<!-- LIVE CRICKET SCORE STRIP -->
 <div class="cricket-strip-container" id="cricketSection" style="display: none;">
   <div class="cricket-card" id="cricketCard"></div>
 </div>
@@ -451,35 +516,35 @@ body{
 
   <div class="quick-buttons">
     <a href="go:S201">
-      <div class="qbtn">
-        <div class="icon">
+      <div class="qbtn-card qbtn-air">
+        <div class="qbtn-icon-wrapper">
           <svg viewBox="0 0 24 24">
-            <path d="M3 10v8a2 2 0 002 2h14a2 2 0 002-2v-8H3zm16 8H5v-6h14v6zM7 4l10 4H7V4zm2 9h3v3H9v-3zm7 1a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/>
+            <path d="M3.24 6.15C2.51 6.43 2 7.17 2 8v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2H8.3l7.43-3-0.73-1.85-11.76 4.99zM4 9h16v10H4V9zm3 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 1h4v2h-4v-2zm0 3h4v1.5h-4v-1.5z"/>
           </svg>
         </div>
-        <div>AIR Radio</div>
+        <span class="qbtn-label">AIR Radio</span>
       </div>
     </a>
 
     <a href="go:S202">
-      <div class="qbtn">
-        <div class="icon">
+      <div class="qbtn-card qbtn-fm">
+        <div class="qbtn-icon-wrapper">
           <svg viewBox="0 0 24 24">
-            <path d="M12 3a9 9 0 019 9h-2a7 7 0 00-14 0H3a9 9 0 019-9zm0 6a3 3 0 013 3h-2a1 1 0 00-2 0H9a3 3 0 013-3zm-1 8h2v4h-2z"/>
+            <path d="M12 2C6.48 2 2 6.48 2 12c0 2.85 1.2 5.41 3.12 7.22l1.42-1.42A7.95 7.95 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 2.25-.93 4.29-2.43 5.75l1.41 1.42C20.78 17.38 22 14.83 22 12c0-5.52-4.48-10-10-10zm0 4a6 6 0 0 0-6 6c0 1.66.67 3.16 1.76 4.24l1.42-1.41A3.98 3.98 0 0 1 8 12c0-2.21 1.79-4 4-4s4 1.79 4 4c0 1.13-.47 2.15-1.22 2.88l1.41 1.42A5.96 5.96 0 0 0 18 12a6 6 0 0 0-6-6zm0 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-1 7h2v5h-2z"/>
           </svg>
         </div>
-        <div>FM Radio</div>
+        <span class="qbtn-label">FM Radio</span>
       </div>
     </a>
 
     <a href="go:S501">
-      <div class="qbtn">
-        <div class="icon">
+      <div class="qbtn-card qbtn-news">
+        <div class="qbtn-icon-wrapper">
           <svg viewBox="0 0 24 24">
-            <path d="M3 6h18v12H3zM10 9l5 3-5 3zM8 20h8v-2H8z"/>
+            <path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12zm-11-2l6-4-6-4v8z"/>
           </svg>
         </div>
-        <div>Live News</div>
+        <span class="qbtn-label">Live News</span>
       </div>
     </a>
   </div>
@@ -636,8 +701,8 @@ function getCurrentProgram(channel){
   const nowMin = now.getHours() * 60 + now.getMinutes();
 
   const list = window.SCHEDULE_DATA
-    .filter(p =>
-      p.channel &&
+    .filter(p => 
+      p.channel && 
       p.channel.toLowerCase().includes(channel.toLowerCase().trim())
     )
     .map(p => ({...p, min: timeToMinutes(p.time)}))
