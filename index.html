@@ -224,7 +224,7 @@ body{
   gap: 8px;
 }
 
-/* ===== MODERN QUICK NAVIGATION ===== */
+/* ===== MODERN QUICK NAVIGATION (CLICK EFFECT DISABLED) ===== */
 .quick-buttons {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -246,7 +246,6 @@ body{
   cursor: pointer;
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .qbtn-card::before {
@@ -259,10 +258,6 @@ body{
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
 }
 
-.qbtn-card:active {
-  transform: scale(0.94);
-}
-
 .qbtn-icon-wrapper {
   width: 44px;
   height: 44px;
@@ -270,11 +265,6 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.qbtn-card:active .qbtn-icon-wrapper {
-  transform: scale(1.08);
 }
 
 .qbtn-icon-wrapper svg {
@@ -299,10 +289,6 @@ body{
   fill: #00e5ff;
   filter: drop-shadow(0 2px 6px rgba(0, 229, 255, 0.45));
 }
-.qbtn-air:active {
-  border-color: rgba(0, 229, 255, 0.45);
-  box-shadow: 0 0 16px rgba(0, 229, 255, 0.25);
-}
 
 /* 2. FM Radio - Violet Glow Accent */
 .qbtn-fm .qbtn-icon-wrapper {
@@ -314,10 +300,6 @@ body{
   fill: #c084fc;
   filter: drop-shadow(0 2px 6px rgba(168, 85, 247, 0.45));
 }
-.qbtn-fm:active {
-  border-color: rgba(168, 85, 247, 0.45);
-  box-shadow: 0 0 16px rgba(168, 85, 247, 0.25);
-}
 
 /* 3. Live News - Coral Glow Accent */
 .qbtn-news .qbtn-icon-wrapper {
@@ -328,10 +310,6 @@ body{
 .qbtn-news svg {
   fill: #fb7185;
   filter: drop-shadow(0 2px 6px rgba(244, 63, 94, 0.45));
-}
-.qbtn-news:active {
-  border-color: rgba(244, 63, 94, 0.45);
-  box-shadow: 0 0 16px rgba(244, 63, 94, 0.25);
 }
 
 /* ===== POPULAR STATIONS ===== */
