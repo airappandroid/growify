@@ -224,7 +224,7 @@ body{
   gap: 8px;
 }
 
-/* ===== MODERN QUICK NAVIGATION (CLICK EFFECT DISABLED) ===== */
+/* ===== MODERN QUICK NAVIGATION ===== */
 .quick-buttons {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -279,7 +279,6 @@ body{
   letter-spacing: 0.2px;
 }
 
-/* 1. AIR Radio - Cyan Glow Accent */
 .qbtn-air .qbtn-icon-wrapper {
   background: linear-gradient(135deg, rgba(0, 229, 255, 0.18), rgba(0, 145, 234, 0.05));
   border: 1px solid rgba(0, 229, 255, 0.25);
@@ -290,7 +289,6 @@ body{
   filter: drop-shadow(0 2px 6px rgba(0, 229, 255, 0.45));
 }
 
-/* 2. FM Radio - Violet Glow Accent */
 .qbtn-fm .qbtn-icon-wrapper {
   background: linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(126, 34, 206, 0.05));
   border: 1px solid rgba(168, 85, 247, 0.25);
@@ -301,7 +299,6 @@ body{
   filter: drop-shadow(0 2px 6px rgba(168, 85, 247, 0.45));
 }
 
-/* 3. Live News - Coral Glow Accent */
 .qbtn-news .qbtn-icon-wrapper {
   background: linear-gradient(135deg, rgba(244, 63, 94, 0.18), rgba(225, 29, 72, 0.05));
   border: 1px solid rgba(244, 63, 94, 0.25);
@@ -551,7 +548,7 @@ body{
 
 <script>
 /* ===== LIVE CRICKET SCORE FETCH & AUTO UPDATE ===== */
-const matchId = "98315";
+const matchId = "98317";
 
 async function fetchLiveScore() {
   const cloudflareProxyUrl = `https://cricvoice.aminurmarch.workers.dev/?matchId=${matchId}&_t=${Date.now()}`;
@@ -568,6 +565,49 @@ async function fetchLiveScore() {
   }
 }
 
+// এই ফাংশনটোৱে আপোনাৰ JSON ফিল্ডসমূহৰ পৰা সঠিক সময় উলিয়াই দেখুৱাব
+function extractMatchNote(scoreData) {
+  // ১. যদি মেচ শেষ হৈছে বা লাইভ ফলাফল আহিছে
+  if (scoreData.result && scoreData.result.trim() !== "") {
+    return scoreData.result;
+  }
+  if (scoreData.status_note && scoreData.status_note.trim() !== "") {
+    return scoreData.status_note;
+  }
+
+  // ২. মেচ Scheduled বা আৰম্ভ নোহোৱাৰ অৱস্থাত date_start_ist পৰীক্ষা কৰা
+  const isScheduled = scoreData.status === 1 || (scoreData.status_str && scoreData.status_str.toLowerCase().includes("sched"));
+  
+  if (isScheduled && scoreData.date_start_ist) {
+    try {
+      // date_start_ist মান: "2026-09-05 20:00:00"
+      const parts = scoreData.date_start_ist.split(" ");
+      if (parts[1]) {
+        const timeSegments = parts[1].split(":");
+        let hour = parseInt(timeSegments[0], 10);
+        let min = parseInt(timeSegments[1], 10);
+
+        const ampm = hour >= 12 ? "PM" : "AM";
+        const hour12 = hour % 12 || 12;
+        const formattedMin = min < 10 ? "0" + min : min;
+        const timeFormatted = `${hour12}:${formattedMin} ${ampm} IST`;
+
+        // সন্ধিয়া বা নিশাৰ মেচ হ'লে "tonight" লিখা হ'ব
+        if (hour >= 17) {
+          return `Match starts tonight at ${timeFormatted}`;
+        } else {
+          return `Match starts today at ${timeFormatted}`;
+        }
+      }
+    } catch (e) {
+      console.error("Time Parsing Error:", e);
+    }
+  }
+
+  // ৩. যদি সময় পোৱা নাযায়, subtitle দেখুৱাব
+  return scoreData.subtitle || "";
+}
+
 function renderCricketStrip(scoreData) {
   if (!scoreData) return;
 
@@ -582,7 +622,7 @@ function renderCricketStrip(scoreData) {
   const teamBScore = teamB.scores_full || teamB.scores || "";
   
   let statusText = scoreData.status_str || "Scheduled";
-  let noteText = scoreData.status_note || scoreData.result || scoreData.subtitle || "";
+  let noteText = extractMatchNote(scoreData);
 
   card.innerHTML = `
     <div class="cs-meta">
