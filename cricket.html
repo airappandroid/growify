@@ -288,20 +288,20 @@
 
         <!-- Header -->
         <div class="card-header">
-            <span class="match-info" id="match-info">India Women vs Hong Kong Women T20</span>
-            <span class="status-badge" id="match-status">SCHEDULED</span>
+            <span class="match-info" id="match-info">India Women vs Pakistan Women T20</span>
+            <span class="status-badge" id="match-status">LIVE</span>
         </div>
 
         <!-- Venue & Latest Ball -->
         <div class="sub-header">
-            <span class="venue" id="venue-info">📍 Dubai International Cricket Stadium, Dubai</span>
+            <span class="venue" id="venue-info">📍 T20 Match</span>
             <div class="last-ball-badge" id="last-ball-container" style="display: none;">
                 <span>Last Ball:</span>
                 <span class="ball-circle" id="latest-ball">-</span>
             </div>
         </div>
 
-        <!-- Team 1 -->
+        <!-- Team 1 (India Women) -->
         <div class="team-row">
             <div class="team-details">
                 <img class="team-logo" id="team-a-logo" src="" alt="" style="display: none;">
@@ -313,11 +313,11 @@
             </div>
         </div>
 
-        <!-- Team 2 -->
+        <!-- Team 2 (Pakistan Women) -->
         <div class="team-row">
             <div class="team-details">
                 <img class="team-logo" id="team-b-logo" src="" alt="" style="display: none;">
-                <span class="team-name" id="team-b-name">Hong Kong Women</span>
+                <span class="team-name" id="team-b-name">Pakistan Women</span>
             </div>
             <div class="team-score">
                 <div class="runs" id="team-b-runs">--</div>
@@ -327,7 +327,7 @@
 
         <!-- Status Message -->
         <div class="status-box" id="status-box">
-            Starts at 8:00 PM IST Today
+            Pak W opt to Bat
         </div>
 
         <!-- Toss Details -->
@@ -342,139 +342,146 @@
     </div>
 
     <script>
-        const matchId = "98317";
-        let isMatchLive = false;
+        const matchId = "6a7521ed78dcf065703188c1";
+        const cricketApiUrl = `https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=${matchId}`;
+        let isMatchLive = true;
 
-        // ভাৰতীয় সময় (IST) নিৰ্ধাৰণ কৰাৰ ফাংচন
-        function getMatchISTTime(match) {
-            let dateObj;
-            if (match.date_start_ist) {
-                dateObj = new Date(match.date_start_ist.replace(" ", "T") + "+05:30");
-            } else if (match.timestamp_start) {
-                dateObj = new Date(match.timestamp_start * 1000);
-            } else if (match.date_start) {
-                dateObj = new Date(match.date_start.replace(" ", "T") + "Z");
+        // নিৰ্দিষ্ট Cricbuzz ল'গ' নিৰ্ধাৰণ
+        function getTeamLogo(team) {
+            if (!team) return "";
+            const name = (team.shortName || team.name || "").toLowerCase();
+
+            if (name.includes("pak")) {
+                return "https://static.cricbuzz.com/a/img/v1/0x0/i1/c776311/pakistan-women.jpg";
+            }
+            if (name.includes("ind")) {
+                return "https://static.cricbuzz.com/a/img/v1/0x0/i1/c776182/india-women.jpg";
+            }
+            if (team.logo) {
+                if (team.logo.startsWith("http")) return team.logo;
+                return `https://api.cricradio.com.au${team.logo.startsWith("/") ? "" : "/"}${team.logo}`;
+            }
+            return "";
+        }
+
+        // স্ক'ৰ আৰু অভাৰ উলিওৱা ফাংশন
+        function getScoreData(teamData, teamKey) {
+            if (!teamData) return { runs: "--", overs: "" };
+            const s1 = teamData[`${teamKey}_1_score`];
+            const s2 = teamData[`${teamKey}_2_score`];
+
+            if (s1 && typeof s1.runs !== "undefined") {
+                const r = `${s1.runs}/${s1.wickets ?? 0}`;
+                const o = s1.overs !== undefined ? `(${s1.overs} ov)` : "";
+                return { runs: r, overs: o };
+            }
+            return { runs: "--", overs: "" };
+        }
+
+        // "MATCH STARTS AT..." লাইন আঁতৰাই ন'ট প্ৰস্তুত কৰা
+        function extractCleanNote(result) {
+            let note = "";
+            if (result.lastCommentary && result.lastCommentary.secondaryText) {
+                note = result.lastCommentary.secondaryText;
+            } else if (result.announcement1 && result.announcement1.trim() !== "") {
+                note = result.announcement1.trim();
+            } else {
+                note = result.status ? result.status.toUpperCase() : "";
             }
 
-            if (!dateObj || isNaN(dateObj.getTime())) return "8:00 PM IST";
-
-            const timeStr = new Intl.DateTimeFormat('en-IN', {
-                timeZone: 'Asia/Kolkata',
-                hour: 'numeric',
-                minute: '2-digit',
-                hour12: true
-            }).format(dateObj).toUpperCase();
-
-            return `${timeStr} IST`;
+            return note
+                .split(/\r?\n/)
+                .filter(line => !line.toLowerCase().includes("match starts at"))
+                .join(" • ")
+                .trim();
         }
 
         async function fetchLiveScore() {
-            const cloudflareProxyUrl = `https://cricvoice.aminurmarch.workers.dev/?matchId=${matchId}&_t=${Date.now()}`;
-
             try {
-                const response = await fetch(cloudflareProxyUrl, { cache: "no-store" });
+                const response = await fetch(`${cricketApiUrl}&_t=${Date.now()}`, { cache: "no-store" });
                 if (!response.ok) return;
 
-                const result = await response.json();
-                
-                if (result?.data?.length > 0) {
-                    const match = result.data[0];
-                    const live = match?.livescore;
+                const data = await response.json();
+                const result = data?.responseData?.result;
+                if (!result) return;
 
-                    if (!live) return;
+                const teamA = result.teams?.a || {};
+                const teamB = result.teams?.b || {};
 
-                    // ১. মেচ টাইটেল
-                    const subTitle = live.subtitle ? `${live.subtitle} • ` : '';
-                    const shortTitle = live.short_title || match.short_title || live.title || 'IND-W vs HK-W T20';
-                    document.getElementById("match-info").textContent = `${subTitle}${shortTitle}`;
+                // ১. মেচ টাইটেল
+                const format = (result.format || "T20").toUpperCase();
+                document.getElementById("match-info").textContent = `${teamA.shortName || teamA.name || "IND W"} vs ${teamB.shortName || teamB.name || "PAK W"} ${format}`;
 
-                    // ২. মেচ ষ্টেটাছ নিৰ্ধাৰণ (Live / Completed / Scheduled)
-                    const rawStatus = (live.status_str || live.game_state_str || match.status_str || "").toLowerCase();
-                    const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || rawStatus.includes("ended") || live.status === 2;
-                    const isLive = rawStatus.includes("live") || rawStatus.includes("in progress") || live.status === 3;
+                // ২. মেচ ষ্টেটাছ নিৰ্ধাৰণ
+                const rawStatus = (result.status || "").toLowerCase();
+                const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || rawStatus.includes("ended");
+                const isLive = rawStatus.includes("started") || rawStatus.includes("live") || rawStatus.includes("in progress");
 
-                    isMatchLive = isLive;
+                isMatchLive = isLive;
 
-                    const statusBadge = document.getElementById("match-status");
-                    const statusBox = document.getElementById("status-box");
-                    const istTime = getMatchISTTime(live);
-                    const venueName = (live.venue && live.venue.name) ? live.venue.name : "Dubai";
+                const statusBadge = document.getElementById("match-status");
+                const statusBox = document.getElementById("status-box");
+                const cleanNote = extractCleanNote(result);
 
-                    if (isCompleted) {
-                        statusBadge.textContent = "COMPLETED";
-                        statusBadge.className = "status-badge completed";
-                        statusBox.className = "status-box completed";
-                        statusBox.textContent = live.status_note || live.result || "Match Finished";
-                    } else if (isLive) {
-                        statusBadge.textContent = "LIVE";
-                        statusBadge.className = "status-badge live";
-                        statusBox.className = "status-box live";
-                        statusBox.textContent = live.status_note || live.live || live.equation || "Match in progress";
-                    } else {
-                        statusBadge.textContent = "SCHEDULED";
-                        statusBadge.className = "status-badge";
-                        statusBox.className = "status-box";
-                        statusBox.textContent = `${live.subtitle || "T20"} • Starts at ${istTime} Today (${venueName})`;
-                    }
-
-                    // ৩. ভেনিউ
-                    if (live.venue) {
-                        const loc = live.venue.location ? `, ${live.venue.location}` : (live.venue.country ? `, ${live.venue.country}` : '');
-                        document.getElementById("venue-info").textContent = `📍 ${venueName}${loc}`;
-                    }
-
-                    // ৪. সৰ্বশেষ বল (Last Ball)
-                    const lastBallContainer = document.getElementById("last-ball-container");
-                    if (isLive && match.latest_ball_score !== undefined && match.latest_ball_score !== null && match.latest_ball_score !== "") {
-                        document.getElementById("latest-ball").textContent = match.latest_ball_score;
-                        lastBallContainer.style.display = "flex";
-                    } else {
-                        lastBallContainer.style.display = "none";
-                    }
-
-                    // ৫. Team A (India Women)
-                    if (live.teama) {
-                        document.getElementById("team-a-name").textContent = live.teama.name || "India Women";
-                        
-                        const logoA = document.getElementById("team-a-logo");
-                        if (live.teama.logo_url) {
-                            logoA.src = live.teama.logo_url;
-                            logoA.alt = live.teama.short_name || "";
-                            logoA.style.display = "block";
-                        }
-                        
-                        document.getElementById("team-a-runs").textContent = live.teama.scores || live.teama.scores_full || "--";
-                        document.getElementById("team-a-overs").textContent = live.teama.overs ? `(${live.teama.overs} ov)` : "";
-                    }
-
-                    // ৬. Team B (Hong Kong Women)
-                    if (live.teamb) {
-                        document.getElementById("team-b-name").textContent = live.teamb.name || "Hong Kong Women";
-                        
-                        const logoB = document.getElementById("team-b-logo");
-                        if (live.teamb.logo_url) {
-                            logoB.src = live.teamb.logo_url;
-                            logoB.alt = live.teamb.short_name || "";
-                            logoB.style.display = "block";
-                        }
-                        
-                        document.getElementById("team-b-runs").textContent = live.teamb.scores || live.teamb.scores_full || "--";
-                        document.getElementById("team-b-overs").textContent = live.teamb.overs ? `(${live.teamb.overs} ov)` : "";
-                    }
-
-                    // ৭. টছৰ বিৱৰণ
-                    const tossEl = document.getElementById("toss-info");
-                    if (live.toss && live.toss.text) {
-                        tossEl.textContent = `Toss: ${live.toss.text}`;
-                        tossEl.style.display = "block";
-                    } else {
-                        tossEl.style.display = "none";
-                    }
+                if (isCompleted) {
+                    statusBadge.textContent = "COMPLETED";
+                    statusBadge.className = "status-badge completed";
+                    statusBox.className = "status-box completed";
+                    statusBox.textContent = cleanNote || "Match Finished";
+                } else if (isLive) {
+                    statusBadge.textContent = "LIVE";
+                    statusBadge.className = "status-badge live";
+                    statusBox.className = "status-box live";
+                    statusBox.textContent = cleanNote || "Match in progress";
+                } else {
+                    statusBadge.textContent = "SCHEDULED";
+                    statusBadge.className = "status-badge";
+                    statusBox.className = "status-box";
+                    statusBox.textContent = cleanNote || "Match Scheduled";
                 }
+
+                // ৩. ভেনিউ
+                document.getElementById("venue-info").textContent = `📍 ${format} Match`;
+
+                // ৪. Team A (India Women)
+                document.getElementById("team-a-name").textContent = teamA.name || teamA.shortName || "India Women";
+                const logoA = document.getElementById("team-a-logo");
+                const logoAUrl = getTeamLogo(teamA);
+                if (logoAUrl) {
+                    logoA.src = logoAUrl;
+                    logoA.alt = teamA.shortName || "IND W";
+                    logoA.style.display = "block";
+                }
+                const scoreA = getScoreData(teamA, "a");
+                document.getElementById("team-a-runs").textContent = scoreA.runs;
+                document.getElementById("team-a-overs").textContent = scoreA.overs;
+
+                // ৫. Team B (Pakistan Women)
+                document.getElementById("team-b-name").textContent = teamB.name || teamB.shortName || "Pakistan Women";
+                const logoB = document.getElementById("team-b-logo");
+                const logoBUrl = getTeamLogo(teamB);
+                if (logoBUrl) {
+                    logoB.src = logoBUrl;
+                    logoB.alt = teamB.shortName || "PAK W";
+                    logoB.style.display = "block";
+                }
+                const scoreB = getScoreData(teamB, "b");
+                document.getElementById("team-b-runs").textContent = scoreB.runs;
+                document.getElementById("team-b-overs").textContent = scoreB.overs;
+
+                // ৬. টছৰ বিৱৰণ
+                const tossEl = document.getElementById("toss-info");
+                if (result.announcement1 && result.announcement1.toLowerCase().includes("opt to")) {
+                    tossEl.textContent = `Toss: ${result.announcement1}`;
+                    tossEl.style.display = "block";
+                } else {
+                    tossEl.style.display = "none";
+                }
+
             } catch (error) {
                 console.error("Error fetching live score:", error);
             } finally {
-                const nextInterval = isMatchLive ? 5000 : 15000;
+                const nextInterval = isMatchLive ? 30000 : 60000;
                 setTimeout(fetchLiveScore, nextInterval);
             }
         }
