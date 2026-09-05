@@ -372,10 +372,20 @@
         .fow-item {
             display: inline-block;
             background: rgba(255, 255, 255, 0.04);
-            padding: 2px 5px;
+            padding: 3px 6px;
             border-radius: 5px;
-            margin: 1.5px 1px;
+            margin: 2px 2px;
             border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .yet-to-bat-box {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 8px 10px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            line-height: 1.4;
         }
 
         .shimmer {
@@ -423,7 +433,7 @@
 
 <script>
     const matchId = "6a7521ed78dcf065703188c1";
-    const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}&inningsNumber=1&battingTeam=b`;
+    const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
     let selectedInningIndex = 0;
@@ -451,12 +461,11 @@
             if (!result) return;
             matchData = result;
 
-            // মেচ ফৰ্মেট আৰু হেডাৰ
             const format = (result.format || "T20").toUpperCase();
             document.getElementById("matchHeader").textContent = `IND-W vs PAK-W • ${format}`;
             document.getElementById("venueHeader").textContent = `📍 ${format} Match`;
 
-            // ষ্টেটাছ নিৰ্ধাৰণ
+            // মেচ অৱস্থা নিৰ্ধাৰণ
             const rawStatus = (result.status || "").toLowerCase();
             const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || rawStatus.includes("ended");
             const isLive = rawStatus === "started" || rawStatus.includes("live") || rawStatus.includes("in progress");
@@ -479,12 +488,11 @@
                 dotEl.style.display = "none";
             }
 
-            // ইনিংছ ডাটা
             const innings = result.innings_batting_order || [];
             if (!Array.isArray(innings) || innings.length === 0) {
                 document.getElementById("contentView").innerHTML = `
                     <div style="text-align:center; padding:25px 10px; color:var(--text-muted); font-size:12px;">
-                        Waiting for innings to start...
+                        Waiting for innings data...
                     </div>
                 `;
                 updateLastRefresh();
@@ -535,61 +543,78 @@
 
         const container = document.getElementById("contentView");
 
-        // ১. বেটিং তালিকা
-        const batsmen = inn.battingOrder || inn.player_batting_order || [];
+        // ১. বেটিং তালিকা (player_batting_order)
+        const batsmen = inn.player_batting_order || inn.battingOrder || [];
         const battingHTML = batsmen.length > 0 ? batsmen.map(b => {
-            const isNotOut = !b.dismissal || b.dismissal.toLowerCase().includes('not out');
-            let dismissal = isNotOut ? '<span class="not-out">not out</span>' : (b.dismissal || b.how_out || "out");
+            const bData = b.batting || b;
+            const isNotOut = bData.dismissed === false || !bData.out_str;
+            let dismissal = isNotOut ? '<span class="not-out">not out</span>' : (bData.out_str || 'out');
+            const pName = b.mobileName || b.name || b.fullname || 'Batter';
 
             return `
                 <tr>
                     <td>
                         <div class="player-info">
                             <div class="player-name-wrapper">
-                                <span class="player-name">${b.name || b.playerName || 'Batter'}</span>
+                                <span class="player-name">${pName}</span>
                             </div>
                             <span class="player-dismissal">${dismissal}</span>
                         </div>
                     </td>
-                    <td class="highlight-val">${b.runs ?? 0}</td>
-                    <td>${b.balls ?? b.balls_faced ?? 0}</td>
-                    <td>${b.fours ?? 0}</td>
-                    <td>${b.sixes ?? 0}</td>
-                    <td>${b.strike_rate || b.strikeRate || '0.00'}</td>
+                    <td class="highlight-val">${bData.runs ?? 0}</td>
+                    <td>${bData.balls ?? 0}</td>
+                    <td>${bData.fours ?? 0}</td>
+                    <td>${bData.sixes ?? 0}</td>
+                    <td>${bData.strike_rate || '0.00'}</td>
                 </tr>
             `;
-        }).join("") : '<tr><td colspan="6" style="text-align:center; padding:12px; color:var(--text-muted);">Yet to bat / No batting data</td></tr>';
+        }).join("") : '<tr><td colspan="6" style="text-align:center; padding:12px; color:var(--text-muted);">No batting data available</td></tr>';
 
-        // ২. বলিং তালিকা
-        const bowlers = inn.bowlingOrder || inn.player_bowling_order || [];
+        // ২. বলিং তালিকা (player_bowling_order)
+        const bowlers = inn.player_bowling_order || inn.bowlingOrder || [];
         const bowlingHTML = bowlers.length > 0 ? bowlers.map(bw => {
+            const bwData = bw.bowling || bw;
+            const bwName = bw.mobileName || bw.name || bw.fullname || 'Bowler';
+
             return `
                 <tr>
                     <td>
                         <div class="player-name-wrapper">
-                            <span class="player-name">${bw.name || bw.playerName || 'Bowler'}</span>
+                            <span class="player-name">${bwName}</span>
                         </div>
                     </td>
-                    <td class="highlight-val">${bw.overs ?? '0.0'}</td>
-                    <td>${bw.maidens ?? 0}</td>
-                    <td>${bw.runs ?? bw.runs_conceded ?? 0}</td>
-                    <td class="wickets-val">${bw.wickets ?? 0}</td>
-                    <td>${bw.econ || bw.economy || '0.00'}</td>
+                    <td class="highlight-val">${bwData.overs ?? '0.0'}</td>
+                    <td>${bwData.maiden_overs ?? bwData.maidens ?? 0}</td>
+                    <td>${bwData.runs ?? 0}</td>
+                    <td class="wickets-val">${bwData.wickets ?? 0}</td>
+                    <td>${bwData.economy || '0.00'}</td>
                 </tr>
             `;
-        }).join("") : '<tr><td colspan="6" style="text-align:center; padding:12px; color:var(--text-muted);">Yet to bowl / No bowling data</td></tr>';
+        }).join("") : '<tr><td colspan="6" style="text-align:center; padding:12px; color:var(--text-muted);">No bowling data available</td></tr>';
 
-        // ৩. ফল অৱ ৱিকেট
-        const fows = inn.fall_of_wickets || inn.wicket_order || [];
+        // ৩. উইকেট পতন (Fall of Wickets)
+        const fows = inn.fall_of_wickets || [];
         let fowList = '<span style="color:var(--text-muted)">No wickets fallen</span>';
         if (Array.isArray(fows) && fows.length > 0) {
             fowList = fows.map(f => {
+                if (typeof f === 'string') {
+                    return `<span class="fow-item">${f}</span>`;
+                }
                 const wkt = `${f.score ?? f.runs ?? 0}-${f.number ?? f.wicket ?? ''}`;
-                return `<span class="fow-item"><b>${wkt}</b> (${f.name || f.playerName || ''}, ${f.overs ?? 0} ov)</span>`;
+                return `<span class="fow-item"><b>${wkt}</b> (${f.name || ''}, ${f.overs ?? 0} ov)</span>`;
             }).join(" ");
         }
 
-        // ৪. অতিৰিক্ত আৰু মুঠ স্ক'ৰ
+        // ৪. Yet to Bat (খেলিবলৈ বাকী থকা খেলুৱৈ)
+        const ytb = inn.yet_to_bat || [];
+        const ytbHTML = ytb.length > 0 ? `
+            <div class="section-header">Yet to Bat</div>
+            <div class="yet-to-bat-box">
+                ${ytb.map(p => p.name).join(", ")}
+            </div>
+        ` : '';
+
+        // ৫. অতিৰিক্ত আৰু মুঠ স্ক'ৰ
         const extrasDetail = `b ${inn.bye ?? 0}, lb ${inn.legbye ?? 0}, w ${inn.wide ?? 0}, nb ${inn.noball ?? 0}`;
         const totalExtras = inn.extras ?? 0;
         const totalScore = inn.run_str || `${inn.runs ?? 0}/${inn.wickets ?? 0} (${inn.overs ?? '0.0'} ov)`;
@@ -632,6 +657,8 @@
                 </div>
             </div>
 
+            ${ytbHTML}
+
             <div class="section-header">Fall of Wickets</div>
             <div class="fow-box">
                 ${fowList}
@@ -657,7 +684,7 @@
     }
 
     loadScorecard();
-    setInterval(loadScorecard, 20000); // প্ৰতি ২০ ছেকেণ্ডত ডাটা স্বয়ংক্ৰিয়ভাৱে সতেজ হ'ব
+    setInterval(loadScorecard, 15000); // প্ৰতি ১৫ ছেকেণ্ডত স্বয়ংক্ৰিয়ভাৱে স্ক'ৰ সতেজ হ'ব
 </script>
 
 </body>
