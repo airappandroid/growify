@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Live Scorecard - IND-W vs HK-W</title>
+    <title>Live Scorecard - IND-W vs PAK-W</title>
     <style>
         :root {
             --bg-base: #020617;
@@ -437,7 +437,7 @@
 
     <!-- Match Information Row -->
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">IND-W vs HK-W T20</span>
+        <span class="match-title-text" id="matchHeader">IND-W vs PAK-W</span>
         <span id="venueHeader">📍 Dubai</span>
     </div>
 
@@ -451,32 +451,70 @@
 </div>
 
 <script>
-    const matchId = "98315";
+    const matchId = "98317";
     const API_URL = `https://cricvoice2.aminurmarch.workers.dev/?matchId=${matchId}`;
     
     let matchData = null;
     let selectedInningIndex = -1;
     let isInitialLoad = true;
 
-    // ভাৰতীয় সময় (IST) নিৰ্ধাৰণ ফাংচন
-    function getISTTimeString(dateStr, timestamp) {
-        let dateObj;
-        if (dateStr) {
-            dateObj = new Date(dateStr.replace(" ", "T") + "+05:30");
-        } else if (timestamp) {
-            dateObj = new Date(timestamp * 1000);
+    // মেচ আৰম্ভণিৰ সময় নিৰ্ধাৰণ ফাংচন
+    function formatMatchScheduleText(data) {
+        if (!data) return "Match starts tonight at 8:00 PM IST";
+
+        if (data.status_note && data.status_note.trim() !== "") {
+            return data.status_note;
         }
 
-        if (!dateObj || isNaN(dateObj.getTime())) return "8:00 PM IST";
+        if (data.date_start_ist) {
+            try {
+                const parts = data.date_start_ist.trim().split(" ");
+                if (parts[1]) {
+                    const timeParts = parts[1].split(":");
+                    let hour = parseInt(timeParts[0], 10);
+                    let min = parseInt(timeParts[1], 10);
 
-        const timeStr = new Intl.DateTimeFormat('en-IN', {
-            timeZone: 'Asia/Kolkata',
-            hour: 'numeric',
-            minute: '2-digit',
-            hour12: true
-        }).format(dateObj).toUpperCase();
+                    const ampm = hour >= 12 ? "PM" : "AM";
+                    const hour12 = hour % 12 || 12;
+                    const formattedMin = min < 10 ? "0" + min : min;
+                    const timeStr = `${hour12}:${formattedMin} ${ampm} IST`;
 
-        return `${timeStr} IST`;
+                    if (hour >= 17) {
+                        return `Match starts tonight at ${timeStr}`;
+                    } else if (hour < 12) {
+                        return `Match starts today morning at ${timeStr}`;
+                    } else {
+                        return `Match starts today at ${timeStr}`;
+                    }
+                }
+            } catch(e) {}
+        }
+
+        if (data.date_start || data.timestamp_start) {
+            try {
+                const d = data.timestamp_start 
+                    ? new Date(data.timestamp_start * 1000) 
+                    : new Date(data.date_start.replace(" ", "T") + "Z");
+
+                const timeStr = d.toLocaleTimeString('en-IN', {
+                    timeZone: 'Asia/Kolkata',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                });
+
+                const hourIST = parseInt(d.toLocaleTimeString('en-IN', {
+                    timeZone: 'Asia/Kolkata',
+                    hour: 'numeric',
+                    hour12: false
+                }), 10);
+
+                const timingTag = hourIST >= 17 ? "tonight" : "today";
+                return `Match starts ${timingTag} at ${timeStr} IST`;
+            } catch(e) {}
+        }
+
+        return "Match starts tonight at 8:00 PM IST";
     }
 
     function updateLastRefresh() {
@@ -497,28 +535,44 @@
             if (!response.ok) return;
             const resData = await response.json();
 
-            // JSON ডাটা চিনাক্তকৰণ
+            // JSON ডাটা সঠিকভাৱে চিনাক্তকৰণ (খালি scoreCard এৰাই চলা হৈছে)
+            let parsedData = null;
             if (resData?.data && Array.isArray(resData.data) && resData.data.length > 0) {
-                matchData = resData.data[0].scoreCard || resData.data[0].livescore || resData.data[0];
-            } else if (resData?.scoreCard) {
-                matchData = resData.scoreCard;
+                const item = resData.data[0];
+                if (item.scoreCard && ((item.scoreCard.innings && item.scoreCard.innings.length > 0) || item.scoreCard.teama)) {
+                    parsedData = item.scoreCard;
+                } else if (item.livescore) {
+                    parsedData = item.livescore;
+                } else {
+                    parsedData = item;
+                }
             } else if (resData?.livescore) {
-                matchData = resData.livescore;
+                parsedData = resData.livescore;
+            } else if (resData?.scoreCard) {
+                parsedData = resData.scoreCard;
             } else {
-                matchData = resData;
+                parsedData = resData;
             }
 
-            if (!matchData) return;
+            if (!parsedData) return;
+            matchData = parsedData;
 
-            // মেচ টাইটেল আৰু ভেনিউ
-            const mainTitle = matchData.short_title || matchData.title || 'India Women vs Hong Kong Women T20';
-            const subTitle = matchData.subtitle ? `${matchData.subtitle} • ` : '';
+            // প্ৰকৃত দলৰ নাম সংগ্ৰহ (Team A / Team B সম্পূৰ্ণৰূপে প্ৰতিস্থাপন কৰা হৈছে)
+            const teamAName = matchData.teama?.name || matchData.team_a?.name || "India Women";
+            const teamBName = matchData.teamb?.name || matchData.team_b?.name || "Pakistan Women";
+            const teamAShort = matchData.teama?.short_name || matchData.team_a?.short_name || "IND-W";
+            const teamBShort = matchData.teamb?.short_name || matchData.team_b?.short_name || "PAK-W";
+
+            const mainTitle = matchData.short_title || matchData.title || `${teamAShort} vs ${teamBShort}`;
+            const subTitle = matchData.subtitle ? `${matchData.subtitle} • ` : (matchData.competition?.abbr ? `${matchData.competition.abbr} • ` : '');
+            
             document.getElementById("matchHeader").textContent = `${subTitle}${mainTitle}`;
+            document.title = `Live Scorecard - ${mainTitle}`;
 
-            const venueName = matchData.venue?.name || matchData.venue?.location || 'Dubai International Cricket Stadium, Dubai';
+            const venueName = matchData.venue?.name || matchData.venue?.location || 'Dubai International Cricket Stadium';
             document.getElementById("venueHeader").textContent = `📍 ${venueName.split(',')[0]}`;
 
-            // ষ্টেটাছ বিশ্লেষণ (Completed / Live / Scheduled)
+            // মেচ অৱস্থা বিশ্লেষণ
             const rawStatus = (
                 matchData.status_str || 
                 matchData.game_state_str || 
@@ -530,7 +584,6 @@
             const statusNote = (matchData.status_note || matchData.result || "").toLowerCase();
             const statusCode = Number(matchData.status);
 
-            // সমাপ্তি নিশ্চিত কৰিবলৈ কীৱৰ্ড পৰীক্ষা
             const completionKeywords = [
                 "complete", "completed", "finish", "finished", 
                 "ended", "result", "closed", "concluded", "stumps", 
@@ -539,7 +592,6 @@
             ];
             const hasCompletedText = completionKeywords.some(kw => rawStatus.includes(kw) || statusNote.includes(kw));
 
-            // মেচ সমাপ্তিৰ স্থিতি নিৰ্ধাৰণ (status == 2 বা ফলাফল থাকিলে)
             const isCompleted = (
                 statusCode === 2 || 
                 statusCode === 4 || 
@@ -548,7 +600,6 @@
                 hasCompletedText
             );
 
-            // মেচ লাইভ হোৱাৰ স্থিতি (কেৱল যদি সমাপ্ত হোৱা নাই)
             const isLive = !isCompleted && (
                 statusCode === 3 || 
                 rawStatus.includes("live") || 
@@ -560,7 +611,6 @@
             const badgeText = document.getElementById("badgeText");
             const dotEl = document.getElementById("liveDot");
 
-            // বেজ আপডেট (প্ৰথমে Completed পৰীক্ষা কৰা হৈছে)
             if (isCompleted) {
                 badgeText.textContent = "COMPLETED";
                 badgeEl.className = "match-badge completed";
@@ -577,17 +627,15 @@
 
             const innings = matchData.innings || [];
 
-            // মেচ আৰম্ভ নোহোৱালৈকে অনুসূচী কাৰ্ড (Scheduled Card)
+            // মেচ আৰম্ভ নোহোৱালৈকে অনুসূচী কাৰ্ড
             if (!Array.isArray(innings) || innings.length === 0) {
                 document.getElementById("inningsTabs").innerHTML = "";
-                const istTime = getISTTimeString(matchData.date_start_ist, matchData.timestamp_start);
-                const teamA = matchData.teama?.name || "India Women";
-                const teamB = matchData.teamb?.name || "Hong Kong Women";
+                const scheduleMessage = formatMatchScheduleText(matchData);
 
                 document.getElementById("contentView").innerHTML = `
                     <div class="scheduled-card">
-                        <div class="sched-title">${teamA} vs ${teamB} T20</div>
-                        <div class="sched-time">Starts at ${istTime} Today</div>
+                        <div class="sched-title">${matchData.title || `${teamAName} vs ${teamBName}`}</div>
+                        <div class="sched-time">${scheduleMessage}</div>
                         <div class="sched-venue">
                             Venue: ${venueName}<br>
                             Live scores, commentary, and scorecard updates will be refreshed automatically here once the match begins.
@@ -598,7 +646,6 @@
                 return;
             }
 
-            // সৰ্বশেষ ইনিংছ লোড কৰক
             if (isInitialLoad || selectedInningIndex === -1 || selectedInningIndex >= innings.length) {
                 selectedInningIndex = innings.length - 1;
                 isInitialLoad = false;
@@ -643,7 +690,6 @@
 
         const container = document.getElementById("contentView");
 
-        // বেটিং তালিকা
         const batsmen = inn.batsmen || [];
         const battingHTML = batsmen.map(b => {
             const isNotOut = !b.how_out || b.how_out.toLowerCase().includes('not out');
@@ -668,7 +714,6 @@
             `;
         }).join("") || '<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">No batting data available</td></tr>';
 
-        // বলিং তালিকা
         const bowlers = inn.bowlers || [];
         const bowlingHTML = bowlers.map(bw => {
             return `
@@ -687,7 +732,6 @@
             `;
         }).join("") || '<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">No bowling data available</td></tr>';
 
-        // Fall of wickets
         let fowList = '<span style="color:var(--text-muted)">No wickets fallen</span>';
         if (Array.isArray(inn.fows) && inn.fows.length > 0) {
             fowList = inn.fows.map(f => {
@@ -696,7 +740,6 @@
             }).join(" ");
         }
 
-        // অতিৰিক্ত ৰাণ
         const ext = inn.extra_runs || {};
         const extrasDetail = `b ${ext.byes ?? 0}, lb ${ext.legbyes ?? 0}, w ${ext.wides ?? 0}, nb ${ext.noballs ?? 0}`;
         const totalExtras = ext.total ?? 0;
@@ -764,7 +807,6 @@
         `;
     }
 
-    // প্ৰতি ৫ ছেকেণ্ডত স্বয়ংক্ৰিয় আপডেট
     loadScorecard();
     setInterval(loadScorecard, 60000);
 </script>
