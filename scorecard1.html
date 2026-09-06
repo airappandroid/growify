@@ -349,11 +349,11 @@
     <div class="scorecard-app">
         <div class="match-card-header">
             <div class="match-title">
-                <span id="header-match">ENG-W vs IRE-W</span>
+                <span id="header-match">ENG-W vs IRE-W • 3rd ODI</span>
                 <span class="status-badge" id="header-status">SCHEDULED</span>
             </div>
-            <div class="match-sub" id="header-venue">📍 County Ground, Derby</div>
-            <div class="status-text" id="header-note">Loading match details...</div>
+            <div class="match-sub" id="header-venue">📍 New Road, Worcester</div>
+            <div class="status-text" id="header-note">Ireland Women tour of England 2026 • Starts at 11:00 AM UK Time</div>
         </div>
 
         <div class="tabs-container" id="tabs-container"></div>
@@ -364,7 +364,8 @@
     </div>
 
     <script>
-        const currentMatchId = "95251";
+        // প্ৰয়োজন অনুযায়ী শুদ্ধ matchId প্ৰদান কৰিব
+        const currentMatchId = "95252";
         const scorecardProxyUrl = `https://cricvoice2.aminurmarch.workers.dev/?matchId=${currentMatchId}`;
         
         let matchData = null;
@@ -380,7 +381,8 @@
                 dateObj = new Date(data.date_start.replace(" ", "T") + "Z");
             }
 
-            if (!dateObj || isNaN(dateObj.getTime())) return "1:00 PM";
+            // ডিফল্ট সময় 11:00 AM UK Time
+            if (!dateObj || isNaN(dateObj.getTime())) return "11:00 AM";
 
             return new Intl.DateTimeFormat('en-GB', {
                 timeZone: 'Europe/London',
@@ -398,7 +400,6 @@
                 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                 const json = await res.json();
 
-                // মূল ডাটা অবজেক্ট নিৰ্ধাৰণ
                 let rootData = {};
                 if (json.data && Array.isArray(json.data) && json.data.length > 0) {
                     rootData = json.data[0];
@@ -408,7 +409,6 @@
                     rootData = json;
                 }
 
-                // মূল ডাটা আৰু scoreCard/livescore একত্ৰিত (Merge) কৰা যাতে status/result নোহোৱা নহয়
                 const childData = rootData.scoreCard || rootData.livescore || {};
                 matchData = {
                     ...rootData,
@@ -422,17 +422,17 @@
                 }
 
                 // হেডাৰ আৰু টাইটেল
-                const subTitle = matchData.subtitle ? `${matchData.subtitle} • ` : '';
-                const mainTitle = matchData.short_title || matchData.title || 'ENG-W vs IRE-W';
-                document.getElementById("header-match").textContent = `${subTitle}${mainTitle}`;
+                const subTitle = matchData.subtitle ? `${matchData.subtitle} • ` : '3rd ODI • ';
+                const mainTitle = matchData.short_title || matchData.title || 'England Women vs Ireland Women';
+                document.getElementById("header-match").textContent = `${mainTitle} (${subTitle.replace(' • ', '')})`;
 
-                // ভেনিউ
-                if (matchData.venue && (matchData.venue.name || matchData.venue.country)) {
-                    const venueParts = [matchData.venue.name, matchData.venue.country].filter(Boolean);
-                    document.getElementById("header-venue").textContent = `📍 ${venueParts.join(', ')}`;
-                }
+                // ভেনিউ (New Road, Worcester)
+                const venueName = (matchData.venue && (matchData.venue.name || matchData.venue.country))
+                    ? [matchData.venue.name, matchData.venue.country].filter(Boolean).join(', ')
+                    : "New Road, Worcester";
+                document.getElementById("header-venue").textContent = `📍 ${venueName}`;
 
-                // উন্নত ষ্টেটাছ নিৰ্ধাৰণ লজিক
+                // মেচৰ ষ্টেটাছ নিৰ্ধাৰণ
                 const statusNum = Number(matchData.status ?? matchData.status_id ?? 0);
                 const gameStateNum = Number(matchData.game_state ?? matchData.game_state_id ?? 0);
 
@@ -442,7 +442,6 @@
                 const resultText = (matchData.result || matchData.match_result || "").toLowerCase();
                 const stateStr = (matchData.state || matchData.match_state || "").toLowerCase();
 
-                // মেচ শেষ হোৱাৰ সম্ভাৱ্য শব্দসমূহ
                 const completedKeywords = [
                     "complete", "finish", "result", "ended", "close", "concluded",
                     "won", "beat", "defeat", "drawn", "tie", "abandon", "no result"
@@ -456,7 +455,6 @@
                     statusNote.includes(k)
                 );
 
-                // মেচ সমাপ্ত হোৱাৰ চৰ্ত (EntitySport: status 2 বা 4, gameState 12)
                 const isCompleted = statusNum === 2 || 
                                     statusNum === 4 || 
                                     gameStateNum === 12 || 
@@ -464,7 +462,6 @@
                                     Boolean(matchData.winner || matchData.winning_team_id) ||
                                     hasCompletedKeyword;
 
-                // লাইভ হোৱাৰ চৰ্ত (যদি মেচ ইতিমধ্যে সমাপ্ত হোৱা নাই)
                 const liveKeywords = ["live", "in progress", "ongoing", "current"];
                 const hasLiveKeyword = liveKeywords.some(k => 
                     statusStr.includes(k) || gameStateStr.includes(k) || stateStr.includes(k)
@@ -475,7 +472,7 @@
                 const noteEl = document.getElementById("header-note");
 
                 const ukTime = getMatchUKTime(matchData);
-                const venueName = matchData.venue && matchData.venue.name ? matchData.venue.name : "Derby";
+                const seriesTitle = matchData.series_name || (matchData.series && matchData.series.name) || "Ireland Women tour of England 2026";
 
                 if (isCompleted) {
                     const isAbandoned = statusNum === 4 || statusStr.includes("abandon") || statusNote.includes("abandon");
@@ -492,7 +489,7 @@
                     badgeEl.textContent = "SCHEDULED";
                     badgeEl.className = "status-badge";
                     noteEl.className = "status-text";
-                    noteEl.textContent = `${matchData.subtitle || "Match"} • Starts at ${ukTime} UK Time (${venueName})`;
+                    noteEl.textContent = `${seriesTitle} • Starts at ${ukTime} UK Time`;
                 }
 
                 // ইনিংছ পৰীক্ষা
@@ -504,9 +501,9 @@
                     container.innerHTML = `
                         <div class="upcoming-card">
                             <div class="upcoming-teams">${teamA} vs ${teamB}</div>
-                            <div class="upcoming-time">${isCompleted ? (matchData.status_note || matchData.result || "Match Finished") : `Starts at ${ukTime} UK Time`}</div>
+                            <div class="upcoming-time">${isCompleted ? (matchData.status_note || matchData.result || "Match Finished") : `Starts Today at ${ukTime} UK Time`}</div>
                             <div class="upcoming-note">
-                                ${isCompleted ? 'Detailed scorecard is not available for this match.' : `Match scheduled at ${venueName}.<br>Live scorecard and ball-by-ball updates will appear here automatically once the match begins.`}
+                                ${isCompleted ? 'Detailed scorecard is not available for this match.' : `Match scheduled at ${venueName}.<br>Series: ${seriesTitle}.<br>Live scorecard will appear here once the match begins.`}
                             </div>
                         </div>
                     `;
@@ -691,7 +688,7 @@
         }
 
         loadScorecard();
-        setInterval(loadScorecard, 20000);
+        setInterval(loadScorecard, 60000);
     </script>
 </body>
 </html>
