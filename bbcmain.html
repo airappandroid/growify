@@ -66,7 +66,7 @@ body {
 .cricket-strip {
     display: block;
     margin: 10px 16px 0;
-    padding: 10px 12px;
+    padding: 10px 8px;
     background: linear-gradient(135deg, #152033 0%, #0e1627 100%);
     border: 1px solid rgba(59, 130, 246, 0.32);
     border-radius: 12px;
@@ -162,30 +162,25 @@ body {
 .strip-scores {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
+    justify-content: space-between;
+    gap: 4px;
     width: 100%;
     white-space: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-}
-
-.strip-scores::-webkit-scrollbar {
-    display: none;
 }
 
 .strip-team {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 3.5px;
     white-space: nowrap;
+    flex-shrink: 0;
 }
 
 /* Team Logo Style */
 .team-logo {
-    width: 18px;
-    height: 18px;
-    min-width: 18px;
+    width: 17px;
+    height: 17px;
+    min-width: 17px;
     border-radius: 50%;
     object-fit: cover;
     background: #1e293b;
@@ -196,12 +191,12 @@ body {
 .team-code {
     color: #ffffff;
     font-weight: 800;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .team-runs {
     color: #38bdf8;
-    font-size: 11.5px;
+    font-size: 11px;
     font-weight: 700;
     white-space: nowrap;
 }
@@ -209,16 +204,17 @@ body {
 /* Overs Style */
 .team-overs {
     color: #94a3b8;
-    font-size: 10.5px;
+    font-size: 9.5px;
     font-weight: 500;
     white-space: nowrap;
 }
 
 .strip-divider {
     color: #64748b;
-    font-size: 10.5px;
+    font-size: 10px;
     font-weight: 700;
-    padding: 0 2px;
+    padding: 0 1px;
+    flex-shrink: 0;
 }
 
 /* Station Card */
@@ -405,14 +401,14 @@ body {
         <div class="strip-body">
             <div class="strip-scores">
                 <div class="strip-team">
-                    <img id="teamALogo" class="team-logo" src="https://gcdnimages.entitysport.com/assets/uploads/2025/09/Eng-w.webp" alt="ENG-W" width="18" height="18">
+                    <img id="teamALogo" class="team-logo" src="https://gcdnimages.entitysport.com/assets/uploads/2025/09/Eng-w.webp" alt="ENG-W" width="17" height="17">
                     <span class="team-code" id="teamACode">ENG-W</span>
                     <span class="team-runs" id="teamAScore">--</span>
                     <span class="team-overs" id="teamAOvers"></span>
                 </div>
                 <span class="strip-divider">vs</span>
                 <div class="strip-team">
-                    <img id="teamBLogo" class="team-logo" src="https://gcdnimages.entitysport.com/assets/uploads/2025/09/ire-w.webp" alt="IRE-W" width="18" height="18">
+                    <img id="teamBLogo" class="team-logo" src="https://gcdnimages.entitysport.com/assets/uploads/2025/09/ire-w.webp" alt="IRE-W" width="17" height="17">
                     <span class="team-code" id="teamBCode">IRE-W</span>
                     <span class="team-runs" id="teamBScore">--</span>
                     <span class="team-overs" id="teamBOvers"></span>
@@ -529,7 +525,6 @@ body {
 const matchId = "95252";
 const cloudflareProxyUrl = `https://cricvoice.aminurmarch.workers.dev/?matchId=${matchId}`;
 
-// UK সময় (BST/GMT) ৰূপান্তৰ কৰাৰ ফাংচন
 function getMatchUKTime(match) {
     let dateObj;
     if (match.timestamp_start) {
@@ -563,7 +558,6 @@ async function fetchCricketScore() {
             const teamA = match.teama;
             const teamB = match.teamb;
 
-            // দল A-ৰ স্ক'ৰ, অ'ভাৰ আৰু ল'গ'
             if (teamA) {
                 document.getElementById('teamACode').textContent = teamA.short_name || "ENG-W";
                 document.getElementById('teamAScore').textContent = teamA.scores || "--";
@@ -580,7 +574,6 @@ async function fetchCricketScore() {
                 }
             }
 
-            // দল B-ৰ স্ক'ৰ, অ'ভাৰ আৰু ল'গ'
             if (teamB) {
                 document.getElementById('teamBCode').textContent = teamB.short_name || "IRE-W";
                 document.getElementById('teamBScore').textContent = teamB.scores || "--";
@@ -597,14 +590,12 @@ async function fetchCricketScore() {
                 }
             }
 
-            // ষ্টেটাছ ন'ট আৰু সময় নিৰ্ণয়
             let statusText = match.status_note || match.live || match.equation || "";
             const statusStr = (match.status_str || "").toLowerCase();
             const badgeContainer = document.getElementById('badgeContainer');
             const badgeEl = document.getElementById('matchBadge');
             const dotEl = document.getElementById('liveDot');
 
-            // খেলখন লাইভ হোৱা নাই (Scheduled)
             if (statusStr.includes("scheduled") || match.status === 1) {
                 const ukTime = getMatchUKTime(match);
                 const venueName = match.venue && match.venue.name ? match.venue.name : "Derby";
@@ -619,7 +610,6 @@ async function fetchCricketScore() {
                 if (dotEl) dotEl.style.display = "none";
 
             } else if (statusStr.includes("completed") || statusStr.includes("finished") || match.status === 2) {
-                // খেল সম্পূৰ্ণ হ'লে
                 document.getElementById('matchNote').textContent = statusText || match.status_note || "Match Ended";
                 badgeEl.textContent = "COMPLETED";
                 badgeContainer.style.background = "rgba(148, 163, 184, 0.16)";
@@ -628,12 +618,11 @@ async function fetchCricketScore() {
                 if (dotEl) dotEl.style.display = "none";
 
             } else {
-                // খেল লাইভ চলি থাকিলে
                 document.getElementById('matchNote').textContent = statusText || "Match in progress";
                 badgeEl.textContent = "LIVE";
                 badgeContainer.style.background = "rgba(239, 68, 68, 0.16)";
                 badgeContainer.style.borderColor = "rgba(239, 68, 68, 0.45)";
-                badgeContainer.color = "#f87171";
+                badgeContainer.style.color = "#f87171";
                 if (dotEl) dotEl.style.display = "inline-block";
             }
         }
