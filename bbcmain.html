@@ -177,7 +177,7 @@ body {
 .strip-team {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     white-space: nowrap;
 }
 
@@ -202,7 +202,15 @@ body {
 .team-runs {
     color: #38bdf8;
     font-size: 11.5px;
-    font-weight: 600;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* Overs Style */
+.team-overs {
+    color: #94a3b8;
+    font-size: 10.5px;
+    font-weight: 500;
     white-space: nowrap;
 }
 
@@ -400,12 +408,14 @@ body {
                     <img id="teamALogo" class="team-logo" src="https://gcdnimages.entitysport.com/assets/uploads/2025/09/Eng-w.webp" alt="ENG-W" width="18" height="18">
                     <span class="team-code" id="teamACode">ENG-W</span>
                     <span class="team-runs" id="teamAScore">--</span>
+                    <span class="team-overs" id="teamAOvers"></span>
                 </div>
                 <span class="strip-divider">vs</span>
                 <div class="strip-team">
                     <img id="teamBLogo" class="team-logo" src="https://gcdnimages.entitysport.com/assets/uploads/2025/09/ire-w.webp" alt="IRE-W" width="18" height="18">
                     <span class="team-code" id="teamBCode">IRE-W</span>
                     <span class="team-runs" id="teamBScore">--</span>
+                    <span class="team-overs" id="teamBOvers"></span>
                 </div>
             </div>
         </div>
@@ -519,7 +529,7 @@ body {
 const matchId = "95252";
 const cloudflareProxyUrl = `https://cricvoice.aminurmarch.workers.dev/?matchId=${matchId}`;
 
-// ইউকে সময় (BST/GMT) ৰূপান্তৰ কৰাৰ ফাংচন
+// UK সময় (BST/GMT) ৰূপান্তৰ কৰাৰ ফাংচন
 function getMatchUKTime(match) {
     let dateObj;
     if (match.timestamp_start) {
@@ -553,19 +563,34 @@ async function fetchCricketScore() {
             const teamA = match.teama;
             const teamB = match.teamb;
 
-            // দল দুটাৰ নাম, স্ক'ৰ আৰু ল'গ'
+            // দল A-ৰ স্ক'ৰ, অ'ভাৰ আৰু ল'গ'
             if (teamA) {
                 document.getElementById('teamACode').textContent = teamA.short_name || "ENG-W";
-                document.getElementById('teamAScore').textContent = teamA.scores || teamA.scores_full || "--";
+                document.getElementById('teamAScore').textContent = teamA.scores || "--";
+                
+                const overAEl = document.getElementById('teamAOvers');
+                if (overAEl) {
+                    const ovA = (teamA.overs || "").toString().trim();
+                    overAEl.textContent = ovA ? `(${ovA} ov)` : "";
+                }
+
                 if (teamA.logo_url) {
                     const logoA = document.getElementById('teamALogo');
                     if (logoA) logoA.src = teamA.logo_url;
                 }
             }
 
+            // দল B-ৰ স্ক'ৰ, অ'ভাৰ আৰু ল'গ'
             if (teamB) {
                 document.getElementById('teamBCode').textContent = teamB.short_name || "IRE-W";
-                document.getElementById('teamBScore').textContent = teamB.scores || teamB.scores_full || "--";
+                document.getElementById('teamBScore').textContent = teamB.scores || "--";
+
+                const overBEl = document.getElementById('teamBOvers');
+                if (overBEl) {
+                    const ovB = (teamB.overs || "").toString().trim();
+                    overBEl.textContent = ovB ? `(${ovB} ov)` : "";
+                }
+
                 if (teamB.logo_url) {
                     const logoB = document.getElementById('teamBLogo');
                     if (logoB) logoB.src = teamB.logo_url;
@@ -608,7 +633,7 @@ async function fetchCricketScore() {
                 badgeEl.textContent = "LIVE";
                 badgeContainer.style.background = "rgba(239, 68, 68, 0.16)";
                 badgeContainer.style.borderColor = "rgba(239, 68, 68, 0.45)";
-                badgeContainer.style.color = "#f87171";
+                badgeContainer.color = "#f87171";
                 if (dotEl) dotEl.style.display = "inline-block";
             }
         }
