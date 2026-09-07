@@ -184,7 +184,6 @@ const stations = [
   { id: "O010", name: "AIR Keonjhar", state: "Odisha" },
   { id: "O011", name: "AIR Puri FM", state: "Odisha" },
   { id: "O012", name: "AIR Rourkela", state: "Odisha" },
-  { id: "O013", name: "AIR Mahanadi Sambalpur", state: "Odisha" },
   { id: "O014", name: "AIR Sambalpur", state: "Odisha" },
   { id: "P001", name: "AIR Karaikal", state: "Puducherry" },
   { id: "P002", name: "AIR Puducherry", state: "Puducherry" },
