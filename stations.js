@@ -70,7 +70,6 @@ const stations = [
   { id: "H001", name: "AIR Dharamshala", state: "Himachal Pradesh" },
   { id: "H002", name: "AIR Hamirpur FM", state: "Himachal Pradesh" },
   { id: "H003", name: "AIR Shimla", state: "Himachal Pradesh" },
-  { id: "H004", name: "AIR Shimla FM", state: "Himachal Pradesh" },
   { id: "JK001", name: "AIR Bhaderwah", state: "Jammu and Kashmir" },
   { id: "JK002", name: "AIR Jammu", state: "Jammu and Kashmir" },
   { id: "JK003", name: "AIR Kathua", state: "Jammu and Kashmir" },
