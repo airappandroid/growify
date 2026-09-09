@@ -6,6 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AIR Radio</title>
 
+<!-- Favicon 404 Error প্ৰতিৰোধৰ বাবে Inline SVG Favicon -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📻</text></svg>">
+
 <style>
 :root {
   --bg-main: #0c0e14;
@@ -544,8 +547,6 @@ body{
 
 </div>
 
-<script id="schedule-script" src="https://airappandroid.github.io/allindiaradio/schedule.js"></script>
-
 <script>
 /* ===== LIVE CRICKET SCORE FETCH & AUTO UPDATE (CRICRADIO API) ===== */
 const matchId = "6a7521ed78dcf065703188c1";
@@ -563,7 +564,6 @@ function getTeamLogo(team) {
     return "https://static.cricbuzz.com/a/img/v1/0x0/i1/c776182/india-women.jpg";
   }
 
-  // যদি অন্য দল থাকে, API-ৰ ল'গ' ব্যৱহাৰ কৰিব
   if (team.logo) {
     if (team.logo.startsWith("http")) return team.logo;
     return `https://api.cricradio.com.au${team.logo.startsWith("/") ? "" : "/"}${team.logo}`;
@@ -587,7 +587,7 @@ function getFormattedScore(teamData, teamKey) {
   return scoreStr;
 }
 
-// মেচৰ বৰ্ণনা উলিয়াই "MATCH STARTS AT..." লাইনটো ফিল্টাৰ কৰা
+// মেচৰ বৰ্ণনা ফিল্টাৰ কৰা
 function extractMatchNote(result) {
   let note = "";
   if (result.lastCommentary && result.lastCommentary.secondaryText) {
@@ -598,7 +598,6 @@ function extractMatchNote(result) {
     note = result.status ? result.status.toUpperCase() : "";
   }
 
-  // "MATCH STARTS AT..." সম্পৰ্কীয় লাইন ফিল্টাৰ কৰি আঁতৰোৱা হৈছে
   const cleaned = note
     .split(/\r?\n/)
     .filter(line => !line.toLowerCase().includes("match starts at"))
@@ -676,8 +675,13 @@ function renderCricketStrip(matchData) {
   section.style.display = "block";
 }
 
-fetchLiveScore();
-setInterval(fetchLiveScore, 30000);
+// পেজ সম্পূৰ্ণ লোড হোৱাৰ পাছতহে API কল আৰম্ভ হ'ব
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    fetchLiveScore();
+    setInterval(fetchLiveScore, 30000);
+  }, 600);
+});
 
 /* ===== RADIO DATA & SCHEDULE ===== */
 if (!window.SCHEDULE_DATA) window.SCHEDULE_DATA = [];
@@ -800,14 +804,11 @@ function updateProgramsOnly(){
 }
 
 renderStations();
-
-const scheduleScript = document.getElementById("schedule-script");
-if (scheduleScript) {
-  scheduleScript.addEventListener("load", updateProgramsOnly);
-}
-
 setInterval(updateProgramsOnly, 60000);
 </script>
+
+<!-- Render-blocking নোহোৱাকৈ defer আৰু onload ব্যৱহাৰ কৰি schedule.js লোড -->
+<script src="https://airappandroid.github.io/allindiaradio/schedule.js" defer onload="updateProgramsOnly()"></script>
 
 </body>
 </html>
