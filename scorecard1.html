@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Match Full Scorecard</title>
+    <title>England vs Pakistan - 3rd Test Scorecard</title>
     <style>
         * {
             box-sizing: border-box;
@@ -347,10 +347,10 @@
     <div class="scorecard-app">
         <div class="match-card-header">
             <div class="match-title">
-                <span id="header-match">ENG-W vs IRE-W • 3rd ODI</span>
+                <span id="header-match">ENG vs PAK • 3rd Test</span>
                 <span class="status-badge" id="header-status">SCHEDULED</span>
             </div>
-            <div class="match-sub" id="header-venue">📍 New Road, Worcester</div>
+            <div class="match-sub" id="header-venue">📍 Edgbaston, Birmingham</div>
             <div class="status-text" id="header-note">Loading match details...</div>
         </div>
 
@@ -362,7 +362,7 @@
     </div>
 
     <script>
-        const currentMatchId = "95255";
+        const currentMatchId = "95255"; // এই আইডিটো প্ৰয়োজন অনুসৰি নতুন মেচৰ আইডিৰে সলনি কৰিব পাৰিব
         const scorecardProxyUrl = `https://cricvoice2.aminurmarch.workers.dev/?matchId=${currentMatchId}`;
         
         let matchData = null;
@@ -417,15 +417,15 @@
                     return;
                 }
 
-                // হেডাৰ আৰু টাইটেল
-                const subTitle = matchData.subtitle ? `${matchData.subtitle} • ` : '3rd ODI • ';
-                const mainTitle = matchData.short_title || matchData.title || 'England Women vs Ireland Women';
+                // হেডাৰ আৰু টাইটেল আপডেট
+                const subTitle = matchData.subtitle ? `${matchData.subtitle} • ` : '3rd Test • ';
+                const mainTitle = matchData.short_title || matchData.title || 'England vs Pakistan';
                 document.getElementById("header-match").textContent = `${mainTitle} (${subTitle.replace(' • ', '')})`;
 
-                // ভেনিউ
+                // ভেনিউ আপডেট
                 const venueName = (matchData.venue && (matchData.venue.name || matchData.venue.country))
                     ? [matchData.venue.name, matchData.venue.country].filter(Boolean).join(', ')
-                    : "New Road, Worcester";
+                    : "Edgbaston, Birmingham";
                 document.getElementById("header-venue").textContent = `📍 ${venueName}`;
 
                 // ষ্টেটাছ নিৰ্ধাৰণ
@@ -436,7 +436,6 @@
                 const statusNote = (matchData.status_note || "").toLowerCase();
                 const resultText = (matchData.result || matchData.match_result || "").toLowerCase();
 
-                // সমাপ্ত বুজোৱা কী-ৱৰ্ড
                 const completedKeywords = [
                     "won", "beat", "defeat", "complete", "finish", "result", "ended", 
                     "concluded", "drawn", "tie", "abandon", "no result"
@@ -449,7 +448,6 @@
                     statusNote.includes(k)
                 );
 
-                // স্পষ্টভাৱে মেচ শেষ হোৱাৰ পৰীক্ষা
                 const isCompleted = statusNum === 2 || 
                                     statusNum === 4 || 
                                     gameStateNum === 12 || 
@@ -467,20 +465,16 @@
                 const badgeEl = document.getElementById("header-status");
                 const noteEl = document.getElementById("header-note");
                 const ukTime = getMatchUKTime(matchData);
-                const seriesTitle = matchData.series_name || (matchData.series && matchData.series.name) || "Ireland Women tour of England 2026";
+                const seriesTitle = matchData.series_name || (matchData.series && matchData.series.name) || "Pakistan tour of England 2026";
 
-                // মেচ ফলাফল নিশ্চিত কৰা (Manual Fallback অন্তৰ্ভুক্ত)
                 let finalResultText = matchData.result || matchData.status_note || matchData.match_result || "";
-                if (!finalResultText || finalResultText.toLowerCase().includes("need")) {
-                    finalResultText = "England Women won by 114 runs";
-                }
 
                 if (isCompleted) {
                     const isAbandoned = statusNum === 4 || statusStr.includes("abandon") || statusNote.includes("abandon");
                     badgeEl.textContent = isAbandoned ? "ABANDONED" : "COMPLETED";
                     badgeEl.className = "status-badge completed";
                     noteEl.className = "status-text completed";
-                    noteEl.textContent = isAbandoned ? "Match Abandoned" : finalResultText;
+                    noteEl.textContent = isAbandoned ? "Match Abandoned" : (finalResultText || "Match Completed");
                 } else if (isLive) {
                     badgeEl.textContent = "LIVE";
                     badgeEl.className = "status-badge live";
@@ -493,11 +487,11 @@
                     noteEl.textContent = `${seriesTitle} • Starts at ${ukTime} UK Time`;
                 }
 
-                // ইনিংছ পৰীক্ষা
+                // ইনিংছ নথকা অৱস্থাত (মেচ আৰম্ভ হোৱাৰ পূৰ্বে)
                 if (!Array.isArray(matchData.innings) || matchData.innings.length === 0) {
                     document.getElementById("tabs-container").innerHTML = "";
-                    const teamA = (matchData.teama && matchData.teama.name) || matchData.team_a || "England Women";
-                    const teamB = (matchData.teamb && matchData.teamb.name) || matchData.team_b || "Ireland Women";
+                    const teamA = (matchData.teama && matchData.teama.name) || matchData.team_a || "England";
+                    const teamB = (matchData.teamb && matchData.teamb.name) || matchData.team_b || "Pakistan";
                     
                     container.innerHTML = `
                         <div class="upcoming-card">
@@ -511,7 +505,6 @@
                     return;
                 }
 
-                // সক্ৰিয় ইনিংছ ঠিক কৰা (মেচ শেষ হ’লে শেষৰ ইনিংছটো ডিফল্ট দেখুওৱা হ’ব পাৰে)
                 if (activeInningIndex >= matchData.innings.length) {
                     activeInningIndex = matchData.innings.length - 1;
                 }
@@ -580,7 +573,7 @@
                 `;
             });
 
-            // ডিড নট বেট
+            // বেটিং নকৰাসকল (Did Not Bat)
             let dnbHtml = "";
             if (Array.isArray(inn.did_not_bat) && inn.did_not_bat.length > 0) {
                 const names = inn.did_not_bat
@@ -620,7 +613,7 @@
                 `;
             });
 
-            // Fall of Wickets
+            // উইকেট পতন (Fall of Wickets)
             let fowHtml = "";
             if (Array.isArray(inn.fows) && inn.fows.length > 0) {
                 const fowList = inn.fows.map(f => `<span><b>${f.score_at_dismissal ?? 0}-${f.number ?? ''}</b> (${f.name || ''}, ${f.overs_at_dismissal ?? 0} ov)</span>`).join(" • ");
