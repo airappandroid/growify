@@ -94,13 +94,13 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    background: rgba(59, 130, 246, 0.16);
-    border: 1px solid rgba(59, 130, 246, 0.45);
+    background: rgba(239, 68, 68, 0.16);
+    border: 1px solid rgba(239, 68, 68, 0.45);
     padding: 2px 6px;
     border-radius: 4px;
     font-size: 9.5px;
     font-weight: 800;
-    color: #60a5fa;
+    color: #f87171;
     letter-spacing: 0.4px;
     flex-shrink: 0;
 }
@@ -111,7 +111,7 @@ body {
     background-color: #ef4444;
     border-radius: 50%;
     animation: blink 1.2s infinite ease-in-out;
-    display: none;
+    display: inline-block;
 }
 
 @keyframes blink {
@@ -388,28 +388,28 @@ body {
     <!-- Cricket Live Score Strip (go:card) -->
     <a href="go:card" class="cricket-strip" id="cricketStrip">
         <div class="strip-top">
-            <div class="live-badge" id="badgeContainer">
-                <span class="dot" id="liveDot"></span>
-                <span id="matchBadge">SCHEDULED</span>
+            <div class="live-badge" id="badgeContainer" style="background: rgba(239, 68, 68, 0.16); border-color: rgba(239, 68, 68, 0.45); color: #f87171;">
+                <span class="dot" id="liveDot" style="display: inline-block;"></span>
+                <span id="matchBadge">LIVE</span>
             </div>
             <div class="strip-action">
                 <span>Scorecard</span>
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </div>
         </div>
-        <div class="strip-status" id="matchNote">Match • Starts 6 Sep at 11:00 AM UK Time (County Ground, Derby)</div>
+        <div class="strip-status" id="matchNote">3rd Match • England elected to bowl (Edgbaston)</div>
         <div class="strip-body">
             <div class="strip-scores">
                 <div class="strip-team">
-                    <img id="teamALogo" class="team-logo" src="https://gcdnimages.entitysport.com/assets/uploads/2025/09/Eng-w.webp" alt="ENG-W" width="17" height="17">
-                    <span class="team-code" id="teamACode">ENG-W</span>
+                    <img id="teamALogo" class="team-logo" src="https://gcdnimages.entitysport.com/assets/uploads/2025/09/ENG.webp" alt="ENG" width="17" height="17">
+                    <span class="team-code" id="teamACode">ENG</span>
                     <span class="team-runs" id="teamAScore">--</span>
                     <span class="team-overs" id="teamAOvers"></span>
                 </div>
                 <span class="strip-divider">vs</span>
                 <div class="strip-team">
-                    <img id="teamBLogo" class="team-logo" src="https://gcdnimages.entitysport.com/assets/uploads/2025/09/ire-w.webp" alt="IRE-W" width="17" height="17">
-                    <span class="team-code" id="teamBCode">IRE-W</span>
+                    <img id="teamBLogo" class="team-logo" src="https://gcdnimages.entitysport.com/assets/uploads/2025/09/PAK.webp" alt="PAK" width="17" height="17">
+                    <span class="team-code" id="teamBCode">PAK</span>
                     <span class="team-runs" id="teamBScore">--</span>
                     <span class="team-overs" id="teamBOvers"></span>
                 </div>
@@ -535,7 +535,7 @@ function getMatchUKTime(match) {
         dateObj = new Date(match.date_start.replace(" ", "T") + "Z");
     }
 
-    if (!dateObj || isNaN(dateObj.getTime())) return "1:00 PM";
+    if (!dateObj || isNaN(dateObj.getTime())) return "10:00 AM";
 
     return new Intl.DateTimeFormat('en-GB', {
         timeZone: 'Europe/London',
@@ -559,8 +559,8 @@ async function fetchCricketScore() {
             const teamB = match.teamb;
 
             if (teamA) {
-                document.getElementById('teamACode').textContent = teamA.short_name || "ENG-W";
-                document.getElementById('teamAScore').textContent = teamA.scores || "--";
+                document.getElementById('teamACode').textContent = teamA.short_name || "ENG";
+                document.getElementById('teamAScore').textContent = teamA.scores || teamA.scores_full || "--";
                 
                 const overAEl = document.getElementById('teamAOvers');
                 if (overAEl) {
@@ -575,8 +575,8 @@ async function fetchCricketScore() {
             }
 
             if (teamB) {
-                document.getElementById('teamBCode').textContent = teamB.short_name || "IRE-W";
-                document.getElementById('teamBScore').textContent = teamB.scores || "--";
+                document.getElementById('teamBCode').textContent = teamB.short_name || "PAK";
+                document.getElementById('teamBScore').textContent = teamB.scores || teamB.scores_full || "--";
 
                 const overBEl = document.getElementById('teamBOvers');
                 if (overBEl) {
@@ -598,7 +598,7 @@ async function fetchCricketScore() {
 
             if (statusStr.includes("scheduled") || match.status === 1) {
                 const ukTime = getMatchUKTime(match);
-                const venueName = match.venue && match.venue.name ? match.venue.name : "Derby";
+                const venueName = match.venue && match.venue.name ? match.venue.name : "Edgbaston";
                 const subTitle = match.subtitle || "Match";
                 
                 document.getElementById('matchNote').textContent = `${subTitle} • Starts at ${ukTime} UK Time (${venueName})`;
@@ -618,7 +618,9 @@ async function fetchCricketScore() {
                 if (dotEl) dotEl.style.display = "none";
 
             } else {
-                document.getElementById('matchNote').textContent = statusText || "Match in progress";
+                const venueName = match.venue && match.venue.name ? ` (${match.venue.name})` : "";
+                const subTitle = match.subtitle ? `${match.subtitle} • ` : "";
+                document.getElementById('matchNote').textContent = `${subTitle}${statusText || "Match in progress"}${venueName}`;
                 badgeEl.textContent = "LIVE";
                 badgeContainer.style.background = "rgba(239, 68, 68, 0.16)";
                 badgeContainer.style.borderColor = "rgba(239, 68, 68, 0.45)";
@@ -719,7 +721,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(updatePrograms, 60000);
 
     fetchCricketScore();
-    setInterval(fetchCricketScore, 15000);
+    setInterval(fetchCricketScore, 30000);
 });
 </script>
 </body>
