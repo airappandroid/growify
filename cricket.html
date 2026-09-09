@@ -188,6 +188,7 @@
             background-color: #1e293b;
             object-fit: cover;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            display: block;
         }
 
         .team-name {
@@ -288,24 +289,24 @@
 
         <!-- Header -->
         <div class="card-header">
-            <span class="match-info" id="match-info">India Women vs Pakistan Women T20</span>
-            <span class="status-badge" id="match-status">LIVE</span>
+            <span class="match-info" id="match-info">England vs Pakistan, 3rd Test</span>
+            <span class="status-badge" id="match-status">UPCOMING</span>
         </div>
 
         <!-- Venue & Latest Ball -->
         <div class="sub-header">
-            <span class="venue" id="venue-info">📍 T20 Match</span>
+            <span class="venue" id="venue-info">📍 3rd Test Match</span>
             <div class="last-ball-badge" id="last-ball-container" style="display: none;">
                 <span>Last Ball:</span>
                 <span class="ball-circle" id="latest-ball">-</span>
             </div>
         </div>
 
-        <!-- Team 1 (India Women) -->
+        <!-- Team 1 (England) -->
         <div class="team-row">
             <div class="team-details">
-                <img class="team-logo" id="team-a-logo" src="" alt="" style="display: none;">
-                <span class="team-name" id="team-a-name">India Women</span>
+                <img class="team-logo" id="team-a-logo" src="https://ssl.gstatic.com/onebox/media/sports/logos/optimized/DTqIL8Ba3KIuxGkpXw5ayA_500x500.png" alt="ENG">
+                <span class="team-name" id="team-a-name">England</span>
             </div>
             <div class="team-score">
                 <div class="runs" id="team-a-runs">--</div>
@@ -313,11 +314,11 @@
             </div>
         </div>
 
-        <!-- Team 2 (Pakistan Women) -->
+        <!-- Team 2 (Pakistan) -->
         <div class="team-row">
             <div class="team-details">
-                <img class="team-logo" id="team-b-logo" src="" alt="" style="display: none;">
-                <span class="team-name" id="team-b-name">Pakistan Women</span>
+                <img class="team-logo" id="team-b-logo" src="https://ssl.gstatic.com/onebox/media/sports/logos/optimized/-I9tpg9uetJjQNCh15jmKw_500x500.png" alt="PAK">
+                <span class="team-name" id="team-b-name">Pakistan</span>
             </div>
             <div class="team-score">
                 <div class="runs" id="team-b-runs">--</div>
@@ -327,7 +328,7 @@
 
         <!-- Status Message -->
         <div class="status-box" id="status-box">
-            Pak W opt to Bat
+            Match starts at 3:30 PM IST
         </div>
 
         <!-- Toss Details -->
@@ -342,20 +343,19 @@
     </div>
 
     <script>
-        const matchId = "6a7521ed78dcf065703188c1";
+        const matchId = "69bd420c1dbf177ca4e58e73";
         const cricketApiUrl = `https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=${matchId}`;
-        let isMatchLive = true;
+        let isMatchLive = false;
 
-        // নিৰ্দিষ্ট Cricbuzz ল'গ' নিৰ্ধাৰণ
         function getTeamLogo(team) {
             if (!team) return "";
             const name = (team.shortName || team.name || "").toLowerCase();
 
-            if (name.includes("pak")) {
-                return "https://static.cricbuzz.com/a/img/v1/0x0/i1/c776311/pakistan-women.jpg";
+            if (name.includes("eng")) {
+                return "https://ssl.gstatic.com/onebox/media/sports/logos/optimized/DTqIL8Ba3KIuxGkpXw5ayA_500x500.png";
             }
-            if (name.includes("ind")) {
-                return "https://static.cricbuzz.com/a/img/v1/0x0/i1/c776182/india-women.jpg";
+            if (name.includes("pak")) {
+                return "https://ssl.gstatic.com/onebox/media/sports/logos/optimized/-I9tpg9uetJjQNCh15jmKw_500x500.png";
             }
             if (team.logo) {
                 if (team.logo.startsWith("http")) return team.logo;
@@ -364,13 +364,16 @@
             return "";
         }
 
-        // স্ক'ৰ আৰু অভাৰ উলিওৱা ফাংশন
         function getScoreData(teamData, teamKey) {
             if (!teamData) return { runs: "--", overs: "" };
             const s1 = teamData[`${teamKey}_1_score`];
             const s2 = teamData[`${teamKey}_2_score`];
 
-            if (s1 && typeof s1.runs !== "undefined") {
+            if (s2 && typeof s2.runs !== "undefined") {
+                const r = `${s2.runs}/${s2.wickets ?? 0} & ${s1 ? s1.runs : 0}`;
+                const o = s2.overs !== undefined ? `(${s2.overs} ov)` : "";
+                return { runs: r, overs: o };
+            } else if (s1 && typeof s1.runs !== "undefined") {
                 const r = `${s1.runs}/${s1.wickets ?? 0}`;
                 const o = s1.overs !== undefined ? `(${s1.overs} ov)` : "";
                 return { runs: r, overs: o };
@@ -378,15 +381,12 @@
             return { runs: "--", overs: "" };
         }
 
-        // "MATCH STARTS AT..." লাইন আঁতৰাই ন'ট প্ৰস্তুত কৰা
         function extractCleanNote(result) {
             let note = "";
             if (result.lastCommentary && result.lastCommentary.secondaryText) {
                 note = result.lastCommentary.secondaryText;
             } else if (result.announcement1 && result.announcement1.trim() !== "") {
                 note = result.announcement1.trim();
-            } else {
-                note = result.status ? result.status.toUpperCase() : "";
             }
 
             return note
@@ -409,13 +409,14 @@
                 const teamB = result.teams?.b || {};
 
                 // ১. মেচ টাইটেল
-                const format = (result.format || "T20").toUpperCase();
-                document.getElementById("match-info").textContent = `${teamA.shortName || teamA.name || "IND W"} vs ${teamB.shortName || teamB.name || "PAK W"} ${format}`;
+                document.getElementById("match-info").textContent = "England vs Pakistan, 3rd Test";
 
-                // ২. মেচ ষ্টেটাছ নিৰ্ধাৰণ
-                const rawStatus = (result.status || "").toLowerCase();
+                // ২. সঠিক মেচ ষ্টেটাছ নিৰ্ধাৰণ (NOTSTARTED ফিল্টাৰ কৰা হৈছে)
+                const rawStatus = (result.status || "").toLowerCase().replace(/\s+/g, "");
+                
                 const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || rawStatus.includes("ended");
-                const isLive = rawStatus.includes("started") || rawStatus.includes("live") || rawStatus.includes("in progress");
+                const isUpcoming = rawStatus.includes("notstarted") || rawStatus.includes("upcoming") || rawStatus.includes("scheduled");
+                const isLive = !isUpcoming && (rawStatus.includes("live") || rawStatus.includes("inprogress") || rawStatus === "started");
 
                 isMatchLive = isLive;
 
@@ -434,36 +435,34 @@
                     statusBox.className = "status-box live";
                     statusBox.textContent = cleanNote || "Match in progress";
                 } else {
-                    statusBadge.textContent = "SCHEDULED";
+                    statusBadge.textContent = "UPCOMING";
                     statusBadge.className = "status-badge";
                     statusBox.className = "status-box";
-                    statusBox.textContent = cleanNote || "Match Scheduled";
+                    statusBox.textContent = "Match starts at 3:30 PM IST";
                 }
 
                 // ৩. ভেনিউ
-                document.getElementById("venue-info").textContent = `📍 ${format} Match`;
+                document.getElementById("venue-info").textContent = result.venue ? `📍 ${result.venue}` : `📍 3rd Test Match`;
 
-                // ৪. Team A (India Women)
-                document.getElementById("team-a-name").textContent = teamA.name || teamA.shortName || "India Women";
+                // ৪. Team A (England)
+                document.getElementById("team-a-name").textContent = teamA.name || "England";
                 const logoA = document.getElementById("team-a-logo");
                 const logoAUrl = getTeamLogo(teamA);
                 if (logoAUrl) {
                     logoA.src = logoAUrl;
-                    logoA.alt = teamA.shortName || "IND W";
-                    logoA.style.display = "block";
+                    logoA.alt = "ENG";
                 }
                 const scoreA = getScoreData(teamA, "a");
                 document.getElementById("team-a-runs").textContent = scoreA.runs;
                 document.getElementById("team-a-overs").textContent = scoreA.overs;
 
-                // ৫. Team B (Pakistan Women)
-                document.getElementById("team-b-name").textContent = teamB.name || teamB.shortName || "Pakistan Women";
+                // ৫. Team B (Pakistan)
+                document.getElementById("team-b-name").textContent = teamB.name || "Pakistan";
                 const logoB = document.getElementById("team-b-logo");
                 const logoBUrl = getTeamLogo(teamB);
                 if (logoBUrl) {
                     logoB.src = logoBUrl;
-                    logoB.alt = teamB.shortName || "PAK W";
-                    logoB.style.display = "block";
+                    logoB.alt = "PAK";
                 }
                 const scoreB = getScoreData(teamB, "b");
                 document.getElementById("team-b-runs").textContent = scoreB.runs;
