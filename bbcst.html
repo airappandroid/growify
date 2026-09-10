@@ -175,6 +175,7 @@
       justify-content: center;
       cursor: pointer;
       z-index: 10;
+      user-select: none;
     }
 
     .fav-btn svg {
@@ -219,8 +220,6 @@
       position: fixed;
       inset: 0;
       background-color: rgba(11, 17, 30, 0.98);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       z-index: 999;
       display: flex;
       flex-direction: column;
@@ -397,16 +396,16 @@
     // Radio Stations Database
     const radioData = {
       uk_radio: [
-        { id: "uk1",  name: "Capital FM",    trigger: "go:capitalfm",  logo: "" },
-        { id: "uk2",  name: "Heart UK",       trigger: "go:heartuk",    logo: "" },
-        { id: "uk3",  name: "Classic FM",     trigger: "go:classicfm",  logo: "" },
-        { id: "uk4",  name: "Virgin Radio",   trigger: "go:virginradio",logo: "" },
-        { id: "uk5",  name: "Fix Radio",      trigger: "go:fixradio",   logo: "" },
-        { id: "uk6",  name: "Smooth Radio",   trigger: "go:smoothradio",logo: "" },
-        { id: "uk7",  name: "BFBS UK",        trigger: "go:bfbsuk",     logo: "" },
-        { id: "uk8",  name: "Boom Radio",     trigger: "go:boomradio",  logo: "" },
-        { id: "uk9",  name: "Jazz FM",        trigger: "go:jazzfm",     logo: "" },
-        { id: "uk10", name: "Magic Radio",    trigger: "go:magicradio", logo: "" }
+        { id: "uk1",  name: "Capital FM",   trigger: "go:capitalfm",  logo: "" },
+        { id: "uk2",  name: "Heart UK",      trigger: "go:heartuk",    logo: "" },
+        { id: "uk3",  name: "Classic FM",    trigger: "go:classicfm",  logo: "" },
+        { id: "uk4",  name: "Virgin Radio",  trigger: "go:virginradio",logo: "" },
+        { id: "uk5",  name: "Fix Radio",     trigger: "go:fixradio",   logo: "" },
+        { id: "uk6",  name: "Smooth Radio",  trigger: "go:smoothradio",logo: "" },
+        { id: "uk7",  name: "BFBS UK",       trigger: "go:bfbsuk",     logo: "" },
+        { id: "uk8",  name: "Boom Radio",    trigger: "go:boomradio",  logo: "" },
+        { id: "uk9",  name: "Jazz FM",       trigger: "go:jazzfm",     logo: "" },
+        { id: "uk10", name: "Magic Radio",   trigger: "go:magicradio", logo: "" }
       ],
       news_radio: [
         { id: "nr1", name: "Times Radio",       trigger: "go:timesradio",      logo: "" },
@@ -581,6 +580,15 @@
       isShowingFavsOnly = !isShowingFavsOnly;
       const favBtn = document.getElementById("favToggle");
       favBtn.classList.toggle("active", isShowingFavsOnly);
+
+      const titleElem = document.getElementById("currentCategoryTitle");
+      if (isShowingFavsOnly) {
+        titleElem.innerText = "Favorite Stations";
+      } else {
+        const selected = categories.find(c => c.key === currentCategory);
+        titleElem.innerText = selected ? selected.title : "Select Category";
+      }
+
       renderStations();
     }
 
@@ -615,7 +623,6 @@
       const modal = document.getElementById("categoryModal");
       const closeBtn = document.getElementById("modalCloseBtn");
       
-      // Allow closing only if a category is already loaded
       closeBtn.style.display = currentCategory ? "flex" : "none";
       modal.classList.add("active");
     }
@@ -677,12 +684,12 @@
 
         card.innerHTML = `
           <div class="thumb-wrapper">
-            <img src="${logoUrl}" alt="${station.name}" class="station-logo" loading="lazy" decoding="async" onerror="this.src='${generateStationLogo(station.name)}'">
-            <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, '${station.id}')" title="Favorite">
+            <img src="${logoUrl}" alt="${station.name}" class="station-logo" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='${generateStationLogo(station.name)}'">
+            <div class="fav-btn ${isFav ? 'active' : ''}" role="button" tabindex="0" onclick="toggleFavorite(event, '${station.id}')" title="Favorite">
               <svg viewBox="0 0 24 24">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
               </svg>
-            </button>
+            </div>
             <div class="play-btn">
               <svg viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z"/>
