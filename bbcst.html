@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>BBC Stations</title>
+  <title>UK Radio Hub</title>
   <style>
     * {
       box-sizing: border-box;
@@ -17,6 +17,7 @@
       background-color: #0b111e;
       color: #ffffff;
       padding: 12px;
+      min-height: 100vh;
     }
 
     /* Top Control Bar */
@@ -27,9 +28,12 @@
       align-items: center;
     }
 
-    /* Dropdown Filter */
-    .dropdown {
+    /* Category Switcher Button */
+    .category-btn {
       flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: 12px 14px;
       font-size: 14px;
       font-weight: 600;
@@ -37,14 +41,28 @@
       background-color: #131b2e;
       border: 1px solid #202d47;
       border-radius: 12px;
-      outline: none;
       cursor: pointer;
-      appearance: none;
-      -webkit-appearance: none;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%238e9fb5'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 12px center;
-      background-size: 20px;
+      transition: background-color 0.2s ease;
+      overflow: hidden;
+    }
+
+    .category-btn:active {
+      background-color: #18233c;
+    }
+
+    .category-btn span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left;
+    }
+
+    .category-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: #8e9fb5;
+      flex-shrink: 0;
+      margin-left: 8px;
     }
 
     /* Favorites Toggle Button */
@@ -77,7 +95,7 @@
       gap: 12px;
     }
 
-    /* Station Card - Performance Optimized */
+    /* Station Card */
     .station-card {
       position: relative;
       display: flex;
@@ -195,18 +213,145 @@
       font-size: 14px;
       line-height: 1.6;
     }
+
+    /* Full-Screen Category Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(11, 17, 30, 0.98);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 16px;
+      overflow-y: auto;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .modal-header p {
+      font-size: 13px;
+      color: #8e9fb5;
+      margin-top: 4px;
+    }
+
+    .modal-close-btn {
+      background: #18233c;
+      border: 1px solid #283756;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #ffffff;
+      flex-shrink: 0;
+    }
+
+    .modal-close-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: #ffffff;
+      stroke-width: 2.2;
+    }
+
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 10px;
+      padding-bottom: 24px;
+    }
+
+    .category-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 18px;
+      background-color: #131b2e;
+      border: 1px solid #1f2b45;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .category-item:active {
+      transform: scale(0.98);
+      background-color: #182542;
+      border-color: #1e6bff;
+    }
+
+    .category-item.selected {
+      background-color: #162a52;
+      border-color: #1e6bff;
+    }
+
+    .cat-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .cat-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #1a253e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .cat-text h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .cat-text p {
+      font-size: 12px;
+      color: #8e9fb5;
+      margin-top: 2px;
+    }
+
+    .cat-arrow svg {
+      width: 18px;
+      height: 18px;
+      fill: #8e9fb5;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Top Controls: Dropdown + Favorites Button -->
+  <!-- Top Controls -->
   <div class="top-bar">
-    <select id="categorySelect" class="dropdown" onchange="onCategoryChange()">
-      <option value="national" selected>BBC National</option>
-      <option value="scotland">Scotland</option>
-      <option value="wales">Wales</option>
-      <option value="local">BBC Local Radio</option>
-    </select>
+    <button id="categoryBtn" class="category-btn" onclick="openCategoryModal()">
+      <span id="currentCategoryTitle">Select Category</span>
+      <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+    </button>
 
     <button id="favToggle" class="fav-toggle-btn" onclick="toggleFavoritesView()">
       <span>❤️ Favs</span> (<span id="favCount">0</span>)
@@ -216,33 +361,89 @@
   <!-- 2x2 Grid -->
   <div id="radioGrid" class="grid-container"></div>
 
+  <!-- Full-Screen Category Selection Modal -->
+  <div id="categoryModal" class="modal-overlay">
+    <div class="modal-header">
+      <div>
+        <h2>Select Category</h2>
+        <p>Choose a category to start listening</p>
+      </div>
+      <button id="modalCloseBtn" class="modal-close-btn" onclick="closeCategoryModal()" style="display: none;">
+        <svg viewBox="0 0 24 24" fill="none">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="category-list" id="categoryOptions"></div>
+  </div>
+
   <script>
     let isShowingFavsOnly = false;
+    let currentCategory = null;
 
-    // আপডেটেড ল’গ’সহ ৰেডিঅ' ষ্টেচনৰ তালিকা
+    // Categories Definition
+    const categories = [
+      { key: "uk_radio", title: "UK Radio", desc: "Music, Hits & Entertainment", icon: "🎵" },
+      { key: "news_radio", title: "News Radio", desc: "Live News & Talk Shows", icon: "🎙️" },
+      { key: "sports_radio", title: "Sports Radio", desc: "Live Commentary & Updates", icon: "⚽" },
+      { key: "national", title: "BBC National", desc: "BBC Radio 1, 2, 3, 4 & more", icon: "🇬🇧" },
+      { key: "scotland", title: "BBC Scotland", desc: "Regional broadcasts from Scotland", icon: "🏴󠁧󠁢󠁳󠁣󠁴󠁿" },
+      { key: "wales", title: "BBC Wales", desc: "BBC Radio Wales & Cymru", icon: "🏴󠁧󠁢󠁷󠁬󠁳󠁿" },
+      { key: "local", title: "BBC Local Radio", desc: "Local counties & cities across UK", icon: "📻" }
+    ];
+
+    // Radio Stations Database
     const radioData = {
+      uk_radio: [
+        { id: "uk1",  name: "Capital FM",    trigger: "go:capitalfm",  logo: "" },
+        { id: "uk2",  name: "Heart UK",       trigger: "go:heartuk",    logo: "" },
+        { id: "uk3",  name: "Classic FM",     trigger: "go:classicfm",  logo: "" },
+        { id: "uk4",  name: "Virgin Radio",   trigger: "go:virginradio",logo: "" },
+        { id: "uk5",  name: "Fix Radio",      trigger: "go:fixradio",   logo: "" },
+        { id: "uk6",  name: "Smooth Radio",   trigger: "go:smoothradio",logo: "" },
+        { id: "uk7",  name: "BFBS UK",        trigger: "go:bfbsuk",     logo: "" },
+        { id: "uk8",  name: "Boom Radio",     trigger: "go:boomradio",  logo: "" },
+        { id: "uk9",  name: "Jazz FM",        trigger: "go:jazzfm",     logo: "" },
+        { id: "uk10", name: "Magic Radio",    trigger: "go:magicradio", logo: "" }
+      ],
+      news_radio: [
+        { id: "nr1", name: "Times Radio",       trigger: "go:timesradio",      logo: "" },
+        { id: "nr2", name: "BBC World Service", trigger: "go:bbcworldservice", logo: "" },
+        { id: "nr3", name: "LBC News",          trigger: "go:lbcnews",         logo: "" },
+        { id: "nr4", name: "talkRADIO",         trigger: "go:talkradio",       logo: "" },
+        { id: "nr5", name: "Al Jazeera",        trigger: "go:aljazeera",       logo: "" },
+        { id: "nr6", name: "CNN",               trigger: "go:cnn",             logo: "" },
+        { id: "nr7", name: "GB News",           trigger: "go:gbnews",          logo: "" }
+      ],
+      sports_radio: [
+        { id: "sr1", name: "talkSPORT",   trigger: "go:talksport",  logo: "" },
+        { id: "sr2", name: "talkSPORT 2", trigger: "go:talksport2", logo: "" },
+        { id: "sr3", name: "BBC 5 Extra", trigger: "go:s10",        logo: "https://ik.imagekit.io/sqt8ptw1k/images.webp" }
+      ],
       national: [
         { id: "s1",  name: "BBC 1",             trigger: "go:BBC1",  logo: "https://ik.imagekit.io/sqt8ptw1k/images_PSlF8kUWN.jpg" },
-        { id: "s2",  name: "BBC 1Xtra",         trigger: "go:BB2",  logo: "https://ik.imagekit.io/sqt8ptw1k/images_vnTRG2ZUIX.png" },
-        { id: "s3",  name: "BBC 1 Anthems",     trigger: "go:BB3",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1).png" },
-        { id: "s4",  name: "BBC 1 Dance",       trigger: "go:BB4",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2).png" },
+        { id: "s2",  name: "BBC 1Xtra",         trigger: "go:BB2",   logo: "https://ik.imagekit.io/sqt8ptw1k/images_vnTRG2ZUIX.png" },
+        { id: "s3",  name: "BBC 1 Anthems",     trigger: "go:BB3",   logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1).png" },
+        { id: "s4",  name: "BBC 1 Dance",       trigger: "go:BB4",   logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2).png" },
         { id: "s5",  name: "BBC 2",             trigger: "go:BBC2",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3).png" },
         { id: "s6",  name: "BBC 3",             trigger: "go:BBC3",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_IqqMmykGi.jpg" },
         { id: "s7",  name: "BBC 4",             trigger: "go:BBC4",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_IqqMmykGi.jpg" },
-        { id: "s8",  name: "BBC 4 Extra",       trigger: "go:s8",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5).png" },
-        { id: "s9",  name: "BBC 5 Live",        trigger: "go:s9",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6).png" },
-        { id: "s10", name: "BBC 5 Extra",       trigger: "go:s10", logo: "https://ik.imagekit.io/sqt8ptw1k/images.webp" },
-        { id: "s11", name: "BBC 6 Music",       trigger: "go:s11", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7).png" },
-        { id: "s12", name: "BBC Asian Network", trigger: "go:s12", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_b0cfqxKx5.jpg" }
+        { id: "s8",  name: "BBC 4 Extra",       trigger: "go:s8",    logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5).png" },
+        { id: "s9",  name: "BBC 5 Live",        trigger: "go:s9",    logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6).png" },
+        { id: "s10", name: "BBC 5 Extra",       trigger: "go:s10",   logo: "https://ik.imagekit.io/sqt8ptw1k/images.webp" },
+        { id: "s11", name: "BBC 6 Music",       trigger: "go:s11",   logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7).png" },
+        { id: "s12", name: "BBC Asian Network", trigger: "go:s12",   logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_b0cfqxKx5.jpg" }
       ],
       scotland: [
         { id: "s13", name: "BBC Scotland",      trigger: "go:s13", logo: "https://ik.imagekit.io/sqt8ptw1k/bbcradioscotland.jpeg" },
         { id: "s14", name: "BBC nan Gàidheal",  trigger: "go:s14", logo: "https://ik.imagekit.io/sqt8ptw1k/images_8BBs9S0zr.png" }
       ],
       wales: [
-        { id: "s15", name: "BBC Wales",         trigger: "go:s15", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_mGGymaeQP.png" },
-        { id: "s16", name: "BBC Cymru",         trigger: "go:s16", logo: "https://ik.imagekit.io/sqt8ptw1k/images_FDIVpdlyx.jpg" },
-        { id: "s17", name: "BBC Cymru 2",       trigger: "go:s17", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_4SdO69eAs.png" }
+        { id: "s15", name: "BBC Wales",   trigger: "go:s15", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_mGGymaeQP.png" },
+        { id: "s16", name: "BBC Cymru",   trigger: "go:s16", logo: "https://ik.imagekit.io/sqt8ptw1k/images_FDIVpdlyx.jpg" },
+        { id: "s17", name: "BBC Cymru 2", trigger: "go:s17", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_4SdO69eAs.png" }
       ],
       local: [
         { id: "s18", name: "BBC Berkshire",       trigger: "go:s18", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_sR4Rnh4_M.png" },
@@ -288,26 +489,43 @@
       ]
     };
 
-    // ল’গ’ লিংক খালি থাকিলে বা লোড নহ’লে ব্যৱহাৰ কৰিব পৰা স্বয়ংক্ৰিয় SVG
     function getStationColor(name) {
-      if (name.includes("BBC 1") || name.includes("1Xtra") || name.includes("Anthems") || name.includes("Dance")) return "#4a1262";
+      if (name.includes("Capital")) return "#00325b";
+      if (name.includes("Heart")) return "#d81734";
+      if (name.includes("Classic")) return "#5d001e";
+      if (name.includes("Virgin")) return "#d60000";
+      if (name.includes("Smooth")) return "#4a235a";
+      if (name.includes("LBC")) return "#0a3871";
+      if (name.includes("talkSPORT")) return "#007a33";
+      if (name.includes("CNN")) return "#cc0000";
+      if (name.includes("Al Jazeera")) return "#e06d10";
+      if (name.includes("GB News")) return "#172b4d";
+      if (name.includes("Times")) return "#1c2333";
+      if (name.includes("Magic")) return "#273c75";
+      if (name.includes("Jazz")) return "#2c3e50";
+      if (name.includes("Fix")) return "#e67e22";
+      if (name.includes("Boom")) return "#16a085";
+      if (name.includes("BBC 1")) return "#4a1262";
       if (name.includes("BBC 2")) return "#dc4a00";
       if (name.includes("BBC 3")) return "#b71427";
       if (name.includes("BBC 4")) return "#00477e";
       if (name.includes("BBC 5")) return "#007a72";
-      if (name.includes("6 Music")) return "#006b5f";
-      if (name.includes("Asian")) return "#841457";
-      if (name.includes("Scotland") || name.includes("Gàidheal")) return "#0c3b69";
-      if (name.includes("Wales") || name.includes("Cymru")) return "#991823";
       return "#18263f";
     }
 
-    function generateBbcLogo(title) {
+    function generateStationLogo(title) {
       const bgColor = encodeURIComponent(getStationColor(title));
-      const cleanTitle = title.replace("BBC ", "");
-      const encodedTitle = encodeURIComponent(cleanTitle);
+      const cleanTitle = encodeURIComponent(title);
 
-      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"><rect width="200" height="200" rx="20" fill="${bgColor}"/><g transform="translate(38, 46)"><rect x="0" y="0" width="36" height="36" rx="5" fill="%23ffffff"/><text x="18" y="26" font-family="sans-serif" font-weight="900" font-size="24" fill="%23000" text-anchor="middle">B</text><rect x="44" y="0" width="36" height="36" rx="5" fill="%23ffffff"/><text x="62" y="26" font-family="sans-serif" font-weight="900" font-size="24" fill="%23000" text-anchor="middle">B</text><rect x="88" y="0" width="36" height="36" rx="5" fill="%23ffffff"/><text x="106" y="26" font-family="sans-serif" font-weight="900" font-size="24" fill="%23000" text-anchor="middle">C</text></g><text x="100" y="142" font-family="sans-serif" font-weight="800" font-size="20" fill="%23ffffff" text-anchor="middle">${encodedTitle}</text></svg>`;
+      if (title.startsWith("BBC")) {
+        const subTitle = encodeURIComponent(title.replace("BBC ", ""));
+        return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"><rect width="200" height="200" rx="20" fill="${bgColor}"/><g transform="translate(38, 46)"><rect x="0" y="0" width="36" height="36" rx="5" fill="%23ffffff"/><text x="18" y="26" font-family="sans-serif" font-weight="900" font-size="24" fill="%23000" text-anchor="middle">B</text><rect x="44" y="0" width="36" height="36" rx="5" fill="%23ffffff"/><text x="62" y="26" font-family="sans-serif" font-weight="900" font-size="24" fill="%23000" text-anchor="middle">B</text><rect x="88" y="0" width="36" height="36" rx="5" fill="%23ffffff"/><text x="106" y="26" font-family="sans-serif" font-weight="900" font-size="24" fill="%23000" text-anchor="middle">C</text></g><text x="100" y="142" font-family="sans-serif" font-weight="800" font-size="20" fill="%23ffffff" text-anchor="middle">${subTitle}</text></svg>`;
+      }
+
+      const words = title.split(" ");
+      const initials = words.length > 1 ? (words[0][0] + words[1][0]).toUpperCase() : title.slice(0, 3).toUpperCase();
+
+      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"><rect width="200" height="200" rx="20" fill="${bgColor}"/><circle cx="100" cy="80" r="42" fill="rgba(255,255,255,0.15)"/><text x="100" y="93" font-family="sans-serif" font-weight="900" font-size="28" fill="%23ffffff" text-anchor="middle">${initials}</text><text x="100" y="152" font-family="sans-serif" font-weight="700" font-size="16" fill="%23ffffff" text-anchor="middle">${cleanTitle}</text></svg>`;
     }
 
     // Favorites Logic
@@ -315,7 +533,7 @@
 
     function getFavorites() {
       try {
-        const stored = localStorage.getItem("bbc_radio_favs");
+        const stored = localStorage.getItem("uk_radio_favs");
         return stored ? JSON.parse(stored) : [];
       } catch (e) {
         return memoryFavs;
@@ -324,7 +542,7 @@
 
     function saveFavorites(favs) {
       try {
-        localStorage.setItem("bbc_radio_favs", JSON.stringify(favs));
+        localStorage.setItem("uk_radio_favs", JSON.stringify(favs));
       } catch (e) {
         memoryFavs = favs;
       }
@@ -366,13 +584,67 @@
       renderStations();
     }
 
-    function onCategoryChange() {
+    // Modal & Category Management
+    function initCategoryModal() {
+      const container = document.getElementById("categoryOptions");
+      container.innerHTML = "";
+
+      categories.forEach(cat => {
+        const item = document.createElement("div");
+        item.className = `category-item ${cat.key === currentCategory ? 'selected' : ''}`;
+        item.onclick = () => selectCategory(cat.key);
+
+        item.innerHTML = `
+          <div class="cat-info">
+            <div class="cat-icon">${cat.icon}</div>
+            <div class="cat-text">
+              <h3>${cat.title}</h3>
+              <p>${cat.desc}</p>
+            </div>
+          </div>
+          <div class="cat-arrow">
+            <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function openCategoryModal() {
+      initCategoryModal();
+      const modal = document.getElementById("categoryModal");
+      const closeBtn = document.getElementById("modalCloseBtn");
+      
+      // Allow closing only if a category is already loaded
+      closeBtn.style.display = currentCategory ? "flex" : "none";
+      modal.classList.add("active");
+    }
+
+    function closeCategoryModal() {
+      document.getElementById("categoryModal").classList.remove("active");
+    }
+
+    function selectCategory(catKey) {
+      currentCategory = catKey;
+      try {
+        localStorage.setItem("preferred_radio_category", catKey);
+      } catch (e) {
+        console.warn("Storage restricted", e);
+      }
+
+      const selected = categories.find(c => c.key === catKey);
+      if (selected) {
+        document.getElementById("currentCategoryTitle").innerText = selected.title;
+      }
+
       isShowingFavsOnly = false;
       document.getElementById("favToggle").classList.remove("active");
+
+      closeCategoryModal();
       renderStations();
     }
 
-    // Grid Rendering
+    // Render Station Cards
     function renderStations() {
       const grid = document.getElementById("radioGrid");
       const favs = getFavorites();
@@ -388,12 +660,11 @@
         stations = allStations.filter(s => favs.includes(s.id));
 
         if (stations.length === 0) {
-          grid.innerHTML = `<div class="empty-msg">কোনো প্ৰিয় ষ্টেচন যোগ কৰা হোৱা নাই।<br>ষ্টেচনৰ ওপৰৰ 🤍 চিনত ক্লিক কৰি যোগ কৰক।</div>`;
+          grid.innerHTML = `<div class="empty-msg">No favorite stations added yet.<br>Tap the heart icon on any station to add.</div>`;
           return;
         }
       } else {
-        const selectedCategory = document.getElementById("categorySelect").value;
-        stations = radioData[selectedCategory] || [];
+        stations = radioData[currentCategory] || [];
       }
 
       stations.forEach(station => {
@@ -402,11 +673,11 @@
         card.href = station.trigger;
         card.className = "station-card";
 
-        const logoUrl = (station.logo && station.logo.trim() !== "") ? station.logo : generateBbcLogo(station.name);
+        const logoUrl = (station.logo && station.logo.trim() !== "") ? station.logo : generateStationLogo(station.name);
 
         card.innerHTML = `
           <div class="thumb-wrapper">
-            <img src="${logoUrl}" alt="${station.name}" class="station-logo" loading="lazy" decoding="async" onerror="this.src='${generateBbcLogo(station.name)}'">
+            <img src="${logoUrl}" alt="${station.name}" class="station-logo" loading="lazy" decoding="async" onerror="this.src='${generateStationLogo(station.name)}'">
             <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, '${station.id}')" title="Favorite">
               <svg viewBox="0 0 24 24">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
@@ -425,9 +696,22 @@
       });
     }
 
+    // Startup Execution
     document.addEventListener("DOMContentLoaded", () => {
       updateFavCount();
-      renderStations();
+
+      let savedCategory = null;
+      try {
+        savedCategory = localStorage.getItem("preferred_radio_category");
+      } catch (e) {
+        console.warn("Storage restricted", e);
+      }
+
+      if (savedCategory && radioData[savedCategory]) {
+        selectCategory(savedCategory);
+      } else {
+        openCategoryModal();
+      }
     });
   </script>
 </body>
