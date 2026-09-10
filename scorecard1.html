@@ -362,11 +362,12 @@
     </div>
 
     <script>
-        const currentMatchId = "95255"; // এই আইডিটো প্ৰয়োজন অনুসৰি নতুন মেচৰ আইডিৰে সলনি কৰিব পাৰিব
+        const currentMatchId = "95255";
         const scorecardProxyUrl = `https://cricvoice2.aminurmarch.workers.dev/?matchId=${currentMatchId}`;
         
         let matchData = null;
         let activeInningIndex = 0;
+        let userManuallySelectedInning = false; // ব্যৱহাৰকাৰীয়ে নিজে টেব সলনি নকৰালৈকে ট্ৰেক কৰিবলৈ
 
         function getMatchUKTime(data) {
             let dateObj;
@@ -487,7 +488,7 @@
                     noteEl.textContent = `${seriesTitle} • Starts at ${ukTime} UK Time`;
                 }
 
-                // ইনিংছ নথকা অৱস্থাত (মেচ আৰম্ভ হোৱাৰ পূৰ্বে)
+                // ইনিংছ নথকা অৱস্থাত
                 if (!Array.isArray(matchData.innings) || matchData.innings.length === 0) {
                     document.getElementById("tabs-container").innerHTML = "";
                     const teamA = (matchData.teama && matchData.teama.name) || matchData.team_a || "England";
@@ -503,6 +504,32 @@
                         </div>
                     `;
                     return;
+                }
+
+                // চলিত বা সৰ্বশেষ ইনিংছ স্বয়ংক্ৰিয়ভাৱে নিৰ্বাচন কৰা (যদি ইউজাৰে আন টেব ক্লিক কৰা নাই)
+                if (!userManuallySelectedInning) {
+                    let targetIdx = -1;
+                    const liveInningNum = matchData.live_inning_number || matchData.current_inning || matchData.live_inning;
+
+                    if (liveInningNum) {
+                        targetIdx = matchData.innings.findIndex(inn => Number(inn.number || inn.inning_number) === Number(liveInningNum));
+                    }
+
+                    if (targetIdx === -1) {
+                        targetIdx = matchData.innings.findIndex(inn => 
+                            inn.is_current === 1 || 
+                            inn.is_current === true || 
+                            inn.status === 3 || 
+                            (inn.status_str && /live|current|progress/i.test(inn.status_str))
+                        );
+                    }
+
+                    // লাইভ ফ্লেগ নাপালে সদায় শেষৰ/শেহতীয়া ইনিংছটো নিৰ্বাচন হ'ব
+                    if (targetIdx === -1) {
+                        targetIdx = matchData.innings.length - 1;
+                    }
+
+                    activeInningIndex = Math.max(0, targetIdx);
                 }
 
                 if (activeInningIndex >= matchData.innings.length) {
@@ -528,19 +555,23 @@
 
             matchData.innings.forEach((inn, idx) => {
                 const btn = document.createElement("button");
-                btn.className = `tab-btn ${idx === activeInningIndex ? 'active' : ''}`;
+                const isActive = idx === activeInningIndex;
+                btn.className = `tab-btn ${isActive ? 'active' : ''}`;
                 btn.textContent = inn.name || `Inning ${inn.number || idx + 1}`;
+                
                 btn.onclick = () => {
+                    userManuallySelectedInning = true; // ইউজাৰে নিজে ক্লিক কৰিলে সেই পছন্দটো থাকিব
                     activeInningIndex = idx;
                     renderInningTabs();
                     renderInningDetails(idx);
                 };
                 tabs.appendChild(btn);
 
-                if (idx === activeInningIndex) {
+                // চলিত ইনিংছৰ টেবটো স্বয়ংক্ৰিয়ভাৱে স্ক্ৰ'ল হৈ চকুত পৰাকৈ ৰাখিবলৈ
+                if (isActive) {
                     setTimeout(() => {
-                        btn.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
-                    }, 50);
+                        btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                    }, 60);
                 }
             });
         }
