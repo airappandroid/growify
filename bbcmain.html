@@ -66,7 +66,7 @@ body {
 .cricket-strip {
     display: block;
     margin: 10px 16px 0;
-    padding: 10px 8px;
+    padding: 10px 12px;
     background: linear-gradient(135deg, #152033 0%, #0e1627 100%);
     border: 1px solid rgba(59, 130, 246, 0.32);
     border-radius: 12px;
@@ -82,12 +82,21 @@ body {
     background: #1a273e;
 }
 
-/* Top Row: Live Badge + Scorecard Button */
+/* Top Row: Live Badge + Venue + Scorecard Button */
 .strip-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 8px;
     margin-bottom: 6px;
+}
+
+.strip-top-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .live-badge {
@@ -119,6 +128,15 @@ body {
     50% { opacity: 0.3; transform: scale(0.8); }
 }
 
+.strip-venue {
+    font-size: 10.5px;
+    font-weight: 500;
+    color: #94a3b8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* Scorecard Action Button */
 .strip-action {
     display: inline-flex;
@@ -145,14 +163,14 @@ body {
     font-weight: 500;
     color: #cbd5e1;
     line-height: 1.35;
-    margin-bottom: 7px;
+    margin-bottom: 8px;
     padding-bottom: 6px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     word-break: break-word;
     letter-spacing: -0.1px;
 }
 
-/* Bottom Row: Full Scores */
+/* Bottom Row: Full Scores (2-Row Balanced Layout) */
 .strip-body {
     display: flex;
     align-items: center;
@@ -161,19 +179,16 @@ body {
 
 .strip-scores {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 4px;
+    flex-direction: column;
+    gap: 5px;
     width: 100%;
-    white-space: nowrap;
 }
 
 .strip-team {
     display: flex;
     align-items: center;
-    gap: 3.5px;
-    white-space: nowrap;
-    flex-shrink: 0;
+    width: 100%;
+    gap: 5px;
 }
 
 /* Team Logo Style */
@@ -191,12 +206,14 @@ body {
 .team-code {
     color: #ffffff;
     font-weight: 800;
-    font-size: 11px;
+    font-size: 11.5px;
+    letter-spacing: 0.2px;
 }
 
 .team-runs {
+    margin-left: auto;
     color: #38bdf8;
-    font-size: 11px;
+    font-size: 11.5px;
     font-weight: 700;
     white-space: nowrap;
 }
@@ -204,17 +221,13 @@ body {
 /* Overs Style */
 .team-overs {
     color: #94a3b8;
-    font-size: 9.5px;
+    font-size: 10px;
     font-weight: 500;
     white-space: nowrap;
 }
 
 .strip-divider {
-    color: #64748b;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 0 1px;
-    flex-shrink: 0;
+    display: none;
 }
 
 /* Station Card */
@@ -388,16 +401,19 @@ body {
     <!-- Cricket Live Score Strip (go:card) -->
     <a href="go:card" class="cricket-strip" id="cricketStrip">
         <div class="strip-top">
-            <div class="live-badge" id="badgeContainer" style="background: rgba(239, 68, 68, 0.16); border-color: rgba(239, 68, 68, 0.45); color: #f87171;">
-                <span class="dot" id="liveDot" style="display: inline-block;"></span>
-                <span id="matchBadge">LIVE</span>
+            <div class="strip-top-left">
+                <div class="live-badge" id="badgeContainer" style="background: rgba(239, 68, 68, 0.16); border-color: rgba(239, 68, 68, 0.45); color: #f87171;">
+                    <span class="dot" id="liveDot" style="display: inline-block;"></span>
+                    <span id="matchBadge">LIVE</span>
+                </div>
+                <span class="strip-venue" id="matchVenue">Edgbaston, Birmingham</span>
             </div>
             <div class="strip-action">
                 <span>Scorecard</span>
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </div>
         </div>
-        <div class="strip-status" id="matchNote">3rd Match • England elected to bowl (Edgbaston)</div>
+        <div class="strip-status" id="matchNote">Loading status...</div>
         <div class="strip-body">
             <div class="strip-scores">
                 <div class="strip-team">
@@ -512,10 +528,10 @@ body {
             <div class="station-info">
                 <div class="station-name">📰 5 Min News Brief</div>
                 <div class="playing-row">
-                    <span>Updated: 10 September 2026, 12:00 PM</span>
+                    <span>Updated: 10 September 2026, 4:00 PM</span>
                 </div>
             </div>
-            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/305cee-w1msm0v71v8qq96/vf_w1msm0v71v8qq96_de9b47c7-4e69-4458-b754-7800bd1c2263.ism/dash/vf_w1msm0v71v8qq96_de9b47c7-4e69-4458-b754-7800bd1c2263-audio_eng_1=96000-1.m3u8" class="play-btn"></a>
+            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/45010f-w1msm0v71v8r68q/vf_w1msm0v71v8r68q_cc5db1b3-a41a-4aeb-9594-2566fc4e4780.ism/dash/vf_w1msm0v71v8r68q_cc5db1b3-a41a-4aeb-9594-2566fc4e4780-audio_eng_1=96000-4.m3u8" class="play-btn"></a>
         </div>
     </div>
 </div>
@@ -545,9 +561,27 @@ function getMatchUKTime(match) {
     }).format(dateObj).toUpperCase();
 }
 
+function getVenueText(match) {
+    if (match && match.venue) {
+        const name = match.venue.name || "";
+        const location = match.venue.location || "";
+        if (name && location) return `${name}, ${location}`;
+        if (name) return name.toLowerCase().includes("birmingham") ? name : `${name}, Birmingham`;
+    }
+    return "Edgbaston, Birmingham";
+}
+
 async function fetchCricketScore() {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+
     try {
-        const res = await fetch(cloudflareProxyUrl);
+        const res = await fetch(cloudflareProxyUrl, { 
+            signal: controller.signal,
+            cache: "no-store"
+        });
+        clearTimeout(timeoutId);
+
         if (!res.ok) return;
         const data = await res.json();
         
@@ -559,8 +593,10 @@ async function fetchCricketScore() {
             const teamB = match.teamb;
 
             if (teamA) {
-                document.getElementById('teamACode').textContent = teamA.short_name || "ENG";
-                document.getElementById('teamAScore').textContent = teamA.scores || teamA.scores_full || "--";
+                const codeA = document.getElementById('teamACode');
+                const scoreA = document.getElementById('teamAScore');
+                if (codeA) codeA.textContent = teamA.short_name || "ENG";
+                if (scoreA) scoreA.textContent = teamA.scores || teamA.scores_full || "--";
                 
                 const overAEl = document.getElementById('teamAOvers');
                 if (overAEl) {
@@ -575,8 +611,10 @@ async function fetchCricketScore() {
             }
 
             if (teamB) {
-                document.getElementById('teamBCode').textContent = teamB.short_name || "PAK";
-                document.getElementById('teamBScore').textContent = teamB.scores || teamB.scores_full || "--";
+                const codeB = document.getElementById('teamBCode');
+                const scoreB = document.getElementById('teamBScore');
+                if (codeB) codeB.textContent = teamB.short_name || "PAK";
+                if (scoreB) scoreB.textContent = teamB.scores || teamB.scores_full || "--";
 
                 const overBEl = document.getElementById('teamBOvers');
                 if (overBEl) {
@@ -590,46 +628,54 @@ async function fetchCricketScore() {
                 }
             }
 
+            // Update Venue
+            const venueEl = document.getElementById('matchVenue');
+            if (venueEl) venueEl.textContent = getVenueText(match);
+
             let statusText = match.status_note || match.live || match.equation || "";
             const statusStr = (match.status_str || "").toLowerCase();
             const badgeContainer = document.getElementById('badgeContainer');
             const badgeEl = document.getElementById('matchBadge');
             const dotEl = document.getElementById('liveDot');
+            const matchNoteEl = document.getElementById('matchNote');
 
             if (statusStr.includes("scheduled") || match.status === 1) {
                 const ukTime = getMatchUKTime(match);
-                const venueName = match.venue && match.venue.name ? match.venue.name : "Edgbaston";
                 const subTitle = match.subtitle || "Match";
                 
-                document.getElementById('matchNote').textContent = `${subTitle} • Starts at ${ukTime} UK Time (${venueName})`;
-                
-                badgeEl.textContent = "SCHEDULED";
-                badgeContainer.style.background = "rgba(59, 130, 246, 0.16)";
-                badgeContainer.style.borderColor = "rgba(59, 130, 246, 0.45)";
-                badgeContainer.style.color = "#60a5fa";
+                if (matchNoteEl) matchNoteEl.textContent = `${subTitle} • Starts at ${ukTime} UK Time`;
+                if (badgeEl) badgeEl.textContent = "SCHEDULED";
+                if (badgeContainer) {
+                    badgeContainer.style.background = "rgba(59, 130, 246, 0.16)";
+                    badgeContainer.style.borderColor = "rgba(59, 130, 246, 0.45)";
+                    badgeContainer.style.color = "#60a5fa";
+                }
                 if (dotEl) dotEl.style.display = "none";
 
             } else if (statusStr.includes("completed") || statusStr.includes("finished") || match.status === 2) {
-                document.getElementById('matchNote').textContent = statusText || match.status_note || "Match Ended";
-                badgeEl.textContent = "COMPLETED";
-                badgeContainer.style.background = "rgba(148, 163, 184, 0.16)";
-                badgeContainer.style.borderColor = "rgba(148, 163, 184, 0.4)";
-                badgeContainer.style.color = "#94a3b8";
+                if (matchNoteEl) matchNoteEl.textContent = statusText || match.status_note || "Match Ended";
+                if (badgeEl) badgeEl.textContent = "COMPLETED";
+                if (badgeContainer) {
+                    badgeContainer.style.background = "rgba(148, 163, 184, 0.16)";
+                    badgeContainer.style.borderColor = "rgba(148, 163, 184, 0.4)";
+                    badgeContainer.style.color = "#94a3b8";
+                }
                 if (dotEl) dotEl.style.display = "none";
 
             } else {
-                const venueName = match.venue && match.venue.name ? ` (${match.venue.name})` : "";
                 const subTitle = match.subtitle ? `${match.subtitle} • ` : "";
-                document.getElementById('matchNote').textContent = `${subTitle}${statusText || "Match in progress"}${venueName}`;
-                badgeEl.textContent = "LIVE";
-                badgeContainer.style.background = "rgba(239, 68, 68, 0.16)";
-                badgeContainer.style.borderColor = "rgba(239, 68, 68, 0.45)";
-                badgeContainer.style.color = "#f87171";
+                if (matchNoteEl) matchNoteEl.textContent = `${subTitle}${statusText || "Match in progress"}`;
+                if (badgeEl) badgeEl.textContent = "LIVE";
+                if (badgeContainer) {
+                    badgeContainer.style.background = "rgba(239, 68, 68, 0.16)";
+                    badgeContainer.style.borderColor = "rgba(239, 68, 68, 0.45)";
+                    badgeContainer.style.color = "#f87171";
+                }
                 if (dotEl) dotEl.style.display = "inline-block";
             }
         }
     } catch (err) {
-        console.error("Error fetching live score:", err);
+        clearTimeout(timeoutId);
     }
 }
 
