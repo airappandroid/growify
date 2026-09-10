@@ -77,7 +77,7 @@
       gap: 12px;
     }
 
-    /* Station Card - Optimized */
+    /* Station Card - Performance Optimized */
     .station-card {
       position: relative;
       display: flex;
@@ -142,7 +142,7 @@
       margin-left: 2px;
     }
 
-    /* Favorite Heart Button - backdrop-filter আঁতৰাই মসৃণ কৰা হৈছে */
+    /* Favorite Heart Button */
     .fav-btn {
       position: absolute;
       top: 8px;
@@ -219,16 +219,16 @@
   <script>
     let isShowingFavsOnly = false;
 
-    // ৰেডিঅ' ষ্টেচনৰ তালিকা
+    // আপডেটেড ল’গ’সহ ৰেডিঅ' ষ্টেচনৰ তালিকা
     const radioData = {
       national: [
-        { id: "s1",  name: "BBC 1",             trigger: "go:s1",  logo: "https://ik.imagekit.io/sqt8ptw1k/images_PSlF8kUWN.jpg" },
-        { id: "s2",  name: "BBC 1Xtra",         trigger: "go:s2",  logo: "https://ik.imagekit.io/sqt8ptw1k/images_vnTRG2ZUIX.png" },
-        { id: "s3",  name: "BBC 1 Anthems",     trigger: "go:s3",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1).png" },
-        { id: "s4",  name: "BBC 1 Dance",       trigger: "go:s4",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2).png" },
-        { id: "s5",  name: "BBC 2",             trigger: "go:s5",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3).png" },
-        { id: "s6",  name: "BBC 3",             trigger: "go:s6",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_IqqMmykGi.jpg" },
-        { id: "s7",  name: "BBC 4",             trigger: "go:s7",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_IqqMmykGi.jpg" },
+        { id: "s1",  name: "BBC 1",             trigger: "go:BBC1",  logo: "https://ik.imagekit.io/sqt8ptw1k/images_PSlF8kUWN.jpg" },
+        { id: "s2",  name: "BBC 1Xtra",         trigger: "go:BB2",  logo: "https://ik.imagekit.io/sqt8ptw1k/images_vnTRG2ZUIX.png" },
+        { id: "s3",  name: "BBC 1 Anthems",     trigger: "go:BB3",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1).png" },
+        { id: "s4",  name: "BBC 1 Dance",       trigger: "go:BB4",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2).png" },
+        { id: "s5",  name: "BBC 2",             trigger: "go:BBC2",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3).png" },
+        { id: "s6",  name: "BBC 3",             trigger: "go:BBC3",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_IqqMmykGi.jpg" },
+        { id: "s7",  name: "BBC 4",             trigger: "go:BBC4",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_IqqMmykGi.jpg" },
         { id: "s8",  name: "BBC 4 Extra",       trigger: "go:s8",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5).png" },
         { id: "s9",  name: "BBC 5 Live",        trigger: "go:s9",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6).png" },
         { id: "s10", name: "BBC 5 Extra",       trigger: "go:s10", logo: "https://ik.imagekit.io/sqt8ptw1k/images.webp" },
@@ -236,59 +236,59 @@
         { id: "s12", name: "BBC Asian Network", trigger: "go:s12", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_b0cfqxKx5.jpg" }
       ],
       scotland: [
-        { id: "s13", name: "BBC Scotland",      trigger: "go:s13", logo: "" },
-        { id: "s14", name: "BBC nan Gàidheal",  trigger: "go:s14", logo: "" }
+        { id: "s13", name: "BBC Scotland",      trigger: "go:s13", logo: "https://ik.imagekit.io/sqt8ptw1k/bbcradioscotland.jpeg" },
+        { id: "s14", name: "BBC nan Gàidheal",  trigger: "go:s14", logo: "https://ik.imagekit.io/sqt8ptw1k/images_8BBs9S0zr.png" }
       ],
       wales: [
-        { id: "s15", name: "BBC Wales",         trigger: "go:s15", logo: "" },
-        { id: "s16", name: "BBC Cymru",         trigger: "go:s16", logo: "" },
-        { id: "s17", name: "BBC Cymru 2",       trigger: "go:s17", logo: "" }
+        { id: "s15", name: "BBC Wales",         trigger: "go:s15", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_mGGymaeQP.png" },
+        { id: "s16", name: "BBC Cymru",         trigger: "go:s16", logo: "https://ik.imagekit.io/sqt8ptw1k/images_FDIVpdlyx.jpg" },
+        { id: "s17", name: "BBC Cymru 2",       trigger: "go:s17", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_4SdO69eAs.png" }
       ],
       local: [
-        { id: "s18", name: "BBC Berkshire",       trigger: "go:s18", logo: "" },
-        { id: "s19", name: "BBC Bristol",         trigger: "go:s19", logo: "" },
-        { id: "s20", name: "BBC Cambridgeshire",   trigger: "go:s20", logo: "" },
-        { id: "s21", name: "BBC Cornwall",        trigger: "go:s21", logo: "" },
-        { id: "s22", name: "BBC CWR",             trigger: "go:s22", logo: "" },
-        { id: "s23", name: "BBC Cumbria",         trigger: "go:s23", logo: "" },
-        { id: "s24", name: "BBC Derby",           trigger: "go:s24", logo: "" },
-        { id: "s25", name: "BBC Devon",           trigger: "go:s25", logo: "" },
-        { id: "s26", name: "BBC Essex",           trigger: "go:s26", logo: "" },
-        { id: "s27", name: "BBC Gloucestershire", trigger: "go:s27", logo: "" },
-        { id: "s28", name: "BBC Guernsey",        trigger: "go:s28", logo: "" },
-        { id: "s29", name: "BBC Hereford & Worc.", trigger: "go:s29", logo: "" },
-        { id: "s30", name: "BBC Humberside",      trigger: "go:s30", logo: "" },
-        { id: "s31", name: "BBC Jersey",          trigger: "go:s31", logo: "" },
-        { id: "s32", name: "BBC Kent",            trigger: "go:s32", logo: "" },
-        { id: "s33", name: "BBC Lancashire",      trigger: "go:s33", logo: "" },
-        { id: "s34", name: "BBC Leeds",           trigger: "go:s34", logo: "" },
-        { id: "s35", name: "BBC Leicester",       trigger: "go:s35", logo: "" },
-        { id: "s36", name: "BBC Lincolnshire",    trigger: "go:s36", logo: "" },
-        { id: "s37", name: "BBC London",          trigger: "go:s37", logo: "" },
-        { id: "s38", name: "BBC Manchester",      trigger: "go:s38", logo: "" },
-        { id: "s39", name: "BBC Merseyside",      trigger: "go:s39", logo: "" },
-        { id: "s40", name: "BBC Newcastle",       trigger: "go:s40", logo: "" },
-        { id: "s41", name: "BBC Norfolk",         trigger: "go:s41", logo: "" },
-        { id: "s42", name: "BBC Northampton",     trigger: "go:s42", logo: "" },
-        { id: "s43", name: "BBC Nottingham",      trigger: "go:s43", logo: "" },
-        { id: "s44", name: "BBC Oxford",          trigger: "go:s44", logo: "" },
-        { id: "s45", name: "BBC Radio WM",        trigger: "go:s45", logo: "" },
-        { id: "s46", name: "BBC Sheffield",       trigger: "go:s46", logo: "" },
-        { id: "s47", name: "BBC Shropshire",      trigger: "go:s47", logo: "" },
-        { id: "s48", name: "BBC Solent",          trigger: "go:s48", logo: "" },
-        { id: "s49", name: "BBC Somerset",        trigger: "go:s49", logo: "" },
-        { id: "s50", name: "BBC Stoke",           trigger: "go:s50", logo: "" },
-        { id: "s51", name: "BBC Suffolk",         trigger: "go:s51", logo: "" },
-        { id: "s52", name: "BBC Surrey",          trigger: "go:s52", logo: "" },
-        { id: "s53", name: "BBC Sussex",          trigger: "go:s53", logo: "" },
-        { id: "s54", name: "BBC Tees",            trigger: "go:s54", logo: "" },
-        { id: "s55", name: "BBC Three Counties",  trigger: "go:s55", logo: "" },
-        { id: "s56", name: "BBC Wiltshire",       trigger: "go:s56", logo: "" },
-        { id: "s57", name: "BBC York",            trigger: "go:s57", logo: "" }
+        { id: "s18", name: "BBC Berkshire",       trigger: "go:s18", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_sR4Rnh4_M.png" },
+        { id: "s19", name: "BBC Bristol",         trigger: "go:s19", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_qf8xk6kos.jpg" },
+        { id: "s20", name: "BBC Cambridgeshire",   trigger: "go:s20", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_tewndzBYI.jpg" },
+        { id: "s21", name: "BBC Cornwall",        trigger: "go:s21", logo: "https://ik.imagekit.io/sqt8ptw1k/download_fJT5q55vY.png" },
+        { id: "s22", name: "BBC CWR",             trigger: "go:s22", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_J2chOXENY.jpg" },
+        { id: "s23", name: "BBC Cumbria",         trigger: "go:s23", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_1Dmf3Gn4A.png" },
+        { id: "s24", name: "BBC Derby",           trigger: "go:s24", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)__-G6XjIE9.png" },
+        { id: "s25", name: "BBC Devon",           trigger: "go:s25", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_DZ8_be12T.png" },
+        { id: "s26", name: "BBC Essex",           trigger: "go:s26", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_ZGE2X22PC.jpg" },
+        { id: "s27", name: "BBC Gloucestershire", trigger: "go:s27", logo: "https://ik.imagekit.io/sqt8ptw1k/bbc-gloucestershire.300e0e6b.png" },
+        { id: "s28", name: "BBC Guernsey",        trigger: "go:s28", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7)_zML9rtdye.png" },
+        { id: "s29", name: "BBC Hereford & Worc.", trigger: "go:s29", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)_vud8m4Z31.jpg" },
+        { id: "s30", name: "BBC Humberside",      trigger: "go:s30", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(8).png" },
+        { id: "s31", name: "BBC Jersey",          trigger: "go:s31", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(9).png" },
+        { id: "s32", name: "BBC Kent",            trigger: "go:s32", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(10).png" },
+        { id: "s33", name: "BBC Lancashire",      trigger: "go:s33", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_64FXrwjZS.jpg" },
+        { id: "s34", name: "BBC Leeds",           trigger: "go:s34", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(11).png" },
+        { id: "s35", name: "BBC Leicester",       trigger: "go:s35", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7)_DJ6yprrEE.jpg" },
+        { id: "s36", name: "BBC Lincolnshire",    trigger: "go:s36", logo: "https://ik.imagekit.io/sqt8ptw1k/download%20(1).png" },
+        { id: "s37", name: "BBC London",          trigger: "go:s37", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(8)_rY4LRdAPC.jpg" },
+        { id: "s38", name: "BBC Manchester",      trigger: "go:s38", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(12).png" },
+        { id: "s39", name: "BBC Merseyside",      trigger: "go:s39", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(13).png" },
+        { id: "s40", name: "BBC Newcastle",       trigger: "go:s40", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(14).png" },
+        { id: "s41", name: "BBC Norfolk",         trigger: "go:s41", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(15).png" },
+        { id: "s42", name: "BBC Northampton",     trigger: "go:s42", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(16).png" },
+        { id: "s43", name: "BBC Nottingham",      trigger: "go:s43", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(9)_9fWrsfrwb.jpg" },
+        { id: "s44", name: "BBC Oxford",          trigger: "go:s44", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(17).png" },
+        { id: "s45", name: "BBC Radio WM",        trigger: "go:s45", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(10)_So_ZA5enga.jpg" },
+        { id: "s46", name: "BBC Sheffield",       trigger: "go:s46", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(11).jpg" },
+        { id: "s47", name: "BBC Shropshire",      trigger: "go:s47", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(12).jpg" },
+        { id: "s48", name: "BBC Solent",          trigger: "go:s48", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(18).png" },
+        { id: "s49", name: "BBC Somerset",        trigger: "go:s49", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(19).png" },
+        { id: "s50", name: "BBC Stoke",           trigger: "go:s50", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(20).png" },
+        { id: "s51", name: "BBC Suffolk",         trigger: "go:s51", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(21).png" },
+        { id: "s52", name: "BBC Surrey",          trigger: "go:s52", logo: "https://ik.imagekit.io/sqt8ptw1k/download%20(2).png" },
+        { id: "s53", name: "BBC Sussex",          trigger: "go:s53", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(13).jpg" },
+        { id: "s54", name: "BBC Tees",            trigger: "go:s54", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(14).jpg" },
+        { id: "s55", name: "BBC Three Counties",  trigger: "go:s55", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(15).jpg" },
+        { id: "s56", name: "BBC Wiltshire",       trigger: "go:s56", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(22).png" },
+        { id: "s57", name: "BBC York",            trigger: "go:s57", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(23).png" }
       ]
     };
 
-    // ল’গ’ লিংক খালি থাকিলে ব্যৱহাৰ কৰিব পৰা স্বয়ংক্ৰিয় SVG
+    // ল’গ’ লিংক খালি থাকিলে বা লোড নহ’লে ব্যৱহাৰ কৰিব পৰা স্বয়ংক্ৰিয় SVG
     function getStationColor(name) {
       if (name.includes("BBC 1") || name.includes("1Xtra") || name.includes("Anthems") || name.includes("Dance")) return "#4a1262";
       if (name.includes("BBC 2")) return "#dc4a00";
@@ -406,7 +406,7 @@
 
         card.innerHTML = `
           <div class="thumb-wrapper">
-            <img src="${logoUrl}" alt="${station.name}" class="station-logo" loading="lazy" decoding="async">
+            <img src="${logoUrl}" alt="${station.name}" class="station-logo" loading="lazy" decoding="async" onerror="this.src='${generateBbcLogo(station.name)}'">
             <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, '${station.id}')" title="Favorite">
               <svg viewBox="0 0 24 24">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
