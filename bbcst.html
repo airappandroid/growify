@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>BBC Stations</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #0b111e;
+      color: #ffffff;
+      padding: 12px;
+    }
+
+    /* Top Control Bar */
+    .top-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+      align-items: center;
+    }
+
+    /* Dropdown Filter */
+    .dropdown {
+      flex: 1;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      background-color: #131b2e;
+      border: 1px solid #202d47;
+      border-radius: 12px;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%238e9fb5'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 20px;
+    }
+
+    /* Favorites Toggle Button */
+    .fav-toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 14px;
+      background-color: #131b2e;
+      border: 1px solid #202d47;
+      border-radius: 12px;
+      color: #8e9fb5;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .fav-toggle-btn.active {
+      background-color: #1e6bff;
+      border-color: #1e6bff;
+      color: #ffffff;
+    }
+
+    /* 2x2 Grid */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    /* Station Card */
+    .station-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #131b2e;
+      border: 1px solid #1c2842;
+      border-radius: 16px;
+      padding: 12px;
+      text-decoration: none;
+      color: #ffffff;
+      transition: transform 0.15s ease, background-color 0.15s ease;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .station-card:active {
+      transform: scale(0.96);
+      background-color: #18233c;
+    }
+
+    /* Thumbnail Wrapper */
+    .thumb-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 10px;
+      background-color: #0a0f1d;
+    }
+
+    .station-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 12px;
+    }
+
+    /* Play Button */
+    .play-btn {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      width: 34px;
+      height: 34px;
+      background: #1e6bff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(30, 107, 255, 0.45);
+    }
+
+    .play-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: #ffffff;
+      margin-left: 2px;
+    }
+
+    /* Favorite Heart Button */
+    .fav-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(11, 17, 30, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      backdrop-filter: blur(4px);
+    }
+
+    .fav-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: #8e9fb5;
+      stroke-width: 2.2;
+      transition: all 0.2s ease;
+    }
+
+    .fav-btn.active svg {
+      fill: #ff334b;
+      stroke: #ff334b;
+      transform: scale(1.15);
+    }
+
+    /* Station Name */
+    .station-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #ffffff;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      letter-spacing: 0.2px;
+    }
+
+    .empty-msg {
+      grid-column: span 2;
+      text-align: center;
+      color: #8e9fb5;
+      padding: 50px 10px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Controls: Dropdown + Favorites Button -->
+  <div class="top-bar">
+    <select id="categorySelect" class="dropdown" onchange="onCategoryChange()">
+      <option value="national" selected>BBC National</option>
+      <option value="scotland">Scotland</option>
+      <option value="wales">Wales</option>
+      <option value="local">BBC Local Radio</option>
+    </select>
+
+    <button id="favToggle" class="fav-toggle-btn" onclick="toggleFavoritesView()">
+      <span>❤️ Favs</span> (<span id="favCount">0</span>)
+    </button>
+  </div>
+
+  <!-- 2x2 Grid -->
+  <div id="radioGrid" class="grid-container"></div>
+
+  <script>
+    let isShowingFavsOnly = false;
+
+    // ৰেডিঅ' ষ্টেচনৰ তালিকা (logo: "" ৰ ভিতৰত নিজৰ Image URL বহুৱাব পাৰিব)
+    const radioData = {
+      national: [
+        { id: "s1",  name: "BBC 1",             trigger: "go:s1",  logo: "https://ik.imagekit.io/sqt8ptw1k/images_PSlF8kUWN.jpg" },
+        { id: "s2",  name: "BBC 1Xtra",         trigger: "go:s2",  logo: "https://ik.imagekit.io/sqt8ptw1k/images_vnTRG2ZUIX.png" },
+        { id: "s3",  name: "BBC 1 Anthems",     trigger: "go:s3",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1).png" },
+        { id: "s4",  name: "BBC 1 Dance",       trigger: "go:s4",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2).png" },
+        { id: "s5",  name: "BBC 2",             trigger: "go:s5",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3).png" },
+        { id: "s6",  name: "BBC 3",             trigger: "go:s6",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_IqqMmykGi.jpg" },
+        { id: "s7",  name: "BBC 4",             trigger: "go:s7",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_IqqMmykGi.jpg" },
+        { id: "s8",  name: "BBC 4 Extra",       trigger: "go:s8",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5).png" },
+        { id: "s9",  name: "BBC 5 Live",        trigger: "go:s9",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6).png" },
+        { id: "s10", name: "BBC 5 Extra",       trigger: "go:s10", logo: "https://ik.imagekit.io/sqt8ptw1k/images.webp" },
+        { id: "s11", name: "BBC 6 Music",       trigger: "go:s11", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7).png" },
+        { id: "s12", name: "BBC Asian Network", trigger: "go:s12", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_b0cfqxKx5.jpg" }
+      ],
+      scotland: [
+        { id: "s13", name: "BBC Scotland",      trigger: "go:s13", logo: "https://ik.imagekit.io/sqt8ptw1k/bbcradioscotland.jpeg" },
+        { id: "s14", name: "BBC nan Gàidheal",  trigger: "go:s14", logo: "https://ik.imagekit.io/sqt8ptw1k/images_8BBs9S0zr.png" }
+      ],
+      wales: [
+        { id: "s15", name: "BBC Wales",         trigger: "go:s15", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_mGGymaeQP.png" },
+        { id: "s16", name: "BBC Cymru",         trigger: "go:s16", logo: "https://ik.imagekit.io/sqt8ptw1k/images_FDIVpdlyx.jpg" },
+        { id: "s17", name: "BBC Cymru 2",       trigger: "go:s17", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_4SdO69eAs.png" }
+      ],
+      local: [
+        { id: "s18", name: "BBC Berkshire",       trigger: "go:s18", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_sR4Rnh4_M.png" },
+        { id: "s19", name: "BBC Bristol",         trigger: "go:s19", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_qf8xk6kos.jpg" },
+        { id: "s20", name: "BBC Cambridgeshire",   trigger: "go:s20", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_tewndzBYI.jpg" },
+        { id: "s21", name: "BBC Cornwall",        trigger: "go:s21", logo: "https://ik.imagekit.io/sqt8ptw1k/download_fJT5q55vY.png" },
+        { id: "s22", name: "BBC CWR",             trigger: "go:s22", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_J2chOXENY.jpg" },
+        { id: "s23", name: "BBC Cumbria",         trigger: "go:s23", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_1Dmf3Gn4A.png" },
+        { id: "s24", name: "BBC Derby",           trigger: "go:s24", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)__-G6XjIE9.png" },
+        { id: "s25", name: "BBC Devon",           trigger: "go:s25", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_DZ8_be12T.png" },
+        { id: "s26", name: "BBC Essex",           trigger: "go:s26", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_ZGE2X22PC.jpg" },
+        { id: "s27", name: "BBC Gloucestershire", trigger: "go:s27", logo: "https://ik.imagekit.io/sqt8ptw1k/bbc-gloucestershire.300e0e6b.png" },
+        { id: "s28", name: "BBC Guernsey",        trigger: "go:s28", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7)_zML9rtdye.png" },
+        { id: "s29", name: "BBC Hereford & Worc.", trigger: "go:s29", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)_vud8m4Z31.jpg" },
+        { id: "s30", name: "BBC Humberside",      trigger: "go:s30", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(8).png" },
+        { id: "s31", name: "BBC Jersey",          trigger: "go:s31", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(9).png" },
+        { id: "s32", name: "BBC Kent",            trigger: "go:s32", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(10).png" },
+        { id: "s33", name: "BBC Lancashire",      trigger: "go:s33", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_64FXrwjZS.jpg" },
+        { id: "s34", name: "BBC Leeds",           trigger: "go:s34", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(11).png" },
+        { id: "s35", name: "BBC Leicester",       trigger: "go:s35", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7)_DJ6yprrEE.jpg" },
+        { id: "s36", name: "BBC Lincolnshire",    trigger: "go:s36", logo: "https://ik.imagekit.io/sqt8ptw1k/download%20(1).png" },
+        { id: "s37", name: "BBC London",          trigger: "go:s37", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(8)_rY4LRdAPC.jpg" },
+        { id: "s38", name: "BBC Manchester",      trigger: "go:s38", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(12).png" },
+        { id: "s39", name: "BBC Merseyside",      trigger: "go:s39", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(13).png" },
+        { id: "s40", name: "BBC Newcastle",       trigger: "go:s40", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(14).png" },
+        { id: "s41", name: "BBC Norfolk",         trigger: "go:s41", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(15).png" },
+        { id: "s42", name: "BBC Northampton",     trigger: "go:s42", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(16).png" },
+        { id: "s43", name: "BBC Nottingham",      trigger: "go:s43", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(9)_9fWrsfrwb.jpg" },
+        { id: "s44", name: "BBC Oxford",          trigger: "go:s44", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(17).png" },
+        { id: "s45", name: "BBC Radio WM",        trigger: "go:s45", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(10)_So_ZA5enga.jpg" },
+        { id: "s46", name: "BBC Sheffield",       trigger: "go:s46", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(11).jpg" },
+        { id: "s47", name: "BBC Shropshire",      trigger: "go:s47", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(12).jpg" },
+        { id: "s48", name: "BBC Solent",          trigger: "go:s48", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(18).png" },
+        { id: "s49", name: "BBC Somerset",        trigger: "go:s49", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(19).png" },
+        { id: "s50", name: "BBC Stoke",           trigger: "go:s50", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(20).png" },
+        { id: "s51", name: "BBC Suffolk",         trigger: "go:s51", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(21).png" },
+        { id: "s52", name: "BBC Surrey",          trigger: "go:s52", logo: "https://ik.imagekit.io/sqt8ptw1k/download%20(2).png" },
+        { id: "s53", name: "BBC Sussex",          trigger: "go:s53", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(13).jpg" },
+        { id: "s54", name: "BBC Tees",            trigger: "go:s54", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(14).jpg" },
+        { id: "s55", name: "BBC Three Counties",  trigger: "go:s55", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(15).jpg" },
+        { id: "s56", name: "BBC Wiltshire",       trigger: "go:s56", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(22).png" },
+        { id: "s57", name: "BBC York",            trigger: "go:s57", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(23).png" }
+      ]
+    };
+
+    // ল’গ’ লিংক খালি থাকিলে ব্যৱহাৰ কৰিব পৰা স্বয়ংক্ৰিয় SVG
+    function getStationColor(name) {
+      if (name.includes("BBC 1") || name.includes("1Xtra") || name.includes("Anthems") || name.includes("Dance")) return "#4a1262";
+      if (name.includes("BBC 2")) return "#dc4a00";
+      if (name.includes("BBC 3")) return "#b71427";
+      if (name.includes("BBC 4")) return "#00477e";
+      if (name.includes("BBC 5")) return "#007a72";
+      if (name.includes("6 Music")) return "#006b5f";
+      if (name.includes("Asian")) return "#841457";
+      if (name.includes("Scotland") || name.includes("Gàidheal")) return "#0c3b69";
+      if (name.includes("Wales") || name.includes("Cymru")) return "#991823";
+      return "#18263f";
+    }
+
+    function generateBbcLogo(title) {
+      const bgColor = encodeURIComponent(getStationColor(title));
+      const cleanTitle = title.replace("BBC ", "");
+      const encodedTitle = encodeURIComponent(cleanTitle);
+
+      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"><rect width="200" height="200" rx="20" fill="${bgColor}"/><g transform="translate(38, 46)"><rect x="0" y="0" width="36" height="36" rx="5" fill="%23ffffff"/><text x="18" y="26" font-family="sans-serif" font-weight="900" font-size="24" fill="%23000" text-anchor="middle">B</text><rect x="44" y="0" width="36" height="36" rx="5" fill="%23ffffff"/><text x="62" y="26" font-family="sans-serif" font-weight="900" font-size="24" fill="%23000" text-anchor="middle">B</text><rect x="88" y="0" width="36" height="36" rx="5" fill="%23ffffff"/><text x="106" y="26" font-family="sans-serif" font-weight="900" font-size="24" fill="%23000" text-anchor="middle">C</text></g><text x="100" y="142" font-family="sans-serif" font-weight="800" font-size="20" fill="%23ffffff" text-anchor="middle">${encodedTitle}</text></svg>`;
+    }
+
+    // Favorites Logic
+    let memoryFavs = [];
+
+    function getFavorites() {
+      try {
+        const stored = localStorage.getItem("bbc_radio_favs");
+        return stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        return memoryFavs;
+      }
+    }
+
+    function saveFavorites(favs) {
+      try {
+        localStorage.setItem("bbc_radio_favs", JSON.stringify(favs));
+      } catch (e) {
+        memoryFavs = favs;
+      }
+      updateFavCount();
+    }
+
+    function updateFavCount() {
+      const favs = getFavorites();
+      document.getElementById("favCount").innerText = favs.length;
+    }
+
+    function toggleFavorite(event, stationId) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      let favs = getFavorites();
+      const index = favs.indexOf(stationId);
+
+      if (index > -1) {
+        favs.splice(index, 1);
+      } else {
+        favs.push(stationId);
+      }
+
+      saveFavorites(favs);
+
+      if (isShowingFavsOnly) {
+        renderStations();
+      } else {
+        const btn = event.currentTarget;
+        btn.classList.toggle("active", favs.includes(stationId));
+      }
+    }
+
+    function toggleFavoritesView() {
+      isShowingFavsOnly = !isShowingFavsOnly;
+      const favBtn = document.getElementById("favToggle");
+      favBtn.classList.toggle("active", isShowingFavsOnly);
+      renderStations();
+    }
+
+    function onCategoryChange() {
+      isShowingFavsOnly = false;
+      document.getElementById("favToggle").classList.remove("active");
+      renderStations();
+    }
+
+    // Grid Rendering
+    function renderStations() {
+      const grid = document.getElementById("radioGrid");
+      const favs = getFavorites();
+      grid.innerHTML = "";
+
+      let stations = [];
+
+      if (isShowingFavsOnly) {
+        let allStations = [];
+        for (let key in radioData) {
+          allStations = allStations.concat(radioData[key]);
+        }
+        stations = allStations.filter(s => favs.includes(s.id));
+
+        if (stations.length === 0) {
+          grid.innerHTML = `<div class="empty-msg">কোনো প্ৰিয় ষ্টেচন যোগ কৰা হোৱা নাই।<br>ষ্টেচনৰ ওপৰৰ 🤍 চিনত ক্লিক কৰি যোগ কৰক।</div>`;
+          return;
+        }
+      } else {
+        const selectedCategory = document.getElementById("categorySelect").value;
+        stations = radioData[selectedCategory] || [];
+      }
+
+      stations.forEach(station => {
+        const isFav = favs.includes(station.id);
+        const card = document.createElement("a");
+        card.href = station.trigger;
+        card.className = "station-card";
+
+        // যদি URL দিয়া থাকে সেয়া ল'ব, নহ'লে ডিফল্ট SVG ল'ব
+        const logoUrl = (station.logo && station.logo.trim() !== "") ? station.logo : generateBbcLogo(station.name);
+
+        card.innerHTML = `
+          <div class="thumb-wrapper">
+            <img src="${logoUrl}" alt="${station.name}" class="station-logo" loading="lazy">
+            <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, '${station.id}')" title="Favorite">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            </button>
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+          </div>
+          <span class="station-name">${station.name}</span>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      updateFavCount();
+      renderStations();
+    });
+  </script>
+</body>
+</html>
