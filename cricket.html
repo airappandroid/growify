@@ -24,32 +24,59 @@
         .score-card {
             background: #161f30;
             border: 1px solid #283548;
-            border-radius: 16px;
+            border-radius: 18px;
             width: 100%;
             max-width: 400px;
             padding: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
         }
 
-        /* Top Commentary Button */
+        /* ===== STYLISH BALL BY BALL COMMENTARY BUTTON ===== */
         .btn-commentary {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: linear-gradient(135deg, #1e293b, #111c2e);
-            border: 1px solid rgba(56, 189, 248, 0.45);
-            border-radius: 12px;
-            padding: 11px 14px;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-top: 1px solid rgba(56, 189, 248, 0.55);
+            border-radius: 14px;
+            padding: 10px 12px;
             margin-bottom: 16px;
             cursor: pointer;
             text-decoration: none;
             gap: 10px;
-            box-shadow: 0 4px 14px rgba(56, 189, 248, 0.12);
-            transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
         .btn-commentary:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
+            border-color: rgba(56, 189, 248, 0.65);
+        }
+
+        .commentary-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mic-icon-box {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .mic-icon-box svg {
+            width: 19px;
+            height: 19px;
+            fill: #38bdf8;
         }
 
         .commentary-text {
@@ -61,7 +88,7 @@
         .commentary-title {
             font-size: 13.5px;
             font-weight: 700;
-            color: #38bdf8;
+            color: #ffffff;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -69,22 +96,34 @@
         }
 
         .commentary-sub {
-            font-size: 11.5px;
+            font-size: 11px;
             color: #94a3b8;
-            margin-top: 3px;
+            margin-top: 2px;
         }
 
         .listen-badge {
-            background: linear-gradient(135deg, #0284c7, #0ea5e9);
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
             color: #ffffff;
-            font-size: 11.5px;
-            font-weight: 600;
+            font-size: 11px;
+            font-weight: 700;
             padding: 6px 12px;
             border-radius: 20px;
             white-space: nowrap;
-            box-shadow: 0 2px 8px rgba(14, 165, 233, 0.35);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            box-shadow: 0 3px 10px rgba(14, 165, 233, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.2px;
         }
 
+        .listen-badge svg {
+            width: 11px;
+            height: 11px;
+            fill: #ffffff;
+        }
+
+        /* ===== HEADER & META ===== */
         .card-header {
             display: flex;
             justify-content: space-between;
@@ -99,7 +138,6 @@
             font-weight: 500;
         }
 
-        /* Dynamic Status Badge */
         .status-badge {
             background-color: rgba(59, 130, 246, 0.16);
             border: 1px solid rgba(59, 130, 246, 0.45);
@@ -212,7 +250,6 @@
             color: #94a3b8;
         }
 
-        /* Dynamic Status Box */
         .status-box {
             background-color: rgba(59, 130, 246, 0.08);
             border: 1px solid rgba(59, 130, 246, 0.25);
@@ -251,62 +288,94 @@
             border: 1px solid #232e42;
         }
 
-        /* Bottom Full Scorecard Button */
+        /* ===== STYLISH FULL SCORECARD BUTTON ===== */
         .btn-card {
             width: 100%;
-            background: #2563eb;
+            background: linear-gradient(135deg, #0284c7 0%, #2563eb 60%, #1d4ed8 100%);
             color: #ffffff;
             font-size: 13.5px;
-            font-weight: 600;
-            padding: 10px;
-            border: none;
-            border-radius: 10px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            padding: 12px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-top: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 12px;
             margin-top: 14px;
             cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 18px rgba(37, 99, 235, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+            transition: transform 0.12s ease, box-shadow 0.15s ease, filter 0.15s ease;
         }
 
         .btn-card:hover {
-            background: #1d4ed8;
+            filter: brightness(1.06);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.28);
         }
 
         .btn-card:active {
             transform: scale(0.98);
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-card svg {
+            width: 16px;
+            height: 16px;
+            fill: #ffffff;
+            transition: transform 0.15s ease;
+        }
+
+        .btn-card:hover svg {
+            transform: translateX(2px);
         }
     </style>
 </head>
 <body>
 
     <div class="score-card">
-        <!-- Top Commentary Button -->
+        <!-- Top Commentary Button (Redesigned) -->
         <div class="btn-commentary" onclick="window.location.href='go:commentary'">
-            <div class="commentary-text">
-                <span class="commentary-title">🎙️ Ball By Ball Commentary</span>
-                <span class="commentary-sub">Listen to live audio coverage</span>
+            <div class="commentary-left">
+                <div class="mic-icon-box">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                    </svg>
+                </div>
+                <div class="commentary-text">
+                    <span class="commentary-title">Ball By Ball Commentary</span>
+                    <span class="commentary-sub">Listen to live audio coverage</span>
+                </div>
             </div>
-            <span class="listen-badge">Listen Now</span>
+            <span class="listen-badge">
+                <svg viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+                Listen Now
+            </span>
         </div>
 
         <!-- Header -->
         <div class="card-header">
-            <span class="match-info" id="match-info">England vs Pakistan, 3rd Test</span>
+            <span class="match-info" id="match-info">Ban W vs Ind W, Semi Final 1</span>
             <span class="status-badge" id="match-status">UPCOMING</span>
         </div>
 
         <!-- Venue & Latest Ball -->
         <div class="sub-header">
-            <span class="venue" id="venue-info">📍 3rd Test Match</span>
+            <span class="venue" id="venue-info">📍 Semi Final 1 (T20)</span>
             <div class="last-ball-badge" id="last-ball-container" style="display: none;">
                 <span>Last Ball:</span>
                 <span class="ball-circle" id="latest-ball">-</span>
             </div>
         </div>
 
-        <!-- Team 1 (England) -->
+        <!-- Team 1 (Bangladesh Women) -->
         <div class="team-row">
             <div class="team-details">
-                <img class="team-logo" id="team-a-logo" src="https://ssl.gstatic.com/onebox/media/sports/logos/optimized/DTqIL8Ba3KIuxGkpXw5ayA_500x500.png" alt="ENG">
-                <span class="team-name" id="team-a-name">England</span>
+                <img class="team-logo" id="team-a-logo" src="https://static.cricbuzz.com/a/img/v1/0x0/i1/c776213/bangladesh-women.jpg" alt="Ban W" onerror="this.onerror=null; this.src='https://static.cricbuzz.com/a/img/v1/0x0/i1/c776213/bangladesh-women.jpg';">
+                <span class="team-name" id="team-a-name">Bangladesh Women</span>
             </div>
             <div class="team-score">
                 <div class="runs" id="team-a-runs">--</div>
@@ -314,11 +383,11 @@
             </div>
         </div>
 
-        <!-- Team 2 (Pakistan) -->
+        <!-- Team 2 (India Women) -->
         <div class="team-row">
             <div class="team-details">
-                <img class="team-logo" id="team-b-logo" src="https://ssl.gstatic.com/onebox/media/sports/logos/optimized/-I9tpg9uetJjQNCh15jmKw_500x500.png" alt="PAK">
-                <span class="team-name" id="team-b-name">Pakistan</span>
+                <img class="team-logo" id="team-b-logo" src="https://static.cricbuzz.com/a/img/v1/0x0/i1/c776182/india-women.jpg" alt="Ind W" onerror="this.onerror=null; this.src='https://static.cricbuzz.com/a/img/v1/0x0/i1/c776182/india-women.jpg';">
+                <span class="team-name" id="team-b-name">India Women</span>
             </div>
             <div class="team-score">
                 <div class="runs" id="team-b-runs">--</div>
@@ -328,7 +397,7 @@
 
         <!-- Status Message -->
         <div class="status-box" id="status-box">
-            Match starts at 3:30 PM IST
+            Match starts at 10 Sep, 8:00 PM IST
         </div>
 
         <!-- Toss Details -->
@@ -336,27 +405,31 @@
             Toss: -
         </div>
 
-        <!-- Bottom Full Scorecard Button -->
+        <!-- Bottom Full Scorecard Button (Redesigned) -->
         <button class="btn-card" onclick="window.location.href='go:card1'">
-            Full Score Card
+            <span>Full Score Card</span>
+            <svg viewBox="0 0 24 24">
+                <path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42 5.43 5.43H5v2z"/>
+            </svg>
         </button>
     </div>
 
     <script>
-        const matchId = "69bd420c1dbf177ca4e58e73";
+        const matchId = "6a7521f778dcf065703188ca";
         const cricketApiUrl = `https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=${matchId}`;
         let isMatchLive = false;
 
         function getTeamLogo(team) {
             if (!team) return "";
-            const name = (team.shortName || team.name || "").toLowerCase();
+            const name = ((team.shortName || team.name || "") + "").toLowerCase();
 
-            if (name.includes("eng")) {
-                return "https://ssl.gstatic.com/onebox/media/sports/logos/optimized/DTqIL8Ba3KIuxGkpXw5ayA_500x500.png";
+            if (name.includes("ban")) {
+                return "https://static.cricbuzz.com/a/img/v1/0x0/i1/c776213/bangladesh-women.jpg";
             }
-            if (name.includes("pak")) {
-                return "https://ssl.gstatic.com/onebox/media/sports/logos/optimized/-I9tpg9uetJjQNCh15jmKw_500x500.png";
+            if (name.includes("ind")) {
+                return "https://static.cricbuzz.com/a/img/v1/0x0/i1/c776182/india-women.jpg";
             }
+
             if (team.logo) {
                 if (team.logo.startsWith("http")) return team.logo;
                 return `https://api.cricradio.com.au${team.logo.startsWith("/") ? "" : "/"}${team.logo}`;
@@ -364,21 +437,36 @@
             return "";
         }
 
+        function formatInningScore(scoreObj) {
+            if (!scoreObj) return null;
+            const runs = scoreObj.runs ?? scoreObj.r;
+            if (runs === undefined || runs === null) return null;
+
+            const wickets = scoreObj.wickets ?? scoreObj.w ?? 0;
+            let overs = scoreObj.overs ?? scoreObj.over ?? scoreObj.o;
+
+            if ((overs === undefined || overs === null) && scoreObj.balls !== undefined) {
+                const completedOvers = Math.floor(scoreObj.balls / 6);
+                const remBalls = scoreObj.balls % 6;
+                overs = `${completedOvers}.${remBalls}`;
+            }
+
+            const ovText = (overs !== undefined && overs !== null && overs !== "") ? `(${overs} ov)` : "";
+            return { runs: `${runs}/${wickets}`, overs: ovText };
+        }
+
         function getScoreData(teamData, teamKey) {
             if (!teamData) return { runs: "--", overs: "" };
-            const s1 = teamData[`${teamKey}_1_score`];
+            const s1 = teamData[`${teamKey}_1_score`] || teamData.score;
             const s2 = teamData[`${teamKey}_2_score`];
 
-            if (s2 && typeof s2.runs !== "undefined") {
-                const r = `${s2.runs}/${s2.wickets ?? 0} & ${s1 ? s1.runs : 0}`;
-                const o = s2.overs !== undefined ? `(${s2.overs} ov)` : "";
-                return { runs: r, overs: o };
-            } else if (s1 && typeof s1.runs !== "undefined") {
-                const r = `${s1.runs}/${s1.wickets ?? 0}`;
-                const o = s1.overs !== undefined ? `(${s1.overs} ov)` : "";
-                return { runs: r, overs: o };
+            const f2 = formatInningScore(s2);
+            const f1 = formatInningScore(s1);
+
+            if (f2 && f1) {
+                return { runs: `${f2.runs} & ${f1.runs}`, overs: f2.overs || f1.overs };
             }
-            return { runs: "--", overs: "" };
+            return f2 || f1 || { runs: "--", overs: "" };
         }
 
         function extractCleanNote(result) {
@@ -391,9 +479,9 @@
 
             return note
                 .split(/\r?\n/)
-                .filter(line => !line.toLowerCase().includes("match starts at"))
-                .join(" • ")
-                .trim();
+                .map(line => line.trim())
+                .filter(Boolean)
+                .join(" • ");
         }
 
         async function fetchLiveScore() {
@@ -408,15 +496,20 @@
                 const teamA = result.teams?.a || {};
                 const teamB = result.teams?.b || {};
 
-                // ১. মেচ টাইটেল
-                document.getElementById("match-info").textContent = "England vs Pakistan, 3rd Test";
+                const nameA = teamA.name || teamA.shortName || 'Bangladesh Women';
+                const nameB = teamB.name || teamB.shortName || 'India Women';
+                const shortA = teamA.shortName || 'Ban W';
+                const shortB = teamB.shortName || 'Ind W';
+                const format = (result.format || 't20').toUpperCase();
 
-                // ২. সঠিক মেচ ষ্টেটাছ নিৰ্ধাৰণ (NOTSTARTED ফিল্টাৰ কৰা হৈছে)
+                // ১. মেচ টাইটেল
+                document.getElementById("match-info").textContent = result.seriesName || `${shortA} vs ${shortB}, Semi Final 1`;
+
+                // ২. মেচ ষ্টেটাছ
                 const rawStatus = (result.status || "").toLowerCase().replace(/\s+/g, "");
-                
                 const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || rawStatus.includes("ended");
-                const isUpcoming = rawStatus.includes("notstarted") || rawStatus.includes("upcoming") || rawStatus.includes("scheduled");
-                const isLive = !isUpcoming && (rawStatus.includes("live") || rawStatus.includes("inprogress") || rawStatus === "started");
+                const isUpcoming = rawStatus.includes("notstarted") || rawStatus.includes("upcoming") || rawStatus.includes("scheduled") || !rawStatus;
+                const isLive = !isUpcoming && !isCompleted && (rawStatus.includes("live") || rawStatus.includes("inprogress") || rawStatus === "started");
 
                 isMatchLive = isLive;
 
@@ -438,37 +531,37 @@
                     statusBadge.textContent = "UPCOMING";
                     statusBadge.className = "status-badge";
                     statusBox.className = "status-box";
-                    statusBox.textContent = "Match starts at 3:30 PM IST";
+                    statusBox.textContent = cleanNote || "Match starts at 10 Sep, 8:00 PM IST";
                 }
 
                 // ৩. ভেনিউ
-                document.getElementById("venue-info").textContent = result.venue ? `📍 ${result.venue}` : `📍 3rd Test Match`;
+                document.getElementById("venue-info").textContent = result.venue ? `📍 ${result.venue}` : `📍 Semi Final 1 (${format})`;
 
-                // ৪. Team A (England)
-                document.getElementById("team-a-name").textContent = teamA.name || "England";
+                // ৪. Team A (Bangladesh Women)
+                document.getElementById("team-a-name").textContent = nameA;
                 const logoA = document.getElementById("team-a-logo");
                 const logoAUrl = getTeamLogo(teamA);
                 if (logoAUrl) {
                     logoA.src = logoAUrl;
-                    logoA.alt = "ENG";
+                    logoA.alt = shortA;
                 }
                 const scoreA = getScoreData(teamA, "a");
                 document.getElementById("team-a-runs").textContent = scoreA.runs;
                 document.getElementById("team-a-overs").textContent = scoreA.overs;
 
-                // ৫. Team B (Pakistan)
-                document.getElementById("team-b-name").textContent = teamB.name || "Pakistan";
+                // ৫. Team B (India Women)
+                document.getElementById("team-b-name").textContent = nameB;
                 const logoB = document.getElementById("team-b-logo");
                 const logoBUrl = getTeamLogo(teamB);
                 if (logoBUrl) {
                     logoB.src = logoBUrl;
-                    logoB.alt = "PAK";
+                    logoB.alt = shortB;
                 }
                 const scoreB = getScoreData(teamB, "b");
                 document.getElementById("team-b-runs").textContent = scoreB.runs;
                 document.getElementById("team-b-overs").textContent = scoreB.overs;
 
-                // ৬. টছৰ বিৱৰণ
+                // ৬. টছ
                 const tossEl = document.getElementById("toss-info");
                 if (result.announcement1 && result.announcement1.toLowerCase().includes("opt to")) {
                     tossEl.textContent = `Toss: ${result.announcement1}`;
