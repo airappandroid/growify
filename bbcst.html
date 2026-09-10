@@ -13,11 +13,17 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden; /* স্ক্ৰীনৰ বাহিৰলৈ যোৱা ৰোধ কৰিবলৈ */
+    }
+
     body {
       background-color: #0b111e;
       color: #ffffff;
       padding: 12px;
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* Top Control Bar */
@@ -26,11 +32,13 @@
       gap: 10px;
       margin-bottom: 16px;
       align-items: center;
+      width: 100%;
     }
 
     /* Category Switcher Button */
     .category-btn {
       flex: 1;
+      min-width: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -42,7 +50,6 @@
       border: 1px solid #202d47;
       border-radius: 12px;
       cursor: pointer;
-      transition: background-color 0.2s ease;
       overflow: hidden;
     }
 
@@ -79,7 +86,7 @@
       font-weight: 700;
       cursor: pointer;
       white-space: nowrap;
-      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+      flex-shrink: 0;
     }
 
     .fav-toggle-btn.active {
@@ -88,11 +95,13 @@
       color: #ffffff;
     }
 
-    /* 2x2 Grid */
+    /* 2x2 Fixed & Equal Grid */
     .grid-container {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      /* minmax(0, 1fr) য়ে দুয়োটা স্তম্ভক সদায় সমান ৫০% জোখত ৰাখে */
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
+      width: 100%;
     }
 
     /* Station Card */
@@ -108,15 +117,12 @@
       color: #ffffff;
       cursor: pointer;
       user-select: none;
-      transition: transform 0.15s ease, background-color 0.15s ease;
+      min-width: 0; /* ছবিৰ জোখে কাৰ্ডখন বহল কৰিব নোৱাৰিবলৈ */
+      width: 100%;
       overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      content-visibility: auto;
-      contain-intrinsic-size: 190px;
     }
 
     .station-card:active {
-      transform: scale(0.96);
       background-color: #18233c;
     }
 
@@ -129,6 +135,7 @@
       overflow: hidden;
       margin-bottom: 10px;
       background-color: #0a0f1d;
+      flex-shrink: 0;
     }
 
     .station-logo {
@@ -152,7 +159,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 6px rgba(30, 107, 255, 0.35);
       pointer-events: none;
     }
 
@@ -178,7 +184,6 @@
       justify-content: center;
       cursor: pointer;
       z-index: 10;
-      user-select: none;
     }
 
     .fav-btn svg {
@@ -188,13 +193,11 @@
       stroke: #8e9fb5;
       stroke-width: 2.2;
       pointer-events: none;
-      transition: transform 0.2s ease, fill 0.2s ease, stroke 0.2s ease;
     }
 
     .fav-btn.active svg {
       fill: #ff334b;
       stroke: #ff334b;
-      transform: scale(1.15);
     }
 
     /* Station Name */
@@ -207,6 +210,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       width: 100%;
+      display: block;
       letter-spacing: 0.2px;
       pointer-events: none;
     }
@@ -220,7 +224,7 @@
       line-height: 1.6;
     }
 
-    /* High Performance Category Modal */
+    /* Modal Overlay */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -231,9 +235,7 @@
       padding: 14px 14px 10px;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.2s ease, visibility 0.2s ease;
-      transform: translateZ(0);
-      will-change: opacity, visibility;
+      transition: opacity 0.15s ease, visibility 0.15s ease;
     }
 
     .modal-overlay.active {
@@ -282,7 +284,6 @@
       stroke-width: 2.2;
     }
 
-    /* Optimized Smooth Scroll List */
     .category-list {
       display: flex;
       flex-direction: column;
@@ -294,7 +295,6 @@
       padding-bottom: 8px;
     }
 
-    /* Compact Category Item */
     .category-item {
       display: flex;
       align-items: center;
@@ -304,12 +304,10 @@
       border: 1px solid #1f2b45;
       border-radius: 12px;
       cursor: pointer;
-      transition: background-color 0.15s ease, border-color 0.15s ease;
       flex-shrink: 0;
     }
 
     .category-item:active {
-      transform: scale(0.98);
       background-color: #182542;
       border-color: #1e6bff;
     }
@@ -397,7 +395,6 @@
     let isShowingFavsOnly = false;
     let currentCategory = null;
 
-    // Categories Definition
     const categories = [
       { key: "uk_radio", title: "UK Radio", desc: "Music, Hits & Entertainment", icon: "🎵" },
       { key: "news_radio", title: "News Radio", desc: "Live News & Talk Shows", icon: "🎙️" },
@@ -408,18 +405,17 @@
       { key: "local", title: "BBC Local Radio", desc: "Local counties & cities across UK", icon: "📻" }
     ];
 
-    // Radio Stations Database
     const radioData = {
       uk_radio: [
         { id: "uk1",  name: "Capital FM",   trigger: "go:capitalfm",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_UwAtO9d7X.jpg" },
-        { id: "uk2",  name: "Heart UK",      trigger: "go:heartuk",    logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_aBHdeVmf6i.png" },
-        { id: "uk3",  name: "Classic FM",    trigger: "go:classicfm",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_PvFAUskpR.jpg" },
-        { id: "uk4",  name: "Virgin Radio",  trigger: "go:virginradio",logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_AZbHRpx0o.png" },
-        { id: "uk5",  name: "Fix Radio",     trigger: "go:fixradio",   logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_76lUfgFpJ.png" },
-        { id: "uk6",  name: "Smooth Radio",  trigger: "go:smoothradio",logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_sXWmm_kFH.jpg" },
+        { id: "uk2",  name: "Heart UK",     trigger: "go:heartuk",    logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_aBHdeVmf6i.png" },
+        { id: "uk3",  name: "Classic FM",   trigger: "go:classicfm",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_PvFAUskpR.jpg" },
+        { id: "uk4",  name: "Virgin Radio", trigger: "go:virginradio",logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_AZbHRpx0o.png" },
+        { id: "uk5",  name: "Fix Radio",    trigger: "go:fixradio",   logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_76lUfgFpJ.png" },
+        { id: "uk6",  name: "Smooth Radio", trigger: "go:smoothradio",logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_sXWmm_kFH.jpg" },
         { id: "uk7",  name: "BFBS UK",       trigger: "go:bfbsuk",     logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_WuwmnZ2cf.png" },
-        { id: "uk8",  name: "Boom Radio",    trigger: "go:boomradio",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)_eBmEi5A2F.png" },
-        { id: "uk9",  name: "Jazz FM",       trigger: "go:jazzfm",     logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_orT7IE_xk.jpg" },
+        { id: "uk8",  name: "Boom Radio",   trigger: "go:boomradio",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)_eBmEi5A2F.png" },
+        { id: "uk9",  name: "Jazz FM",      trigger: "go:jazzfm",     logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_orT7IE_xk.jpg" },
         { id: "uk10", name: "Magic Radio",   trigger: "go:magicradio", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_Vm4_-n2EM.png" }
       ],
       news_radio: [
@@ -542,7 +538,6 @@
       return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"><rect width="200" height="200" rx="20" fill="${bgColor}"/><circle cx="100" cy="80" r="42" fill="rgba(255,255,255,0.15)"/><text x="100" y="93" font-family="sans-serif" font-weight="900" font-size="28" fill="%23ffffff" text-anchor="middle">${initials}</text><text x="100" y="152" font-family="sans-serif" font-weight="700" font-size="16" fill="%23ffffff" text-anchor="middle">${cleanTitle}</text></svg>`;
     }
 
-    // Favorites Logic
     let memoryFavs = [];
 
     function getFavorites() {
@@ -607,21 +602,21 @@
       renderStations();
     }
 
-    // Station Navigation
     function playStation(trigger) {
       if (trigger) {
         window.location.href = trigger;
       }
     }
 
-    // Modal Management
-    function initCategoryModal() {
+    function buildCategoryModalOnce() {
       const container = document.getElementById("categoryOptions");
       container.innerHTML = "";
 
+      const fragment = document.createDocumentFragment();
       categories.forEach(cat => {
         const item = document.createElement("div");
         item.className = `category-item ${cat.key === currentCategory ? 'selected' : ''}`;
+        item.setAttribute("data-cat", cat.key);
         item.onclick = () => selectCategory(cat.key);
 
         item.innerHTML = `
@@ -636,23 +631,33 @@
             <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
           </div>
         `;
-        container.appendChild(item);
+        fragment.appendChild(item);
+      });
+      container.appendChild(fragment);
+    }
+
+    function updateCategoryModalSelection() {
+      const items = document.querySelectorAll(".category-item");
+      items.forEach(el => {
+        if (el.getAttribute("data-cat") === currentCategory) {
+          el.classList.add("selected");
+        } else {
+          el.classList.remove("selected");
+        }
       });
     }
 
     function openCategoryModal() {
-      initCategoryModal();
+      updateCategoryModalSelection();
       const modal = document.getElementById("categoryModal");
       const closeBtn = document.getElementById("modalCloseBtn");
       
       closeBtn.style.display = currentCategory ? "flex" : "none";
       modal.classList.add("active");
-      document.body.style.overflow = "hidden";
     }
 
     function closeCategoryModal() {
       document.getElementById("categoryModal").classList.remove("active");
-      document.body.style.overflow = "auto";
     }
 
     function selectCategory(catKey) {
@@ -675,7 +680,6 @@
       renderStations();
     }
 
-    // Render Station Cards
     function renderStations() {
       const grid = document.getElementById("radioGrid");
       const favs = getFavorites();
@@ -698,6 +702,8 @@
       } else {
         stations = radioData[currentCategory] || [];
       }
+
+      const fragment = document.createDocumentFragment();
 
       stations.forEach(station => {
         const isFav = favs.includes(station.id);
@@ -724,12 +730,14 @@
           <span class="station-name">${station.name}</span>
         `;
 
-        grid.appendChild(card);
+        fragment.appendChild(card);
       });
+
+      grid.appendChild(fragment);
     }
 
-    // Startup Execution
     document.addEventListener("DOMContentLoaded", () => {
+      buildCategoryModalOnce();
       updateFavCount();
 
       let savedCategory = null;
