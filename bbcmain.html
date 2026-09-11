@@ -249,7 +249,6 @@ body {
     background: #1e293b;
 }
 
-/* Station Logo Style */
 .station-logo {
     width: 42px;
     height: 42px;
@@ -260,13 +259,12 @@ body {
     background: #1e293b;
     border: 1px solid rgba(255, 255, 255, 0.08);
     flex-shrink: 0;
-    transform: translateZ(0);
 }
 
 .station-info {
     flex: 1;
     min-width: 0;
-    padding-right: 12px;
+    padding-right: 10px;
 }
 
 .station-name {
@@ -282,46 +280,21 @@ body {
     color: #94a3b8;
     display: flex;
     align-items: flex-start;
-    line-height: 1.35;
+    line-height: 1.4;
     word-break: break-word;
     white-space: normal;
 }
 
-/* Live Pulse Indicator */
-.live-indicator {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 9px;
-    height: 9px;
-    margin-right: 7px;
-    margin-top: 3px;
-    flex-shrink: 0;
-}
-
 .live-dot {
-    width: 7px;
-    height: 7px;
+    width: 6.5px;
+    height: 6.5px;
+    min-width: 6.5px;
     background-color: #22c55e;
     border-radius: 50%;
-    z-index: 2;
-}
-
-.live-pulse {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(34, 197, 94, 0.7);
-    border-radius: 50%;
-    animation: pulse 2s infinite ease-out;
-    transform: translateZ(0);
-    display: none;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); opacity: 0.8; }
-    100% { transform: scale(2.2); opacity: 0; }
+    margin-right: 7px;
+    margin-top: 5px;
+    flex-shrink: 0;
+    display: inline-block;
 }
 
 /* Play Button */
@@ -336,7 +309,6 @@ body {
     justify-content: center;
     text-decoration: none;
     flex-shrink: 0;
-    transform: translateZ(0);
 }
 
 .play-btn:active {
@@ -353,38 +325,78 @@ body {
     margin-left: 2px;
 }
 
-/* Quick Access Grid */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 9px;
+/* Explore All Stations Card */
+.view-all-container {
+    margin-top: 4px;
 }
 
-.card {
-    background: #141e30;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+.view-all-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.12) 0%, rgba(30, 58, 138, 0.18) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.28);
     border-radius: 12px;
-    padding: 12px 10px;
+    padding: 12px 14px;
     text-decoration: none;
-    color: #e2e8f0;
-    font-size: 13px;
-    font-weight: 600;
-    text-align: center;
+    color: #ffffff;
+    transition: all 0.2s ease;
+}
+
+.view-all-card:active {
+    transform: scale(0.985);
+    background: rgba(37, 99, 235, 0.22);
+}
+
+.view-all-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.view-all-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #60a5fa;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.view-all-sub {
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+.view-all-arrow {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(59, 130, 246, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    transform: translateZ(0);
+    color: #60a5fa;
 }
 
-.card:active {
-    transform: scale(0.97);
-    background: #1c2a42;
-}
-
-/* News Card */
+/* Latest Updates Cards */
 .news-card {
     border-color: rgba(59, 130, 246, 0.35);
+}
+
+.thought-card {
+    border-color: rgba(168, 85, 247, 0.35);
+}
+
+.duration-tag {
+    display: inline-block;
+    padding: 1.5px 6px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+    font-size: 10px;
+    font-weight: 600;
+    margin-left: 6px;
 }
 </style>
 
@@ -433,105 +445,122 @@ body {
         </div>
     </a>
 
+    <!-- Popular Stations Section -->
     <div class="section">
         <div class="title">📻 Popular Stations</div>
 
+        <!-- BBC Radio 1 -->
         <div class="station-card">
             <img class="station-logo" src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/images%20(4).jpg" alt="BBC Radio 1" width="42" height="42" decoding="async">
             <div class="station-info">
                 <div class="station-name">BBC Radio 1</div>
                 <div class="playing-row">
-                    <span class="live-indicator">
-                        <span class="live-pulse"></span>
-                        <span class="live-dot"></span>
-                    </span>
+                    <span class="live-dot"></span>
                     <span id="bbc1">Loading...</span>
                 </div>
             </div>
             <a href="go:BBC1" class="play-btn"></a>
         </div>
 
+        <!-- BBC Radio 2 -->
         <div class="station-card">
             <img class="station-logo" src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/images%20(6).jpg" alt="BBC Radio 2" width="42" height="42" decoding="async">
             <div class="station-info">
                 <div class="station-name">BBC Radio 2</div>
                 <div class="playing-row">
-                    <span class="live-indicator">
-                        <span class="live-pulse"></span>
-                        <span class="live-dot"></span>
-                    </span>
+                    <span class="live-dot"></span>
                     <span id="bbc2">Loading...</span>
                 </div>
             </div>
             <a href="go:BBC2" class="play-btn"></a>
         </div>
 
+        <!-- BBC Radio 3 -->
         <div class="station-card">
             <img class="station-logo" src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/images%20(7).jpg" alt="BBC Radio 3" width="42" height="42" decoding="async">
             <div class="station-info">
                 <div class="station-name">BBC Radio 3</div>
                 <div class="playing-row">
-                    <span class="live-indicator">
-                        <span class="live-pulse"></span>
-                        <span class="live-dot"></span>
-                    </span>
+                    <span class="live-dot"></span>
                     <span id="bbc3">Loading...</span>
                 </div>
             </div>
             <a href="go:BBC3" class="play-btn"></a>
         </div>
 
+        <!-- BBC Radio 4 -->
         <div class="station-card">
             <img class="station-logo" src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/images%20(1).png" alt="BBC Radio 4" width="42" height="42" decoding="async">
             <div class="station-info">
                 <div class="station-name">BBC Radio 4</div>
                 <div class="playing-row">
-                    <span class="live-indicator">
-                        <span class="live-pulse"></span>
-                        <span class="live-dot"></span>
-                    </span>
+                    <span class="live-dot"></span>
                     <span id="bbc4">Loading...</span>
                 </div>
             </div>
             <a href="go:BBC4" class="play-btn"></a>
         </div>
 
+        <!-- BBC World Service -->
         <div class="station-card">
             <img class="station-logo" src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/images%20(2).png" alt="BBC World Service" width="42" height="42" decoding="async">
             <div class="station-info">
                 <div class="station-name">BBC World Service</div>
                 <div class="playing-row">
-                    <span class="live-indicator">
-                        <span class="live-pulse"></span>
-                        <span class="live-dot"></span>
-                    </span>
+                    <span class="live-dot"></span>
                     <span id="bbcws">Loading...</span>
                 </div>
             </div>
             <a href="go:BBCWS" class="play-btn"></a>
         </div>
-    </div>
 
-    <div class="section">
-        <div class="title">⚡ Quick Access</div>
-        <div class="grid">
-            <a href="go:BBC" class="card">🇬🇧 BBC Radio</a>
-            <a href="go:UKR" class="card">📻 UK Radio</a>
-            <a href="go:NEWS" class="card">📰 News Radio</a>
-            <a href="go:SPO" class="card">🏀 Sports Radio</a>
+        <!-- View All Stations Card -->
+        <div class="view-all-container">
+            <a href="go:BBC_ALL" class="view-all-card">
+                <div class="view-all-text">
+                    <div class="view-all-title">
+                        <span>Explore All Stations</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                    <div class="view-all-sub">100+ UK, BBC Local & Regional Stations</div>
+                </div>
+                <div class="view-all-arrow">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+            </a>
         </div>
     </div>
 
+    <!-- Latest Updates Section -->
     <div class="section">
         <div class="title">🕒 Latest Updates</div>
+
+        <!-- 5 Min News Brief -->
         <div class="station-card news-card">
             <div class="station-info">
-                <div class="station-name">📰 5 Min News Brief</div>
+                <div class="station-name">
+                    📰 5 Min News Brief
+                    <span class="duration-tag">5 Min</span>
+                </div>
                 <div class="playing-row">
                     <span>Updated: 11 September 2026, 7:00 AM</span>
                 </div>
             </div>
             <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/48dce3-w1msm0v71v8t0gn/vf_w1msm0v71v8t0gn_3dd27c14-0b7d-416f-a466-349c2be2e1c9.ism/dash/vf_w1msm0v71v8t0gn_3dd27c14-0b7d-416f-a466-349c2be2e1c9-audio_eng_1=96000-1.m3u8" class="play-btn"></a>
+        </div>
+
+        <!-- Thought for the Day -->
+        <div class="station-card thought-card">
+            <div class="station-info">
+                <div class="station-name">
+                    🎙️ Thought for the Day
+                    <span class="duration-tag">3 Min</span>
+                </div>
+                <div class="playing-row">
+                    <span>Updated: 10 September 2026, 9:00 AM</span>
+                </div>
+            </div>
+            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/7b3ec5-p0p8w7b7/vf_p0p8w7b7_402ca945-e346-470e-ac1d-171c8480ff1a.ism/dash/vf_p0p8w7b7_402ca945-e346-470e-ac1d-171c8480ff1a-audio_eng_1=96000-4.m3u8" class="play-btn"></a>
         </div>
     </div>
 </div>
