@@ -32,6 +32,145 @@ body {
     margin: 0 auto;
 }
 
+/* ================= Top App Header ================= */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #090d16;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-title {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    color: #ffffff;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #cbd5e1;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.header-btn:active {
+    background: rgba(37, 99, 235, 0.3);
+    color: #60a5fa;
+}
+
+/* ================= Zero-Lag Privacy Popup Modal (No Backdrop Filter) ================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(4, 7, 13, 0.82); /* ডার্ক চলিড বেকগ্ৰাউণ্ড (কুনো লেগ নহয়) */
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    transform: translateZ(0); /* GPU acceleration */
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.modal-box {
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 420px;
+    color: #e2e8f0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+    transform: scale(0.95);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+    will-change: transform;
+}
+
+.modal-overlay.active .modal-box {
+    transform: scale(1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: #152033;
+}
+
+.modal-header h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.modal-close {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px;
+}
+
+.modal-body {
+    padding: 16px;
+    max-height: 380px;
+    overflow-y: auto;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #cbd5e1;
+}
+
+.modal-body p {
+    margin-bottom: 12px;
+}
+
+/* ================= Main Content & Radio Cards ================= */
 .section {
     padding: 0 16px;
     margin-top: 18px;
@@ -60,7 +199,7 @@ body {
     border: 1px solid #1e293b;
 }
 
-/* Compact & Balanced Cricket Score Strip */
+/* Cricket Score Strip */
 .cricket-strip {
     display: block;
     margin: 10px 16px 0;
@@ -73,7 +212,6 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* Top Row: Live Badge + Venue + Scorecard Button */
 .strip-top {
     display: flex;
     align-items: center;
@@ -128,7 +266,6 @@ body {
     text-overflow: ellipsis;
 }
 
-/* Scorecard Action Button */
 .strip-action {
     display: inline-flex;
     align-items: center;
@@ -143,7 +280,6 @@ body {
     flex-shrink: 0;
 }
 
-/* Middle Row: Match Status Full Line */
 .strip-status {
     font-size: 11px;
     font-weight: 500;
@@ -156,7 +292,6 @@ body {
     letter-spacing: -0.1px;
 }
 
-/* Bottom Row: Full Scores */
 .strip-body {
     display: flex;
     align-items: center;
@@ -177,7 +312,6 @@ body {
     gap: 5px;
 }
 
-/* Team Logo Style */
 .team-logo {
     width: 17px;
     height: 17px;
@@ -204,7 +338,6 @@ body {
     white-space: nowrap;
 }
 
-/* Overs Style */
 .team-overs {
     color: #94a3b8;
     font-size: 10px;
@@ -277,7 +410,6 @@ body {
     display: inline-block;
 }
 
-/* Play Button */
 .play-btn {
     width: 38px;
     height: 38px;
@@ -381,6 +513,33 @@ body {
 <body>
 
 <div class="container">
+
+    <!-- Top App Header -->
+    <header class="app-header">
+        <div class="header-brand">
+            <span style="font-size: 19px;">📻</span>
+            <span class="header-title">All UK Radio</span>
+        </div>
+        <div class="header-actions">
+            <!-- Share Button (Directly triggers http://action_share) -->
+            <a href="http://action_share" class="header-btn" aria-label="Share App" title="Share App">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+            </a>
+            <!-- Privacy Policy Button -->
+            <button type="button" class="header-btn" id="privacyBtn" aria-label="Privacy Policy" title="Privacy Policy">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
     <!-- Top Banner -->
     <a href="go:BBC5E" class="top-banner">
         <img src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/file_00000000131482118e401397f6f8c742.jpg" alt="BBC 5 Sports Extra" fetchpriority="high" decoding="async">
@@ -539,9 +698,50 @@ body {
             <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/f59cca-p0p93h4q/vf_p0p93h4q_0512bb94-07d2-4023-964c-03fe097fda84.ism/dash/vf_p0p93h4q_0512bb94-07d2-4023-964c-03fe097fda84-audio_eng_1=96000-2.m3u8" class="play-btn" aria-label="Play Thought for the Day"></a>
         </div>
     </div>
+
+</div>
+
+<!-- Smooth Privacy Policy Modal -->
+<div id="privacyModal" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>🔒 Privacy Policy</h3>
+            <button type="button" class="modal-close" id="closeModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p><strong>Welcome to All UK Radio.</strong></p>
+            <p>We are committed to protecting your privacy. This application streams publicly accessible radio broadcasts and does not collect, store, or sell any personal identifying information.</p>
+            <p>All audio streams and cricket data are delivered in real time for listening and informational convenience. For questions or support, please reach out via our official developer contact channel.</p>
+        </div>
+    </div>
 </div>
 
 <script>
+/* ================= Zero-Lag Modal Functionality ================= */
+const privacyBtn = document.getElementById('privacyBtn');
+const privacyModal = document.getElementById('privacyModal');
+const closeModal = document.getElementById('closeModal');
+
+if (privacyBtn && privacyModal) {
+    privacyBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        privacyModal.classList.add('active');
+    });
+}
+
+if (closeModal && privacyModal) {
+    closeModal.addEventListener('click', (e) => {
+        e.preventDefault();
+        privacyModal.classList.remove('active');
+    });
+}
+
+window.addEventListener('click', (e) => {
+    if (e.target === privacyModal) {
+        privacyModal.classList.remove('active');
+    }
+});
+
 /* ================= Live Cricket Score Fetcher ================= */
 const matchId = "95255";
 const cloudflareProxyUrl = `https://cricvoice.aminurmarch.workers.dev/?matchId=${matchId}`;
