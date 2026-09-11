@@ -9,10 +9,11 @@
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
-    -webkit-user-select: none; /* Long-press text select বন্ধ কৰিবলৈ */
+    -webkit-user-select: none;
     user-select: none;
     margin: 0;
     padding: 0;
+    outline: none;
 }
 
 body {
@@ -57,11 +58,6 @@ body {
     height: auto;
     border-radius: 14px;
     border: 1px solid #1e293b;
-    will-change: transform;
-}
-
-.top-banner:active img {
-    transform: scale(0.985);
 }
 
 /* Compact & Balanced Cricket Score Strip */
@@ -75,13 +71,6 @@ body {
     text-decoration: none;
     color: #ffffff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transform: translateZ(0);
-    transition: all 0.2s ease;
-}
-
-.cricket-strip:active {
-    transform: scale(0.985);
-    background: #1a273e;
 }
 
 /* Top Row: Live Badge + Venue + Scorecard Button */
@@ -154,11 +143,6 @@ body {
     flex-shrink: 0;
 }
 
-.cricket-strip:active .strip-action {
-    background: #2563eb;
-    color: #ffffff;
-}
-
 /* Middle Row: Match Status Full Line */
 .strip-status {
     font-size: 11px;
@@ -172,7 +156,7 @@ body {
     letter-spacing: -0.1px;
 }
 
-/* Bottom Row: Full Scores (2-Row Balanced Layout) */
+/* Bottom Row: Full Scores */
 .strip-body {
     display: flex;
     align-items: center;
@@ -243,12 +227,6 @@ body {
     justify-content: space-between;
     align-items: center;
     color: #ffffff;
-    transform: translateZ(0);
-}
-
-.station-card:active {
-    transform: scale(0.985);
-    background: #1e293b;
 }
 
 .station-logo {
@@ -313,10 +291,6 @@ body {
     flex-shrink: 0;
 }
 
-.play-btn:active {
-    transform: scale(0.92);
-}
-
 .play-btn::before {
     content: "";
     width: 0;
@@ -327,7 +301,7 @@ body {
     margin-left: 2px;
 }
 
-/* Explore All Stations Card (High-Visibility Vibrant CTA) */
+/* Explore All Stations Card */
 .view-all-container {
     margin-top: 10px;
     margin-bottom: 4px;
@@ -344,13 +318,6 @@ body {
     text-decoration: none;
     color: #ffffff;
     box-shadow: 0 6px 18px rgba(37, 99, 235, 0.38);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-    transform: translateZ(0);
-}
-
-.view-all-card:active {
-    transform: scale(0.98);
-    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
 }
 
 .view-all-text {
@@ -716,7 +683,7 @@ async function fetchCricketScore() {
     }
 }
 
-/* ================= UK Time & Optimized Radio Program Schedule ================= */
+/* ================= UK Time & Radio Program Schedule ================= */
 function getUKMinutesNow() {
     const parts = new Intl.DateTimeFormat('en-GB', {
         timeZone: 'Europe/London',
@@ -745,7 +712,6 @@ function timeStringToMinutesUK(timeStr) {
     return h * 60 + m;
 }
 
-// ডাটা এবাৰ প্ৰি-প্ৰচেছ আৰু ছৰ্ট কৰি কেচত ৰখাৰ ব্যৱস্থা
 let cachedSchedule = null;
 
 function getPreparedSchedule() {
