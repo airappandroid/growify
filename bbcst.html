@@ -15,7 +15,7 @@
 
     html, body {
       max-width: 100%;
-      overflow-x: hidden; /* স্ক্ৰীনৰ বাহিৰলৈ যোৱা ৰোধ কৰিবলৈ */
+      overflow-x: hidden;
     }
 
     body {
@@ -29,8 +29,8 @@
     /* Top Control Bar */
     .top-bar {
       display: flex;
-      gap: 10px;
-      margin-bottom: 16px;
+      gap: 8px;
+      margin-bottom: 12px;
       align-items: center;
       width: 100%;
     }
@@ -72,6 +72,37 @@
       margin-left: 8px;
     }
 
+    /* Search Toggle Button */
+    .search-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      background-color: #131b2e;
+      border: 1px solid #202d47;
+      border-radius: 12px;
+      color: #8e9fb5;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .search-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: #8e9fb5;
+      stroke-width: 2.2;
+      fill: none;
+    }
+
+    .search-btn.active {
+      background-color: #1e6bff;
+      border-color: #1e6bff;
+    }
+
+    .search-btn.active svg {
+      stroke: #ffffff;
+    }
+
     /* Favorites Toggle Button */
     .fav-toggle-btn {
       display: flex;
@@ -95,10 +126,65 @@
       color: #ffffff;
     }
 
-    /* 2x2 Fixed & Equal Grid */
+    /* Search Input Container */
+    .search-container {
+      display: none;
+      width: 100%;
+      margin-bottom: 14px;
+    }
+
+    .search-container.active {
+      display: block;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .search-icon-inside {
+      position: absolute;
+      left: 14px;
+      width: 16px;
+      height: 16px;
+      stroke: #8e9fb5;
+      stroke-width: 2.2;
+      fill: none;
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 11px 40px 11px 40px;
+      background-color: #131b2e;
+      border: 1px solid #202d47;
+      border-radius: 12px;
+      color: #ffffff;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: #1e6bff;
+    }
+
+    .search-clear-btn {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      color: #8e9fb5;
+      font-size: 18px;
+      cursor: pointer;
+      display: none;
+      padding: 4px;
+    }
+
+    /* 2x2 Fixed Grid */
     .grid-container {
       display: grid;
-      /* minmax(0, 1fr) য়ে দুয়োটা স্তম্ভক সদায় সমান ৫০% জোখত ৰাখে */
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
       width: 100%;
@@ -117,7 +203,7 @@
       color: #ffffff;
       cursor: pointer;
       user-select: none;
-      min-width: 0; /* ছবিৰ জোখে কাৰ্ডখন বহল কৰিব নোৱাৰিবলৈ */
+      min-width: 0;
       width: 100%;
       overflow: hidden;
     }
@@ -126,7 +212,6 @@
       background-color: #18233c;
     }
 
-    /* Thumbnail Wrapper */
     .thumb-wrapper {
       position: relative;
       width: 100%;
@@ -147,7 +232,6 @@
       pointer-events: none;
     }
 
-    /* Play Button */
     .play-btn {
       position: absolute;
       bottom: 8px;
@@ -169,7 +253,6 @@
       margin-left: 2px;
     }
 
-    /* Favorite Heart Button */
     .fav-btn {
       position: absolute;
       top: 8px;
@@ -200,7 +283,6 @@
       stroke: #ff334b;
     }
 
-    /* Station Name */
     .station-name {
       font-size: 13.5px;
       font-weight: 700;
@@ -365,9 +447,37 @@
       <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
     </button>
 
+    <button id="searchToggleBtn" class="search-btn" onclick="toggleSearchBar()" title="Search">
+      <svg viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+    </button>
+
     <button id="favToggle" class="fav-toggle-btn" onclick="toggleFavoritesView()">
       <span>❤️ Favs</span> (<span id="favCount">0</span>)
     </button>
+  </div>
+
+  <!-- Search Input Bar -->
+  <div id="searchContainer" class="search-container">
+    <div class="search-input-wrapper">
+      <svg class="search-icon-inside" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input 
+        type="text" 
+        id="searchInput" 
+        class="search-input" 
+        placeholder="Search any station..." 
+        oninput="handleSearch(this.value)"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+      />
+      <button id="clearSearchBtn" class="search-clear-btn" onclick="clearSearch()">✕</button>
+    </div>
   </div>
 
   <!-- 2x2 Grid -->
@@ -394,6 +504,10 @@
   <script>
     let isShowingFavsOnly = false;
     let currentCategory = null;
+    let searchQuery = "";
+    let isSearchOpen = false;
+    let searchDebounceTimer = null;
+    let cachedAllStations = null; // মেম'ৰীত এবাৰ সাঁচি ৰাখিবলৈ
 
     const categories = [
       { key: "uk_radio", title: "UK Radio", desc: "Music, Hits & Entertainment", icon: "🎵" },
@@ -410,9 +524,9 @@
         { id: "uk1",  name: "Capital FM",   trigger: "go:capitalfm",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_UwAtO9d7X.jpg" },
         { id: "uk2",  name: "Heart UK",     trigger: "go:heartuk",    logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_aBHdeVmf6i.png" },
         { id: "uk3",  name: "Classic FM",   trigger: "go:classicfm",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_PvFAUskpR.jpg" },
-        { id: "uk4",  name: "Virgin Radio", trigger: "go:virgin",logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_AZbHRpx0o.png" },
+        { id: "uk4",  name: "Virgin Radio", trigger: "go:virgin",     logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_AZbHRpx0o.png" },
         { id: "uk5",  name: "Fix Radio",    trigger: "go:fixradio",   logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_76lUfgFpJ.png" },
-        { id: "uk6",  name: "Smooth Radio", trigger: "go:smooth",logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_sXWmm_kFH.jpg" },
+        { id: "uk6",  name: "Smooth Radio", trigger: "go:smooth",     logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_sXWmm_kFH.jpg" },
         { id: "uk7",  name: "BFBS UK",       trigger: "go:bfbsuk",     logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_WuwmnZ2cf.png" },
         { id: "uk8",  name: "Boom Radio",   trigger: "go:boomradio",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)_eBmEi5A2F.png" },
         { id: "uk9",  name: "Jazz FM",      trigger: "go:jazzfm",     logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_orT7IE_xk.jpg" },
@@ -420,7 +534,7 @@
       ],
       news_radio: [
         { id: "nr1", name: "Times Radio",       trigger: "go:timesradio",      logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7)_StZmG6MaR.png" },
-        { id: "nr2", name: "BBC World Service", trigger: "go:BBCWS", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(8)_le1kPe5Fs.png" },
+        { id: "nr2", name: "BBC World Service", trigger: "go:BBCWS",          logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(8)_le1kPe5Fs.png" },
         { id: "nr3", name: "LBC News",          trigger: "go:lbcnews",         logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_nHTDY1ahv.jpg" },
         { id: "nr4", name: "talkRADIO",         trigger: "go:talkradio",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(9)_YUdKs9Dsu.png" },
         { id: "nr5", name: "Al Jazeera",        trigger: "go:aljazeera",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(10)_ZvPCSQdqa.png" },
@@ -430,19 +544,19 @@
       sports_radio: [
         { id: "sr1", name: "talkSPORT",   trigger: "go:talksport",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)_MTxN5yXMFY.jpg" },
         { id: "sr2", name: "talkSPORT 2", trigger: "go:talksport2", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(13)_lb-tkQH-6.png" },
-        { id: "sr3", name: "BBC 5 Extra", trigger: "go:BBC5E",        logo: "https://ik.imagekit.io/sqt8ptw1k/images.webp" }
+        { id: "sr3", name: "BBC 5 Extra", trigger: "go:BBC5E",      logo: "https://ik.imagekit.io/sqt8ptw1k/images.webp" }
       ],
       national: [
         { id: "s1",  name: "BBC 1",             trigger: "go:BBC1",  logo: "https://ik.imagekit.io/sqt8ptw1k/images_PSlF8kUWN.jpg" },
-        { id: "s2",  name: "BBC 1Xtra",         trigger: "go:BB1x",   logo: "https://ik.imagekit.io/sqt8ptw1k/images_vnTRG2ZUIX.png" },
-        { id: "s3",  name: "BBC 1 Anthems",     trigger: "go:BBan",   logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1).png" },
+        { id: "s2",  name: "BBC 1Xtra",         trigger: "go:BB1x",  logo: "https://ik.imagekit.io/sqt8ptw1k/images_vnTRG2ZUIX.png" },
+        { id: "s3",  name: "BBC 1 Anthems",     trigger: "go:BBan",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1).png" },
         { id: "s4",  name: "BBC 1 Dance",       trigger: "go:BBd",   logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2).png" },
         { id: "s5",  name: "BBC 2",             trigger: "go:BBC2",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3).png" },
         { id: "s6",  name: "BBC 3",             trigger: "go:BBC3",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_IqqMmykGi.jpg" },
         { id: "s7",  name: "BBC 4",             trigger: "go:BBC4",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_IqqMmykGi.jpg" },
         { id: "s8",  name: "BBC 4 Extra",       trigger: "go:s8",    logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5).png" },
-        { id: "s9",  name: "BBC 5 Live",        trigger: "go:BBC5",    logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6).png" },
-        { id: "s10", name: "BBC 5 Extra",       trigger: "go:BBC5E",   logo: "https://ik.imagekit.io/sqt8ptw1k/images.webp" },
+        { id: "s9",  name: "BBC 5 Live",        trigger: "go:BBC5",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6).png" },
+        { id: "s10", name: "BBC 5 Extra",       trigger: "go:BBC5E", logo: "https://ik.imagekit.io/sqt8ptw1k/images.webp" },
         { id: "s11", name: "BBC 6 Music",       trigger: "go:s11",   logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7).png" },
         { id: "s12", name: "BBC Asian Network", trigger: "go:s12",   logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_b0cfqxKx5.jpg" }
       ],
@@ -498,6 +612,18 @@
         { id: "s57", name: "BBC York",            trigger: "go:s57", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(23).png" }
       ]
     };
+
+    // সকলো ষ্টেছন এবাৰতে কেছ কৰি ৰাখে যাতে বাৰে বাৰে লুপ চলাব লগা নহয়
+    function getAllStationsCached() {
+      if (!cachedAllStations) {
+        let allStations = [];
+        for (let key in radioData) {
+          allStations = allStations.concat(radioData[key]);
+        }
+        cachedAllStations = Array.from(new Map(allStations.map(s => [s.id, s])).values());
+      }
+      return cachedAllStations;
+    }
 
     function getStationColor(name) {
       if (name.includes("Capital")) return "#00325b";
@@ -591,6 +717,10 @@
       const favBtn = document.getElementById("favToggle");
       favBtn.classList.toggle("active", isShowingFavsOnly);
 
+      if (isSearchOpen) {
+        closeSearchBar();
+      }
+
       const titleElem = document.getElementById("currentCategoryTitle");
       if (isShowingFavsOnly) {
         titleElem.innerText = "Favorite Stations";
@@ -606,6 +736,52 @@
       if (trigger) {
         window.location.href = trigger;
       }
+    }
+
+    /* Debounced Search Handler */
+    function handleSearch(val) {
+      const trimmed = val.trim();
+      document.getElementById("clearSearchBtn").style.display = trimmed ? "block" : "none";
+
+      // আগৰ টাইমাৰ বাতিল কৰা
+      clearTimeout(searchDebounceTimer);
+
+      // ব্যৱহাৰকাৰীয়ে টাইপ কৰি থকা অৱস্থাত ৰেণ্ডাৰ নকৰি ১৫০ মিল্লিছেকেণ্ড ৰৈ তাৰ পাছত ফিল্টাৰ কৰিব
+      searchDebounceTimer = setTimeout(() => {
+        searchQuery = trimmed.toLowerCase();
+        renderStations();
+      }, 150);
+    }
+
+    function clearSearch() {
+      clearTimeout(searchDebounceTimer);
+      searchQuery = "";
+      const input = document.getElementById("searchInput");
+      if (input) input.value = "";
+      document.getElementById("clearSearchBtn").style.display = "none";
+      renderStations();
+    }
+
+    function toggleSearchBar() {
+      isSearchOpen = !isSearchOpen;
+      const searchContainer = document.getElementById("searchContainer");
+      const searchToggleBtn = document.getElementById("searchToggleBtn");
+      const searchInput = document.getElementById("searchInput");
+
+      if (isSearchOpen) {
+        searchContainer.classList.add("active");
+        searchToggleBtn.classList.add("active");
+        searchInput.focus();
+      } else {
+        closeSearchBar();
+      }
+    }
+
+    function closeSearchBar() {
+      isSearchOpen = false;
+      document.getElementById("searchContainer").classList.remove("active");
+      document.getElementById("searchToggleBtn").classList.remove("active");
+      clearSearch();
     }
 
     function buildCategoryModalOnce() {
@@ -676,6 +852,10 @@
       isShowingFavsOnly = false;
       document.getElementById("favToggle").classList.remove("active");
 
+      if (isSearchOpen) {
+        clearSearch();
+      }
+
       closeCategoryModal();
       renderStations();
     }
@@ -687,13 +867,17 @@
 
       let stations = [];
 
-      if (isShowingFavsOnly) {
-        let allStations = [];
-        for (let key in radioData) {
-          allStations = allStations.concat(radioData[key]);
+      if (searchQuery !== "") {
+        const all = getAllStationsCached();
+        stations = all.filter(s => s.name.toLowerCase().includes(searchQuery));
+
+        if (stations.length === 0) {
+          grid.innerHTML = `<div class="empty-msg">No station found matching "<b>${searchQuery}</b>"</div>`;
+          return;
         }
-        const uniqueStations = Array.from(new Map(allStations.map(s => [s.id, s])).values());
-        stations = uniqueStations.filter(s => favs.includes(s.id));
+      } else if (isShowingFavsOnly) {
+        const all = getAllStationsCached();
+        stations = all.filter(s => favs.includes(s.id));
 
         if (stations.length === 0) {
           grid.innerHTML = `<div class="empty-msg">No favorite stations added yet.<br>Tap the heart icon on any station to add.</div>`;
