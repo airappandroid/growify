@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Radio App</title>
+<title>All UK Radio App</title>
 
 <style>
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none; /* Long-press text select বন্ধ কৰিবলৈ */
+    user-select: none;
     margin: 0;
     padding: 0;
 }
@@ -325,58 +327,65 @@ body {
     margin-left: 2px;
 }
 
-/* Explore All Stations Card */
+/* Explore All Stations Card (High-Visibility Vibrant CTA) */
 .view-all-container {
-    margin-top: 4px;
+    margin-top: 10px;
+    margin-bottom: 4px;
 }
 
 .view-all-card {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(135deg, rgba(37, 99, 235, 0.12) 0%, rgba(30, 58, 138, 0.18) 100%);
-    border: 1px solid rgba(59, 130, 246, 0.28);
-    border-radius: 12px;
-    padding: 12px 14px;
+    background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 14px;
+    padding: 13px 16px;
     text-decoration: none;
     color: #ffffff;
-    transition: all 0.2s ease;
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.38);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transform: translateZ(0);
 }
 
 .view-all-card:active {
-    transform: scale(0.985);
-    background: rgba(37, 99, 235, 0.22);
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
 }
 
 .view-all-text {
     display: flex;
     flex-direction: column;
-    gap: 1px;
+    gap: 2px;
 }
 
 .view-all-title {
-    font-size: 13.5px;
-    font-weight: 700;
-    color: #60a5fa;
+    font-size: 14.5px;
+    font-weight: 800;
+    color: #ffffff;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
+    letter-spacing: -0.2px;
 }
 
 .view-all-sub {
-    font-size: 11px;
-    color: #94a3b8;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.88);
 }
 
 .view-all-arrow {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
     border-radius: 50%;
-    background: rgba(59, 130, 246, 0.15);
+    background: rgba(255, 255, 255, 0.22);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #60a5fa;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 /* Latest Updates Cards */
@@ -400,14 +409,14 @@ body {
 }
 </style>
 
-<script src="https://airappandroid.github.io/growify/bbc.js" defer></script>
+<script src="https://growify.aminurmarch.workers.dev/bbc.js" defer></script>
 </head>
 <body>
 
 <div class="container">
     <!-- Top Banner -->
     <a href="go:BBC5E" class="top-banner">
-        <img src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/file_00000000131482118e401397f6f8c742.jpg" alt="BBC 5 Sports Extra" fetchpriority="high" decoding="async">
+        <img src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/file_00000000131482118e401397f6f8c742.jpg" alt="BBC 5 Sports Extra" fetchpriority="high" decoding="async">
     </a>
 
     <!-- Cricket Live Score Strip (go:card) -->
@@ -451,7 +460,7 @@ body {
 
         <!-- BBC Radio 1 -->
         <div class="station-card">
-            <img class="station-logo" src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/images%20(4).jpg" alt="BBC Radio 1" width="42" height="42" decoding="async">
+            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(4).jpg" alt="BBC Radio 1" width="42" height="42" decoding="async">
             <div class="station-info">
                 <div class="station-name">BBC Radio 1</div>
                 <div class="playing-row">
@@ -459,12 +468,12 @@ body {
                     <span id="bbc1">Loading...</span>
                 </div>
             </div>
-            <a href="go:BBC1" class="play-btn"></a>
+            <a href="go:BBC1" class="play-btn" aria-label="Play BBC Radio 1"></a>
         </div>
 
         <!-- BBC Radio 2 -->
         <div class="station-card">
-            <img class="station-logo" src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/images%20(6).jpg" alt="BBC Radio 2" width="42" height="42" decoding="async">
+            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(6).jpg" alt="BBC Radio 2" width="42" height="42" decoding="async">
             <div class="station-info">
                 <div class="station-name">BBC Radio 2</div>
                 <div class="playing-row">
@@ -472,12 +481,12 @@ body {
                     <span id="bbc2">Loading...</span>
                 </div>
             </div>
-            <a href="go:BBC2" class="play-btn"></a>
+            <a href="go:BBC2" class="play-btn" aria-label="Play BBC Radio 2"></a>
         </div>
 
         <!-- BBC Radio 3 -->
         <div class="station-card">
-            <img class="station-logo" src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/images%20(7).jpg" alt="BBC Radio 3" width="42" height="42" decoding="async">
+            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(7).jpg" alt="BBC Radio 3" width="42" height="42" decoding="async">
             <div class="station-info">
                 <div class="station-name">BBC Radio 3</div>
                 <div class="playing-row">
@@ -485,12 +494,12 @@ body {
                     <span id="bbc3">Loading...</span>
                 </div>
             </div>
-            <a href="go:BBC3" class="play-btn"></a>
+            <a href="go:BBC3" class="play-btn" aria-label="Play BBC Radio 3"></a>
         </div>
 
         <!-- BBC Radio 4 -->
         <div class="station-card">
-            <img class="station-logo" src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/images%20(1).png" alt="BBC Radio 4" width="42" height="42" decoding="async">
+            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(1).png" alt="BBC Radio 4" width="42" height="42" decoding="async">
             <div class="station-info">
                 <div class="station-name">BBC Radio 4</div>
                 <div class="playing-row">
@@ -498,12 +507,12 @@ body {
                     <span id="bbc4">Loading...</span>
                 </div>
             </div>
-            <a href="go:BBC4" class="play-btn"></a>
+            <a href="go:BBC4" class="play-btn" aria-label="Play BBC Radio 4"></a>
         </div>
 
         <!-- BBC World Service -->
         <div class="station-card">
-            <img class="station-logo" src="https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/images%20(2).png" alt="BBC World Service" width="42" height="42" decoding="async">
+            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(2).png" alt="BBC World Service" width="42" height="42" decoding="async">
             <div class="station-info">
                 <div class="station-name">BBC World Service</div>
                 <div class="playing-row">
@@ -511,21 +520,21 @@ body {
                     <span id="bbcws">Loading...</span>
                 </div>
             </div>
-            <a href="go:BBCWS" class="play-btn"></a>
+            <a href="go:BBCWS" class="play-btn" aria-label="Play BBC World Service"></a>
         </div>
 
-        <!-- View All Stations Card -->
+        <!-- Explore All Stations Card -->
         <div class="view-all-container">
             <a href="go:BBC_ALL" class="view-all-card">
                 <div class="view-all-text">
                     <div class="view-all-title">
                         <span>Explore All Stations</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </div>
                     <div class="view-all-sub">100+ UK, BBC Local & Regional Stations</div>
                 </div>
                 <div class="view-all-arrow">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </div>
             </a>
         </div>
@@ -546,7 +555,7 @@ body {
                     <span>Updated: 11 September 2026, 8:00 AM</span>
                 </div>
             </div>
-            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/fb572a-w1msm0v71v8t7yx/vf_w1msm0v71v8t7yx_373322e0-6173-40ea-a449-40a1a26a4f12.ism/dash/vf_w1msm0v71v8t7yx_373322e0-6173-40ea-a449-40a1a26a4f12-audio_eng_1=96000-1.m3u8" class="play-btn"></a>
+            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/fb572a-w1msm0v71v8t7yx/vf_w1msm0v71v8t7yx_373322e0-6173-40ea-a449-40a1a26a4f12.ism/dash/vf_w1msm0v71v8t7yx_373322e0-6173-40ea-a449-40a1a26a4f12-audio_eng_1=96000-1.m3u8" class="play-btn" aria-label="Play 5 Min News Brief"></a>
         </div>
 
         <!-- Thought for the Day -->
@@ -557,10 +566,10 @@ body {
                     <span class="duration-tag">3 Min</span>
                 </div>
                 <div class="playing-row">
-                    <span>Updated: 10 September 2026, 9:00 AM</span>
+                    <span>Updated: 11 September 2026, 11:00 AM</span>
                 </div>
             </div>
-            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/7b3ec5-p0p8w7b7/vf_p0p8w7b7_402ca945-e346-470e-ac1d-171c8480ff1a.ism/dash/vf_p0p8w7b7_402ca945-e346-470e-ac1d-171c8480ff1a-audio_eng_1=96000-4.m3u8" class="play-btn"></a>
+            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/f59cca-p0p93h4q/vf_p0p93h4q_0512bb94-07d2-4023-964c-03fe097fda84.ism/dash/vf_p0p93h4q_0512bb94-07d2-4023-964c-03fe097fda84-audio_eng_1=96000-2.m3u8" class="play-btn" aria-label="Play Thought for the Day"></a>
         </div>
     </div>
 </div>
@@ -657,7 +666,6 @@ async function fetchCricketScore() {
                 }
             }
 
-            // Update Venue
             const venueEl = document.getElementById('matchVenue');
             if (venueEl) venueEl.textContent = getVenueText(match);
 
@@ -708,7 +716,7 @@ async function fetchCricketScore() {
     }
 }
 
-/* ================= UK Time & Radio Program Schedule ================= */
+/* ================= UK Time & Optimized Radio Program Schedule ================= */
 function getUKMinutesNow() {
     const parts = new Intl.DateTimeFormat('en-GB', {
         timeZone: 'Europe/London',
@@ -737,30 +745,44 @@ function timeStringToMinutesUK(timeStr) {
     return h * 60 + m;
 }
 
-function getCurrentShow(channelName) {
-    if (typeof SCHEDULE_DATA === "undefined" || !Array.isArray(SCHEDULE_DATA)) return "Loading...";
+// ডাটা এবাৰ প্ৰি-প্ৰচেছ আৰু ছৰ্ট কৰি কেচত ৰখাৰ ব্যৱস্থা
+let cachedSchedule = null;
 
-    const nowMin = getUKMinutesNow();
-    const list = SCHEDULE_DATA
-        .filter(p => p && p.channel && p.channel.toLowerCase().includes(channelName.toLowerCase()))
-        .sort((a, b) => timeStringToMinutesUK(a.time) - timeStringToMinutesUK(b.time));
+function getPreparedSchedule() {
+    if (cachedSchedule) return cachedSchedule;
+    if (typeof SCHEDULE_DATA === "undefined" || !Array.isArray(SCHEDULE_DATA)) return null;
+
+    cachedSchedule = SCHEDULE_DATA.map(p => ({
+        channel: (p.channel || "").toLowerCase(),
+        title: p.title || "Live",
+        startMin: timeStringToMinutesUK(p.time)
+    })).sort((a, b) => a.startMin - b.startMin);
+
+    return cachedSchedule;
+}
+
+function getCurrentShow(channelName) {
+    const listData = getPreparedSchedule();
+    if (!listData) return "Loading...";
+
+    const target = channelName.toLowerCase();
+    const list = listData.filter(p => p.channel.includes(target));
 
     if (!list.length) return "Live";
 
-    if (nowMin < timeStringToMinutesUK(list[0].time)) {
-        return list[list.length - 1].title || "Live";
+    const nowMin = getUKMinutesNow();
+
+    if (nowMin < list[0].startMin) {
+        return list[list.length - 1].title;
     }
 
     for (let i = 0; i < list.length - 1; i++) {
-        const start = timeStringToMinutesUK(list[i].time);
-        const end = timeStringToMinutesUK(list[i + 1].time);
-
-        if (nowMin >= start && nowMin < end) {
-            return list[i].title || "Live";
+        if (nowMin >= list[i].startMin && nowMin < list[i + 1].startMin) {
+            return list[i].title;
         }
     }
 
-    return list[list.length - 1].title || "Live";
+    return list[list.length - 1].title;
 }
 
 let scheduleAttempts = 0;
@@ -775,7 +797,7 @@ function updatePrograms() {
 
     if (typeof SCHEDULE_DATA === "undefined") {
         scheduleAttempts++;
-        if (scheduleAttempts > 5) {
+        if (scheduleAttempts >= 2) {
             stations.forEach(st => {
                 const el = document.getElementById(st.id);
                 if (el && el.innerText === "Loading...") el.innerText = "Live";
