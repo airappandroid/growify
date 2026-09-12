@@ -229,6 +229,12 @@ window.SCHEDULE_DATA = [
 
 
 
+
+  {
+    "time": "12:06 AM",
+    "title": "Unexpected Elements - The Phizz-Whizzing Science of Roald Dahl",
+    "channel": "BBC World Service"
+  },
   {
     "time": "1:00 AM",
     "title": "BBC News - Latest Five Minute Global Bulletin",
@@ -266,7 +272,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "2:32 AM",
-    "title": "Americast - Insights & Analysis on What's Happening Inside Trump's White House",
+    "title": "Stumped - Is Smriti Mandhana the Greatest Women's Batter of All Time? (Run Record Special)",
     "channel": "BBC World Service"
   },
   {
@@ -311,7 +317,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "5:32 AM",
-    "title": "Dear Daughter - Lessons from Childhood (Sierra Leone & Overcoming Bullying)",
+    "title": "Dear Daughter - Lessons from Childhood (Yeiwah in Sierra Leone)",
     "channel": "BBC World Service"
   },
   {
@@ -326,7 +332,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "6:06 AM",
-    "title": "Weekend - A Review of the Week with Latest News",
+    "title": "Weekend - Saudi Arabia Shuts Oil Pipeline as Houthis Tighten Grip on Red Sea",
     "channel": "BBC World Service"
   },
   {
@@ -336,17 +342,17 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "7:06 AM",
-    "title": "Weekend - A Review of the Week with Latest News",
+    "title": "Weekend - BRICS Meets in India (Summit of Russia, China & Iran)",
     "channel": "BBC World Service"
   },
   {
     "time": "8:00 AM",
-    "title": "BBC News - Latest Five Minute Global Bulletin",
+    "title": "BBC News - Houthis Tighten Grip on Yemen's Red Sea Coast",
     "channel": "BBC World Service"
   },
   {
     "time": "8:06 AM",
-    "title": "Weekend - A Review of the Week with Latest News",
+    "title": "Weekend - Review of the Week with Latest News",
     "channel": "BBC World Service"
   },
   {
@@ -376,7 +382,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "10:06 AM",
-    "title": "Not by the Playbook: Screen Time - From Table Tennis Pro to Paralympians in Show Business",
+    "title": "Not by the Playbook: Screen Time - Stars of the Sports World on Big & Small Screen",
     "channel": "BBC World Service"
   },
   {
@@ -396,7 +402,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "11:32 AM",
-    "title": "Heart and Soul - The Woman Who Saved Me on 9/11 (Paul Carris Escape Story)",
+    "title": "Health Check - Addressing the Risks of Period Pain in Childhood",
     "channel": "BBC World Service"
   },
   {
@@ -416,7 +422,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "1:06 PM",
-    "title": "Newshour - Interviews, News & Global Analysis",
+    "title": "Newshour - Trump Says United Ireland Would Be a 'Great Thing'",
     "channel": "BBC World Service"
   },
   {
@@ -426,57 +432,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "2:06 PM",
-    "title": "The History Hour - Mysteries of the Bayeux Tapestry & Surviving 9/11",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "3:00 PM",
-    "title": "BBC News - Latest Five Minute Global Bulletin",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "3:06 PM",
-    "title": "Unexpected Elements - The Phizz-Whizzing Science of Roald Dahl",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "4:00 PM",
-    "title": "BBC News - Latest Five Minute Global Bulletin",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "4:06 PM",
-    "title": "BBC Conversations - The Business of Modern Dating (In-Person Events & Dating Apps)",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "4:30 PM",
-    "title": "BBC News Summary",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "4:32 PM",
-    "title": "The Documentary: Where is Austin Tice? - Ep1. 'We believe he’s alive'",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "5:00 PM",
-    "title": "BBC News - Latest Five Minute Global Bulletin",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "5:06 PM",
-    "title": "From Our Own Correspondent - Nigeria Vigilantes, Ukraine Drones & Global Dispatches",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "5:30 PM",
-    "title": "BBC News Summary",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "5:32 PM",
-    "title": "The Conversation - What is a Joyful Life? (Finding and Treasuring Moments of Joy)",
+    "title": "Sportsworld - Live Sporting Action from Around the World (Premier League & News)",
     "channel": "BBC World Service"
   },
   {
@@ -496,7 +452,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "6:32 PM",
-    "title": "Dear Daughter - Lessons from Childhood",
+    "title": "Dear Daughter - Lessons from Childhood (Sierra Leone & Overcoming Bullying)",
     "channel": "BBC World Service"
   },
   {
@@ -531,7 +487,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "8:06 PM",
-    "title": "The Arts Hour: Sandra Bullock & Nicole Kidman - Practical Magic 2 & Radhe Jaggi",
+    "title": "The Arts Hour: Sandra Bullock & Nicole Kidman - Practical Magic 2 Discussion",
     "channel": "BBC World Service"
   },
   {
@@ -541,7 +497,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "9:06 PM",
-    "title": "Newshour - Interviews, News & Analysis of the Day’s Global Events",
+    "title": "Newshour - Interviews, News & Analysis of the Day's Global Events",
     "channel": "BBC World Service"
   },
   {
@@ -551,7 +507,7 @@ window.SCHEDULE_DATA = [
   },
   {
     "time": "10:06 PM",
-    "title": "Not by the Playbook: Screen Time - Marty Supreme & Stranger Things Stars",
+    "title": "Not by the Playbook: Screen Time - Stars of the Sports World on Big & Small Screen",
     "channel": "BBC World Service"
   },
   {
@@ -565,18 +521,8 @@ window.SCHEDULE_DATA = [
     "channel": "BBC World Service"
   },
   {
-    "time": "11:30 PM",
-    "title": "BBC News Summary",
-    "channel": "BBC World Service"
-  },
-  {
     "time": "11:32 PM",
-    "title": "Americast - Insights & Analysis on What's Happening Inside Trump's White House",
-    "channel": "BBC World Service"
-  },
-  {
-    "time": "12:00 AM",
-    "title": "BBC News - Latest Five Minute Global Bulletin",
+    "title": "This Is... Yilim (Ivory Coast Rapper's Sister & Major Musical Talent)",
     "channel": "BBC World Service"
   },
  
