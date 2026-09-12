@@ -79,10 +79,6 @@ body {
     transition: background 0.15s ease, color 0.15s ease;
 }
 
-.header-btn:active {
-    background: rgba(37, 99, 235, 0.3);
-    color: #60a5fa;
-}
 
 /* ================= Zero-Lag Privacy Popup Modal (No Backdrop Filter) ================= */
 .modal-overlay {
@@ -594,7 +590,7 @@ body {
                     <span id="bbc1">Loading...</span>
                 </div>
             </div>
-            <a href="go:BBC1" class="play-btn" aria-label="Play BBC Radio 1"></a>
+            <a href="https://as-hls-ww-live.akamaized.net/pool_01505109/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d96000.norewind.m3u8" class="play-btn" aria-label="Play BBC Radio 1"></a>
         </div>
 
         <!-- BBC Radio 2 -->
@@ -607,7 +603,7 @@ body {
                     <span id="bbc2">Loading...</span>
                 </div>
             </div>
-            <a href="go:BBC2" class="play-btn" aria-label="Play BBC Radio 2"></a>
+            <a href="https://as-hls-ww.live.cf.md.bbci.co.uk/pool_74208725/live/ww/bbc_radio_two/bbc_radio_two.isml/bbc_radio_two-audio%3d96000.norewind.m3u8" class="play-btn" aria-label="Play BBC Radio 2"></a>
         </div>
 
         <!-- BBC Radio 3 -->
@@ -620,7 +616,7 @@ body {
                     <span id="bbc3">Loading...</span>
                 </div>
             </div>
-            <a href="go:BBC3" class="play-btn" aria-label="Play BBC Radio 3"></a>
+            <a href="https://as-hls-ww-live.akamaized.net/pool_23461179/live/ww/bbc_radio_three/bbc_radio_three.isml/bbc_radio_three-audio%3d96000.norewind.m3u8" class="play-btn" aria-label="Play BBC Radio 3"></a>
         </div>
 
         <!-- BBC Radio 4 -->
@@ -633,7 +629,7 @@ body {
                     <span id="bbc4">Loading...</span>
                 </div>
             </div>
-            <a href="go:BBC4" class="play-btn" aria-label="Play BBC Radio 4"></a>
+            <a href="https://as-hls-ww-live.akamaized.net/pool_55057080/live/ww/bbc_radio_fourfm/bbc_radio_fourfm.isml/bbc_radio_fourfm-audio%3d96000.norewind.m3u8" class="play-btn" aria-label="Play BBC Radio 4"></a>
         </div>
 
         <!-- BBC World Service -->
@@ -646,7 +642,7 @@ body {
                     <span id="bbcws">Loading...</span>
                 </div>
             </div>
-            <a href="go:BBCWS" class="play-btn" aria-label="Play BBC World Service"></a>
+            <a href="https://stream.live.vc.bbcmedia.co.uk/bbc_world_service" class="play-btn" aria-label="Play BBC World Service"></a>
         </div>
 
         <!-- Explore All Stations Card -->
@@ -785,7 +781,6 @@ async function fetchCricketScore() {
             signal: controller.signal,
             cache: "no-store"
         });
-        clearTimeout(timeoutId);
 
         if (!res.ok) return;
         const data = await res.json();
@@ -879,6 +874,8 @@ async function fetchCricketScore() {
             }
         }
     } catch (err) {
+        // network / abort errors handled quietly
+    } finally {
         clearTimeout(timeoutId);
     }
 }
@@ -963,7 +960,7 @@ function updatePrograms() {
 
     if (typeof SCHEDULE_DATA === "undefined") {
         scheduleAttempts++;
-        if (scheduleAttempts >= 2) {
+        if (scheduleAttempts >= 10) {
             stations.forEach(st => {
                 const el = document.getElementById(st.id);
                 if (el && el.innerText === "Loading...") el.innerText = "Live";
@@ -980,9 +977,23 @@ function updatePrograms() {
 
 /* ================= Initialization ================= */
 document.addEventListener("DOMContentLoaded", () => {
+    // প্ৰথমবাৰ চেষ্টা কৰিব
     updatePrograms();
+
+    // পদ্ধতি ২: SCHEDULE_DATA উপলব্ধ নোহোৱালৈকে প্ৰতি ৫০০ms (০.৫ ছেকেণ্ড) মূৰে মূৰে চেষ্টা কৰিব (সৰ্বোচ্চ ১০ বাৰ / ৫ ছেকেণ্ড)
+    let checkCount = 0;
+    const scheduleTimer = setInterval(() => {
+        checkCount++;
+        if (typeof SCHEDULE_DATA !== "undefined" || checkCount >= 10) {
+            updatePrograms();
+            clearInterval(scheduleTimer); // ডাটা পাই গ'লে এই লুপটো বন্ধ হ'ব
+        }
+    }, 500);
+
+    // প্ৰতি ১ মিনিটৰ মূৰে মূৰে নিয়মীয়া আপডেট
     setInterval(updatePrograms, 60000);
 
+    // ক্ৰিকেট স্ক'ৰ ফেচ
     fetchCricketScore();
     setInterval(fetchCricketScore, 30000);
 });
