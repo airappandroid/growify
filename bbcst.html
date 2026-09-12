@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <!-- viewport-fit=cover য়ে কেমেৰা নচ আৰু ষ্টেটাছ বাৰৰ সুৰক্ষিত স্থান নিশ্চিত কৰে -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>UK Radio Hub</title>
   <style>
     * {
@@ -10,7 +11,10 @@
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      -webkit-tap-highlight-color: transparent;
+      /* সকলো বুটাম আৰু কাৰ্ডৰ টেপ হাইলাইট সম্পূৰ্ণ বন্ধ */
+      -webkit-tap-highlight-color: transparent !important;
+      outline: none;
+      -webkit-touch-callout: none;
     }
 
     html, body {
@@ -21,7 +25,11 @@
     body {
       background-color: #0b111e;
       color: #ffffff;
-      padding: 12px;
+      /* ষ্টেটাছ বাৰ আৰু তলৰ নেভিগেশ্বন বাৰৰ কাৰণে Safe Area Padding */
+      padding-top: max(12px, env(safe-area-inset-top));
+      padding-bottom: max(12px, env(safe-area-inset-bottom));
+      padding-left: max(12px, env(safe-area-inset-left));
+      padding-right: max(12px, env(safe-area-inset-right));
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
@@ -51,10 +59,7 @@
       border-radius: 12px;
       cursor: pointer;
       overflow: hidden;
-    }
-
-    .category-btn:active {
-      background-color: #18233c;
+      user-select: none;
     }
 
     .category-btn span {
@@ -76,7 +81,7 @@
     .search-btn {
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       padding: 12px;
       background-color: #131b2e;
       border: 1px solid #202d47;
@@ -84,6 +89,7 @@
       color: #8e9fb5;
       cursor: pointer;
       flex-shrink: 0;
+      user-select: none;
     }
 
     .search-btn svg {
@@ -118,6 +124,7 @@
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
+      user-select: none;
     }
 
     .fav-toggle-btn.active {
@@ -180,6 +187,7 @@
       cursor: pointer;
       display: none;
       padding: 4px;
+      user-select: none;
     }
 
     /* 2x2 Fixed Grid */
@@ -203,13 +211,10 @@
       color: #ffffff;
       cursor: pointer;
       user-select: none;
+      -webkit-user-select: none;
       min-width: 0;
       width: 100%;
       overflow: hidden;
-    }
-
-    .station-card:active {
-      background-color: #18233c;
     }
 
     .thumb-wrapper {
@@ -267,6 +272,7 @@
       justify-content: center;
       cursor: pointer;
       z-index: 10;
+      user-select: none;
     }
 
     .fav-btn svg {
@@ -314,7 +320,10 @@
       z-index: 999;
       display: flex;
       flex-direction: column;
-      padding: 14px 14px 10px;
+      padding-top: max(14px, env(safe-area-inset-top));
+      padding-bottom: max(10px, env(safe-area-inset-bottom));
+      padding-left: max(14px, env(safe-area-inset-left));
+      padding-right: max(14px, env(safe-area-inset-right));
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.15s ease, visibility 0.15s ease;
@@ -357,6 +366,7 @@
       cursor: pointer;
       color: #ffffff;
       flex-shrink: 0;
+      user-select: none;
     }
 
     .modal-close-btn svg {
@@ -387,11 +397,7 @@
       border-radius: 12px;
       cursor: pointer;
       flex-shrink: 0;
-    }
-
-    .category-item:active {
-      background-color: #182542;
-      border-color: #1e6bff;
+      user-select: none;
     }
 
     .category-item.selected {
@@ -490,7 +496,7 @@
         <h2>Select Category</h2>
         <p>Choose a category to start listening</p>
       </div>
-      <button id="modalCloseBtn" class="modal-close-btn" onclick="closeCategoryModal()" style="display: none;">
+      <button id="modalCloseBtn" class="modal-close-btn" onclick="closeCategoryModal(true)" style="display: none;">
         <svg viewBox="0 0 24 24" fill="none">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -507,7 +513,11 @@
     let searchQuery = "";
     let isSearchOpen = false;
     let searchDebounceTimer = null;
-    let cachedAllStations = null; // মেম'ৰীত এবাৰ সাঁচি ৰাখিবলৈ
+    let cachedAllStations = null;
+
+    // মেম'ৰী বেকআপ ফলবেক (যদি LocalStorage ব্লক বা অক্ষম থাকে)
+    let memoryFavs = [];
+    let memoryCategory = null;
 
     const categories = [
       { key: "uk_radio", title: "UK Radio", desc: "Music, Hits & Entertainment", icon: "🎵" },
@@ -613,7 +623,6 @@
       ]
     };
 
-    // সকলো ষ্টেছন এবাৰতে কেছ কৰি ৰাখে যাতে বাৰে বাৰে লুপ চলাব লগা নহয়
     function getAllStationsCached() {
       if (!cachedAllStations) {
         let allStations = [];
@@ -664,24 +673,41 @@
       return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"><rect width="200" height="200" rx="20" fill="${bgColor}"/><circle cx="100" cy="80" r="42" fill="rgba(255,255,255,0.15)"/><text x="100" y="93" font-family="sans-serif" font-weight="900" font-size="28" fill="%23ffffff" text-anchor="middle">${initials}</text><text x="100" y="152" font-family="sans-serif" font-weight="700" font-size="16" fill="%23ffffff" text-anchor="middle">${cleanTitle}</text></svg>`;
     }
 
-    let memoryFavs = [];
-
+    /* সুৰক্ষিত Storage হেণ্ডলাৰ (LocalStorage ব্লক থাকিলেও কাম কৰিব) */
     function getFavorites() {
       try {
         const stored = localStorage.getItem("uk_radio_favs");
-        return stored ? JSON.parse(stored) : [];
+        return stored ? JSON.parse(stored) : memoryFavs;
       } catch (e) {
         return memoryFavs;
       }
     }
 
     function saveFavorites(favs) {
+      memoryFavs = favs;
       try {
         localStorage.setItem("uk_radio_favs", JSON.stringify(favs));
       } catch (e) {
-        memoryFavs = favs;
+        console.warn("LocalStorage restricted, stored in memory");
       }
       updateFavCount();
+    }
+
+    function getSavedCategory() {
+      try {
+        return localStorage.getItem("preferred_radio_category") || memoryCategory;
+      } catch (e) {
+        return memoryCategory;
+      }
+    }
+
+    function saveSavedCategory(catKey) {
+      memoryCategory = catKey;
+      try {
+        localStorage.setItem("preferred_radio_category", catKey);
+      } catch (e) {
+        console.warn("LocalStorage restricted, stored in memory");
+      }
     }
 
     function updateFavCount() {
@@ -718,12 +744,12 @@
       favBtn.classList.toggle("active", isShowingFavsOnly);
 
       if (isSearchOpen) {
-        closeSearchBar();
+        closeSearchBar(false);
       }
 
       const titleElem = document.getElementById("currentCategoryTitle");
       if (isShowingFavsOnly) {
-        titleElem.innerText = "Favorite Stations";
+        titleElem.innerText = "Favorites";
       } else {
         const selected = categories.find(c => c.key === currentCategory);
         titleElem.innerText = selected ? selected.title : "Select Category";
@@ -743,10 +769,7 @@
       const trimmed = val.trim();
       document.getElementById("clearSearchBtn").style.display = trimmed ? "block" : "none";
 
-      // আগৰ টাইমাৰ বাতিল কৰা
       clearTimeout(searchDebounceTimer);
-
-      // ব্যৱহাৰকাৰীয়ে টাইপ কৰি থকা অৱস্থাত ৰেণ্ডাৰ নকৰি ১৫০ মিল্লিছেকেণ্ড ৰৈ তাৰ পাছত ফিল্টাৰ কৰিব
       searchDebounceTimer = setTimeout(() => {
         searchQuery = trimmed.toLowerCase();
         renderStations();
@@ -762,26 +785,33 @@
       renderStations();
     }
 
+    /* এণ্ড্ৰইড বেক বুটামৰ সৈতে চাৰ্চ বাৰ খোলা আৰু বন্ধ কৰা */
     function toggleSearchBar() {
-      isSearchOpen = !isSearchOpen;
-      const searchContainer = document.getElementById("searchContainer");
-      const searchToggleBtn = document.getElementById("searchToggleBtn");
-      const searchInput = document.getElementById("searchInput");
-
       if (isSearchOpen) {
-        searchContainer.classList.add("active");
-        searchToggleBtn.classList.add("active");
-        searchInput.focus();
+        closeSearchBar(true);
       } else {
-        closeSearchBar();
+        openSearchBar();
       }
     }
 
-    function closeSearchBar() {
+    function openSearchBar() {
+      isSearchOpen = true;
+      document.getElementById("searchContainer").classList.add("active");
+      document.getElementById("searchToggleBtn").classList.add("active");
+      document.getElementById("searchInput").focus();
+      history.pushState({ view: "search" }, "");
+    }
+
+    function closeSearchBar(shouldGoBack = true) {
+      if (!isSearchOpen) return;
       isSearchOpen = false;
       document.getElementById("searchContainer").classList.remove("active");
       document.getElementById("searchToggleBtn").classList.remove("active");
       clearSearch();
+
+      if (shouldGoBack && history.state && history.state.view === "search") {
+        history.back();
+      }
     }
 
     function buildCategoryModalOnce() {
@@ -823,6 +853,7 @@
       });
     }
 
+    /* এণ্ড্ৰইড বেক বুটামৰ সৈতে ম'ডেল হেণ্ডলিং */
     function openCategoryModal() {
       updateCategoryModalSelection();
       const modal = document.getElementById("categoryModal");
@@ -830,19 +861,24 @@
       
       closeBtn.style.display = currentCategory ? "flex" : "none";
       modal.classList.add("active");
+
+      // বেক বুটাম টেপ কৰিলে ম'ডেল বন্ধ হোৱাৰ বাবে ষ্টেট পুশ্ব
+      history.pushState({ view: "modal" }, "");
     }
 
-    function closeCategoryModal() {
-      document.getElementById("categoryModal").classList.remove("active");
+    function closeCategoryModal(shouldGoBack = true) {
+      const modal = document.getElementById("categoryModal");
+      if (modal.classList.contains("active")) {
+        modal.classList.remove("active");
+        if (shouldGoBack && history.state && history.state.view === "modal") {
+          history.back();
+        }
+      }
     }
 
     function selectCategory(catKey) {
       currentCategory = catKey;
-      try {
-        localStorage.setItem("preferred_radio_category", catKey);
-      } catch (e) {
-        console.warn("Storage restricted", e);
-      }
+      saveSavedCategory(catKey);
 
       const selected = categories.find(c => c.key === catKey);
       if (selected) {
@@ -853,10 +889,10 @@
       document.getElementById("favToggle").classList.remove("active");
 
       if (isSearchOpen) {
-        clearSearch();
+        closeSearchBar(false);
       }
 
-      closeCategoryModal();
+      closeCategoryModal(true);
       renderStations();
     }
 
@@ -920,16 +956,26 @@
       grid.appendChild(fragment);
     }
 
+    /* এণ্ড্ৰইড চিষ্টেম বেক বুটাম (System Back Button) ইভেন্ট লিচেনাৰ */
+    window.addEventListener("popstate", () => {
+      const modal = document.getElementById("categoryModal");
+      // যদি কেটেগৰী ম'ডেল খোলা আছে, বেক বুটামে প্ৰথমে ম'ডেলটো বন্ধ কৰিব
+      if (modal.classList.contains("active")) {
+        closeCategoryModal(false);
+        return;
+      }
+      // যদি চাৰ্চ বাৰ খোলা আছে, বেক বুটামে চাৰ্চ বাৰ বন্ধ কৰিব
+      if (isSearchOpen) {
+        closeSearchBar(false);
+        return;
+      }
+    });
+
     document.addEventListener("DOMContentLoaded", () => {
       buildCategoryModalOnce();
       updateFavCount();
 
-      let savedCategory = null;
-      try {
-        savedCategory = localStorage.getItem("preferred_radio_category");
-      } catch (e) {
-        console.warn("Storage restricted", e);
-      }
+      const savedCategory = getSavedCategory();
 
       if (savedCategory && radioData[savedCategory]) {
         selectCategory(savedCategory);
