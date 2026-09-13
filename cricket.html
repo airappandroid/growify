@@ -335,7 +335,7 @@
 <body>
 
     <div class="score-card">
-        <!-- Top Commentary Button (Redesigned) -->
+        <!-- Top Commentary Button -->
         <div class="btn-commentary" onclick="window.location.href='go:commentary'">
             <div class="commentary-left">
                 <div class="mic-icon-box">
@@ -358,24 +358,24 @@
 
         <!-- Header -->
         <div class="card-header">
-            <span class="match-info" id="match-info">Ban W vs Ind W, Semi Final 1</span>
+            <span class="match-info" id="match-info">IND vs AFG, 1st T20</span>
             <span class="status-badge" id="match-status">UPCOMING</span>
         </div>
 
         <!-- Venue & Latest Ball -->
         <div class="sub-header">
-            <span class="venue" id="venue-info">📍 Semi Final 1 (T20)</span>
+            <span class="venue" id="venue-info">📍 Arun Jaitley Stadium, Delhi</span>
             <div class="last-ball-badge" id="last-ball-container" style="display: none;">
                 <span>Last Ball:</span>
                 <span class="ball-circle" id="latest-ball">-</span>
             </div>
         </div>
 
-        <!-- Team 1 (Bangladesh Women) -->
+        <!-- Team 1 (India) -->
         <div class="team-row">
             <div class="team-details">
-                <img class="team-logo" id="team-a-logo" src="https://static.cricbuzz.com/a/img/v1/0x0/i1/c776213/bangladesh-women.jpg" alt="Ban W" onerror="this.onerror=null; this.src='https://static.cricbuzz.com/a/img/v1/0x0/i1/c776213/bangladesh-women.jpg';">
-                <span class="team-name" id="team-a-name">Bangladesh Women</span>
+                <img class="team-logo" id="team-a-logo" src="https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg/" alt="IND" onerror="this.onerror=null; this.src='https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg/';">
+                <span class="team-name" id="team-a-name">India</span>
             </div>
             <div class="team-score">
                 <div class="runs" id="team-a-runs">--</div>
@@ -383,11 +383,11 @@
             </div>
         </div>
 
-        <!-- Team 2 (India Women) -->
+        <!-- Team 2 (Afghanistan) -->
         <div class="team-row">
             <div class="team-details">
-                <img class="team-logo" id="team-b-logo" src="https://static.cricbuzz.com/a/img/v1/0x0/i1/c776182/india-women.jpg" alt="Ind W" onerror="this.onerror=null; this.src='https://static.cricbuzz.com/a/img/v1/0x0/i1/c776182/india-women.jpg';">
-                <span class="team-name" id="team-b-name">India Women</span>
+                <img class="team-logo" id="team-b-logo" src="https://ik.imagekit.io/sqt8ptw1k/images%20(1)_8_VfAHVo8.jpg" alt="AFG" onerror="this.onerror=null; this.src='https://ik.imagekit.io/sqt8ptw1k/images%20(1)_8_VfAHVo8.jpg';">
+                <span class="team-name" id="team-b-name">Afghanistan</span>
             </div>
             <div class="team-score">
                 <div class="runs" id="team-b-runs">--</div>
@@ -397,7 +397,7 @@
 
         <!-- Status Message -->
         <div class="status-box" id="status-box">
-            Match starts at 10 Sep, 8:00 PM IST
+            Starts Today at 7:30 PM IST • Arun Jaitley Stadium, Delhi
         </div>
 
         <!-- Toss Details -->
@@ -405,7 +405,7 @@
             Toss: -
         </div>
 
-        <!-- Bottom Full Scorecard Button (Redesigned) -->
+        <!-- Bottom Full Scorecard Button -->
         <button class="btn-card" onclick="window.location.href='go:card1'">
             <span>Full Score Card</span>
             <svg viewBox="0 0 24 24">
@@ -415,7 +415,7 @@
     </div>
 
     <script>
-        const matchId = "6a7521f778dcf065703188ca";
+        const matchId = "6a7c72f078dcf0657031d932";
         const cricketApiUrl = `https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=${matchId}`;
         let isMatchLive = false;
 
@@ -423,11 +423,11 @@
             if (!team) return "";
             const name = ((team.shortName || team.name || "") + "").toLowerCase();
 
-            if (name.includes("ban")) {
-                return "https://static.cricbuzz.com/a/img/v1/0x0/i1/c776213/bangladesh-women.jpg";
-            }
             if (name.includes("ind")) {
-                return "https://static.cricbuzz.com/a/img/v1/0x0/i1/c776182/india-women.jpg";
+                return "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg/";
+            }
+            if (name.includes("afg")) {
+                return "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_8_VfAHVo8.jpg";
             }
 
             if (team.logo) {
@@ -496,14 +496,14 @@
                 const teamA = result.teams?.a || {};
                 const teamB = result.teams?.b || {};
 
-                const nameA = teamA.name || teamA.shortName || 'Bangladesh Women';
-                const nameB = teamB.name || teamB.shortName || 'India Women';
-                const shortA = teamA.shortName || 'Ban W';
-                const shortB = teamB.shortName || 'Ind W';
+                const nameA = teamA.name || teamA.shortName || 'India';
+                const nameB = teamB.name || teamB.shortName || 'Afghanistan';
+                const shortA = teamA.shortName || 'IND';
+                const shortB = teamB.shortName || 'AFG';
                 const format = (result.format || 't20').toUpperCase();
 
                 // ১. মেচ টাইটেল
-                document.getElementById("match-info").textContent = result.seriesName || `${shortA} vs ${shortB}, Semi Final 1`;
+                document.getElementById("match-info").textContent = result.seriesName || `${shortA} vs ${shortB}, 1st T20`;
 
                 // ২. মেচ ষ্টেটাছ
                 const rawStatus = (result.status || "").toLowerCase().replace(/\s+/g, "");
@@ -531,13 +531,13 @@
                     statusBadge.textContent = "UPCOMING";
                     statusBadge.className = "status-badge";
                     statusBox.className = "status-box";
-                    statusBox.textContent = cleanNote || "Match starts at 10 Sep, 8:00 PM IST";
+                    statusBox.textContent = cleanNote || "Starts Today at 7:30 PM IST • Arun Jaitley Stadium, Delhi";
                 }
 
                 // ৩. ভেনিউ
-                document.getElementById("venue-info").textContent = result.venue ? `📍 ${result.venue}` : `📍 Semi Final 1 (${format})`;
+                document.getElementById("venue-info").textContent = result.venue ? `📍 ${result.venue}` : `📍 Arun Jaitley Stadium, Delhi`;
 
-                // ৪. Team A (Bangladesh Women)
+                // ৪. Team A (India)
                 document.getElementById("team-a-name").textContent = nameA;
                 const logoA = document.getElementById("team-a-logo");
                 const logoAUrl = getTeamLogo(teamA);
@@ -549,7 +549,7 @@
                 document.getElementById("team-a-runs").textContent = scoreA.runs;
                 document.getElementById("team-a-overs").textContent = scoreA.overs;
 
-                // ৫. Team B (India Women)
+                // ৫. Team B (Afghanistan)
                 document.getElementById("team-b-name").textContent = nameB;
                 const logoB = document.getElementById("team-b-logo");
                 const logoBUrl = getTeamLogo(teamB);
