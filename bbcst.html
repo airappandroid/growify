@@ -11,7 +11,6 @@
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      /* সকলো বুটাম আৰু কাৰ্ডৰ টেপ হাইলাইট সম্পূৰ্ণ বন্ধ */
       -webkit-tap-highlight-color: transparent !important;
       outline: none;
       -webkit-touch-callout: none;
@@ -25,7 +24,6 @@
     body {
       background-color: #0b111e;
       color: #ffffff;
-      /* ষ্টেটাছ বাৰ আৰু তলৰ নেভিগেশ্বন বাৰৰ কাৰণে Safe Area Padding */
       padding-top: max(12px, env(safe-area-inset-top));
       padding-bottom: max(12px, env(safe-area-inset-bottom));
       padding-left: max(12px, env(safe-area-inset-left));
@@ -515,14 +513,15 @@
     let searchDebounceTimer = null;
     let cachedAllStations = null;
 
-    // মেম'ৰী বেকআপ ফলবেক (যদি LocalStorage ব্লক বা অক্ষম থাকে)
     let memoryFavs = [];
     let memoryCategory = null;
 
     const categories = [
-      { key: "uk_radio", title: "UK Radio", desc: "Music, Hits & Entertainment", icon: "🎵" },
-      { key: "news_radio", title: "News Radio", desc: "Live News & Talk Shows", icon: "🎙️" },
-      { key: "sports_radio", title: "Sports Radio", desc: "Live Commentary & Updates", icon: "⚽" },
+      { key: "pop_hits", title: "Pop & Chart Hits", desc: "Top 40, Chart & Contemporary Hits", icon: "🎵" },
+      { key: "news_sport", title: "News, Talk & Sport", desc: "Live News, Commentary & Debate", icon: "🎙️" },
+      { key: "rock_alt", title: "Rock & Alternative", desc: "Indie, Classic Rock & Metal", icon: "🎸" },
+      { key: "decades_oldies", title: "Decades & Oldies", desc: "70s, 80s, 90s & Timeless Classics", icon: "📻" },
+      { key: "classical_specialist", title: "Classical & Specialist", desc: "Classical, Jazz, Chill & Specialist", icon: "🎻" },
       { key: "national", title: "BBC National", desc: "BBC Radio 1, 2, 3, 4 & more", icon: "🇬🇧" },
       { key: "scotland", title: "BBC Scotland", desc: "Regional broadcasts from Scotland", icon: "🏴󠁧󠁢󠁳󠁣󠁴󠁿" },
       { key: "wales", title: "BBC Wales", desc: "BBC Radio Wales & Cymru", icon: "🏴󠁧󠁢󠁷󠁬󠁳󠁿" },
@@ -530,31 +529,56 @@
     ];
 
     const radioData = {
-      uk_radio: [
-        { id: "uk1",  name: "Capital FM",   trigger: "go:capitalfm",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_UwAtO9d7X.jpg" },
-        { id: "uk2",  name: "Heart UK",     trigger: "go:heartuk",    logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_aBHdeVmf6i.png" },
-        { id: "uk3",  name: "Classic FM",   trigger: "go:classicfm",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_PvFAUskpR.jpg" },
-        { id: "uk4",  name: "Virgin Radio", trigger: "go:virgin",     logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_AZbHRpx0o.png" },
-        { id: "uk5",  name: "Fix Radio",    trigger: "go:fixradio",   logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_76lUfgFpJ.png" },
-        { id: "uk6",  name: "Smooth Radio", trigger: "go:smooth",     logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_sXWmm_kFH.jpg" },
-        { id: "uk7",  name: "BFBS UK",       trigger: "go:bfbsuk",     logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_WuwmnZ2cf.png" },
-        { id: "uk8",  name: "Boom Radio",   trigger: "go:boomradio",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)_eBmEi5A2F.png" },
-        { id: "uk9",  name: "Jazz FM",      trigger: "go:jazzfm",     logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_orT7IE_xk.jpg" },
-        { id: "uk10", name: "Magic Radio",   trigger: "go:magicradio", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_Vm4_-n2EM.png" }
+      pop_hits: [
+        { id: "uk1",          name: "Capital FM",       trigger: "go:capitalfm",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_UwAtO9d7X.jpg" },
+        { id: "cap_dance",    name: "Capital Dance",    trigger: "go:capitaldance",    logo: "https://ik.imagekit.io/sqt8ptw1k/images_cJJvU0cKk.jpg" },
+        { id: "cap_xtra",     name: "Capital Xtra",     trigger: "go:capitalxtra",     logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_niVjWGT0i.jpg" },
+        { id: "cap_anthems",  name: "Capital Anthems",  trigger: "go:capitalanthems",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_fW92XZlmD.png" },
+        { id: "cap_scotland", name: "Capital Scotland", trigger: "go:capitalscotland", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)__1h2vKVdO.png" },
+        { id: "uk2",          name: "Heart UK",         trigger: "go:heartuk",         logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_aBHdeVmf6i.png" },
+        { id: "hrt_dance",    name: "Heart Dance",      trigger: "go:heartdance",      logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_IVbEygpPf.jpg" },
+        { id: "hrt_love",     name: "Heart Love",       trigger: "go:heartlove",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_he9kyFKwc.jpg" },
+        { id: "hrt_scotland", name: "Heart Scotland",   trigger: "go:heartscotland",   logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_Kxq613Si_.jpg" },
+        { id: "pop_hits_1",   name: "Hits Radio",       trigger: "go:hitsradio",       logo: "https://ik.imagekit.io/sqt8ptw1k/images_NUCvopDPG.png" },
+       
+       
+        { id: "uk6",          name: "Smooth Radio",     trigger: "go:smooth",          logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_sXWmm_kFH.jpg" },
+        { id: "uk10",         name: "Magic Radio",      trigger: "go:magicradio",      logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_Vm4_-n2EM.png" },
+        { id: "uk4",          name: "Virgin Radio",     trigger: "go:virgin",          logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_AZbHRpx0o.png" }
       ],
-      news_radio: [
-        { id: "nr1", name: "Times Radio",       trigger: "go:timesradio",      logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7)_StZmG6MaR.png" },
-        { id: "nr2", name: "BBC World Service", trigger: "go:BBCWS",          logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(8)_le1kPe5Fs.png" },
-        { id: "nr3", name: "LBC News",          trigger: "go:lbcnews",         logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_nHTDY1ahv.jpg" },
-        { id: "nr4", name: "talkRADIO",         trigger: "go:talkradio",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(9)_YUdKs9Dsu.png" },
-        { id: "nr5", name: "Al Jazeera",        trigger: "go:aljazeera",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(10)_ZvPCSQdqa.png" },
-        { id: "nr6", name: "CNN",               trigger: "go:cnn",             logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(11)_L6MbWLoL6.png" },
-        { id: "nr7", name: "GB News",           trigger: "go:gbnews",          logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(12)_wvEMvRXLl.png" }
+      news_sport: [
+        { id: "nr3",          name: "LBC",              trigger: "go:lbc",             logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_nHTDY1ahv.jpg" },
+        { id: "nr_lbcnews",   name: "LBC News",         trigger: "go:lbcnews",         logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_nHTDY1ahv.jpg" },
+        { id: "sr1",          name: "talkSPORT",        trigger: "go:talksport",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)_MTxN5yXMFY.jpg" },
+        { id: "sr2",          name: "talkSPORT 2",      trigger: "go:talksport2",      logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(13)_lb-tkQH-6.png" },
+        { id: "nr1",          name: "Times Radio",      trigger: "go:timesradio",      logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7)_StZmG6MaR.png" },
+        { id: "nr4",          name: "Talk",             trigger: "go:talkradio",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(9)_YUdKs9Dsu.png" },
+        { id: "nr7",          name: "GB News",          trigger: "go:gbnews",          logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(12)_wvEMvRXLl.png" },
+        { id: "nr2",          name: "BBC World Service",trigger: "go:BBCWS",           logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(8)_le1kPe5Fs.png" },
+        { id: "nr6",          name: "CNN",              trigger: "go:cnn",             logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(11)_L6MbWLoL6.png" },
+        { id: "nr5",          name: "Al Jazeera",       trigger: "go:aljazeera",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(10)_ZvPCSQdqa.png" }
       ],
-      sports_radio: [
-        { id: "sr1", name: "talkSPORT",   trigger: "go:talksport",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)_MTxN5yXMFY.jpg" },
-        { id: "sr2", name: "talkSPORT 2", trigger: "go:talksport2", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(13)_lb-tkQH-6.png" },
-        { id: "sr3", name: "BBC 5 Extra", trigger: "go:BBC5E",      logo: "https://ik.imagekit.io/sqt8ptw1k/images.webp" }
+      rock_alt: [
+        { id: "rk1",          name: "Radio X",          trigger: "go:radiox",          logo: "https://ik.imagekit.io/sqt8ptw1k/download_j206gtRI8.jpg" },
+        { id: "rk2",          name: "Absolute Radio",   trigger: "go:absoluter",   logo: "https://ik.imagekit.io/sqt8ptw1k/absolute-radio.webp" },
+        { id: "rk3",          name: "Planet Rock",      trigger: "go:planetrock",      logo: "https://ik.imagekit.io/sqt8ptw1k/planet-rock.webp" },
+        { id: "rk4",          name: "Kerrang! Radio",   trigger: "go:kerrang",         logo: "https://ik.imagekit.io/sqt8ptw1k/kerrang-radio.webp" }
+      ],
+      decades_oldies: [
+        { id: "hrt_70s",      name: "Heart 70s",        trigger: "go:heart70s",        logo: "https://ik.imagekit.io/sqt8ptw1k/download_XoAI6YUyA.png" },
+        { id: "hrt_80s",      name: "Heart 80s",        trigger: "go:heart80s",        logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)_lXqoI4Mrw.jpg" },
+        { id: "hrt_90s",      name: "Heart 90s",        trigger: "go:heart90s",        logo: "https://ik.imagekit.io/sqt8ptw1k/download%20(1)_Ke1KyTkIW.png" },
+        { id: "dec1",         name: "Greatest Hits",    trigger: "go:greatest",    logo: "https://ik.imagekit.io/sqt8ptw1k/20lZIrUwZ3suPMeA3pzH5132KgaH1K-metaMzgxLnBuZw==--lg.webp" },
+        { id: "dec2",         name: "Gold",             trigger: "go:gold",            logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_OKOcEusPsV.jpg" },
+        { id: "uk8",          name: "Boom Radio",       trigger: "go:boomradio",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)_eBmEi5A2F.png" }
+      ],
+      classical_specialist: [
+        { id: "uk3",          name: "Classic FM",       trigger: "go:classicfm",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_PvFAUskpR.jpg" },
+        { id: "uk9",          name: "Jazz FM",          trigger: "go:jazzfm",          logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_orT7IE_xk.jpg" },
+        { id: "cap_chill",    name: "Capital Chill",    trigger: "go:capitalch",    logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_PxxWieEEsS.jpg" },
+       
+        { id: "uk5",          name: "Fix Radio",        trigger: "go:fixradio",        logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_76lUfgFpJ.png" },
+        { id: "uk7",          name: "BFBS UK",          trigger: "go:bfbsuk",          logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_WuwmnZ2cf.png" }
       ],
       national: [
         { id: "s1",  name: "BBC 1",             trigger: "go:BBC1",  logo: "https://ik.imagekit.io/sqt8ptw1k/images_PSlF8kUWN.jpg" },
@@ -642,10 +666,20 @@
       if (name.includes("Smooth")) return "#4a235a";
       if (name.includes("LBC")) return "#0a3871";
       if (name.includes("talkSPORT")) return "#007a33";
+      if (name.includes("Hits Radio")) return "#e71d73";
+      if (name.includes("KISS") || name.includes("KISSTORY")) return "#00d1b2";
+      if (name.includes("Radio X")) return "#009944";
+      if (name.includes("Absolute")) return "#1c1c1c";
+      if (name.includes("Planet Rock")) return "#c0392b";
+      if (name.includes("Kerrang")) return "#111111";
+      if (name.includes("Greatest Hits")) return "#e67e22";
+      if (name.includes("Gold")) return "#d4af37";
+      if (name.includes("Scala")) return "#4a148c";
       if (name.includes("CNN")) return "#cc0000";
       if (name.includes("Al Jazeera")) return "#e06d10";
       if (name.includes("GB News")) return "#172b4d";
       if (name.includes("Times")) return "#1c2333";
+      if (name.includes("Talk")) return "#e74c3c";
       if (name.includes("Magic")) return "#273c75";
       if (name.includes("Jazz")) return "#2c3e50";
       if (name.includes("Fix")) return "#e67e22";
@@ -673,7 +707,7 @@
       return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"><rect width="200" height="200" rx="20" fill="${bgColor}"/><circle cx="100" cy="80" r="42" fill="rgba(255,255,255,0.15)"/><text x="100" y="93" font-family="sans-serif" font-weight="900" font-size="28" fill="%23ffffff" text-anchor="middle">${initials}</text><text x="100" y="152" font-family="sans-serif" font-weight="700" font-size="16" fill="%23ffffff" text-anchor="middle">${cleanTitle}</text></svg>`;
     }
 
-    /* সুৰক্ষিত Storage হেণ্ডলাৰ (LocalStorage ব্লক থাকিলেও কাম কৰিব) */
+    /* Storage Handlers */
     function getFavorites() {
       try {
         const stored = localStorage.getItem("uk_radio_favs");
@@ -785,7 +819,7 @@
       renderStations();
     }
 
-    /* এণ্ড্ৰইড বেক বুটামৰ সৈতে চাৰ্চ বাৰ খোলা আৰু বন্ধ কৰা */
+    /* Search Bar Toggle */
     function toggleSearchBar() {
       if (isSearchOpen) {
         closeSearchBar(true);
@@ -853,7 +887,6 @@
       });
     }
 
-    /* এণ্ড্ৰইড বেক বুটামৰ সৈতে ম'ডেল হেণ্ডলিং */
     function openCategoryModal() {
       updateCategoryModalSelection();
       const modal = document.getElementById("categoryModal");
@@ -862,7 +895,6 @@
       closeBtn.style.display = currentCategory ? "flex" : "none";
       modal.classList.add("active");
 
-      // বেক বুটাম টেপ কৰিলে ম'ডেল বন্ধ হোৱাৰ বাবে ষ্টেট পুশ্ব
       history.pushState({ view: "modal" }, "");
     }
 
@@ -956,15 +988,13 @@
       grid.appendChild(fragment);
     }
 
-    /* এণ্ড্ৰইড চিষ্টেম বেক বুটাম (System Back Button) ইভেন্ট লিচেনাৰ */
+    /* System Back Button Listener */
     window.addEventListener("popstate", () => {
       const modal = document.getElementById("categoryModal");
-      // যদি কেটেগৰী ম'ডেল খোলা আছে, বেক বুটামে প্ৰথমে ম'ডেলটো বন্ধ কৰিব
       if (modal.classList.contains("active")) {
         closeCategoryModal(false);
         return;
       }
-      // যদি চাৰ্চ বাৰ খোলা আছে, বেক বুটামে চাৰ্চ বাৰ বন্ধ কৰিব
       if (isSearchOpen) {
         closeSearchBar(false);
         return;
@@ -980,7 +1010,7 @@
       if (savedCategory && radioData[savedCategory]) {
         selectCategory(savedCategory);
       } else {
-        openCategoryModal();
+        selectCategory("pop_hits");
       }
     });
   </script>
