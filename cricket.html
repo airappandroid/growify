@@ -3,55 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Cricket Score Card</title>
+    <title>CricVoice - Live Cricket</title>
+
     <style>
+        :root {
+            --bg-body: #080c14;
+            --card-bg: #111827;
+            --card-border: rgba(255, 255, 255, 0.08);
+            --card-subtle: #1a2234;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-blue: #2563eb;
+            --accent-sky: #0284c7;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: #0b0f19;
-            color: #f1f5f9;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
             display: flex;
             justify-content: center;
-            padding: 10px;
-            margin: 0;
+            align-items: center;
+            min-height: 100vh;
+            padding: 14px;
         }
 
         .score-card {
-            background: #161f30;
-            border: 1px solid #283548;
-            border-radius: 18px;
+            background: linear-gradient(180deg, #151d30 0%, #0f172a 100%);
+            border: 1px solid var(--card-border);
+            border-radius: 22px;
             width: 100%;
-            max-width: 400px;
+            max-width: 390px;
             padding: 16px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 1px 1px rgba(255, 255, 255, 0.05);
+            position: relative;
         }
 
-        /* ===== STYLISH BALL BY BALL COMMENTARY BUTTON ===== */
+        /* ===== TOP APP HEADER ===== */
+        .app-top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 14px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .app-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .app-logo-dot {
+            width: 10px;
+            height: 10px;
+            background: #38bdf8;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #38bdf8;
+        }
+
+        .app-title {
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            background: linear-gradient(90deg, #ffffff 40%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-icon-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .action-icon-btn:active {
+            transform: scale(0.92);
+            background: rgba(56, 189, 248, 0.15);
+            border-color: rgba(56, 189, 248, 0.4);
+            color: #38bdf8;
+        }
+
+        .action-icon-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* ===== COMMENTARY CAPSULE ===== */
         .btn-commentary {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border: 1px solid rgba(56, 189, 248, 0.35);
-            border-top: 1px solid rgba(56, 189, 248, 0.55);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(56, 189, 248, 0.2);
             border-radius: 14px;
             padding: 10px 12px;
             margin-bottom: 16px;
             cursor: pointer;
             text-decoration: none;
-            gap: 10px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            gap: 12px;
+            transition: all 0.2s ease;
         }
 
         .btn-commentary:active {
-            transform: scale(0.97);
-            border-color: rgba(56, 189, 248, 0.65);
+            transform: scale(0.98);
+            background: rgba(56, 189, 248, 0.08);
+            border-color: rgba(56, 189, 248, 0.4);
         }
 
         .commentary-left {
@@ -61,21 +142,20 @@
         }
 
         .mic-icon-box {
-            width: 36px;
-            height: 36px;
+            width: 34px;
+            height: 34px;
             border-radius: 10px;
-            background: rgba(56, 189, 248, 0.12);
-            border: 1px solid rgba(56, 189, 248, 0.3);
+            background: rgba(14, 165, 233, 0.12);
+            border: 1px solid rgba(14, 165, 233, 0.25);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .mic-icon-box svg {
-            width: 19px;
-            height: 19px;
+            width: 17px;
+            height: 17px;
             fill: #38bdf8;
         }
 
@@ -86,99 +166,105 @@
         }
 
         .commentary-title {
-            font-size: 13.5px;
-            font-weight: 700;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            letter-spacing: 0.2px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #f8fafc;
         }
 
         .commentary-sub {
             font-size: 11px;
-            color: #94a3b8;
-            margin-top: 2px;
+            color: var(--text-secondary);
+            margin-top: 1px;
         }
 
         .listen-badge {
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
             color: #ffffff;
             font-size: 11px;
-            font-weight: 700;
-            padding: 6px 12px;
+            font-weight: 600;
+            padding: 6px 11px;
             border-radius: 20px;
             white-space: nowrap;
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            border: 1px solid rgba(255, 255, 255, 0.22);
-            box-shadow: 0 3px 10px rgba(14, 165, 233, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-            letter-spacing: 0.2px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
         }
 
         .listen-badge svg {
-            width: 11px;
-            height: 11px;
+            width: 10px;
+            height: 10px;
             fill: #ffffff;
         }
 
-        /* ===== HEADER & META ===== */
+        /* ===== MATCH HEADER & METADATA ===== */
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding-bottom: 12px;
-            border-bottom: 1px solid #232e42;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .match-info {
             font-size: 13px;
-            color: #94a3b8;
-            font-weight: 500;
+            color: #e2e8f0;
+            font-weight: 600;
         }
 
         .status-badge {
-            background-color: rgba(59, 130, 246, 0.16);
-            border: 1px solid rgba(59, 130, 246, 0.45);
-            color: #60a5fa;
-            font-size: 11px;
+            background: rgba(148, 163, 184, 0.12);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            color: #94a3b8;
+            font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
             padding: 3px 8px;
-            border-radius: 12px;
+            border-radius: 6px;
             letter-spacing: 0.5px;
-            transition: all 0.3s ease;
         }
 
         .status-badge.live {
-            background-color: #ef4444;
-            border-color: #ef4444;
-            color: #ffffff;
-            animation: blink 1.2s infinite ease-in-out;
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.4);
+            color: #f87171;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-badge.live::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #ef4444;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse-dot 1.2s infinite ease-in-out;
         }
 
         .status-badge.completed {
-            background-color: #10b981;
-            border-color: #10b981;
-            color: #ffffff;
+            background: rgba(16, 185, 129, 0.12);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: #34d399;
         }
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.8); }
         }
 
         .sub-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 12px 0 16px 0;
+            margin: 10px 0 16px 0;
         }
 
         .venue {
-            font-size: 12px;
-            color: #94a3b8;
+            font-size: 11.5px;
+            color: var(--text-secondary);
         }
 
         .last-ball-badge {
@@ -186,31 +272,39 @@
             align-items: center;
             gap: 6px;
             font-size: 11px;
-            color: #94a3b8;
-            background: #1e293b;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.04);
             padding: 2px 8px;
-            border-radius: 20px;
-            border: 1px solid #334155;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .ball-circle {
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            width: 18px;
-            height: 18px;
+            width: 17px;
+            height: 17px;
             background: #38bdf8;
-            color: #0b0f19;
+            color: #080c14;
             font-weight: 700;
             border-radius: 50%;
-            font-size: 11px;
+            font-size: 10.5px;
+        }
+
+        /* ===== TEAMS & SCORES ===== */
+        .teams-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 14px;
         }
 
         .team-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 14px;
+            padding: 4px 0;
         }
 
         .team-details {
@@ -223,119 +317,205 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background-color: #1e293b;
+            background-color: var(--card-subtle);
             object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: block;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            flex-shrink: 0;
         }
 
         .team-name {
-            font-size: 15px;
+            font-size: 14.5px;
             font-weight: 600;
-            color: #e2e8f0;
+            color: #f1f5f9;
         }
 
         .team-score {
             text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
         }
 
         .runs {
-            font-size: 15px;
+            font-size: 15.5px;
             font-weight: 700;
             color: #ffffff;
+            font-variant-numeric: tabular-nums;
         }
 
         .overs {
-            font-size: 12px;
-            color: #94a3b8;
+            font-size: 11.5px;
+            color: var(--text-muted);
+            font-weight: 500;
         }
 
+        /* ===== STATUS & NOTES ===== */
         .status-box {
-            background-color: rgba(59, 130, 246, 0.08);
-            border: 1px solid rgba(59, 130, 246, 0.25);
-            color: #93c5fd;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #cbd5e1;
             border-radius: 10px;
-            padding: 10px;
-            font-size: 13px;
+            padding: 9px 12px;
+            font-size: 12px;
             text-align: center;
-            margin-top: 14px;
+            margin-top: 10px;
             line-height: 1.4;
             font-weight: 500;
-            transition: all 0.3s ease;
         }
 
         .status-box.live {
-            background-color: rgba(239, 68, 68, 0.1);
-            border-color: rgba(239, 68, 68, 0.25);
-            color: #f87171;
+            background: rgba(239, 68, 68, 0.08);
+            border-color: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
         }
 
         .status-box.completed {
-            background-color: rgba(56, 189, 248, 0.1);
-            border-color: rgba(56, 189, 248, 0.25);
-            color: #38bdf8;
+            background: rgba(16, 185, 129, 0.08);
+            border-color: rgba(16, 185, 129, 0.2);
+            color: #6ee7b7;
         }
 
         .footer-note {
-            margin-top: 12px;
-            font-size: 12.5px;
-            color: #cbd5e1;
+            margin-top: 8px;
+            font-size: 11.5px;
+            color: var(--text-secondary);
             font-weight: 500;
             text-align: center;
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.02);
             padding: 6px 10px;
             border-radius: 8px;
-            border: 1px solid #232e42;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
         }
 
-        /* ===== STYLISH FULL SCORECARD BUTTON ===== */
+        /* ===== ACTION BUTTON ===== */
         .btn-card {
             width: 100%;
-            background: linear-gradient(135deg, #0284c7 0%, #2563eb 60%, #1d4ed8 100%);
+            background: #2563eb;
             color: #ffffff;
             font-size: 13.5px;
-            font-weight: 700;
-            letter-spacing: 0.3px;
+            font-weight: 600;
             padding: 12px 14px;
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            border-top: 1px solid rgba(255, 255, 255, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 12px;
             margin-top: 14px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            box-shadow: 0 4px 18px rgba(37, 99, 235, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.22);
-            transition: transform 0.12s ease, box-shadow 0.15s ease, filter 0.15s ease;
-        }
-
-        .btn-card:hover {
-            filter: brightness(1.06);
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+            gap: 6px;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+            transition: all 0.15s ease;
         }
 
         .btn-card:active {
             transform: scale(0.98);
-            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
         }
 
         .btn-card svg {
-            width: 16px;
-            height: 16px;
+            width: 15px;
+            height: 15px;
             fill: #ffffff;
-            transition: transform 0.15s ease;
         }
 
-        .btn-card:hover svg {
-            transform: translateX(2px);
+        /* ===== PRIVACY POLICY MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-card {
+            background: #151d30;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 340px;
+            padding: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .modal-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 20px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-body {
+            font-size: 12.5px;
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .modal-btn {
+            width: 100%;
+            background: #2563eb;
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
     <div class="score-card">
-        <!-- Top Commentary Button -->
+        <!-- Top App Bar -->
+        <div class="app-top-bar">
+            <div class="app-brand">
+                <div class="app-logo-dot"></div>
+                <span class="app-title">CricVoice</span>
+            </div>
+            <div class="header-actions">
+                <button class="action-icon-btn" onclick="openPrivacyModal()" title="Privacy Policy">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+                    </svg>
+                </button>
+                <button class="action-icon-btn" onclick="window.location.href='http://action_share'" title="Share">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Audio Commentary Capsule -->
         <div class="btn-commentary" onclick="window.location.href='go:commentary'">
             <div class="commentary-left">
                 <div class="mic-icon-box">
@@ -356,7 +536,7 @@
             </span>
         </div>
 
-        <!-- Header -->
+        <!-- Match Header -->
         <div class="card-header">
             <span class="match-info" id="match-info">IND vs AFG, 1st T20</span>
             <span class="status-badge" id="match-status">UPCOMING</span>
@@ -364,40 +544,43 @@
 
         <!-- Venue & Latest Ball -->
         <div class="sub-header">
-            <span class="venue" id="venue-info">📍 Arun Jaitley Stadium, Delhi</span>
+            <span class="venue" id="venue-info">Arun Jaitley Stadium, Delhi</span>
             <div class="last-ball-badge" id="last-ball-container" style="display: none;">
                 <span>Last Ball:</span>
                 <span class="ball-circle" id="latest-ball">-</span>
             </div>
         </div>
 
-        <!-- Team 1 (India) -->
-        <div class="team-row">
-            <div class="team-details">
-                <img class="team-logo" id="team-a-logo" src="https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg" alt="IND" onerror="this.onerror=null; this.src='https://static.cricbuzz.com/a/img/v1/0x0/i1/c776182/india-women.jpg';">
-                <span class="team-name" id="team-a-name">India</span>
+        <!-- Teams Section -->
+        <div class="teams-container">
+            <!-- Team 1 -->
+            <div class="team-row">
+                <div class="team-details">
+                    <img class="team-logo" id="team-a-logo" src="https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg" alt="IND" onerror="this.onerror=null; this.src='https://static.cricbuzz.com/a/img/v1/0x0/i1/c776182/india-women.jpg';">
+                    <span class="team-name" id="team-a-name">India</span>
+                </div>
+                <div class="team-score">
+                    <div class="runs" id="team-a-runs">--</div>
+                    <div class="overs" id="team-a-overs"></div>
+                </div>
             </div>
-            <div class="team-score">
-                <div class="runs" id="team-a-runs">--</div>
-                <div class="overs" id="team-a-overs"></div>
+
+            <!-- Team 2 -->
+            <div class="team-row">
+                <div class="team-details">
+                    <img class="team-logo" id="team-b-logo" src="https://ik.imagekit.io/sqt8ptw1k/images%20(1)_8_VfAHVo8.jpg" alt="AFG" onerror="this.onerror=null; this.src='https://ik.imagekit.io/sqt8ptw1k/images%20(1)_8_VfAHVo8.jpg';">
+                    <span class="team-name" id="team-b-name">Afghanistan</span>
+                </div>
+                <div class="team-score">
+                    <div class="runs" id="team-b-runs">--</div>
+                    <div class="overs" id="team-b-overs"></div>
+                </div>
             </div>
         </div>
 
-        <!-- Team 2 (Afghanistan) -->
-        <div class="team-row">
-            <div class="team-details">
-                <img class="team-logo" id="team-b-logo" src="https://ik.imagekit.io/sqt8ptw1k/images%20(1)_8_VfAHVo8.jpg" alt="AFG" onerror="this.onerror=null; this.src='https://ik.imagekit.io/sqt8ptw1k/images%20(1)_8_VfAHVo8.jpg';">
-                <span class="team-name" id="team-b-name">Afghanistan</span>
-            </div>
-            <div class="team-score">
-                <div class="runs" id="team-b-runs">--</div>
-                <div class="overs" id="team-b-overs"></div>
-            </div>
-        </div>
-
-        <!-- Status Message -->
+        <!-- Status Box -->
         <div class="status-box" id="status-box">
-            Starts Today at 7:30 PM IST • Arun Jaitley Stadium, Delhi
+            Match begins shortly
         </div>
 
         <!-- Toss Details -->
@@ -405,19 +588,47 @@
             Toss: -
         </div>
 
-        <!-- Bottom Full Scorecard Button -->
+        <!-- Full Scorecard Button -->
         <button class="btn-card" onclick="window.location.href='go:card1'">
-            <span>Full Score Card</span>
+            <span>Full Scorecard</span>
             <svg viewBox="0 0 24 24">
                 <path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42 5.43 5.43H5v2z"/>
             </svg>
         </button>
     </div>
 
+    <!-- Privacy Policy Modal Pop-up -->
+    <div class="modal-overlay" id="privacyModal" onclick="closePrivacyModalOnOverlay(event)">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title">Privacy Policy</h3>
+                <button class="modal-close" onclick="closePrivacyModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                Your privacy is important to us. CricVoice does not collect or store any personal user data. All real-time scores, match schedules, and audio commentary feeds are provided solely to deliver an enhanced live sports experience.
+            </div>
+            <button class="modal-btn" onclick="closePrivacyModal()">Understood</button>
+        </div>
+    </div>
+
     <script>
         const matchId = "6a7c72f078dcf0657031d932";
         const cricketApiUrl = `https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=${matchId}`;
         let isMatchLive = false;
+
+        function openPrivacyModal() {
+            document.getElementById('privacyModal').classList.add('show');
+        }
+
+        function closePrivacyModal() {
+            document.getElementById('privacyModal').classList.remove('show');
+        }
+
+        function closePrivacyModalOnOverlay(event) {
+            if (event.target.id === 'privacyModal') {
+                closePrivacyModal();
+            }
+        }
 
         function getTeamLogo(team) {
             if (!team) return "";
@@ -500,12 +711,9 @@
                 const nameB = teamB.name || teamB.shortName || 'Afghanistan';
                 const shortA = teamA.shortName || 'IND';
                 const shortB = teamB.shortName || 'AFG';
-                const format = (result.format || 't20').toUpperCase();
 
-                // ১. মেচ টাইটেল
                 document.getElementById("match-info").textContent = result.seriesName || `${shortA} vs ${shortB}, 1st T20`;
 
-                // ২. মেচ ষ্টেটাছ
                 const rawStatus = (result.status || "").toLowerCase().replace(/\s+/g, "");
                 const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || rawStatus.includes("ended");
                 const isUpcoming = rawStatus.includes("notstarted") || rawStatus.includes("upcoming") || rawStatus.includes("scheduled") || !rawStatus;
@@ -531,13 +739,13 @@
                     statusBadge.textContent = "UPCOMING";
                     statusBadge.className = "status-badge";
                     statusBox.className = "status-box";
-                    statusBox.textContent = cleanNote || "Starts Today at 7:30 PM IST • Arun Jaitley Stadium, Delhi";
+                    statusBox.textContent = cleanNote || (result.startDate ? `Starts at ${result.startDate}` : "Starts Today at 7:30 PM IST");
                 }
 
-                // ৩. ভেনিউ
-                document.getElementById("venue-info").textContent = result.venue ? `📍 ${result.venue}` : `📍 Arun Jaitley Stadium, Delhi`;
+                if (result.venue) {
+                    document.getElementById("venue-info").textContent = result.venue;
+                }
 
-                // ৪. Team A (India)
                 document.getElementById("team-a-name").textContent = nameA;
                 const logoA = document.getElementById("team-a-logo");
                 const logoAUrl = getTeamLogo(teamA);
@@ -549,7 +757,6 @@
                 document.getElementById("team-a-runs").textContent = scoreA.runs;
                 document.getElementById("team-a-overs").textContent = scoreA.overs;
 
-                // ৫. Team B (Afghanistan)
                 document.getElementById("team-b-name").textContent = nameB;
                 const logoB = document.getElementById("team-b-logo");
                 const logoBUrl = getTeamLogo(teamB);
@@ -561,7 +768,6 @@
                 document.getElementById("team-b-runs").textContent = scoreB.runs;
                 document.getElementById("team-b-overs").textContent = scoreB.overs;
 
-                // ৬. টছ
                 const tossEl = document.getElementById("toss-info");
                 if (result.announcement1 && result.announcement1.toLowerCase().includes("opt to")) {
                     tossEl.textContent = `Toss: ${result.announcement1}`;
