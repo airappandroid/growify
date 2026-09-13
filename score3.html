@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Live Scorecard - IND-W vs SL-W, Women's Asia Cup Final</title>
+    <style>
+        :root {
+            --bg-base: #020617;
+            --card-bg: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(3, 7, 18, 0.98) 100%);
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.35);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-highlight: rgba(56, 189, 248, 0.3);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --success: #34d399;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            min-height: 100vh;
+            width: 100vw;
+            background-color: var(--bg-base);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 12px 6px;
+            color: var(--text-primary);
+        }
+
+        .scorecard-app {
+            width: 100%;
+            max-width: 500px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 14px 10px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.95), 0 0 35px rgba(14, 165, 233, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Top Header */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4px 8px 4px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .match-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(59, 130, 246, 0.12);
+            border: 1px solid rgba(59, 130, 246, 0.35);
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 9.5px;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            color: #60a5fa;
+            transition: all 0.3s ease;
+        }
+
+        .match-badge.live {
+            background: rgba(239, 68, 68, 0.12);
+            border-color: rgba(239, 68, 68, 0.35);
+            color: #f87171;
+        }
+
+        .match-badge.completed {
+            background: rgba(52, 211, 153, 0.12);
+            border-color: rgba(52, 211, 153, 0.35);
+            color: var(--success);
+        }
+
+        .live-dot {
+            width: 5.5px;
+            height: 5.5px;
+            background-color: var(--danger);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--danger);
+            animation: pulse 1.5s infinite;
+            display: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.3); }
+        }
+
+        .refresh-status {
+            font-size: 9.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 3px 8px;
+            border-radius: 12px;
+        }
+
+        /* Match Information Bar */
+        .match-meta-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .match-title-text {
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Tabs */
+        .tabs-wrapper {
+            display: flex;
+            gap: 5px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 1px 2px;
+        }
+
+        .tabs-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 6px 10px;
+            border-radius: 9px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: #ffffff;
+            border-color: var(--accent);
+            box-shadow: 0 3px 12px var(--accent-glow);
+        }
+
+        .current-indicator {
+            width: 5px;
+            height: 5px;
+            background: var(--success);
+            border-radius: 50%;
+            box-shadow: 0 0 6px var(--success);
+        }
+
+        /* Hero Card */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(15, 23, 42, 0.5) 100%);
+            border: 1px solid var(--border-highlight);
+            border-radius: 14px;
+            padding: 10px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-team-name {
+            font-size: 14px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .hero-status-tag {
+            font-size: 9.5px;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        .hero-score-box {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .hero-score-main {
+            font-size: 19px;
+            font-weight: 900;
+            color: #ffffff;
+            line-height: 1.1;
+        }
+
+        .hero-score-sub {
+            font-size: 10.5px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+            font-weight: 600;
+            max-width: 220px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .section-header {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Responsive Table */
+        .table-container {
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: rgba(15, 23, 42, 0.4);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            min-width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-muted);
+            font-weight: 800;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            padding: 7px 4px;
+            text-align: right;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        th:first-child {
+            text-align: left;
+            padding-left: 8px;
+            width: 44%;
+        }
+
+        th:last-child {
+            padding-right: 8px;
+        }
+
+        td {
+            padding: 7px 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            color: var(--text-primary);
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+
+        td:first-child {
+            text-align: left;
+            padding-left: 8px;
+            white-space: normal;
+        }
+
+        td:last-child {
+            padding-right: 8px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .player-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            max-width: 155px;
+        }
+
+        .player-name-wrapper {
+            display: inline-flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 3px;
+        }
+
+        .player-name {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .player-dismissal {
+            font-size: 9px;
+            color: var(--text-secondary);
+            line-height: 1.15;
+            word-break: break-word;
+        }
+
+        .not-out {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .highlight-val {
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .wickets-val {
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .meta-summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 8px;
+            font-size: 10.5px;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.015);
+        }
+
+        .meta-summary-row.total-row {
+            background: rgba(14, 165, 233, 0.06);
+            border-top: 1px solid var(--border-highlight);
+            color: #ffffff;
+            font-weight: 800;
+        }
+
+        .fow-box {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 8px 10px;
+            font-size: 10px;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+
+        .fow-item {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 3px 6px;
+            border-radius: 5px;
+            margin: 2px 2px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .yet-to-bat-box {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 8px 10px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .shimmer {
+            height: 160px;
+            border-radius: 12px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="scorecard-app">
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="match-badge" id="matchBadge">
+            <span class="live-dot" id="liveDot"></span>
+            <span id="badgeText">UPCOMING</span>
+        </div>
+        <div class="refresh-status" id="refreshTimer">
+            <span id="updateTime">Syncing...</span>
+        </div>
+    </div>
+
+    <!-- Match Information Row -->
+    <div class="match-meta-bar">
+        <span class="match-title-text" id="matchHeader">IND-W vs SL-W, Asia Cup Final</span>
+        <span id="venueHeader">📍 Dubai International Cricket Stadium, Dubai</span>
+    </div>
+
+    <!-- Innings Navigation Tabs -->
+    <div class="tabs-wrapper" id="inningsTabs"></div>
+
+    <!-- Dynamic Scorecard View -->
+    <div id="contentView">
+        <div class="shimmer"></div>
+    </div>
+</div>
+
+<script>
+    const matchId = "6a7521fb78dcf065703188cd";
+    const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
+    
+    let matchData = null;
+    let selectedInningIndex = 0;
+    let isInitialLoad = true;
+    let isMatchFinishedGlobal = false;
+
+    function updateLastRefresh() {
+        const d = new Date();
+        const time = d.toLocaleTimeString('en-IN', { 
+            timeZone: 'Asia/Kolkata',
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit',
+            hour12: true 
+        });
+        document.getElementById("updateTime").textContent = `Sync: ${time} IST`;
+    }
+
+    function getInningsTabLabel(inn, idx, teamA, teamB) {
+        if (inn.teamName) {
+            const lower = inn.teamName.toLowerCase();
+            if (lower.includes("ind")) return "IND-W";
+            if (lower.includes("sl") || lower.includes("sri")) return "SL-W";
+            return inn.teamName;
+        }
+
+        const aShort = teamA.shortName || "IND-W";
+        const bShort = teamB.shortName || "SL-W";
+
+        if (inn.key === "a_1" || inn.key === "a") return aShort;
+        if (inn.key === "b_1" || inn.key === "b") return bShort;
+        return `Innings ${idx + 1}`;
+    }
+
+    function getInningsDisplayName(inn, teamA, teamB) {
+        if (inn.teamName) return inn.teamName;
+        const aName = teamA.name || "India Women";
+        const bName = teamB.name || "Sri Lanka Women";
+
+        if (inn.key === "a_1" || inn.key === "a") return `${aName} Innings`;
+        if (inn.key === "b_1" || inn.key === "b") return `${bName} Innings`;
+        return "Team Innings";
+    }
+
+    async function loadScorecard() {
+        try {
+            const response = await fetch(`${API_URL}&_t=${Date.now()}`, { cache: "no-store" });
+            if (!response.ok) return;
+            const resData = await response.json();
+
+            const result = resData?.responseData?.result;
+            if (!result) return;
+            matchData = result;
+
+            const teamA = result.teams?.a || {};
+            const teamB = result.teams?.b || {};
+
+            const nameA = teamA.shortName || teamA.name || 'IND-W';
+            const nameB = teamB.shortName || teamB.name || 'SL-W';
+            const format = (result.format || 't20').toUpperCase();
+            const tournament = result.seriesName || `${nameA} vs ${nameB}, Asia Cup Final`;
+
+            // ১. হেডাৰ আপডেট
+            document.getElementById("matchHeader").textContent = tournament;
+            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : `📍 Dubai International Cricket Stadium, Dubai`;
+
+            // ২. মেচ ষ্টেটাছ নিৰ্ধাৰণ
+            const rawStatus = (result.status || "").toLowerCase().replace(/\s+/g, "");
+            const statusFields = [
+                result.match_status,
+                result.matchStatus,
+                result.state,
+                result.status_note,
+                result.status_text,
+                result.result,
+                result.winning_team,
+                result.winner
+            ].filter(Boolean).map(s => String(s).toLowerCase()).join(" ");
+
+            const completionKeywords = [
+                "complete", "completed", "finish", "finished", "ended", "concluded",
+                "won", "win", "beat", "defeat", "tied", "tie", "abandon", "abandoned", "no result"
+            ];
+
+            const isUpcoming = rawStatus.includes("notstarted") || rawStatus.includes("upcoming") || rawStatus.includes("scheduled") || !rawStatus;
+
+            let isCompleted = !isUpcoming && (
+                completionKeywords.some(kw => rawStatus.includes(kw) || statusFields.includes(kw)) ||
+                Boolean(result.winner) ||
+                Boolean(result.winning_team) ||
+                result.is_completed === true ||
+                result.is_completed === 1
+            );
+
+            isMatchFinishedGlobal = isCompleted;
+
+            const isLive = !isCompleted && !isUpcoming && (
+                rawStatus.includes("live") ||
+                rawStatus.includes("inprogress") ||
+                rawStatus === "started" ||
+                statusFields.includes("live") ||
+                result.live === true ||
+                result.is_live === true ||
+                result.is_live === 1
+            );
+
+            const badgeEl = document.getElementById("matchBadge");
+            const badgeText = document.getElementById("badgeText");
+            const dotEl = document.getElementById("liveDot");
+
+            if (isCompleted) {
+                badgeText.textContent = "COMPLETED";
+                badgeEl.className = "match-badge completed";
+                dotEl.style.display = "none";
+            } else if (isLive) {
+                badgeText.textContent = "LIVE";
+                badgeEl.className = "match-badge live";
+                dotEl.style.display = "inline-block";
+            } else {
+                badgeText.textContent = "UPCOMING";
+                badgeEl.className = "match-badge";
+                dotEl.style.display = "none";
+            }
+
+            const innings = result.innings_batting_order || [];
+
+            if (isUpcoming || !Array.isArray(innings) || innings.length === 0) {
+                document.getElementById("inningsTabs").innerHTML = "";
+                document.getElementById("contentView").innerHTML = `
+                    <div class="hero-banner">
+                        <div class="hero-team">
+                            <span class="hero-team-name">${nameA} vs ${nameB}</span>
+                            <span class="hero-status-tag">Asia Cup Final (${format})</span>
+                        </div>
+                        <div class="hero-score-box">
+                            <div class="hero-score-main">MATCH READY</div>
+                            <div class="hero-score-sub">Waiting for toss / innings start</div>
+                        </div>
+                    </div>
+                    <div style="text-align:center; padding:35px 10px; color:var(--text-muted); font-size:12px; line-height:1.6;">
+                        ⏳ Match has not started yet.<br>Full live scorecard will appear once play begins.
+                    </div>
+                `;
+                updateLastRefresh();
+                return;
+            }
+
+            if (isInitialLoad || selectedInningIndex >= innings.length) {
+                selectedInningIndex = innings.length - 1;
+                isInitialLoad = false;
+            }
+
+            renderTabs(innings, teamA, teamB);
+            renderScorecard(innings[selectedInningIndex], teamA, teamB);
+            updateLastRefresh();
+
+        } catch (err) {
+            console.error("Scorecard Load Error:", err);
+        }
+    }
+
+    function renderTabs(innings, teamA, teamB) {
+        const tabContainer = document.getElementById("inningsTabs");
+        tabContainer.innerHTML = "";
+
+        innings.forEach((inn, idx) => {
+            const isLatest = (idx === innings.length - 1);
+            const btn = document.createElement("button");
+            btn.className = `tab-btn ${idx === selectedInningIndex ? 'active' : ''}`;
+            
+            const tabTitle = getInningsTabLabel(inn, idx, teamA, teamB);
+            
+            btn.innerHTML = `
+                ${(isLatest && !isMatchFinishedGlobal) ? '<span class="current-indicator"></span>' : ''}
+                <span>${tabTitle}</span>
+            `;
+
+            btn.onclick = () => {
+                selectedInningIndex = idx;
+                renderTabs(innings, teamA, teamB);
+                renderScorecard(innings[idx], teamA, teamB);
+            };
+            tabContainer.appendChild(btn);
+        });
+    }
+
+    function renderScorecard(inn, teamA, teamB) {
+        if (!inn) return;
+
+        const container = document.getElementById("contentView");
+
+        // ১. বেটিং তালিকা
+        const batsmen = inn.player_batting_order || inn.battingOrder || [];
+        const battingHTML = batsmen.length > 0 ? batsmen.map(b => {
+            const bData = b.batting || b;
+            const isNotOut = bData.dismissed === false || !bData.out_str;
+            let dismissal = isNotOut ? '<span class="not-out">not out</span>' : (bData.out_str || 'out');
+            const pName = b.mobileName || b.name || b.fullname || 'Batter';
+
+            return `
+                <tr>
+                    <td>
+                        <div class="player-info">
+                            <div class="player-name-wrapper">
+                                <span class="player-name">${pName}</span>
+                            </div>
+                            <span class="player-dismissal">${dismissal}</span>
+                        </div>
+                    </td>
+                    <td class="highlight-val">${bData.runs ?? 0}</td>
+                    <td>${bData.balls ?? 0}</td>
+                    <td>${bData.fours ?? 0}</td>
+                    <td>${bData.sixes ?? 0}</td>
+                    <td>${bData.strike_rate || '0.00'}</td>
+                </tr>
+            `;
+        }).join("") : '<tr><td colspan="6" style="text-align:center; padding:12px; color:var(--text-muted);">No batting data available</td></tr>';
+
+        // ২. বলিং তালিকা
+        const bowlers = inn.player_bowling_order || inn.bowlingOrder || [];
+        const bowlingHTML = bowlers.length > 0 ? bowlers.map(bw => {
+            const bwData = bw.bowling || bw;
+            const bwName = bw.mobileName || bw.name || bw.fullname || 'Bowler';
+
+            return `
+                <tr>
+                    <td>
+                        <div class="player-name-wrapper">
+                            <span class="player-name">${bwName}</span>
+                        </div>
+                    </td>
+                    <td class="highlight-val">${bwData.overs ?? '0.0'}</td>
+                    <td>${bwData.maiden_overs ?? bwData.maidens ?? 0}</td>
+                    <td>${bwData.runs ?? 0}</td>
+                    <td class="wickets-val">${bwData.wickets ?? 0}</td>
+                    <td>${bwData.economy || '0.00'}</td>
+                </tr>
+            `;
+        }).join("") : '<tr><td colspan="6" style="text-align:center; padding:12px; color:var(--text-muted);">No bowling data available</td></tr>';
+
+        // ৩. উইকেট পতন (Fall of Wickets)
+        const fows = inn.fall_of_wickets || [];
+        let fowList = '<span style="color:var(--text-muted)">No wickets fallen</span>';
+        if (Array.isArray(fows) && fows.length > 0) {
+            fowList = fows.map(f => {
+                if (typeof f === 'string') {
+                    return `<span class="fow-item">${f}</span>`;
+                }
+                const wkt = `${f.score ?? f.runs ?? 0}-${f.number ?? f.wicket ?? ''}`;
+                return `<span class="fow-item"><b>${wkt}</b> (${f.name || ''}, ${f.overs ?? 0} ov)</span>`;
+            }).join(" ");
+        }
+
+        // ৪. Yet to Bat
+        const ytb = inn.yet_to_bat || [];
+        const ytbHTML = ytb.length > 0 ? `
+            <div class="section-header">Yet to Bat</div>
+            <div class="yet-to-bat-box">
+                ${ytb.map(p => p.name).join(", ")}
+            </div>
+        ` : '';
+
+        // ৫. স্ক'ৰ আৰু বিৱৰণ
+        const extrasDetail = `b ${inn.bye ?? 0}, lb ${inn.legbye ?? 0}, w ${inn.wide ?? 0}, nb ${inn.noball ?? 0}`;
+        const totalExtras = inn.extras ?? 0;
+        const totalScore = inn.run_str || `${inn.runs ?? 0}/${inn.wickets ?? 0} (${inn.overs ?? '0.0'} ov)`;
+        const runRate = inn.run_rate ? `${inn.run_rate} CRR` : "";
+
+        let statusSubText = (matchData?.status_note || matchData?.status_text || matchData?.result || matchData?.status || "").toUpperCase();
+        if (isMatchFinishedGlobal && (statusSubText === "LIVE" || statusSubText === "STARTED" || !statusSubText)) {
+            statusSubText = "MATCH COMPLETED";
+        }
+
+        const teamDisplayName = getInningsDisplayName(inn, teamA, teamB);
+
+        container.innerHTML = `
+            <div class="hero-banner">
+                <div class="hero-team">
+                    <span class="hero-team-name">${teamDisplayName}</span>
+                    <span class="hero-status-tag">${runRate}</span>
+                </div>
+                <div class="hero-score-box">
+                    <div class="hero-score-main">${totalScore}</div>
+                    <div class="hero-score-sub" title="${statusSubText}">${statusSubText}</div>
+                </div>
+            </div>
+
+            <div class="section-header">Batting Performance</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Batter</th>
+                            <th>R</th>
+                            <th>B</th>
+                            <th>4s</th>
+                            <th>6s</th>
+                            <th>SR</th>
+                        </tr>
+                    </thead>
+                    <tbody>${battingHTML}</tbody>
+                </table>
+                <div class="meta-summary-row">
+                    <span>Extras (${extrasDetail})</span>
+                    <span class="highlight-val">${totalExtras}</span>
+                </div>
+                <div class="meta-summary-row total-row">
+                    <span>TOTAL</span>
+                    <span>${totalScore}</span>
+                </div>
+            </div>
+
+            ${ytbHTML}
+
+            <div class="section-header">Fall of Wickets</div>
+            <div class="fow-box">
+                ${fowList}
+            </div>
+
+            <div class="section-header">Bowling Figures</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bowler</th>
+                            <th>O</th>
+                            <th>M</th>
+                            <th>R</th>
+                            <th>W</th>
+                            <th>ECO</th>
+                        </tr>
+                    </thead>
+                    <tbody>${bowlingHTML}</tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    loadScorecard();
+    setInterval(loadScorecard, 30000);
+</script>
+
+</body>
+</html>
