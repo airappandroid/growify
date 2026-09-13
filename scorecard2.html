@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Live Scorecard - Ban W vs Ind W, Semi Final 1</title>
+    <title>Live Scorecard - IND vs AFG, 1st T20</title>
     <style>
         :root {
             --bg-base: #020617;
@@ -422,8 +422,8 @@
 
     <!-- Match Information Row -->
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">Ban W vs Ind W, Semi Final 1</span>
-        <span id="venueHeader">📍 Semi Final 1 (T20)</span>
+        <span class="match-title-text" id="matchHeader">IND vs AFG, 1st T20</span>
+        <span id="venueHeader">📍 Arun Jaitley Stadium, Delhi</span>
     </div>
 
     <!-- Innings Navigation Tabs -->
@@ -436,7 +436,7 @@
 </div>
 
 <script>
-    const matchId = "6a7521f778dcf065703188ca";
+    const matchId = "6a7c72f078dcf0657031d932";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
@@ -460,13 +460,13 @@
     function getInningsTabLabel(inn, idx, teamA, teamB) {
         if (inn.teamName) {
             const lower = inn.teamName.toLowerCase();
-            if (lower.includes("ban")) return "Ban W";
-            if (lower.includes("ind")) return "Ind W";
+            if (lower.includes("ind")) return "IND";
+            if (lower.includes("afg")) return "AFG";
             return inn.teamName;
         }
 
-        const aShort = teamA.shortName || "Ban W";
-        const bShort = teamB.shortName || "Ind W";
+        const aShort = teamA.shortName || "IND";
+        const bShort = teamB.shortName || "AFG";
 
         if (inn.key === "a_1" || inn.key === "a") return aShort;
         if (inn.key === "b_1" || inn.key === "b") return bShort;
@@ -475,8 +475,8 @@
 
     function getInningsDisplayName(inn, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
-        const aName = teamA.name || "Bangladesh Women";
-        const bName = teamB.name || "India Women";
+        const aName = teamA.name || "India";
+        const bName = teamB.name || "Afghanistan";
 
         if (inn.key === "a_1" || inn.key === "a") return `${aName} Innings`;
         if (inn.key === "b_1" || inn.key === "b") return `${bName} Innings`;
@@ -496,14 +496,14 @@
             const teamA = result.teams?.a || {};
             const teamB = result.teams?.b || {};
 
-            const nameA = teamA.shortName || teamA.name || 'Ban W';
-            const nameB = teamB.shortName || teamB.name || 'Ind W';
+            const nameA = teamA.shortName || teamA.name || 'IND';
+            const nameB = teamB.shortName || teamB.name || 'AFG';
             const format = (result.format || 't20').toUpperCase();
-            const tournament = result.seriesName || `${nameA} vs ${nameB}, Semi Final 1`;
+            const tournament = result.seriesName || `${nameA} vs ${nameB}, 1st T20`;
 
             // ১. হেডাৰ আপডেট
             document.getElementById("matchHeader").textContent = tournament;
-            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : `📍 Semi Final 1 (${format})`;
+            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : `📍 Arun Jaitley Stadium, Delhi`;
 
             // ২. মেচ ষ্টেটাছ নিৰ্ধাৰণ
             const rawStatus = (result.status || "").toLowerCase().replace(/\s+/g, "");
@@ -565,18 +565,18 @@
 
             const innings = result.innings_batting_order || [];
 
-            // মেচ আৰম্ভ নহ'লে T20 আৰম্ভণি সময় (৮:০০ PM IST) প্ৰদৰ্শন
+            // মেচ আৰম্ভ নহ'লে T20 আৰম্ভণি সময় (৭:৩০ PM IST) প্ৰদৰ্শন
             if (isUpcoming || !Array.isArray(innings) || innings.length === 0) {
                 document.getElementById("inningsTabs").innerHTML = "";
                 document.getElementById("contentView").innerHTML = `
                     <div class="hero-banner">
                         <div class="hero-team">
                             <span class="hero-team-name">${nameA} vs ${nameB}</span>
-                            <span class="hero-status-tag">Semi Final 1 (${format})</span>
+                            <span class="hero-status-tag">1st T20 (${format})</span>
                         </div>
                         <div class="hero-score-box">
-                            <div class="hero-score-main">8:00 PM</div>
-                            <div class="hero-score-sub">Match starts at 10 Sep, 8:00 PM IST</div>
+                            <div class="hero-score-main">7:30 PM</div>
+                            <div class="hero-score-sub">Match starts today at 7:30 PM IST</div>
                         </div>
                     </div>
                     <div style="text-align:center; padding:35px 10px; color:var(--text-muted); font-size:12px; line-height:1.6;">
