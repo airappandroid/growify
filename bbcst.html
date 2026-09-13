@@ -188,7 +188,7 @@
       user-select: none;
     }
 
-    /* 2x2 Fixed Grid */
+    /* 2x2 Fixed Grid for Stations */
     .grid-container {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -336,7 +336,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
       flex-shrink: 0;
     }
 
@@ -374,71 +374,114 @@
       stroke-width: 2.2;
     }
 
+    /* Category Modal 2x Grid Layout */
     .category-list {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
       flex: 1;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
       overscroll-behavior: contain;
-      padding-bottom: 8px;
+      padding: 2px 2px 20px 2px;
     }
 
     .category-item {
+      position: relative;
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: space-between;
-      padding: 9px 12px;
-      background-color: #131b2e;
-      border: 1px solid #1f2b45;
-      border-radius: 12px;
+      padding: 12px;
+      background: #131b2e;
+      border: 1.5px solid #1f2b45;
+      border-radius: 14px;
       cursor: pointer;
-      flex-shrink: 0;
       user-select: none;
+      transition: all 0.15s ease-in-out;
+      min-height: 108px;
+    }
+
+    .category-item:active {
+      transform: scale(0.96);
+      background-color: #17223b;
     }
 
     .category-item.selected {
-      background-color: #162a52;
+      background: linear-gradient(145deg, #162a52, #101a33);
       border-color: #1e6bff;
+      box-shadow: 0 4px 12px rgba(30, 107, 255, 0.25);
     }
 
-    .cat-info {
+    .cat-top-row {
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 8px;
     }
 
     .cat-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 9px;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
       background: #1a253e;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 17px;
+      font-size: 18px;
       flex-shrink: 0;
     }
 
+    .category-item.selected .cat-icon {
+      background: rgba(30, 107, 255, 0.25);
+    }
+
+    .cat-check {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #1e6bff;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .cat-check svg {
+      width: 12px;
+      height: 12px;
+      stroke: #ffffff;
+      stroke-width: 2.5;
+      fill: none;
+    }
+
+    .category-item.selected .cat-check {
+      display: flex;
+    }
+
+    .cat-text {
+      width: 100%;
+    }
+
     .cat-text h3 {
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 700;
       color: #ffffff;
-      line-height: 1.2;
+      line-height: 1.25;
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .cat-text p {
-      font-size: 11px;
+      font-size: 10.5px;
       color: #8e9fb5;
-      margin-top: 1px;
-      line-height: 1.2;
-    }
-
-    .cat-arrow svg {
-      width: 16px;
-      height: 16px;
-      fill: #8e9fb5;
+      line-height: 1.25;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
   </style>
 </head>
@@ -484,10 +527,10 @@
     </div>
   </div>
 
-  <!-- 2x2 Grid -->
+  <!-- 2x2 Station Grid -->
   <div id="radioGrid" class="grid-container"></div>
 
-  <!-- Full-Screen Category Selection Modal -->
+  <!-- Full-Screen Category Selection Modal (Grid Style) -->
   <div id="categoryModal" class="modal-overlay">
     <div class="modal-header">
       <div>
@@ -540,8 +583,6 @@
         { id: "hrt_love",     name: "Heart Love",       trigger: "go:heartl",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_he9kyFKwc.jpg" },
         { id: "hrt_scotland", name: "Heart Scotland",   trigger: "go:heartsc",   logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_Kxq613Si_.jpg" },
         { id: "pop_hits_1",   name: "Hits Radio",       trigger: "go:hits",       logo: "https://ik.imagekit.io/sqt8ptw1k/images_NUCvopDPG.png" },
-       
-       
         { id: "uk6",          name: "Smooth Radio",     trigger: "go:smooth",          logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_sXWmm_kFH.jpg" },
         { id: "uk10",         name: "Magic Radio",      trigger: "go:magicradio",      logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_Vm4_-n2EM.png" },
         { id: "uk4",          name: "Virgin Radio",     trigger: "go:virgin",          logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_AZbHRpx0o.png" }
@@ -576,7 +617,6 @@
         { id: "uk3",          name: "Classic FM",       trigger: "go:classicfm",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_PvFAUskpR.jpg" },
         { id: "uk9",          name: "Jazz FM",          trigger: "go:jazzfm",          logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_orT7IE_xk.jpg" },
         { id: "cap_chill",    name: "Capital Chill",    trigger: "go:capitalch",    logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_PxxWieEEsS.jpg" },
-       
         { id: "uk5",          name: "Fix Radio",        trigger: "go:fixradio",        logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_76lUfgFpJ.png" },
         { id: "uk7",          name: "BFBS UK",          trigger: "go:bfbsuk",          logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_WuwmnZ2cf.png" }
       ],
@@ -848,6 +888,7 @@
       }
     }
 
+    /* 2x Grid Modal Builder */
     function buildCategoryModalOnce() {
       const container = document.getElementById("categoryOptions");
       container.innerHTML = "";
@@ -860,15 +901,17 @@
         item.onclick = () => selectCategory(cat.key);
 
         item.innerHTML = `
-          <div class="cat-info">
+          <div class="cat-top-row">
             <div class="cat-icon">${cat.icon}</div>
-            <div class="cat-text">
-              <h3>${cat.title}</h3>
-              <p>${cat.desc}</p>
+            <div class="cat-check">
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
             </div>
           </div>
-          <div class="cat-arrow">
-            <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+          <div class="cat-text">
+            <h3>${cat.title}</h3>
+            <p>${cat.desc}</p>
           </div>
         `;
         fragment.appendChild(item);
