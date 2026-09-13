@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <!-- Safe Area সমৰ্থনৰ বাবে viewport-fit=cover যোগ কৰা হৈছে -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -11,81 +10,112 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📻</text></svg>">
 
 <style>
-:root {
-  --bg-main: #0c0e14;
-  --card-bg: #161922;
-  --card-border: #232733;
-  --accent-cyan: #00e5ff;
-  --accent-blue: #0091ea;
-  --accent-gradient: linear-gradient(135deg, #00e5ff, #0091ea);
-  --text-primary: #ffffff;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --live-green: #10b981;
-}
-
-*{
+* {
   -webkit-tap-highlight-color: transparent;
   box-sizing: border-box;
+  -webkit-touch-callout: none;
 }
 
-a{
+a {
   text-decoration: none;
   color: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
-a:active, a:focus{ outline: none; }
+a:active, a:focus {
+  outline: none;
+}
 
 html {
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* ===== ZERO-LAG BASE THEME & SAFE AREA INSETS ===== */
-body{
+/* ===== BASE: MODERN DEEP DARK THEME & SAFE AREA ===== */
+body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: var(--bg-main);
-  color: var(--text-primary);
-  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #0c0e14;
+  color: #f1f5f9;
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
   padding-left: env(safe-area-inset-left, 0px);
   padding-right: env(safe-area-inset-right, 0px);
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* ===== TOP MOBILE AD (320x100) ===== */
-.top-ad{
+.top-ad {
   width: 100%;
-  padding: 12px 14px 4px;
+  padding: 10px 14px 2px;
   display: flex;
   justify-content: center;
+  background: #0c0e14;
 }
 
-.top-ad img{
+.top-ad img {
   width: 100%;
-  max-width: 350px;
-  height: auto;
-  border-radius: 14px;
-  display: block;
-  border: 1px solid var(--card-border);
-}
-
-/* ===== LIVE CRICKET SCORE STRIP & CLS SKELETON ===== */
-.cricket-strip-container {
-  padding: 8px 16px 4px;
-}
-
-.cricket-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
+  max-width: 340px;
+  height: 100px;
+  object-fit: cover;
   border-radius: 16px;
-  padding: 10px 14px;
+  display: block;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ===== CRICKET TOGGLE BUTTONS ===== */
+.cricket-strip-container {
+  padding: 8px 14px 2px;
+}
+
+.cricket-toggle-bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 4px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.cs-tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.cs-tab-btn.active {
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  color: #031326;
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.35);
+}
+
+/* ===== CRICKET CARD & CLS SKELETON ===== */
+.cricket-card {
+  background: linear-gradient(145deg, #151821, #10121a);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  min-height: 128px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  min-height: 135px;
 }
 
 .cricket-card.skeleton::after {
@@ -111,20 +141,20 @@ body{
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--accent-gradient);
+  background: linear-gradient(90deg, #38bdf8, #818cf8);
 }
 
 .cs-meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.3px;
 }
 
 .cs-tour {
-  color: var(--accent-cyan);
+  color: #38bdf8;
   max-width: 70%;
   white-space: nowrap;
   overflow: hidden;
@@ -134,10 +164,11 @@ body{
 .cs-status-tag {
   display: flex;
   align-items: center;
-  gap: 5px;
-  color: var(--accent-cyan);
+  gap: 6px;
+  color: #38bdf8;
   text-transform: uppercase;
-  font-size: 10px;
+  font-size: 10.5px;
+  letter-spacing: 0.5px;
   font-weight: 800;
 }
 
@@ -146,7 +177,7 @@ body{
 }
 
 .cs-status-tag.completed {
-  color: var(--live-green);
+  color: #10b981;
 }
 
 .cs-match-row {
@@ -158,7 +189,7 @@ body{
 .cs-team {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   flex: 1;
 }
 
@@ -168,12 +199,13 @@ body{
 }
 
 .cs-flag {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   object-fit: cover;
-  background: #232733;
+  background: #1a1d26;
   border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   flex-shrink: 0;
 }
 
@@ -183,39 +215,38 @@ body{
 }
 
 .cs-team-name {
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 700;
-  color: var(--text-primary);
+  color: #ffffff;
 }
 
 .cs-team-score {
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 600;
-  color: var(--accent-cyan);
+  color: #38bdf8;
 }
 
 .cs-vs {
   font-size: 11px;
   font-weight: 800;
-  color: var(--text-muted);
+  color: #475569;
   padding: 0 10px;
 }
 
-/* BOTTOM BAR: NOTE (LEFT) & SCORECARD BUTTON (RIGHT) */
 .cs-bottom-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
   background: rgba(255, 255, 255, 0.03);
-  padding: 5px 8px;
-  border-radius: 8px;
-  margin-top: 2px;
+  padding: 7px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .cs-note {
   font-size: 11.5px;
-  color: var(--text-secondary);
+  color: #94a3b8;
   text-align: left;
   line-height: 1.3;
   flex: 1;
@@ -227,203 +258,165 @@ body{
 .cs-btn-card {
   font-size: 11px;
   font-weight: 700;
-  color: #060e18;
-  background: var(--accent-gradient);
-  padding: 4px 10px;
+  color: #031326;
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  padding: 5px 14px;
   border-radius: 20px;
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform .1s ease;
   flex-shrink: 0;
-}
-
-.cs-btn-card:active {
-  transform: scale(0.94);
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.35);
 }
 
 /* ===== LAYOUT ===== */
-.container{
-  padding: 10px 16px 24px;
+.container {
+  padding: 12px 14px 18px;
 }
 
-.section-title{
-  font-size: 15px;
+.section-title {
+  font-size: 16px;
   font-weight: 800;
-  letter-spacing: .4px;
-  text-transform: uppercase;
-  margin: 22px 0 12px;
-  color: #e2e8f0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  letter-spacing: .3px;
+  margin: 20px 0 12px;
+  color: #ffffff;
 }
 
-/* ===== QUICK NAVIGATION ===== */
+/* ===== MODERN QUICK BUTTONS ===== */
 .quick-buttons {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
-.qbtn-card {
-  position: relative;
-  background: linear-gradient(165deg, rgba(26, 30, 42, 0.85) 0%, rgba(15, 18, 25, 0.95) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+.quick-buttons a {
+  flex: 1;
+  min-width: 0;
+  text-decoration: none;
+}
+
+.qbtn {
+  padding: 14px 8px 12px;
   border-radius: 18px;
-  padding: 14px 6px 12px;
+  background: linear-gradient(160deg, #181b24, #11131a);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  cursor: pointer;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
-.qbtn-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 20%;
-  right: 20%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-}
-
-.qbtn-icon-wrapper {
-  width: 44px;
-  height: 44px;
+.icon-box {
+  width: 42px;
+  height: 42px;
   border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 8px;
 }
 
-.qbtn-icon-wrapper svg {
-  width: 22px;
-  height: 22px;
+.icon-box svg {
+  width: 20px;
+  height: 20px;
 }
 
-.qbtn-label {
+.qb-air .icon-box {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(147, 197, 253, 0.06));
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.15);
+}
+.qb-air .icon-box svg { fill: #38bdf8; }
+
+.qb-fm .icon-box {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(147, 51, 234, 0.06));
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.15);
+}
+.qb-fm .icon-box svg { fill: #c084fc; }
+
+.qb-news .icon-box {
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.2), rgba(225, 29, 72, 0.06));
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  box-shadow: 0 0 12px rgba(244, 63, 94, 0.15);
+}
+.qb-news .icon-box svg { fill: #fb7185; }
+
+.label {
   font-size: 12px;
   font-weight: 700;
-  color: #f1f5f9;
+  color: #e2e8f0;
   letter-spacing: 0.2px;
 }
 
-.qbtn-air .qbtn-icon-wrapper {
-  background: linear-gradient(135deg, rgba(0, 229, 255, 0.18), rgba(0, 145, 234, 0.05));
-  border: 1px solid rgba(0, 229, 255, 0.25);
-  box-shadow: 0 4px 14px rgba(0, 229, 255, 0.15);
-}
-.qbtn-air svg {
-  fill: #00e5ff;
-  filter: drop-shadow(0 2px 6px rgba(0, 229, 255, 0.45));
-}
-
-.qbtn-fm .qbtn-icon-wrapper {
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(126, 34, 206, 0.05));
-  border: 1px solid rgba(168, 85, 247, 0.25);
-  box-shadow: 0 4px 14px rgba(168, 85, 247, 0.15);
-}
-.qbtn-fm svg {
-  fill: #c084fc;
-  filter: drop-shadow(0 2px 6px rgba(168, 85, 247, 0.45));
+/* ===== CARD COMMON ===== */
+.card {
+  background: linear-gradient(145deg, #151821, #10121a);
+  border-radius: 20px;
+  padding: 14px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.qbtn-news .qbtn-icon-wrapper {
-  background: linear-gradient(135deg, rgba(244, 63, 94, 0.18), rgba(225, 29, 72, 0.05));
-  border: 1px solid rgba(244, 63, 94, 0.25);
-  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.15);
-}
-.qbtn-news svg {
-  fill: #fb7185;
-  filter: drop-shadow(0 2px 6px rgba(244, 63, 94, 0.45));
-}
-
-/* ===== POPULAR STATIONS ===== */
-#stations{
+/* ===== MODERN POPULAR STATIONS ===== */
+#stations {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
-.station{
+.station {
   display: flex;
   align-items: center;
-  padding: 10px 12px;
-  border-radius: 16px;
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  position: relative;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #161922, #11131a);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 
-.station-logo {
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
+.station-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
   object-fit: cover;
-  background: #10121a;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  margin-right: 12px;
+  background: #1a1d26;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   flex-shrink: 0;
 }
 
-.station-info{
+.station-info {
   flex: 1;
   min-width: 0;
-  padding-right: 10px;
 }
 
-.station-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 3px;
-}
-
-.station-name{
+.station-name {
   font-size: 15px;
   font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: .2px;
+  color: #ffffff;
+  letter-spacing: 0.2px;
+  margin-bottom: 4px;
 }
 
-.program-row{
+.program-row {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: 7px;
 }
 
-.program{
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--text-secondary);
-  line-height: 1.35;
-  word-break: break-word;
-}
-
-.live-dot-wrapper {
-  margin-top: 5px;
-  flex-shrink: 0;
-  width: 8px;
-  height: 8px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.live-dot{
+.live-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--live-green);
-  z-index: 1;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  flex-shrink: 0;
+  margin-top: 5px;
 }
 
 .live-dot.red {
@@ -431,226 +424,240 @@ body{
   box-shadow: 0 0 8px #ef4444;
 }
 
-.live-dot-wrapper::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: var(--live-green);
+.program {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #94a3b8;
+  line-height: 1.35;
+  word-break: break-word;
 }
 
-.play{
-  width: 38px;
-  height: 38px;
+.play {
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--accent-gradient);
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
   flex-shrink: 0;
-  transition: transform .1s ease;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.35);
 }
 
 .play svg {
-  width: 14px;
-  height: 14px;
-  fill: #060e18;
+  width: 17px;
+  height: 17px;
+  fill: #041426;
   margin-left: 2px;
 }
 
-.play:active{
-  transform: scale(0.9);
-}
-
 /* ===== POPULAR STATES ===== */
-.states-container{
-  background: var(--card-bg);
-  border-radius: 16px;
-  padding: 14px;
-  border: 1px solid var(--card-border);
-}
-
-.state-grid{
+.state-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
+  gap: 9px;
   margin-bottom: 12px;
 }
 
-.state-item{
-  background: #11131a;
-  border: 1px solid var(--card-border);
-  border-radius: 10px;
-  padding: 10px 12px;
-  text-align: left;
-  font-size: 13px;
+.state-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px 8px;
+  text-align: center;
+  font-size: 13.5px;
   font-weight: 600;
-  color: #e2e8f0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: transform .1s ease, background .15s ease;
+  color: #cbd5e1;
+  letter-spacing: .2px;
 }
 
-.state-item::after {
-  content: "›";
-  font-size: 16px;
-  color: var(--text-muted);
-}
-
-.state-item:active{
-  transform: scale(0.97);
-  background: #1a1e29;
-}
-
-.view-all-states{
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.view-all-states {
+  display: block;
+  text-align: center;
   font-size: 13px;
   font-weight: 700;
-  color: var(--accent-cyan);
-  padding: 4px 0;
+  color: #38bdf8;
+  padding: 8px 0 4px;
 }
 </style>
 </head>
 
 <body>
-
-<a href="go:S401">
+<!-- TOP AD BANNER -->
+<a href="go:COMM"> 
   <div class="top-ad">
     <img src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@main/file_00000000ae908211aa83735fe139713f.jpg?raw=true" alt="AIR Banner">
   </div>
 </a>
 
-<!-- LIVE CRICKET SCORE STRIP -->
+<!-- LIVE CRICKET SCORE STRIP WITH TOGGLE BUTTONS -->
 <div class="cricket-strip-container" id="cricketSection">
-  <div class="cricket-card" id="cricketCard">
-    <div class="cs-meta">
-      <span class="cs-tour">IND vs AFG • 1st T20</span>
-      <span class="cs-status-tag">
-        UPCOMING
-      </span>
-    </div>
-
-    <div class="cs-match-row">
-      <div class="cs-team">
-        <img class="cs-flag" src="https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg/" alt="IND">
-        <div class="cs-team-info">
-          <span class="cs-team-name">IND</span>
-        </div>
-      </div>
-
-      <div class="cs-vs">VS</div>
-
-      <div class="cs-team right">
-        <img class="cs-flag" src="https://ik.imagekit.io/sqt8ptw1k/images%20(1)_8_VfAHVo8.jpg" alt="AFG">
-        <div class="cs-team-info">
-          <span class="cs-team-name">AFG</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="cs-bottom-bar">
-      <div class="cs-note">Starts Today at 7:30 PM IST •Delhi</div>
-      <a href="go:card1" class="cs-btn-card">Scorecard</a>
-    </div>
+  <div class="cricket-toggle-bar">
+    <button class="cs-tab-btn active" id="tabBtn0" onclick="switchCricketMatch(0)">IND vs AFG</button>
+    <button class="cs-tab-btn" id="tabBtn1" onclick="switchCricketMatch(1)">IND W vs SL W</button>
   </div>
+
+  <div class="cricket-card" id="cricketCard1"></div>
+  <div class="cricket-card" id="cricketCard2" style="display: none;"></div>
 </div>
 
 <div class="container">
 
-  <div class="quick-buttons">
-    <a href="go:AIR">
-      <div class="qbtn-card qbtn-air">
-        <div class="qbtn-icon-wrapper">
-          <svg viewBox="0 0 24 24">
-            <path d="M3.24 6.15C2.51 6.43 2 7.17 2 8v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2H8.3l7.43-3-0.73-1.85-11.76 4.99zM4 9h16v10H4V9zm3 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 1h4v2h-4v-2zm0 3h4v1.5h-4v-1.5z"/>
-          </svg>
-        </div>
-        <span class="qbtn-label">AIR Radio</span>
+<!-- MODERN QUICK BUTTONS -->
+<div class="quick-buttons">
+  <a href="go:AIR" class="qb-air">
+    <div class="qbtn">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24">
+          <path d="M3 10v8a2 2 0 002 2h14a2 2 0 002-2v-8H3zm16 8H5v-6h14v6zM7 4l10 4H7V4zm2 9h3v3H9v-3zm7 1a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/>
+        </svg>
       </div>
-    </a>
-
-    <a href="go:S202">
-      <div class="qbtn-card qbtn-fm">
-        <div class="qbtn-icon-wrapper">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12c0 2.85 1.2 5.41 3.12 7.22l1.42-1.42A7.95 7.95 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 2.25-.93 4.29-2.43 5.75l1.41 1.42C20.78 17.38 22 14.83 22 12c0-5.52-4.48-10-10-10zm0 4a6 6 0 0 0-6 6c0 1.66.67 3.16 1.76 4.24l1.42-1.41A3.98 3.98 0 0 1 8 12c0-2.21 1.79-4 4-4s4 1.79 4 4c0 1.13-.47 2.15-1.22 2.88l1.41 1.42A5.96 5.96 0 0 0 18 12a6 6 0 0 0-6-6zm0 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-1 7h2v5h-2z"/>
-          </svg>
-        </div>
-        <span class="qbtn-label">FM Radio</span>
-      </div>
-    </a>
-
-    <a href="go:S501">
-      <div class="qbtn-card qbtn-news">
-        <div class="qbtn-icon-wrapper">
-          <svg viewBox="0 0 24 24">
-            <path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12zm-11-2l6-4-6-4v8z"/>
-          </svg>
-        </div>
-        <span class="qbtn-label">Live News</span>
-      </div>
-    </a>
-  </div>
-
-  <div id="homeContent">
-    <div class="section-title">🔥 Popular Stations</div>
-    <div id="stations"></div>
-
-    <div class="section-title">📍 Popular States</div>
-    <div class="states-container">
-      <div class="state-grid">
-        <a href="go:DELHI" class="state-item">Delhi</a>
-        <a href="go:UP" class="state-item">Uttar Pradesh</a>
-        <a href="go:MH" class="state-item">Maharashtra</a>
-        <a href="go:BIHAR" class="state-item">Bihar</a>
-        <a href="go:WB" class="state-item">West Bengal</a>
-        <a href="go:TN" class="state-item">Tamil Nadu</a>
-      </div>
-      <a href="go:S201" class="view-all-states">View All States &nbsp;→</a>
+      <div class="label">AIR Radio</div>
     </div>
+  </a>
+
+  <a href="go:FM2" class="qb-fm">
+    <div class="qbtn">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 3a9 9 0 019 9h-2a7 7 0 00-14 0H3a9 9 0 019-9zm0 6a3 3 0 013 3h-2a1 1 0 00-2 0H9a3 3 0 013-3zm-1 8h2v4h-2z"/>
+        </svg>
+      </div>
+      <div class="label">FM Radio</div>
+    </div>
+  </a>
+
+  <a href="go:LIVEN" class="qb-news">
+    <div class="qbtn">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24">
+          <path d="M3 6h18v12H3zM10 9l5 3-5 3zM8 20h8v-2H8z"/>
+        </svg>
+      </div>
+      <div class="label">Live News</div>
+    </div>
+  </a>
+</div>
+
+<!-- Popular Stations & States -->
+<div id="homeContent">
+  <h2 class="section-title">🔥 Popular Stations</h2>
+  <div id="stations"></div>
+
+  <h2 class="section-title">📍 Popular States</h2>
+  <div class="card">
+    <div class="state-grid">
+      <a href="go:DELHI" class="state-item">Delhi</a>
+      <a href="go:UP" class="state-item">Uttar Pradesh</a>
+      <a href="go:MH" class="state-item">Maharashtra</a>
+      <a href="go:BIHAR" class="state-item">Bihar</a>
+      <a href="go:WB" class="state-item">West Bengal</a>
+      <a href="go:TN" class="state-item">Tamil Nadu</a>
+    </div>
+    <a href="go:A2" class="view-all-states">View All States →</a>
   </div>
+</div>
 
 </div>
 
 <script>
-/* ===== LIVE CRICKET SCORE FETCH & AUTO UPDATE (CRICRADIO API) ===== */
-const matchId = "6a7c72f078dcf0657031d932";
-const cricketApiUrl = `https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=${matchId}`;
-
-const initialMatchData = {
-  "_id": "6a7c72f078dcf0657031d932",
-  "status": "upcoming",
-  "format": "t20",
-  "seriesName": "IND vs AFG • 1st T20",
-  "announcement1": "Starts Today at 7:30 PM IST • Delhi",
-  "teams": {
-    "a": {
-      "name": "India",
-      "shortName": "IND",
-      "logo": "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg/"
-    },
-    "b": {
-      "name": "Afghanistan",
-      "shortName": "AFG",
-      "logo": "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_8_VfAHVo8.jpg"
+/* ===== LIVE CRICKET SCORE FETCH & DUAL MATCH LOGIC ===== */
+const cricketMatches = [
+  {
+    cardId: "cricketCard1",
+    tabId: "tabBtn0",
+    matchId: "6a7c72f078dcf0657031d932",
+    scorecardLink: "go:card1",
+    initialData: {
+      "_id": "6a7c72f078dcf0657031d932",
+      "status": "upcoming",
+      "format": "t20",
+      "seriesName": "IND vs AFG • 1st T20",
+      "venue": "Venue: Arun Jaitley Stadium, Delhi",
+      "announcement1": "Starts Today at 7:30 PM IST • Delhi",
+      "teams": {
+        "a": {
+          "name": "India",
+          "shortName": "IND",
+          "logo": "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg/"
+        },
+        "b": {
+          "name": "Afghanistan",
+          "shortName": "AFG",
+          "logo": "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_8_VfAHVo8.jpg"
+        }
+      },
+      "lastCommentary": {
+        "secondaryText": "Starts Today at 7:30 PM IST • Arun Jaitley Stadium, Delhi"
+      }
     }
   },
-  "lastCommentary": {
-    "secondaryText": "Starts Today at 7:30 PM IST • Arun Jaitley Stadium, Delhi"
+  {
+    cardId: "cricketCard2",
+    tabId: "tabBtn1",
+    matchId: "6a7521fb78dcf065703188cd",
+    scorecardLink: "go:card2",
+    initialData: {
+      "_id": "6a7521fb78dcf065703188cd",
+      "status": "upcoming",
+      "format": "t20",
+      "seriesName": "IND W vs SL W • T20",
+      "venue": "Match Starts Today at 8PM",
+      "announcement1": "Match Starts Today at 8PM",
+      "teams": {
+        "a": {
+          "name": "India Women",
+          "shortName": "IND W",
+          "logo": "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg/"
+        },
+        "b": {
+          "name": "Sri Lanka Women",
+          "shortName": "SL W",
+          "logo": "https://ik.imagekit.io/sqt8ptw1k/sri-lanka-women.webp"
+        }
+      },
+      "lastCommentary": {
+        "secondaryText": "Match Starts Today at 8PM"
+      }
+    }
   }
-};
+];
+
+let activeMatchIndex = 0;
+
+function switchCricketMatch(index) {
+  activeMatchIndex = index;
+  cricketMatches.forEach((match, idx) => {
+    const cardEl = document.getElementById(match.cardId);
+    const tabEl = document.getElementById(match.tabId);
+    
+    if (cardEl) {
+      cardEl.style.display = (idx === index) ? "flex" : "none";
+    }
+    if (tabEl) {
+      if (idx === index) {
+        tabEl.classList.add("active");
+      } else {
+        tabEl.classList.remove("active");
+      }
+    }
+  });
+}
 
 function getTeamLogo(team) {
-  if (!team) return "";
+  if (!team) return "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg";
   const name = ((team.shortName || team.name || "") + "").toLowerCase();
 
+  // শ্ৰীলংকা দলৰ ল'গ'
+  if (name.includes("sl") || name.includes("sri lanka")) {
+    return "https://ik.imagekit.io/sqt8ptw1k/sri-lanka-women.webp";
+  }
+  // ভাৰত দলৰ ল'গ'
   if (name.includes("ind")) {
     return "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg/";
   }
+  // আফগানিস্তান দলৰ ল'গ'
   if (name.includes("afg")) {
     return "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_8_VfAHVo8.jpg";
   }
@@ -659,7 +666,7 @@ function getTeamLogo(team) {
     if (team.logo.startsWith("http")) return team.logo;
     return `https://api.cricradio.com.au${team.logo.startsWith("/") ? "" : "/"}${team.logo}`;
   }
-  return "";
+  return "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg";
 }
 
 function formatInningScore(scoreObj) {
@@ -709,19 +716,23 @@ function extractMatchNote(result) {
     .join(" • ");
 }
 
-function renderCricketStrip(matchData) {
-  if (!matchData) return;
-
-  const card = document.getElementById("cricketCard");
+function renderCricketStrip(cardElement, matchData, scorecardLink, tabId) {
+  if (!cardElement || !matchData) return;
 
   const teamA = matchData.teams ? matchData.teams.a : {};
   const teamB = matchData.teams ? matchData.teams.b : {};
 
-  const nameA = teamA.shortName || teamA.name || 'IND';
-  const nameB = teamB.shortName || teamB.name || 'AFG';
+  const nameA = teamA.shortName || teamA.name || 'Team A';
+  const nameB = teamB.shortName || teamB.name || 'Team B';
+
+  // টগল বুটামত দলৰ নাম আপডেট কৰা
+  const tabBtn = document.getElementById(tabId);
+  if (tabBtn && nameA && nameB) {
+    tabBtn.textContent = `${nameA} vs ${nameB}`;
+  }
 
   const format = (matchData.format || 't20').toUpperCase();
-  const tournament = matchData.seriesName || `${nameA} vs ${nameB} • ${format}`;
+  const tournament = matchData.seriesName || matchData.venue || `${nameA} vs ${nameB} • ${format}`;
 
   const teamAScore = getFormattedScore(teamA, "a");
   const teamBScore = getFormattedScore(teamB, "b");
@@ -748,23 +759,23 @@ function renderCricketStrip(matchData) {
   } else {
     statusText = "UPCOMING";
     statusClass = "cs-status-tag";
-    noteText = extractMatchNote(matchData) || "Starts Today at 7:30 PM IST • Arun Jaitley Stadium, Delhi";
+    noteText = extractMatchNote(matchData) || matchData.announcement1 || "Match Starts Today at 8PM";
   }
 
-  card.classList.remove("skeleton");
+  cardElement.classList.remove("skeleton");
 
-  card.innerHTML = `
+  cardElement.innerHTML = `
     <div class="cs-meta">
       <span class="cs-tour">${tournament}</span>
       <span class="${statusClass}">
-        ${showDot ? '<span class="live-dot red" style="width: 6px; height: 6px;"></span>' : ''}
+        ${showDot ? '<span class="live-dot red" style="margin-top: 0;"></span>' : ''}
         ${statusText}
       </span>
     </div>
 
     <div class="cs-match-row">
       <div class="cs-team">
-        <img class="cs-flag" src="${getTeamLogo(teamA)}" alt="${nameA}" onerror="this.onerror=null; this.src='https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg?updatedAt=1789284753096';">
+        <img class="cs-flag" src="${getTeamLogo(teamA)}" alt="${nameA}" onerror="this.onerror=null; this.src='https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg';">
         <div class="cs-team-info">
           <span class="cs-team-name">${nameA}</span>
           ${teamAScore ? `<span class="cs-team-score">${teamAScore}</span>` : ''}
@@ -774,7 +785,7 @@ function renderCricketStrip(matchData) {
       <div class="cs-vs">VS</div>
 
       <div class="cs-team right">
-        <img class="cs-flag" src="${getTeamLogo(teamB)}" alt="${nameB}" onerror="this.onerror=null; this.src='https://ik.imagekit.io/sqt8ptw1k/images%20(1)_8_VfAHVo8.jpg';">
+        <img class="cs-flag" src="${getTeamLogo(teamB)}" alt="${nameB}" onerror="this.onerror=null; this.src='https://ik.imagekit.io/sqt8ptw1k/sri-lanka-women.webp';">
         <div class="cs-team-info">
           <span class="cs-team-name">${nameB}</span>
           ${teamBScore ? `<span class="cs-team-score">${teamBScore}</span>` : ''}
@@ -784,36 +795,49 @@ function renderCricketStrip(matchData) {
 
     <div class="cs-bottom-bar">
       <div class="cs-note">${noteText}</div>
-      <a href="go:card1" class="cs-btn-card">Scorecard</a>
+      <a href="${scorecardLink}" class="cs-btn-card">Scorecard</a>
     </div>
   `;
 }
 
-async function fetchLiveScore() {
+async function fetchMatchScore(match) {
+  const cardElement = document.getElementById(match.cardId);
+  if (!cardElement) return;
+
   try {
-    const response = await fetch(`${cricketApiUrl}&_t=${Date.now()}`);
+    const url = `https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=${match.matchId}&_t=${Date.now()}`;
+    const response = await fetch(url);
     if (!response.ok) return;
 
     const data = await response.json();
     if (data && data.responseData && data.responseData.result) {
-      renderCricketStrip(data.responseData.result);
+      renderCricketStrip(cardElement, data.responseData.result, match.scorecardLink, match.tabId);
     }
   } catch (error) {
-    console.error("Live Cricket Score Error:", error);
+    console.error(`Match Fetch Error (${match.matchId}):`, error);
   }
 }
 
-// প্ৰাৰম্ভিক ডাটা তৎক্ষণাৎ প্ৰদৰ্শন
-renderCricketStrip(initialMatchData);
+function fetchAllMatches() {
+  cricketMatches.forEach(match => fetchMatchScore(match));
+}
+
+// প্ৰাৰম্ভিক তথ্য প্ৰদৰ্শন (IND vs AFG আৰু IND W vs SL W)
+cricketMatches.forEach(match => {
+  if (match.initialData) {
+    const el = document.getElementById(match.cardId);
+    renderCricketStrip(el, match.initialData, match.scorecardLink, match.tabId);
+  }
+});
 
 window.addEventListener('load', () => {
   setTimeout(() => {
-    fetchLiveScore();
-    setInterval(fetchLiveScore, 30000);
+    fetchAllMatches();
+    setInterval(fetchAllMatches, 30000);
   }, 600);
 });
 
-/* ===== RADIO DATA & SCHEDULE ===== */
+/* ===== RADIO & SCHEDULE LOGIC ===== */
 if (!window.SCHEDULE_DATA) window.SCHEDULE_DATA = [];
 
 const popularStations = [
@@ -839,86 +863,79 @@ const popularStations = [
   }
 ];
 
+const defaultFallbackLogo = "https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/file_0000000021e08211b4960dad0c90dbff.jpg";
 const lastProgram = {};
 
-function timeToMinutes(t){
-  if(!t) return 0;
-  t = t.trim();
-  if(!t.includes(" ")){
-    let [h, m] = t.split(":").map(Number);
-    return (h || 0) * 60 + (m || 0);
-  }
-  const parts = t.split(/\s+/);
-  let [h, m] = parts[0].split(":").map(Number);
-  const meridiem = (parts[1] || "").toUpperCase();
-  h = h || 0;
-  m = m || 0;
-  if(meridiem === "PM" && h !== 12) h += 12;
-  if(meridiem === "AM" && h === 12) h = 0;
-  return h * 60 + m;
+function timeToMinutes(t) {
+  if (!t) return 0;
+  const match = t.trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
+  if (!match) return 0;
+  
+  let h = parseInt(match[1], 10);
+  let m = parseInt(match[2], 10);
+  const meridiem = match[3] ? match[3].toUpperCase() : null;
+
+  if (meridiem === "PM" && h !== 12) h += 12;
+  if (meridiem === "AM" && h === 12) h = 0;
+  return (h || 0) * 60 + (m || 0);
 }
 
-function getCurrentProgram(channel){
-  if(!window.SCHEDULE_DATA || !window.SCHEDULE_DATA.length) {
+function getCurrentProgram(channel) {
+  if (!window.SCHEDULE_DATA || !window.SCHEDULE_DATA.length) {
     return lastProgram[channel] || "Live Broadcast";
   }
 
-  const now = new Date();
+  const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
   const nowMin = now.getHours() * 60 + now.getMinutes();
-
+  
   const list = window.SCHEDULE_DATA
-    .filter(p => 
-      p.channel && 
-      p.channel.toLowerCase().includes(channel.toLowerCase().trim())
-    )
-    .map(p => ({...p, min: timeToMinutes(p.time)}))
-    .sort((a,b) => a.min - b.min);
+    .filter(p => p.channel && p.channel.toLowerCase().includes(channel.toLowerCase().trim()))
+    .map(p => ({ ...p, min: timeToMinutes(p.time) }))
+    .sort((a, b) => a.min - b.min);
 
-  if(!list.length) return lastProgram[channel] || "Live Broadcast";
+  if (!list.length) return lastProgram[channel] || "Live Broadcast";
 
-  if(nowMin < list[0].min){
-    const prevShow = list[list.length - 1].title;
-    lastProgram[channel] = prevShow;
-    return prevShow;
-  }
+  let currentTitle = "Live Broadcast";
 
-  for(let i = 0; i < list.length; i++){
-    const cur = list[i], next = list[i + 1];
-    if(nowMin >= cur.min && (!next || nowMin < next.min)){
-      lastProgram[channel] = cur.title;
-      return cur.title;
+  if (nowMin < list[0].min) {
+    currentTitle = list[list.length - 1].title;
+  } else {
+    for (let i = 0; i < list.length; i++) {
+      const cur = list[i];
+      const next = list[i + 1];
+      if (nowMin >= cur.min && (!next || nowMin < next.min)) {
+        currentTitle = cur.title;
+        break;
+      }
     }
   }
-  return lastProgram[channel] || "Live Broadcast";
+
+  lastProgram[channel] = currentTitle;
+  return currentTitle;
 }
 
-function renderStations(){
+function renderStations() {
   const box = document.getElementById("stations");
+  if (!box) return;
   box.innerHTML = "";
 
-  popularStations.forEach(st=>{
+  popularStations.forEach(st => {
     const div = document.createElement("div");
     div.className = "station";
 
     div.innerHTML = `
-      <img class="station-logo" src="${st.logo}" alt="${st.name}" width="46" height="46" loading="lazy" decoding="async" onerror="this.src='https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/gVkZQ1787940599.png'">
+      <img src="${st.logo}" class="station-thumb" alt="${st.name}" onerror="this.onerror=null;this.src='${defaultFallbackLogo}';">
       <div class="station-info">
-        <div class="station-header">
-          <div class="station-name">${st.name}</div>
-        </div>
+        <div class="station-name">${st.name}</div>
         <div class="program-row">
-          <div class="live-dot-wrapper">
-            <span class="live-dot"></span>
-          </div>
+          <span class="live-dot"></span>
           <div class="program" data-channel="${st.name}">
             ${getCurrentProgram(st.name)}
           </div>
         </div>
       </div>
-      <a href="go:${st.code}" class="play">
-        <svg viewBox="0 0 24 24">
-          <path d="M8 5v14l11-7z"/>
-        </svg>
+      <a href="go:${st.code}" class="play" aria-label="Play ${st.name}">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
       </a>
     `;
 
@@ -926,10 +943,12 @@ function renderStations(){
   });
 }
 
-function updateProgramsOnly(){
-  document.querySelectorAll(".program").forEach(el=>{
+function updateProgramsOnly() {
+  document.querySelectorAll(".program").forEach(el => {
     const channel = el.getAttribute("data-channel");
-    el.textContent = getCurrentProgram(channel);
+    if (channel) {
+      el.textContent = getCurrentProgram(channel);
+    }
   });
 }
 
@@ -938,6 +957,5 @@ setInterval(updateProgramsOnly, 60000);
 </script>
 
 <script src="https://allindiaradio.pages.dev/docs/schedule.js" defer onload="updateProgramsOnly()"></script>
-
 </body>
 </html>
