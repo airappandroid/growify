@@ -79,15 +79,14 @@ body {
     transition: background 0.15s ease, color 0.15s ease;
 }
 
-
-/* ================= Zero-Lag Privacy Popup Modal (No Backdrop Filter) ================= */
+/* ================= Zero-Lag Privacy Popup Modal ================= */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(4, 7, 13, 0.82); /* ডার্ক চলিড বেকগ্ৰাউণ্ড (কুনো লেগ নহয়) */
+    background: rgba(4, 7, 13, 0.82);
     z-index: 9999;
     display: flex;
     align-items: center;
@@ -97,7 +96,7 @@ body {
     visibility: hidden;
     pointer-events: none;
     transition: opacity 0.2s ease, visibility 0.2s ease;
-    transform: translateZ(0); /* GPU acceleration */
+    transform: translateZ(0);
 }
 
 .modal-overlay.active {
@@ -182,15 +181,17 @@ body {
 
 /* Top Banner */
 .top-banner {
-    display: block;
+    display: flex;
+    justify-content: center;
     padding: 12px 16px 0;
     text-decoration: none;
 }
 
 .top-banner img {
     display: block;
-    width: 100%;
-    height: auto;
+    width: 320px;
+    height: 100px;
+    object-fit: cover;
     border-radius: 14px;
     border: 1px solid #1e293b;
 }
@@ -203,9 +204,9 @@ body {
     background: linear-gradient(135deg, #152033 0%, #0e1627 100%);
     border: 1px solid rgba(59, 130, 246, 0.32);
     border-radius: 12px;
-    text-decoration: none;
     color: #ffffff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
 }
 
 .strip-top {
@@ -260,6 +261,35 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.strip-top-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.strip-audio-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2.5px 8px;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 800;
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.45);
+    transition: transform 0.12s ease, opacity 0.12s ease;
+}
+
+.strip-audio-btn:active {
+    transform: scale(0.92);
+    opacity: 0.9;
 }
 
 .strip-action {
@@ -517,7 +547,7 @@ body {
             <span class="header-title">All UK Radio</span>
         </div>
         <div class="header-actions">
-            <!-- Share Button (Directly triggers http://action_share) -->
+            <!-- Share Button -->
             <a href="http://action_share" class="header-btn" aria-label="Share App" title="Share App">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="18" cy="5" r="3"></circle>
@@ -541,8 +571,8 @@ body {
         <img src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@main/file_00000000c1b481f8b31eb26562ce4c58.jpg?raw=true" alt="BBC 5 Sports Extra" fetchpriority="high" decoding="async">
     </a>
 
-    <!-- Cricket Live Score Strip (go:card) -->
-    <a href="go:card" class="cricket-strip" id="cricketStrip">
+    <!-- Cricket Live Score Strip -->
+    <div class="cricket-strip" id="cricketStrip" onclick="window.location.href='go:card'">
         <div class="strip-top">
             <div class="strip-top-left">
                 <div class="live-badge" id="badgeContainer" style="background: rgba(239, 68, 68, 0.16); border-color: rgba(239, 68, 68, 0.45); color: #f87171;">
@@ -551,12 +581,27 @@ body {
                 </div>
                 <span class="strip-venue" id="matchVenue">Edgbaston, Birmingham</span>
             </div>
-            <div class="strip-action">
-                <span>Scorecard</span>
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+
+            <!-- Audio & Scorecard Action Container -->
+            <div class="strip-top-right">
+                <!-- Audio Button with ID for manual toggle -->
+                <a href="go:BBC5E" class="strip-audio-btn" id="stripAudioBtn" onclick="event.stopPropagation();" aria-label="Listen Commentary">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                        <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                    </svg>
+                    <span>Audio</span>
+                </a>
+
+                <div class="strip-action">
+                    <span>Scorecard</span>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
             </div>
         </div>
+
         <div class="strip-status" id="matchNote">Loading status...</div>
+
         <div class="strip-body">
             <div class="strip-scores">
                 <div class="strip-team">
@@ -574,7 +619,7 @@ body {
                 </div>
             </div>
         </div>
-    </a>
+    </div>
 
     <!-- Popular Stations Section -->
     <div class="section">
@@ -713,6 +758,17 @@ body {
 </div>
 
 <script>
+/* ================= Manual Button Visibility Switch ================= */
+// 'Audio' বুটামটো দেখুৱাবলৈ true আৰু লুকুৱাবলৈ false ৰাখক:
+const SHOW_AUDIO_BTN = true; 
+
+function applyAudioButtonVisibility() {
+    const audioBtn = document.getElementById('stripAudioBtn');
+    if (audioBtn) {
+        audioBtn.style.display = SHOW_AUDIO_BTN ? 'inline-flex' : 'none';
+    }
+}
+
 /* ================= Zero-Lag Modal Functionality ================= */
 const privacyBtn = document.getElementById('privacyBtn');
 const privacyModal = document.getElementById('privacyModal');
@@ -977,23 +1033,22 @@ function updatePrograms() {
 
 /* ================= Initialization ================= */
 document.addEventListener("DOMContentLoaded", () => {
-    // প্ৰথমবাৰ চেষ্টা কৰিব
+    // Audio button visibility apply
+    applyAudioButtonVisibility();
+
     updatePrograms();
 
-    // পদ্ধতি ২: SCHEDULE_DATA উপলব্ধ নোহোৱালৈকে প্ৰতি ৫০০ms (০.৫ ছেকেণ্ড) মূৰে মূৰে চেষ্টা কৰিব (সৰ্বোচ্চ ১০ বাৰ / ৫ ছেকেণ্ড)
     let checkCount = 0;
     const scheduleTimer = setInterval(() => {
         checkCount++;
         if (typeof SCHEDULE_DATA !== "undefined" || checkCount >= 10) {
             updatePrograms();
-            clearInterval(scheduleTimer); // ডাটা পাই গ'লে এই লুপটো বন্ধ হ'ব
+            clearInterval(scheduleTimer);
         }
     }, 500);
 
-    // প্ৰতি ১ মিনিটৰ মূৰে মূৰে নিয়মীয়া আপডেট
     setInterval(updatePrograms, 60000);
 
-    // ক্ৰিকেট স্ক'ৰ ফেচ
     fetchCricketScore();
     setInterval(fetchCricketScore, 30000);
 });
