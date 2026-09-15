@@ -229,13 +229,10 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    background: rgba(239, 68, 68, 0.16);
-    border: 1px solid rgba(239, 68, 68, 0.45);
     padding: 2px 6px;
     border-radius: 4px;
     font-size: 9.5px;
     font-weight: 800;
-    color: #f87171;
     letter-spacing: 0.4px;
     flex-shrink: 0;
 }
@@ -571,20 +568,21 @@ body {
         <img src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@main/file_00000000c1b481f8b31eb26562ce4c58.jpg?raw=true" alt="BBC 5 Sports Extra" fetchpriority="high" decoding="async">
     </a>
 
-    <!-- Cricket Live Score Strip -->
+    <!-- Cricket Live Score Strip (Default: Scheduled) -->
     <div class="cricket-strip" id="cricketStrip" onclick="window.location.href='go:card'">
         <div class="strip-top">
             <div class="strip-top-left">
-                <div class="live-badge" id="badgeContainer" style="background: rgba(239, 68, 68, 0.16); border-color: rgba(239, 68, 68, 0.45); color: #f87171;">
-                    <span class="dot" id="liveDot" style="display: inline-block;"></span>
-                    <span id="matchBadge">LIVE</span>
+                <!-- Blue Scheduled Badge -->
+                <div class="live-badge" id="badgeContainer" style="background: rgba(59, 130, 246, 0.16); border: 1px solid rgba(59, 130, 246, 0.45); color: #60a5fa;">
+                    <span class="dot" id="liveDot" style="display: none;"></span>
+                    <span id="matchBadge">SCHEDULED</span>
                 </div>
-                <span class="strip-venue" id="matchVenue">Edgbaston, Birmingham</span>
+                <!-- Default Venue -->
+                <span class="strip-venue" id="matchVenue">Utilita Bowl, Southampton</span>
             </div>
 
             <!-- Audio & Scorecard Action Container -->
             <div class="strip-top-right">
-                <!-- Audio Button with ID for manual toggle -->
                 <a href="go:BBC5E" class="strip-audio-btn" id="stripAudioBtn" onclick="event.stopPropagation();" aria-label="Listen Commentary">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
@@ -600,7 +598,8 @@ body {
             </div>
         </div>
 
-        <div class="strip-status" id="matchNote">Loading status...</div>
+        <!-- Default Scheduled Note -->
+        <div class="strip-status" id="matchNote">1st T20I • Starts today at 6:30 PM UK Time</div>
 
         <div class="strip-body">
             <div class="strip-scores">
@@ -612,8 +611,8 @@ body {
                 </div>
                 <span class="strip-divider">vs</span>
                 <div class="strip-team">
-                    <img id="teamBLogo" class="team-logo" src="https://gcdnimages.entitysport.com/assets/uploads/2025/09/PAK.webp" alt="PAK" width="17" height="17">
-                    <span class="team-code" id="teamBCode">PAK</span>
+                    <img id="teamBLogo" class="team-logo" src="https://ik.imagekit.io/sqt8ptw1k/sri-lanka-women.webp?updatedAt=1789308085405" alt="SL" width="17" height="17">
+                    <span class="team-code" id="teamBCode">SL</span>
                     <span class="team-runs" id="teamBScore">--</span>
                     <span class="team-overs" id="teamBOvers"></span>
                 </div>
@@ -759,7 +758,6 @@ body {
 
 <script>
 /* ================= Manual Button Visibility Switch ================= */
-// 'Audio' বুটামটো দেখুৱাবলৈ true আৰু লুকুৱাবলৈ false ৰাখক:
 const SHOW_AUDIO_BTN = true; 
 
 function applyAudioButtonVisibility() {
@@ -795,20 +793,20 @@ window.addEventListener('click', (e) => {
 });
 
 /* ================= Live Cricket Score Fetcher ================= */
-const matchId = "95255";
+const matchId = "95154";
 const cloudflareProxyUrl = `https://cricvoice.aminurmarch.workers.dev/?matchId=${matchId}`;
 
 function getMatchUKTime(match) {
     let dateObj;
-    if (match.timestamp_start) {
+    if (match && match.timestamp_start) {
         dateObj = new Date(match.timestamp_start * 1000);
-    } else if (match.date_start_ist) {
+    } else if (match && match.date_start_ist) {
         dateObj = new Date(match.date_start_ist.replace(" ", "T") + "+05:30");
-    } else if (match.date_start) {
+    } else if (match && match.date_start) {
         dateObj = new Date(match.date_start.replace(" ", "T") + "Z");
     }
 
-    if (!dateObj || isNaN(dateObj.getTime())) return "10:00 AM";
+    if (!dateObj || isNaN(dateObj.getTime())) return "6:30 PM";
 
     return new Intl.DateTimeFormat('en-GB', {
         timeZone: 'Europe/London',
@@ -823,9 +821,9 @@ function getVenueText(match) {
         const name = match.venue.name || "";
         const location = match.venue.location || "";
         if (name && location) return `${name}, ${location}`;
-        if (name) return name.toLowerCase().includes("birmingham") ? name : `${name}, Birmingham`;
+        if (name) return name;
     }
-    return "Edgbaston, Birmingham";
+    return "Utilita Bowl, Southampton";
 }
 
 async function fetchCricketScore() {
@@ -869,7 +867,7 @@ async function fetchCricketScore() {
             if (teamB) {
                 const codeB = document.getElementById('teamBCode');
                 const scoreB = document.getElementById('teamBScore');
-                if (codeB) codeB.textContent = teamB.short_name || "PAK";
+                if (codeB) codeB.textContent = teamB.short_name || "SL";
                 if (scoreB) scoreB.textContent = teamB.scores || teamB.scores_full || "--";
 
                 const overBEl = document.getElementById('teamBOvers');
@@ -896,9 +894,9 @@ async function fetchCricketScore() {
 
             if (statusStr.includes("scheduled") || match.status === 1) {
                 const ukTime = getMatchUKTime(match);
-                const subTitle = match.subtitle || "Match";
+                const subTitle = match.subtitle || "1st T20I";
                 
-                if (matchNoteEl) matchNoteEl.textContent = `${subTitle} • Starts at ${ukTime} UK Time`;
+                if (matchNoteEl) matchNoteEl.textContent = `${subTitle} • Starts today at ${ukTime} UK Time`;
                 if (badgeEl) badgeEl.textContent = "SCHEDULED";
                 if (badgeContainer) {
                     badgeContainer.style.background = "rgba(59, 130, 246, 0.16)";
@@ -930,7 +928,7 @@ async function fetchCricketScore() {
             }
         }
     } catch (err) {
-        // network / abort errors handled quietly
+        // network fallback quiet
     } finally {
         clearTimeout(timeoutId);
     }
@@ -1033,7 +1031,6 @@ function updatePrograms() {
 
 /* ================= Initialization ================= */
 document.addEventListener("DOMContentLoaded", () => {
-    // Audio button visibility apply
     applyAudioButtonVisibility();
 
     updatePrograms();
