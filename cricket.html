@@ -538,13 +538,13 @@
 
         <!-- Match Header -->
         <div class="card-header">
-            <span class="match-info" id="match-info">IND vs AFG, 1st T20</span>
+            <span class="match-info" id="match-info">IND vs AFG, 2nd T20</span>
             <span class="status-badge" id="match-status">UPCOMING</span>
         </div>
 
         <!-- Venue & Latest Ball -->
         <div class="sub-header">
-            <span class="venue" id="venue-info">Arun Jaitley Stadium, Delhi</span>
+            <span class="venue" id="venue-info">Venue loading...</span>
             <div class="last-ball-badge" id="last-ball-container" style="display: none;">
                 <span>Last Ball:</span>
                 <span class="ball-circle" id="latest-ball">-</span>
@@ -612,7 +612,7 @@
     </div>
 
     <script>
-        const matchId = "6a7c72f078dcf0657031d932";
+        const matchId = "6a7c72f178dcf0657031d933";
         const cricketApiUrl = `https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=${matchId}`;
         let isMatchLive = false;
 
@@ -712,7 +712,7 @@
                 const shortA = teamA.shortName || 'IND';
                 const shortB = teamB.shortName || 'AFG';
 
-                document.getElementById("match-info").textContent = result.seriesName || `${shortA} vs ${shortB}, 1st T20`;
+                document.getElementById("match-info").textContent = result.seriesName || `${shortA} vs ${shortB}, 2nd T20`;
 
                 const rawStatus = (result.status || "").toLowerCase().replace(/\s+/g, "");
                 const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || rawStatus.includes("ended");
@@ -739,7 +739,7 @@
                     statusBadge.textContent = "UPCOMING";
                     statusBadge.className = "status-badge";
                     statusBox.className = "status-box";
-                    statusBox.textContent = cleanNote || (result.startDate ? `Starts at ${result.startDate}` : "Starts Today at 7:30 PM IST");
+                    statusBox.textContent = cleanNote || (result.startDate ? `Starts at ${result.startDate}` : "Match begins shortly");
                 }
 
                 if (result.venue) {
