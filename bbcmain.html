@@ -214,22 +214,21 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 .strip-top-left {
     display: flex;
     align-items: center;
     gap: 6px;
-    min-width: 0;
-    overflow: hidden;
+    flex-shrink: 0;
 }
 
 .live-badge {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 2px 6px;
+    padding: 2.5px 7px;
     border-radius: 4px;
     font-size: 9.5px;
     font-weight: 800;
@@ -251,31 +250,22 @@ body {
     50% { opacity: 0.3; transform: scale(0.8); }
 }
 
-.strip-venue {
-    font-size: 10.5px;
-    font-weight: 500;
-    color: #94a3b8;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 .strip-top-right {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     flex-shrink: 0;
 }
 
 .strip-audio-btn {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    padding: 2.5px 8px;
+    gap: 5px;
+    padding: 4.5px 12px;
     background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
     border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 12px;
-    font-size: 10px;
+    border-radius: 14px;
+    font-size: 11.5px;
     font-weight: 800;
     color: #ffffff;
     text-decoration: none;
@@ -292,12 +282,12 @@ body {
 .strip-action {
     display: inline-flex;
     align-items: center;
-    gap: 3px;
-    padding: 2.5px 8px;
+    gap: 4px;
+    padding: 4.5px 12px;
     background: rgba(37, 99, 235, 0.2);
     border: 1px solid rgba(59, 130, 246, 0.45);
-    border-radius: 12px;
-    font-size: 10px;
+    border-radius: 14px;
+    font-size: 11.5px;
     font-weight: 700;
     color: #60a5fa;
     flex-shrink: 0;
@@ -568,23 +558,21 @@ body {
         <img src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@main/file_00000000c1b481f8b31eb26562ce4c58.jpg?raw=true" alt="BBC 5 Sports Extra" fetchpriority="high" decoding="async">
     </a>
 
-    <!-- Cricket Live Score Strip (Default: Scheduled) -->
+    <!-- Cricket Live Score Strip -->
     <div class="cricket-strip" id="cricketStrip" onclick="window.location.href='go:card'">
         <div class="strip-top">
             <div class="strip-top-left">
-                <!-- Blue Scheduled Badge -->
+                <!-- Status Badge -->
                 <div class="live-badge" id="badgeContainer" style="background: rgba(59, 130, 246, 0.16); border: 1px solid rgba(59, 130, 246, 0.45); color: #60a5fa;">
                     <span class="dot" id="liveDot" style="display: none;"></span>
                     <span id="matchBadge">SCHEDULED</span>
                 </div>
-                <!-- Default Venue -->
-                <span class="strip-venue" id="matchVenue">Utilita Bowl, Southampton</span>
             </div>
 
             <!-- Audio & Scorecard Action Container -->
             <div class="strip-top-right">
                 <a href="go:BBC5E" class="strip-audio-btn" id="stripAudioBtn" onclick="event.stopPropagation();" aria-label="Listen Commentary">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
                         <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
                     </svg>
@@ -593,12 +581,12 @@ body {
 
                 <div class="strip-action">
                     <span>Scorecard</span>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </div>
             </div>
         </div>
 
-        <!-- Default Scheduled Note -->
+        <!-- Match Status Note (Venue Removed) -->
         <div class="strip-status" id="matchNote">1st T20I • Starts today at 6:30 PM UK Time</div>
 
         <div class="strip-body">
@@ -816,16 +804,6 @@ function getMatchUKTime(match) {
     }).format(dateObj).toUpperCase();
 }
 
-function getVenueText(match) {
-    if (match && match.venue) {
-        const name = match.venue.name || "";
-        const location = match.venue.location || "";
-        if (name && location) return `${name}, ${location}`;
-        if (name) return name;
-    }
-    return "Utilita Bowl, Southampton";
-}
-
 async function fetchCricketScore() {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 8000);
@@ -881,9 +859,6 @@ async function fetchCricketScore() {
                     if (logoB) logoB.src = teamB.logo_url;
                 }
             }
-
-            const venueEl = document.getElementById('matchVenue');
-            if (venueEl) venueEl.textContent = getVenueText(match);
 
             let statusText = match.status_note || match.live || match.equation || "";
             const statusStr = (match.status_str || "").toLowerCase();
