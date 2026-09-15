@@ -247,7 +247,7 @@ body {
 
 @keyframes blink {
     0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.3; transform: scale(8.8); }
+    50% { opacity: 0.3; transform: scale(1.4); }
 }
 
 .strip-top-right {
@@ -568,10 +568,10 @@ body {
     <div class="cricket-strip" id="cricketStrip" onclick="window.location.href='go:card'">
         <div class="strip-top">
             <div class="strip-top-left">
-                <!-- Status Badge -->
-                <div class="live-badge" id="badgeContainer" style="background: rgba(59, 130, 246, 0.16); border: 1px solid rgba(59, 130, 246, 0.45); color: #60a5fa;">
-                    <span class="dot" id="liveDot" style="display: none;"></span>
-                    <span id="matchBadge">SCHEDULED</span>
+                <!-- Status Badge (Updated to LIVE) -->
+                <div class="live-badge" id="badgeContainer" style="background: rgba(239, 68, 68, 0.16); border: 1px solid rgba(239, 68, 68, 0.45); color: #f87171;">
+                    <span class="dot" id="liveDot" style="display: inline-block;"></span>
+                    <span id="matchBadge">LIVE</span>
                 </div>
             </div>
 
@@ -592,8 +592,8 @@ body {
             </div>
         </div>
 
-        <!-- Match Status Note -->
-        <div class="strip-status" id="matchNote">1st T20I • Starts today at 6:30 PM UK Time</div>
+        <!-- Match Status Note (Updated with Toss Info) -->
+        <div class="strip-status" id="matchNote">Sri Lanka elected to bowl</div>
 
         <div class="strip-body">
             <div class="strip-scores">
@@ -605,7 +605,7 @@ body {
                 </div>
                 <span class="strip-divider">vs</span>
                 <div class="strip-team">
-                    <img id="teamBLogo" class="team-logo" src="https://ik.imagekit.io/sqt8ptw1k/sri-lanka-women.webp?updatedAt=1789308085405" alt="SL" width="17" height="17">
+                    <img id="teamBLogo" class="team-logo" src="https://gcdnimages.entitysport.com/assets/uploads/2023/05/Sri-lanka.png" alt="SL" width="17" height="17">
                     <span class="team-code" id="teamBCode">SL</span>
                     <span class="team-runs" id="teamBScore">--</span>
                     <span class="team-overs" id="teamBOvers"></span>
@@ -788,8 +788,6 @@ window.addEventListener('click', (e) => {
 
 /* ================= Live Cricket Score Fetcher ================= */
 const MATCH_ID = "95154"; 
-
-// Cloudflare Worker URL
 const cloudflareProxyUrl = `https://bdcr.aminurmarch.workers.dev/?id=${MATCH_ID}`;
 
 function getMatchUKTime(match) {
@@ -819,99 +817,123 @@ async function fetchCricketScore() {
     try {
         const res = await fetch(cloudflareProxyUrl, { 
             signal: controller.signal, 
-            cache: "no-store"
+            cache: "no-store" 
         });
 
         if (!res.ok) return;
         const data = await res.json();
         
-        if (data && data.data && data.data.length > 0) {
-            const match = data.data[0].livescore;
-            if (!match) return;
+        let match = null;
+        let teams = null;
 
-            const teamA = match.teama;
-            const teamB = match.teamb;
-
-            if (teamA) {
-                const codeA = document.getElementById('teamACode');
-                const scoreA = document.getElementById('teamAScore');
-                if (codeA) codeA.textContent = teamA.short_name || "ENG";
-                if (scoreA) scoreA.textContent = teamA.scores || teamA.scores_full || "--";
-                
-                const overAEl = document.getElementById('teamAOvers');
-                if (overAEl) {
-                    const ovA = (teamA.overs || "").toString().trim();
-                    overAEl.textContent = ovA ? `(${ovA} ov)` : "";
-                }
-
-                if (teamA.logo_url) {
-                    const logoA = document.getElementById('teamALogo');
-                    if (logoA) logoA.src = teamA.logo_url;
-                }
-            }
-
-            if (teamB) {
-                const codeB = document.getElementById('teamBCode');
-                const scoreB = document.getElementById('teamBScore');
-                if (codeB) codeB.textContent = teamB.short_name || "SL";
-                if (scoreB) scoreB.textContent = teamB.scores || teamB.scores_full || "--";
-
-                const overBEl = document.getElementById('teamBOvers');
-                if (overBEl) {
-                    const ovB = (teamB.overs || "").toString().trim();
-                    overBEl.textContent = ovB ? `(${ovB} ov)` : "";
-                }
-
-                if (teamB.logo_url) {
-                    const logoB = document.getElementById('teamBLogo');
-                    if (logoB) logoB.src = teamB.logo_url;
-                }
-            }
-
-            let statusText = match.status_note || match.live || match.equation || "";
-            const statusStr = (match.status_str || "").toLowerCase();
-            const badgeContainer = document.getElementById('badgeContainer');
-            const badgeEl = document.getElementById('matchBadge');
-            const dotEl = document.getElementById('liveDot');
-            const matchNoteEl = document.getElementById('matchNote');
-
-            if (statusStr.includes("scheduled") || match.status === 1) {
-                const ukTime = getMatchUKTime(match);
-                const subTitle = match.subtitle || "1st T20I";
-                
-                if (matchNoteEl) matchNoteEl.textContent = `${subTitle} • Starts today at ${ukTime} UK Time`;
-                if (badgeEl) badgeEl.textContent = "SCHEDULED";
-                if (badgeContainer) {
-                    badgeContainer.style.background = "rgba(59, 130, 246, 0.16)";
-                    badgeContainer.style.borderColor = "rgba(59, 130, 246, 0.45)";
-                    badgeContainer.style.color = "#60a5fa";
-                }
-                if (dotEl) dotEl.style.display = "none";
-
-            } else if (statusStr.includes("completed") || statusStr.includes("finished") || match.status === 2) {
-                if (matchNoteEl) matchNoteEl.textContent = statusText || match.status_note || "Match Ended";
-                if (badgeEl) badgeEl.textContent = "COMPLETED";
-                if (badgeContainer) {
-                    badgeContainer.style.background = "rgba(148, 163, 184, 0.16)";
-                    badgeContainer.style.borderColor = "rgba(148, 163, 184, 0.4)";
-                    badgeContainer.style.color = "#94a3b8";
-                }
-                if (dotEl) dotEl.style.display = "none";
-
-            } else {
-                const subTitle = match.subtitle ? `${match.subtitle} • ` : "";
-                if (matchNoteEl) matchNoteEl.textContent = `${subTitle}${statusText || "Match in progress"}`;
-                if (badgeEl) badgeEl.textContent = "LIVE";
-                if (badgeContainer) {
-                    badgeContainer.style.background = "rgba(239, 68, 68, 0.16)";
-                    badgeContainer.style.borderColor = "rgba(239, 68, 68, 0.45)";
-                    badgeContainer.style.color = "#f87171";
-                }
-                if (dotEl) dotEl.style.display = "inline-block";
+        // Support direct EntitySport response structure and wrapped formats
+        if (data && data.response) {
+            match = data.response;
+            teams = match.teams;
+        } else if (data && data.data && data.data.length > 0) {
+            match = data.data[0].livescore || data.data[0];
+            if (match.teama && match.teamb) {
+                teams = [match.teama, match.teamb];
+            } else if (match.teams) {
+                teams = match.teams;
             }
         }
+
+        if (!match) return;
+
+        // Team identification
+        let teamA = null;
+        let teamB = null;
+
+        if (Array.isArray(teams) && teams.length >= 2) {
+            teamA = teams.find(t => ((t.abbr || t.short_name || "")).toUpperCase() === "ENG") || teams[1];
+            teamB = teams.find(t => ((t.abbr || t.short_name || "")).toUpperCase() === "SL") || teams[0];
+        } else if (match.teama && match.teamb) {
+            teamA = match.teama;
+            teamB = match.teamb;
+        }
+
+        // Update Team A (ENG)
+        if (teamA) {
+            const codeA = document.getElementById('teamACode');
+            const scoreA = document.getElementById('teamAScore');
+            const overAEl = document.getElementById('teamAOvers');
+            const logoA = document.getElementById('teamALogo');
+
+            if (codeA) codeA.textContent = teamA.abbr || teamA.short_name || "ENG";
+            
+            const scA = teamA.scores || teamA.scores_full || "";
+            if (scoreA) scoreA.textContent = scA.trim() !== "" ? scA : "--";
+            
+            const ovA = (teamA.overs || "").toString().trim();
+            if (overAEl) overAEl.textContent = ovA ? `(${ovA} ov)` : "";
+
+            if (teamA.logo_url && logoA) logoA.src = teamA.logo_url;
+        }
+
+        // Update Team B (SL)
+        if (teamB) {
+            const codeB = document.getElementById('teamBCode');
+            const scoreB = document.getElementById('teamBScore');
+            const overBEl = document.getElementById('teamBOvers');
+            const logoB = document.getElementById('teamBLogo');
+
+            if (codeB) codeB.textContent = teamB.abbr || teamB.short_name || "SL";
+            
+            const scB = teamB.scores || teamB.scores_full || "";
+            if (scoreB) scoreB.textContent = scB.trim() !== "" ? scB : "--";
+            
+            const ovB = (teamB.overs || "").toString().trim();
+            if (overBEl) overBEl.textContent = ovB ? `(${ovB} ov)` : "";
+
+            if (teamB.logo_url && logoB) logoB.src = teamB.logo_url;
+        }
+
+        // Match Status & Badge handling
+        const statusText = match.status_note || match.equation || match.live || "";
+        const statusStr = (match.status_str || "").toLowerCase();
+        const badgeContainer = document.getElementById('badgeContainer');
+        const badgeEl = document.getElementById('matchBadge');
+        const dotEl = document.getElementById('liveDot');
+        const matchNoteEl = document.getElementById('matchNote');
+
+        if (statusStr.includes("scheduled") || match.status === 1) {
+            const ukTime = getMatchUKTime(match);
+            const subTitle = match.subtitle || "1st T20I";
+            
+            if (matchNoteEl) matchNoteEl.textContent = `${subTitle} • Starts today at ${ukTime} UK Time`;
+            if (badgeEl) badgeEl.textContent = "SCHEDULED";
+            if (badgeContainer) {
+                badgeContainer.style.background = "rgba(59, 130, 246, 0.16)";
+                badgeContainer.style.borderColor = "rgba(59, 130, 246, 0.45)";
+                badgeContainer.style.color = "#60a5fa";
+            }
+            if (dotEl) dotEl.style.display = "none";
+
+        } else if (statusStr.includes("completed") || statusStr.includes("finished") || match.status === 2) {
+            if (matchNoteEl) matchNoteEl.textContent = statusText || match.status_note || "Match Ended";
+            if (badgeEl) badgeEl.textContent = "COMPLETED";
+            if (badgeContainer) {
+                badgeContainer.style.background = "rgba(148, 163, 184, 0.16)";
+                badgeContainer.style.borderColor = "rgba(148, 163, 184, 0.4)";
+                badgeContainer.style.color = "#94a3b8";
+            }
+            if (dotEl) dotEl.style.display = "none";
+
+        } else {
+            // Live Status (status: 3)
+            const subTitle = match.subtitle ? `${match.subtitle} • ` : "";
+            if (matchNoteEl) matchNoteEl.textContent = `${subTitle}${statusText || "Match in progress"}`;
+            if (badgeEl) badgeEl.textContent = "LIVE";
+            if (badgeContainer) {
+                badgeContainer.style.background = "rgba(239, 68, 68, 0.16)";
+                badgeContainer.style.borderColor = "rgba(239, 68, 68, 0.45)";
+                badgeContainer.style.color = "#f87171";
+            }
+            if (dotEl) dotEl.style.display = "inline-block";
+        }
     } catch (err) {
-        // network fallback quiet
+        // quiet fallback
     } finally {
         clearTimeout(timeoutId);
     }
@@ -1015,7 +1037,6 @@ function updatePrograms() {
 /* ================= Initialization ================= */
 document.addEventListener("DOMContentLoaded", () => {
     applyAudioButtonVisibility();
-
     updatePrograms();
 
     let checkCount = 0;
