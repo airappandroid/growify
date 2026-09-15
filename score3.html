@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Live Scorecard - IND-W vs SL-W, Women's Asia Cup Final</title>
+    <title>Live Scorecard - AUS vs ZIM, 1st ODI</title>
     <style>
         :root {
             --bg-base: #020617;
@@ -422,8 +422,8 @@
 
     <!-- Match Information Row -->
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">IND-W vs SL-W, Asia Cup Final</span>
-        <span id="venueHeader">📍 Dubai International Cricket Stadium, Dubai</span>
+        <span class="match-title-text" id="matchHeader">AUS vs ZIM, 1st ODI</span>
+        <span id="venueHeader">📍 Match Venue</span>
     </div>
 
     <!-- Innings Navigation Tabs -->
@@ -436,7 +436,7 @@
 </div>
 
 <script>
-    const matchId = "6a7521fb78dcf065703188cd";
+    const matchId = "6a2918947327c23debeeebc3";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
@@ -459,13 +459,13 @@
     function getInningsTabLabel(inn, idx, teamA, teamB) {
         if (inn.teamName) {
             const lower = inn.teamName.toLowerCase();
-            if (lower.includes("ind")) return "IND-W";
-            if (lower.includes("sl") || lower.includes("sri")) return "SL-W";
+            if (lower.includes("aus")) return "AUS";
+            if (lower.includes("zim")) return "ZIM";
             return inn.teamName;
         }
 
-        const aShort = teamA.shortName || "IND-W";
-        const bShort = teamB.shortName || "SL-W";
+        const aShort = teamA.shortName || "AUS";
+        const bShort = teamB.shortName || "ZIM";
 
         if (inn.key === "a_1" || inn.key === "a") return aShort;
         if (inn.key === "b_1" || inn.key === "b") return bShort;
@@ -474,8 +474,8 @@
 
     function getInningsDisplayName(inn, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
-        const aName = teamA.name || "India Women";
-        const bName = teamB.name || "Sri Lanka Women";
+        const aName = teamA.name || "Australia";
+        const bName = teamB.name || "Zimbabwe";
 
         if (inn.key === "a_1" || inn.key === "a") return `${aName} Innings`;
         if (inn.key === "b_1" || inn.key === "b") return `${bName} Innings`;
@@ -495,14 +495,14 @@
             const teamA = result.teams?.a || {};
             const teamB = result.teams?.b || {};
 
-            const nameA = teamA.shortName || teamA.name || 'IND-W';
-            const nameB = teamB.shortName || teamB.name || 'SL-W';
-            const format = (result.format || 't20').toUpperCase();
-            const tournament = result.seriesName || `${nameA} vs ${nameB}, Asia Cup Final`;
+            const nameA = teamA.shortName || teamA.name || 'AUS';
+            const nameB = teamB.shortName || teamB.name || 'ZIM';
+            const format = (result.format || 'odi').toUpperCase();
+            const tournament = result.seriesName || `${nameA} vs ${nameB}, 1st ODI`;
 
             // ১. হেডাৰ আপডেট
             document.getElementById("matchHeader").textContent = tournament;
-            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : `📍 Dubai International Cricket Stadium, Dubai`;
+            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : `📍 Match Venue`;
 
             // ২. মেচ ষ্টেটাছ নিৰ্ধাৰণ
             const rawStatus = (result.status || "").toLowerCase().replace(/\s+/g, "");
@@ -570,7 +570,7 @@
                     <div class="hero-banner">
                         <div class="hero-team">
                             <span class="hero-team-name">${nameA} vs ${nameB}</span>
-                            <span class="hero-status-tag">Asia Cup Final (${format})</span>
+                            <span class="hero-status-tag">1st ODI (${format})</span>
                         </div>
                         <div class="hero-score-box">
                             <div class="hero-score-main">MATCH READY</div>
