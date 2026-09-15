@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>England vs Pakistan - 3rd Test Scorecard</title>
+    <title>England vs Sri Lanka - 1st T20I Scorecard</title>
     <style>
         * {
             box-sizing: border-box;
@@ -347,11 +347,11 @@
     <div class="scorecard-app">
         <div class="match-card-header">
             <div class="match-title">
-                <span id="header-match">ENG vs PAK • 3rd Test</span>
+                <span id="header-match">ENG vs SL • 1st T20I</span>
                 <span class="status-badge" id="header-status">SCHEDULED</span>
             </div>
-            <div class="match-sub" id="header-venue">📍 Edgbaston, Birmingham</div>
-            <div class="status-text" id="header-note">Loading match details...</div>
+            <div class="match-sub" id="header-venue">📍 Utilita Bowl, Southampton</div>
+            <div class="status-text" id="header-note">1st T20I • Starts today at 6:30 PM UK Time</div>
         </div>
 
         <div class="tabs-container" id="tabs-container"></div>
@@ -362,24 +362,24 @@
     </div>
 
     <script>
-        const currentMatchId = "95255";
+        const currentMatchId = "95154";
         const scorecardProxyUrl = `https://cricvoice2.aminurmarch.workers.dev/?matchId=${currentMatchId}`;
         
         let matchData = null;
         let activeInningIndex = 0;
-        let userManuallySelectedInning = false; // ব্যৱহাৰকাৰীয়ে নিজে টেব সলনি নকৰালৈকে ট্ৰেক কৰিবলৈ
+        let userManuallySelectedInning = false;
 
         function getMatchUKTime(data) {
             let dateObj;
-            if (data.timestamp_start) {
+            if (data && data.timestamp_start) {
                 dateObj = new Date(data.timestamp_start * 1000);
-            } else if (data.date_start_ist) {
+            } else if (data && data.date_start_ist) {
                 dateObj = new Date(data.date_start_ist.replace(" ", "T") + "+05:30");
-            } else if (data.date_start) {
+            } else if (data && data.date_start) {
                 dateObj = new Date(data.date_start.replace(" ", "T") + "Z");
             }
 
-            if (!dateObj || isNaN(dateObj.getTime())) return "11:00 AM";
+            if (!dateObj || isNaN(dateObj.getTime())) return "6:30 PM";
 
             return new Intl.DateTimeFormat('en-GB', {
                 timeZone: 'Europe/London',
@@ -419,14 +419,14 @@
                 }
 
                 // হেডাৰ আৰু টাইটেল আপডেট
-                const subTitle = matchData.subtitle ? `${matchData.subtitle} • ` : '3rd Test • ';
-                const mainTitle = matchData.short_title || matchData.title || 'England vs Pakistan';
+                const subTitle = matchData.subtitle ? `${matchData.subtitle} • ` : '1st T20I • ';
+                const mainTitle = matchData.short_title || matchData.title || 'England vs Sri Lanka';
                 document.getElementById("header-match").textContent = `${mainTitle} (${subTitle.replace(' • ', '')})`;
 
                 // ভেনিউ আপডেট
                 const venueName = (matchData.venue && (matchData.venue.name || matchData.venue.country))
                     ? [matchData.venue.name, matchData.venue.country].filter(Boolean).join(', ')
-                    : "Edgbaston, Birmingham";
+                    : "Utilita Bowl, Southampton";
                 document.getElementById("header-venue").textContent = `📍 ${venueName}`;
 
                 // ষ্টেটাছ নিৰ্ধাৰণ
@@ -466,7 +466,7 @@
                 const badgeEl = document.getElementById("header-status");
                 const noteEl = document.getElementById("header-note");
                 const ukTime = getMatchUKTime(matchData);
-                const seriesTitle = matchData.series_name || (matchData.series && matchData.series.name) || "Pakistan tour of England 2026";
+                const seriesTitle = matchData.series_name || (matchData.series && matchData.series.name) || "Sri Lanka tour of England 2026";
 
                 let finalResultText = matchData.result || matchData.status_note || matchData.match_result || "";
 
@@ -485,14 +485,14 @@
                     badgeEl.textContent = "SCHEDULED";
                     badgeEl.className = "status-badge";
                     noteEl.className = "status-text";
-                    noteEl.textContent = `${seriesTitle} • Starts at ${ukTime} UK Time`;
+                    noteEl.textContent = `${seriesTitle} • Starts today at ${ukTime} UK Time`;
                 }
 
-                // ইনিংছ নথকা অৱস্থাত
+                // ইনিংছ নথকা অৱস্থাত (মেচ আৰম্ভ নোহোৱালৈকে)
                 if (!Array.isArray(matchData.innings) || matchData.innings.length === 0) {
                     document.getElementById("tabs-container").innerHTML = "";
                     const teamA = (matchData.teama && matchData.teama.name) || matchData.team_a || "England";
-                    const teamB = (matchData.teamb && matchData.teamb.name) || matchData.team_b || "Pakistan";
+                    const teamB = (matchData.teamb && matchData.teamb.name) || matchData.team_b || "Sri Lanka";
                     
                     container.innerHTML = `
                         <div class="upcoming-card">
@@ -506,7 +506,7 @@
                     return;
                 }
 
-                // চলিত বা সৰ্বশেষ ইনিংছ স্বয়ংক্ৰিয়ভাৱে নিৰ্বাচন কৰা (যদি ইউজাৰে আন টেব ক্লিক কৰা নাই)
+                // চলিত বা সৰ্বশেষ ইনিংছ স্বয়ংক্ৰিয়ভাৱে নিৰ্বাচন কৰা
                 if (!userManuallySelectedInning) {
                     let targetIdx = -1;
                     const liveInningNum = matchData.live_inning_number || matchData.current_inning || matchData.live_inning;
@@ -524,7 +524,6 @@
                         );
                     }
 
-                    // লাইভ ফ্লেগ নাপালে সদায় শেষৰ/শেহতীয়া ইনিংছটো নিৰ্বাচন হ'ব
                     if (targetIdx === -1) {
                         targetIdx = matchData.innings.length - 1;
                     }
@@ -560,14 +559,13 @@
                 btn.textContent = inn.name || `Inning ${inn.number || idx + 1}`;
                 
                 btn.onclick = () => {
-                    userManuallySelectedInning = true; // ইউজাৰে নিজে ক্লিক কৰিলে সেই পছন্দটো থাকিব
+                    userManuallySelectedInning = true;
                     activeInningIndex = idx;
                     renderInningTabs();
                     renderInningDetails(idx);
                 };
                 tabs.appendChild(btn);
 
-                // চলিত ইনিংছৰ টেবটো স্বয়ংক্ৰিয়ভাৱে স্ক্ৰ'ল হৈ চকুত পৰাকৈ ৰাখিবলৈ
                 if (isActive) {
                     setTimeout(() => {
                         btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
