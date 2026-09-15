@@ -362,8 +362,10 @@
     </div>
 
     <script>
-        const currentMatchId = "95154";
-        const scorecardProxyUrl = `https://cricvoice2.aminurmarch.workers.dev/?matchId=${currentMatchId}`;
+        const MATCH_ID = "95154"; 
+
+        // Cloudflare Worker URL
+        const scorecardProxyUrl = `https://bdcr.aminurmarch.workers.dev/?id=${MATCH_ID}`;
         
         let matchData = null;
         let activeInningIndex = 0;
@@ -488,7 +490,7 @@
                     noteEl.textContent = `${seriesTitle} • Starts today at ${ukTime} UK Time`;
                 }
 
-                // ইনিংছ নথকা অৱস্থাত (মেচ আৰম্ভ নোহোৱালৈকে)
+                // ইনিংছ নথকা অৱস্থাত
                 if (!Array.isArray(matchData.innings) || matchData.innings.length === 0) {
                     document.getElementById("tabs-container").innerHTML = "";
                     const teamA = (matchData.teama && matchData.teama.name) || matchData.team_a || "England";
@@ -506,7 +508,7 @@
                     return;
                 }
 
-                // চলিত বা সৰ্বশেষ ইনিংছ স্বয়ংক্ৰিয়ভাৱে নিৰ্বাচন কৰা
+                // চলিত বা সৰ্বশেষ ইনিংছ স্বয়ংক্ৰিয়ভাৱে বাছনি কৰা
                 if (!userManuallySelectedInning) {
                     let targetIdx = -1;
                     const liveInningNum = matchData.live_inning_number || matchData.current_inning || matchData.live_inning;
