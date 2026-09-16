@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radios Françaises</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Radios Françaises - Direct</title>
     <style>
         * {
             box-sizing: border-box;
@@ -13,489 +13,479 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        body {
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
             background-color: #0b1120;
             color: #f8fafc;
-            padding: 16px;
-            padding-bottom: 30px;
         }
 
-        /* Top Navigation Tabs */
-        .tab-container {
-            display: flex;
-            background: #1e293b;
-            padding: 4px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        body {
+            padding: 14px 12px 30px 12px;
         }
 
-        .tab-btn {
-            flex: 1;
-            padding: 8px 12px;
-            border: none;
-            background: transparent;
-            color: #94a3b8;
-            font-weight: 600;
-            font-size: 13px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .tab-btn.active {
-            background: #0284c7;
-            color: #ffffff;
-            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
-        }
-
-        .fav-badge {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 1px 6px;
-            border-radius: 10px;
-            font-size: 11px;
-        }
-
-        .section-header {
+        /* 1. Header */
+        .app-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-top: 20px;
+            margin-bottom: 16px;
+            width: 100%;
+        }
+
+        .brand-title {
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(90deg, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            white-space: nowrap;
+        }
+
+        .icon-btn {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            cursor: pointer;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .icon-btn svg {
+            width: 17px;
+            height: 17px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* 2. Quick Genre Chips */
+        .chips-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            margin-bottom: 18px;
+            padding-bottom: 4px;
+            width: 100%;
+        }
+
+        .chips-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .genre-chip {
+            white-space: nowrap;
+            padding: 6px 12px;
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 18px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #cbd5e1;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .genre-chip.active {
+            background: #0284c7;
+            color: #ffffff;
+            border-color: #38bdf8;
+        }
+
+        /* 3. Section Bar */
+        .section-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             margin-bottom: 12px;
+            width: 100%;
         }
 
-        .section-header:first-of-type {
-            margin-top: 0;
-        }
-
-        .section-title {
-            font-size: 16px;
+        .section-bar h2 {
+            font-size: 14px;
             font-weight: 700;
             color: #f1f5f9;
         }
 
-        /* 1. Horizontal Carousel */
-        .carousel-container {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            padding-bottom: 6px;
-            scrollbar-width: none;
-        }
-
-        .carousel-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        .carousel-card {
-            flex: 0 0 130px;
-            scroll-snap-align: start;
-            background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 12px 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            position: relative;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-            transition: transform 0.15s ease;
-        }
-
-        .carousel-card:active {
-            transform: scale(0.97);
-        }
-
-        .station-logo {
-            border-radius: 12px;
-            background: #ffffff;
-            padding: 4px;
-            object-fit: contain;
-            display: block;
-        }
-
-        .carousel-card .station-logo {
-            width: 56px;
-            height: 56px;
-            margin-bottom: 8px;
-        }
-
-        /* Fallback Badge if Image fails */
-        .logo-fallback {
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
+        .view-all-link {
             font-size: 12px;
-            color: #ffffff;
-            text-transform: uppercase;
-            border-radius: 12px;
-        }
-
-        .carousel-card .logo-fallback {
-            width: 56px;
-            height: 56px;
-            margin-bottom: 8px;
-        }
-
-        .carousel-card .station-name {
-            font-size: 13px;
-            font-weight: 600;
-            color: #f8fafc;
-            text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 100%;
-        }
-
-        .carousel-card .play-tag {
-            font-size: 11px;
             color: #38bdf8;
-            font-weight: 700;
-            margin-top: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            white-space: nowrap;
         }
 
-        /* 2. Two-Column Grid */
-        .grid-container {
+        /* 4. Stations Grid - Mobile Safe */
+        .stations-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            width: 100%;
+            margin-bottom: 18px;
         }
 
-        .grid-card {
+        .radio-card {
             background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 14px;
-            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 12px;
+            padding: 10px 8px;
             display: flex;
             align-items: center;
+            gap: 8px;
             text-decoration: none;
-            gap: 10px;
             position: relative;
+            min-width: 0;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             transition: transform 0.15s ease;
         }
 
-        .grid-card:active {
-            transform: scale(0.98);
+        .radio-card:active {
+            transform: scale(0.97);
         }
 
-        .grid-card .station-logo,
-        .grid-card .logo-fallback {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
+        .logo-wrap {
+            position: relative;
+            width: 40px;
+            height: 40px;
             flex-shrink: 0;
         }
 
-        .grid-card .station-info {
+        .station-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: #ffffff;
+            padding: 2px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .logo-fallback {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 10px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .radio-info {
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            flex-grow: 1;
+            flex: 1;
+            min-width: 0;
         }
 
-        .grid-card .station-name {
-            font-size: 13px;
-            font-weight: 600;
+        .radio-name {
+            font-size: 12px;
+            font-weight: 700;
             color: #f8fafc;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            width: 100%;
+            display: block;
         }
 
-        .grid-card .station-sub {
-            font-size: 11px;
+        .radio-desc {
+            font-size: 10px;
             color: #94a3b8;
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            display: block;
         }
 
-        /* Fallback Colors */
+        /* Fallbacks */
         .bg-inter { background: #e11d48; }
+        .bg-rtl { background: #dc2626; }
+        .bg-nrj { background: #e11d48; }
         .bg-info { background: #eab308; color: #000; }
-        .bg-ici { background: #0284c7; }
-        .bg-culture { background: #7c3aed; }
-        .bg-musique { background: #be123c; }
-        .bg-mouv { background: #10b981; color: #000; }
-        .bg-nrj { background: #dc2626; }
-        .bg-rtl { background: #b91c1c; }
-        .bg-rmc { background: #0369a1; }
-        .bg-skyrock { background: #000000; color: #38bdf8; border: 1px solid #38bdf8; }
-        .bg-nostalgie { background: #1e3a8a; color: #facc15; }
         .bg-europe1 { background: #1d4ed8; }
-        .bg-rtl2 { background: #991b1b; }
-        .bg-fun { background: #ea580c; }
+        .bg-nostalgie { background: #1e3a8a; color: #facc15; }
 
-        /* Heart / Favorite Button */
+        /* Fav Button */
         .fav-btn {
             background: transparent;
             border: none;
             cursor: pointer;
-            padding: 4px;
+            padding: 3px;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 3;
+            flex-shrink: 0;
         }
 
         .fav-btn svg {
-            width: 18px;
-            height: 18px;
+            width: 15px;
+            height: 15px;
             fill: none;
             stroke: #64748b;
             stroke-width: 2;
-            transition: all 0.2s ease;
         }
 
         .fav-btn.active svg {
             fill: #f43f5e;
             stroke: #f43f5e;
-            transform: scale(1.15);
         }
 
-        .carousel-card .fav-btn {
-            position: absolute;
-            top: 6px;
-            right: 6px;
+        /* 5. Explore CTA Card */
+        .explore-banner {
+            width: 100%;
+            background: linear-gradient(135deg, #0284c7 0%, #1e40af 100%);
+            border-radius: 14px;
+            padding: 14px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25);
+            margin-bottom: 20px;
+            min-width: 0;
         }
 
-        /* Empty State */
-        .empty-view {
-            text-align: center;
-            padding: 50px 20px;
-            color: #64748b;
-            display: none;
+        .explore-banner:active {
+            transform: scale(0.98);
         }
 
-        .empty-view svg {
-            width: 48px;
-            height: 48px;
-            stroke: #475569;
-            margin-bottom: 12px;
+        .explore-text {
+            min-width: 0;
+            flex: 1;
+            padding-right: 8px;
         }
 
-        .empty-view p {
+        .explore-text h3 {
             font-size: 14px;
-            line-height: 1.5;
+            font-weight: 700;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .explore-text p {
+            font-size: 11px;
+            color: #bae6fd;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 2px;
+        }
+
+        .explore-arrow {
+            background: rgba(255, 255, 255, 0.2);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* 6. Favorites Section */
+        .fav-section {
+            width: 100%;
+            background: #111c30;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 12px;
+            min-width: 0;
+        }
+
+        .fav-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .fav-badge {
+            background: #0284c7;
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 1px 7px;
+            border-radius: 10px;
+        }
+
+        .fav-empty-text {
+            color: #64748b;
+            font-size: 11px;
+            text-align: center;
+            padding: 12px 0;
+            line-height: 1.4;
+        }
+
+        /* অতি সৰু স্ক্ৰীনৰ বাবে (340px বা তাতকৈ কম) */
+        @media (max-width: 340px) {
+            body { padding: 10px 8px 24px 8px; }
+            .radio-card { padding: 8px 6px; gap: 6px; }
+            .logo-wrap, .station-logo, .logo-fallback { width: 34px; height: 34px; }
+            .radio-name { font-size: 11px; }
+            .radio-desc { font-size: 9px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Tab Buttons -->
-    <div class="tab-container">
-        <button class="tab-btn active" id="btn-all" onclick="showTab('all')">
-            Toutes les radios
-        </button>
-        <button class="tab-btn" id="btn-fav" onclick="showTab('fav')">
-            Favoris <span class="fav-badge" id="fav-count">0</span>
-        </button>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="brand-title">Radios Françaises</div>
+        <a href="explore.html" class="icon-btn" title="Rechercher">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </a>
+    </header>
+
+    <!-- Genre Chips -->
+    <div class="chips-scroll">
+        <a href="#" class="genre-chip active">🔥 À la une</a>
+        <a href="explore.html#news" class="genre-chip">Actualités</a>
+        <a href="explore.html#pop" class="genre-chip">Pop & Hits</a>
+        <a href="explore.html#rock" class="genre-chip">Pop-Rock</a>
+        <a href="explore.html#jazz" class="genre-chip">Classique & Jazz</a>
     </div>
 
-    <!-- 1. All Stations Section -->
-    <div id="section-all">
-        <div class="section-header">
-            <span class="section-title">🔥 Stations Populaires</span>
-        </div>
-        <div class="carousel-container">
-            
-            <!-- France Inter -->
-            <a href="go:S1" class="carousel-card" data-id="S1" data-name="France Inter" data-sub="Généraliste" data-logo="https://assets.radiofrance.fr/common/logos/stations/franceinter.svg" data-bg="bg-inter" data-tag="INTER" data-href="go:S1">
-                <button class="fav-btn" onclick="toggleFav(event, 'S1')">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </button>
+    <!-- Top Stations Header -->
+    <div class="section-bar">
+        <h2>🇫🇷 Top Écoutes</h2>
+        <a href="explore.html" class="view-all-link">Voir tout →</a>
+    </div>
+
+    <!-- Top Stations Grid -->
+    <div class="stations-grid">
+        <!-- France Inter -->
+        <a href="go:S1" class="radio-card" data-id="S1" data-name="France Inter" data-sub="Généraliste" data-logo="https://assets.radiofrance.fr/common/logos/stations/franceinter.svg" data-bg="bg-inter" data-tag="INTER" data-href="go:S1">
+            <div class="logo-wrap">
                 <img class="station-logo" src="https://assets.radiofrance.fr/common/logos/stations/franceinter.svg" alt="France Inter" onerror="handleError(this)">
                 <div class="logo-fallback bg-inter">INTER</div>
-                <span class="station-name">France Inter</span>
-                <span class="play-tag">Écouter ▶</span>
-            </a>
+            </div>
+            <div class="radio-info">
+                <span class="radio-name">France Inter</span>
+                <span class="radio-desc">Généraliste</span>
+            </div>
+            <button class="fav-btn" onclick="toggleFav(event, 'S1')">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+        </a>
 
-            <!-- franceinfo -->
-            <a href="go:S2" class="carousel-card" data-id="S2" data-name="franceinfo" data-sub="Actualités" data-logo="https://assets.radiofrance.fr/common/logos/stations/franceinfo.svg" data-bg="bg-info" data-tag="INFO" data-href="go:S2">
-                <button class="fav-btn" onclick="toggleFav(event, 'S2')">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </button>
-                <img class="station-logo" src="https://assets.radiofrance.fr/common/logos/stations/franceinfo.svg" alt="franceinfo" onerror="handleError(this)">
-                <div class="logo-fallback bg-info">INFO</div>
-                <span class="station-name">franceinfo</span>
-                <span class="play-tag">Écouter ▶</span>
-            </a>
-
-            <!-- HERE (ici) -->
-            <a href="go:S3" class="carousel-card" data-id="S3" data-name="HERE (ici)" data-sub="Régionale" data-logo="https://assets.radiofrance.fr/common/logos/stations/francebleu.svg" data-bg="bg-ici" data-tag="ICI" data-href="go:S3">
-                <button class="fav-btn" onclick="toggleFav(event, 'S3')">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </button>
-                <img class="station-logo" src="https://assets.radiofrance.fr/common/logos/stations/francebleu.svg" alt="Ici" onerror="handleError(this)">
-                <div class="logo-fallback bg-ici">ICI</div>
-                <span class="station-name">HERE (ici)</span>
-                <span class="play-tag">Écouter ▶</span>
-            </a>
-
-            <!-- France Culture -->
-            <a href="go:S4" class="carousel-card" data-id="S4" data-name="France Culture" data-sub="Culture" data-logo="https://assets.radiofrance.fr/common/logos/stations/franceculture.svg" data-bg="bg-culture" data-tag="CULTURE" data-href="go:S4">
-                <button class="fav-btn" onclick="toggleFav(event, 'S4')">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </button>
-                <img class="station-logo" src="https://assets.radiofrance.fr/common/logos/stations/franceculture.svg" alt="France Culture" onerror="handleError(this)">
-                <div class="logo-fallback bg-culture">CULTURE</div>
-                <span class="station-name">France Culture</span>
-                <span class="play-tag">Écouter ▶</span>
-            </a>
-
-            <!-- France Musique -->
-            <a href="go:S5" class="carousel-card" data-id="S5" data-name="France Musique" data-sub="Classique" data-logo="https://assets.radiofrance.fr/common/logos/stations/francemusique.svg" data-bg="bg-musique" data-tag="MUSIQUE" data-href="go:S5">
-                <button class="fav-btn" onclick="toggleFav(event, 'S5')">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </button>
-                <img class="station-logo" src="https://assets.radiofrance.fr/common/logos/stations/francemusique.svg" alt="France Musique" onerror="handleError(this)">
-                <div class="logo-fallback bg-musique">MUSIQUE</div>
-                <span class="station-name">France Musique</span>
-                <span class="play-tag">Écouter ▶</span>
-            </a>
-
-            <!-- Mouv' -->
-            <a href="go:S6" class="carousel-card" data-id="S6" data-name="Mouv'" data-sub="Urbain" data-logo="https://assets.radiofrance.fr/common/logos/stations/mouv.svg" data-bg="bg-mouv" data-tag="MOUV'" data-href="go:S6">
-                <button class="fav-btn" onclick="toggleFav(event, 'S6')">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </button>
-                <img class="station-logo" src="https://assets.radiofrance.fr/common/logos/stations/mouv.svg" alt="Mouv'" onerror="handleError(this)">
-                <div class="logo-fallback bg-mouv">MOUV'</div>
-                <span class="station-name">Mouv'</span>
-                <span class="play-tag">Écouter ▶</span>
-            </a>
-
-        </div>
-
-        <div class="section-header">
-            <span class="section-title">📻 Radios Commerciales & Hits</span>
-        </div>
-        <div class="grid-container">
-
-            <!-- NRJ -->
-            <a href="go:S7" class="grid-card" data-id="S7" data-name="NRJ" data-sub="Hit Music" data-logo="https://cdn-profiles.tunein.com/s25395/images/logod.png" data-bg="bg-nrj" data-tag="NRJ" data-href="go:S7">
-                <img class="station-logo" src="https://cdn-profiles.tunein.com/s25395/images/logod.png" alt="NRJ" onerror="handleError(this)">
-                <div class="logo-fallback bg-nrj">NRJ</div>
-                <div class="station-info">
-                    <span class="station-name">NRJ</span>
-                    <span class="station-sub">Hit Music</span>
-                </div>
-                <button class="fav-btn" onclick="toggleFav(event, 'S7')">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </button>
-            </a>
-
-            <!-- RTL -->
-            <a href="go:S8" class="grid-card" data-id="S8" data-name="RTL" data-sub="Généraliste" data-logo="https://cdn-profiles.tunein.com/s6606/images/logod.png" data-bg="bg-rtl" data-tag="RTL" data-href="go:S8">
+        <!-- RTL -->
+        <a href="go:S8" class="radio-card" data-id="S8" data-name="RTL" data-sub="Info & Musique" data-logo="https://cdn-profiles.tunein.com/s6606/images/logod.png" data-bg="bg-rtl" data-tag="RTL" data-href="go:S8">
+            <div class="logo-wrap">
                 <img class="station-logo" src="https://cdn-profiles.tunein.com/s6606/images/logod.png" alt="RTL" onerror="handleError(this)">
                 <div class="logo-fallback bg-rtl">RTL</div>
-                <div class="station-info">
-                    <span class="station-name">RTL</span>
-                    <span class="station-sub">Généraliste</span>
-                </div>
-                <button class="fav-btn" onclick="toggleFav(event, 'S8')">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </button>
-            </a>
+            </div>
+            <div class="radio-info">
+                <span class="radio-name">RTL</span>
+                <span class="radio-desc">Info & Débats</span>
+            </div>
+            <button class="fav-btn" onclick="toggleFav(event, 'S8')">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+        </a>
 
-            <!-- RMC -->
-            <a href="go:S9" class="grid-card" data-id="S9" data-name="RMC" data-sub="Info & Sport" data-logo="https://cdn-profiles.tunein.com/s6599/images/logod.png" data-bg="bg-rmc" data-tag="RMC" data-href="go:S9">
-                <img class="station-logo" src="https://cdn-profiles.tunein.com/s6599/images/logod.png" alt="RMC" onerror="handleError(this)">
-                <div class="logo-fallback bg-rmc">RMC</div>
-                <div class="station-info">
-                    <span class="station-name">RMC</span>
-                    <span class="station-sub">Info & Sport</span>
-                </div>
-                <button class="fav-btn" onclick="toggleFav(event, 'S9')">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </button>
-            </a>
+        <!-- NRJ -->
+        <a href="go:S7" class="radio-card" data-id="S7" data-name="NRJ" data-sub="Hit Music Only" data-logo="https://cdn-profiles.tunein.com/s25395/images/logod.png" data-bg="bg-nrj" data-tag="NRJ" data-href="go:S7">
+            <div class="logo-wrap">
+                <img class="station-logo" src="https://cdn-profiles.tunein.com/s25395/images/logod.png" alt="NRJ" onerror="handleError(this)">
+                <div class="logo-fallback bg-nrj">NRJ</div>
+            </div>
+            <div class="radio-info">
+                <span class="radio-name">NRJ</span>
+                <span class="radio-desc">Hit Music</span>
+            </div>
+            <button class="fav-btn" onclick="toggleFav(event, 'S7')">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+        </a>
 
-            <!-- Skyrock -->
-            <a href="go:S10" class="grid-card" data-id="S10" data-name="Skyrock" data-sub="Rap & RnB" data-logo="https://cdn-profiles.tunein.com/s25394/images/logod.png" data-bg="bg-skyrock" data-tag="SKY" data-href="go:S10">
-                <img class="station-logo" src="https://cdn-profiles.tunein.com/s25394/images/logod.png" alt="Skyrock" onerror="handleError(this)">
-                <div class="logo-fallback bg-skyrock">SKY</div>
-                <div class="station-info">
-                    <span class="station-name">Skyrock</span>
-                    <span class="station-sub">Rap & RnB</span>
-                </div>
-                <button class="fav-btn" onclick="toggleFav(event, 'S10')">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </button>
-            </a>
+        <!-- franceinfo -->
+        <a href="go:S2" class="radio-card" data-id="S2" data-name="franceinfo" data-sub="Actualités" data-logo="https://assets.radiofrance.fr/common/logos/stations/franceinfo.svg" data-bg="bg-info" data-tag="INFO" data-href="go:S2">
+            <div class="logo-wrap">
+                <img class="station-logo" src="https://assets.radiofrance.fr/common/logos/stations/franceinfo.svg" alt="franceinfo" onerror="handleError(this)">
+                <div class="logo-fallback bg-info">INFO</div>
+            </div>
+            <div class="radio-info">
+                <span class="radio-name">franceinfo</span>
+                <span class="radio-desc">En Continu</span>
+            </div>
+            <button class="fav-btn" onclick="toggleFav(event, 'S2')">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+        </a>
 
-            <!-- Nostalgie -->
-            <a href="go:S11" class="grid-card" data-id="S11" data-name="Nostalgie" data-sub="Hits 70-80" data-logo="https://cdn-profiles.tunein.com/s24993/images/logod.png" data-bg="bg-nostalgie" data-tag="NOST" data-href="go:S11">
+        <!-- Nostalgie -->
+        <a href="go:S11" class="radio-card" data-id="S11" data-name="Nostalgie" data-sub="Hits 70-80" data-logo="https://cdn-profiles.tunein.com/s24993/images/logod.png" data-bg="bg-nostalgie" data-tag="NOST" data-href="go:S11">
+            <div class="logo-wrap">
                 <img class="station-logo" src="https://cdn-profiles.tunein.com/s24993/images/logod.png" alt="Nostalgie" onerror="handleError(this)">
                 <div class="logo-fallback bg-nostalgie">NOST</div>
-                <div class="station-info">
-                    <span class="station-name">Nostalgie</span>
-                    <span class="station-sub">Hits 70-80</span>
-                </div>
-                <button class="fav-btn" onclick="toggleFav(event, 'S11')">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </button>
-            </a>
+            </div>
+            <div class="radio-info">
+                <span class="radio-name">Nostalgie</span>
+                <span class="radio-desc">Légendes</span>
+            </div>
+            <button class="fav-btn" onclick="toggleFav(event, 'S11')">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+        </a>
 
-            <!-- Europe 1 -->
-            <a href="go:S12" class="grid-card" data-id="S12" data-name="Europe 1" data-sub="Info & Talk" data-logo="https://cdn-profiles.tunein.com/s6566/images/logod.png" data-bg="bg-europe1" data-tag="E1" data-href="go:S12">
+        <!-- Europe 1 -->
+        <a href="go:S12" class="radio-card" data-id="S12" data-name="Europe 1" data-sub="Info & Talk" data-logo="https://cdn-profiles.tunein.com/s6566/images/logod.png" data-bg="bg-europe1" data-tag="E1" data-href="go:S12">
+            <div class="logo-wrap">
                 <img class="station-logo" src="https://cdn-profiles.tunein.com/s6566/images/logod.png" alt="Europe 1" onerror="handleError(this)">
                 <div class="logo-fallback bg-europe1">E1</div>
-                <div class="station-info">
-                    <span class="station-name">Europe 1</span>
-                    <span class="station-sub">Info & Talk</span>
-                </div>
-                <button class="fav-btn" onclick="toggleFav(event, 'S12')">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </button>
-            </a>
-
-            <!-- RTL2 -->
-            <a href="go:S13" class="grid-card" data-id="S13" data-name="RTL2" data-sub="Pop-Rock" data-logo="https://cdn-profiles.tunein.com/s25884/images/logod.png" data-bg="bg-rtl2" data-tag="RTL2" data-href="go:S13">
-                <img class="station-logo" src="https://cdn-profiles.tunein.com/s25884/images/logod.png" alt="RTL2" onerror="handleError(this)">
-                <div class="logo-fallback bg-rtl2">RTL2</div>
-                <div class="station-info">
-                    <span class="station-name">RTL2</span>
-                    <span class="station-sub">Pop-Rock</span>
-                </div>
-                <button class="fav-btn" onclick="toggleFav(event, 'S13')">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </button>
-            </a>
-
-            <!-- Fun Radio -->
-            <a href="go:S14" class="grid-card" data-id="S14" data-name="Fun Radio" data-sub="Electro" data-logo="https://cdn-profiles.tunein.com/s6572/images/logod.png" data-bg="bg-fun" data-tag="FUN" data-href="go:S14">
-                <img class="station-logo" src="https://cdn-profiles.tunein.com/s6572/images/logod.png" alt="Fun Radio" onerror="handleError(this)">
-                <div class="logo-fallback bg-fun">FUN</div>
-                <div class="station-info">
-                    <span class="station-name">Fun Radio</span>
-                    <span class="station-sub">Electro</span>
-                </div>
-                <button class="fav-btn" onclick="toggleFav(event, 'S14')">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </button>
-            </a>
-
-        </div>
+            </div>
+            <div class="radio-info">
+                <span class="radio-name">Europe 1</span>
+                <span class="radio-desc">Info & Talk</span>
+            </div>
+            <button class="fav-btn" onclick="toggleFav(event, 'S12')">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+        </a>
     </div>
 
-    <!-- 2. Favorites Section -->
-    <div id="section-fav" style="display: none;">
-        <div class="grid-container" id="fav-list-grid"></div>
-        <div class="empty-view" id="fav-empty">
-            <svg viewBox="0 0 24 24" fill="none"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-            <p>Aucune station favorite pour le moment.<br>Appuyez sur le ❤️ pour en ajouter.</p>
+    <!-- Explore CTA Banner -->
+    <a href="explore.html" class="explore-banner">
+        <div class="explore-text">
+            <h3>Explorer +100 Radios</h3>
+            <p>Par thèmes, régions & fréquences</p>
+        </div>
+        <div class="explore-arrow">→</div>
+    </a>
+
+    <!-- Favorites Box -->
+    <div class="fav-section">
+        <div class="fav-header">
+            <span style="font-size: 13px; font-weight: 700; color: #e2e8f0;">❤️ Mes Favoris</span>
+            <span class="fav-badge" id="fav-count">0</span>
+        </div>
+        <div id="fav-container" class="stations-grid" style="margin-bottom: 0;"></div>
+        <div id="fav-empty" class="fav-empty-text">
+            Aucun favori enregistré.<br>Appuyez sur le ❤️ pour en ajouter.
         </div>
     </div>
 
     <script>
-        // Fallback Handler: If image fails, reveal the station's colored badge
         function handleError(img) {
             img.style.display = 'none';
             if (img.nextElementSibling && img.nextElementSibling.classList.contains('logo-fallback')) {
@@ -503,9 +493,8 @@
             }
         }
 
-        // Store station data
         const stations = {};
-        document.querySelectorAll('[data-id]').forEach(el => {
+        document.querySelectorAll('.radio-card[data-id]').forEach(el => {
             stations[el.dataset.id] = {
                 id: el.dataset.id,
                 name: el.dataset.name,
@@ -517,7 +506,6 @@
             };
         });
 
-        // Use a clean versioned key to clear any corrupt old data
         const STORAGE_KEY = 'radio_favs_v2';
 
         function getFavorites() {
@@ -551,8 +539,7 @@
         function updateUI() {
             const favs = getFavorites();
 
-            // 1. Sync hearts
-            document.querySelectorAll('[data-id]').forEach(el => {
+            document.querySelectorAll('.radio-card[data-id]').forEach(el => {
                 const id = el.dataset.id;
                 const btn = el.querySelector('.fav-btn');
                 if (btn) {
@@ -564,57 +551,41 @@
                 }
             });
 
-            // 2. Sync count
-            document.getElementById('fav-count').innerText = favs.length;
+            const countEl = document.getElementById('fav-count');
+            if (countEl) countEl.innerText = favs.length;
 
-            // 3. Render Favorites Grid
-            const favGrid = document.getElementById('fav-list-grid');
-            const emptyView = document.getElementById('fav-empty');
-            favGrid.innerHTML = '';
+            const favContainer = document.getElementById('fav-container');
+            const emptyText = document.getElementById('fav-empty');
+            if (!favContainer || !emptyText) return;
+
+            favContainer.innerHTML = '';
 
             if (favs.length === 0) {
-                emptyView.style.display = 'block';
+                emptyText.style.display = 'block';
             } else {
-                emptyView.style.display = 'none';
+                emptyText.style.display = 'none';
                 favs.forEach(id => {
                     const item = stations[id];
                     if (!item) return;
 
                     const card = document.createElement('a');
                     card.href = item.href;
-                    card.className = 'grid-card';
+                    card.className = 'radio-card';
                     card.innerHTML = `
-                        <img class="station-logo" src="${item.logo}" alt="${item.name}" onerror="handleError(this)">
-                        <div class="logo-fallback ${item.bg}">${item.tag}</div>
-                        <div class="station-info">
-                            <span class="station-name">${item.name}</span>
-                            <span class="station-sub">${item.sub}</span>
+                        <div class="logo-wrap">
+                            <img class="station-logo" src="${item.logo}" alt="${item.name}" onerror="handleError(this)">
+                            <div class="logo-fallback ${item.bg}">${item.tag}</div>
+                        </div>
+                        <div class="radio-info">
+                            <span class="radio-name">${item.name}</span>
+                            <span class="radio-desc">${item.sub}</span>
                         </div>
                         <button class="fav-btn active" onclick="toggleFav(event, '${item.id}')">
                             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                         </button>
                     `;
-                    favGrid.appendChild(card);
+                    favContainer.appendChild(card);
                 });
-            }
-        }
-
-        function showTab(tab) {
-            const btnAll = document.getElementById('btn-all');
-            const btnFav = document.getElementById('btn-fav');
-            const secAll = document.getElementById('section-all');
-            const secFav = document.getElementById('section-fav');
-
-            if (tab === 'all') {
-                btnAll.classList.add('active');
-                btnFav.classList.remove('active');
-                secAll.style.display = 'block';
-                secFav.style.display = 'none';
-            } else {
-                btnFav.classList.add('active');
-                btnAll.classList.remove('active');
-                secAll.style.display = 'none';
-                secFav.style.display = 'block';
             }
         }
 
