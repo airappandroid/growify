@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Explorer les Radios - Radios Françaises</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            background-color: #0b1120;
+            color: #f8fafc;
+        }
+
+        body {
+            padding: 14px 12px 36px 12px;
+        }
+
+        /* 1. Header with Back Button */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .back-btn {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f8fafc;
+            text-decoration: none;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:active {
+            transform: scale(0.92);
+            background: #334155;
+        }
+
+        .back-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.5;
+        }
+
+        .nav-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #f1f5f9;
+        }
+
+        /* 2. Instant Search Bar */
+        .search-box {
+            position: relative;
+            margin-bottom: 14px;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 10px 12px 10px 38px;
+            font-size: 13px;
+            color: #ffffff;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input:focus {
+            border-color: #0284c7;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            stroke: #94a3b8;
+            fill: none;
+            stroke-width: 2;
+            pointer-events: none;
+        }
+
+        /* 3. Filter Chips */
+        .chips-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            margin-bottom: 18px;
+            padding-bottom: 2px;
+            width: 100%;
+        }
+
+        .chips-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .chip-btn {
+            white-space: nowrap;
+            padding: 6px 12px;
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 18px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #94a3b8;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .chip-btn.active {
+            background: #0284c7;
+            color: #ffffff;
+            border-color: #38bdf8;
+        }
+
+        /* 4. Section Bar */
+        .section-header {
+            margin: 18px 0 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-header:first-of-type {
+            margin-top: 0;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* 5. Mobile-Safe Stations Grid */
+        .stations-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            width: 100%;
+        }
+
+        .radio-card {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 12px;
+            padding: 10px 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            min-width: 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.15s ease;
+        }
+
+        .radio-card:active {
+            transform: scale(0.97);
+        }
+
+        .logo-wrap {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+        }
+
+        .station-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: #ffffff;
+            padding: 2px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .logo-fallback {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 10px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .radio-info {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .radio-name {
+            font-size: 12px;
+            font-weight: 700;
+            color: #f8fafc;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            display: block;
+        }
+
+        .radio-desc {
+            font-size: 10px;
+            color: #94a3b8;
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            display: block;
+        }
+
+        /* Fallbacks */
+        .bg-inter { background: #e11d48; }
+        .bg-info { background: #eab308; color: #000; }
+        .bg-europe1 { background: #1d4ed8; }
+        .bg-rmc { background: #0369a1; }
+        .bg-rfi { background: #dc2626; }
+        .bg-bfm { background: #0284c7; }
+        .bg-nrj { background: #dc2626; }
+        .bg-rtl { background: #b91c1c; }
+        .bg-fun { background: #ea580c; }
+        .bg-skyrock { background: #000000; color: #38bdf8; border: 1px solid #38bdf8; }
+        .bg-cherie { background: #db2777; }
+        .bg-europe2 { background: #dc2626; }
+        .bg-nostalgie { background: #1e3a8a; color: #facc15; }
+        .bg-rtl2 { background: #991b1b; }
+        .bg-rfm { background: #0284c7; }
+        .bg-ouifm { background: #b91c1c; }
+        .bg-fip { background: #be185d; }
+        .bg-classique { background: #475569; }
+        .bg-musique { background: #be123c; }
+        .bg-jazz { background: #0f766e; }
+        .bg-rire { background: #f59e0b; color: #000; }
+        .bg-ici { background: #0284c7; }
+
+        /* Fav Button */
+        .fav-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .fav-btn svg {
+            width: 15px;
+            height: 15px;
+            fill: none;
+            stroke: #64748b;
+            stroke-width: 2;
+        }
+
+        .fav-btn.active svg {
+            fill: #f43f5e;
+            stroke: #f43f5e;
+        }
+
+        /* Empty State */
+        .empty-results {
+            text-align: center;
+            padding: 40px 16px;
+            color: #64748b;
+            font-size: 13px;
+            display: none;
+        }
+
+        @media (max-width: 340px) {
+            body { padding: 10px 8px 24px 8px; }
+            .radio-card { padding: 8px 6px; gap: 6px; }
+            .logo-wrap, .station-logo, .logo-fallback { width: 34px; height: 34px; }
+            .radio-name { font-size: 11px; }
+            .radio-desc { font-size: 9px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Top Bar -->
+    <header class="top-nav">
+        <!-- Back to Home -->
+        <a href="index.html" class="back-btn" title="Retour">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </a>
+        <h1 class="nav-title">Explorer les radios</h1>
+    </header>
+
+    <!-- 2. Instant Search Input -->
+    <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="search" id="search-input" class="search-input" placeholder="Rechercher une station ou style..." oninput="handleSearch()">
+    </div>
+
+    <!-- 3. Category Filter Chips -->
+    <div class="chips-scroll">
+        <button class="chip-btn active" onclick="filterCategory('all', this)">Tous</button>
+        <button class="chip-btn" onclick="filterCategory('actu', this)">Actualités</button>
+        <button class="chip-btn" onclick="filterCategory('pop', this)">Pop & Hits</button>
+        <button class="chip-btn" onclick="filterCategory('rock', this)">Rock & Vintage</button>
+        <button class="chip-btn" onclick="filterCategory('jazz', this)">Classique & Jazz</button>
+        <button class="chip-btn" onclick="filterCategory('humour', this)">Humour</button>
+        <button class="chip-btn" onclick="filterCategory('regions', this)">Régions</button>
+    </div>
+
+    <!-- 4. Stations List by Categories -->
+    <div id="catalog-container">
+
+        <!-- SECTION: ACTU & INFO -->
+        <div class="genre-group" data-genre="actu">
+            <div class="section-header">
+                <span class="section-title">📰 Actu & Débats</span>
+            </div>
+            <div class="stations-grid">
+                <!-- France Inter -->
+                <a href="go:S1" class="radio-card" data-id="S1" data-genre="actu" data-keywords="france inter generaliste actu talk news">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://assets.radiofrance.fr/common/logos/stations/franceinter.svg" alt="France Inter" onerror="handleError(this)">
+                        <div class="logo-fallback bg-inter">INTER</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">France Inter</span>
+                        <span class="radio-desc">Généraliste</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S1')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+
+                <!-- franceinfo -->
+                <a href="go:S2" class="radio-card" data-id="S2" data-genre="actu" data-keywords="franceinfo actualite news en continu">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://assets.radiofrance.fr/common/logos/stations/franceinfo.svg" alt="franceinfo" onerror="handleError(this)">
+                        <div class="logo-fallback bg-info">INFO</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">franceinfo</span>
+                        <span class="radio-desc">En Continu</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S2')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+
+                <!-- Europe 1 -->
+                <a href="go:S12" class="radio-card" data-id="S12" data-genre="actu" data-keywords="europe 1 talk debats politique news">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://cdn-profiles.tunein.com/s6566/images/logod.png" alt="Europe 1" onerror="handleError(this)">
+                        <div class="logo-fallback bg-europe1">E1</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">Europe 1</span>
+                        <span class="radio-desc">Info & Talk</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S12')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+
+                <!-- RMC -->
+                <a href="go:S9" class="radio-card" data-id="S9" data-genre="actu" data-keywords="rmc info sport debats football">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://cdn-profiles.tunein.com/s6599/images/logod.png" alt="RMC" onerror="handleError(this)">
+                        <div class="logo-fallback bg-rmc">RMC</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">RMC</span>
+                        <span class="radio-desc">Info & Sport</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S9')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+
+                <!-- RFI -->
+                <a href="go:S15" class="radio-card" data-id="S15" data-genre="actu" data-keywords="rfi monde international afrique francais">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://cdn-profiles.tunein.com/s6588/images/logod.png" alt="RFI" onerror="handleError(this)">
+                        <div class="logo-fallback bg-rfi">RFI</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">RFI Monde</span>
+                        <span class="radio-desc">International</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S15')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+
+                <!-- BFM Business -->
+                <a href="go:S16" class="radio-card" data-id="S16" data-genre="actu" data-keywords="bfm business bourse economie finance">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://cdn-profiles.tunein.com/s6580/images/logod.png" alt="BFM" onerror="handleError(this)">
+                        <div class="logo-fallback bg-bfm">BFM</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">BFM Business</span>
+                        <span class="radio-desc">Économie</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S16')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <!-- SECTION: POP & HITS -->
+        <div class="genre-group" data-genre="pop">
+            <div class="section-header">
+                <span class="section-title">🔥 Hits, Pop & Urbain</span>
+            </div>
+            <div class="stations-grid">
+                <!-- NRJ -->
+                <a href="go:S7" class="radio-card" data-id="S7" data-genre="pop" data-keywords="nrj hit music pop dance musique">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://cdn-profiles.tunein.com/s25395/images/logod.png" alt="NRJ" onerror="handleError(this)">
+                        <div class="logo-fallback bg-nrj">NRJ</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">NRJ</span>
+                        <span class="radio-desc">Hit Music Only</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S7')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+
+                <!-- RTL -->
+                <a href="go:S8" class="radio-card" data-id="S8" data-genre="pop" data-keywords="rtl hits musique debats">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://cdn-profiles.tunein.com/s6606/images/logod.png" alt="RTL" onerror="handleError(this)">
+                        <div class="logo-fallback bg-rtl">RTL</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">RTL</span>
+                        <span class="radio-desc">Info & Musique</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S8')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+
+                <!-- Skyrock -->
+                <a href="go:S10" class="radio-card" data-id="S10" data-genre="pop" data-keywords="skyrock rap rnb hiphop urban skyrock">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://cdn-profiles.tunein.com/s25394/images/logod.png" alt="Skyrock" onerror="handleError(this)">
+                        <div class="logo-fallback bg-skyrock">SKY</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">Skyrock</span>
+                        <span class="radio-desc">Rap & RnB</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S10')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+
+                <!-- Fun Radio -->
+                <a href="go:S14" class="radio-card" data-id="S14" data-genre="pop" data-keywords="fun radio electro dance dj">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://cdn-profiles.tunein.com/s6572/images/logod.png" alt="Fun Radio" onerror="handleError(this)">
+                        <div class="logo-fallback bg-fun">FUN</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">Fun Radio</span>
+                        <span class="radio-desc">Electro & Hits</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S14')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+
+                <!-- Chérie FM -->
+                <a href="go:S17" class="radio-card" data-id="S17" data-genre="pop" data-keywords="cherie fm feel good pop love chansons">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://cdn-profiles.tunein.com/s25396/images/logod.png" alt="Chérie FM" onerror="handleError(this)">
+                        <div class="logo-fallback bg-cherie">CHÉRIE</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">Chérie FM</span>
+                        <span class="radio-desc">Feel Good Pop</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S17')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+
+                <!-- Europe 2 -->
+                <a href="go:S18" class="radio-card" data-id="S18" data-genre="pop" data-keywords="europe 2 virgin pop rock hits moderne">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://cdn-profiles.tunein.com/s24992/images/logod.png" alt="Europe 2" onerror="handleError(this)">
+                        <div class="logo-fallback bg-europe2">E2</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">Europe 2</span>
+                        <span class="radio-desc">Le Meilleur Son</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S18')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <!-- SECTION: ROCK & VINTAGE -->
+        <div class="genre-group" data-genre="rock">
+            <div class="section-header">
+                <span class="section-title">🎸 Pop-Rock & 70-80-90</span>
+            </div>
+            <div class="stations-grid">
+                <!-- Nostalgie -->
+                <a href="go:S11" class="radio-card" data-id="S11" data-genre="rock" data-keywords="nostalgie hits 70 80 annees 80 vintage legende">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://cdn-profiles.tunein.com/s24993/images/logod.png" alt="Nostalgie" onerror="handleError(this)">
+                        <div class="logo-fallback bg-nostalgie">NOST</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">Nostalgie</span>
+                        <span class="radio-desc">Hits 70-80</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S11')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+
+                <!-- RTL2 -->
+                <a href="go:S13" class="radio-card" data-id="S13" data-genre="rock" data-keywords="rtl2 pop rock acoustique guitare">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://cdn-profiles.tunein.com/s25884/images/logod.png" alt="RTL2" onerror="handleError(this)">
+                        <div class="logo-fallback bg-rtl2">RTL2</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">RTL2</span>
+                        <span class="radio-desc">Son Pop-Rock</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S13')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+
+                <!-- RFM -->
+                <a href="go:S19" class="radio-card" data-id="S19" data-genre="rock" data-keywords="rfm le meilleur de la musique annees 80 90">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://cdn-profiles.tunein.com/s25397/images/logod.png" alt="RFM" onerror="handleError(this)">
+                        <div class="logo-fallback bg-rfm">RFM</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">RFM</span>
+                        <span class="radio-desc">Best Music</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S19')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+
+                <!-- OUI FM -->
+                <a href="go:S20" class="radio-card" data-id="S20" data-genre="rock" data-keywords="oui fm rock pur hard rock alternative">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://cdn-profiles.tunein.com/s6593/images/logod.png" alt="Ouï FM" onerror="handleError(this)">
+                        <div class="logo-fallback bg-ouifm">OUI</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">Ouï FM</span>
+                        <span class="radio-desc">Le Son Rock</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S20')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <!-- SECTION: JAZZ & CLASSIQUE -->
+        <div class="genre-group" data-genre="jazz">
+            <div class="section-header">
+                <span class="section-title">🎻 Détente, Classique & Jazz</span>
+            </div>
+            <div class="stations-grid">
+                <!-- FIP -->
+                <a href="go:S21" class="radio-card" data-id="S21" data-genre="jazz" data-keywords="fip eclectique sans pub jazz funk chillout">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://assets.radiofrance.fr/common/logos/stations/fip.svg" alt="FIP" onerror="handleError(this)">
+                        <div class="logo-fallback bg-fip">FIP</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">FIP</span>
+                        <span class="radio-desc">Éclectique & Zen</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S21')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+
+                <!-- Radio Classique -->
+                <a href="go:S22" class="radio-card" data-id="S22" data-genre="jazz" data-keywords="radio classique mozart bach opera actu">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://cdn-profiles.tunein.com/s6598/images/logod.png" alt="Radio Classique" onerror="handleError(this)">
+                        <div class="logo-fallback bg-classique">CLASS</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">Radio Classique</span>
+                        <span class="radio-desc">Classique & Éco</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S22')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+
+                <!-- France Musique -->
+                <a href="go:S5" class="radio-card" data-id="S5" data-genre="jazz" data-keywords="france musique classique opera orchestre concert">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://assets.radiofrance.fr/common/logos/stations/francemusique.svg" alt="France Musique" onerror="handleError(this)">
+                        <div class="logo-fallback bg-musique">MUSIQUE</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">France Musique</span>
+                        <span class="radio-desc">Classique</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S5')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+
+                <!-- TSF Jazz -->
+                <a href="go:S23" class="radio-card" data-id="S23" data-genre="jazz" data-keywords="tsf jazz blues swing soul impro">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://cdn-profiles.tunein.com/s24994/images/logod.png" alt="TSF Jazz" onerror="handleError(this)">
+                        <div class="logo-fallback bg-jazz">JAZZ</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">TSF Jazz</span>
+                        <span class="radio-desc">100% Jazz</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S23')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <!-- SECTION: HUMOUR -->
+        <div class="genre-group" data-genre="humour">
+            <div class="section-header">
+                <span class="section-title">😄 Humour & sketches</span>
+            </div>
+            <div class="stations-grid">
+                <!-- Rire & Chansons -->
+                <a href="go:S24" class="radio-card" data-id="S24" data-genre="humour" data-keywords="rire et chansons humour blagues comedie sketch rock">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://cdn-profiles.tunein.com/s25399/images/logod.png" alt="Rire & Chansons" onerror="handleError(this)">
+                        <div class="logo-fallback bg-rire">RIRE</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">Rire & Chansons</span>
+                        <span class="radio-desc">Humour & Sketches</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S24')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <!-- SECTION: RÉGIONS (France Bleu) -->
+        <div class="genre-group" data-genre="regions">
+            <div class="section-header">
+                <span class="section-title">📍 Radios Régionales (ici)</span>
+            </div>
+            <div class="stations-grid">
+                <!-- France Bleu Paris -->
+                <a href="go:S3" class="radio-card" data-id="S3" data-genre="regions" data-keywords="france bleu paris ile de france ici regionale">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://assets.radiofrance.fr/common/logos/stations/francebleu.svg" alt="France Bleu" onerror="handleError(this)">
+                        <div class="logo-fallback bg-ici">ICI</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">ici Paris</span>
+                        <span class="radio-desc">Île-de-France</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S3')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+
+                <!-- France Bleu Provence -->
+                <a href="go:S25" class="radio-card" data-id="S25" data-genre="regions" data-keywords="france bleu provence marseille sud paca">
+                    <div class="logo-wrap">
+                        <img class="station-logo" src="https://assets.radiofrance.fr/common/logos/stations/francebleu.svg" alt="Provence" onerror="handleError(this)">
+                        <div class="logo-fallback bg-ici">ICI</div>
+                    </div>
+                    <div class="radio-info">
+                        <span class="radio-name">ici Provence</span>
+                        <span class="radio-desc">Marseille & Sud</span>
+                    </div>
+                    <button class="fav-btn" onclick="toggleFav(event, 'S25')">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Empty Search Results -->
+    <div id="no-results" class="empty-results">
+        <p>Aucune station trouvée pour cette recherche.<br>Essayez un autre mot-clé.</p>
+    </div>
+
+    <script>
+        // Fallback badge if image fails to load
+        function handleError(img) {
+            img.style.display = 'none';
+            if (img.nextElementSibling && img.nextElementSibling.classList.contains('logo-fallback')) {
+                img.nextElementSibling.style.display = 'flex';
+            }
+        }
+
+        // Keep favorites synced with the exact same localStorage key as the Home page
+        const STORAGE_KEY = 'radio_favs_v2';
+
+        function getFavorites() {
+            try {
+                return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveFavorites(favs) {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(favs));
+            } catch (e) {}
+            syncHearts();
+        }
+
+        function toggleFav(event, id) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            let favs = getFavorites();
+            if (favs.includes(id)) {
+                favs = favs.filter(item => item !== id);
+            } else {
+                favs.push(id);
+            }
+            saveFavorites(favs);
+        }
+
+        function syncHearts() {
+            const favs = getFavorites();
+            document.querySelectorAll('.radio-card[data-id]').forEach(el => {
+                const id = el.dataset.id;
+                const btn = el.querySelector('.fav-btn');
+                if (btn) {
+                    if (favs.includes(id)) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                }
+            });
+        }
+
+        // Instant Search Logic
+        function handleSearch() {
+            const query = document.getElementById('search-input').value.trim().toLowerCase();
+            const groups = document.querySelectorAll('.genre-group');
+            const cards = document.querySelectorAll('.radio-card');
+            const noResults = document.getElementById('no-results');
+            let totalVisible = 0;
+
+            if (query === "") {
+                // Reset to active category filter
+                const activeChip = document.querySelector('.chip-btn.active');
+                if (activeChip) {
+                    activeChip.click();
+                } else {
+                    filterCategory('all', null);
+                }
+                noResults.style.display = 'none';
+                return;
+            }
+
+            cards.forEach(card => {
+                const name = (card.querySelector('.radio-name') ? card.querySelector('.radio-name').innerText : "").toLowerCase();
+                const desc = (card.querySelector('.radio-desc') ? card.querySelector('.radio-desc').innerText : "").toLowerCase();
+                const keywords = (card.dataset.keywords || "").toLowerCase();
+
+                if (name.includes(query) || desc.includes(query) || keywords.includes(query)) {
+                    card.style.display = 'flex';
+                    totalVisible++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Hide empty genre groups during search
+            groups.forEach(group => {
+                const visibleCardsInGroup = group.querySelectorAll('.radio-card:not([style*="display: none"])');
+                if (visibleCardsInGroup.length > 0) {
+                    group.style.display = 'block';
+                } else {
+                    group.style.display = 'none';
+                }
+            });
+
+            noResults.style.display = (totalVisible === 0) ? 'block' : 'none';
+        }
+
+        // Category Filter Logic
+        function filterCategory(category, btn) {
+            // Clear search field
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) searchInput.value = '';
+
+            // Update chip active style
+            if (btn) {
+                document.querySelectorAll('.chip-btn').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+            }
+
+            const groups = document.querySelectorAll('.genre-group');
+            const cards = document.querySelectorAll('.radio-card');
+            const noResults = document.getElementById('no-results');
+            noResults.style.display = 'none';
+
+            // Reset cards visibility
+            cards.forEach(card => card.style.display = 'flex');
+
+            groups.forEach(group => {
+                if (category === 'all' || group.dataset.genre === category) {
+                    group.style.display = 'block';
+                } else {
+                    group.style.display = 'none';
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            syncHearts();
+        });
+    </script>
+</body>
+</html>
