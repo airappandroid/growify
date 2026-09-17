@@ -67,15 +67,13 @@
             stroke-width: 2;
         }
 
-        /* 2. Quick Genre Chips - সৰু স্ক্ৰীনৰ কাটি যোৱা সমস্যা সমাধান */
+        /* 2. Quick Genre Chips */
         .chips-scroll {
             display: flex;
             gap: 8px;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
-            
-            /* Body padding-ৰ সৈতে মিলাই স্ক্ৰীনৰ দুয়োকাষে সমান মার্জিন-পেডিং */
             margin-left: -12px;
             margin-right: -12px;
             padding-left: 12px;
@@ -83,7 +81,6 @@
             padding-top: 6px;
             padding-bottom: 8px;
             margin-bottom: 16px;
-            
             position: sticky;
             top: 0;
             background-color: #0b1120;
@@ -94,7 +91,6 @@
             display: none;
         }
 
-        /* শেষৰ বুটামটো স্ক্ৰীনৰ দাঁতিত লাগি কাটি নাযাবলৈ স্পেচাৰ */
         .chips-scroll::after {
             content: "";
             flex-shrink: 0;
@@ -162,14 +158,6 @@
             font-size: 14px;
             font-weight: 700;
             color: #f1f5f9;
-        }
-
-        .view-all-link {
-            font-size: 12px;
-            color: #38bdf8;
-            text-decoration: none;
-            font-weight: 600;
-            white-space: nowrap;
         }
 
         /* 4. Stations Grid */
@@ -400,7 +388,7 @@
             line-height: 1.4;
         }
 
-        /* অতি সৰু স্ক্ৰীনৰ বাবে (340px বা তাতকৈ কম) */
+        /* Media Query */
         @media (max-width: 340px) {
             body { padding: 10px 8px 24px 8px; }
             
@@ -447,7 +435,6 @@
     <div id="tab-alaune" class="genre-content active">
         <div class="section-bar">
             <h2>🇫🇷 Top Écoutes</h2>
-            <a href="explore.html" class="view-all-link">Voir tout →</a>
         </div>
         <div class="stations-grid">
             <a href="go:S1" class="radio-card" data-id="S1" data-name="France Inter" data-sub="Généraliste" data-logo="https://assets.radiofrance.fr/common/logos/stations/franceinter.svg" data-bg="bg-inter" data-tag="INTER" data-href="go:S1">
@@ -540,7 +527,6 @@
     <div id="tab-actualites" class="genre-content">
         <div class="section-bar">
             <h2>📰 Actualités & Info</h2>
-            <a href="explore.html#news" class="view-all-link">Voir tout →</a>
         </div>
         <div class="stations-grid">
             <a href="go:S2" class="radio-card" data-id="S2" data-name="franceinfo" data-sub="En Continu" data-logo="https://assets.radiofrance.fr/common/logos/stations/franceinfo.svg" data-bg="bg-info" data-tag="INFO" data-href="go:S2">
@@ -557,7 +543,7 @@
                 </button>
             </a>
 
-            <a href="go:S3" class="radio-card" data-id="S3" data-name="RMC" data-sub="Info Talk Sport" data-logo="https://cdn-profiles.tunein.com/s14896/images/logod.png" data-bg="bg-rmc" data-tag="RMC" data-href="go:S3">
+            <a href="go:rmc" class="radio-card" data-id="S3" data-name="RMC" data-sub="Info Talk Sport" data-logo="https://cdn-profiles.tunein.com/s14896/images/logod.png" data-bg="bg-rmc" data-tag="RMC" data-href="go:S3">
                 <div class="logo-wrap">
                     <img class="station-logo" src="https://cdn-profiles.tunein.com/s14896/images/logod.png" alt="RMC" onerror="handleError(this)">
                     <div class="logo-fallback bg-rmc">RMC</div>
@@ -585,7 +571,7 @@
                 </button>
             </a>
 
-            <a href="go:S4" class="radio-card" data-id="S4" data-name="BFM Business" data-sub="Éco & Bourse" data-logo="https://cdn-profiles.tunein.com/s17938/images/logod.png" data-bg="bg-bfm" data-tag="BFM" data-href="go:S4">
+            <a href="go:bfm" class="radio-card" data-id="S4" data-name="BFM Business" data-sub="Éco & Bourse" data-logo="https://cdn-profiles.tunein.com/s17938/images/logod.png" data-bg="bg-bfm" data-tag="BFM" data-href="go:S4">
                 <div class="logo-wrap">
                     <img class="station-logo" src="https://cdn-profiles.tunein.com/s17938/images/logod.png" alt="BFM Business" onerror="handleError(this)">
                     <div class="logo-fallback bg-bfm">BFM</div>
@@ -599,7 +585,7 @@
                 </button>
             </a>
 
-            <a href="go:S5" class="radio-card" data-id="S5" data-name="RFI Monde" data-sub="International" data-logo="https://cdn-profiles.tunein.com/s6608/images/logod.png" data-bg="bg-rfi" data-tag="RFI" data-href="go:S5">
+            <a href="go:rfi" class="radio-card" data-id="S5" data-name="RFI Monde" data-sub="International" data-logo="https://cdn-profiles.tunein.com/s6608/images/logod.png" data-bg="bg-rfi" data-tag="RFI" data-href="go:S5">
                 <div class="logo-wrap">
                     <img class="station-logo" src="https://cdn-profiles.tunein.com/s6608/images/logod.png" alt="RFI Monde" onerror="handleError(this)">
                     <div class="logo-fallback bg-rfi">RFI</div>
@@ -613,7 +599,7 @@
                 </button>
             </a>
 
-            <a href="go:S6" class="radio-card" data-id="S6" data-name="Sud Radio" data-sub="Info & Débats" data-logo="https://cdn-profiles.tunein.com/s25241/images/logod.png" data-bg="bg-sud" data-tag="SUD" data-href="go:S6">
+            <a href="go:sud" class="radio-card" data-id="S6" data-name="Sud Radio" data-sub="Info & Débats" data-logo="https://cdn-profiles.tunein.com/s25241/images/logod.png" data-bg="bg-sud" data-tag="SUD" data-href="go:S6">
                 <div class="logo-wrap">
                     <img class="station-logo" src="https://cdn-profiles.tunein.com/s25241/images/logod.png" alt="Sud Radio" onerror="handleError(this)">
                     <div class="logo-fallback bg-sud">SUD</div>
@@ -633,7 +619,6 @@
     <div id="tab-pophits" class="genre-content">
         <div class="section-bar">
             <h2>🎵 Pop & Hits</h2>
-            <a href="explore.html#pop" class="view-all-link">Voir tout →</a>
         </div>
         <div class="stations-grid">
             <a href="go:S7" class="radio-card" data-id="S7" data-name="NRJ" data-sub="Hit Music" data-logo="https://cdn-profiles.tunein.com/s25395/images/logod.png" data-bg="bg-nrj" data-tag="NRJ" data-href="go:S7">
@@ -726,7 +711,6 @@
     <div id="tab-poprock" class="genre-content">
         <div class="section-bar">
             <h2>🎸 Pop-Rock</h2>
-            <a href="explore.html#rock" class="view-all-link">Voir tout →</a>
         </div>
         <div class="stations-grid">
             <a href="go:S17" class="radio-card" data-id="S17" data-name="RTL2" data-sub="Pop-Rock" data-logo="https://cdn-profiles.tunein.com/s24948/images/logod.png" data-bg="bg-rtl2" data-tag="RTL2" data-href="go:S17">
@@ -816,7 +800,7 @@
     </div>
 
     <!-- Explore CTA Banner -->
-    <a href="explore.html" class="explore-banner">
+    <a href="go:exp" class="explore-banner">
         <div class="explore-text">
             <h3>Explorer +100 Radios</h3>
             <p>Par thèmes, régions & fréquences</p>
