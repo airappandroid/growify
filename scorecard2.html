@@ -436,7 +436,7 @@
 </div>
 
 <script>
-    const matchId = "6a7c72f178dcf0657031d933";
+    const matchId = "6a7c72ee78dcf0657031d931";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
@@ -503,7 +503,7 @@
 
             // ১. হেডাৰ আপডেট
             document.getElementById("matchHeader").textContent = tournament;
-            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : `📍 Holkar Cricket Stadium, Indore`;
+            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : `📍 Arun Jaitley Stadium, Delhi`;
 
             // ২. মেচ ষ্টেটাছ নিৰ্ধাৰণ
             const rawStatus = (result.status || "").toLowerCase().replace(/\s+/g, "");
@@ -575,8 +575,8 @@
                             <span class="hero-status-tag">2nd T20 (${format})</span>
                         </div>
                         <div class="hero-score-box">
-                            <div class="hero-score-main">7:00 PM</div>
-                            <div class="hero-score-sub">Match starts today at 7:00 PM IST</div>
+                            <div class="hero-score-main">7:30 PM</div>
+                            <div class="hero-score-sub">Match starts today at 7:30 PM IST</div>
                         </div>
                     </div>
                     <div style="text-align:center; padding:35px 10px; color:var(--text-muted); font-size:12px; line-height:1.6;">
