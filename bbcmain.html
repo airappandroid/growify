@@ -196,7 +196,7 @@ body {
     border: 1px solid #1e293b;
 }
 
-/* Cricket Score Strip (Responsive & Compact) */
+/* Cricket Score Strip */
 .cricket-strip {
     display: block;
     margin: 10px 16px 0;
@@ -597,7 +597,7 @@ body {
         </div>
 
         <!-- Match Status Note -->
-        <div class="strip-status" id="matchNote">ENG vs SL 2nd T20, Starts Today at 6:30pm UK time. Venue: Sophia Gardens, Cardiff</div>
+        <div class="strip-status" id="matchNote">Loading match details...</div>
 
         <div class="strip-body">
             <div class="strip-scores">
@@ -800,7 +800,32 @@ const BASE_IMAGE_URL = "https://cricradio.com";
 const CUSTOM_LOGO_A = "https://ik.imagekit.io/sqt8ptw1k/england.webp?updatedAt=1789628691703";
 const CUSTOM_LOGO_B = "https://ik.imagekit.io/sqt8ptw1k/sri-lanka-women.webp?updatedAt=1789308085405";
 
-const OVERRIDE_NOTE = "ENG vs SL 2nd T20, Starts Today at 6:30pm UK time. Venue: Sophia Gardens, Cardiff";
+// ইনীংছৰ ৰান আৰু অভাৰ উলিওৱাৰ সহায়ক ফাংচন (a_1_score / b_1_score চাপৰ্টৰ বাবে)
+function getTeamScoreData(teamObj, inningPrefix) {
+    if (!teamObj) return { score: "--", overs: "" };
+
+    const directScore = (teamObj.score ?? teamObj.scores ?? "").toString().trim();
+    if (directScore !== "") {
+        const directOver = (teamObj.over ?? teamObj.overs ?? "").toString().trim();
+        return {
+            score: directScore,
+            overs: directOver !== "" ? `(${directOver} ov)` : ""
+        };
+    }
+
+    const innScore = teamObj[`${inningPrefix}_1_score`] || teamObj[`${inningPrefix}_2_score`];
+    if (innScore && typeof innScore.runs !== "undefined") {
+        const runs = innScore.runs ?? 0;
+        const wickets = innScore.wickets ?? 0;
+        const overs = innScore.overs ? `(${innScore.overs} ov)` : "";
+        return {
+            score: `${runs}/${wickets}`,
+            overs: overs
+        };
+    }
+
+    return { score: "--", overs: "" };
+}
 
 async function fetchCricketScore() {
     const controller = new AbortController();
@@ -830,12 +855,9 @@ async function fetchCricketScore() {
 
             if (codeA) codeA.textContent = teamA.shortName || teamA.abbr || "ENG";
 
-            // Nullish coalescing ব্যৱহাৰ কৰা হৈছে যাতে 0 স্ক'ৰ হ'লে মচি নাযায়
-            const scA = (teamA.score ?? teamA.scores ?? "").toString().trim();
-            if (scoreA) scoreA.textContent = scA !== "" ? scA : "--";
-
-            const ovA = (teamA.over ?? teamA.overs ?? "").toString().trim();
-            if (overA) overA.textContent = ovA !== "" ? `(${ovA} ov)` : "";
+            const dataA = getTeamScoreData(teamA, "a");
+            if (scoreA) scoreA.textContent = dataA.score;
+            if (overA) overA.textContent = dataA.overs;
 
             if (logoA) {
                 logoA.src = CUSTOM_LOGO_A || (teamA.logo ? (teamA.logo.startsWith("http") ? teamA.logo : `${BASE_IMAGE_URL}${teamA.logo}`) : logoA.src);
@@ -851,28 +873,39 @@ async function fetchCricketScore() {
 
             if (codeB) codeB.textContent = teamB.shortName || teamB.abbr || "SL";
 
-            // Nullish coalescing ব্যৱহাৰ কৰা হৈছে যাতে 0 স্ক'ৰ হ'লে মচি নাযায়
-            const scB = (teamB.score ?? teamB.scores ?? "").toString().trim();
-            if (scoreB) scoreB.textContent = scB !== "" ? scB : "--";
-
-            const ovB = (teamB.over ?? teamB.overs ?? "").toString().trim();
-            if (overB) overB.textContent = ovB !== "" ? `(${ovB} ov)` : "";
+            const dataB = getTeamScoreData(teamB, "b");
+            if (scoreB) scoreB.textContent = dataB.score;
+            if (overB) overB.textContent = dataB.overs;
 
             if (logoB) {
                 logoB.src = CUSTOM_LOGO_B || (teamB.logo ? (teamB.logo.startsWith("http") ? teamB.logo : `${BASE_IMAGE_URL}${teamB.logo}`) : logoB.src);
             }
         }
 
-        // --- Match Status & Badge Handling ---
+        // --- Match Status & Live Note (API Data) ---
         const badgeContainer = document.getElementById('badgeContainer');
         const badgeEl = document.getElementById('matchBadge');
         const dotEl = document.getElementById('liveDot');
         const matchNoteEl = document.getElementById('matchNote');
 
-        const status = (match.status || "").toLowerCase();
-        const commentary = match.lastCommentary?.primaryText || match.statusNote || "";
+        const status = (match.status || "").toLowerCase().trim();
 
-        if (status === "live" || status === "inprogress") {
+        // API-ৰ পৰা কমেণ্ট্ৰী বা ঘোষণা সংগ্ৰহ
+        let dynamicNote = match.lastCommentary?.primaryText;
+        if (!dynamicNote && match.lastCommentary?.secondaryText) {
+            dynamicNote = match.lastCommentary.secondaryText.replace(/\n+/g, " • ").trim();
+        }
+        if (!dynamicNote && match.announcement1) {
+            dynamicNote = match.announcement1.trim();
+        }
+        if (!dynamicNote && match.statusNote) {
+            dynamicNote = match.statusNote.trim();
+        }
+
+        const isLive = ["live", "inprogress", "started", "in progress"].includes(status);
+        const isCompleted = ["completed", "finished", "result"].includes(status);
+
+        if (isLive) {
             if (badgeEl) badgeEl.textContent = "LIVE";
             if (dotEl) dotEl.style.display = "inline-block";
             if (badgeContainer) {
@@ -880,9 +913,9 @@ async function fetchCricketScore() {
                 badgeContainer.style.borderColor = "rgba(239, 68, 68, 0.45)";
                 badgeContainer.style.color = "#f87171";
             }
-            if (matchNoteEl) matchNoteEl.textContent = commentary || "Match in progress";
+            if (matchNoteEl) matchNoteEl.textContent = dynamicNote || "Match in progress";
 
-        } else if (status === "completed" || status === "finished") {
+        } else if (isCompleted) {
             if (badgeEl) badgeEl.textContent = "COMPLETED";
             if (dotEl) dotEl.style.display = "none";
             if (badgeContainer) {
@@ -890,7 +923,7 @@ async function fetchCricketScore() {
                 badgeContainer.style.borderColor = "rgba(148, 163, 184, 0.4)";
                 badgeContainer.style.color = "#94a3b8";
             }
-            if (matchNoteEl) matchNoteEl.textContent = commentary || "Match Ended";
+            if (matchNoteEl) matchNoteEl.textContent = dynamicNote || "Match Ended";
 
         } else {
             if (badgeEl) badgeEl.textContent = "SCHEDULED";
@@ -900,7 +933,7 @@ async function fetchCricketScore() {
                 badgeContainer.style.borderColor = "rgba(59, 130, 246, 0.45)";
                 badgeContainer.style.color = "#60a5fa";
             }
-            if (matchNoteEl) matchNoteEl.textContent = OVERRIDE_NOTE || commentary || "Match has not started yet.";
+            if (matchNoteEl) matchNoteEl.textContent = dynamicNote || "Match has not started yet.";
         }
 
     } catch (err) {
