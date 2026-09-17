@@ -34,8 +34,8 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 14px;
+            align-items: flex-start; /* ওপৰৰ খালী ঠাই আঁতৰাই হেডাৰ একেবাৰে ওপৰলৈ অনা হ'ল */
+            padding: 8px 10px;
         }
 
         .app-container {
@@ -43,8 +43,8 @@
             max-width: 390px;
             background-color: var(--surface-card);
             border: 1px solid var(--border-subtle);
-            border-radius: 24px;
-            padding: 16px;
+            border-radius: 20px;
+            padding: 14px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
             position: relative;
         }
@@ -118,11 +118,11 @@
 
         /* Audio Commentary Capsule */
         .commentary-capsule {
-            margin: 14px 0;
+            margin: 12px 0;
             background: var(--surface-nested);
             border: 1px solid #1e3a5f;
-            border-radius: 16px;
-            padding: 11px 13px;
+            border-radius: 14px;
+            padding: 10px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -193,7 +193,7 @@
         .match-card {
             background: var(--surface-nested);
             border: 1px solid var(--border-subtle);
-            border-radius: 18px;
+            border-radius: 16px;
             padding: 14px;
         }
 
@@ -201,7 +201,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .match-label {
@@ -257,7 +257,7 @@
             align-items: center;
             font-size: 11px;
             color: var(--text-muted);
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             padding-bottom: 8px;
             border-bottom: 1px solid var(--border-subtle);
         }
@@ -273,7 +273,7 @@
             align-items: center;
             gap: 5px;
             background: #111827;
-            padding: 2px 7px;
+            padding: 3px 8px;
             border-radius: 8px;
             font-size: 10.5px;
             color: #cbd5e1;
@@ -281,12 +281,13 @@
         }
 
         .ball-glow {
-            width: 16px;
-            height: 16px;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 4px;
             background: var(--accent-cyan);
             color: #030712;
             font-weight: 800;
-            border-radius: 50%;
+            border-radius: 9px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -297,7 +298,7 @@
         .teams-arena {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 9px;
         }
 
         .team-box {
@@ -391,15 +392,15 @@
 
         /* Main Action Button */
         .btn-action-main {
-            margin-top: 14px;
+            margin-top: 12px;
             width: 100%;
             background: #2563eb;
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: #ffffff;
             font-size: 13.5px;
             font-weight: 700;
-            padding: 13px;
-            border-radius: 14px;
+            padding: 12px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -417,7 +418,7 @@
             fill: currentColor;
         }
 
-        /* Flat Privacy Modal */
+        /* Privacy Modal */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -540,15 +541,13 @@
 
         <!-- Main Cricket Score Card -->
         <div class="match-card">
-            <!-- Header: Title & Status -->
             <div class="match-meta-bar">
                 <span class="match-label" id="match-info">Connecting...</span>
                 <span class="status-tag" id="match-status">UPCOMING</span>
             </div>
 
-            <!-- Venue & Last Ball -->
             <div class="venue-row">
-                <span class="venue-name" id="venue-info">Delhi</span>
+                <span class="venue-name" id="match-format">T20 Match</span>
                 <div class="last-ball-chip" id="last-ball-container" style="display: none;">
                     <span>Last Ball:</span>
                     <span class="ball-glow" id="latest-ball">-</span>
@@ -561,7 +560,7 @@
                 <div class="team-box">
                     <div class="team-profile">
                         <img class="team-crest" id="team-a-logo" src="https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg" alt="Team A">
-                        <span class="team-name-text" id="team-a-name">Team 1</span>
+                        <span class="team-name-text" id="team-a-name">India</span>
                     </div>
                     <div class="team-metrics">
                         <span class="runs-val" id="team-a-runs">--</span>
@@ -573,7 +572,7 @@
                 <div class="team-box">
                     <div class="team-profile">
                         <img class="team-crest" id="team-b-logo" src="https://ik.imagekit.io/sqt8ptw1k/images%20(1)_8_VfAHVo8.jpg" alt="Team B">
-                        <span class="team-name-text" id="team-b-name">Team 2</span>
+                        <span class="team-name-text" id="team-b-name">Afghanistan</span>
                     </div>
                     <div class="team-metrics">
                         <span class="runs-val" id="team-b-runs">--</span>
@@ -582,7 +581,7 @@
                 </div>
             </div>
 
-            <!-- Match Result / Status Note -->
+            <!-- Summary Status -->
             <div class="summary-status" id="status-box">
                 Fetching match updates...
             </div>
@@ -602,7 +601,7 @@
         </button>
     </div>
 
-    <!-- Lightweight Privacy Modal -->
+    <!-- Privacy Modal -->
     <div class="modal-overlay" id="privacyModal" onclick="closePrivacyModalOnOverlay(event)">
         <div class="modal-box">
             <div class="modal-head">
@@ -619,6 +618,7 @@
     <script>
         const matchId = "6a7c72ee78dcf0657031d931";
         const cricketApiUrl = `https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=${matchId}`;
+        const cricRadioBase = "https://api.cricradio.com.au";
         let isMatchLive = false;
 
         function openPrivacyModal() {
@@ -635,8 +635,10 @@
             }
         }
 
+        // ল'গ' নিৰ্বাচন (ImageKit প্ৰাথমিকতা আৰু Fallback সহ)
         function getTeamLogo(team) {
-            if (!team) return "";
+            if (!team) return "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg";
+
             const name = ((team.shortName || team.name || "") + "").toLowerCase();
 
             if (name.includes("ind")) {
@@ -648,62 +650,35 @@
 
             if (team.logo) {
                 if (team.logo.startsWith("http")) return team.logo;
-                return `https://api.cricradio.com.au${team.logo.startsWith("/") ? "" : "/"}${team.logo}`;
-            }
-            return "";
-        }
-
-        function formatInningScore(scoreObj) {
-            if (!scoreObj) return null;
-            const runs = scoreObj.runs ?? scoreObj.r;
-            if (runs === undefined || runs === null) return null;
-
-            const wickets = scoreObj.wickets ?? scoreObj.w ?? 0;
-            let overs = scoreObj.overs ?? scoreObj.over ?? scoreObj.o;
-
-            if ((overs === undefined || overs === null) && scoreObj.balls !== undefined) {
-                const completedOvers = Math.floor(scoreObj.balls / 6);
-                const remBalls = scoreObj.balls % 6;
-                overs = `${completedOvers}.${remBalls}`;
+                return `${cricRadioBase}${team.logo.startsWith("/") ? "" : "/"}${team.logo}`;
             }
 
-            const ovText = (overs !== undefined && overs !== null && overs !== "") ? `(${overs} ov)` : "";
-            return { runs: `${runs}/${wickets}`, overs: ovText };
+            return "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg";
         }
 
-        function getScoreData(teamData, teamKey) {
+        // স্ক'ৰ ফৰ্মেটিং
+        function extractTeamScore(teamData, teamKey) {
             if (!teamData) return { runs: "--", overs: "" };
-            const s1 = teamData[`${teamKey}_1_score`] || teamData.score;
-            const s2 = teamData[`${teamKey}_2_score`];
 
-            const f2 = formatInningScore(s2);
-            const f1 = formatInningScore(s1);
-
-            if (f2 && f1) {
-                return { runs: `${f2.runs} & ${f1.runs}`, overs: f2.overs || f1.overs };
-            }
-            return f2 || f1 || { runs: "--", overs: "" };
-        }
-
-        function extractCleanNote(result) {
-            let note = "";
-            if (result.lastCommentary && result.lastCommentary.secondaryText) {
-                note = result.lastCommentary.secondaryText;
-            } else if (result.announcement1 && result.announcement1.trim() !== "") {
-                note = result.announcement1.trim();
+            const scoreObj = teamData[`${teamKey}_1_score`] || teamData.score;
+            if (!scoreObj || scoreObj.runs === undefined) {
+                return { runs: "Yet to bat", overs: "" };
             }
 
-            return note
-                .split(/\r?\n/)
-                .map(line => line.trim())
-                .filter(Boolean)
-                .join(" • ");
+            const runs = scoreObj.runs ?? 0;
+            const wickets = scoreObj.wickets ?? 0;
+            const overs = scoreObj.overs ? `(${scoreObj.overs} ov)` : "";
+
+            return {
+                runs: `${runs}/${wickets}`,
+                overs: overs
+            };
         }
 
         async function fetchLiveScore() {
             try {
                 const response = await fetch(`${cricketApiUrl}&_t=${Date.now()}`, { cache: "no-store" });
-                if (!response.ok) return;
+                if (!response.ok) throw new Error("Network error");
 
                 const data = await response.json();
                 const result = data?.responseData?.result;
@@ -717,64 +692,68 @@
                 const shortA = teamA.shortName || 'IND';
                 const shortB = teamB.shortName || 'AFG';
 
-                document.getElementById("match-info").textContent = result.seriesName || `${shortA} vs ${shortB}`;
+                // হেডাৰ আৰু ফৰ্মেট
+                const matchFormat = (result.format || "T20").toUpperCase();
+                document.getElementById("match-info").textContent = `${shortA} vs ${shortB} • ${matchFormat}`;
+                document.getElementById("match-format").textContent = `${matchFormat} Match`;
 
-                const rawStatus = (result.status || "").toLowerCase().replace(/\s+/g, "");
-                const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || rawStatus.includes("ended");
-                const isUpcoming = rawStatus.includes("notstarted") || rawStatus.includes("upcoming") || rawStatus.includes("scheduled") || !rawStatus;
-                const isLive = !isUpcoming && !isCompleted && (rawStatus.includes("live") || rawStatus.includes("inprogress") || rawStatus === "started");
+                // ষ্টেটাছ নিৰ্ধাৰণ
+                const rawStatus = (result.status || "").toLowerCase();
+                const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish");
+                const isLive = rawStatus.includes("started") || rawStatus.includes("live") || rawStatus.includes("inprogress");
 
                 isMatchLive = isLive;
 
                 const statusBadge = document.getElementById("match-status");
                 const statusBox = document.getElementById("status-box");
-                const cleanNote = extractCleanNote(result);
 
                 if (isCompleted) {
                     statusBadge.textContent = "COMPLETED";
                     statusBadge.className = "status-tag completed";
                     statusBox.className = "summary-status completed";
-                    statusBox.textContent = cleanNote || "Match Finished";
+                    statusBox.textContent = result.announcement1 || "Match Finished";
                 } else if (isLive) {
                     statusBadge.textContent = "LIVE";
                     statusBadge.className = "status-tag live";
                     statusBox.className = "summary-status live";
-                    statusBox.textContent = cleanNote || "Match in progress";
+
+                    const crr = result.now?.run_rate ? `CRR: ${result.now.run_rate}` : "";
+                    const currentTeam = result.settingObj?.currentTeam === "a" ? nameA : nameB;
+                    statusBox.textContent = crr ? `${currentTeam} batting • ${crr}` : `${currentTeam} batting`;
                 } else {
                     statusBadge.textContent = "UPCOMING";
                     statusBadge.className = "status-tag";
                     statusBox.className = "summary-status";
-                    statusBox.textContent = cleanNote || (result.startDate ? `Starts at ${result.startDate}` : "Match scheduled");
+                    statusBox.textContent = "Match Scheduled";
                 }
 
-                if (result.venue) {
-                    document.getElementById("venue-info").textContent = result.venue;
+                // শেষৰ বল (Last Ball)
+                const lastBallBox = document.getElementById("last-ball-container");
+                const latestBallEl = document.getElementById("latest-ball");
+                if (result.lastCommentary && result.lastCommentary.primaryText) {
+                    latestBallEl.textContent = result.lastCommentary.primaryText;
+                    lastBallBox.style.display = "flex";
+                } else {
+                    lastBallBox.style.display = "none";
                 }
 
+                // Team A ল'গ' আৰু স্ক'ৰ
                 document.getElementById("team-a-name").textContent = nameA;
-                const logoA = document.getElementById("team-a-logo");
-                const logoAUrl = getTeamLogo(teamA);
-                if (logoAUrl) {
-                    logoA.src = logoAUrl;
-                    logoA.alt = shortA;
-                }
-                const scoreA = getScoreData(teamA, "a");
+                document.getElementById("team-a-logo").src = getTeamLogo(teamA);
+                const scoreA = extractTeamScore(teamA, "a");
                 document.getElementById("team-a-runs").textContent = scoreA.runs;
                 document.getElementById("team-a-overs").textContent = scoreA.overs;
 
+                // Team B ল'গ' আৰু স্ক'ৰ
                 document.getElementById("team-b-name").textContent = nameB;
-                const logoB = document.getElementById("team-b-logo");
-                const logoBUrl = getTeamLogo(teamB);
-                if (logoBUrl) {
-                    logoB.src = logoBUrl;
-                    logoB.alt = shortB;
-                }
-                const scoreB = getScoreData(teamB, "b");
+                document.getElementById("team-b-logo").src = getTeamLogo(teamB);
+                const scoreB = extractTeamScore(teamB, "b");
                 document.getElementById("team-b-runs").textContent = scoreB.runs;
                 document.getElementById("team-b-overs").textContent = scoreB.overs;
 
+                // টচ (Toss)
                 const tossEl = document.getElementById("toss-info");
-                if (result.announcement1 && result.announcement1.toLowerCase().includes("opt to")) {
+                if (result.announcement1) {
                     tossEl.textContent = `Toss: ${result.announcement1}`;
                     tossEl.style.display = "block";
                 } else {
@@ -782,10 +761,10 @@
                 }
 
             } catch (error) {
-                console.error("Error fetching live score:", error);
+                console.error("Score fetch failed:", error);
+                document.getElementById("status-box").textContent = "Unable to sync score. Retrying...";
             } finally {
-                const nextInterval = isMatchLive ? 25000 : 60000;
-                setTimeout(fetchLiveScore, nextInterval);
+                setTimeout(fetchLiveScore, isMatchLive ? 15000 : 60000);
             }
         }
 
