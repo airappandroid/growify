@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Live Scorecard - AUS vs ZIM, 1st ODI</title>
+    <title>Live Scorecard - ENG vs SL, 2nd T20</title>
     <style>
         :root {
             --bg-base: #020617;
@@ -422,8 +422,8 @@
 
     <!-- Match Information Row -->
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">AUS vs ZIM, 1st ODI</span>
-        <span id="venueHeader">📍 Match Venue</span>
+        <span class="match-title-text" id="matchHeader">ENG vs SL, 2nd T20</span>
+        <span id="venueHeader">📍 Sophia Gardens, Cardiff</span>
     </div>
 
     <!-- Innings Navigation Tabs -->
@@ -436,7 +436,7 @@
 </div>
 
 <script>
-    const matchId = "6a2918947327c23debeeebc3";
+    const matchId = "69bd420b1dbf177ca4e58e71";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
@@ -459,13 +459,13 @@
     function getInningsTabLabel(inn, idx, teamA, teamB) {
         if (inn.teamName) {
             const lower = inn.teamName.toLowerCase();
-            if (lower.includes("aus")) return "AUS";
-            if (lower.includes("zim")) return "ZIM";
+            if (lower.includes("eng")) return "ENG";
+            if (lower.includes("sl")) return "SL";
             return inn.teamName;
         }
 
-        const aShort = teamA.shortName || "AUS";
-        const bShort = teamB.shortName || "ZIM";
+        const aShort = teamA.shortName || "ENG";
+        const bShort = teamB.shortName || "SL";
 
         if (inn.key === "a_1" || inn.key === "a") return aShort;
         if (inn.key === "b_1" || inn.key === "b") return bShort;
@@ -474,8 +474,8 @@
 
     function getInningsDisplayName(inn, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
-        const aName = teamA.name || "Australia";
-        const bName = teamB.name || "Zimbabwe";
+        const aName = teamA.name || "England";
+        const bName = teamB.name || "Sri Lanka";
 
         if (inn.key === "a_1" || inn.key === "a") return `${aName} Innings`;
         if (inn.key === "b_1" || inn.key === "b") return `${bName} Innings`;
@@ -495,14 +495,14 @@
             const teamA = result.teams?.a || {};
             const teamB = result.teams?.b || {};
 
-            const nameA = teamA.shortName || teamA.name || 'AUS';
-            const nameB = teamB.shortName || teamB.name || 'ZIM';
-            const format = (result.format || 'odi').toUpperCase();
-            const tournament = result.seriesName || `${nameA} vs ${nameB}, 1st ODI`;
+            const nameA = teamA.shortName || teamA.name || 'ENG';
+            const nameB = teamB.shortName || teamB.name || 'SL';
+            const format = (result.format || 't20').toUpperCase();
+            const tournament = result.seriesName || `${nameA} vs ${nameB}, 2nd T20`;
 
             // ১. হেডাৰ আপডেট
             document.getElementById("matchHeader").textContent = tournament;
-            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : `📍 Match Venue`;
+            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : `📍 Sophia Gardens, Cardiff`;
 
             // ২. মেচ ষ্টেটাছ নিৰ্ধাৰণ
             const rawStatus = (result.status || "").toLowerCase().replace(/\s+/g, "");
@@ -570,11 +570,11 @@
                     <div class="hero-banner">
                         <div class="hero-team">
                             <span class="hero-team-name">${nameA} vs ${nameB}</span>
-                            <span class="hero-status-tag">1st ODI (${format})</span>
+                            <span class="hero-status-tag">2nd T20 (${format})</span>
                         </div>
                         <div class="hero-score-box">
-                            <div class="hero-score-main">MATCH READY</div>
-                            <div class="hero-score-sub">Waiting for toss / innings start</div>
+                            <div class="hero-score-main">11 PM</div>
+                            <div class="hero-score-sub">Match starts today at 11pm</div>
                         </div>
                     </div>
                     <div style="text-align:center; padding:35px 10px; color:var(--text-muted); font-size:12px; line-height:1.6;">
