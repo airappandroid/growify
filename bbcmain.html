@@ -196,7 +196,7 @@ body {
     border: 1px solid #1e293b;
 }
 
-/* Cricket Score Strip */
+/* Cricket Score Strip (Responsive & Compact) */
 .cricket-strip {
     display: block;
     margin: 10px 16px 0;
@@ -213,27 +213,28 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
+    gap: 4px;
     margin-bottom: 8px;
 }
 
 .strip-top-left {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     flex-shrink: 0;
 }
 
 .live-badge {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    padding: 2.5px 7px;
+    gap: 3.5px;
+    padding: 2px 6px;
     border-radius: 4px;
-    font-size: 9.5px;
+    font-size: 9px;
     font-weight: 800;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.3px;
     flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .live-badge .dot {
@@ -253,25 +254,27 @@ body {
 .strip-top-right {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 5px;
     flex-shrink: 0;
 }
 
 .strip-audio-btn {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: 4.5px 12px;
+    gap: 4px;
+    padding: 3.5px 8px;
     background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
     border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 14px;
-    font-size: 11.5px;
+    border-radius: 12px;
+    font-size: 11px;
     font-weight: 800;
     color: #ffffff;
     text-decoration: none;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.2px;
     box-shadow: 0 2px 8px rgba(239, 68, 68, 0.45);
     transition: transform 0.12s ease, opacity 0.12s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .strip-audio-btn:active {
@@ -282,15 +285,16 @@ body {
 .strip-action {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    padding: 4.5px 12px;
+    gap: 3px;
+    padding: 3.5px 8px;
     background: rgba(37, 99, 235, 0.2);
     border: 1px solid rgba(59, 130, 246, 0.45);
-    border-radius: 14px;
-    font-size: 11.5px;
+    border-radius: 12px;
+    font-size: 11px;
     font-weight: 700;
     color: #60a5fa;
     flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .strip-status {
@@ -568,17 +572,17 @@ body {
     <div class="cricket-strip" id="cricketStrip" onclick="window.location.href='go:card'">
         <div class="strip-top">
             <div class="strip-top-left">
-                <!-- Status Badge (Updated to LIVE) -->
-                <div class="live-badge" id="badgeContainer" style="background: rgba(239, 68, 68, 0.16); border: 1px solid rgba(239, 68, 68, 0.45); color: #f87171;">
-                    <span class="dot" id="liveDot" style="display: inline-block;"></span>
-                    <span id="matchBadge">LIVE</span>
+                <!-- Status Badge -->
+                <div class="live-badge" id="badgeContainer" style="background: rgba(59, 130, 246, 0.16); border: 1px solid rgba(59, 130, 246, 0.45); color: #60a5fa;">
+                    <span class="dot" id="liveDot" style="display: none;"></span>
+                    <span id="matchBadge">SCHEDULED</span>
                 </div>
             </div>
 
             <!-- Audio & Scorecard Action Container -->
             <div class="strip-top-right">
                 <a href="go:BBC5E" class="strip-audio-btn" id="stripAudioBtn" onclick="event.stopPropagation();" aria-label="Listen Commentary">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
                         <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
                     </svg>
@@ -587,13 +591,13 @@ body {
 
                 <div class="strip-action">
                     <span>Scorecard</span>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </div>
             </div>
         </div>
 
-        <!-- Match Status Note (Updated with Toss Info) -->
-        <div class="strip-status" id="matchNote">Sri Lanka elected to bowl</div>
+        <!-- Match Status Note (Overridden Text) -->
+        <div class="strip-status" id="matchNote">ENG vs SL 2nd T20, Starts Today at 6:30pm UK time. Venue: Sophia Gardens, Cardiff</div>
 
         <div class="strip-body">
             <div class="strip-scores">
@@ -786,29 +790,12 @@ window.addEventListener('click', (e) => {
     }
 });
 
-/* ================= Live Cricket Score Fetcher ================= */
-const MATCH_ID = "95154"; 
+/* ================= Live Cricket Score Fetcher & Override ================= */
+const MATCH_ID = "95155"; 
 const cloudflareProxyUrl = `https://bdcr.aminurmarch.workers.dev/?id=${MATCH_ID}`;
 
-function getMatchUKTime(match) {
-    let dateObj;
-    if (match && match.timestamp_start) {
-        dateObj = new Date(match.timestamp_start * 1000);
-    } else if (match && match.date_start_ist) {
-        dateObj = new Date(match.date_start_ist.replace(" ", "T") + "+05:30");
-    } else if (match && match.date_start) {
-        dateObj = new Date(match.date_start.replace(" ", "T") + "Z");
-    }
-
-    if (!dateObj || isNaN(dateObj.getTime())) return "6:30 PM";
-
-    return new Intl.DateTimeFormat('en-GB', {
-        timeZone: 'Europe/London',
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true
-    }).format(dateObj).toUpperCase();
-}
+// আপোনাৰ নিৰ্দিষ্ট মেচ টেক্সট
+const OVERRIDE_NOTE = "ENG vs SL 2nd T20, Starts Today at 6:30pm UK time. Venue: Sophia Gardens, Cardiff";
 
 async function fetchCricketScore() {
     const controller = new AbortController();
@@ -826,7 +813,6 @@ async function fetchCricketScore() {
         let match = null;
         let teams = null;
 
-        // Support direct EntitySport response structure and wrapped formats
         if (data && data.response) {
             match = data.response;
             teams = match.teams;
@@ -841,7 +827,6 @@ async function fetchCricketScore() {
 
         if (!match) return;
 
-        // Team identification
         let teamA = null;
         let teamB = null;
 
@@ -853,7 +838,10 @@ async function fetchCricketScore() {
             teamB = match.teamb;
         }
 
-        // Update Team A (ENG)
+        let scA = "";
+        let scB = "";
+
+        // Team A (ENG)
         if (teamA) {
             const codeA = document.getElementById('teamACode');
             const scoreA = document.getElementById('teamAScore');
@@ -862,8 +850,8 @@ async function fetchCricketScore() {
 
             if (codeA) codeA.textContent = teamA.abbr || teamA.short_name || "ENG";
             
-            const scA = teamA.scores || teamA.scores_full || "";
-            if (scoreA) scoreA.textContent = scA.trim() !== "" ? scA : "--";
+            scA = (teamA.scores || teamA.scores_full || "").trim();
+            if (scoreA) scoreA.textContent = scA !== "" ? scA : "--";
             
             const ovA = (teamA.overs || "").toString().trim();
             if (overAEl) overAEl.textContent = ovA ? `(${ovA} ov)` : "";
@@ -871,7 +859,7 @@ async function fetchCricketScore() {
             if (teamA.logo_url && logoA) logoA.src = teamA.logo_url;
         }
 
-        // Update Team B (SL)
+        // Team B (SL)
         if (teamB) {
             const codeB = document.getElementById('teamBCode');
             const scoreB = document.getElementById('teamBScore');
@@ -880,8 +868,8 @@ async function fetchCricketScore() {
 
             if (codeB) codeB.textContent = teamB.abbr || teamB.short_name || "SL";
             
-            const scB = teamB.scores || teamB.scores_full || "";
-            if (scoreB) scoreB.textContent = scB.trim() !== "" ? scB : "--";
+            scB = (teamB.scores || teamB.scores_full || "").trim();
+            if (scoreB) scoreB.textContent = scB !== "" ? scB : "--";
             
             const ovB = (teamB.overs || "").toString().trim();
             if (overBEl) overBEl.textContent = ovB ? `(${ovB} ov)` : "";
@@ -889,28 +877,22 @@ async function fetchCricketScore() {
             if (teamB.logo_url && logoB) logoB.src = teamB.logo_url;
         }
 
-        // Match Status & Badge handling
-        const statusText = match.status_note || match.equation || match.live || "";
-        const statusStr = (match.status_str || "").toLowerCase();
         const badgeContainer = document.getElementById('badgeContainer');
         const badgeEl = document.getElementById('matchBadge');
         const dotEl = document.getElementById('liveDot');
         const matchNoteEl = document.getElementById('matchNote');
 
-        if (statusStr.includes("scheduled") || match.status === 1) {
-            const ukTime = getMatchUKTime(match);
-            const subTitle = match.subtitle || "1st T20I";
-            
-            if (matchNoteEl) matchNoteEl.textContent = `${subTitle} • Starts today at ${ukTime} UK Time`;
-            if (badgeEl) badgeEl.textContent = "SCHEDULED";
-            if (badgeContainer) {
-                badgeContainer.style.background = "rgba(59, 130, 246, 0.16)";
-                badgeContainer.style.borderColor = "rgba(59, 130, 246, 0.45)";
-                badgeContainer.style.color = "#60a5fa";
-            }
-            if (dotEl) dotEl.style.display = "none";
+        const statusStr = (match.status_str || "").toLowerCase();
+        const statusText = match.status_note || match.equation || match.live || "";
 
-        } else if (statusStr.includes("completed") || statusStr.includes("finished") || match.status === 2) {
+        const hasLiveScore = (scA !== "" && scA !== "--") || (scB !== "" && scB !== "--");
+
+        const isCompleted = String(match.status) === "2" || 
+                            statusStr.includes("completed") || 
+                            statusStr.includes("finished") || 
+                            statusStr.includes("result");
+
+        if (isCompleted) {
             if (matchNoteEl) matchNoteEl.textContent = statusText || match.status_note || "Match Ended";
             if (badgeEl) badgeEl.textContent = "COMPLETED";
             if (badgeContainer) {
@@ -920,9 +902,18 @@ async function fetchCricketScore() {
             }
             if (dotEl) dotEl.style.display = "none";
 
+        } else if (!hasLiveScore) {
+            if (matchNoteEl) matchNoteEl.textContent = OVERRIDE_NOTE;
+            if (badgeEl) badgeEl.textContent = "SCHEDULED";
+            if (badgeContainer) {
+                badgeContainer.style.background = "rgba(59, 130, 246, 0.16)";
+                badgeContainer.style.borderColor = "rgba(59, 130, 246, 0.45)";
+                badgeContainer.style.color = "#60a5fa";
+            }
+            if (dotEl) dotEl.style.display = "none";
+
         } else {
-            // Live Status (status: 3)
-            const subTitle = match.subtitle ? `${match.subtitle} • ` : "";
+            const subTitle = match.subtitle ? `${match.subtitle} • ` : "2nd T20I • ";
             if (matchNoteEl) matchNoteEl.textContent = `${subTitle}${statusText || "Match in progress"}`;
             if (badgeEl) badgeEl.textContent = "LIVE";
             if (badgeContainer) {
@@ -933,7 +924,7 @@ async function fetchCricketScore() {
             if (dotEl) dotEl.style.display = "inline-block";
         }
     } catch (err) {
-        // quiet fallback
+        // fallback
     } finally {
         clearTimeout(timeoutId);
     }
