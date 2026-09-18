@@ -1,5 +1,5 @@
 // stations.js
-const stations = [
+window.stations = [
   { id: "N001", name: "Live News 24x7", state: "National" },
   { id: "N002", name: "Vividh Bharati", state: "National" },
   { id: "N003", name: "Raagam", state: "National" },
