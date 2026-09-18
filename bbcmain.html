@@ -572,10 +572,10 @@ body {
     <div class="cricket-strip" id="cricketStrip" onclick="window.location.href='go:card'">
         <div class="strip-top">
             <div class="strip-top-left">
-                <!-- Status Badge -->
-                <div class="live-badge" id="badgeContainer" style="background: rgba(59, 130, 246, 0.16); border: 1px solid rgba(59, 130, 246, 0.45); color: #60a5fa;">
+                <!-- Status Badge (COMPLETED) -->
+                <div class="live-badge" id="badgeContainer" style="background: rgba(148, 163, 184, 0.16); border: 1px solid rgba(148, 163, 184, 0.4); color: #94a3b8;">
                     <span class="dot" id="liveDot" style="display: none;"></span>
-                    <span id="matchBadge">SCHEDULED</span>
+                    <span id="matchBadge">COMPLETED</span>
                 </div>
             </div>
 
@@ -597,7 +597,7 @@ body {
         </div>
 
         <!-- Match Status Note -->
-        <div class="strip-status" id="matchNote">Loading match details...</div>
+        <div class="strip-status" id="matchNote">England won by 6 wkts</div>
 
         <div class="strip-body">
             <div class="strip-scores">
@@ -797,10 +797,13 @@ const WORKER_URL = "https://cricvoice.aminurmarch.workers.dev/";
 const MATCH_ID = "69bd420b1dbf177ca4e58e71";
 const BASE_IMAGE_URL = "https://cricradio.com";
 
+// ষ্টেটাছ অভাৰৰাইড কনষ্টেণ্ট
+const OVERRIDE_NOTE = "England won by 6 wkts";
+
 const CUSTOM_LOGO_A = "https://ik.imagekit.io/sqt8ptw1k/england.webp?updatedAt=1789628691703";
 const CUSTOM_LOGO_B = "https://ik.imagekit.io/sqt8ptw1k/sri-lanka-women.webp?updatedAt=1789308085405";
 
-// ইনীংছৰ ৰান আৰু অভাৰ উলিওৱাৰ সহায়ক ফাংচন (a_1_score / b_1_score চাপৰ্টৰ বাবে)
+// ইনীংছৰ ৰান আৰু অভাৰ উলিওৱাৰ সহায়ক ফাংচন
 function getTeamScoreData(teamObj, inningPrefix) {
     if (!teamObj) return { score: "--", overs: "" };
 
@@ -882,7 +885,7 @@ async function fetchCricketScore() {
             }
         }
 
-        // --- Match Status & Live Note (API Data) ---
+        // --- Match Status & Live Note (API Data & Override Handling) ---
         const badgeContainer = document.getElementById('badgeContainer');
         const badgeEl = document.getElementById('matchBadge');
         const dotEl = document.getElementById('liveDot');
@@ -902,20 +905,8 @@ async function fetchCricketScore() {
             dynamicNote = match.statusNote.trim();
         }
 
-        const isLive = ["live", "inprogress", "started", "in progress"].includes(status);
-        const isCompleted = ["completed", "finished", "result"].includes(status);
-
-        if (isLive) {
-            if (badgeEl) badgeEl.textContent = "LIVE";
-            if (dotEl) dotEl.style.display = "inline-block";
-            if (badgeContainer) {
-                badgeContainer.style.background = "rgba(239, 68, 68, 0.16)";
-                badgeContainer.style.borderColor = "rgba(239, 68, 68, 0.45)";
-                badgeContainer.style.color = "#f87171";
-            }
-            if (matchNoteEl) matchNoteEl.textContent = dynamicNote || "Match in progress";
-
-        } else if (isCompleted) {
+        // অভাৰৰাইড চেক: অভাৰৰাইড থাকিলে সদায় COMPLETED দেখুৱাব
+        if (OVERRIDE_NOTE) {
             if (badgeEl) badgeEl.textContent = "COMPLETED";
             if (dotEl) dotEl.style.display = "none";
             if (badgeContainer) {
@@ -923,17 +914,41 @@ async function fetchCricketScore() {
                 badgeContainer.style.borderColor = "rgba(148, 163, 184, 0.4)";
                 badgeContainer.style.color = "#94a3b8";
             }
-            if (matchNoteEl) matchNoteEl.textContent = dynamicNote || "Match Ended";
-
+            if (matchNoteEl) matchNoteEl.textContent = OVERRIDE_NOTE;
         } else {
-            if (badgeEl) badgeEl.textContent = "SCHEDULED";
-            if (dotEl) dotEl.style.display = "none";
-            if (badgeContainer) {
-                badgeContainer.style.background = "rgba(59, 130, 246, 0.16)";
-                badgeContainer.style.borderColor = "rgba(59, 130, 246, 0.45)";
-                badgeContainer.style.color = "#60a5fa";
+            const isLive = ["live", "inprogress", "started", "in progress"].includes(status);
+            const isCompleted = ["completed", "finished", "result"].includes(status);
+
+            if (isLive) {
+                if (badgeEl) badgeEl.textContent = "LIVE";
+                if (dotEl) dotEl.style.display = "inline-block";
+                if (badgeContainer) {
+                    badgeContainer.style.background = "rgba(239, 68, 68, 0.16)";
+                    badgeContainer.style.borderColor = "rgba(239, 68, 68, 0.45)";
+                    badgeContainer.style.color = "#f87171";
+                }
+                if (matchNoteEl) matchNoteEl.textContent = dynamicNote || "Match in progress";
+
+            } else if (isCompleted) {
+                if (badgeEl) badgeEl.textContent = "COMPLETED";
+                if (dotEl) dotEl.style.display = "none";
+                if (badgeContainer) {
+                    badgeContainer.style.background = "rgba(148, 163, 184, 0.16)";
+                    badgeContainer.style.borderColor = "rgba(148, 163, 184, 0.4)";
+                    badgeContainer.style.color = "#94a3b8";
+                }
+                if (matchNoteEl) matchNoteEl.textContent = dynamicNote || "Match Ended";
+
+            } else {
+                if (badgeEl) badgeEl.textContent = "SCHEDULED";
+                if (dotEl) dotEl.style.display = "none";
+                if (badgeContainer) {
+                    badgeContainer.style.background = "rgba(59, 130, 246, 0.16)";
+                    badgeContainer.style.borderColor = "rgba(59, 130, 246, 0.45)";
+                    badgeContainer.style.color = "#60a5fa";
+                }
+                if (matchNoteEl) matchNoteEl.textContent = dynamicNote || "Match has not started yet.";
             }
-            if (matchNoteEl) matchNoteEl.textContent = dynamicNote || "Match has not started yet.";
         }
 
     } catch (err) {
