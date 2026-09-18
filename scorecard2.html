@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Live Scorecard - IND vs AFG, 3rd T20</title>
+    <title>Live Scorecard</title>
     <style>
         :root {
             --bg-base: #020617;
@@ -52,7 +52,6 @@
             gap: 12px;
         }
 
-        /* Top Header */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -73,7 +72,6 @@
             font-weight: 800;
             letter-spacing: 0.6px;
             color: #60a5fa;
-            transition: all 0.3s ease;
         }
 
         .match-badge.live {
@@ -113,7 +111,6 @@
             border-radius: 12px;
         }
 
-        /* Match Information Bar */
         .match-meta-bar {
             display: flex;
             justify-content: space-between;
@@ -128,7 +125,6 @@
             color: var(--accent);
         }
 
-        /* Tabs */
         .tabs-wrapper {
             display: flex;
             gap: 5px;
@@ -172,7 +168,6 @@
             box-shadow: 0 0 6px var(--success);
         }
 
-        /* Hero Card */
         .hero-banner {
             background: linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(15, 23, 42, 0.5) 100%);
             border: 1px solid var(--border-highlight);
@@ -240,7 +235,6 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
-        /* Responsive Table */
         .table-container {
             border-radius: 12px;
             border: 1px solid var(--border);
@@ -409,7 +403,6 @@
 <body>
 
 <div class="scorecard-app">
-    <!-- Top Bar -->
     <div class="top-bar">
         <div class="match-badge" id="matchBadge">
             <span class="live-dot" id="liveDot"></span>
@@ -420,16 +413,13 @@
         </div>
     </div>
 
-    <!-- Match Information Row -->
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">IND vs AFG, 3rd T20</span>
-        <span id="venueHeader">📍 Arun Jaitley Stadium, Delhi</span>
+        <span class="match-title-text" id="matchHeader">Live Match</span>
+        <span id="venueHeader">📍 Stadium</span>
     </div>
 
-    <!-- Innings Navigation Tabs -->
     <div class="tabs-wrapper" id="inningsTabs"></div>
 
-    <!-- Dynamic Scorecard View -->
     <div id="contentView">
         <div class="shimmer"></div>
     </div>
@@ -457,15 +447,9 @@
     }
 
     function getInningsTabLabel(inn, idx, teamA, teamB) {
-        if (inn.teamName) {
-            const lower = inn.teamName.toLowerCase();
-            if (lower.includes("ind")) return "IND";
-            if (lower.includes("afg")) return "AFG";
-            return inn.teamName;
-        }
-
-        const aShort = teamA.shortName || "IND";
-        const bShort = teamB.shortName || "AFG";
+        if (inn.teamName) return inn.teamName;
+        const aShort = teamA.shortName || teamA.name || "Team A";
+        const bShort = teamB.shortName || teamB.name || "Team B";
 
         if (inn.key === "a_1" || inn.key === "a") return aShort;
         if (inn.key === "b_1" || inn.key === "b") return bShort;
@@ -474,8 +458,8 @@
 
     function getInningsDisplayName(inn, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
-        const aName = teamA.name || "India";
-        const bName = teamB.name || "Afghanistan";
+        const aName = teamA.name || "Team A";
+        const bName = teamB.name || "Team B";
 
         if (inn.key === "a_1" || inn.key === "a") return `${aName} Innings`;
         if (inn.key === "b_1" || inn.key === "b") return `${bName} Innings`;
@@ -495,16 +479,14 @@
             const teamA = result.teams?.a || {};
             const teamB = result.teams?.b || {};
 
-            const nameA = teamA.shortName || teamA.name || 'IND';
-            const nameB = teamB.shortName || teamB.name || 'AFG';
+            const nameA = teamA.shortName || teamA.name || '';
+            const nameB = teamB.shortName || teamB.name || '';
             const format = (result.format || 't20').toUpperCase();
-            const tournament = result.seriesName || `${nameA} vs ${nameB}, 3rd T20`;
+            const tournament = result.seriesName || (nameA && nameB ? `${nameA} vs${nameB}` : "Live Match");
 
-            // ১. হেডাৰ আপডেট
-            document.getElementById("matchHeader").textContent = tournament;
-            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : `📍 Arun Jaitley Stadium, Delhi`;
+            document.getElementById("matchHeader").textContent = `${tournament} (${format})`;
+            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : ``;
 
-            // ২. মেচ ষ্টেটাছ নিৰ্ধাৰণ
             const rawStatus = (result.status || "").toLowerCase().replace(/\s+/g, "");
             const statusFields = [
                 result.match_status,
@@ -569,12 +551,12 @@
                 document.getElementById("contentView").innerHTML = `
                     <div class="hero-banner">
                         <div class="hero-team">
-                            <span class="hero-team-name">${nameA} vs ${nameB}</span>
-                            <span class="hero-status-tag">3rd T20 (${format})</span>
+                            <span class="hero-team-name">${tournament}</span>
+                            <span class="hero-status-tag">${format}</span>
                         </div>
                         <div class="hero-score-box">
-                            <div class="hero-score-main">7:30PM</div>
-                            <div class="hero-score-sub">Match starts today at 7:30pm</div>
+                            <div class="hero-score-main">Upcoming</div>
+                            <div class="hero-score-sub">Match has not started yet</div>
                         </div>
                     </div>
                     <div style="text-align:center; padding:35px 10px; color:var(--text-muted); font-size:12px; line-height:1.6;">
@@ -629,12 +611,61 @@
 
         const container = document.getElementById("contentView");
 
-        // ১. বেটিং তালিকা
-        const batsmen = inn.player_batting_order || inn.battingOrder || [];
-        const battingHTML = batsmen.length > 0 ? batsmen.map(b => {
+        // Active Partnership resolution
+        const partnerships = inn.partnerships || [];
+        const lastPartnership = partnerships.length > 0 ? partnerships[partnerships.length - 1] : null;
+        
+        const activePartnerIds = new Set();
+        const activePartnerNames = new Set();
+
+        if (lastPartnership && !lastPartnership.dismissed) {
+            if (lastPartnership.player_a_Id) activePartnerIds.add(String(lastPartnership.player_a_Id));
+            if (lastPartnership.player_b_Id) activePartnerIds.add(String(lastPartnership.player_b_Id));
+            if (lastPartnership.player_a) activePartnerNames.add(lastPartnership.player_a.toLowerCase().trim());
+            if (lastPartnership.player_b) activePartnerNames.add(lastPartnership.player_b.toLowerCase().trim());
+        }
+
+        const rawBatsmen = (inn.player_batting_order && inn.player_batting_order.length > 0)
+            ? inn.player_batting_order 
+            : (inn.battingOrder || []);
+
+        const activeBatters = [];
+        const unbattedFromOrder = [];
+
+        rawBatsmen.forEach(b => {
             const bData = b.batting || b;
-            const isNotOut = bData.dismissed === false || !bData.out_str;
-            let dismissal = isNotOut ? '<span class="not-out">not out</span>' : (bData.out_str || 'out');
+            const isOut = Boolean(
+                bData.dismissed === true || 
+                bData.dismissed === 1 || 
+                (bData.out_str && bData.out_str.trim() !== "" && bData.out_str.trim().toLowerCase() !== "not out")
+            );
+            const balls = Number(bData.balls || 0);
+            const runs = Number(bData.runs || 0);
+
+            const pId = String(b.playerId || b._id || '');
+            const pName = (b.name || b.fullname || b.mobileName || '').toLowerCase().trim();
+
+            const isPartnerBatting = activePartnerIds.has(pId) || activePartnerNames.has(pName);
+
+            // Batter tabhi table mein aayega jab:
+            // 1. Wo out ho chuka ho
+            // 2. Usne balls kheli ho ya runs banaye ho
+            // 3. Ya wo active partnership ke hisaab se crease par ho
+            if (isOut || balls > 0 || runs > 0 || isPartnerBatting) {
+                activeBatters.push(b);
+            } else {
+                unbattedFromOrder.push(b);
+            }
+        });
+
+        const battingHTML = activeBatters.length > 0 ? activeBatters.map(b => {
+            const bData = b.batting || b;
+            const isOut = Boolean(
+                bData.dismissed === true || 
+                bData.dismissed === 1 || 
+                (bData.out_str && bData.out_str.trim() !== "" && bData.out_str.trim().toLowerCase() !== "not out")
+            );
+            let dismissal = isOut ? (bData.out_str || 'out') : '<span class="not-out">not out</span>';
             const pName = b.mobileName || b.name || b.fullname || 'Batter';
 
             return `
@@ -656,8 +687,17 @@
             `;
         }).join("") : '<tr><td colspan="6" style="text-align:center; padding:12px; color:var(--text-muted);">No batting data available</td></tr>';
 
-        // ২. বলিং তালিকা
-        const bowlers = inn.player_bowling_order || inn.bowlingOrder || [];
+        // Bowling list (only bowlers who have bowled)
+        const rawBowlers = (inn.player_bowling_order && inn.player_bowling_order.length > 0)
+            ? inn.player_bowling_order
+            : (inn.bowlingOrder || []);
+
+        const bowlers = rawBowlers.filter(bw => {
+            const bwData = bw.bowling || bw;
+            const overs = parseFloat(bwData.overs ?? 0);
+            return overs > 0 || (bwData.wickets ?? 0) > 0 || (bwData.runs ?? 0) > 0;
+        });
+
         const bowlingHTML = bowlers.length > 0 ? bowlers.map(bw => {
             const bwData = bw.bowling || bw;
             const bwName = bw.mobileName || bw.name || bw.fullname || 'Bowler';
@@ -678,29 +718,33 @@
             `;
         }).join("") : '<tr><td colspan="6" style="text-align:center; padding:12px; color:var(--text-muted);">No bowling data available</td></tr>';
 
-        // ৩. উইকেট পতন (Fall of Wickets)
+        // Fall of Wickets
         const fows = inn.fall_of_wickets || [];
         let fowList = '<span style="color:var(--text-muted)">No wickets fallen</span>';
         if (Array.isArray(fows) && fows.length > 0) {
             fowList = fows.map(f => {
-                if (typeof f === 'string') {
-                    return `<span class="fow-item">${f}</span>`;
-                }
+                if (typeof f === 'string') return `<span class="fow-item">${f}</span>`;
                 const wkt = `${f.score ?? f.runs ?? 0}-${f.number ?? f.wicket ?? ''}`;
                 return `<span class="fow-item"><b>${wkt}</b> (${f.name || ''}, ${f.overs ?? 0} ov)</span>`;
             }).join(" ");
         }
 
-        // ৪. Yet to Bat
-        const ytb = inn.yet_to_bat || [];
-        const ytbHTML = ytb.length > 0 ? `
+        // Yet to Bat merge (0 balls wale batters + yet_to_bat array)
+        const existingYtbNames = new Set((inn.yet_to_bat || []).map(p => (p.name || p.mobileName || '').toLowerCase().trim()));
+        const extraYtb = unbattedFromOrder.filter(p => {
+            const pName = (p.name || p.mobileName || p.fullname || '').toLowerCase().trim();
+            return pName && !existingYtbNames.has(pName);
+        });
+
+        const fullYetToBat = [...extraYtb, ...(inn.yet_to_bat || [])];
+        const ytbHTML = fullYetToBat.length > 0 ? `
             <div class="section-header">Yet to Bat</div>
             <div class="yet-to-bat-box">
-                ${ytb.map(p => p.name).join(", ")}
+                ${fullYetToBat.map(p => p.name || p.mobileName || p.fullname).join(", ")}
             </div>
         ` : '';
 
-        // ৫. স্ক'ৰ আৰু বিৱৰণ
+        // Summary details
         const extrasDetail = `b ${inn.bye ?? 0}, lb ${inn.legbye ?? 0}, w ${inn.wide ?? 0}, nb ${inn.noball ?? 0}`;
         const totalExtras = inn.extras ?? 0;
         const totalScore = inn.run_str || `${inn.runs ?? 0}/${inn.wickets ?? 0} (${inn.overs ?? '0.0'} ov)`;
