@@ -1,0 +1,26 @@
+[
+  {
+    "id": "hindi",
+    "tabTitle": "Hindi",
+    "name": "AIR Hindi Samachar",
+    "time": "Today • 08:00 AM",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg",
+    "streamUrl": "https://air.pc.cdn.bitgravity.com/air/live/pcr:air_hindi/playlist.m3u8"
+  },
+  {
+    "id": "english",
+    "tabTitle": "English",
+    "name": "AIR English News",
+    "time": "Today • 09:00 AM",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg",
+    "streamUrl": "https://air.pc.cdn.bitgravity.com/air/live/pcr:air_english/playlist.m3u8"
+  },
+  {
+    "id": "bbc",
+    "tabTitle": "BBC",
+    "name": "BBC World Service",
+    "time": "Today • 10:00 AM",
+    "logo": "https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/file_0000000021e08211b4960dad0c90dbff.jpg",
+    "streamUrl": "https://aod-dash-ww-gcomm.live.cf.md.bbci.co.uk/usp/auth/vod/piff_abr_full_audio/acf1e1-w1msm0v7f3lqd60/vf_w1msm0v7f3lqd60_0835852f-6ba8-4729-b96f-48de53f6fd8d.ism/dash/vf_w1msm0v7f3lqd60_0835852f-6ba8-4729-b96f-48de53f6fd8d-audio_eng_1=96000-3.m3u8"
+  }
+]
