@@ -3,24 +3,24 @@
     "id": "hindi",
     "tabTitle": "Hindi",
     "name": "AIR Hindi Samachar",
-    "time": "Today • 08:00 AM",
-    "logo": "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg",
-    "streamUrl": "https://air.pc.cdn.bitgravity.com/air/live/pcr:air_hindi/playlist.m3u8"
+    "time": "19 SEP • 10:00 PM",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/air-news-Google-Search-09-19-2026_11_44_PM.webp?updatedAt=1789841735313",
+    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/09/Hindi-2200-2205-6.mp3"
   },
   {
     "id": "english",
     "tabTitle": "English",
     "name": "AIR English News",
-    "time": "Today • 09:00 AM",
-    "logo": "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg",
-    "streamUrl": "https://air.pc.cdn.bitgravity.com/air/live/pcr:air_english/playlist.m3u8"
+    "time": "19 SEP • 10:00 PM",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/air-news-Google-Search-09-19-2026_11_44_PM.webp?updatedAt=1789841735313",
+    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/09/English-2205-2210-5.mp3"
   },
   {
     "id": "bbc",
     "tabTitle": "BBC",
-    "name": "BBC World Service",
-    "time": "Today • 10:00 AM",
-    "logo": "https://raw.githubusercontent.com/airappandroid/mp3-files/refs/heads/main/file_0000000021e08211b4960dad0c90dbff.jpg",
-    "streamUrl": "https://aod-dash-ww-gcomm.live.cf.md.bbci.co.uk/usp/auth/vod/piff_abr_full_audio/acf1e1-w1msm0v7f3lqd60/vf_w1msm0v7f3lqd60_0835852f-6ba8-4729-b96f-48de53f6fd8d.ism/dash/vf_w1msm0v7f3lqd60_0835852f-6ba8-4729-b96f-48de53f6fd8d-audio_eng_1=96000-3.m3u8"
+    "name": "BBC Hindi Dinbhar",
+    "time": "18 SEP • 9:00 PM",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_YwHwgPg83.jpg",
+    "streamUrl": "https://aod-dash-ww-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/1525ea-p0pbbgwd/vf_p0pbbgwd_fa0e6532-1c80-401d-8dfe-5afb2ba0f857.ism/dash/vf_p0pbbgwd_fa0e6532-1c80-401d-8dfe-5afb2ba0f857-audio_eng_1=96000-4.m3u8"
   }
 ]
