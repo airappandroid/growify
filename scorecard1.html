@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Live Scorecard - ENG vs SL, 2nd T20</title>
+    <title>Live Scorecard - ENG vs SL, 3rd T20</title>
     <style>
         :root {
             --bg-base: #020617;
@@ -422,7 +422,7 @@
 
     <!-- Match Information Row -->
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">ENG vs SL, 2nd T20</span>
+        <span class="match-title-text" id="matchHeader">ENG vs SL, 3rd T20</span>
         <span id="venueHeader">📍 Sophia Gardens, Cardiff</span>
     </div>
 
@@ -436,7 +436,7 @@
 </div>
 
 <script>
-    const matchId = "69bd420b1dbf177ca4e58e71";
+    const matchId = "69bd420e1dbf177ca4e58e77";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
@@ -498,7 +498,7 @@
             const nameA = teamA.shortName || teamA.name || 'ENG';
             const nameB = teamB.shortName || teamB.name || 'SL';
             const format = (result.format || 't20').toUpperCase();
-            const tournament = result.seriesName || `${nameA} vs ${nameB}, 2nd T20`;
+            const tournament = result.seriesName || `${nameA} vs ${nameB}, 3rd T20`;
 
             // ১. হেডাৰ আপডেট
             document.getElementById("matchHeader").textContent = tournament;
@@ -570,11 +570,11 @@
                     <div class="hero-banner">
                         <div class="hero-team">
                             <span class="hero-team-name">${nameA} vs ${nameB}</span>
-                            <span class="hero-status-tag">2nd T20 (${format})</span>
+                            <span class="hero-status-tag">3rd T20 (${format})</span>
                         </div>
                         <div class="hero-score-box">
-                            <div class="hero-score-main">6:30PM (UK Time)</div>
-                            <div class="hero-score-sub">Match starts today at 6:30pm</div>
+                            <div class="hero-score-main">2:30PM</div>
+                            <div class="hero-score-sub">Match starts today at 2:30pm</div>
                         </div>
                     </div>
                     <div style="text-align:center; padding:35px 10px; color:var(--text-muted); font-size:12px; line-height:1.6;">
