@@ -572,10 +572,10 @@ body {
     <div class="cricket-strip" id="cricketStrip" onclick="window.location.href='go:card'">
         <div class="strip-top">
             <div class="strip-top-left">
-                <!-- Status Badge (COMPLETED) -->
-                <div class="live-badge" id="badgeContainer" style="background: rgba(148, 163, 184, 0.16); border: 1px solid rgba(148, 163, 184, 0.4); color: #94a3b8;">
+                <!-- Status Badge (UPCOMING) -->
+                <div class="live-badge" id="badgeContainer" style="background: rgba(59, 130, 246, 0.16); border: 1px solid rgba(59, 130, 246, 0.45); color: #60a5fa;">
                     <span class="dot" id="liveDot" style="display: none;"></span>
-                    <span id="matchBadge">COMPLETED</span>
+                    <span id="matchBadge">UPCOMING</span>
                 </div>
             </div>
 
@@ -597,7 +597,7 @@ body {
         </div>
 
         <!-- Match Status Note -->
-        <div class="strip-status" id="matchNote">England won by 6 wkts</div>
+        <div class="strip-status" id="matchNote">ENG vs SL 3rd T20, Match Starts Today at 2:30pm</div>
 
         <div class="strip-body">
             <div class="strip-scores">
@@ -794,11 +794,11 @@ window.addEventListener('click', (e) => {
 
 /* ================= Live Cricket Score Fetcher & Worker Integration ================= */
 const WORKER_URL = "https://cricvoice.aminurmarch.workers.dev/";
-const MATCH_ID = "69bd420b1dbf177ca4e58e71";
+const MATCH_ID = "69bd420e1dbf177ca4e58e77";
 const BASE_IMAGE_URL = "https://cricradio.com";
 
 // ষ্টেটাছ অভাৰৰাইড কনষ্টেণ্ট
-const OVERRIDE_NOTE = "England won by 6 wkts";
+const OVERRIDE_NOTE = "ENG vs SL 3rd T20, Match Starts Today at 2:30pm";
 
 const CUSTOM_LOGO_A = "https://ik.imagekit.io/sqt8ptw1k/england.webp?updatedAt=1789628691703";
 const CUSTOM_LOGO_B = "https://ik.imagekit.io/sqt8ptw1k/sri-lanka-women.webp?updatedAt=1789308085405";
@@ -905,14 +905,14 @@ async function fetchCricketScore() {
             dynamicNote = match.statusNote.trim();
         }
 
-        // অভাৰৰাইড চেক: অভাৰৰাইড থাকিলে সদায় COMPLETED দেখুৱাব
+        // অভাৰৰাইড চেক: নিৰ্দিষ্ট মেছেজ আৰু UPCOMING ষ্টেটাছ
         if (OVERRIDE_NOTE) {
-            if (badgeEl) badgeEl.textContent = "COMPLETED";
+            if (badgeEl) badgeEl.textContent = "UPCOMING";
             if (dotEl) dotEl.style.display = "none";
             if (badgeContainer) {
-                badgeContainer.style.background = "rgba(148, 163, 184, 0.16)";
-                badgeContainer.style.borderColor = "rgba(148, 163, 184, 0.4)";
-                badgeContainer.style.color = "#94a3b8";
+                badgeContainer.style.background = "rgba(59, 130, 246, 0.16)";
+                badgeContainer.style.borderColor = "rgba(59, 130, 246, 0.45)";
+                badgeContainer.style.color = "#60a5fa";
             }
             if (matchNoteEl) matchNoteEl.textContent = OVERRIDE_NOTE;
         } else {
