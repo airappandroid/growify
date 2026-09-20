@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Live Scorecard - AUS vs ZIM, 2nd ODI</title>
+    <title>Live Scorecard - AUS vs ZIM, 3rd ODI</title>
     <style>
         :root {
             --bg-base: #020617;
@@ -422,7 +422,7 @@
 
     <!-- Match Information Row -->
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">AUS vs ZIM, 2nd ODI</span>
+        <span class="match-title-text" id="matchHeader">AUS vs ZIM, 3rd ODI</span>
         <span id="venueHeader">📍 Harare Sports Club</span>
     </div>
 
@@ -436,7 +436,7 @@
 </div>
 
 <script>
-    const matchId = "6a2918927327c23debeeebc1";
+    const matchId = "6a2918937327c23debeeebc2";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
@@ -498,7 +498,7 @@
             const nameA = teamA.shortName || teamA.name || 'AUS';
             const nameB = teamB.shortName || teamB.name || 'ZIM';
             const format = (result.format || 'odi').toUpperCase();
-            const tournament = result.seriesName || `${nameA} vs ${nameB}, 2nd ODI`;
+            const tournament = result.seriesName || `${nameA} vs ${nameB}, 3rd ODI`;
 
             // ১. হেডাৰ আপডেট
             document.getElementById("matchHeader").textContent = tournament;
@@ -570,7 +570,7 @@
                     <div class="hero-banner">
                         <div class="hero-team">
                             <span class="hero-team-name">${nameA} vs ${nameB}</span>
-                            <span class="hero-status-tag">2nd ODI (${format})</span>
+                            <span class="hero-status-tag">3rd ODI (${format})</span>
                         </div>
                         <div class="hero-score-box">
                             <div class="hero-score-main">Upcoming</div>
