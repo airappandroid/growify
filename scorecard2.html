@@ -426,7 +426,7 @@
 </div>
 
 <script>
-    const matchId = "6a83ae5f78dcf06570323aaf";
+    const matchId = "6a2918937327c23debeeebc2";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
@@ -647,10 +647,6 @@
 
             const isPartnerBatting = activePartnerIds.has(pId) || activePartnerNames.has(pName);
 
-            // Batter tabhi table mein aayega jab:
-            // 1. Wo out ho chuka ho
-            // 2. Usne balls kheli ho ya runs banaye ho
-            // 3. Ya wo active partnership ke hisaab se crease par ho
             if (isOut || balls > 0 || runs > 0 || isPartnerBatting) {
                 activeBatters.push(b);
             } else {
@@ -729,7 +725,7 @@
             }).join(" ");
         }
 
-        // Yet to Bat merge (0 balls wale batters + yet_to_bat array)
+        // Yet to Bat merge
         const existingYtbNames = new Set((inn.yet_to_bat || []).map(p => (p.name || p.mobileName || '').toLowerCase().trim()));
         const extraYtb = unbattedFromOrder.filter(p => {
             const pName = (p.name || p.mobileName || p.fullname || '').toLowerCase().trim();
