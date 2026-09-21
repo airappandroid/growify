@@ -3,24 +3,24 @@
     "id": "hindi",
     "tabTitle": "Hindi",
     "name": "AIR Hindi Samachar",
-    "time": "21 SEP • 3:00 PM",
+    "time": "21 SEP • 10:00 PM",
     "logo": "https://ik.imagekit.io/sqt8ptw1k/air-news-Google-Search-09-19-2026_11_44_PM.webp?updatedAt=1789841735313",
-    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/09/1500-6.mp3"
+    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/09/Hindi-2200-8.mp3"
   },
   {
     "id": "english",
     "tabTitle": "English",
     "name": "AIR English News",
-    "time": "21 SEP • 3:00 PM",
+    "time": "21 SEP • 10:00 PM",
     "logo": "https://ik.imagekit.io/sqt8ptw1k/air-news-Google-Search-09-19-2026_11_44_PM.webp?updatedAt=1789841735313",
-    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/09/1505-8.mp3"
+    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/09/English-2205-9.mp3"
   },
   {
     "id": "bbc",
     "tabTitle": "BBC",
     "name": "BBC Hindi Dinbhar",
-    "time": "18 SEP • 9:00 PM",
+    "time": "21 SEP • 11:00 PM",
     "logo": "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_YwHwgPg83.jpg",
-    "streamUrl": "https://aod-dash-ww-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/1525ea-p0pbbgwd/vf_p0pbbgwd_fa0e6532-1c80-401d-8dfe-5afb2ba0f857.ism/dash/vf_p0pbbgwd_fa0e6532-1c80-401d-8dfe-5afb2ba0f857-audio_eng_1=96000-4.m3u8"
+    "streamUrl": "https://aod-dash-ww-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/3a7309-p0pbrvf7/vf_p0pbrvf7_f37cf740-085f-48c8-9797-552473d1f1f6.ism/dash/vf_p0pbrvf7_f37cf740-085f-48c8-9797-552473d1f1f6-audio_eng_1=96000-2.m3u8"
   }
 ]
