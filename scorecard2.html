@@ -414,8 +414,8 @@
     </div>
 
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">Live Match</span>
-        <span id="venueHeader">📍 Stadium</span>
+        <span class="match-title-text" id="matchHeader">IND vs Japan (T20)</span>
+        <span id="venueHeader">Match Starts 22 SEP, 9:30 AM</span>
     </div>
 
     <div class="tabs-wrapper" id="inningsTabs"></div>
@@ -426,7 +426,7 @@
 </div>
 
 <script>
-    const matchId = "6a83ae5f78dcf06570323aaf";
+    const matchId = "6a9d59f81f0f3936e9029873";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
@@ -556,7 +556,7 @@
                         </div>
                         <div class="hero-score-box">
                             <div class="hero-score-main">Upcoming</div>
-                            <div class="hero-score-sub">Match has not started yet</div>
+                            <div class="hero-score-sub">${result.announcement1 || "Match Starts 22 SEP, 9:30 AM"}</div>
                         </div>
                     </div>
                     <div style="text-align:center; padding:35px 10px; color:var(--text-muted); font-size:12px; line-height:1.6;">
@@ -647,10 +647,6 @@
 
             const isPartnerBatting = activePartnerIds.has(pId) || activePartnerNames.has(pName);
 
-            // Batter tabhi table mein aayega jab:
-            // 1. Wo out ho chuka ho
-            // 2. Usne balls kheli ho ya runs banaye ho
-            // 3. Ya wo active partnership ke hisaab se crease par ho
             if (isOut || balls > 0 || runs > 0 || isPartnerBatting) {
                 activeBatters.push(b);
             } else {
@@ -729,7 +725,7 @@
             }).join(" ");
         }
 
-        // Yet to Bat merge (0 balls wale batters + yet_to_bat array)
+        // Yet to Bat merge
         const existingYtbNames = new Set((inn.yet_to_bat || []).map(p => (p.name || p.mobileName || '').toLowerCase().trim()));
         const extraYtb = unbattedFromOrder.filter(p => {
             const pName = (p.name || p.mobileName || p.fullname || '').toLowerCase().trim();
