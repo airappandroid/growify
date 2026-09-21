@@ -34,7 +34,7 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* ওপৰৰ খালী ঠাই আঁতৰাই হেডাৰ একেবাৰে ওপৰলৈ অনা হ'ল */
+            align-items: flex-start;
             padding: 8px 10px;
         }
 
@@ -542,7 +542,7 @@
         <!-- Main Cricket Score Card -->
         <div class="match-card">
             <div class="match-meta-bar">
-                <span class="match-label" id="match-info">Connecting...</span>
+                <span class="match-label" id="match-info">IND vs JPN • T20</span>
                 <span class="status-tag" id="match-status">UPCOMING</span>
             </div>
 
@@ -556,10 +556,10 @@
 
             <!-- Teams & Runs Arena -->
             <div class="teams-arena">
-                <!-- Team A -->
+                <!-- Team A (India) -->
                 <div class="team-box">
                     <div class="team-profile">
-                        <img class="team-crest" id="team-a-logo" src="https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg" alt="Team A">
+                        <img class="team-crest" id="team-a-logo" src="https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg" alt="India">
                         <span class="team-name-text" id="team-a-name">India</span>
                     </div>
                     <div class="team-metrics">
@@ -568,11 +568,11 @@
                     </div>
                 </div>
 
-                <!-- Team B -->
+                <!-- Team B (Japan) -->
                 <div class="team-box">
                     <div class="team-profile">
-                        <img class="team-crest" id="team-b-logo" src="https://ik.imagekit.io/sqt8ptw1k/images%20(1)_8_VfAHVo8.jpg" alt="Team B">
-                        <span class="team-name-text" id="team-b-name">Afghanistan</span>
+                        <img class="team-crest" id="team-b-logo" src="https://ik.imagekit.io/sqt8ptw1k/japan-women.webp?updatedAt=1789707848535" alt="Japan">
+                        <span class="team-name-text" id="team-b-name">Japan</span>
                     </div>
                     <div class="team-metrics">
                         <span class="runs-val" id="team-b-runs">--</span>
@@ -583,7 +583,7 @@
 
             <!-- Summary Status -->
             <div class="summary-status" id="status-box">
-                Fetching match updates...
+                Match Starts 22 SEP, 9:30 AM
             </div>
 
             <!-- Toss Details -->
@@ -616,7 +616,7 @@
     </div>
 
     <script>
-        const matchId = "6a7c72ee78dcf0657031d931";
+        const matchId = "6a9d59f81f0f3936e9029873";
         const cricketApiUrl = `https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=${matchId}`;
         const cricRadioBase = "https://api.cricradio.com.au";
         let isMatchLive = false;
@@ -643,6 +643,9 @@
 
             if (name.includes("ind")) {
                 return "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg";
+            }
+            if (name.includes("jpn") || name.includes("japan")) {
+                return "https://ik.imagekit.io/sqt8ptw1k/japan-women.webp?updatedAt=1789707848535";
             }
             if (name.includes("afg")) {
                 return "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_8_VfAHVo8.jpg";
@@ -688,9 +691,9 @@
                 const teamB = result.teams?.b || {};
 
                 const nameA = teamA.name || teamA.shortName || 'India';
-                const nameB = teamB.name || teamB.shortName || 'Afghanistan';
+                const nameB = teamB.name || teamB.shortName || 'Japan';
                 const shortA = teamA.shortName || 'IND';
-                const shortB = teamB.shortName || 'AFG';
+                const shortB = teamB.shortName || 'JPN';
 
                 // হেডাৰ আৰু ফৰ্মেট
                 const matchFormat = (result.format || "T20").toUpperCase();
@@ -724,7 +727,7 @@
                     statusBadge.textContent = "UPCOMING";
                     statusBadge.className = "status-tag";
                     statusBox.className = "summary-status";
-                    statusBox.textContent = "Match Scheduled";
+                    statusBox.textContent = result.announcement1 || "Match Starts 22 SEP, 9:30 AM";
                 }
 
                 // শেষৰ বল (Last Ball)
