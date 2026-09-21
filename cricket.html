@@ -542,7 +542,7 @@
         <!-- Main Cricket Score Card -->
         <div class="match-card">
             <div class="match-meta-bar">
-                <span class="match-label" id="match-info">IND vs JPN • T20</span>
+                <span class="match-label" id="match-info">Connecting...</span>
                 <span class="status-tag" id="match-status">UPCOMING</span>
             </div>
 
@@ -556,11 +556,11 @@
 
             <!-- Teams & Runs Arena -->
             <div class="teams-arena">
-                <!-- Team A (India) -->
+                <!-- Team A -->
                 <div class="team-box">
                     <div class="team-profile">
-                        <img class="team-crest" id="team-a-logo" src="https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg" alt="India">
-                        <span class="team-name-text" id="team-a-name">India</span>
+                        <img class="team-crest" id="team-a-logo" src="https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg" alt="Team A">
+                        <span class="team-name-text" id="team-a-name">Loading...</span>
                     </div>
                     <div class="team-metrics">
                         <span class="runs-val" id="team-a-runs">--</span>
@@ -568,11 +568,11 @@
                     </div>
                 </div>
 
-                <!-- Team B (Japan) -->
+                <!-- Team B -->
                 <div class="team-box">
                     <div class="team-profile">
-                        <img class="team-crest" id="team-b-logo" src="https://ik.imagekit.io/sqt8ptw1k/japan-women.webp?updatedAt=1789707848535" alt="Japan">
-                        <span class="team-name-text" id="team-b-name">Japan</span>
+                        <img class="team-crest" id="team-b-logo" src="https://ik.imagekit.io/sqt8ptw1k/japan-women.webp?updatedAt=1789707848535" alt="Team B">
+                        <span class="team-name-text" id="team-b-name">Loading...</span>
                     </div>
                     <div class="team-metrics">
                         <span class="runs-val" id="team-b-runs">--</span>
@@ -635,7 +635,6 @@
             }
         }
 
-        // ল'গ' নিৰ্বাচন (ImageKit প্ৰাথমিকতা আৰু Fallback সহ)
         function getTeamLogo(team) {
             if (!team) return "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg";
 
@@ -647,9 +646,6 @@
             if (name.includes("jpn") || name.includes("japan")) {
                 return "https://ik.imagekit.io/sqt8ptw1k/japan-women.webp?updatedAt=1789707848535";
             }
-            if (name.includes("afg")) {
-                return "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_8_VfAHVo8.jpg";
-            }
 
             if (team.logo) {
                 if (team.logo.startsWith("http")) return team.logo;
@@ -659,7 +655,6 @@
             return "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg";
         }
 
-        // স্ক'ৰ ফৰ্মেটিং
         function extractTeamScore(teamData, teamKey) {
             if (!teamData) return { runs: "--", overs: "" };
 
@@ -690,20 +685,23 @@
                 const teamA = result.teams?.a || {};
                 const teamB = result.teams?.b || {};
 
-                const nameA = teamA.name || teamA.shortName || 'India';
-                const nameB = teamB.name || teamB.shortName || 'Japan';
-                const shortA = teamA.shortName || 'IND';
-                const shortB = teamB.shortName || 'JPN';
+                const nameA = teamA.name || teamA.shortName || 'Japan';
+                const nameB = teamB.name || teamB.shortName || 'India';
+                const shortA = teamA.shortName || 'JPN';
+                const shortB = teamB.shortName || 'IND';
 
                 // হেডাৰ আৰু ফৰ্মেট
                 const matchFormat = (result.format || "T20").toUpperCase();
                 document.getElementById("match-info").textContent = `${shortA} vs ${shortB} • ${matchFormat}`;
                 document.getElementById("match-format").textContent = `${matchFormat} Match`;
 
-                // ষ্টেটাছ নিৰ্ধাৰণ
-                const rawStatus = (result.status || "").toLowerCase();
-                const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish");
-                const isLive = rawStatus.includes("started") || rawStatus.includes("live") || rawStatus.includes("inprogress");
+                // ষ্টেটাছ নিৰ্ধাৰণ (Strict Evaluation)
+                const rawStatus = (result.status || "").toLowerCase().replace(/[\s_-]+/g, "");
+                const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || rawStatus.includes("ended");
+                const isUpcoming = rawStatus.includes("notstarted") || rawStatus.includes("upcoming") || rawStatus.includes("scheduled") || !rawStatus;
+                
+                // কেৱল প্ৰকৃততে খেল আৰম্ভ হ'লে আৰু upcoming নহ'লেহে LIVE হ'ব
+                const isLive = !isUpcoming && !isCompleted && (rawStatus.includes("live") || rawStatus.includes("inprogress") || rawStatus === "started");
 
                 isMatchLive = isLive;
 
@@ -733,21 +731,21 @@
                 // শেষৰ বল (Last Ball)
                 const lastBallBox = document.getElementById("last-ball-container");
                 const latestBallEl = document.getElementById("latest-ball");
-                if (result.lastCommentary && result.lastCommentary.primaryText) {
+                if (isLive && result.lastCommentary && result.lastCommentary.primaryText) {
                     latestBallEl.textContent = result.lastCommentary.primaryText;
                     lastBallBox.style.display = "flex";
                 } else {
                     lastBallBox.style.display = "none";
                 }
 
-                // Team A ল'গ' আৰু স্ক'ৰ
+                // Team A
                 document.getElementById("team-a-name").textContent = nameA;
                 document.getElementById("team-a-logo").src = getTeamLogo(teamA);
                 const scoreA = extractTeamScore(teamA, "a");
                 document.getElementById("team-a-runs").textContent = scoreA.runs;
                 document.getElementById("team-a-overs").textContent = scoreA.overs;
 
-                // Team B ল'গ' আৰু স্ক'ৰ
+                // Team B
                 document.getElementById("team-b-name").textContent = nameB;
                 document.getElementById("team-b-logo").src = getTeamLogo(teamB);
                 const scoreB = extractTeamScore(teamB, "b");
@@ -756,7 +754,7 @@
 
                 // টচ (Toss)
                 const tossEl = document.getElementById("toss-info");
-                if (result.announcement1) {
+                if (result.announcement1 && isLive) {
                     tossEl.textContent = `Toss: ${result.announcement1}`;
                     tossEl.style.display = "block";
                 } else {
