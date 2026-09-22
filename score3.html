@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Live Scorecard - AUS vs ZIM, 3rd ODI</title>
+    <title>Live Scorecard - IND W vs SL W</title>
     <style>
         :root {
             --bg-base: #020617;
@@ -422,8 +422,8 @@
 
     <!-- Match Information Row -->
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">AUS vs ZIM, 3rd ODI</span>
-        <span id="venueHeader">📍 Harare Sports Club</span>
+        <span class="match-title-text" id="matchHeader">IND W vs SL W</span>
+        <span id="venueHeader">📍 Live Match</span>
     </div>
 
     <!-- Innings Navigation Tabs -->
@@ -436,7 +436,7 @@
 </div>
 
 <script>
-    const matchId = "6a2918937327c23debeeebc2";
+    const matchId = "6a83ae5c78dcf06570323aad";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
@@ -459,13 +459,13 @@
     function getInningsTabLabel(inn, idx, teamA, teamB) {
         if (inn.teamName) {
             const lower = inn.teamName.toLowerCase();
-            if (lower.includes("aus")) return "AUS";
-            if (lower.includes("zim")) return "ZIM";
+            if (lower.includes("ind") || lower.includes("india")) return "IND W";
+            if (lower.includes("sl") || lower.includes("sri lanka")) return "SL W";
             return inn.teamName;
         }
 
-        const aShort = teamA.shortName || "AUS";
-        const bShort = teamB.shortName || "ZIM";
+        const aShort = teamA.shortName || "IND W";
+        const bShort = teamB.shortName || "SL W";
 
         if (inn.key === "a_1" || inn.key === "a") return aShort;
         if (inn.key === "b_1" || inn.key === "b") return bShort;
@@ -474,8 +474,8 @@
 
     function getInningsDisplayName(inn, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
-        const aName = teamA.name || "Australia";
-        const bName = teamB.name || "Zimbabwe";
+        const aName = teamA.name || "India Women";
+        const bName = teamB.name || "Sri Lanka Women";
 
         if (inn.key === "a_1" || inn.key === "a") return `${aName} Innings`;
         if (inn.key === "b_1" || inn.key === "b") return `${bName} Innings`;
@@ -492,19 +492,19 @@
             if (!result) return;
             matchData = result;
 
-            const teamA = result.teams?.a || {};
-            const teamB = result.teams?.b || {};
+            const teamA = result.teams?.a || { name: "India Women", shortName: "IND W" };
+            const teamB = result.teams?.b || { name: "Sri Lanka Women", shortName: "SL W" };
 
-            const nameA = teamA.shortName || teamA.name || 'AUS';
-            const nameB = teamB.shortName || teamB.name || 'ZIM';
-            const format = (result.format || 'odi').toUpperCase();
-            const tournament = result.seriesName || `${nameA} vs ${nameB}, 3rd ODI`;
+            const nameA = teamA.shortName || teamA.name || 'IND W';
+            const nameB = teamB.shortName || teamB.name || 'SL W';
+            const format = (result.format || 't20').toUpperCase();
+            const tournament = result.seriesName || `${nameA} vs ${nameB}`;
 
-            // ১. হেডাৰ আপডেট
+            // 1. Header Update
             document.getElementById("matchHeader").textContent = tournament;
-            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : `📍 Harare Sports Club`;
+            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : `📍 Live Match`;
 
-            // ২. মেচ ষ্টেটাছ নিৰ্ধাৰণ
+            // 2. Status Determination
             const rawStatus = (result.status || "").toLowerCase().replace(/\s+/g, "");
             const statusFields = [
                 result.match_status,
@@ -564,21 +564,30 @@
 
             const innings = result.innings_batting_order || [];
 
+            // If match is upcoming or started but no ball bowled yet
             if (isUpcoming || !Array.isArray(innings) || innings.length === 0) {
                 document.getElementById("inningsTabs").innerHTML = "";
+
+                const isStartedWaiting = isLive || rawStatus === "started";
+                const heroMain = isStartedWaiting ? "Match Started" : "Upcoming";
+                const heroSub = isStartedWaiting ? "Toss Done / Play to begin shortly" : "Match scheduled soon";
+                const messageText = isStartedWaiting 
+                    ? "🏏 The match has started.<br>Live scorecard and player statistics will appear once play begins."
+                    : "⏳ Match has not started yet.<br>Full live scorecard will appear once play begins.";
+
                 document.getElementById("contentView").innerHTML = `
                     <div class="hero-banner">
                         <div class="hero-team">
                             <span class="hero-team-name">${nameA} vs ${nameB}</span>
-                            <span class="hero-status-tag">3rd ODI (${format})</span>
+                            <span class="hero-status-tag">${format}</span>
                         </div>
                         <div class="hero-score-box">
-                            <div class="hero-score-main">Upcoming</div>
-                            <div class="hero-score-sub">Match scheduled at Harare Sports Club</div>
+                            <div class="hero-score-main">${heroMain}</div>
+                            <div class="hero-score-sub">${heroSub}</div>
                         </div>
                     </div>
-                    <div style="text-align:center; padding:35px 10px; color:var(--text-muted); font-size:12px; line-height:1.6;">
-                        ⏳ Match has not started yet.<br>Full live scorecard will appear once play begins.
+                    <div style="text-align:center; padding:35px 10px; color:var(--text-muted); font-size:12.5px; line-height:1.6;">
+                        ${messageText}
                     </div>
                 `;
                 updateLastRefresh();
@@ -629,7 +638,7 @@
 
         const container = document.getElementById("contentView");
 
-        // ১. বেটিং তালিকা
+        // 1. Batting Table
         const batsmen = inn.player_batting_order || inn.battingOrder || [];
         const battingHTML = batsmen.length > 0 ? batsmen.map(b => {
             const bData = b.batting || b;
@@ -656,7 +665,7 @@
             `;
         }).join("") : '<tr><td colspan="6" style="text-align:center; padding:12px; color:var(--text-muted);">No batting data available</td></tr>';
 
-        // ২. বলিং তালিকা
+        // 2. Bowling Table
         const bowlers = inn.player_bowling_order || inn.bowlingOrder || [];
         const bowlingHTML = bowlers.length > 0 ? bowlers.map(bw => {
             const bwData = bw.bowling || bw;
@@ -678,7 +687,7 @@
             `;
         }).join("") : '<tr><td colspan="6" style="text-align:center; padding:12px; color:var(--text-muted);">No bowling data available</td></tr>';
 
-        // ৩. উইকেট পতন (Fall of Wickets)
+        // 3. Fall of Wickets
         const fows = inn.fall_of_wickets || [];
         let fowList = '<span style="color:var(--text-muted)">No wickets fallen</span>';
         if (Array.isArray(fows) && fows.length > 0) {
@@ -691,7 +700,7 @@
             }).join(" ");
         }
 
-        // ৪. Yet to Bat
+        // 4. Yet to Bat
         const ytb = inn.yet_to_bat || [];
         const ytbHTML = ytb.length > 0 ? `
             <div class="section-header">Yet to Bat</div>
@@ -700,7 +709,7 @@
             </div>
         ` : '';
 
-        // ৫. স্ক'ৰ আৰু বিৱৰণ
+        // 5. Scores and Summary
         const extrasDetail = `b ${inn.bye ?? 0}, lb ${inn.legbye ?? 0}, w ${inn.wide ?? 0}, nb ${inn.noball ?? 0}`;
         const totalExtras = inn.extras ?? 0;
         const totalScore = inn.run_str || `${inn.runs ?? 0}/${inn.wickets ?? 0} (${inn.overs ?? '0.0'} ov)`;
