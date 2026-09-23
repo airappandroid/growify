@@ -500,45 +500,94 @@
             const format = (result.format || 't20').toUpperCase();
             const tournament = result.seriesName || `${nameA} vs ${nameB}, 1st ODI`;
 
-            // ১. হেডাৰ আপডেট
+            // 1. Header update
             document.getElementById("matchHeader").textContent = tournament;
             document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : `📍 Riverside Ground`;
 
-            // ২. মেচ ষ্টেটাছ নিৰ্ধাৰণ
-            const rawStatus = (result.status || "").toLowerCase().replace(/\s+/g, "");
-            const statusFields = [
+            // 2. Comprehensive Match Status Determination
+            const rawStatus = String(result.status || "").toLowerCase().trim();
+            const cleanRawStatus = rawStatus.replace(/\s+/g, "");
+
+            const statusFieldsList = [
                 result.match_status,
                 result.matchStatus,
                 result.state,
+                result.match_state,
                 result.status_note,
                 result.status_text,
                 result.result,
                 result.winning_team,
-                result.winner
-            ].filter(Boolean).map(s => String(s).toLowerCase()).join(" ");
-
-            const completionKeywords = [
-                "complete", "completed", "finish", "finished", "ended", "concluded",
-                "won", "win", "beat", "defeat", "tied", "tie", "abandon", "abandoned", "no result"
+                result.winner,
+                result.win_margin,
+                result.summary,
+                result.note,
+                result.header?.status,
+                result.header?.state,
+                result.header?.status_note
             ];
 
-            const isUpcoming = rawStatus.includes("notstarted") || rawStatus.includes("upcoming") || rawStatus.includes("scheduled") || !rawStatus;
+            const statusFieldsStr = statusFieldsList.filter(Boolean).map(s => String(s).toLowerCase()).join(" ");
+
+            const completionKeywords = [
+                "complete", "completed", "finish", "finished", "ended", "end", "concluded",
+                "won", "win", "beat", "defeat", "tied", "tie", "abandon", "abandoned", 
+                "no result", "result", "post", "closed", "stumps", "drawn", "draw", "loss", "lost"
+            ];
+
+            const innings = result.innings_batting_order || [];
+
+            const isUpcoming = cleanRawStatus.includes("notstarted") || 
+                               cleanRawStatus.includes("upcoming") || 
+                               cleanRawStatus.includes("scheduled") || 
+                               (!cleanRawStatus && (!Array.isArray(innings) || innings.length === 0));
 
             let isCompleted = !isUpcoming && (
-                completionKeywords.some(kw => rawStatus.includes(kw) || statusFields.includes(kw)) ||
+                completionKeywords.some(kw => rawStatus.includes(kw) || statusFieldsStr.includes(kw)) ||
                 Boolean(result.winner) ||
                 Boolean(result.winning_team) ||
                 result.is_completed === true ||
-                result.is_completed === 1
+                result.is_completed === 1 ||
+                result.completed === true ||
+                result.status_id === 3 ||
+                result.status === 3 ||
+                result.status === "3"
             );
+
+            // Scorecard Math Fallback (agar API status me 'Live' atka ho tab bhi calculate karega)
+            if (!isCompleted && !isUpcoming && Array.isArray(innings) && innings.length >= 2) {
+                const inn1 = innings[0] || {};
+                const inn2 = innings[1] || {};
+
+                const r1 = parseInt(inn1.runs ?? 0, 10);
+                const r2 = parseInt(inn2.runs ?? 0, 10);
+                const w2 = parseInt(inn2.wickets ?? 0, 10);
+                const ov2 = parseFloat(inn2.overs ?? 0);
+
+                let maxOvers = 20;
+                const fmt = (result.format || tournament || "").toLowerCase();
+                if (fmt.includes("odi") || fmt.includes("50")) maxOvers = 50;
+                else if (fmt.includes("t10") || fmt.includes("10")) maxOvers = 10;
+                else if (fmt.includes("hundred")) maxOvers = 20;
+
+                const target = parseInt(inn2.target || result.target || (r1 > 0 ? r1 + 1 : 0), 10);
+
+                const targetChased = (target > 0 && r2 >= target) || (r1 > 0 && r2 > r1);
+                const allOut = w2 >= 10;
+                const oversDone = ov2 >= maxOvers;
+                const innClosed = inn2.is_closed === true || inn2.closed === true || inn2.status === "completed";
+
+                if (targetChased || allOut || oversDone || innClosed) {
+                    isCompleted = true;
+                }
+            }
 
             isMatchFinishedGlobal = isCompleted;
 
             const isLive = !isCompleted && !isUpcoming && (
-                rawStatus.includes("live") ||
-                rawStatus.includes("inprogress") ||
-                rawStatus === "started" ||
-                statusFields.includes("live") ||
+                cleanRawStatus.includes("live") ||
+                cleanRawStatus.includes("inprogress") ||
+                cleanRawStatus === "started" ||
+                statusFieldsStr.includes("live") ||
                 result.live === true ||
                 result.is_live === true ||
                 result.is_live === 1
@@ -561,8 +610,6 @@
                 badgeEl.className = "match-badge";
                 dotEl.style.display = "none";
             }
-
-            const innings = result.innings_batting_order || [];
 
             if (isUpcoming || !Array.isArray(innings) || innings.length === 0) {
                 document.getElementById("inningsTabs").innerHTML = "";
@@ -591,7 +638,7 @@
             }
 
             renderTabs(innings, teamA, teamB);
-            renderScorecard(innings[selectedInningIndex], teamA, teamB);
+            renderScorecard(innings[selectedInningIndex], teamA, teamB, innings);
             updateLastRefresh();
 
         } catch (err) {
@@ -618,18 +665,18 @@
             btn.onclick = () => {
                 selectedInningIndex = idx;
                 renderTabs(innings, teamA, teamB);
-                renderScorecard(innings[idx], teamA, teamB);
+                renderScorecard(innings[idx], teamA, teamB, innings);
             };
             tabContainer.appendChild(btn);
         });
     }
 
-    function renderScorecard(inn, teamA, teamB) {
+    function renderScorecard(inn, teamA, teamB, allInnings = []) {
         if (!inn) return;
 
         const container = document.getElementById("contentView");
 
-        // ১. বেটিং তালিকা
+        // 1. Batting table
         const batsmen = inn.player_batting_order || inn.battingOrder || [];
         const battingHTML = batsmen.length > 0 ? batsmen.map(b => {
             const bData = b.batting || b;
@@ -656,7 +703,7 @@
             `;
         }).join("") : '<tr><td colspan="6" style="text-align:center; padding:12px; color:var(--text-muted);">No batting data available</td></tr>';
 
-        // ২. বলিং তালিকা
+        // 2. Bowling table
         const bowlers = inn.player_bowling_order || inn.bowlingOrder || [];
         const bowlingHTML = bowlers.length > 0 ? bowlers.map(bw => {
             const bwData = bw.bowling || bw;
@@ -678,7 +725,7 @@
             `;
         }).join("") : '<tr><td colspan="6" style="text-align:center; padding:12px; color:var(--text-muted);">No bowling data available</td></tr>';
 
-        // ৩. উইকেট পতন (Fall of Wickets)
+        // 3. Fall of Wickets
         const fows = inn.fall_of_wickets || [];
         let fowList = '<span style="color:var(--text-muted)">No wickets fallen</span>';
         if (Array.isArray(fows) && fows.length > 0) {
@@ -691,7 +738,7 @@
             }).join(" ");
         }
 
-        // ৪. Yet to Bat
+        // 4. Yet to Bat
         const ytb = inn.yet_to_bat || [];
         const ytbHTML = ytb.length > 0 ? `
             <div class="section-header">Yet to Bat</div>
@@ -700,15 +747,38 @@
             </div>
         ` : '';
 
-        // ৫. স্ক'ৰ আৰু বিৱৰণ
+        // 5. Score aur Status Sub-text
         const extrasDetail = `b ${inn.bye ?? 0}, lb ${inn.legbye ?? 0}, w ${inn.wide ?? 0}, nb ${inn.noball ?? 0}`;
         const totalExtras = inn.extras ?? 0;
         const totalScore = inn.run_str || `${inn.runs ?? 0}/${inn.wickets ?? 0} (${inn.overs ?? '0.0'} ov)`;
         const runRate = inn.run_rate ? `${inn.run_rate} CRR` : "";
 
-        let statusSubText = (matchData?.status_note || matchData?.status_text || matchData?.result || matchData?.status || "").toUpperCase();
-        if (isMatchFinishedGlobal && (statusSubText === "LIVE" || statusSubText === "STARTED" || !statusSubText)) {
-            statusSubText = "MATCH COMPLETED";
+        let statusSubText = String(matchData?.status_note || matchData?.status_text || matchData?.result || matchData?.status || "").toUpperCase();
+
+        if (isMatchFinishedGlobal) {
+            if (statusSubText === "LIVE" || statusSubText === "STARTED" || statusSubText === "IN PROGRESS" || !statusSubText) {
+                if (allInnings.length >= 2) {
+                    const inn1 = allInnings[0];
+                    const inn2 = allInnings[1];
+                    const r1 = parseInt(inn1.runs ?? 0, 10);
+                    const r2 = parseInt(inn2.runs ?? 0, 10);
+                    const w2 = parseInt(inn2.wickets ?? 0, 10);
+                    const nameA = teamA.shortName || teamA.name || 'ENG';
+                    const nameB = teamB.shortName || teamB.name || 'SL';
+
+                    if (r2 > r1) {
+                        statusSubText = `${nameB} WON BY ${10 - w2} WICKETS`;
+                    } else if (r1 > r2) {
+                        statusSubText = `${nameA} WON BY ${r1 - r2} RUNS`;
+                    } else if (r1 === r2 && r1 > 0) {
+                        statusSubText = "MATCH TIED";
+                    } else {
+                        statusSubText = "MATCH COMPLETED";
+                    }
+                } else {
+                    statusSubText = "MATCH COMPLETED";
+                }
+            }
         }
 
         const teamDisplayName = getInningsDisplayName(inn, teamA, teamB);
