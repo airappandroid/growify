@@ -1,0 +1,178 @@
+[
+{
+"id": "radio1",
+"name": "Mirchi Bollywood Hits",
+"category": "Hindi",
+"streamUrl": "https://stream.zeno.fm/f3wvbbqmdg8uv",
+"trigger": "go:radio1",
+"logo": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio2",
+"name": "Vividh Bharati Radio",
+"category": "Hindi",
+"streamUrl": "https://air.pc.cdn.bitgravity.com/air/live/pcr:vividhbharti/playlist.m3u8",
+"trigger": "go:radio2",
+"logo": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio3",
+"name": "Radio City Hindi",
+"category": "Hindi",
+"streamUrl": "https://stream.zeno.fm/u7k3m1umdg8uv",
+"trigger": "go:radio3",
+"logo": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio4",
+"name": "BBC World Service",
+"category": "English",
+"streamUrl": "https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",
+"trigger": "go:radio4",
+"logo": "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio5",
+"name": "Dance Wave English",
+"category": "English",
+"streamUrl": "https://dancewave.online/dance.mp3",
+"trigger": "go:radio5",
+"logo": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio6",
+"name": "Bhakti Sagar Tarang",
+"category": "Bhakti",
+"streamUrl": "https://stream.zeno.fm/0w9436qmdg8uv",
+"trigger": "go:radio6",
+"logo": "https://images.unsplash.com/photo-1609342122563-a43ac8917a3a?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio7",
+"name": "Krishna Katha & Kirtan",
+"category": "Bhakti",
+"streamUrl": "https://stream.zeno.fm/k2k1w1umdg8uv",
+"trigger": "go:radio7",
+"logo": "https://images.unsplash.com/photo-1545239351-ef35f43d514b?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio8",
+"name": "Bangla Gaan Radio",
+"category": "Bangla",
+"streamUrl": "https://stream.zeno.fm/87v9p9umdg8uv",
+"trigger": "go:radio8",
+"logo": "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio9",
+"name": "Dhaka FM Bangla",
+"category": "Bangla",
+"streamUrl": "https://stream.zeno.fm/3u3n74umdg8uv",
+"trigger": "go:radio9",
+"logo": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio10",
+"name": "Assam Sur Tarang",
+"category": "Assamese",
+"streamUrl": "https://stream.zeno.fm/m9y457umdg8uv",
+"trigger": "go:radio10",
+"logo": "https://images.unsplash.com/photo-1506157786151-b8491531f063?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio11",
+"name": "Odia Geeti Radio",
+"category": "Odia",
+"streamUrl": "https://stream.zeno.fm/65q8w3umdg8uv",
+"trigger": "go:radio11",
+"logo": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio12",
+"name": "Bhojpuri Dhamaka FM",
+"category": "Bhojpuri",
+"streamUrl": "https://stream.zeno.fm/a81387umdg8uv",
+"trigger": "go:radio12",
+"logo": "https://images.unsplash.com/photo-1526478806334-5fd488fcaabc?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio13",
+"name": "Radio Nepal Lokvani",
+"category": "Nepali",
+"streamUrl": "https://stream.zeno.fm/3u3n74umdg8uv",
+"trigger": "go:radio13",
+"logo": "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio14",
+"name": "Punjabi Dhol Beats",
+"category": "Punjabi",
+"streamUrl": "https://stream.zeno.fm/c3fsq8umdg8uv",
+"trigger": "go:radio14",
+"logo": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio15",
+"name": "Desi Punjabi Hits",
+"category": "Punjabi",
+"streamUrl": "https://stream.zeno.fm/f3wvbbqmdg8uv",
+"trigger": "go:radio15",
+"logo": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio16",
+"name": "Marathi Sangeet Vani",
+"category": "Marathi",
+"streamUrl": "https://stream.zeno.fm/q1g5r2umdg8uv",
+"trigger": "go:radio16",
+"logo": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio17",
+"name": "Gujarati Rangila Radio",
+"category": "Gujarati",
+"streamUrl": "https://stream.zeno.fm/u7k3m1umdg8uv",
+"trigger": "go:radio17",
+"logo": "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio18",
+"name": "Tamil Isai Beat FM",
+"category": "Tamil",
+"streamUrl": "https://stream.zeno.fm/s493z2umdg8uv",
+"trigger": "go:radio18",
+"logo": "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio19",
+"name": "Telugu Cinema Vaani",
+"category": "Telugu",
+"streamUrl": "https://stream.zeno.fm/v7x391umdg8uv",
+"trigger": "go:radio19",
+"logo": "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio20",
+"name": "Kannada Gaana Radio",
+"category": "Kannada",
+"streamUrl": "https://stream.zeno.fm/5f7w1tumdg8uv",
+"trigger": "go:radio20",
+"logo": "https://images.unsplash.com/photo-1445985543469-7233886ff323?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio21",
+"name": "Sport Live Commentary",
+"category": "Sport",
+"streamUrl": "https://stream.zeno.fm/9a7w2vumdg8uv",
+"trigger": "go:radio21",
+"logo": "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=300&auto=format&fit=crop&q=80"
+},
+{
+"id": "radio22",
+"name": "Cricket Radio Live",
+"category": "Sport",
+"streamUrl": "https://stream.zeno.fm/0w9436qmdg8uv",
+"trigger": "go:radio22",
+"logo": "https://images.unsplash.com/photo-1540747913346-59e32dc3e828?w=300&auto=format&fit=crop&q=80"
+}
+]
