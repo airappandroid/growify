@@ -1,11 +1,11 @@
 [
 {
 "id": "radio1",
-"name": "Mirchi Bollywood Hits",
+"name": "Radio Mirchi",
 "category": "Hindi",
 "streamUrl": "https://stream.zeno.fm/f3wvbbqmdg8uv",
-"trigger": "go:radio1",
-"logo": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&auto=format&fit=crop&q=80"
+"trigger": "go:mirchi",
+"logo": "https://ik.imagekit.io/sqt8ptw1k/images_ib3s_z65N.jpg"
 },
 {
 "id": "radio2",
