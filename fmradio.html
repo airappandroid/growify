@@ -205,10 +205,6 @@
         color 0.15s ease;
     }
 
-    .action-btn:active {
-      transform: scale(0.94);
-    }
-
     .action-btn.active {
       background: rgba(244, 63, 94, 0.14);
       border-color: var(--accent);
@@ -258,14 +254,7 @@
       min-width: 0;
       content-visibility: auto;
       contain-intrinsic-size: 180px;
-      transition:
-        transform 0.12s ease,
-        border-color 0.12s ease;
-    }
-
-    .station-card:active {
-      transform: scale(0.97);
-      border-color: rgba(244, 63, 94, 0.5);
+      transition: border-color 0.12s ease;
     }
 
     /* =========================
@@ -311,13 +300,8 @@
       color: var(--text-muted);
       cursor: pointer;
       transition:
-        transform 0.12s ease,
         color 0.12s ease,
         background-color 0.12s ease;
-    }
-
-    .card-fav-btn:active {
-      transform: scale(0.86);
     }
 
     .card-fav-btn.favorited {
@@ -554,10 +538,6 @@
       flex-shrink: 0;
     }
 
-    .modal-close-icon-btn:active {
-      transform: scale(0.9);
-    }
-
     .modal-grid-scroll {
       flex: 1;
       min-height: 0;
@@ -595,10 +575,6 @@
       transition:
         background-color 0.12s ease,
         border-color 0.12s ease;
-    }
-
-    .pref-item:active {
-      transform: scale(0.98);
     }
 
     .pref-item.selected {
@@ -675,10 +651,6 @@
       font-weight: 800;
       cursor: pointer;
       box-shadow: 0 4px 18px var(--accent-glow);
-    }
-
-    .modal-confirm-btn:active {
-      transform: scale(0.98);
     }
 
     /* =========================
@@ -931,36 +903,37 @@
       "Nepali": "नेपाली लोक संगीत",
       "Punjabi": "ਪੰਜਾਬੀ ਢੋਲ ਤੇ ਬੀਟਸ",
       "Marathi": "मराठी भावगीत",
-      "Gujarati": "ગુજરાતી ગીતો",
+      "Gujarati": "ગુજરાતી গীতો",
       "Tamil": "தமிழ் இசை",
       "Telugu": "తెలుగు పాటలు",
       "Kannada": "ಕನ್ನಡ ಗೀತೆಗಳು",
       "Sport": "Cricket & Sports Live"
     };
 
+    /* FALLBACK_DATA: streamUrl আঁতৰোৱা হৈছে */
     const FALLBACK_DATA = [
-      { id: "radio1", name: "Mirchi Bollywood Hits", category: "Hindi", streamUrl: "https://stream.zeno.fm/f3wvbbqmdg8uv", logo: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&q=80" },
-      { id: "radio2", name: "Vividh Bharati Radio", category: "Hindi", streamUrl: "https://air.pc.cdn.bitgravity.com/air/live/pcr:vividhbharti/playlist.m3u8", logo: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&q=80" },
-      { id: "radio3", name: "BBC World Service", category: "English", streamUrl: "https://stream.live.vc/bbcmedia.co.uk/bbc_world_service", logo: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=300&q=80" },
-      { id: "radio4", name: "Dance Wave Global", category: "English", streamUrl: "https://dancewave.online/dance.mp3", logo: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=300&q=80" },
-      { id: "radio5", name: "Bhakti Sagar Tarang", category: "Bhakti", streamUrl: "https://stream.zeno.fm/0w9436qmdg8uv", logo: "https://images.unsplash.com/photo-1609342122563-a43ac8917a3a?w=300&q=80" },
-      { id: "radio6", name: "Bangla Gaan FM", category: "Bangla", streamUrl: "https://stream.zeno.fm/87v9p9umdg8uv", logo: "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=300&q=80" },
-      { id: "radio7", name: "Assam Sur Sangeet", category: "Assamese", streamUrl: "https://stream.zeno.fm/m9y457umdg8uv", logo: "https://images.unsplash.com/photo-1506157786151-b8491531f063?w=300&q=80" },
-      { id: "radio8", name: "Odia Tarang Radio", category: "Odia", streamUrl: "https://stream.zeno.fm/65q8w3umdg8uv", logo: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&q=80" },
-      { id: "radio9", name: "Bhojpuri Dhamaka", category: "Bhojpuri", streamUrl: "https://stream.zeno.fm/a81387umdg8uv", logo: "https://images.unsplash.com/photo-1526478806334-5fd488fcaabc?w=300&q=80" },
-      { id: "radio10", name: "Nepali Lok Radio", category: "Nepali", streamUrl: "https://stream.zeno.fm/3u3n74umdg8uv", logo: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=300&q=80" },
-      { id: "radio11", name: "Punjabi Dhol Beats", category: "Punjabi", streamUrl: "https://stream.zeno.fm/c3fsq8umdg8uv", logo: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=300&q=80" },
-      { id: "radio12", name: "Marathi Bhavgeet FM", category: "Marathi", streamUrl: "https://stream.zeno.fm/q1g5r2umdg8uv", logo: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&q=80" },
-      { id: "radio13", name: "Gujarati Rangila FM", category: "Gujarati", streamUrl: "https://stream.zeno.fm/u7k3m1umdg8uv", logo: "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=300&q=80" },
-      { id: "radio14", name: "Tamil Isai Vani", category: "Tamil", streamUrl: "https://stream.zeno.fm/s493z2umdg8uv", logo: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=300&q=80" },
-      { id: "radio15", name: "Telugu Super Hits", category: "Telugu", streamUrl: "https://stream.zeno.fm/v7x391umdg8uv", logo: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=300&q=80" },
-      { id: "radio16", name: "Kannada Gaana Taranga", category: "Kannada", streamUrl: "https://stream.zeno.fm/5f7w1tumdg8uv", logo: "https://images.unsplash.com/photo-1445985543469-7233886ff323?w=300&q=80" },
-      { id: "radio17", name: "Live Cricket & Sport", category: "Sport", streamUrl: "https://stream.zeno.fm/9a7w2vumdg8uv", logo: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=300&q=80" }
+      { id: "radio1", name: "Mirchi Bollywood Hits", category: "Hindi", logo: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&q=80" },
+      { id: "radio2", name: "Vividh Bharati Radio", category: "Hindi", logo: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&q=80" },
+      { id: "radio3", name: "BBC World Service", category: "English", logo: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=300&q=80" },
+      { id: "radio4", name: "Dance Wave Global", category: "English", logo: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=300&q=80" },
+      { id: "radio5", name: "Bhakti Sagar Tarang", category: "Bhakti", logo: "https://images.unsplash.com/photo-1609342122563-a43ac8917a3a?w=300&q=80" },
+      { id: "radio6", name: "Bangla Gaan FM", category: "Bangla", logo: "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=300&q=80" },
+      { id: "radio7", name: "Assam Sur Sangeet", category: "Assamese", logo: "https://images.unsplash.com/photo-1506157786151-b8491531f063?w=300&q=80" },
+      { id: "radio8", name: "Odia Tarang Radio", category: "Odia", logo: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&q=80" },
+      { id: "radio9", name: "Bhojpuri Dhamaka", category: "Bhojpuri", logo: "https://images.unsplash.com/photo-1526478806334-5fd488fcaabc?w=300&q=80" },
+      { id: "radio10", name: "Nepali Lok Radio", category: "Nepali", logo: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=300&q=80" },
+      { id: "radio11", name: "Punjabi Dhol Beats", category: "Punjabi", logo: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=300&q=80" },
+      { id: "radio12", name: "Marathi Bhavgeet FM", category: "Marathi", logo: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&q=80" },
+      { id: "radio13", name: "Gujarati Rangila FM", category: "Gujarati", logo: "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=300&q=80" },
+      { id: "radio14", name: "Tamil Isai Vani", category: "Tamil", logo: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=300&q=80" },
+      { id: "radio15", name: "Telugu Super Hits", category: "Telugu", logo: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=300&q=80" },
+      { id: "radio16", name: "Kannada Gaana Taranga", category: "Kannada", logo: "https://images.unsplash.com/photo-1445985543469-7233886ff323?w=300&q=80" },
+      { id: "radio17", name: "Live Cricket & Sport", category: "Sport", logo: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=300&q=80" }
     ];
 
-    /* =========================================================
+    /* =========================
        STATE
-    ========================================================= */
+    ========================= */
 
     let allStations = [];
     let activeCategory = "All";
@@ -972,9 +945,9 @@
     let modalSelectedCategory = "Hindi";
     let activeCategoriesList = [...PRIMARY_CATEGORIES];
 
-    /* =========================================================
+    /* =========================
        DOM ELEMENTS
-    ========================================================= */
+    ========================= */
 
     const searchInput = document.getElementById("search-input");
     const clearSearchBtn = document.getElementById("clear-search-btn");
@@ -992,7 +965,7 @@
     const toastMsg = document.getElementById("toast-msg");
 
     /* =========================================================
-       FALLBACK SVG (NO LEADING WHITESPACE)
+       FALLBACK SVG
     ========================================================= */
 
     function getFallbackSvg(text) {
@@ -1120,7 +1093,7 @@
       hideSkeleton();
       renderStations();
 
-      // First Launch: open modal if category preference was never saved
+      // First Launch check
       if (!localStorage.getItem(STORAGE_KEY_PREF)) {
         openModal(true);
       }
@@ -1264,7 +1237,7 @@
     }
 
     /* =========================================================
-       FAVORITE TOGGLE & BUTTON OPTIMIZATION
+       FAVORITE TOGGLE & BUTTON UPDATE
     ========================================================= */
 
     function toggleFavorite(id, event) {
