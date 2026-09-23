@@ -18,6 +18,7 @@
       --text-secondary: #8b949e;
       --text-muted: #6e7681;
       --accent-green: #10b981;
+      --accent-green-hover: #34d399;
       --accent-cyan: #38bdf8;
       --accent-amber: #f59e0b;
       --badge-bg: #21262d;
@@ -185,7 +186,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       flex-wrap: wrap;
     }
 
@@ -200,6 +201,12 @@
       letter-spacing: 0.5px;
     }
 
+    .card-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
     .badge-slot-time {
       font-family: var(--font-mono);
       font-size: 11px;
@@ -207,8 +214,47 @@
       color: var(--accent-cyan);
       background-color: #121e2c;
       border: 1px solid #1e3a5f;
-      padding: 2px 8px;
+      padding: 3px 8px;
       border-radius: 6px;
+    }
+
+    /* Play Button Styles */
+    .btn-play-station {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: linear-gradient(135deg, var(--accent-green), #059669);
+      color: #041f14;
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .btn-play-station:hover {
+      background: linear-gradient(135deg, var(--accent-green-hover), var(--accent-green));
+      box-shadow: 0 3px 12px rgba(16, 185, 129, 0.4);
+      transform: translateY(-1px);
+      color: #02120b;
+    }
+
+    .btn-play-station:active {
+      transform: scale(0.95);
+    }
+
+    .btn-play-station svg {
+      width: 12px;
+      height: 12px;
+      fill: currentColor;
     }
 
     .now-title {
@@ -502,7 +548,16 @@
             <span class="pulse-dot"></span>
             <span>Live Now</span>
           </div>
-          <span class="badge-slot-time" id="liveSlotBadge">--:-- -- - --:-- --</span>
+          <div class="card-header-actions">
+            <span class="badge-slot-time" id="liveSlotBadge">--:-- -- - --:-- --</span>
+            <!-- Play Button Triggering go:AS003 -->
+            <a href="go:AS003" class="btn-play-station" id="btnPlayStation" title="Play Akashvani Mahabahu">
+              <svg viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              <span>Play</span>
+            </a>
+          </div>
         </div>
         <h2 class="now-title" id="liveProgTitle">Identifying Current Broadcast...</h2>
         <p class="now-desc" id="liveProgDesc">Checking official Akashvani Mahabahu transmission cuesheet.</p>
