@@ -118,7 +118,7 @@
     }
 
     /* =========================
-       SEARCH
+       SEARCH BUTTON
     ========================= */
 
     .search-wrapper {
@@ -127,6 +127,8 @@
       min-width: 0;
       display: flex;
       align-items: center;
+      text-decoration: none;
+      cursor: pointer;
     }
 
     .search-icon {
@@ -137,48 +139,31 @@
       stroke: var(--text-muted);
       fill: none;
       pointer-events: none;
+      z-index: 2;
     }
 
     .search-input {
       width: 100%;
       background: var(--surface-color);
-      color: var(--text-main);
+      color: var(--text-muted);
       font-size: 13px;
       border: 1px solid var(--card-border);
       border-radius: 14px;
-      padding: 10px 34px 10px 36px;
+      padding: 10px 14px 10px 36px;
       outline: none;
-      -webkit-appearance: none;
-      appearance: none;
-      user-select: text;
-      -webkit-user-select: text;
+      cursor: pointer;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-select: none;
       transition:
         border-color 0.15s ease,
         box-shadow 0.15s ease;
     }
 
-    .search-input:focus {
+    .search-wrapper:hover .search-input,
+    .search-wrapper:active .search-input {
       border-color: var(--accent);
       box-shadow: 0 0 0 2px var(--accent-glow);
-    }
-
-    .search-input::placeholder {
-      color: #64748b;
-    }
-
-    .clear-search-btn {
-      position: absolute;
-      right: 8px;
-      width: 28px;
-      height: 28px;
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 4px;
     }
 
     /* =========================
@@ -348,23 +333,13 @@
       letter-spacing: 0.3px;
     }
 
+    /* LIVE BLINK BANDH KIYA GAYA (ANIMATION REMOVED) */
     .live-dot {
       width: 6px;
       height: 6px;
       background-color: var(--live-green);
       border-radius: 50%;
       box-shadow: 0 0 6px var(--live-green-glow);
-      animation: pulseDot 1.8s infinite;
-    }
-
-    @keyframes pulseDot {
-      0%,
-      100% {
-        opacity: 1;
-      }
-      50% {
-        opacity: 0.4;
-      }
     }
 
     .play-icon-box {
@@ -740,8 +715,15 @@
     <header class="top-controls">
       <div class="search-row">
 
-        <!-- Search Input -->
-        <div class="search-wrapper">
+        <!-- Search Button (Triggers http://action_search) -->
+        <a
+          href="http://action_search"
+          id="search-btn"
+          class="search-wrapper"
+          role="button"
+          aria-label="Search Stations"
+          title="Search"
+        >
           <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="11" cy="11" r="7" stroke-width="2.2"></circle>
             <line x1="16.5" y1="16.5" x2="21" y2="21" stroke-width="2.2" stroke-linecap="round"></line>
@@ -751,24 +733,10 @@
             id="search-input"
             class="search-input"
             placeholder="Search stations..."
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="none"
-            spellcheck="false"
-            inputmode="search"
+            tabindex="-1"
+            readonly
           />
-          <button
-            id="clear-search-btn"
-            class="clear-search-btn"
-            aria-label="Clear Search"
-            type="button"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-        </div>
+        </a>
 
         <!-- Favorites Filter -->
         <button
@@ -829,7 +797,7 @@
           <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path>
         </svg>
         <p class="empty-title">No stations found</p>
-        <p class="empty-subtitle">Try another keyword or select a different category</p>
+        <p class="empty-subtitle">Select a different category or show all stations</p>
         <button id="reset-filter-btn" class="reset-btn" type="button">Show All Stations</button>
       </div>
 
@@ -883,7 +851,6 @@
     const JSON_URL = "https://vividh.pages.dev/fmradio.json";
     const STORAGE_KEY_PREF = "preferred_radio_category";
     const STORAGE_KEY_FAVS = "favorite_radio_ids";
-    const SEARCH_DEBOUNCE_MS = 180;
 
     const PRIMARY_CATEGORIES = [
       "All", "Hindi", "English", "Bhakti", "Bangla", "Assamese", "Odia",
@@ -903,14 +870,13 @@
       "Nepali": "नेपाली लोक संगीत",
       "Punjabi": "ਪੰਜਾਬੀ ਢੋਲ ਤੇ ਬੀਟਸ",
       "Marathi": "मराठी भावगीत",
-      "Gujarati": "ગુજરાતી গীতો",
+      "Gujarati": "ગુજરાતી ગીતો",
       "Tamil": "தமிழ் இசை",
       "Telugu": "తెలుగు పాటలు",
       "Kannada": "ಕನ್ನಡ ಗೀತೆಗಳು",
       "Sport": "Cricket & Sports Live"
     };
 
-    /* FALLBACK_DATA: streamUrl আঁতৰোৱা হৈছে */
     const FALLBACK_DATA = [
       { id: "radio1", name: "Mirchi Bollywood Hits", category: "Hindi", logo: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&q=80" },
       { id: "radio2", name: "Vividh Bharati Radio", category: "Hindi", logo: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&q=80" },
@@ -937,11 +903,9 @@
 
     let allStations = [];
     let activeCategory = "All";
-    let searchQuery = "";
     let onlyFavorites = false;
     let favorites = new Set();
     let toastTimer = null;
-    let searchTimer = null;
     let modalSelectedCategory = "Hindi";
     let activeCategoriesList = [...PRIMARY_CATEGORIES];
 
@@ -949,8 +913,7 @@
        DOM ELEMENTS
     ========================= */
 
-    const searchInput = document.getElementById("search-input");
-    const clearSearchBtn = document.getElementById("clear-search-btn");
+    const searchBtn = document.getElementById("search-btn");
     const favFilterBtn = document.getElementById("fav-filter-btn");
     const prefBtn = document.getElementById("pref-btn");
     const stationsGrid = document.getElementById("stations-grid");
@@ -1276,20 +1239,14 @@
     ========================================================= */
 
     function getFilteredStations() {
-      const q = searchQuery.toLowerCase().trim();
-
       return allStations.filter((station) => {
         const matchCategory = onlyFavorites
           ? true
           : (activeCategory === "All" || station._categoryLower === activeCategory.toLowerCase());
 
-        const matchQuery = !q ||
-          station._nameLower.includes(q) ||
-          station._categoryLower.includes(q);
-
         const matchFavorite = onlyFavorites ? favorites.has(station.id) : true;
 
-        return matchCategory && matchQuery && matchFavorite;
+        return matchCategory && matchFavorite;
       });
     }
 
@@ -1308,10 +1265,10 @@
           emptySubtitle.textContent = "Tap the heart icon on any station to add it here";
         } else if (onlyFavorites) {
           emptyTitle.textContent = "No matching favorites";
-          emptySubtitle.textContent = "Try searching with a different keyword";
+          emptySubtitle.textContent = "Select a different category";
         } else {
           emptyTitle.textContent = "No stations found";
-          emptySubtitle.textContent = "Try another keyword or select a different category";
+          emptySubtitle.textContent = "Select a different category";
         }
 
         stationsGrid.replaceChildren();
@@ -1411,31 +1368,15 @@
     }
 
     /* =========================================================
-       SEARCH WITH DEBOUNCE
+       SEARCH BUTTON TRIGGER (http://action_search)
     ========================================================= */
 
-    searchInput.addEventListener("input", (event) => {
-      const query = event.target.value;
-      clearSearchBtn.style.display = query.length > 0 ? "flex" : "none";
-
-      if (searchTimer) clearTimeout(searchTimer);
-
-      searchTimer = setTimeout(() => {
-        searchQuery = query;
-        renderStations();
-      }, SEARCH_DEBOUNCE_MS);
-    });
-
-    clearSearchBtn.onclick = () => {
-      searchInput.value = "";
-      searchQuery = "";
-      clearSearchBtn.style.display = "none";
-
-      if (searchTimer) clearTimeout(searchTimer);
-
-      renderStations();
-      searchInput.focus();
-    };
+    if (searchBtn) {
+      searchBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        window.location.href = "http://action_search";
+      });
+    }
 
     /* =========================================================
        FAVORITES & RESET FILTERS
@@ -1454,9 +1395,6 @@
 
     resetFilterBtn.onclick = () => {
       activeCategory = "All";
-      searchQuery = "";
-      searchInput.value = "";
-      clearSearchBtn.style.display = "none";
       onlyFavorites = false;
 
       favFilterBtn.classList.remove("active");
