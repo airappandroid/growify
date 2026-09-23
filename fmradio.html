@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+  />
+  <title>Mobile Radio Player</title>
+
+  <style>
+    :root {
+      --bg-color: #090d16;
+      --surface-color: #121826;
+      --card-bg: #162032;
+      --card-border: rgba(255, 255, 255, 0.08);
+
+      --accent: #f43f5e;
+      --accent-gradient: linear-gradient(
+        135deg,
+        #f43f5e 0%,
+        #e11d48 100%
+      );
+      --accent-glow: rgba(244, 63, 94, 0.28);
+
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+
+      --live-green: #10b981;
+      --live-green-glow: rgba(16, 185, 129, 0.35);
+    }
+
+    /* =========================
+       RESET & BASE
+    ========================= */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      width: 100%;
+      min-height: 100%;
+      background: var(--bg-color);
+      overscroll-behavior-x: none;
+    }
+
+    body {
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: var(--bg-color);
+      color: var(--text-main);
+      font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeSpeed;
+      overscroll-behavior-x: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    /* =========================
+       APP CONTAINER
+    ========================= */
+
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      padding:
+        8px
+        14px
+        calc(28px + env(safe-area-inset-bottom))
+        14px;
+      position: relative;
+    }
+
+    /* =========================
+       STICKY TOP CONTROLS
+    ========================= */
+
+    .top-controls {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: var(--bg-color);
+      padding: max(6px, env(safe-area-inset-top)) 0 8px;
+      contain: layout paint;
+    }
+
+    .search-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* =========================
+       SEARCH
+    ========================= */
+
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      width: 16px;
+      height: 16px;
+      stroke: var(--text-muted);
+      fill: none;
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--surface-color);
+      color: var(--text-main);
+      font-size: 13px;
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 10px 34px 10px 36px;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+      user-select: text;
+      -webkit-user-select: text;
+      transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-glow);
+    }
+
+    .search-input::placeholder {
+      color: #64748b;
+    }
+
+    .clear-search-btn {
+      position: absolute;
+      right: 8px;
+      width: 28px;
+      height: 28px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+    }
+
+    /* =========================
+       ACTION BUTTONS
+    ========================= */
+
+    .action-btn {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      background: var(--surface-color);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      position: relative;
+      transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease;
+    }
+
+    .action-btn:active {
+      transform: scale(0.94);
+    }
+
+    .action-btn.active {
+      background: rgba(244, 63, 94, 0.14);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .action-btn .active-indicator-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--accent);
+    }
+
+    /* =========================
+       STATION GRID
+    ========================= */
+
+    .stations-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 4px;
+      width: 100%;
+    }
+
+    #stations-grid {
+      contain: layout style;
+    }
+
+    /* =========================
+       STATION CARD
+    ========================= */
+
+    .station-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      position: relative;
+      min-width: 0;
+      content-visibility: auto;
+      contain-intrinsic-size: 180px;
+      transition:
+        transform 0.12s ease,
+        border-color 0.12s ease;
+    }
+
+    .station-card:active {
+      transform: scale(0.97);
+      border-color: rgba(244, 63, 94, 0.5);
+    }
+
+    /* =========================
+       IMAGE
+    ========================= */
+
+    .img-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #0f172a;
+      margin-bottom: 8px;
+      contain: layout paint;
+    }
+
+    .station-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      background: #0f172a;
+      opacity: 1;
+    }
+
+    /* =========================
+       FAVORITE BUTTON
+    ========================= */
+
+    .card-fav-btn {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(9, 13, 22, 0.86);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition:
+        transform 0.12s ease,
+        color 0.12s ease,
+        background-color 0.12s ease;
+    }
+
+    .card-fav-btn:active {
+      transform: scale(0.86);
+    }
+
+    .card-fav-btn.favorited {
+      color: var(--accent);
+      background: rgba(244, 63, 94, 0.18);
+      border-color: var(--accent);
+    }
+
+    /* =========================
+       STATION TITLE
+    ========================= */
+
+    .station-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 8px;
+      line-height: 1.3;
+      min-width: 0;
+    }
+
+    /* =========================
+       CARD FOOTER
+    ========================= */
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 6px;
+    }
+
+    .live-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--live-green);
+      letter-spacing: 0.3px;
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background-color: var(--live-green);
+      border-radius: 50%;
+      box-shadow: 0 0 6px var(--live-green-glow);
+      animation: pulseDot 1.8s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%,
+      100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.4;
+      }
+    }
+
+    .play-icon-box {
+      width: 26px;
+      height: 26px;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+    }
+
+    .play-icon-box svg {
+      width: 12px;
+      height: 12px;
+      fill: currentColor;
+      margin-left: 1px;
+    }
+
+    /* =========================
+       SKELETON
+    ========================= */
+
+    .skeleton-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 10px;
+      animation: skeletonPulse 1.4s infinite alternate ease-in-out;
+    }
+
+    .skeleton-thumb {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 14px;
+      background: #1e293b;
+      margin-bottom: 8px;
+    }
+
+    .skeleton-line {
+      height: 14px;
+      background: #1e293b;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .skeleton-line.short {
+      width: 55%;
+      height: 10px;
+    }
+
+    @keyframes skeletonPulse {
+      from {
+        opacity: 0.55;
+      }
+      to {
+        opacity: 0.9;
+      }
+    }
+
+    /* =========================
+       EMPTY STATE
+    ========================= */
+
+    .empty-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 16px;
+      text-align: center;
+    }
+
+    .empty-icon {
+      width: 48px;
+      height: 48px;
+      stroke: var(--text-muted);
+      margin-bottom: 12px;
+      opacity: 0.7;
+    }
+
+    .empty-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .empty-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .reset-btn {
+      background: var(--accent-gradient);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px var(--accent-glow);
+    }
+
+    /* =========================
+       CATEGORY MODAL
+    ========================= */
+
+    .full-modal {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      background-color: var(--bg-color);
+      z-index: 1000;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      padding:
+        calc(16px + env(safe-area-inset-top))
+        18px
+        calc(22px + env(safe-area-inset-bottom))
+        18px;
+      overflow: hidden;
+    }
+
+    .full-modal.open {
+      display: flex;
+    }
+
+    .modal-top-bar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding-top: 4px;
+    }
+
+    .modal-title-group {
+      min-width: 0;
+    }
+
+    .modal-title-group h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.3px;
+    }
+
+    .modal-title-group p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .modal-close-icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--surface-color);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .modal-close-icon-btn:active {
+      transform: scale(0.9);
+    }
+
+    .modal-grid-scroll {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      padding: 4px 2px 14px 2px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+    }
+
+    .modal-grid-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .modal-grid-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 4px;
+    }
+
+    .pref-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-width: 0;
+      padding: 12px 14px;
+      background: var(--surface-color);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      cursor: pointer;
+      position: relative;
+      transition:
+        background-color 0.12s ease,
+        border-color 0.12s ease;
+    }
+
+    .pref-item:active {
+      transform: scale(0.98);
+    }
+
+    .pref-item.selected {
+      background: rgba(244, 63, 94, 0.15);
+      border-color: var(--accent);
+      box-shadow: 0 0 12px rgba(244, 63, 94, 0.16);
+    }
+
+    .pref-item-text {
+      min-width: 0;
+      padding-right: 8px;
+    }
+
+    .pref-item-text h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .pref-item-text span {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pref-item .check-indicator {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .pref-item.selected .check-indicator {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .pref-item .check-indicator svg {
+      display: none;
+      width: 10px;
+      height: 10px;
+      stroke: #ffffff;
+      stroke-width: 3;
+      fill: none;
+    }
+
+    .pref-item.selected .check-indicator svg {
+      display: block;
+    }
+
+    .modal-footer {
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: var(--bg-color);
+    }
+
+    .modal-confirm-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent-gradient);
+      color: #ffffff;
+      border: none;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 18px var(--accent-glow);
+    }
+
+    .modal-confirm-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* =========================
+       TOAST
+    ========================= */
+
+    .toast-box {
+      position: fixed;
+      bottom: calc(20px + env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%) translateY(70px);
+      background: rgba(18, 24, 38, 0.97);
+      border: 1px solid var(--accent);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      padding: 10px 18px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #ffffff;
+      z-index: 1050;
+      transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+      opacity: 0;
+      pointer-events: none;
+      max-width: 90%;
+      white-space: nowrap;
+    }
+
+    .toast-box.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* =========================
+       SMALL DEVICES
+    ========================= */
+
+    @media (max-width: 340px) {
+      .app-container {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      .stations-grid {
+        gap: 8px;
+      }
+      .station-card {
+        padding: 8px;
+        border-radius: 15px;
+      }
+      .img-container {
+        border-radius: 12px;
+      }
+      .station-title {
+        font-size: 12px;
+      }
+      .modal-grid-scroll {
+        gap: 8px;
+      }
+    }
+
+    /* =========================
+       REDUCE MOTION
+    ========================= */
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app-container">
+
+    <!-- Top Sticky Controls -->
+    <header class="top-controls">
+      <div class="search-row">
+
+        <!-- Search Input -->
+        <div class="search-wrapper">
+          <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" stroke-width="2.2"></circle>
+            <line x1="16.5" y1="16.5" x2="21" y2="21" stroke-width="2.2" stroke-linecap="round"></line>
+          </svg>
+          <input
+            type="text"
+            id="search-input"
+            class="search-input"
+            placeholder="Search stations..."
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="none"
+            spellcheck="false"
+            inputmode="search"
+          />
+          <button
+            id="clear-search-btn"
+            class="clear-search-btn"
+            aria-label="Clear Search"
+            type="button"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Favorites Filter -->
+        <button
+          id="fav-filter-btn"
+          class="action-btn"
+          title="Favorites"
+          aria-label="Filter Favorites"
+          type="button"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </button>
+
+        <!-- Category Preferences -->
+        <button
+          id="pref-btn"
+          class="action-btn"
+          title="Select Category"
+          aria-label="Select Category"
+          type="button"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="21" x2="4" y2="14"></line>
+            <line x1="4" y1="10" x2="4" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12" y2="3"></line>
+            <line x1="20" y1="21" x2="20" y2="16"></line>
+            <line x1="20" y1="12" x2="20" y2="3"></line>
+            <line x1="1" y1="14" x2="7" y2="14"></line>
+            <line x1="9" y1="8" x2="15" y2="8"></line>
+            <line x1="17" y1="16" x2="23" y2="16"></line>
+          </svg>
+          <span class="active-indicator-dot" aria-hidden="true"></span>
+        </button>
+
+      </div>
+    </header>
+
+    <!-- Main Stations View -->
+    <main>
+
+      <!-- Skeleton Slices -->
+      <div id="skeleton-grid" class="stations-grid">
+        <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+        <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+        <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+        <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+      </div>
+
+      <!-- Active Stations Grid -->
+      <div id="stations-grid" class="stations-grid" style="display:none;"></div>
+
+      <!-- Empty Fallback -->
+      <div id="empty-state" class="empty-state">
+        <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="2"></circle>
+          <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path>
+        </svg>
+        <p class="empty-title">No stations found</p>
+        <p class="empty-subtitle">Try another keyword or select a different category</p>
+        <button id="reset-filter-btn" class="reset-btn" type="button">Show All Stations</button>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Category Selection Modal -->
+  <div
+    id="pref-modal"
+    class="full-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="category-title"
+  >
+    <div>
+      <div class="modal-top-bar">
+        <div class="modal-title-group">
+          <h2 id="category-title">Select Your Category</h2>
+          <p>Choose your preferred radio language</p>
+        </div>
+        <button id="close-modal-btn" class="modal-close-icon-btn" aria-label="Close modal" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="pref-grid" class="modal-grid-scroll"></div>
+
+    <div class="modal-footer">
+      <button id="confirm-pref-btn" class="modal-confirm-btn" type="button">Confirm & Continue</button>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-box" class="toast-box" role="status" aria-live="polite">
+    <span style="width:7px; height:7px; border-radius:50%; background:#10b981; display:inline-block;"></span>
+    <span id="toast-msg">Connecting...</span>
+  </div>
+
+  <script>
+    "use strict";
+
+    /* =========================================================
+       CONFIG & CONSTANTS
+    ========================================================= */
+
+    const JSON_URL = "https://vividh.pages.dev/fmradio.json";
+    const STORAGE_KEY_PREF = "preferred_radio_category";
+    const STORAGE_KEY_FAVS = "favorite_radio_ids";
+    const SEARCH_DEBOUNCE_MS = 180;
+
+    const PRIMARY_CATEGORIES = [
+      "All", "Hindi", "English", "Bhakti", "Bangla", "Assamese", "Odia",
+      "Bhojpuri", "Nepali", "Punjabi", "Marathi", "Gujarati", "Tamil",
+      "Telugu", "Kannada", "Sport"
+    ];
+
+    const CATEGORY_LOCAL_LABELS = {
+      "All": "All Languages (सभी)",
+      "Hindi": "हिंदी संगीत व समाचार",
+      "English": "Global Hits & News",
+      "Bhakti": "भक्ति, भजन व आरती",
+      "Bangla": "বাংলা গান ও খবর",
+      "Assamese": "অসমীয়া সংগীত",
+      "Odia": "ଓଡ଼ିଆ ଭଜନ ଓ ଗୀତ",
+      "Bhojpuri": "भोजपुरी धमाका",
+      "Nepali": "नेपाली लोक संगीत",
+      "Punjabi": "ਪੰਜਾਬੀ ਢੋਲ ਤੇ ਬੀਟਸ",
+      "Marathi": "मराठी भावगीत",
+      "Gujarati": "ગુજરાતી ગીતો",
+      "Tamil": "தமிழ் இசை",
+      "Telugu": "తెలుగు పాటలు",
+      "Kannada": "ಕನ್ನಡ ಗೀತೆಗಳು",
+      "Sport": "Cricket & Sports Live"
+    };
+
+    const FALLBACK_DATA = [
+      { id: "radio1", name: "Mirchi Bollywood Hits", category: "Hindi", streamUrl: "https://stream.zeno.fm/f3wvbbqmdg8uv", logo: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&q=80" },
+      { id: "radio2", name: "Vividh Bharati Radio", category: "Hindi", streamUrl: "https://air.pc.cdn.bitgravity.com/air/live/pcr:vividhbharti/playlist.m3u8", logo: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&q=80" },
+      { id: "radio3", name: "BBC World Service", category: "English", streamUrl: "https://stream.live.vc/bbcmedia.co.uk/bbc_world_service", logo: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=300&q=80" },
+      { id: "radio4", name: "Dance Wave Global", category: "English", streamUrl: "https://dancewave.online/dance.mp3", logo: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=300&q=80" },
+      { id: "radio5", name: "Bhakti Sagar Tarang", category: "Bhakti", streamUrl: "https://stream.zeno.fm/0w9436qmdg8uv", logo: "https://images.unsplash.com/photo-1609342122563-a43ac8917a3a?w=300&q=80" },
+      { id: "radio6", name: "Bangla Gaan FM", category: "Bangla", streamUrl: "https://stream.zeno.fm/87v9p9umdg8uv", logo: "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=300&q=80" },
+      { id: "radio7", name: "Assam Sur Sangeet", category: "Assamese", streamUrl: "https://stream.zeno.fm/m9y457umdg8uv", logo: "https://images.unsplash.com/photo-1506157786151-b8491531f063?w=300&q=80" },
+      { id: "radio8", name: "Odia Tarang Radio", category: "Odia", streamUrl: "https://stream.zeno.fm/65q8w3umdg8uv", logo: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&q=80" },
+      { id: "radio9", name: "Bhojpuri Dhamaka", category: "Bhojpuri", streamUrl: "https://stream.zeno.fm/a81387umdg8uv", logo: "https://images.unsplash.com/photo-1526478806334-5fd488fcaabc?w=300&q=80" },
+      { id: "radio10", name: "Nepali Lok Radio", category: "Nepali", streamUrl: "https://stream.zeno.fm/3u3n74umdg8uv", logo: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=300&q=80" },
+      { id: "radio11", name: "Punjabi Dhol Beats", category: "Punjabi", streamUrl: "https://stream.zeno.fm/c3fsq8umdg8uv", logo: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=300&q=80" },
+      { id: "radio12", name: "Marathi Bhavgeet FM", category: "Marathi", streamUrl: "https://stream.zeno.fm/q1g5r2umdg8uv", logo: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&q=80" },
+      { id: "radio13", name: "Gujarati Rangila FM", category: "Gujarati", streamUrl: "https://stream.zeno.fm/u7k3m1umdg8uv", logo: "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=300&q=80" },
+      { id: "radio14", name: "Tamil Isai Vani", category: "Tamil", streamUrl: "https://stream.zeno.fm/s493z2umdg8uv", logo: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=300&q=80" },
+      { id: "radio15", name: "Telugu Super Hits", category: "Telugu", streamUrl: "https://stream.zeno.fm/v7x391umdg8uv", logo: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=300&q=80" },
+      { id: "radio16", name: "Kannada Gaana Taranga", category: "Kannada", streamUrl: "https://stream.zeno.fm/5f7w1tumdg8uv", logo: "https://images.unsplash.com/photo-1445985543469-7233886ff323?w=300&q=80" },
+      { id: "radio17", name: "Live Cricket & Sport", category: "Sport", streamUrl: "https://stream.zeno.fm/9a7w2vumdg8uv", logo: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=300&q=80" }
+    ];
+
+    /* =========================================================
+       STATE
+    ========================================================= */
+
+    let allStations = [];
+    let activeCategory = "All";
+    let searchQuery = "";
+    let onlyFavorites = false;
+    let favorites = new Set();
+    let toastTimer = null;
+    let searchTimer = null;
+    let modalSelectedCategory = "Hindi";
+    let activeCategoriesList = [...PRIMARY_CATEGORIES];
+
+    /* =========================================================
+       DOM ELEMENTS
+    ========================================================= */
+
+    const searchInput = document.getElementById("search-input");
+    const clearSearchBtn = document.getElementById("clear-search-btn");
+    const favFilterBtn = document.getElementById("fav-filter-btn");
+    const prefBtn = document.getElementById("pref-btn");
+    const stationsGrid = document.getElementById("stations-grid");
+    const skeletonGrid = document.getElementById("skeleton-grid");
+    const emptyState = document.getElementById("empty-state");
+    const resetFilterBtn = document.getElementById("reset-filter-btn");
+    const prefModal = document.getElementById("pref-modal");
+    const prefGrid = document.getElementById("pref-grid");
+    const confirmPrefBtn = document.getElementById("confirm-pref-btn");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const toastBox = document.getElementById("toast-box");
+    const toastMsg = document.getElementById("toast-msg");
+
+    /* =========================================================
+       FALLBACK SVG (NO LEADING WHITESPACE)
+    ========================================================= */
+
+    function getFallbackSvg(text) {
+      const label = encodeURIComponent((text || "FM").substring(0, 3).toUpperCase());
+      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="200" height="200" fill="%231e293b"/><text x="50%" y="54%" font-family="sans-serif" font-weight="bold" font-size="32" fill="%2394a3b8" text-anchor="middle" dominant-baseline="middle">${label}</text></svg>`;
+    }
+
+    /* =========================================================
+       HTML ESCAPE UTILITY
+    ========================================================= */
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    /* =========================================================
+       CSS ESCAPE FALLBACK
+    ========================================================= */
+
+    function cssEscape(value) {
+      if (window.CSS && typeof window.CSS.escape === "function") {
+        return window.CSS.escape(String(value));
+      }
+      return String(value).replace(/["\\]/g, "\\$&");
+    }
+
+    /* =========================================================
+       NORMALIZE STATIONS
+    ========================================================= */
+
+    function normalizeStations(raw) {
+      let rawList = [];
+
+      if (Array.isArray(raw)) {
+        rawList = raw;
+      } else if (raw && typeof raw === "object") {
+        if (Array.isArray(raw.stations)) rawList = raw.stations;
+        else if (Array.isArray(raw.radios)) rawList = raw.radios;
+        else if (Array.isArray(raw.data)) rawList = raw.data;
+        else {
+          Object.keys(raw).forEach((catKey) => {
+            if (Array.isArray(raw[catKey])) {
+              raw[catKey].forEach((st) => {
+                if (st && typeof st === "object") {
+                  rawList.push({
+                    ...st,
+                    category: st.category || catKey
+                  });
+                }
+              });
+            }
+          });
+        }
+      }
+
+      if (!rawList.length) return [];
+
+      return rawList.map((item, index) => {
+        const id = String(item.id || item.radio_id || `radio${index + 1}`).trim();
+        const name = String(item.name || item.title || item.station_name || `Radio ${index + 1}`).trim();
+        let category = String(item.category || item.lang || item.language || item.genre || "Hindi").trim();
+
+        category = category.charAt(0).toUpperCase() + category.slice(1);
+
+        const logo = item.logo || item.image || item.icon || item.img || item.station_logo || getFallbackSvg(category);
+        const streamUrl = item.streamUrl || item.url || item.stream || item.link || "";
+
+        let trigger = item.trigger || `go:${id}`;
+        if (!trigger.startsWith("go:")) {
+          trigger = `go:${trigger}`;
+        }
+
+        return {
+          id,
+          name,
+          category,
+          logo,
+          streamUrl,
+          trigger,
+          _nameLower: name.toLowerCase(),
+          _categoryLower: category.toLowerCase()
+        };
+      });
+    }
+
+    /* =========================================================
+       LOAD JSON & FIRST LAUNCH CHECK
+    ========================================================= */
+
+    async function loadStationData() {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 6000);
+
+      try {
+        const response = await fetch(JSON_URL, {
+          signal: controller.signal,
+          headers: { "Accept": "application/json" },
+          cache: "default"
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) throw new Error("HTTP " + response.status);
+
+        const jsonData = await response.json();
+        const parsed = normalizeStations(jsonData);
+
+        if (parsed.length > 0) {
+          allStations = parsed;
+        } else {
+          allStations = normalizeStations(FALLBACK_DATA);
+        }
+      } catch (err) {
+        clearTimeout(timeoutId);
+        console.warn("Could not load remote JSON:", err.message);
+        allStations = normalizeStations(FALLBACK_DATA);
+      }
+
+      buildCategoryList();
+      hideSkeleton();
+      renderStations();
+
+      // First Launch: open modal if category preference was never saved
+      if (!localStorage.getItem(STORAGE_KEY_PREF)) {
+        openModal(true);
+      }
+    }
+
+    /* =========================================================
+       CATEGORY LIST BUILDER
+    ========================================================= */
+
+    function buildCategoryList() {
+      const catSet = new Set(PRIMARY_CATEGORIES);
+      allStations.forEach((station) => {
+        if (station.category && station.category.trim()) {
+          catSet.add(station.category.trim());
+        }
+      });
+      activeCategoriesList = Array.from(catSet);
+    }
+
+    /* =========================================================
+       LOCAL STORAGE HANDLING
+    ========================================================= */
+
+    function initUserPreferences() {
+      try {
+        const savedFavs = localStorage.getItem(STORAGE_KEY_FAVS);
+        if (savedFavs) {
+          const parsed = JSON.parse(savedFavs);
+          if (Array.isArray(parsed)) {
+            favorites = new Set(parsed);
+          }
+        }
+      } catch (e) {
+        favorites = new Set();
+      }
+
+      try {
+        const savedPref = localStorage.getItem(STORAGE_KEY_PREF);
+        if (savedPref) {
+          activeCategory = savedPref;
+          modalSelectedCategory = savedPref;
+          prefBtn.classList.toggle("active", activeCategory !== "All");
+        } else {
+          modalSelectedCategory = "Hindi";
+        }
+      } catch (e) {
+        activeCategory = "All";
+      }
+    }
+
+    function saveFavorites() {
+      try {
+        localStorage.setItem(STORAGE_KEY_FAVS, JSON.stringify(Array.from(favorites)));
+      } catch (e) {}
+    }
+
+    function savePreferredCategory(cat) {
+      try {
+        localStorage.setItem(STORAGE_KEY_PREF, cat);
+      } catch (e) {}
+    }
+
+    /* =========================================================
+       CATEGORY MODAL LOGIC
+    ========================================================= */
+
+    function openModal(isFirstLaunch = false) {
+      modalSelectedCategory = (activeCategory === "All" && isFirstLaunch) ? "Hindi" : activeCategory;
+      renderModalPreferences();
+      prefModal.classList.add("open");
+      closeModalBtn.style.display = isFirstLaunch ? "none" : "flex";
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      prefModal.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    function renderModalPreferences() {
+      const fragment = document.createDocumentFragment();
+
+      activeCategoriesList.forEach((cat) => {
+        const isSelected = modalSelectedCategory.toLowerCase() === cat.toLowerCase();
+        const sub = CATEGORY_LOCAL_LABELS[cat] || `${cat} Stations`;
+
+        const item = document.createElement("div");
+        item.className = `pref-item ${isSelected ? "selected" : ""}`;
+        item.innerHTML = `
+          <div class="pref-item-text">
+            <h4>${escapeHtml(cat)}</h4>
+            <span>${escapeHtml(sub)}</span>
+          </div>
+          <div class="check-indicator">
+            <svg viewBox="0 0 24 24">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+        `;
+
+        item.onclick = () => {
+          modalSelectedCategory = cat;
+          renderModalPreferences();
+        };
+
+        fragment.appendChild(item);
+      });
+
+      prefGrid.replaceChildren(fragment);
+    }
+
+    confirmPrefBtn.onclick = () => {
+      activeCategory = modalSelectedCategory;
+      savePreferredCategory(activeCategory);
+      closeModal();
+
+      onlyFavorites = false;
+      favFilterBtn.classList.remove("active");
+      favFilterBtn.querySelector("svg").setAttribute("fill", "none");
+
+      prefBtn.classList.toggle("active", activeCategory !== "All");
+
+      renderStations();
+      showToast(`Category: ${activeCategory}`);
+    };
+
+    closeModalBtn.onclick = closeModal;
+    prefBtn.onclick = () => openModal(false);
+
+    /* =========================================================
+       STATION TRIGGER (AppCreator24 go: scheme)
+    ========================================================= */
+
+    function triggerStation(station) {
+      showToast(`Playing ${station.name}`);
+      try {
+        window.location.href = station.trigger;
+      } catch (err) {
+        console.warn("Trigger error:", err);
+      }
+    }
+
+    /* =========================================================
+       FAVORITE TOGGLE & BUTTON OPTIMIZATION
+    ========================================================= */
+
+    function toggleFavorite(id, event) {
+      if (event) event.stopPropagation();
+
+      if (favorites.has(id)) {
+        favorites.delete(id);
+      } else {
+        favorites.add(id);
+      }
+
+      saveFavorites();
+
+      if (!onlyFavorites) {
+        const btn = document.querySelector(`.card-fav-btn[data-id="${cssEscape(id)}"]`);
+        if (btn) {
+          updateFavoriteButton(btn, favorites.has(id));
+        }
+        return;
+      }
+
+      renderStations();
+    }
+
+    function updateFavoriteButton(button, isFavorite) {
+      button.classList.toggle("favorited", isFavorite);
+      button.setAttribute("aria-label", isFavorite ? "Remove from favorites" : "Add to favorites");
+      const svg = button.querySelector("svg");
+      if (svg) {
+        svg.setAttribute("fill", isFavorite ? "currentColor" : "none");
+      }
+    }
+
+    /* =========================================================
+       FILTER & RENDER
+    ========================================================= */
+
+    function getFilteredStations() {
+      const q = searchQuery.toLowerCase().trim();
+
+      return allStations.filter((station) => {
+        const matchCategory = onlyFavorites
+          ? true
+          : (activeCategory === "All" || station._categoryLower === activeCategory.toLowerCase());
+
+        const matchQuery = !q ||
+          station._nameLower.includes(q) ||
+          station._categoryLower.includes(q);
+
+        const matchFavorite = onlyFavorites ? favorites.has(station.id) : true;
+
+        return matchCategory && matchQuery && matchFavorite;
+      });
+    }
+
+    function renderStations() {
+      const filtered = getFilteredStations();
+
+      if (!filtered.length) {
+        stationsGrid.style.display = "none";
+        emptyState.style.display = "flex";
+
+        const emptyTitle = emptyState.querySelector(".empty-title");
+        const emptySubtitle = emptyState.querySelector(".empty-subtitle");
+
+        if (onlyFavorites && favorites.size === 0) {
+          emptyTitle.textContent = "No favorites saved yet";
+          emptySubtitle.textContent = "Tap the heart icon on any station to add it here";
+        } else if (onlyFavorites) {
+          emptyTitle.textContent = "No matching favorites";
+          emptySubtitle.textContent = "Try searching with a different keyword";
+        } else {
+          emptyTitle.textContent = "No stations found";
+          emptySubtitle.textContent = "Try another keyword or select a different category";
+        }
+
+        stationsGrid.replaceChildren();
+        return;
+      }
+
+      emptyState.style.display = "none";
+      stationsGrid.style.display = "grid";
+
+      const fragment = document.createDocumentFragment();
+
+      filtered.forEach((station) => {
+        const isFav = favorites.has(station.id);
+        const card = document.createElement("div");
+        card.className = "station-card";
+        card.dataset.id = station.id;
+
+        card.innerHTML = `
+          <div>
+            <div class="img-container">
+              <img
+                class="station-img"
+                src="${escapeHtml(station.logo)}"
+                alt="${escapeHtml(station.name)}"
+                loading="lazy"
+                decoding="async"
+                referrerpolicy="no-referrer"
+              />
+              <button
+                class="card-fav-btn ${isFav ? "favorited" : ""}"
+                data-id="${escapeHtml(station.id)}"
+                aria-label="${isFav ? "Remove from favorites" : "Add to favorites"}"
+                type="button"
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="${isFav ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="station-title" title="${escapeHtml(station.name)}">
+              ${escapeHtml(station.name)}
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="live-status">
+              <span class="live-dot"></span>
+              LIVE
+            </span>
+            <div class="play-icon-box">
+              <svg viewBox="0 0 24 24">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </div>
+          </div>
+        `;
+
+        const img = card.querySelector(".station-img");
+        img.addEventListener(
+          "error",
+          function imageError() {
+            this.removeEventListener("error", imageError);
+            this.src = getFallbackSvg(station.name);
+          },
+          { once: true }
+        );
+
+        card.addEventListener("click", () => {
+          triggerStation(station);
+        });
+
+        const favBtn = card.querySelector(".card-fav-btn");
+        favBtn.addEventListener("click", (event) => {
+          toggleFavorite(station.id, event);
+        });
+
+        fragment.appendChild(card);
+      });
+
+      stationsGrid.replaceChildren(fragment);
+    }
+
+    function hideSkeleton() {
+      skeletonGrid.style.display = "none";
+    }
+
+    /* =========================
+       TOAST
+    ========================= */
+
+    function showToast(msg) {
+      if (toastTimer) clearTimeout(toastTimer);
+      toastMsg.textContent = msg;
+      toastBox.classList.add("show");
+      toastTimer = setTimeout(() => {
+        toastBox.classList.remove("show");
+      }, 2200);
+    }
+
+    /* =========================================================
+       SEARCH WITH DEBOUNCE
+    ========================================================= */
+
+    searchInput.addEventListener("input", (event) => {
+      const query = event.target.value;
+      clearSearchBtn.style.display = query.length > 0 ? "flex" : "none";
+
+      if (searchTimer) clearTimeout(searchTimer);
+
+      searchTimer = setTimeout(() => {
+        searchQuery = query;
+        renderStations();
+      }, SEARCH_DEBOUNCE_MS);
+    });
+
+    clearSearchBtn.onclick = () => {
+      searchInput.value = "";
+      searchQuery = "";
+      clearSearchBtn.style.display = "none";
+
+      if (searchTimer) clearTimeout(searchTimer);
+
+      renderStations();
+      searchInput.focus();
+    };
+
+    /* =========================================================
+       FAVORITES & RESET FILTERS
+    ========================================================= */
+
+    favFilterBtn.onclick = () => {
+      onlyFavorites = !onlyFavorites;
+      favFilterBtn.classList.toggle("active", onlyFavorites);
+
+      const heartSvg = favFilterBtn.querySelector("svg");
+      heartSvg.setAttribute("fill", onlyFavorites ? "currentColor" : "none");
+
+      showToast(onlyFavorites ? "All Favorite Stations" : `Category: ${activeCategory}`);
+      renderStations();
+    };
+
+    resetFilterBtn.onclick = () => {
+      activeCategory = "All";
+      searchQuery = "";
+      searchInput.value = "";
+      clearSearchBtn.style.display = "none";
+      onlyFavorites = false;
+
+      favFilterBtn.classList.remove("active");
+      favFilterBtn.querySelector("svg").setAttribute("fill", "none");
+      prefBtn.classList.remove("active");
+
+      savePreferredCategory("All");
+      renderStations();
+    };
+
+    /* =========================================================
+       BACKGROUND SCROLL LOCK FOR MODAL
+    ========================================================= */
+
+    prefModal.addEventListener(
+      "touchmove",
+      (event) => {
+        if (event.target.closest(".modal-grid-scroll")) {
+          return;
+        }
+        event.preventDefault();
+      },
+      { passive: false }
+    );
+
+    /* =========================================================
+       BOOTSTRAP
+    ========================================================= */
+
+    window.addEventListener("DOMContentLoaded", () => {
+      initUserPreferences();
+      loadStationData();
+    });
+  </script>
+
+</body>
+</html>
