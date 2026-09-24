@@ -597,7 +597,7 @@ body {
         </div>
 
         <!-- Match Status Note -->
-        <div class="strip-status" id="matchNote">ENG vs SL 3rd T20, Match Starts Today at 2:30pm</div>
+        <div class="strip-status" id="matchNote">ENG vs SL 2nd ODI, Match Starts Today at 12:30 pm UK time</div>
 
         <div class="strip-body">
             <div class="strip-scores">
@@ -718,10 +718,10 @@ body {
                     <span class="duration-tag">5 Min</span>
                 </div>
                 <div class="playing-row">
-                    <span>Updated: 23 September 2026, 10:00 AM</span>
+                    <span>Updated: 24 September 2026, 4:00 AM</span>
                 </div>
             </div>
-            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/ed3659-w1msm0v7scx5w3j/vf_w1msm0v7scx5w3j_2a70482e-6444-4d37-ade7-0a8e2eb0746d.ism/dash/vf_w1msm0v7scx5w3j_2a70482e-6444-4d37-ade7-0a8e2eb0746d-audio_eng_1=96000-1.m3u8" class="play-btn" aria-label="Play 5 Min News Brief"></a>
+            <a href="https://aod-dash-ww-gcomm.live.cf.md.bbci.co.uk/usp/auth/vod/piff_abr_full_audio/d52ad5-w1msm0v7scx81jv/vf_w1msm0v7scx81jv_8f40bb8b-bfb6-4c29-b44a-d66458ce7c88.ism/dash/vf_w1msm0v7scx81jv_8f40bb8b-bfb6-4c29-b44a-d66458ce7c88-audio_eng_1=96000-4.m3u8" class="play-btn" aria-label="Play 5 Min News Brief"></a>
         </div>
 
         <!-- Thought for the Day -->
@@ -794,11 +794,11 @@ window.addEventListener('click', (e) => {
 
 /* ================= Live Cricket Score Fetcher & Worker Integration ================= */
 const WORKER_URL = "https://cricvoice.aminurmarch.workers.dev/";
-const MATCH_ID = "69bd420e1dbf177ca4e58e76";
+const MATCH_ID = "69bd420f1dbf177ca4e58e78";
 const BASE_IMAGE_URL = "https://cricradio.com";
 
-// ষ্টেটাছ অভাৰৰাইড কনষ্টেণ্ট
-const OVERRIDE_NOTE = "England won by 89 runs";
+// ষ্টেটাছ অভাৰৰাইড কনষ্টেণ্ট (নতুন মেচৰ বাবে খালী ৰখা হৈছে যাতে লাইভ/শ্বেডিউল্ড ষ্টেটাছ সঠিকভাৱে আহে)
+const OVERRIDE_NOTE = "";
 
 const CUSTOM_LOGO_A = "https://ik.imagekit.io/sqt8ptw1k/england.webp?updatedAt=1789628691703";
 const CUSTOM_LOGO_B = "https://ik.imagekit.io/sqt8ptw1k/sri-lanka-women.webp?updatedAt=1789308085405";
@@ -905,7 +905,7 @@ async function fetchCricketScore() {
             dynamicNote = match.statusNote.trim();
         }
 
-        // অভাৰৰাইড চেক: নিৰ্দিষ্ট মেছেজ আৰু UPCOMING ষ্টেটাছ
+        // অভাৰৰাইড চেক
         if (OVERRIDE_NOTE) {
             if (badgeEl) badgeEl.textContent = "COMPLETED";
             if (dotEl) dotEl.style.display = "none";
@@ -947,7 +947,7 @@ async function fetchCricketScore() {
                     badgeContainer.style.borderColor = "rgba(59, 130, 246, 0.45)";
                     badgeContainer.style.color = "#60a5fa";
                 }
-                if (matchNoteEl) matchNoteEl.textContent = dynamicNote || "Match has not started yet.";
+                if (matchNoteEl) matchNoteEl.textContent = dynamicNote || "ENG vs SL 2nd ODI, Match Starts Today at 12:30 pm UK time";
             }
         }
 
