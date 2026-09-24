@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Live Scorecard - IND W vs SL W</title>
+    <title>Live Scorecard - ENG vs SL ODI</title>
     <style>
         :root {
             --bg-base: #020617;
@@ -422,7 +422,7 @@
 
     <!-- Match Information Row -->
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">IND W vs SL W</span>
+        <span class="match-title-text" id="matchHeader">ENG vs SL ODI</span>
         <span id="venueHeader">📍 Live Match</span>
     </div>
 
@@ -436,7 +436,7 @@
 </div>
 
 <script>
-    const matchId = "6a83ae5c78dcf06570323aad";
+    const matchId = "69bd420f1dbf177ca4e58e78";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
@@ -459,13 +459,13 @@
     function getInningsTabLabel(inn, idx, teamA, teamB) {
         if (inn.teamName) {
             const lower = inn.teamName.toLowerCase();
-            if (lower.includes("ind") || lower.includes("india")) return "IND W";
-            if (lower.includes("sl") || lower.includes("sri lanka")) return "SL W";
+            if (lower.includes("eng") || lower.includes("england")) return "ENG";
+            if (lower.includes("sl") || lower.includes("sri lanka")) return "SL";
             return inn.teamName;
         }
 
-        const aShort = teamA.shortName || "IND W";
-        const bShort = teamB.shortName || "SL W";
+        const aShort = teamA.shortName || "ENG";
+        const bShort = teamB.shortName || "SL";
 
         if (inn.key === "a_1" || inn.key === "a") return aShort;
         if (inn.key === "b_1" || inn.key === "b") return bShort;
@@ -474,8 +474,8 @@
 
     function getInningsDisplayName(inn, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
-        const aName = teamA.name || "India Women";
-        const bName = teamB.name || "Sri Lanka Women";
+        const aName = teamA.name || "England";
+        const bName = teamB.name || "Sri Lanka";
 
         if (inn.key === "a_1" || inn.key === "a") return `${aName} Innings`;
         if (inn.key === "b_1" || inn.key === "b") return `${bName} Innings`;
@@ -492,13 +492,13 @@
             if (!result) return;
             matchData = result;
 
-            const teamA = result.teams?.a || { name: "India Women", shortName: "IND W" };
-            const teamB = result.teams?.b || { name: "Sri Lanka Women", shortName: "SL W" };
+            const teamA = result.teams?.a || { name: "England", shortName: "ENG" };
+            const teamB = result.teams?.b || { name: "Sri Lanka", shortName: "SL" };
 
-            const nameA = teamA.shortName || teamA.name || 'IND W';
-            const nameB = teamB.shortName || teamB.name || 'SL W';
-            const format = (result.format || 't20').toUpperCase();
-            const tournament = result.seriesName || `${nameA} vs ${nameB}`;
+            const nameA = teamA.shortName || teamA.name || 'ENG';
+            const nameB = teamB.shortName || teamB.name || 'SL';
+            const format = (result.format || 'odi').toUpperCase();
+            const tournament = result.seriesName || `${nameA} vs ${nameB} • ${format}`;
 
             // 1. Header Update
             document.getElementById("matchHeader").textContent = tournament;
