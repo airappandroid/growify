@@ -1,632 +1,597 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Radios Françaises - Direct</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Radios Françaises</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(23, 32, 51, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-border-active: #0284c7;
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --text-muted: #64748b;
+      --accent: #38bdf8;
+      --inter-color: #ef4444;
+      --info-color: #f59e0b;
+      --culture-color: #8b5cf6;
+      --musique-color: #ec4899;
+    }
 
-        html, body {
-            width: 100%;
-            max-width: 100%;
-            overflow-x: hidden;
-            background-color: #0b1120;
-            color: #f8fafc;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
 
-        body {
-            padding: 14px 12px 30px 12px;
-        }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg);
+      background-image: radial-gradient(circle at top right, rgba(56, 189, 248, 0.06), transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(239, 68, 68, 0.04), transparent 40%);
+      color: var(--text-main);
+      padding: 12px 14px 28px;
+      line-height: 1.4;
+      min-height: 100vh;
+    }
 
-        /* 1. Header */
-        .app-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-            width: 100%;
-        }
+    /* Header Bar */
+    .header {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
 
-        .brand-title {
-            font-size: 19px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            background: linear-gradient(90deg, #ffffff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            white-space: nowrap;
-        }
+    .app-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-        .icon-btn {
-            background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #94a3b8;
-            cursor: pointer;
-            text-decoration: none;
-            flex-shrink: 0;
-        }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-        .icon-btn svg {
-            width: 17px;
-            height: 17px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 2;
-        }
+    .privacy-btn {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-sub);
+      border: 1px solid var(--card-border);
+      padding: 5px 11px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+    }
 
-        /* 2. Quick Genre Chips (Non-scrollable, Fixed Grid) */
-        .chips-bar {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 6px;
-            width: 100%;
-            margin-bottom: 16px;
-            position: sticky;
-            top: 0;
-            background-color: #0b1120;
-            z-index: 10;
-            padding-top: 6px;
-            padding-bottom: 8px;
-        }
+    .privacy-btn:active {
+      transform: scale(0.96);
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
 
-        .genre-chip {
-            width: 100%;
-            padding: 8px 4px;
-            background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-            color: #cbd5e1;
-            text-decoration: none;
-            text-align: center;
-            cursor: pointer;
-            outline: none;
-            font-family: inherit;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    .time-chip {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--card-border);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      font-variant-numeric: tabular-nums;
+    }
 
-        .genre-chip:active {
-            transform: scale(0.95);
-        }
+    /* Station List & Cards */
+    .station-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-        .genre-chip.active {
-            background: #0284c7;
-            color: #ffffff;
-            border-color: #38bdf8;
-            box-shadow: 0 0 10px rgba(2, 132, 199, 0.4);
-        }
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    }
 
-        /* 3. Section Bar & Content Container */
-        .genre-content {
-            display: none;
-            animation: fadeIn 0.25s ease-out;
-        }
+    .card.playing {
+      border-color: rgba(56, 189, 248, 0.45);
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
+      box-shadow: 0 8px 24px rgba(2, 132, 199, 0.18);
+    }
 
-        .genre-content.active {
-            display: block;
-        }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(4px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .station-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        .section-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            width: 100%;
-        }
+    .station-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #090d16;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+      flex-shrink: 0;
+    }
 
-        .section-bar h2 {
-            font-size: 14px;
-            font-weight: 700;
-            color: #f1f5f9;
-        }
+    .station-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-        /* 4. Stations Grid */
-        .stations-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 10px;
-            width: 100%;
-            margin-bottom: 20px;
-        }
+    .station-name {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      color: #fff;
+    }
 
-        .radio-card {
-            background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            border-radius: 12px;
-            padding: 10px 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            position: relative;
-            min-width: 0;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            transition: transform 0.15s ease;
-        }
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      background: rgba(239, 68, 68, 0.12);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      padding: 3px 9px;
+      border-radius: 20px;
+    }
 
-        .radio-card:active {
-            transform: scale(0.97);
-        }
+    .pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ef4444;
+      box-shadow: 0 0 8px #ef4444;
+      animation: blink 1.3s infinite ease-in-out;
+    }
 
-        .logo-wrap {
-            position: relative;
-            width: 40px;
-            height: 40px;
-            flex-shrink: 0;
-        }
+    @keyframes blink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.8); }
+    }
 
-        .station-logo {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: #ffffff;
-            padding: 2px;
-            object-fit: contain;
-            display: block;
-        }
+    /* Programme Details Box */
+    .prog-body {
+      background: rgba(10, 15, 26, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 10px 12px;
+      border-radius: 11px;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .logo-fallback {
-            display: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 9px;
-            color: #ffffff;
-            text-transform: uppercase;
-            text-align: center;
-            padding: 2px;
-        }
+    .prog-body::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--card-border);
+      border-radius: 3px 0 0 3px;
+    }
 
-        .radio-info {
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            flex: 1;
-            min-width: 0;
-        }
+    .card.playing .prog-body::before {
+      background: var(--accent);
+    }
 
-        .radio-name {
-            font-size: 12px;
-            font-weight: 700;
-            color: #f8fafc;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 100%;
-            display: block;
-        }
+    .prog-time {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 4px;
+      letter-spacing: 0.2px;
+    }
 
-        .radio-desc {
-            font-size: 10px;
-            color: #94a3b8;
-            margin-top: 2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 100%;
-            display: block;
-        }
+    .prog-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 4px;
+      white-space: normal;
+      word-break: break-word;
+      line-height: 1.35;
+    }
 
-        /* Fallbacks Colors */
-        .bg-inter { background: #e11d48; }
-        .bg-rtl { background: #dc2626; }
-        .bg-nrj { background: #e11d48; }
-        .bg-info { background: #eab308; color: #000; }
-        .bg-europe1 { background: #1d4ed8; }
-        .bg-nostalgie { background: #1e3a8a; color: #facc15; }
-        .bg-rmc { background: #dc2626; }
-        .bg-bfm { background: #0284c7; }
-        .bg-rfi { background: #e11d48; }
-        .bg-sud { background: #b91c1c; }
-        .bg-cherie { background: #db2777; }
-        .bg-europe2 { background: #ea580c; }
-        .bg-fun { background: #0284c7; }
-        .bg-skyrock { background: #0f172a; border: 1px solid #475569; }
-        .bg-fg { background: #0d9488; }
-        .bg-rtl2 { background: #0284c7; }
-        .bg-ouifm { background: #dc2626; }
-        .bg-rfm { background: #2563eb; }
-        .bg-rire { background: #f59e0b; color: #000; }
-        .bg-fip { background: #e11d48; }
+    .prog-desc {
+      font-size: 11.5px;
+      color: var(--text-sub);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.35;
+    }
 
-        /* Fav Button */
-        .fav-btn {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 3px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
+    /* Action Play Button */
+    .play-btn {
+      width: 100%;
+      background: #1e293b;
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 13.5px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.18s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
 
-        .fav-btn svg {
-            width: 15px;
-            height: 15px;
-            fill: none;
-            stroke: #64748b;
-            stroke-width: 2;
-        }
+    .play-btn:active {
+      transform: scale(0.98);
+    }
 
-        .fav-btn.active svg {
-            fill: #f43f5e;
-            stroke: #f43f5e;
-        }
+    .card.playing .play-btn {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+    }
 
-        /* 5. Explore CTA Card */
-        .explore-banner {
-            width: 100%;
-            background: linear-gradient(135deg, #0284c7 0%, #1e40af 100%);
-            border-radius: 14px;
-            padding: 14px 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            text-decoration: none;
-            box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25);
-            margin-bottom: 20px;
-            min-width: 0;
-        }
+    /* Equalizer */
+    .eq-container {
+      display: none;
+      align-items: flex-end;
+      gap: 2.5px;
+      height: 13px;
+    }
 
-        .explore-banner:active {
-            transform: scale(0.98);
-        }
+    .card.playing .eq-container {
+      display: flex;
+    }
 
-        .explore-text {
-            min-width: 0;
-            flex: 1;
-            padding-right: 8px;
-        }
+    .eq-bar {
+      width: 3px;
+      background: #ffffff;
+      border-radius: 2px;
+      animation: eq 0.8s infinite ease-in-out alternate;
+    }
 
-        .explore-text h3 {
-            font-size: 14px;
-            font-weight: 700;
-            color: #ffffff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+    .eq-bar:nth-child(2) { animation-delay: 0.25s; }
+    .eq-bar:nth-child(3) { animation-delay: 0.45s; }
 
-        .explore-text p {
-            font-size: 11px;
-            color: #bae6fd;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-top: 2px;
-        }
+    @keyframes eq {
+      0% { height: 3px; }
+      100% { height: 13px; }
+    }
 
-        .explore-arrow {
-            background: rgba(255, 255, 255, 0.2);
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            font-size: 15px;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
+    /* Modal Overlay */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
 
-        /* 6. Favorites Section */
-        .fav-section {
-            width: 100%;
-            background: #111c30;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 14px;
-            padding: 12px;
-            min-width: 0;
-        }
+    .modal-overlay.active {
+      display: flex;
+    }
 
-        .fav-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
+    .modal-card {
+      background: #172033;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      max-width: 380px;
+      width: 100%;
+      padding: 20px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
+      animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-        .fav-badge {
-            background: #0284c7;
-            color: #ffffff;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 1px 7px;
-            border-radius: 10px;
-        }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
 
-        .fav-empty-text {
-            color: #64748b;
-            font-size: 11px;
-            text-align: center;
-            padding: 12px 0;
-            line-height: 1.4;
-        }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 10px;
+    }
 
-        /* Media Query */
-        @media (max-width: 340px) {
-            body { padding: 10px 8px 24px 8px; }
-            
-            .chips-bar {
-                gap: 4px;
-            }
+    .modal-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-            .genre-chip {
-                padding: 6px 2px;
-                font-size: 9.5px;
-            }
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-sub);
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+    }
 
-            .radio-card { padding: 8px 6px; gap: 6px; }
-            .logo-wrap, .station-logo, .logo-fallback { width: 34px; height: 34px; }
-            .radio-name { font-size: 11px; }
-            .radio-desc { font-size: 9px; }
-        }
-    </style>
+    .modal-content {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.55;
+    }
+
+    .modal-footer {
+      margin-top: 16px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .modal-btn {
+      background: #0284c7;
+      color: #fff;
+      border: none;
+      border-radius: 9px;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header class="app-header">
-        <div class="brand-title">Radios Françaises</div>
-        <a href="explore.html" class="icon-btn" title="Rechercher">
-            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        </a>
-    </header>
-
-    <!-- Genre Chips (Non-scrollable Toggle Bar) -->
-    <div class="chips-bar">
-        <button type="button" class="genre-chip active" data-target="tab-alaune">🔥 À la une</button>
-        <button type="button" class="genre-chip" data-target="tab-actualites">Actualités</button>
-        <button type="button" class="genre-chip" data-target="tab-pophits">Pop & Hits</button>
-        <button type="button" class="genre-chip" data-target="tab-poprock">Pop-Rock</button>
+  <!-- Header Section -->
+  <div class="header">
+    <div class="app-title">
+      <span>📻</span> Radios Françaises
     </div>
-
-    <!-- 1. À la une / Top Écoutes (Tab 1) -->
-    <div id="tab-alaune" class="genre-content active">
-        <div class="section-bar">
-            <h2>🇫🇷 Top Écoutes</h2>
-        </div>
-        <div class="stations-grid" id="grid-alaune"></div>
+    <div class="header-actions">
+      <button class="privacy-btn" onclick="openPrivacyModal()">🛡️ Privacy</button>
+      <div class="time-chip" id="paris-clock">Paris --:--:--</div>
     </div>
+  </div>
 
-    <!-- 2. Actualités (Tab 2) -->
-    <div id="tab-actualites" class="genre-content">
-        <div class="section-bar">
-            <h2>📰 Actualités & Info</h2>
-        </div>
-        <div class="stations-grid" id="grid-actualites"></div>
+  <!-- Stations List -->
+  <div class="station-list" id="stations-container"></div>
+
+  <!-- Privacy Policy Popup Modal -->
+  <div class="modal-overlay" id="privacy-modal" onclick="closePrivacyModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-title">🛡️ Politique de Confidentialité</div>
+        <button class="modal-close" onclick="closePrivacyModal()">&times;</button>
+      </div>
+      <div class="modal-content">
+        <p>Cette application respecte votre vie privée. Aucune donnée personnelle ni identifiant de suivi n'est collecté.</p>
+        <br>
+        <p>Les flux audio sont transmis en direct et en accès public pour vous offrir une expérience d'écoute optimale.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn" onclick="closePrivacyModal()">Fermer</button>
+      </div>
     </div>
+  </div>
 
-    <!-- 3. Pop & Hits (Tab 3) -->
-    <div id="tab-pophits" class="genre-content">
-        <div class="section-bar">
-            <h2>🎵 Pop & Hits</h2>
-        </div>
-        <div class="stations-grid" id="grid-pophits"></div>
-    </div>
+  <script>
+    const STATIONS = [
+      {
+        id: "inter",
+        name: "France Inter",
+        trigger: "go:finter",
+        color: "var(--inter-color)",
+        logo: "https://ik.imagekit.io/sqt8ptw1k/images_FOnmIj289.png"
+      },
+      {
+        id: "info",
+        name: "France Info",
+        trigger: "go:finfo",
+        color: "var(--info-color)",
+        logo: "https://ik.imagekit.io/sqt8ptw1k/download_iJaUHUs7R0.png"
+      },
+      {
+        id: "culture",
+        name: "France Culture",
+        trigger: "go:fcul",
+        color: "var(--culture-color)",
+        logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_2O3twmcLj.png"
+      },
+      {
+        id: "musique",
+        name: "France Musique",
+        trigger: "go:fmusi",
+        color: "var(--musique-color)",
+        logo: "https://ik.imagekit.io/sqt8ptw1k/download%20(1)_wUMJsGpab.png"
+      }
+    ];
 
-    <!-- 4. Pop-Rock (Tab 4) -->
-    <div id="tab-poprock" class="genre-content">
-        <div class="section-bar">
-            <h2>🎸 Pop-Rock</h2>
-        </div>
-        <div class="stations-grid" id="grid-poprock"></div>
-    </div>
+    // ডাঙৰ লিষ্টখন আঁতৰাই কেৱল খালী এৰে' ৰখা হৈছে, বাকীখিনি অনলাইন ফেচ হ'ব
+    let scheduleData = [];
+    let currentPlayingId = null;
 
-    <!-- Explore CTA Banner -->
-    <a href="go:exp" class="explore-banner">
-        <div class="explore-text">
-            <h3>Explorer +100 Radios</h3>
-            <p>Par thèmes, régions & fréquences</p>
-        </div>
-        <div class="explore-arrow">→</div>
-    </a>
+    function getParisTime() {
+      const now = new Date();
+      const str = now.toLocaleTimeString("en-GB", { timeZone: "Europe/Paris", hour12: false });
+      const [h, m, s] = str.split(":").map(Number);
+      return { totalMinutes: h * 60 + m, timeStr: str };
+    }
 
-    <!-- Favorites Box -->
-    <div class="fav-section">
-        <div class="fav-header">
-            <span style="font-size: 13px; font-weight: 700; color: #e2e8f0;">❤️ Mes Favoris</span>
-            <span class="fav-badge" id="fav-count">0</span>
-        </div>
-        <div id="fav-container" class="stations-grid" style="margin-bottom: 0;"></div>
-        <div id="fav-empty" class="fav-empty-text">
-            Aucun favori enregistré.<br>Appuyez sur le ❤️ pour en ajouter.
-        </div>
-    </div>
+    function isShowLive(timeRange, nowMinutes) {
+      if (!timeRange) return false;
+      const parts = timeRange.split("-").map(p => p.trim());
+      if (parts.length !== 2) return false;
 
-    <script>
-        function handleError(img) {
-            img.style.display = 'none';
-            if (img.nextElementSibling && img.nextElementSibling.classList.contains('logo-fallback')) {
-                img.nextElementSibling.style.display = 'flex';
-            }
+      const parseM = (tStr) => {
+        const clean = tStr.replace("h", ":");
+        const [h, m] = clean.split(":").map(Number);
+        return h * 60 + (m || 0);
+      };
+
+      const start = parseM(parts[0]);
+      let end = parseM(parts[1]);
+
+      if (end === 0) end = 1440;
+
+      if (end < start) {
+        return nowMinutes >= start || nowMinutes < end;
+      }
+      return nowMinutes >= start && nowMinutes < end;
+    }
+
+    function getCurrentShow(channelName, nowMinutes) {
+      if (!scheduleData.length) {
+        return { title: "Chargement en direct...", time: "--:--", description: "Radio France en direct" };
+      }
+      const shows = scheduleData.filter(s => s.channel.toLowerCase() === channelName.toLowerCase());
+      const live = shows.find(s => isShowLive(s.time, nowMinutes));
+      return live || shows[0] || { title: "Programme en cours", time: "En direct", description: "Radio France en direct" };
+    }
+
+    function renderCards() {
+      const container = document.getElementById("stations-container");
+      const paris = getParisTime();
+
+      container.innerHTML = STATIONS.map(st => {
+        const show = getCurrentShow(st.name, paris.totalMinutes);
+        const isPlaying = (currentPlayingId === st.id);
+
+        return `
+          <div class="card ${isPlaying ? 'playing' : ''}" id="card-${st.id}">
+            <div class="card-top">
+              <div class="station-meta">
+                <div class="station-avatar">
+                  <img src="${st.logo}" alt="${st.name}" loading="lazy">
+                </div>
+                <div class="station-title-group">
+                  <span class="station-name">${st.name}</span>
+                </div>
+              </div>
+              <div class="live-badge">
+                <span class="pulse"></span> DIRECT
+              </div>
+            </div>
+
+            <div class="prog-body">
+              <div class="prog-time">${show.time}</div>
+              <div class="prog-title">${show.title}</div>
+              <div class="prog-desc">${show.description || ''}</div>
+            </div>
+
+            <div class="card-footer">
+              <button class="play-btn" onclick="playStation('${st.id}', '${st.trigger}')">
+                <div class="eq-container">
+                  <div class="eq-bar"></div>
+                  <div class="eq-bar"></div>
+                  <div class="eq-bar"></div>
+                </div>
+                <span>${isPlaying ? '▶ Écoute en cours' : 'Écouter la station'}</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function playStation(stationId, triggerScheme) {
+      currentPlayingId = stationId;
+      renderCards();
+      window.location.href = triggerScheme;
+    }
+
+    function startClock() {
+      setInterval(() => {
+        const paris = getParisTime();
+        document.getElementById("paris-clock").innerText = "Paris " + paris.timeStr;
+      }, 1000);
+
+      setInterval(() => {
+        renderCards();
+      }, 60000);
+    }
+
+    // লাইভ JSON ফেচ কৰা
+    async function fetchLiveJson() {
+      try {
+        const res = await fetch("https://vividh.pages.dev/rfrance.json", { cache: "no-store" });
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data) && data.length > 0) {
+            scheduleData = data;
+            renderCards();
+          }
         }
+      } catch (e) {
+        console.error("Erreur de chargement du programme:", e);
+      }
+    }
 
-        /* কেন্দ্ৰীয়ভাৱে সকলো ষ্টেচনৰ ডাটা */
-        const STATIONS = {
-            "S1": { name: "France Inter", sub: "Généraliste", logo: "https://assets.radiofrance.fr/common/logos/stations/franceinter.svg", bg: "bg-inter", tag: "INTER", href: "go:S1" },
-            "S2": { name: "franceinfo", sub: "En Continu", logo: "https://assets.radiofrance.fr/common/logos/stations/franceinfo.svg", bg: "bg-info", tag: "INFO", href: "go:S2" },
-            "S3": { name: "RMC", sub: "Info Talk Sport", logo: "https://cdn-profiles.tunein.com/s14896/images/logod.png", bg: "bg-rmc", tag: "RMC", href: "go:rmc" },
-            "S4": { name: "BFM Business", sub: "Éco & Bourse", logo: "https://cdn-profiles.tunein.com/s17938/images/logod.png", bg: "bg-bfm", tag: "BFM", href: "go:bfm" },
-            "S5": { name: "RFI Monde", sub: "International", logo: "https://cdn-profiles.tunein.com/s6608/images/logod.png", bg: "bg-rfi", tag: "RFI", href: "go:rfi" },
-            "S6": { name: "Sud Radio", sub: "Info & Débats", logo: "https://cdn-profiles.tunein.com/s25241/images/logod.png", bg: "bg-sud", tag: "SUD", href: "go:sud" },
-            "S7": { name: "NRJ", sub: "Hit Music Only", logo: "https://cdn-profiles.tunein.com/s25395/images/logod.png", bg: "bg-nrj", tag: "NRJ", href: "go:S7" },
-            "S8": { name: "RTL", sub: "Info & Débats", logo: "https://cdn-profiles.tunein.com/s6606/images/logod.png", bg: "bg-rtl", tag: "RTL", href: "go:S8" },
-            "S9": { name: "Chérie FM", sub: "Feel Good Music", logo: "https://cdn-profiles.tunein.com/s3124/images/logod.png", bg: "bg-cherie", tag: "CHÉRIE", href: "go:cherie" },
-            "S10": { name: "Europe 2", sub: "Meilleur Son Pop", logo: "https://cdn-profiles.tunein.com/s10464/images/logod.png", bg: "bg-europe2", tag: "E2", href: "go:europe2" },
-            "S11": { name: "Nostalgie", sub: "Légendes", logo: "https://cdn-profiles.tunein.com/s24993/images/logod.png", bg: "bg-nostalgie", tag: "NOST", href: "go:S11" },
-            "S12": { name: "Europe 1", sub: "Info & Talk", logo: "https://cdn-profiles.tunein.com/s6566/images/logod.png", bg: "bg-europe1", tag: "E1", href: "go:S12" },
-            "S13": { name: "Fun Radio", sub: "Electro & Hits", logo: "https://cdn-profiles.tunein.com/s2109/images/logod.png", bg: "bg-fun", tag: "FUN", href: "go:S14" },
-            "S14": { name: "Skyrock", sub: "Rap & RnB Non-Stop", logo: "https://cdn-profiles.tunein.com/s25232/images/logod.png", bg: "bg-skyrock", tag: "SKY", href: "go:S10" },
-            "S15": { name: "Radio FG", sub: "House & Dance Hits", logo: "https://cdn-profiles.tunein.com/s25399/images/logod.png", bg: "bg-fg", tag: "FG", href: "go:fgradio" },
-            "S17": { name: "RTL2", sub: "Le Son Pop-Rock", logo: "https://cdn-profiles.tunein.com/s24948/images/logod.png", bg: "bg-rtl2", tag: "RTL2", href: "go:S13" },
-            "S18": { name: "OUI FM", sub: "La Radio du Rock", logo: "https://cdn-profiles.tunein.com/s6586/images/logod.png", bg: "bg-ouifm", tag: "OUI", href: "go:oui" },
-            "S19": { name: "RFM", sub: "Le Meilleur de la Musique", logo: "https://cdn-profiles.tunein.com/s6616/images/logod.png", bg: "bg-rfm", tag: "RFM", href: "go:rfm2" },
-            "S20": { name: "Rire & Chansons", sub: "Humour & Classic Rock", logo: "https://cdn-profiles.tunein.com/s25398/images/logod.png", bg: "bg-rire", tag: "RIRE", href: "go:rire" },
-            "S21": { name: "FIP", sub: "Pop, Rock & Éclectique", logo: "https://assets.radiofrance.fr/common/logos/stations/fip.svg", bg: "bg-fip", tag: "FIP", href: "go:fip" }
-        };
+    function openPrivacyModal() {
+      const modal = document.getElementById("privacy-modal");
+      if (modal) modal.classList.add("active");
+    }
 
-        /* শ্ৰেণী অনুসৰি ষ্টেচনসমূহৰ তালিকা */
-        const CATEGORIES = {
-            "grid-alaune": ["S1", "S8", "S7", "S2", "S11", "S12"],
-            "grid-actualites": ["S2", "S3", "S12", "S4", "S5", "S6"],
-            "grid-pophits": ["S7", "S9", "S10", "S13", "S14", "S15"],
-            "grid-poprock": ["S17", "S11", "S18", "S19", "S20", "S21"]
-        };
+    function closePrivacyModal() {
+      const modal = document.getElementById("privacy-modal");
+      if (modal) modal.classList.remove("active");
+    }
 
-        const STORAGE_KEY = 'radio_favs_v2';
-
-        function getFavorites() {
-            try {
-                return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-            } catch (e) {
-                return [];
-            }
-        }
-
-        function saveFavorites(favs) {
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(favs));
-            } catch (e) {}
-            updateFavoritesUI();
-        }
-
-        function toggleFav(event, id) {
-            event.preventDefault();
-            event.stopPropagation();
-
-            let favs = getFavorites();
-            if (favs.includes(id)) {
-                favs = favs.filter(item => item !== id);
-            } else {
-                favs.push(id);
-            }
-            saveFavorites(favs);
-        }
-
-        /* কাৰ্ড বনোৱাৰ উমৈহতীয়া ফাংচন */
-        function createCard(id, isFav = false) {
-            const item = STATIONS[id];
-            if (!item) return '';
-
-            const activeClass = isFav ? 'active' : '';
-            return `
-                <a href="${item.href}" class="radio-card" data-id="${id}">
-                    <div class="logo-wrap">
-                        <img class="station-logo" src="${item.logo}" alt="${item.name}" onerror="handleError(this)">
-                        <div class="logo-fallback ${item.bg}">${item.tag}</div>
-                    </div>
-                    <div class="radio-info">
-                        <span class="radio-name">${item.name}</span>
-                        <span class="radio-desc">${item.sub}</span>
-                    </div>
-                    <button class="fav-btn ${activeClass}" onclick="toggleFav(event, '${id}')">
-                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                    </button>
-                </a>
-            `;
-        }
-
-        /* পেজ লোড হ'লে মূল গ্ৰিডসমূহ ডাইনামিকভাৱে তৈয়াৰ কৰা */
-        function renderCategoryGrids() {
-            const favs = getFavorites();
-            for (const [gridId, stationIds] of Object.entries(CATEGORIES)) {
-                const gridEl = document.getElementById(gridId);
-                if (gridEl) {
-                    gridEl.innerHTML = stationIds.map(id => createCard(id, favs.includes(id))).join('');
-                }
-            }
-        }
-
-        /* ফেভাৰিট অংশ আপডেট কৰা */
-        function updateFavoritesUI() {
-            const favs = getFavorites();
-
-            // সকলো কাৰ্ডৰ ভিতৰত থকা হার্ট বুটাম আপডেট কৰা
-            document.querySelectorAll('.radio-card[data-id]').forEach(el => {
-                const id = el.dataset.id;
-                const btn = el.querySelector('.fav-btn');
-                if (btn) {
-                    if (favs.includes(id)) {
-                        btn.classList.add('active');
-                    } else {
-                        btn.classList.remove('active');
-                    }
-                }
-            });
-
-            const countEl = document.getElementById('fav-count');
-            if (countEl) countEl.innerText = favs.length;
-
-            const favContainer = document.getElementById('fav-container');
-            const emptyText = document.getElementById('fav-empty');
-            if (!favContainer || !emptyText) return;
-
-            if (favs.length === 0) {
-                favContainer.innerHTML = '';
-                emptyText.style.display = 'block';
-            } else {
-                emptyText.style.display = 'none';
-                favContainer.innerHTML = favs.map(id => createCard(id, true)).join('');
-            }
-        }
-
-        // Chip Tab Switching Logic
-        document.querySelectorAll('.genre-chip[data-target]').forEach(chip => {
-            chip.addEventListener('click', function() {
-                const targetId = this.getAttribute('data-target');
-
-                document.querySelectorAll('.genre-chip').forEach(c => c.classList.remove('active'));
-                this.classList.add('active');
-
-                document.querySelectorAll('.genre-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-
-                const activeTarget = document.getElementById(targetId);
-                if (activeTarget) {
-                    activeTarget.classList.add('active');
-                }
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            renderCategoryGrids();
-            updateFavoritesUI();
-        });
-    </script>
+    renderCards();
+    startClock();
+    fetchLiveJson();
+  </script>
 </body>
 </html>
