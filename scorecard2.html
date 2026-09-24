@@ -414,8 +414,8 @@
     </div>
 
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">IND vs Japan (T20)</span>
-        <span id="venueHeader">Match Starts 22 SEP, 9:30 AM</span>
+        <span class="match-title-text" id="matchHeader">AUS vs SA 1st ODI</span>
+        <span id="venueHeader">Match Starts Today at 1:30 pm</span>
     </div>
 
     <div class="tabs-wrapper" id="inningsTabs"></div>
@@ -426,7 +426,7 @@
 </div>
 
 <script>
-    const matchId = "6a9d59f81f0f3936e9029873";
+    const matchId = "6a2bb7b87327c23debeefbe6";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
@@ -448,8 +448,8 @@
 
     function getInningsTabLabel(inn, idx, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
-        const aShort = teamA.shortName || teamA.name || "Team A";
-        const bShort = teamB.shortName || teamB.name || "Team B";
+        const aShort = teamA.shortName || teamA.name || "AUS";
+        const bShort = teamB.shortName || teamB.name || "SA";
 
         if (inn.key === "a_1" || inn.key === "a") return aShort;
         if (inn.key === "b_1" || inn.key === "b") return bShort;
@@ -458,8 +458,8 @@
 
     function getInningsDisplayName(inn, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
-        const aName = teamA.name || "Team A";
-        const bName = teamB.name || "Team B";
+        const aName = teamA.name || "Australia";
+        const bName = teamB.name || "South Africa";
 
         if (inn.key === "a_1" || inn.key === "a") return `${aName} Innings`;
         if (inn.key === "b_1" || inn.key === "b") return `${bName} Innings`;
@@ -479,10 +479,10 @@
             const teamA = result.teams?.a || {};
             const teamB = result.teams?.b || {};
 
-            const nameA = teamA.shortName || teamA.name || '';
-            const nameB = teamB.shortName || teamB.name || '';
-            const format = (result.format || 't20').toUpperCase();
-            const tournament = result.seriesName || (nameA && nameB ? `${nameA} vs${nameB}` : "Live Match");
+            const nameA = teamA.shortName || teamA.name || 'AUS';
+            const nameB = teamB.shortName || teamB.name || 'SA';
+            const format = (result.format || 'odi').toUpperCase();
+            const tournament = result.seriesName || (nameA && nameB ? `${nameA} vs${nameB}` : "AUS vs SA 1st ODI");
 
             document.getElementById("matchHeader").textContent = `${tournament} (${format})`;
             document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : ``;
@@ -556,7 +556,7 @@
                         </div>
                         <div class="hero-score-box">
                             <div class="hero-score-main">Upcoming</div>
-                            <div class="hero-score-sub">${result.announcement1 || "Match Starts 22 SEP, 9:30 AM"}</div>
+                            <div class="hero-score-sub">${result.announcement1 || "Match Starts Today at 1:30 pm"}</div>
                         </div>
                     </div>
                     <div style="text-align:center; padding:35px 10px; color:var(--text-muted); font-size:12px; line-height:1.6;">
