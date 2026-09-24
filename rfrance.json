@@ -1,0 +1,302 @@
+[
+  {
+    "time": "05:00 - 07:00",
+    "title": "Le 5/7",
+    "channel": "France Inter",
+    "description": "Première tranche d'information de la journée avec la revue de presse, les prévisions météo et les premiers décryptages de l'actualité."
+  },
+  {
+    "time": "07:00 - 10:00",
+    "title": "Le 7/10",
+    "channel": "France Inter",
+    "description": "La grande matinale d'information généraliste avec interviews politiques majeures, reportages, débats de société et billets d'humour."
+  },
+  {
+    "time": "10:00 - 11:00",
+    "title": "Grand bien vous fasse !",
+    "channel": "France Inter",
+    "description": "Magazine quotidien consacré à la vie quotidienne, à la santé, à la psychologie et au bien-être personnel."
+  },
+  {
+    "time": "11:00 - 12:30",
+    "title": "La bande originale",
+    "channel": "France Inter",
+    "description": "Émission culturelle et d'humour accueillant des personnalités du monde des arts, du cinéma et de la musique pour des échanges décontractés."
+  },
+  {
+    "time": "12:30 - 13:00",
+    "title": "Carnets de campagne & Le jeu des 1000 euros",
+    "channel": "France Inter",
+    "description": "Mise en avant d'initiatives citoyennes locales à travers les territoires français, suivie du mythique quiz radiophonique itinérant de culture générale."
+  },
+  {
+    "time": "13:00 - 14:00",
+    "title": "Le 13/14",
+    "channel": "France Inter",
+    "description": "Journal complet de la mi-journée avec reportages de terrain, synthèses de l'actualité nationale et analyses d'experts."
+  },
+  {
+    "time": "14:00 - 15:00",
+    "title": "La Terre au carré",
+    "channel": "France Inter",
+    "description": "Magazine d'actualité scientifique, d'écologie et d'environnement abordant les enjeux climatiques et la biodiversité."
+  },
+  {
+    "time": "15:00 - 16:00",
+    "title": "Affaires sensibles",
+    "channel": "France Inter",
+    "description": "Récits documentaires et fictions sonores sur les grandes affaires criminelles, judiciaires, politiques et historiques des dernières décennies."
+  },
+  {
+    "time": "16:00 - 18:00",
+    "title": "Zoom Zoom Zen",
+    "channel": "France Inter",
+    "description": "Décryptage caustique et humoristique des tendances actuelles, des phénomènes viraux et des évolutions des modes de vie."
+  },
+  {
+    "time": "18:00 - 19:00",
+    "title": "Un jour dans le monde",
+    "channel": "France Inter",
+    "description": "Émission d'actualité géopolitique et internationale analysant les événements majeurs survenant au-delà des frontières françaises."
+  },
+  {
+    "time": "19:00 - 20:00",
+    "title": "Le 19/20 : Le journal & Le téléphone sonne",
+    "channel": "France Inter",
+    "description": "Grande édition du soir suivie d'un débat thématique en direct au cours duquel les auditeurs posent leurs questions aux experts."
+  },
+  {
+    "time": "20:00 - 21:00",
+    "title": "L'Heure bleue",
+    "channel": "France Inter",
+    "description": "Entretien intime et approfondi avec un artiste, écrivain ou intellectuel sur son parcours et ses réflexions."
+  },
+  {
+    "time": "21:00 - 22:00",
+    "title": "Very Good Trip",
+    "channel": "France Inter",
+    "description": "Sélection musicale pointue explorant les grands classiques et raretés du rock, de la pop et des musiques indépendantes."
+  },
+  {
+    "time": "22:00 - 23:00",
+    "title": "Côté Club",
+    "channel": "France Inter",
+    "description": "Rendez-vous musical mettant à l'honneur les nouveautés de la scène française et internationale avec interviews et sessions live."
+  },
+  {
+    "time": "23:00 - 05:00",
+    "title": "Les Nuits de France Inter",
+    "channel": "France Inter",
+    "description": "Programmation nocturne proposant des rediffusions d'émissions phares, des documentaires sonores et des journaux d'information réguliers."
+  },
+  {
+    "time": "00:00 - 05:00",
+    "title": "Les Nuits de franceinfo",
+    "channel": "France Info",
+    "description": "Fil continu de l'actualité tout au long de la nuit, rappels réguliers des titres, synthèses de l'information internationale et rediffusion des chroniques marquantes de la journée."
+  },
+  {
+    "time": "05:00 - 06:00",
+    "title": "franceinfo Petit matin",
+    "channel": "France Info",
+    "description": "Première tranche d'information de la journée avec les prévisions météo, le trafic, les premiers journaux complets et les chroniques de réveil."
+  },
+  {
+    "time": "06:00 - 08:30",
+    "title": "La matinale de franceinfo",
+    "channel": "France Info",
+    "description": "Le grand rendez-vous de l'actualité matinale avec journaux complets tous les quarts d'heure, reportages de terrain, décryptages économiques et analyses politiques."
+  },
+  {
+    "time": "08:30 - 09:00",
+    "title": "8.30 franceinfo",
+    "channel": "France Info",
+    "description": "La grande interview politique et sociétale de la matinée face aux personnalités de premier plan du gouvernement, de l'opposition et de la société civile."
+  },
+  {
+    "time": "09:00 - 09:30",
+    "title": "Les informés du matin",
+    "channel": "France Info",
+    "description": "Débat d'actualité et confrontations d'analyses entre éditorialistes, journalistes et experts sur les grands sujets qui font la une."
+  },
+  {
+    "time": "09:30 - 12:00",
+    "title": "Le 9h30/12h",
+    "channel": "France Info",
+    "description": "Suivi en direct et décryptage des faits d'actualité en évolution, chroniques consacrées aux médias, aux innovations technologiques et à la consommation."
+  },
+  {
+    "time": "12:00 - 15:00",
+    "title": "Le 12/15",
+    "channel": "France Info",
+    "description": "Grande session d'information de la mi-journée avec journaux détaillés, reportages nationaux et internationaux, points boursiers et actualité sportive."
+  },
+  {
+    "time": "15:00 - 17:00",
+    "title": "Le 15/17",
+    "channel": "France Info",
+    "description": "Tranche d'information de l'après-midi rythmée par l'actualité en direct, les reportages de la rédaction et la séquence pédagogique franceinfo junior."
+  },
+  {
+    "time": "17:00 - 20:00",
+    "title": "Le 17/20",
+    "channel": "France Info",
+    "description": "Le grand carrefour d'actualité de fin de journée dressant le bilan des événements marquants, complété par l'édito politique, l'interview économique et la météo du soir."
+  },
+  {
+    "time": "20:00 - 21:00",
+    "title": "Les informés de franceinfo",
+    "channel": "France Info",
+    "description": "Émission quotidienne de décryptage et de débat où des invités confrontent leurs regards critiques sur les événements politiques et sociétaux du jour."
+  },
+  {
+    "time": "21:00 - 00:00",
+    "title": "Le 21h/minuit",
+    "channel": "France Info",
+    "description": "Dernière grande tranche d'information en direct récapitulant les événements de la soirée, avec bilans complets, suivi des compétitions sportives et chroniques culturelles."
+  },
+  {
+    "time": "05:00 - 06:00",
+    "title": "Le 5/6",
+    "channel": "France Culture",
+    "description": "Première tranche d'information matinale avec les prévisions météo, les revues de presse et les premiers titres de l'actualité."
+  },
+  {
+    "time": "06:00 - 09:00",
+    "title": "Le 6/9",
+    "channel": "France Culture",
+    "description": "La grande matinale d'information avec journaux complets, reportages de terrain, décryptages économiques et la grande interview politique."
+  },
+  {
+    "time": "09:00 - 09:30",
+    "title": "Le 9/9h30",
+    "channel": "France Culture",
+    "description": "Tranche d'information comprenant Les informés du matin, un débat d'actualité et le fil info de 9h20."
+  },
+  {
+    "time": "09:30 - 12:00",
+    "title": "Le 9h30/12",
+    "channel": "France Culture",
+    "description": "Suivi en direct des faits d'actualité, chroniques thématiques sur les médias, l'innovation, la société et la consommation."
+  },
+  {
+    "time": "12:00 - 15:00",
+    "title": "Le 12/15",
+    "channel": "France Culture",
+    "description": "La grande édition de la mi-journée avec reportages nationaux et internationaux, points économiques et actualité sportive."
+  },
+  {
+    "time": "15:00 - 17:00",
+    "title": "Le 15/17",
+    "channel": "France Culture",
+    "description": "Session d'actualité continue de l'après-midi rythmée par les directs, les analyses d'experts et les séquences pédagogiques."
+  },
+  {
+    "time": "17:00 - 19:30",
+    "title": "Le 17h/19h30",
+    "channel": "France Culture",
+    "description": "Le grand carrefour de fin de journée dressant le bilan des faits marquants avec les chroniques politiques et économiques du soir."
+  },
+  {
+    "time": "19:30 - 20:30",
+    "title": "Le 19h30/20h30",
+    "channel": "France Culture",
+    "description": "Édition spéciale du soir proposant un tour complet de l'actualité et les grands débats de société avec les auditeurs."
+  },
+  {
+    "time": "20:30 - 00:00",
+    "title": "Le 20h30/00",
+    "channel": "France Culture",
+    "description": "Grande tranche d'information de fin de soirée, récapitulant les événements majeurs de la journée avec suivi sportif et actualité culturelle."
+  },
+  {
+    "time": "07:00 - 09:00",
+    "title": "Musique matin",
+    "channel": "France Musique",
+    "description": "La matinale musicale animée par Charlotte Landru-Chandès et Hippolyte Pérès : actualité musicale, chroniques et découvertes classiques."
+  },
+  {
+    "time": "09:00 - 11:00",
+    "title": "En pistes !",
+    "channel": "France Musique",
+    "description": "De l'intimité du lied au grand opéra : sélection des nouveautés discographiques et grands enregistrements classiques."
+  },
+  {
+    "time": "11:00 - 13:00",
+    "title": "Allegretto",
+    "channel": "France Musique",
+    "description": "« Est-ce que je viens avec vous ? » : voyage musical éclectique, anecdotes et partages guidés par Denisa Kerschova."
+  },
+  {
+    "time": "13:00 - 13:30",
+    "title": "Autour de midi",
+    "channel": "France Musique",
+    "description": "Autour de midi avec le metteur en scène Robert Carsen et la metteuse en scène et comédienne Ambre Kahan."
+  },
+  {
+    "time": "13:30 - 14:00",
+    "title": "Création mondiale",
+    "channel": "France Musique",
+    "description": "Rendez-vous quotidien d'Anne Montaron consacré à la création contemporaine et aux nouvelles écritures sonores."
+  },
+  {
+    "time": "14:00 - 15:00",
+    "title": "Les Essentiels",
+    "channel": "France Musique",
+    "description": "Le pianiste Alexandre Kantorow à l'honneur avec François-Xavier Szymczak : écoute et analyse de son répertoire."
+  },
+  {
+    "time": "15:00 - 16:00",
+    "title": "Relax !",
+    "channel": "France Musique",
+    "description": "À la rencontre de trois grands chœurs : une pause musicale décontractée et chaleureuse avec Lionel Esparza."
+  },
+  {
+    "time": "16:00 - 17:00",
+    "title": "Stars du classique",
+    "channel": "France Musique",
+    "description": "Dennis Brain, un corniste de légende : retour sur le parcours exceptionnel du virtuose avec Aurélie Moreau."
+  },
+  {
+    "time": "17:00 - 18:00",
+    "title": "Banzzaï",
+    "channel": "France Musique",
+    "description": "Appétissant : Sarah Vaughan, Sonny Clark, Frank Woeste, Steve Swallow et d'autres, dans la sélection jazz de Nathalie Piolé."
+  },
+  {
+    "time": "18:00 - 19:00",
+    "title": "Au cœur du jazz",
+    "channel": "France Musique",
+    "description": "Exploration des figures incontournables, des archives et des courants majeurs du jazz avec Nicolas Pommaret."
+  },
+  {
+    "time": "19:00 - 19:30",
+    "title": "Les Grands Entretiens",
+    "channel": "France Musique",
+    "description": "Entretien approfondi et intime avec une personnalité marquante du paysage musical et artistique."
+  },
+  {
+    "time": "19:30 - 20:00",
+    "title": "Création mondiale",
+    "channel": "France Musique",
+    "description": "Session du soir dédiée aux œuvres contemporaines inédites et aux compositeurs d'aujourd'hui avec Anne Montaron."
+  },
+  {
+    "time": "20:00 - 20:30",
+    "title": "Les Trésors de France Musique",
+    "channel": "France Musique",
+    "description": "Voyage à travers les archives historiques et les enregistrements d'exception de la station avec Françoise Monteil."
+  },
+  {
+    "time": "20:30 - 21:00",
+    "title": "Les Essentiels",
+    "channel": "France Musique",
+    "description": "Les grandes pages du répertoire classique et les interprétations de référence présentées par François-Xavier Szymczak."
+  },
+  {
+    "time": "21:00 - 00:00",
+    "title": "Les Nuits de France Musique",
+    "channel": "France Musique",
+    "description": "Programmation nocturne proposant des concerts d'archives, de la musique de chambre et les chefs-d'œuvre du patrimoine musical."
+  }
+]
