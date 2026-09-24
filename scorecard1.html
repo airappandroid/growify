@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Live Scorecard - ENG vs SL, 3rd T20</title>
+    <title>Live Scorecard - ENG vs SL, 2nd ODI</title>
     <style>
         :root {
             --bg-base: #020617;
@@ -422,8 +422,8 @@
 
     <!-- Match Information Row -->
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">ENG vs SL, 3rd T20</span>
-        <span id="venueHeader">📍 Sophia Gardens, Cardiff</span>
+        <span class="match-title-text" id="matchHeader">ENG vs SL, 2nd ODI</span>
+        <span id="venueHeader">📍 Headingley, Leeds</span>
     </div>
 
     <!-- Innings Navigation Tabs -->
@@ -436,7 +436,7 @@
 </div>
 
 <script>
-    const matchId = "69bd420e1dbf177ca4e58e76";
+    const matchId = "69bd420f1dbf177ca4e58e78";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
@@ -497,12 +497,12 @@
 
             const nameA = teamA.shortName || teamA.name || 'ENG';
             const nameB = teamB.shortName || teamB.name || 'SL';
-            const format = (result.format || 't20').toUpperCase();
-            const tournament = result.seriesName || `${nameA} vs ${nameB}, 1st ODI`;
+            const format = (result.format || 'ODI').toUpperCase();
+            const tournament = result.seriesName || `${nameA} vs ${nameB}, 2nd ODI`;
 
             // 1. Header update
             document.getElementById("matchHeader").textContent = tournament;
-            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : `📍 Riverside Ground`;
+            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : `📍 Headingley, Leeds`;
 
             // 2. Comprehensive Match Status Determination
             const rawStatus = String(result.status || "").toLowerCase().trim();
@@ -553,7 +553,7 @@
                 result.status === "3"
             );
 
-            // Scorecard Math Fallback (agar API status me 'Live' atka ho tab bhi calculate karega)
+            // Scorecard Math Fallback
             if (!isCompleted && !isUpcoming && Array.isArray(innings) && innings.length >= 2) {
                 const inn1 = innings[0] || {};
                 const inn2 = innings[1] || {};
@@ -563,9 +563,9 @@
                 const w2 = parseInt(inn2.wickets ?? 0, 10);
                 const ov2 = parseFloat(inn2.overs ?? 0);
 
-                let maxOvers = 20;
+                let maxOvers = 50;
                 const fmt = (result.format || tournament || "").toLowerCase();
-                if (fmt.includes("odi") || fmt.includes("50")) maxOvers = 50;
+                if (fmt.includes("t20") || fmt.includes("20")) maxOvers = 20;
                 else if (fmt.includes("t10") || fmt.includes("10")) maxOvers = 10;
                 else if (fmt.includes("hundred")) maxOvers = 20;
 
@@ -617,11 +617,11 @@
                     <div class="hero-banner">
                         <div class="hero-team">
                             <span class="hero-team-name">${nameA} vs ${nameB}</span>
-                            <span class="hero-status-tag">3rd T20 (${format})</span>
+                            <span class="hero-status-tag">2nd ODI (${format})</span>
                         </div>
                         <div class="hero-score-box">
-                            <div class="hero-score-main">2:30PM</div>
-                            <div class="hero-score-sub">Match starts today at 2:30pm</div>
+                            <div class="hero-score-main">12:30 PM</div>
+                            <div class="hero-score-sub">Match starts today at 12:30 pm UK time</div>
                         </div>
                     </div>
                     <div style="text-align:center; padding:35px 10px; color:var(--text-muted); font-size:12px; line-height:1.6;">
