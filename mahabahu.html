@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Akashvani Guwahati (Mahabahu) - Live Cuesheet Schedule</title>
   
   <style>
@@ -22,40 +22,46 @@
       --accent-cyan: #38bdf8;
       --accent-amber: #f59e0b;
       --badge-bg: #21262d;
-      --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      /* Android Native System Fonts */
+      --font-system: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      --font-mono: ui-monospace, "Roboto Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
 
     html {
-      scroll-behavior: auto;
       background-color: var(--bg-main);
       color: var(--text-primary);
       font-family: var(--font-system);
-      -webkit-tap-highlight-color: transparent;
+      overscroll-behavior-y: contain; /* Prevents pull-to-refresh jitter in WebView */
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
     }
 
     body {
       background-color: var(--bg-main);
       min-height: 100vh;
       line-height: 1.45;
-      padding-bottom: 40px;
+      /* Edge-to-edge support for Android status bar and gesture navigation */
+      padding-top: max(8px, env(safe-area-inset-top));
+      padding-bottom: max(32px, env(safe-area-inset-bottom));
+      touch-action: manipulation;
     }
 
     .app-container {
       max-width: 680px;
       margin: 0 auto;
-      padding: 12px 14px;
+      padding: 10px 14px;
     }
 
     .header-box {
       text-align: center;
-      padding: 14px 10px 10px;
+      padding: 10px 10px 8px;
     }
 
     .tag-air {
@@ -84,7 +90,7 @@
     }
 
     .main-title {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 800;
       letter-spacing: -0.3px;
       color: var(--text-primary);
@@ -92,7 +98,7 @@
     }
 
     .frequency-line {
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--text-secondary);
       font-weight: 500;
     }
@@ -151,7 +157,7 @@
 
     .live-clock-digits {
       font-family: var(--font-mono);
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       color: var(--accent-cyan);
       background-color: #0d1117;
@@ -178,7 +184,7 @@
 
     .card-now-playing.is-active {
       border-color: rgba(16, 185, 129, 0.65);
-      box-shadow: 0 0 15px rgba(16, 185, 129, 0.08);
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.1);
     }
 
     .card-header-line {
@@ -218,12 +224,11 @@
       border-radius: 6px;
     }
 
-    /* Play Button Styles */
     .btn-play-station {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 5px;
       background: linear-gradient(135deg, var(--accent-green), #059669);
       color: #041f14;
       font-size: 11.5px;
@@ -236,15 +241,7 @@
       border: 1px solid rgba(16, 185, 129, 0.4);
       box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
       cursor: pointer;
-      transition: all 0.2s ease;
       user-select: none;
-    }
-
-    .btn-play-station:hover {
-      background: linear-gradient(135deg, var(--accent-green-hover), var(--accent-green));
-      box-shadow: 0 3px 12px rgba(16, 185, 129, 0.4);
-      transform: translateY(-1px);
-      color: #02120b;
     }
 
     .btn-play-station:active {
@@ -258,7 +255,7 @@
     }
 
     .now-title {
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       color: var(--text-primary);
       line-height: 1.35;
@@ -266,7 +263,7 @@
     }
 
     .now-desc {
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--text-secondary);
       line-height: 1.4;
     }
@@ -281,7 +278,7 @@
       display: flex;
       justify-content: space-between;
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 10.5px;
       color: var(--text-muted);
       margin-bottom: 6px;
       min-height: 14px;
@@ -305,6 +302,7 @@
       width: 0%;
       background-color: var(--accent-green);
       border-radius: 999px;
+      transition: width 0.3s ease;
     }
 
     .card-next-up {
@@ -348,7 +346,7 @@
 
     .next-time-badge {
       font-family: var(--font-mono);
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--accent-amber);
       background-color: #291807;
@@ -389,8 +387,8 @@
     }
 
     .col-time-header {
-      width: 130px;
-      min-width: 130px;
+      width: 120px;
+      min-width: 120px;
       padding: 10px 12px;
       color: var(--accent-cyan);
       border-right: 1px solid var(--border-color);
@@ -417,10 +415,6 @@
       border-bottom: none;
     }
 
-    .schedule-row:hover {
-      background-color: var(--bg-row-hover);
-    }
-
     .schedule-row.live-active {
       background-color: var(--bg-live) !important;
       border-left: 4px solid var(--accent-green);
@@ -436,8 +430,8 @@
     }
 
     .col-time {
-      width: 130px;
-      min-width: 130px;
+      width: 120px;
+      min-width: 120px;
       padding: 12px 10px;
       border-right: 1px solid #21262d;
       display: flex;
@@ -448,14 +442,14 @@
 
     .time-range {
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 600;
       color: var(--text-primary);
       line-height: 1.35;
     }
 
     .time-sep {
-      font-size: 10px;
+      font-size: 9.5px;
       color: var(--text-muted);
       margin: 1px 0;
       display: block;
@@ -501,7 +495,7 @@
     }
 
     .prog-desc {
-      font-size: 12px;
+      font-size: 11.8px;
       color: var(--text-secondary);
       line-height: 1.45;
       margin-top: 3px;
@@ -550,7 +544,6 @@
           </div>
           <div class="card-header-actions">
             <span class="badge-slot-time" id="liveSlotBadge">--:-- -- - --:-- --</span>
-            <!-- Play Button Triggering go:AS003 -->
             <a href="go:AS003" class="btn-play-station" id="btnPlayStation" title="Play Akashvani Mahabahu">
               <svg viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z"/>
@@ -603,14 +596,15 @@
   </div>
 
   <script>
-   const FULL_SCHEDULE = [
+    // Official Cuesheet: 25-09-2026 (Friday)
+    const FULL_SCHEDULE = [
       {
         id: 1,
         startStr: "05:28 AM",
         endStr: "05:30 AM",
         startMin: 5 * 60 + 28,
         endMin: 5 * 60 + 30,
-        title: "AIR SIGNATURE TUNE",
+        title: "AIR Signature Tune",
         desc: "Opening station signature tune.",
         presenter: "AOD",
         studio: "Studio 7"
@@ -621,7 +615,7 @@
         endStr: "05:35 AM",
         startMin: 5 * 60 + 30,
         endMin: 5 * 60 + 35,
-        title: "Vande Mataram / Time Reading / Opening Announcement / Mangaldhwani",
+        title: "Vande Mataram / Opening Announcement / Time Reading / Mangaldhwani",
         desc: "Morning invocation, official transmission opening announcement & auspicious Mangaldhwani.",
         presenter: "AOD",
         studio: "Studio 7"
@@ -633,9 +627,9 @@
         startMin: 5 * 60 + 35,
         endMin: 6 * 60 + 0,
         title: "Bandana (Devotional Songs with Signature Tune)",
-        desc: "1. Borgeet - Kanika Boro (Sankardev - GHR-07-210 cut-3) • 2. Lokageet - Nabanita Das (GHR-01B-1226 cut-1) • 3. Chiyageet - Sidheswar Deka & Pty (GHR-01B-1230 cut-1) • 4. Tokarigeet - Khagen Gogoi & Party (GHR-01B-89 cut-4) • 5. Bhajan - Vani Jairam (GHR-07-10 cut-4).",
+        desc: "1. Borgeet - Gautam Bayan (Madhabdev - GHR-07-203 cut-2) • 2. Lokageet - Birina Pathak (GHR-01B-1204 cut-10) • 3. Naam - Sarala Devi & Party (26M-024 cut-2) • 4. Bhajan - Mitali Dey (GHR-07-135 cut-5) • 5. Zikir - Jamir Choudhury & Party (GHR-01B-117 cut-4).",
         presenter: "AOD",
-        studio: "Studio 7"
+        studio: "Studio 6"
       },
       {
         id: 4,
@@ -643,7 +637,7 @@
         endStr: "06:05 AM",
         startMin: 6 * 60 + 0,
         endMin: 6 * 60 + 5,
-        title: "NEWS IN HINDI",
+        title: "News in Hindi",
         desc: "National morning Hindi news bulletin relay from New Delhi.",
         presenter: "RVUD",
         studio: "Studio 7"
@@ -654,7 +648,7 @@
         endStr: "06:10 AM",
         startMin: 6 * 60 + 5,
         endMin: 6 * 60 + 10,
-        title: "NEWS IN ENGLISH",
+        title: "News in English",
         desc: "National morning English news bulletin relay.",
         presenter: "RVUD",
         studio: "Studio 7"
@@ -665,10 +659,10 @@
         endStr: "06:15 AM",
         startMin: 6 * 60 + 10,
         endMin: 6 * 60 + 15,
-        title: "MUKUTAMALA :: Ananda Chandra Barua",
-        desc: "Pearls of wisdom: Ananda Chandra Barua (GHR-43-17).",
+        title: "Mukutamala :: Jyoti Prasad Agarwala",
+        desc: "Pearls of wisdom: Jyoti Prasad Agarwala (GHR-43-7).",
         presenter: "AOD",
-        studio: "Studio B"
+        studio: "Studio 7"
       },
       {
         id: 7,
@@ -676,10 +670,10 @@
         endStr: "06:30 AM",
         startMin: 6 * 60 + 15,
         endMin: 6 * 60 + 30,
-        title: "Tokarigeet :: Hirak Jyoti Sarma & Party",
-        desc: "Traditional Tokarigeet recital (01B-1241).",
+        title: "Zikir :: Ibrahim Khaliluddah & Party",
+        desc: "Spiritual Zikir recitation (01B-108 cut-1,2,3).",
         presenter: "AOD",
-        studio: "Studio B"
+        studio: "Studio 7"
       },
       {
         id: 8,
@@ -687,8 +681,8 @@
         endStr: "06:45 AM",
         startMin: 6 * 60 + 30,
         endMin: 6 * 60 + 45,
-        title: "Bhajan From Hindi Films",
-        desc: "1. Film: Amar Prem - Bada Natkhat • 2. Film: Gharana - Jai Raghunandan • 3. Film: Kaajal - Tora Man.",
+        title: "Gandhi Prasanga :: 'Mahatma's 7 Days in Assam'",
+        desc: "Production: Ajoy Kumar Bora. Followed by Gandhi Bhajan (Computer-3).",
         presenter: "AOD",
         studio: "Studio 7"
       },
@@ -698,8 +692,8 @@
         endStr: "06:55 AM",
         startMin: 6 * 60 + 45,
         endMin: 6 * 60 + 55,
-        title: "ANUSTHAN PARICHITI & PROMOS",
-        desc: "Mobile Apps, Akashvani Web & promotional announcements.",
+        title: "Programme Summary & Promos",
+        desc: "Station highlights, commercial promos & Vividh Bharati promo.",
         presenter: "AOD",
         studio: "Studio 7"
       },
@@ -709,9 +703,9 @@
         endStr: "07:00 AM",
         startMin: 6 * 60 + 55,
         endMin: 7 * 60 + 0,
-        title: "GYAN BIGYAN :: Prabal Kumar Sarma",
-        desc: "Science and technology broadcast presentation by Prabal Kumar Sarma.",
-        presenter: "AOD",
+        title: "Gyan Bigyan :: Prabal Kumar Sarma",
+        desc: "Science & technology presentation by Prabal Kumar Sarma.",
+        presenter: "Prabal Kumar Sarma",
         studio: "Studio 7"
       },
       {
@@ -720,9 +714,9 @@
         endStr: "07:05 AM",
         startMin: 7 * 60 + 0,
         endMin: 7 * 60 + 5,
-        title: "NIYOG BATORI",
+        title: "Niyog Batori",
         desc: "Employment news read by Utpal Bora, Mobile App Promo.",
-        presenter: "UTPAL BORA",
+        presenter: "Utpal Bora",
         studio: "Studio 7"
       },
       {
@@ -731,7 +725,7 @@
         endStr: "07:15 AM",
         startMin: 7 * 60 + 5,
         endMin: 7 * 60 + 15,
-        title: "NEWS IN ASSAMESE",
+        title: "News in Assamese",
         desc: "Puwar Batori relayed by Regional News Unit (RNU L/DIB, G1).",
         presenter: "RNU",
         studio: "Studio 7"
@@ -742,9 +736,9 @@
         endStr: "07:30 AM",
         startMin: 7 * 60 + 15,
         endMin: 7 * 60 + 30,
-        title: "AJI PUWA (Morning Information Programme)",
+        title: "Aji Puwa (Morning Information Programme)",
         desc: "Morning information programme. Production: Kartik Sutradhar.",
-        presenter: "Bhaswati Devi Sarma",
+        presenter: "Samujwal Dutta",
         studio: "Studio 7"
       },
       {
@@ -753,8 +747,8 @@
         endStr: "07:50 AM",
         startMin: 7 * 60 + 30,
         endMin: 7 * 60 + 50,
-        title: "Abhilekhagaror Pora",
-        desc: "Archival presentation. Production: Indrajit Das (Computer-1).",
+        title: "Album Songs of One Artist :: Paapon",
+        desc: "Special showcase of selected melodies by Paapon.",
         presenter: "AOD",
         studio: "Studio 7"
       },
@@ -764,8 +758,8 @@
         endStr: "07:55 AM",
         startMin: 7 * 60 + 50,
         endMin: 7 * 60 + 55,
-        title: "Spots, Jingles, Slogans, VBS Promo & MKB",
-        desc: "Commercial announcements, slogans, Vividh Bharati promo & MKB.",
+        title: "Spots, Jingles, Slogans & VBS Promo",
+        desc: "Commercial announcements, slogans & Vividh Bharati promos.",
         presenter: "AOD",
         studio: "Studio 7"
       },
@@ -776,7 +770,7 @@
         startMin: 7 * 60 + 55,
         endMin: 8 * 60 + 0,
         title: "ANCHALIK BATORI",
-        desc: "Regional news bulletin relay (RNU L/DIB, G1).",
+        desc: "Regional news bulletin relay (RNU L/DIB).",
         presenter: "RNU",
         studio: "Studio 7"
       },
@@ -786,7 +780,7 @@
         endStr: "08:15 AM",
         startMin: 8 * 60 + 0,
         endMin: 8 * 60 + 15,
-        title: "SAMACHAR PRABHAT",
+        title: "Samachar Prabhat",
         desc: "National morning Hindi news relay from New Delhi.",
         presenter: "RVUD",
         studio: "Studio 7"
@@ -797,7 +791,7 @@
         endStr: "08:30 AM",
         startMin: 8 * 60 + 15,
         endMin: 8 * 60 + 30,
-        title: "MORNING NEWS",
+        title: "Morning News",
         desc: "National morning English news relay from New Delhi.",
         presenter: "RVUD",
         studio: "Studio 7"
@@ -809,7 +803,7 @@
         startMin: 8 * 60 + 30,
         endMin: 9 * 60 + 0,
         title: "GEETIMALIKA :: Assamese Melodies",
-        desc: "1. Tarali Sarma (Mor Mon Jai - Nirmal Prabha Bordoloi - 14M-343) • 2. Jayanta Sarma (Tomar Chakule - Dhruba Kr. Talukdar - 14M-087) • 3. Queen Das (Hridaye Aji - Dinesh Baishya - 14M-106) • 4. Bijoy Mahanta (Sonali Sarate - Aparna Banikya - 14M-133) • 5. Madhumita Bora Bhattacharyya (Banare Keteki - Kirti Kamal Bhuyan - 14M-240).",
+        desc: "1. Sangeeta Borthakur (Ratir Nibir - Lakshahira Das - 14M-356) • 2. Santanu Goswami (O Nawaria - Reena Devi - 14M-253) • 3. Malabika Bora (Moi Bidehi - Dwijendra Mohan Sarma - 14M-260) • 4. Bhabesh Kalita (Jiban Batot - Hiren Goswami - 14M-121) • 5. Rupali Keot Nath (Niribili - Dimbeswar Das - 14M-253-338).",
         presenter: "AOD",
         studio: "Studio 7"
       },
@@ -838,49 +832,38 @@
       {
         id: 22,
         startStr: "09:20 AM",
-        endStr: "10:00 AM",
+        endStr: "10:30 AM",
         startMin: 9 * 60 + 20,
-        endMin: 10 * 60 + 0,
-        title: "Live Phone in Kalpataru",
-        desc: "Live phone-in listener's choice musical presentation.",
-        presenter: "AOD",
+        endMin: 10 * 60 + 30,
+        title: "PRABHATI TARANGA (Live)",
+        desc: "Live morning magazine broadcast. Anchor: Indrajit Das.",
+        presenter: "Indrajit Das",
         studio: "Studio 7"
       },
       {
         id: 23,
-        startStr: "10:00 AM",
-        endStr: "10:30 AM",
-        startMin: 10 * 60 + 0,
-        endMin: 10 * 60 + 30,
-        title: "Maatir Gaan",
-        desc: "1. Nepali: Yo Manlai Ke Garu - Kishor Giri (GHR-16-103) • 2. Rabhageet: Jil Mil Kokai - Purander Rabha & Party (GHR-01E-111) • 3. Deurigeet: Chimachipa - Ramdhan Deuri & Party (GHR-01E130) • 4. Karbigeet: Padanang Padanang - Khagen Ranghang & Party (GHR-01E-112) • 5. Tiwa Geet: Laling Bordoloi & Party (GHR-01E-002).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 24,
         startStr: "10:30 AM",
         endStr: "11:00 AM",
         startMin: 10 * 60 + 30,
         endMin: 11 * 60 + 0,
         title: "UMANG :: NCERT Sponsored Programme",
-        desc: "Special educational series (Episode: 1379, Computer-3).",
+        desc: "Educational series (Episode: 1380, Computer-3).",
         presenter: "AOD",
         studio: "Studio 7"
       },
       {
-        id: 25,
+        id: 24,
         startStr: "11:00 AM",
         endStr: "11:05 AM",
         startMin: 11 * 60 + 0,
         endMin: 11 * 60 + 5,
         title: "ANCHALIK BATORI",
-        desc: "Mid-morning regional news bulletin relay from RNU (L/DIB, G1).",
+        desc: "Mid-morning regional news bulletin relay from RNU (L/DIB).",
         presenter: "RNU",
         studio: "Studio 7"
       },
       {
-        id: 26,
+        id: 25,
         startStr: "11:05 AM",
         endStr: "11:30 AM",
         startMin: 11 * 60 + 5,
@@ -891,150 +874,150 @@
         studio: "Studio 7"
       },
       {
-        id: 27,
+        id: 26,
         startStr: "11:30 AM",
         endStr: "12:00 PM",
         startMin: 11 * 60 + 30,
         endMin: 12 * 60 + 0,
-        title: "Amar Yuva Vanir Pora :: Yuva Sahitya",
-        desc: "Golpo: Sakshi Priyambada. Kobita: Manash Pratim Baishya. Presented by: Jharana Bharali. Production: Indrajit Das.",
+        title: "Amar Yuvabanir Pora :: Zubeen Garg Special",
+        desc: "Topic: 'Yuva Drishtit Zubeen'. Presented by Bhargav Kalita. Production: Indrajit Das.",
         presenter: "AOD",
         studio: "Studio 7"
       },
       {
-        id: 28,
+        id: 27,
         startStr: "12:00 PM",
         endStr: "12:05 PM",
         startMin: 12 * 60 + 0,
         endMin: 12 * 60 + 5,
-        title: "NEWS IN HINDI",
+        title: "News in Hindi",
         desc: "Midday national Hindi news bulletin relay.",
         presenter: "RVUD",
         studio: "Studio 7"
       },
       {
-        id: 29,
+        id: 28,
         startStr: "12:05 PM",
         endStr: "12:15 PM",
         startMin: 12 * 60 + 5,
         endMin: 12 * 60 + 15,
-        title: "ANCHALIK BATORI",
+        title: "Anchalik Batori",
         desc: "Midday regional news in Assamese from RNU (L/DIB, G1).",
         presenter: "RNU",
         studio: "Studio 7"
       },
       {
-        id: 30,
+        id: 29,
         startStr: "12:15 PM",
         endStr: "12:30 PM",
         startMin: 12 * 60 + 15,
         endMin: 12 * 60 + 30,
-        title: "Hindi Film Songs",
-        desc: "Selected Hindi film tracks: 1. Ghar • 2. Chaalbaaz • 3. Masoom • 4. Bhrashtachar.",
+        title: "Hindi Film Songs :: Film: 'LAJJA'",
+        desc: "Special broadcast featuring tracks from the film 'Lajja'.",
+        presenter: "AOD",
+        studio: "Studio 7"
+      },
+      {
+        id: 30,
+        startStr: "12:30 PM",
+        endStr: "01:00 PM",
+        startMin: 12 * 60 + 30,
+        endMin: 13 * 60 + 0,
+        title: "Aaideur Bulani :: Shristi",
+        desc: "Story: Rupjyoti Gogoi (FB) • Poem: Mala Musahari Patar. Presenter: Runamoni Bora.",
         presenter: "AOD",
         studio: "Studio 7"
       },
       {
         id: 31,
-        startStr: "12:30 PM",
-        endStr: "01:00 PM",
-        startMin: 12 * 60 + 30,
-        endMin: 13 * 60 + 0,
-        title: "AAIDEUR BULANI :: Sajun Kachun",
-        desc: "Topic: Byaktitwa Prakashat Fashion (FB). Guest: Ankita Pathak. Interviewer: Runamoni Bora.",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 32,
         startStr: "01:00 PM",
         endStr: "01:05 PM",
         startMin: 13 * 60 + 0,
         endMin: 13 * 60 + 5,
-        title: "NEWS IN HINDI",
+        title: "News in Hindi",
         desc: "Afternoon Hindi news relay from New Delhi.",
         presenter: "RVUD",
         studio: "Studio 7"
       },
       {
-        id: 33,
+        id: 32,
         startStr: "01:05 PM",
         endStr: "01:10 PM",
         startMin: 13 * 60 + 5,
         endMin: 13 * 60 + 10,
-        title: "NEWS IN ENGLISH",
+        title: "News in English",
         desc: "Afternoon English national news relay.",
         presenter: "RVUD",
         studio: "Studio 7"
       },
       {
-        id: 34,
+        id: 33,
         startStr: "01:10 PM",
         endStr: "01:20 PM",
         startMin: 13 * 60 + 10,
         endMin: 13 * 60 + 20,
-        title: "Adhunik Geet :: Nipu Bhuyan",
-        desc: "Modern Assamese songs sung by Nipu Bhuyan (01C-573 cut-1,2 - FB).",
+        title: "Adhunik Geet :: Trishagni Barua",
+        desc: "Modern Assamese songs sung by Trishagni Barua (01C-574 cut-1,2 - FB).",
         presenter: "AOD",
-        studio: "Studio 6"
+        studio: "Studio 7"
       },
       {
-        id: 35,
+        id: 34,
         startStr: "01:20 PM",
         endStr: "01:35 PM",
         startMin: 13 * 60 + 20,
         endMin: 13 * 60 + 35,
-        title: "Ojapali :: Janaram Saikia & Party",
-        desc: "Traditional Ojapali recital (01B-753).",
+        title: "OJAPALI :: Nakul Ch. Nath & Party",
+        desc: "Traditional Ojapali recital (01B-244).",
+        presenter: "AOD",
+        studio: "Studio 7"
+      },
+      {
+        id: 35,
+        startStr: "01:35 PM",
+        endStr: "01:40 PM",
+        startMin: 13 * 60 + 35,
+        endMin: 13 * 60 + 40,
+        title: "Instrumental Music :: Khol Badan Recital",
+        desc: "Classical Khol recital by Bipul Ojah (FB).",
         presenter: "AOD",
         studio: "Studio 7"
       },
       {
         id: 36,
-        startStr: "01:35 PM",
-        endStr: "01:40 PM",
-        startMin: 13 * 60 + 35,
-        endMin: 13 * 60 + 40,
-        title: "Instrumental Music :: Hawaiian Guitar Recital",
-        desc: "Hawaiian guitar recital by Deepa Mukharjee (01D-034).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 37,
         startStr: "01:40 PM",
         endStr: "01:50 PM",
         startMin: 13 * 60 + 40,
         endMin: 13 * 60 + 50,
-        title: "NEWS IN ASSAMESE",
+        title: "News in Assamese",
         desc: "Regional afternoon news broadcast from RNU (L/DIB, G1).",
         presenter: "RNU",
         studio: "Studio 7"
       },
       {
-        id: 38,
+        id: 37,
         startStr: "01:50 PM",
         endStr: "02:00 PM",
         startMin: 13 * 60 + 50,
         endMin: 14 * 60 + 0,
-        title: "BHAJAN :: Chitrali Goswami",
-        desc: "Devotional songs by Chitrali Goswami (07-48).",
+        title: "Lokageet :: Bhudeb Sarma",
+        desc: "Traditional folk songs sung by Bhudeb Sarma (01B-1003).",
         presenter: "AOD",
         studio: "Studio 7"
       },
       {
-        id: 39,
+        id: 38,
         startStr: "02:00 PM",
         endStr: "02:15 PM",
         startMin: 14 * 60 + 0,
         endMin: 14 * 60 + 15,
-        title: "MID-DAY NEWS",
+        title: "Mid-Day News",
         desc: "National mid-day English news bulletin relay.",
         presenter: "RVUD",
         studio: "Studio 7"
       },
       {
-        id: 40,
+        id: 39,
         startStr: "02:15 PM",
         endStr: "02:30 PM",
         startMin: 14 * 60 + 15,
@@ -1045,106 +1028,106 @@
         studio: "Studio 7"
       },
       {
-        id: 41,
+        id: 40,
         startStr: "02:30 PM",
         endStr: "03:00 PM",
         startMin: 14 * 60 + 30,
         endMin: 15 * 60 + 0,
-        title: "WESTERN MUSIC SHOWCASE",
-        desc: "1. This Is Our Song (Code Red - 188) • 2. Angel Baby (Dean Martin - 79) • 3. American Pie (Don McLean - 696) • 4. One of Us (ABBA - 824) • 5. Circle of Life (Elton John - 499) • 6. Everytime Baby (UB40 - 727).",
-        presenter: "MONJOYEE SARMA PATGIRI",
+        title: "Western Music Showcase",
+        desc: "1. Hello (Sita - 293) • 2. Runaway (Bon Jovi - 205) • 3. Fool (Shakira - 464) • 4. Columbia (Oasis - 465) • 5. Bachelor Boy (Cliff Richard - 785) • 6. Summer Night City (ABBA - 824).",
+        presenter: "Deva Kumar Singh",
         studio: "Studio 7"
       },
       {
-        id: 42,
+        id: 41,
         startStr: "03:00 PM",
         endStr: "03:05 PM",
         startMin: 15 * 60 + 0,
         endMin: 15 * 60 + 5,
         title: "ANCHALIK BATORI",
-        desc: "Regional afternoon news update from RNU (L/DIB, G1).",
+        desc: "Regional afternoon news update from RNU (L/DIB).",
         presenter: "RNU",
         studio: "Studio 7"
       },
       {
-        id: 43,
+        id: 42,
         startStr: "03:05 PM",
         endStr: "03:15 PM",
         startMin: 15 * 60 + 5,
         endMin: 15 * 60 + 15,
-        title: "ADHUNIK GEET :: Album: Parineeta",
-        desc: "Album: Parineeta, Artist: Parineeta Borthakur.",
+        title: "ADHUNIK GEET :: Album: Chinakigeet",
+        desc: "Artist: Khagen Mahanta.",
         presenter: "AOD",
         studio: "Studio 7"
       },
       {
-        id: 44,
+        id: 43,
         startStr: "03:15 PM",
         endStr: "03:45 PM",
         startMin: 15 * 60 + 15,
         endMin: 15 * 60 + 45,
-        title: "NEPALI PROGRAMME",
-        desc: "1. News Summary • 2. Employment News • 3. Youth Variety Prog. presented by the youth of Yobak Sangha (Lead by: Laxmi Chetry) • 4. Programme Highlight for the next day • 5. Songs: a. Narbahadur Chetry, b. Bhawna Thapa.",
-        presenter: "SANTOSH NEWAR",
+        title: "Nepali Programme",
+        desc: "1. News Summary • 2. Compering on Antyodaya Divas • 3. Talk: 'Importance of Tree Plantation' by Purnima Pokrel (GHR-16-266) • 4. Programme Highlight for the next day • 5. Duet Songs: a. Narbahadur Dorgee & Milon Newar, b. Bhupen Hazarika & Anju Devi, c. Dhiraj Srestha & Sindhu Malla.",
+        presenter: "Tharka Adhikari & Santosh Newar",
         studio: "Studio 7"
       },
       {
-        id: 45,
+        id: 44,
         startStr: "03:45 PM",
         endStr: "04:30 PM",
         startMin: 15 * 60 + 45,
         endMin: 16 * 60 + 30,
-        title: "KARBI PROGRAMME",
-        desc: "1. News • 2. Proverb (Sarlamthe): 'Aphuruita thithe, akeibongta lokle' • 3. Slogan on Abuses of Tobacco • 4. Programme Highlights for the next day • 5. Folk Song (Lunbarim): a. Monsing Lekthe, b. Sarpo Rongpi, c. Phulmoti Teronpi • 6. Interview with Dr. Samsing Singhar on 'Hepatitis' (Interviewer: Pradip Rongphar - GHR-15-574(3) Rpt).",
-        presenter: "BONTI TIMUNGPI",
+        title: "Karbi Programme",
+        desc: "1. News • 2. Proverb (Sarlamtha): 'Recho don puri pen pini angepak' • 3. Slogan on Drinking Water • 4. Programme Highlights for the Next Day • 5. Compering on Social Justice Day • 6. Duet Songs by: Pokhila Lekthepi & Prasenjit Phangchio, Pratima Rongpipi & Mongal Rongpi, Jaequeline Teronpi & Deori Rongpi, Jiten Terang & Robina Kropi.",
+        presenter: "Bonti Timungpi & Aron Rongpi",
         studio: "Studio 7"
       },
       {
-        id: 46,
+        id: 45,
         startStr: "04:00 PM",
         endStr: "04:02 PM",
         startMin: 16 * 60 + 0,
         endMin: 16 * 60 + 2,
-        title: "NEWS HEADLINES (Karbi Prog continued)",
-        desc: "Fast-track news headlines relay from RNU (L/DIB, G1).",
+        title: "News Headlines (Karbi Prog continued)",
+        desc: "Fast-track news headlines relay from RNU (L/DIB).",
         presenter: "RNU",
         studio: "Studio 7"
       },
       {
-        id: 47,
+        id: 46,
         startStr: "04:30 PM",
         endStr: "05:15 PM",
         startMin: 16 * 60 + 30,
         endMin: 17 * 60 + 15,
-        title: "BODO PROGRAMME",
-        desc: "1. News • 2. Employment News • 3. Agricultural Hints • 4. Rwisumwi Khobam (Assignee Choice Song) • 5. Programme Highlights for the next day.",
-        presenter: "MANAJIT BASUMATARY",
+        title: "Bodo Programme",
+        desc: "1. News • 2. Literary Programme: Self Composed Poem Recitation by Raidwm Boro (FB); Short Story Reading by Rakhaw Basumatary (GHR-17-905 Rpt) • 3. Modern Song: Kameswar Baro & Ajoli Swargiaray (GHR-17-836 Rpt) • 4. Folk Song: Parameswar Ramchiary (GHR-17-530 Rpt) • 5. Prog Highlights for next day.",
+        presenter: "Nagen Daimary & Sonjib Boro",
         studio: "Studio 7"
       },
       {
-        id: 48,
+        id: 47,
         startStr: "05:15 PM",
         endStr: "05:25 PM",
         startMin: 17 * 60 + 15,
         endMin: 17 * 60 + 25,
-        title: "ANCHALIK BATORI",
+        title: "Anchalik Batori",
         desc: "Regional evening news in Assamese from RNU (L/DIB, G1).",
         presenter: "RNU",
         studio: "Studio 7"
       },
       {
-        id: 49,
+        id: 48,
         startStr: "05:25 PM",
         endStr: "05:40 PM",
         startMin: 17 * 60 + 25,
         endMin: 17 * 60 + 40,
-        title: "TALK IN HINDI",
-        desc: "Topic: 'Bigyan Manob Jibon ke liye Bordan Hai Ya Avishap' (FB). Script by: Rakesh Das (Computer-1).",
+        title: "Sanskrit Lesson :: Lesson 50",
+        desc: "Participants: Gaurisankar Bhagawati, Runumi Das, Rupa Hazarika, Anamika Das. Conducted by: Dr. Rajendranath Sarma (GHR020-029).",
         presenter: "AOD",
         studio: "Studio 7"
       },
       {
-        id: 50,
+        id: 49,
         startStr: "05:40 PM",
         endStr: "05:45 PM",
         startMin: 17 * 60 + 40,
@@ -1155,18 +1138,18 @@
         studio: "Studio 7"
       },
       {
-        id: 51,
+        id: 50,
         startStr: "05:45 PM",
         endStr: "06:00 PM",
         startMin: 17 * 60 + 45,
         endMin: 18 * 60 + 0,
-        title: "Teachers' Broadcast",
-        desc: "Talk: 'Chatra Chatrir Charitra Gathanat Sikshakar Bhumika (Part-2)' by Gobinda Prasad Bhuyan (L/DIB).",
+        title: "Bidyarthir Anusthan :: Assamese Grammar for Class X (Part 2)",
+        desc: "Educational presentation by Dr. Dharani Lahan (FB - L/DIB).",
         presenter: "AOD",
         studio: "Studio 7"
       },
       {
-        id: 52,
+        id: 51,
         startStr: "06:00 PM",
         endStr: "06:10 PM",
         startMin: 18 * 60 + 0,
@@ -1177,123 +1160,134 @@
         studio: "Studio 7"
       },
       {
-        id: 53,
+        id: 52,
         startStr: "06:10 PM",
         endStr: "06:40 PM",
         startMin: 18 * 60 + 10,
         endMin: 18 * 60 + 40,
-        title: "Krishak Bani (Phone-in Live)",
-        desc: "Phone-in live: 'Krishijaata Saamogrir Bipanan' (FB). Participants: Dr. Dipanjan Kashyap, Manas Jyoti Borah. Anchor: Bhaskar Jyoti Acharya. Production: Utpal Bora.",
+        title: "Krishi Jagat :: Udyaan Shasyar Raptaani Jogya Saamagri",
+        desc: "Discussion: Udyaan Shasyar Raptaani Jogya Saamagri. Participants: Dr. Daradi Priyam Duwara, Karina Saikia. Moderator: Bhaskar Jyoti Acharya. Production: Utpal Bora.",
+        presenter: "AOD",
+        studio: "Studio 7"
+      },
+      {
+        id: 53,
+        startStr: "06:40 PM",
+        endStr: "06:45 PM",
+        startMin: 18 * 60 + 40,
+        endMin: 18 * 60 + 45,
+        title: "Zikir :: Ibrahim Khaliluddah & Party",
+        desc: "Spiritual Zikir recital (01B-108 cut-4,5).",
         presenter: "AOD",
         studio: "Studio 7"
       },
       {
         id: 54,
-        startStr: "06:40 PM",
-        endStr: "06:45 PM",
-        startMin: 18 * 60 + 40,
-        endMin: 18 * 60 + 45,
-        title: "Vrindagaan :: Nai Nai Bhin Por",
-        desc: "Chorus rendition composed by Rudra Baruah (GHR-01G-012, Computer-1).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 55,
         startStr: "06:45 PM",
         endStr: "07:00 PM",
         startMin: 18 * 60 + 45,
         endMin: 19 * 60 + 0,
         title: "Sandhiyar Anchalik Batori",
-        desc: "Comprehensive evening regional news roundup from RNU (L/DIB, G1).",
+        desc: "Comprehensive evening regional news roundup from RNU (L/DIB).",
         presenter: "RNU",
         studio: "Studio 7"
       },
       {
-        id: 56,
+        id: 55,
         startStr: "07:00 PM",
         endStr: "07:05 PM",
         startMin: 19 * 60 + 0,
         endMin: 19 * 60 + 5,
-        title: "NIYOG BATORI",
+        title: "Niyog Batori",
         desc: "Employment news announcements read by Utpal Bora.",
-        presenter: "UTPAL BORA",
+        presenter: "Utpal Bora",
         studio: "Studio 7"
       },
       {
-        id: 57,
+        id: 56,
         startStr: "07:05 PM",
         endStr: "07:10 PM",
         startMin: 19 * 60 + 5,
         endMin: 19 * 60 + 10,
-        title: "Vrindagaan :: Somai Tomar",
-        desc: "Chorus song composed by Nalini Choudhury (GHR-01G-56).",
+        title: "Vrindagaan :: Ami Jaon",
+        desc: "Chorus rendition composed by Abdul Kadir Ahmed (GHR-01G-039).",
         presenter: "AOD",
         studio: "Studio 7"
       },
       {
-        id: 58,
+        id: 57,
         startStr: "07:10 PM",
         endStr: "07:20 PM",
         startMin: 19 * 60 + 10,
         endMin: 19 * 60 + 20,
-        title: "NEWS IN ASSAMESE",
-        desc: "Night regional news bulletin relayed by RNU (L/DIB, G1).",
+        title: "News in Assamese",
+        desc: "Night regional news bulletin relayed by RNU (L/DIB).",
         presenter: "RNU",
         studio: "Studio 7"
       },
       {
-        id: 59,
+        id: 58,
         startStr: "07:20 PM",
-        endStr: "07:30 PM",
+        endStr: "07:35 PM",
         startMin: 19 * 60 + 20,
-        endMin: 19 * 60 + 30,
-        title: "SANSKRIT TALK",
-        desc: "Topic: 'Vaidika Saahitye Aayurvigyaanam' by Dr. Manjula Devi (Rpt).",
+        endMin: 19 * 60 + 35,
+        title: "Akou Sunu Aahok :: Evergreen Melodies",
+        desc: "1. Uzagore Koto - Dilip Das (14M-261) • 2. Tomar Jodi - Nibedita Sharma (14M-297) • 3. Mor Pranar - Tarun Das (14M-312).",
+        presenter: "AOD",
+        studio: "Studio 7"
+      },
+      {
+        id: 59,
+        startStr: "07:35 PM",
+        endStr: "07:45 PM",
+        startMin: 19 * 60 + 35,
+        endMin: 19 * 60 + 45,
+        title: "Pubalir Sur / Rabha Geet",
+        desc: "Rabha geet recital by Dwijendra Rabha (01E-077).",
         presenter: "AOD",
         studio: "Studio 7"
       },
       {
         id: 60,
-        startStr: "07:30 PM",
-        endStr: "07:45 PM",
-        startMin: 19 * 60 + 30,
-        endMin: 19 * 60 + 45,
-        title: "Pubalir Sur / Karbi Geet",
-        desc: "Karbi geet recital by Chandra Kr. Teron (01E-033).",
+        startStr: "07:45 PM",
+        endStr: "08:00 PM",
+        startMin: 19 * 60 + 45,
+        endMin: 20 * 60 + 0,
+        title: "Adhunik Geet :: Trishagni Barua",
+        desc: "Assamese modern tracks sung by Trishagni Barua (01C-574 cut-3,4,5 - FB).",
         presenter: "AOD",
         studio: "Studio 7"
       },
       {
         id: 61,
-        startStr: "07:45 PM",
-        endStr: "08:00 PM",
-        startMin: 19 * 60 + 45,
-        endMin: 20 * 60 + 0,
-        title: "Adhunikgeet :: Nipu Bhuyan",
-        desc: "Assamese modern tracks sung by Nipu Bhuyan (01C-573 cut-3,4,5 - FB).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 62,
         startStr: "08:00 PM",
         endStr: "08:02 PM",
         startMin: 20 * 60 + 0,
         endMin: 20 * 60 + 2,
-        title: "NEWS HEADLINES",
-        desc: "Prime national and regional news headlines relay (RNU L/DIB, G1).",
+        title: "News Headlines",
+        desc: "Fast-track regional news headlines from RNU (L/DIB).",
         presenter: "RNU",
         studio: "Studio 7"
       },
       {
-        id: 63,
+        id: 62,
         startStr: "08:02 PM",
-        endStr: "08:30 PM",
+        endStr: "08:20 PM",
         startMin: 20 * 60 + 2,
+        endMin: 20 * 60 + 20,
+        title: "Novel Reading :: 'JOLPODUMOR PANCHOI' (Episode 19)",
+        desc: "Written by Dilip Phookan. Read & Produced by Rituparna Das (FB).",
+        presenter: "AOD",
+        studio: "Studio 7"
+      },
+      {
+        id: 63,
+        startStr: "08:20 PM",
+        endStr: "08:30 PM",
+        startMin: 20 * 60 + 20,
         endMin: 20 * 60 + 30,
-        title: "NATUN DIGANTA",
-        desc: "Topic: 'Krittrim Budhimattar Xamajik Prabhab' (FB). Participants: 1. Dr. Aaradhana Misra, 2. Manas Pratim Sarma. Moderator: Kritanjali Barman. Production: Prabal Kr Sarmah.",
+        title: "English Talk :: Surrogacy: 'A New Dimension to Motherhood'",
+        desc: "Presentation by Dr. M.S.S. Murthy (GHRW-18-0001 - Rpt).",
         presenter: "AOD",
         studio: "Studio 7"
       },
@@ -1304,7 +1298,7 @@
         startMin: 20 * 60 + 30,
         endMin: 20 * 60 + 45,
         title: "ADHUNIK GEET",
-        desc: "Selected album tracks: 1. O Bandhu • 2. Raagi • 3. Bhor Duporiya.",
+        desc: "Selected album melodies: 1. Pahariya Suwali • 2. Debokonya • 3. Aserenga Rowd.",
         presenter: "AOD",
         studio: "Studio 7"
       },
@@ -1314,7 +1308,7 @@
         endStr: "09:00 PM",
         startMin: 20 * 60 + 45,
         endMin: 21 * 60 + 0,
-        title: "SAMACHAR SANDHYA",
+        title: "Samachar Sandhya",
         desc: "Prime national Hindi news relay from New Delhi.",
         presenter: "RVUD",
         studio: "Studio 7"
@@ -1326,7 +1320,7 @@
         startMin: 21 * 60 + 0,
         endMin: 21 * 60 + 25,
         title: "CHITRAGEET :: Assamese Film Songs",
-        desc: "Selected evergreen Assamese film songs: 1. Debi • 2. Mamata • 3. Duranir Rang • 4. Upapath.",
+        desc: "Selected film songs: 1. Bhaiti • 2. Abhijan • 3. Uttaran • 4. Mukti.",
         presenter: "AOD",
         studio: "Studio 7"
       },
@@ -1336,7 +1330,7 @@
         endStr: "09:30 PM",
         startMin: 21 * 60 + 25,
         endMin: 21 * 60 + 30,
-        title: "Nisar Anchalik Batari",
+        title: "Nishar Anchalik Batori",
         desc: "Night regional news summary from RNU (L/DIB, G1).",
         presenter: "RNU",
         studio: "Studio 7"
@@ -1347,8 +1341,8 @@
         endStr: "10:00 PM",
         startMin: 21 * 60 + 30,
         endMin: 22 * 60 + 0,
-        title: "GHAZAL",
-        desc: "Selected ghazals: 1. Pyar Ka Pehla Khat • 2. Melodies • 3. Mohabbat Ho Gayee • 4. The Finest Ghazals of Mehdi Hassan.",
+        title: "JEEVANAR DEEGH BANI :: Interview with Arun Sharma (Part-4)",
+        desc: "Interview with eminent writer Arun Sharma. Interviewer: Kamal Sharma. Production: Anjuma Das Mahate (Computer-1).",
         presenter: "AOD",
         studio: "Studio 7"
       },
@@ -1358,8 +1352,8 @@
         endStr: "10:30 PM",
         startMin: 22 * 60 + 0,
         endMin: 22 * 60 + 30,
-        title: "CLASSICAL MUSIC :: Khayal",
-        desc: "Raag: Maru Bihag. Artist: Jiten Basumatary (GHR-01CLV-037).",
+        title: "Amar Pranor Bhupen Hazarika :: Birth Centenary Special",
+        desc: "Special interview with Manisha Hazarika. Concept, presentation & production: Rituparna Das (FB).",
         presenter: "AOD",
         studio: "Studio 7"
       },
@@ -1398,8 +1392,15 @@
       return `${secs}s`;
     }
 
-    function updateClockAndLiveDetection() {
+    // Accurate Indian Standard Time (IST) Clock
+    function getISTDate() {
       const now = new Date();
+      const istString = now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+      return new Date(istString);
+    }
+
+    function updateClockAndLiveDetection() {
+      const now = getISTDate();
       let hrs = now.getHours();
       let mins = now.getMinutes();
       let secs = now.getSeconds();
@@ -1419,6 +1420,7 @@
       let activeItem = null;
       let nextItem = null;
 
+      // Active program detection with nested news headline prioritization
       for (let i = 0; i < FULL_SCHEDULE.length; i++) {
         const item = FULL_SCHEDULE[i];
         if (effectiveMinutes >= item.startMin && effectiveMinutes < item.endMin) {
@@ -1505,7 +1507,6 @@
       currentLiveProgramId = activeItem ? activeItem.id : null;
 
       let visibleList = FULL_SCHEDULE.filter(item => item.endMin > effectiveMinutes);
-
       if (visibleList.length === 0) {
         visibleList = FULL_SCHEDULE;
       }
