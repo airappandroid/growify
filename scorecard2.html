@@ -414,8 +414,8 @@
     </div>
 
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">AUS vs SA 1st ODI</span>
-        <span id="venueHeader">Match Starts Today at 1:30 pm</span>
+        <span class="match-title-text" id="matchHeader">Japan vs Nepal (T20)</span>
+        <span id="venueHeader">Match Starts Soon</span>
     </div>
 
     <div class="tabs-wrapper" id="inningsTabs"></div>
@@ -426,7 +426,8 @@
 </div>
 
 <script>
-    const matchId = "6a2bb7b87327c23debeefbe6";
+    // নতুন Match ID
+    const matchId = "6a9a9df11f0f3936e9027d6e";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
@@ -448,8 +449,8 @@
 
     function getInningsTabLabel(inn, idx, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
-        const aShort = teamA.shortName || teamA.name || "AUS";
-        const bShort = teamB.shortName || teamB.name || "SA";
+        const aShort = teamA.shortName || teamA.name || "Jpn";
+        const bShort = teamB.shortName || teamB.name || "Nep";
 
         if (inn.key === "a_1" || inn.key === "a") return aShort;
         if (inn.key === "b_1" || inn.key === "b") return bShort;
@@ -458,8 +459,8 @@
 
     function getInningsDisplayName(inn, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
-        const aName = teamA.name || "Australia";
-        const bName = teamB.name || "South Africa";
+        const aName = teamA.name || "Japan";
+        const bName = teamB.name || "Nepal";
 
         if (inn.key === "a_1" || inn.key === "a") return `${aName} Innings`;
         if (inn.key === "b_1" || inn.key === "b") return `${bName} Innings`;
@@ -479,10 +480,10 @@
             const teamA = result.teams?.a || {};
             const teamB = result.teams?.b || {};
 
-            const nameA = teamA.shortName || teamA.name || 'AUS';
-            const nameB = teamB.shortName || teamB.name || 'SA';
-            const format = (result.format || 'odi').toUpperCase();
-            const tournament = result.seriesName || (nameA && nameB ? `${nameA} vs${nameB}` : "AUS vs SA 1st ODI");
+            const nameA = teamA.shortName || teamA.name || 'Jpn';
+            const nameB = teamB.shortName || teamB.name || 'Nep';
+            const format = (result.format || 't20').toUpperCase();
+            const tournament = result.seriesName || (nameA && nameB ? `${nameA} vs${nameB}` : "Japan vs Nepal");
 
             document.getElementById("matchHeader").textContent = `${tournament} (${format})`;
             document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : ``;
@@ -519,7 +520,7 @@
             const isLive = !isCompleted && !isUpcoming && (
                 rawStatus.includes("live") ||
                 rawStatus.includes("inprogress") ||
-                rawStatus === "started" ||
+                (rawStatus.includes("started") && !rawStatus.includes("notstarted")) ||
                 statusFields.includes("live") ||
                 result.live === true ||
                 result.is_live === true ||
@@ -556,7 +557,7 @@
                         </div>
                         <div class="hero-score-box">
                             <div class="hero-score-main">Upcoming</div>
-                            <div class="hero-score-sub">${result.announcement1 || "Match Starts Today at 1:30 pm"}</div>
+                            <div class="hero-score-sub">${result.announcement1 || "Match Starts Soon"}</div>
                         </div>
                     </div>
                     <div style="text-align:center; padding:35px 10px; color:var(--text-muted); font-size:12px; line-height:1.6;">
@@ -683,7 +684,7 @@
             `;
         }).join("") : '<tr><td colspan="6" style="text-align:center; padding:12px; color:var(--text-muted);">No batting data available</td></tr>';
 
-        // Bowling list (only bowlers who have bowled)
+        // Bowling figures
         const rawBowlers = (inn.player_bowling_order && inn.player_bowling_order.length > 0)
             ? inn.player_bowling_order
             : (inn.bowlingOrder || []);
