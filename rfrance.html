@@ -5,463 +5,452 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Radios Françaises</title>
   <style>
-    :root {
-      --bg: #07090e;
-      --card-bg: rgba(18, 24, 38, 0.7);
-      --card-border: rgba(255, 255, 255, 0.08);
-      --text-main: #ffffff;
-      --text-sub: #94a3b8;
-      --text-muted: #64748b;
-      --accent: #38bdf8;
-      --live-red: #ef4444;
-      --inter-color: #ef4444;
-      --info-color: #f59e0b;
-      --culture-color: #a855f7;
-      --musique-color: #ec4899;
-    }
+:root {
+  --bg:#07090e;
+  --card-bg:#121826;
+  --card-border:rgba(255,255,255,.08);
+  --text-main:#fff;
+  --text-sub:#94a3b8;
+  --text-muted:#64748b;
+  --accent:#38bdf8;
+  --inter-color:#ef4444;
+  --info-color:#f59e0b;
+  --culture-color:#a855f7;
+  --musique-color:#ec4899;
+}
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
+* {
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+}
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg);
-      color: var(--text-main);
-      padding: 18px 16px 36px;
-      line-height: 1.4;
-      min-height: 100vh;
-      -webkit-overflow-scrolling: touch;
-      position: relative;
-      overflow-x: hidden;
-    }
+html {
+  background:var(--bg);
+  scroll-behavior:auto;
+}
 
-    /* Ambient Background Glow */
-    body::before {
-      content: '';
-      position: fixed;
-      top: -60px;
-      right: -60px;
-      width: 240px;
-      height: 240px;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.15), transparent 70%);
-      z-index: -1;
-      pointer-events: none;
-    }
+body {
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;
+  background:var(--bg);
+  color:var(--text-main);
+  padding:18px 16px 36px;
+  line-height:1.4;
+  min-height:100vh;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-y:contain;
+}
 
-    body::after {
-      content: '';
-      position: fixed;
-      bottom: 80px;
-      left: -80px;
-      width: 280px;
-      height: 280px;
-      background: radial-gradient(circle, rgba(168, 85, 247, 0.12), transparent 70%);
-      z-index: -1;
-      pointer-events: none;
-    }
+/* Lightweight background accents: no fixed blur/filter layer */
+body::before,
+body::after {
+  content:"";
+  position:fixed;
+  width:180px;
+  height:180px;
+  pointer-events:none;
+  z-index:-1;
+  opacity:.10;
+  border-radius:50%;
+}
+body::before {
+  top:-90px;
+  right:-90px;
+  background:#38bdf8;
+}
+body::after {
+  bottom:60px;
+  left:-100px;
+  background:#a855f7;
+}
 
-    /* Header */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 16px;
-      padding-top: 4px;
-    }
+.header {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:16px;
+  padding-top:4px;
+}
 
-    .brand-title {
-      font-size: 26px;
-      font-weight: 800;
-      letter-spacing: -0.6px;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+.brand-title {
+  font-size:26px;
+  font-weight:800;
+  letter-spacing:-.6px;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
 
-    .brand-subtitle {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-muted);
-      margin-top: 2px;
-      letter-spacing: 0.2px;
-    }
+.brand-subtitle {
+  font-size:12px;
+  font-weight:500;
+  color:var(--text-muted);
+  margin-top:2px;
+  letter-spacing:.2px;
+}
 
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+.header-actions {
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
 
-    .time-badge {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 11.5px;
-      font-weight: 600;
-      color: var(--accent);
-      font-variant-numeric: tabular-nums;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+.time-badge,
+.privacy-btn,
+.quick-btn {
+  background:#111722;
+  border:1px solid rgba(255,255,255,.08);
+}
 
-    .time-badge-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
+.time-badge {
+  padding:6px 12px;
+  border-radius:20px;
+  font-size:11.5px;
+  font-weight:600;
+  color:var(--accent);
+  font-variant-numeric:tabular-nums;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
 
-    .privacy-btn {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--text-sub);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      backdrop-filter: blur(10px);
-    }
+.time-badge-dot {
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--accent);
+}
 
-    .privacy-btn:active {
-      background: rgba(255, 255, 255, 0.15);
-      color: #fff;
-    }
+.privacy-btn {
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  color:var(--text-sub);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
 
-    /* Quick Access Buttons */
-    .quick-access-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
+.privacy-btn:active {
+  background:#1c2433;
+  color:#fff;
+}
 
-    .quick-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
-      padding: 10px 12px;
-      color: #fff;
-      cursor: pointer;
-      outline: none;
-      transition: all 0.2s ease;
-    }
+.quick-access-container {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:18px;
+}
 
-    .quick-btn:active {
-      transform: scale(0.96);
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.2);
-    }
+.quick-btn {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  border-radius:14px;
+  padding:10px 12px;
+  color:#fff;
+  cursor:pointer;
+  outline:none;
+  transition:transform .12s ease,background .12s ease;
+}
 
-    .quick-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+.quick-btn:active {
+  transform:scale(.97);
+  background:#1c2433;
+}
 
-    .quick-name {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: -0.2px;
-      flex: 1;
-      text-align: left;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+.quick-dot {
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  flex-shrink:0;
+}
 
-    .quick-arrow {
-      width: 15px;
-      height: 15px;
-      fill: var(--text-muted);
-      flex-shrink: 0;
-      transition: transform 0.2s ease;
-    }
+.quick-name {
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:-.2px;
+  flex:1;
+  text-align:left;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
 
-    .quick-btn:active .quick-arrow {
-      fill: #fff;
-      transform: translateX(2px);
-    }
+.quick-arrow {
+  width:15px;
+  height:15px;
+  fill:var(--text-muted);
+  flex-shrink:0;
+}
 
-    /* Station Cards List */
-    .station-list {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
+.quick-btn:active .quick-arrow {
+  fill:#fff;
+  transform:translateX(2px);
+}
 
-    /* Modern Glassmorphic Card */
-    .station-card {
-      position: relative;
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 16px;
-      cursor: pointer;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-    }
+.station-list {
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
 
-    .station-card:active {
-      transform: scale(0.98);
-      background: rgba(25, 34, 52, 0.85);
-      border-color: rgba(255, 255, 255, 0.18);
-    }
+.station-card {
+  position:relative;
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:18px;
+  padding:16px;
+  cursor:pointer;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  contain:layout paint;
+  content-visibility:auto;
+  contain-intrinsic-size:180px;
+  transition:transform .12s ease,background .12s ease;
+}
 
-    .station-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      width: 3.5px;
-      background: var(--station-color, var(--accent));
-      border-radius: 4px 0 0 4px;
-    }
+.station-card:active {
+  transform:scale(.985);
+  background:#192235;
+}
 
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+.station-card::before {
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  bottom:0;
+  width:3px;
+  background:var(--station-color,var(--accent));
+  border-radius:3px 0 0 3px;
+}
 
-    .station-identity {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+.card-top {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 
-    .station-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: #000;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    }
+.station-identity {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
 
-    .station-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+.station-avatar {
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  background:#000;
+  border:1px solid rgba(255,255,255,.1);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  flex-shrink:0;
+}
 
-    .station-text-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
+.station-avatar img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
 
-    .station-title {
-      font-size: 17px;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: -0.3px;
-    }
+.station-text-meta {
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0;
+}
 
-    .live-indicator {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.6px;
-      color: #f87171;
-    }
+.station-title {
+  font-size:17px;
+  font-weight:700;
+  color:#fff;
+  letter-spacing:-.3px;
+}
 
-    .equalizer {
-      display: flex;
-      align-items: flex-end;
-      gap: 2px;
-      height: 11px;
-    }
+.live-indicator {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.6px;
+  color:#f87171;
+}
 
-    .equalizer span {
-      width: 2.2px;
-      background: #ef4444;
-      border-radius: 1px;
-      animation: bounce-eq 1.2s ease-in-out infinite alternate;
-    }
+.equalizer {
+  display:flex;
+  align-items:center;
+  gap:2px;
+  height:11px;
+}
 
-    .equalizer span:nth-child(1) { height: 50%; animation-delay: 0.1s; }
-    .equalizer span:nth-child(2) { height: 95%; animation-delay: 0.35s; }
-    .equalizer span:nth-child(3) { height: 35%; animation-delay: 0.2s; }
-    .equalizer span:nth-child(4) { height: 75%; animation-delay: 0.45s; }
+.equalizer span {
+  width:2px;
+  height:7px;
+  background:#ef4444;
+  border-radius:1px;
+}
+.equalizer span:nth-child(2){height:10px}
+.equalizer span:nth-child(3){height:5px}
+.equalizer span:nth-child(4){height:8px}
 
-    @keyframes bounce-eq {
-      0% { height: 25%; }
-      100% { height: 100%; }
-    }
+.play-circle {
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:#1a2230;
+  border:1px solid rgba(255,255,255,.12);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  transition:transform .12s ease,background .12s ease;
+}
 
-    .play-circle {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+.play-circle svg {
+  width:17px;
+  height:17px;
+  fill:currentColor;
+  margin-left:2px;
+}
 
-    .play-circle svg {
-      width: 17px;
-      height: 17px;
-      fill: currentColor;
-      margin-left: 2px;
-    }
+.station-card:active .play-circle {
+  transform:scale(.92);
+  background:#fff;
+  color:#000;
+}
 
-    .station-card:active .play-circle {
-      transform: scale(0.92);
-      background: #fff;
-      color: #000;
-      box-shadow: 0 0 16px rgba(255, 255, 255, 0.5);
-    }
+.show-wrapper {
+  padding-left:4px;
+  min-width:0;
+}
 
-    .show-wrapper {
-      padding-left: 4px;
-    }
+.show-badge-row {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-bottom:5px;
+}
 
-    .show-badge-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 5px;
-    }
+.show-time-chip {
+  font-size:11px;
+  font-weight:600;
+  background:rgba(56,189,248,.12);
+  color:var(--accent);
+  padding:2px 8px;
+  border-radius:6px;
+  letter-spacing:.2px;
+}
 
-    .show-time-chip {
-      font-size: 11px;
-      font-weight: 600;
-      background: rgba(56, 189, 248, 0.12);
-      color: var(--accent);
-      padding: 2px 8px;
-      border-radius: 6px;
-      letter-spacing: 0.2px;
-    }
+.show-heading {
+  font-size:14.5px;
+  font-weight:600;
+  color:#f1f5f9;
+  line-height:1.35;
+  margin-bottom:3px;
+}
 
-    .show-heading {
-      font-size: 14.5px;
-      font-weight: 600;
-      color: #f1f5f9;
-      line-height: 1.35;
-      margin-bottom: 3px;
-    }
+.show-summary {
+  font-size:12px;
+  color:var(--text-sub);
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  line-height:1.45;
+}
 
-    .show-summary {
-      font-size: 12px;
-      color: var(--text-sub);
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      line-height: 1.45;
-    }
+.modal-overlay {
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.78);
+  z-index:999;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
 
-    /* Modal */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: 999;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
+.modal-overlay.active { display:flex; }
 
-    .modal-overlay.active {
-      display: flex;
-    }
+.modal-card {
+  background:#141b2c;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:22px;
+  max-width:360px;
+  width:100%;
+  padding:22px;
+  box-shadow:0 16px 32px rgba(0,0,0,.5);
+}
 
-    .modal-card {
-      background: #141b2c;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 22px;
-      max-width: 360px;
-      width: 100%;
-      padding: 22px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-    }
+.modal-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:14px;
+}
 
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-    }
+.modal-title {
+  font-size:16px;
+  font-weight:700;
+  color:#fff;
+}
 
-    .modal-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: #fff;
-    }
+.modal-close {
+  background:none;
+  border:none;
+  color:var(--text-sub);
+  font-size:24px;
+  line-height:1;
+  cursor:pointer;
+}
 
-    .modal-close {
-      background: none;
-      border: none;
-      color: var(--text-sub);
-      font-size: 24px;
-      line-height: 1;
-      cursor: pointer;
-    }
+.modal-content {
+  font-size:13px;
+  color:var(--text-sub);
+  line-height:1.55;
+}
 
-    .modal-content {
-      font-size: 13px;
-      color: var(--text-sub);
-      line-height: 1.55;
-    }
+.modal-footer {
+  margin-top:20px;
+  display:flex;
+  justify-content:flex-end;
+}
 
-    .modal-footer {
-      margin-top: 20px;
-      display: flex;
-      justify-content: flex-end;
-    }
+.modal-btn {
+  background:#38bdf8;
+  color:#04101f;
+  border:none;
+  border-radius:12px;
+  padding:9px 20px;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+}
 
-    .modal-btn {
-      background: #38bdf8;
-      color: #04101f;
-      border: none;
-      border-radius: 12px;
-      padding: 9px 20px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-  </style>
+@media (prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    animation-duration:.01ms!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
+}
+</style>
 </head>
 <body>
 
@@ -524,164 +513,249 @@
   </div>
 
   <script>
-    const STATIONS = [
-      {
-        id: "inter",
-        name: "France Inter",
-        trigger: "go:finter",
-        color: "var(--inter-color)",
-        logo: "https://ik.imagekit.io/sqt8ptw1k/images_FOnmIj289.png"
-      },
-      {
-        id: "info",
-        name: "France Info",
-        trigger: "go:finfo",
-        color: "var(--info-color)",
-        logo: "https://ik.imagekit.io/sqt8ptw1k/download_iJaUHUs7R0.png"
-      },
-      {
-        id: "culture",
-        name: "France Culture",
-        trigger: "go:fcul",
-        color: "var(--culture-color)",
-        logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_2O3twmcLj.png"
-      },
-      {
-        id: "musique",
-        name: "France Musique",
-        trigger: "go:fmusi",
-        color: "var(--musique-color)",
-        logo: "https://ik.imagekit.io/sqt8ptw1k/download%20(1)_wUMJsGpab.png"
-      }
-    ];
+const STATIONS = [
+  {
+    id:"inter",
+    name:"France Inter",
+    trigger:"go:finter",
+    color:"var(--inter-color)",
+    logo:"https://ik.imagekit.io/sqt8ptw1k/images_FOnmIj289.png"
+  },
+  {
+    id:"info",
+    name:"France Info",
+    trigger:"go:finfo",
+    color:"var(--info-color)",
+    logo:"https://ik.imagekit.io/sqt8ptw1k/download_iJaUHUs7R0.png"
+  },
+  {
+    id:"culture",
+    name:"France Culture",
+    trigger:"go:fcul",
+    color:"var(--culture-color)",
+    logo:"https://ik.imagekit.io/sqt8ptw1k/images%20(1)_2O3twmcLj.png"
+  },
+  {
+    id:"musique",
+    name:"France Musique",
+    trigger:"go:fmusi",
+    color:"var(--musique-color)",
+    logo:"https://ik.imagekit.io/sqt8ptw1k/download%20(1)_wUMJsGpab.png"
+  }
+];
 
-    let scheduleData = [];
+let scheduleData = [];
+let stationElements = new Map();
 
-    function getParisTime() {
-      const now = new Date();
-      const str = now.toLocaleTimeString("en-GB", { timeZone: "Europe/Paris", hour12: false });
-      const [h, m, s] = str.split(":").map(Number);
-      return { totalMinutes: h * 60 + m, timeStr: str };
-    }
+function getParisTime() {
+  const now = new Date();
+  const str = now.toLocaleTimeString("en-GB", {
+    timeZone:"Europe/Paris",
+    hour12:false
+  });
+  const parts = str.split(":").map(Number);
+  return {
+    totalMinutes:parts[0] * 60 + parts[1],
+    timeStr:str
+  };
+}
 
-    function isShowLive(timeRange, nowMinutes) {
-      if (!timeRange) return false;
-      const parts = timeRange.split("-").map(p => p.trim());
-      if (parts.length !== 2) return false;
+function isShowLive(timeRange, nowMinutes) {
+  if (!timeRange) return false;
 
-      const parseM = (tStr) => {
-        const clean = tStr.replace("h", ":");
-        const [h, m] = clean.split(":").map(Number);
-        return h * 60 + (m || 0);
-      };
+  const parts = timeRange.split("-").map(p => p.trim());
+  if (parts.length !== 2) return false;
 
-      const start = parseM(parts[0]);
-      let end = parseM(parts[1]);
+  function parseM(tStr) {
+    const clean = tStr.replace("h", ":");
+    const p = clean.split(":").map(Number);
+    return p[0] * 60 + (p[1] || 0);
+  }
 
-      if (end === 0) end = 1440;
+  const start = parseM(parts[0]);
+  let end = parseM(parts[1]);
 
-      if (end < start) {
-        return nowMinutes >= start || nowMinutes < end;
-      }
-      return nowMinutes >= start && nowMinutes < end;
-    }
+  if (end === 0) end = 1440;
 
-    function getCurrentShow(channelName, nowMinutes) {
-      if (!scheduleData.length) {
-        return { title: "Chargement en direct...", time: "--:--", description: "Radio France en direct" };
-      }
-      const shows = scheduleData.filter(s => s.channel.toLowerCase() === channelName.toLowerCase());
-      const live = shows.find(s => isShowLive(s.time, nowMinutes));
-      return live || shows[0] || { title: "Programme en cours", time: "En direct", description: "Radio France en direct" };
-    }
+  if (end < start) {
+    return nowMinutes >= start || nowMinutes < end;
+  }
 
-    function renderCards() {
-      const container = document.getElementById("stations-container");
-      const paris = getParisTime();
+  return nowMinutes >= start && nowMinutes < end;
+}
 
-      container.innerHTML = STATIONS.map(st => {
-        const show = getCurrentShow(st.name, paris.totalMinutes);
+/* Build a lookup once instead of filtering the full schedule for every card. */
+function getShowsByChannel() {
+  const map = new Map();
 
-        return `
-          <div class="station-card" style="--station-color: ${st.color};" onclick="playStation('${st.trigger}')">
-            <div class="card-top">
-              <div class="station-identity">
-                <div class="station-avatar">
-                  <img src="${st.logo}" alt="${st.name}" loading="lazy">
-                </div>
-                <div class="station-text-meta">
-                  <div class="station-title">${st.name}</div>
-                  <div class="live-indicator">
-                    <div class="equalizer">
-                      <span></span><span></span><span></span><span></span>
-                    </div>
-                    DIRECT
-                  </div>
-                </div>
+  for (const item of scheduleData) {
+    if (!item || !item.channel) continue;
+
+    const key = item.channel.toLowerCase();
+    if (!map.has(key)) map.set(key, []);
+    map.get(key).push(item);
+  }
+
+  return map;
+}
+
+let showsByChannel = new Map();
+
+function getCurrentShow(channelName, nowMinutes) {
+  if (!scheduleData.length) {
+    return {
+      title:"Chargement en direct...",
+      time:"--:--",
+      description:"Radio France en direct"
+    };
+  }
+
+  const shows = showsByChannel.get(channelName.toLowerCase()) || [];
+
+  for (const show of shows) {
+    if (isShowLive(show.time, nowMinutes)) return show;
+  }
+
+  return shows[0] || {
+    title:"Programme en cours",
+    time:"En direct",
+    description:"Radio France en direct"
+  };
+}
+
+/* Create DOM only once. This is the main scroll-performance improvement. */
+function buildCards() {
+  const container = document.getElementById("stations-container");
+  const fragment = document.createDocumentFragment();
+
+  stationElements.clear();
+
+  for (const st of STATIONS) {
+    const card = document.createElement("div");
+    card.className = "station-card";
+    card.style.setProperty("--station-color", st.color);
+    card.onclick = () => playStation(st.trigger);
+
+    card.innerHTML = `
+      <div class="card-top">
+        <div class="station-identity">
+          <div class="station-avatar">
+            <img src="${st.logo}" alt="${st.name}" width="48" height="48" decoding="async">
+          </div>
+          <div class="station-text-meta">
+            <div class="station-title">${st.name}</div>
+            <div class="live-indicator">
+              <div class="equalizer">
+                <span></span><span></span><span></span><span></span>
               </div>
-
-              <div class="play-circle" title="Écouter">
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              </div>
-            </div>
-
-            <div class="show-wrapper">
-              <div class="show-badge-row">
-                <span class="show-time-chip">${show.time}</span>
-              </div>
-              <div class="show-heading">${show.title}</div>
-              <div class="show-summary">${show.description || ''}</div>
+              DIRECT
             </div>
           </div>
-        `;
-      }).join('');
+        </div>
+
+        <div class="play-circle" title="Écouter">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="show-wrapper">
+        <div class="show-badge-row">
+          <span class="show-time-chip"></span>
+        </div>
+        <div class="show-heading"></div>
+        <div class="show-summary"></div>
+      </div>
+    `;
+
+    stationElements.set(st.id, {
+      time:card.querySelector(".show-time-chip"),
+      title:card.querySelector(".show-heading"),
+      summary:card.querySelector(".show-summary")
+    });
+
+    fragment.appendChild(card);
+  }
+
+  container.replaceChildren(fragment);
+}
+
+/* Update text nodes only — no innerHTML rebuild during scrolling. */
+function updateShows() {
+  const paris = getParisTime();
+
+  for (const st of STATIONS) {
+    const el = stationElements.get(st.id);
+    if (!el) continue;
+
+    const show = getCurrentShow(st.name, paris.totalMinutes);
+
+    el.time.textContent = show.time || "En direct";
+    el.title.textContent = show.title || "Programme en cours";
+    el.summary.textContent = show.description || "";
+  }
+
+  const clock = document.getElementById("paris-clock");
+  if (clock && clock.textContent !== paris.timeStr) {
+    clock.textContent = paris.timeStr;
+  }
+}
+
+function playStation(triggerScheme) {
+  window.location.href = triggerScheme;
+}
+
+function startClock() {
+  updateShows();
+
+  /* One timer instead of separate timers. */
+  setInterval(updateShows, 1000);
+}
+
+async function fetchLiveJson() {
+  try {
+    const res = await fetch(
+      "https://vividh.pages.dev/rfrance.json",
+      { cache:"no-store" }
+    );
+
+    if (!res.ok) return;
+
+    const data = await res.json();
+
+    if (Array.isArray(data) && data.length > 0) {
+      scheduleData = data;
+      showsByChannel = getShowsByChannel();
+      updateShows();
     }
+  } catch (e) {
+    console.error("Erreur de chargement du programme:", e);
+  }
+}
 
-    function playStation(triggerScheme) {
-      window.location.href = triggerScheme;
-    }
+function openPrivacyModal() {
+  const modal = document.getElementById("privacy-modal");
+  if (modal) modal.classList.add("active");
+}
 
-    function startClock() {
-      setInterval(() => {
-        const paris = getParisTime();
-        document.getElementById("paris-clock").innerText = paris.timeStr;
-      }, 1000);
+function closePrivacyModal(e) {
+  if (
+    !e ||
+    e.target.id === "privacy-modal" ||
+    e.target.classList.contains("modal-close") ||
+    e.target.classList.contains("modal-btn")
+  ) {
+    const modal = document.getElementById("privacy-modal");
+    if (modal) modal.classList.remove("active");
+  }
+}
 
-      setInterval(() => {
-        renderCards();
-      }, 60000);
-    }
-
-    async function fetchLiveJson() {
-      try {
-        const res = await fetch("https://vividh.pages.dev/rfrance.json", { cache: "no-store" });
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data) && data.length > 0) {
-            scheduleData = data;
-            renderCards();
-          }
-        }
-      } catch (e) {
-        console.error("Erreur de chargement du programme:", e);
-      }
-    }
-
-    function openPrivacyModal() {
-      const modal = document.getElementById("privacy-modal");
-      if (modal) modal.classList.add("active");
-    }
-
-    function closePrivacyModal(e) {
-      if (!e || e.target.id === "privacy-modal" || e.target.classList.contains("modal-close") || e.target.classList.contains("modal-btn")) {
-        const modal = document.getElementById("privacy-modal");
-        if (modal) modal.classList.remove("active");
-      }
-    }
-
-    renderCards();
-    startClock();
-    fetchLiveJson();
-  </script>
+/* Initialisation */
+buildCards();
+updateShows();
+startClock();
+fetchLiveJson();
+</script>
 </body>
 </html>
