@@ -3,17 +3,17 @@
     "id": "hindi",
     "tabTitle": "Hindi",
     "name": "AIR Hindi Samachar",
-    "time": "25 SEP • 11:00 AM",
+    "time": "25 SEP • 5:00 PM",
     "logo": "https://ik.imagekit.io/sqt8ptw1k/air-news-Google-Search-09-19-2026_11_44_PM.webp?updatedAt=1789841735313",
-    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/09/Hindi-1100-1105-26.mp3"
+    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/09/Hindi-1700-1705-8.mp3"
   },
   {
     "id": "english",
     "tabTitle": "English",
     "name": "AIR English News",
-    "time": "25 SEP • 11:00 AM",
+    "time": "25 SEP • 5:00 PM",
     "logo": "https://ik.imagekit.io/sqt8ptw1k/air-news-Google-Search-09-19-2026_11_44_PM.webp?updatedAt=1789841735313",
-    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/09/English-1105-1110-24.mp3"
+    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/09/English-1705-1710-8.mp3"
   },
   {
     "id": "bbc",
