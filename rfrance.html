@@ -6,16 +6,17 @@
   <title>Radios Françaises</title>
   <style>
     :root {
-      --bg: #0b0f19;
-      --card-bg: #172033;
-      --card-border: #222f49;
-      --text-main: #f8fafc;
+      --bg: #07090e;
+      --card-bg: rgba(18, 24, 38, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-main: #ffffff;
       --text-sub: #94a3b8;
       --text-muted: #64748b;
       --accent: #38bdf8;
+      --live-red: #ef4444;
       --inter-color: #ef4444;
       --info-color: #f59e0b;
-      --culture-color: #8b5cf6;
+      --culture-color: #a855f7;
       --musique-color: #ec4899;
     }
 
@@ -28,34 +29,67 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
       background-color: var(--bg);
       color: var(--text-main);
-      padding: 12px 14px 28px;
+      padding: 18px 16px 36px;
       line-height: 1.4;
       min-height: 100vh;
       -webkit-overflow-scrolling: touch;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    /* Header Bar */
+    /* Ambient Background Glow */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -60px;
+      right: -60px;
+      width: 240px;
+      height: 240px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.15), transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: 80px;
+      left: -80px;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.12), transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Header */
     .header {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 12px 16px;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      padding-top: 4px;
     }
 
-    .app-title {
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 0.2px;
+    .brand-title {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.6px;
+      color: #fff;
       display: flex;
       align-items: center;
       gap: 8px;
+    }
+
+    .brand-subtitle {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-top: 2px;
+      letter-spacing: 0.2px;
     }
 
     .header-actions {
@@ -64,52 +98,148 @@
       gap: 8px;
     }
 
-    .privacy-btn {
-      background: #0f172a;
-      color: var(--text-sub);
-      border: 1px solid var(--card-border);
-      padding: 5px 11px;
+    .time-badge {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 6px 12px;
       border-radius: 20px;
       font-size: 11.5px;
       font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+      display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
+    }
+
+    .time-badge-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .privacy-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-sub);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
     }
 
     .privacy-btn:active {
+      background: rgba(255, 255, 255, 0.15);
       color: #fff;
     }
 
-    .time-chip {
-      background: #0f172a;
-      border: 1px solid var(--card-border);
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 11.5px;
-      color: var(--accent);
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      font-variant-numeric: tabular-nums;
+    /* Quick Access Buttons */
+    .quick-access-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
     }
 
-    /* Station List & Cards */
+    .quick-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 10px 12px;
+      color: #fff;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .quick-btn:active {
+      transform: scale(0.96);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .quick-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .quick-name {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+      flex: 1;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .quick-arrow {
+      width: 15px;
+      height: 15px;
+      fill: var(--text-muted);
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+
+    .quick-btn:active .quick-arrow {
+      fill: #fff;
+      transform: translateX(2px);
+    }
+
+    /* Station Cards List */
     .station-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
     }
 
-    .card {
+    /* Modern Glassmorphic Card */
+    .station-card {
+      position: relative;
       background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 14px 16px;
+      border-radius: 20px;
+      padding: 16px;
+      cursor: pointer;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      position: relative;
+      gap: 14px;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .station-card:active {
+      transform: scale(0.98);
+      background: rgba(25, 34, 52, 0.85);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .station-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 3.5px;
+      background: var(--station-color, var(--accent));
+      border-radius: 4px 0 0 4px;
     }
 
     .card-top {
@@ -118,23 +248,24 @@
       align-items: center;
     }
 
-    .station-meta {
+    .station-identity {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .station-avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      background: #090d16;
-      border: 1px solid #222f49;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: #000;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
       flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     }
 
     .station-avatar img {
@@ -143,110 +274,129 @@
       object-fit: cover;
     }
 
-    .station-title-group {
+    .station-text-meta {
       display: flex;
       flex-direction: column;
+      gap: 2px;
     }
 
-    .station-name {
-      font-size: 15px;
+    .station-title {
+      font-size: 17px;
       font-weight: 700;
       color: #fff;
+      letter-spacing: -0.3px;
     }
 
-    /* Static Live Badge */
-    .live-badge {
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      color: #f87171;
+    }
+
+    .equalizer {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 11px;
+    }
+
+    .equalizer span {
+      width: 2.2px;
+      background: #ef4444;
+      border-radius: 1px;
+      animation: bounce-eq 1.2s ease-in-out infinite alternate;
+    }
+
+    .equalizer span:nth-child(1) { height: 50%; animation-delay: 0.1s; }
+    .equalizer span:nth-child(2) { height: 95%; animation-delay: 0.35s; }
+    .equalizer span:nth-child(3) { height: 35%; animation-delay: 0.2s; }
+    .equalizer span:nth-child(4) { height: 75%; animation-delay: 0.45s; }
+
+    @keyframes bounce-eq {
+      0% { height: 25%; }
+      100% { height: 100%; }
+    }
+
+    .play-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .play-circle svg {
+      width: 17px;
+      height: 17px;
+      fill: currentColor;
+      margin-left: 2px;
+    }
+
+    .station-card:active .play-circle {
+      transform: scale(0.92);
+      background: #fff;
+      color: #000;
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.5);
+    }
+
+    .show-wrapper {
+      padding-left: 4px;
+    }
+
+    .show-badge-row {
       display: flex;
       align-items: center;
       gap: 6px;
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      background: rgba(239, 68, 68, 0.15);
-      color: #f87171;
-      border: 1px solid rgba(239, 68, 68, 0.25);
-      padding: 3px 9px;
-      border-radius: 20px;
+      margin-bottom: 5px;
     }
 
-    .pulse {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #ef4444;
-    }
-
-    /* Programme Details Box */
-    .prog-body {
-      background: #0d1424;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      padding: 10px 12px;
-      border-radius: 10px;
-      position: relative;
-    }
-
-    .prog-body::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: var(--card-border);
-      border-radius: 3px 0 0 3px;
-    }
-
-    .prog-time {
+    .show-time-chip {
       font-size: 11px;
       font-weight: 600;
+      background: rgba(56, 189, 248, 0.12);
       color: var(--accent);
-      margin-bottom: 4px;
+      padding: 2px 8px;
+      border-radius: 6px;
       letter-spacing: 0.2px;
     }
 
-    .prog-title {
-      font-size: 13.5px;
+    .show-heading {
+      font-size: 14.5px;
       font-weight: 600;
-      color: var(--text-main);
-      margin-bottom: 4px;
-      white-space: normal;
-      word-break: break-word;
+      color: #f1f5f9;
       line-height: 1.35;
+      margin-bottom: 3px;
     }
 
-    .prog-desc {
-      font-size: 11.5px;
+    .show-summary {
+      font-size: 12px;
       color: var(--text-sub);
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
-      line-height: 1.35;
+      line-height: 1.45;
     }
 
-    /* Action Play Button */
-    .play-btn {
-      width: 100%;
-      background: #24314c;
-      color: var(--text-main);
-      border: 1px solid #334466;
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-size: 13.5px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      outline: none;
-    }
-
-    /* Modal Overlay */
+    /* Modal */
     .modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       z-index: 999;
       justify-content: center;
       align-items: center;
@@ -258,37 +408,33 @@
     }
 
     .modal-card {
-      background: #172033;
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      max-width: 380px;
+      background: #141b2c;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 22px;
+      max-width: 360px;
       width: 100%;
-      padding: 20px;
+      padding: 22px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
-      border-bottom: 1px solid var(--card-border);
-      padding-bottom: 10px;
+      margin-bottom: 14px;
     }
 
     .modal-title {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 700;
       color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
 
     .modal-close {
       background: none;
       border: none;
       color: var(--text-sub);
-      font-size: 22px;
+      font-size: 24px;
       line-height: 1;
       cursor: pointer;
     }
@@ -300,53 +446,79 @@
     }
 
     .modal-footer {
-      margin-top: 16px;
+      margin-top: 20px;
       display: flex;
       justify-content: flex-end;
     }
 
     .modal-btn {
-      background: #0284c7;
-      color: #fff;
+      background: #38bdf8;
+      color: #04101f;
       border: none;
-      border-radius: 8px;
-      padding: 8px 18px;
+      border-radius: 12px;
+      padding: 9px 20px;
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <!-- Header Section -->
-  <div class="header">
-    <div class="app-title">
-      <span>📻</span> Radios Françaises
+  <!-- Header -->
+  <header class="header">
+    <div>
+      <div class="brand-title">📻 Radios</div>
+      <div class="brand-subtitle">Direct National Français</div>
     </div>
+    
     <div class="header-actions">
-      <button class="privacy-btn" onclick="openPrivacyModal()">🛡️ Privacy</button>
-      <div class="time-chip" id="paris-clock">Paris --:--:--</div>
+      <div class="time-badge">
+        <span class="time-badge-dot"></span>
+        <span id="paris-clock">--:--:--</span>
+      </div>
+      <button class="privacy-btn" onclick="openPrivacyModal()" aria-label="Privacy" title="Confidentialité">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+      </button>
     </div>
+  </header>
+
+  <!-- Quick Access Buttons -->
+  <div class="quick-access-container">
+    <button class="quick-btn" onclick="playStation('go:button1')">
+      <span class="quick-dot" style="background: #0284c7;"></span>
+      <span class="quick-name">Ici (Bleu)</span>
+      <svg class="quick-arrow" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+    </button>
+
+    <button class="quick-btn" onclick="playStation('go:button2')">
+      <span class="quick-dot" style="background: #ef4444;"></span>
+      <span class="quick-name">Radios Privées</span>
+      <svg class="quick-arrow" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+    </button>
   </div>
 
-  <!-- Stations List -->
+  <!-- Station Cards List -->
   <div class="station-list" id="stations-container"></div>
 
-  <!-- Privacy Policy Popup Modal -->
+  <!-- Privacy Policy Modal -->
   <div class="modal-overlay" id="privacy-modal" onclick="closePrivacyModal(event)">
     <div class="modal-card" onclick="event.stopPropagation()">
       <div class="modal-header">
-        <div class="modal-title">🛡️ Politique de Confidentialité</div>
+        <div class="modal-title">Confidentialité</div>
         <button class="modal-close" onclick="closePrivacyModal()">&times;</button>
       </div>
       <div class="modal-content">
         <p>Cette application respecte votre vie privée. Aucune donnée personnelle ni identifiant de suivi n'est collecté.</p>
         <br>
-        <p>Les flux audio sont transmis en direct et en accès public pour vous offrir une expérience d'écoute optimale.</p>
+        <p>Les flux audio sont transmis en direct et en accès libre pour une écoute fluide.</p>
       </div>
       <div class="modal-footer">
-        <button class="modal-btn" onclick="closePrivacyModal()">Fermer</button>
+        <button class="modal-btn" onclick="closePrivacyModal()">Compris</button>
       </div>
     </div>
   </div>
@@ -431,31 +603,34 @@
         const show = getCurrentShow(st.name, paris.totalMinutes);
 
         return `
-          <div class="card" id="card-${st.id}">
+          <div class="station-card" style="--station-color: ${st.color};" onclick="playStation('${st.trigger}')">
             <div class="card-top">
-              <div class="station-meta">
+              <div class="station-identity">
                 <div class="station-avatar">
                   <img src="${st.logo}" alt="${st.name}" loading="lazy">
                 </div>
-                <div class="station-title-group">
-                  <span class="station-name">${st.name}</span>
+                <div class="station-text-meta">
+                  <div class="station-title">${st.name}</div>
+                  <div class="live-indicator">
+                    <div class="equalizer">
+                      <span></span><span></span><span></span><span></span>
+                    </div>
+                    DIRECT
+                  </div>
                 </div>
               </div>
-              <div class="live-badge">
-                <span class="pulse"></span> DIRECT
+
+              <div class="play-circle" title="Écouter">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
               </div>
             </div>
 
-            <div class="prog-body">
-              <div class="prog-time">${show.time}</div>
-              <div class="prog-title">${show.title}</div>
-              <div class="prog-desc">${show.description || ''}</div>
-            </div>
-
-            <div class="card-footer">
-              <button class="play-btn" onclick="playStation('${st.trigger}')">
-                <span>Écouter la station</span>
-              </button>
+            <div class="show-wrapper">
+              <div class="show-badge-row">
+                <span class="show-time-chip">${show.time}</span>
+              </div>
+              <div class="show-heading">${show.title}</div>
+              <div class="show-summary">${show.description || ''}</div>
             </div>
           </div>
         `;
@@ -469,7 +644,7 @@
     function startClock() {
       setInterval(() => {
         const paris = getParisTime();
-        document.getElementById("paris-clock").innerText = "Paris " + paris.timeStr;
+        document.getElementById("paris-clock").innerText = paris.timeStr;
       }, 1000);
 
       setInterval(() => {
@@ -497,9 +672,11 @@
       if (modal) modal.classList.add("active");
     }
 
-    function closePrivacyModal() {
-      const modal = document.getElementById("privacy-modal");
-      if (modal) modal.classList.remove("active");
+    function closePrivacyModal(e) {
+      if (!e || e.target.id === "privacy-modal" || e.target.classList.contains("modal-close") || e.target.classList.contains("modal-btn")) {
+        const modal = document.getElementById("privacy-modal");
+        if (modal) modal.classList.remove("active");
+      }
     }
 
     renderCards();
