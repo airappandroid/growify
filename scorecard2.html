@@ -406,7 +406,7 @@
     <div class="top-bar">
         <div class="match-badge" id="matchBadge">
             <span class="live-dot" id="liveDot"></span>
-            <span id="badgeText">LIVE</span>
+            <span id="badgeText">UPCOMING</span>
         </div>
         <div class="refresh-status" id="refreshTimer">
             <span id="updateTime">Syncing...</span>
@@ -414,7 +414,7 @@
     </div>
 
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">Jpn vs Nep (T20)</span>
+        <span class="match-title-text" id="matchHeader">IND vs WI (ODI)</span>
         <span id="venueHeader">Live Match</span>
     </div>
 
@@ -426,7 +426,7 @@
 </div>
 
 <script>
-    const matchId = "6a9a9df11f0f3936e9027d6e";
+    const matchId = "6a3103797327c23debef2675";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
@@ -448,8 +448,8 @@
 
     function getInningsTabLabel(inn, idx, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
-        const aShort = teamA.shortName || teamA.name || "Jpn";
-        const bShort = teamB.shortName || teamB.name || "Nep";
+        const aShort = teamA.shortName || teamA.name || "IND";
+        const bShort = teamB.shortName || teamB.name || "WI";
 
         if (inn.key === "a_1" || inn.key === "a") return aShort;
         if (inn.key === "b_1" || inn.key === "b") return bShort;
@@ -458,8 +458,8 @@
 
     function getInningsDisplayName(inn, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
-        const aName = teamA.name || "Japan";
-        const bName = teamB.name || "Nepal";
+        const aName = teamA.name || "India";
+        const bName = teamB.name || "West Indies";
 
         if (inn.key === "a_1" || inn.key === "a") return `${aName} Innings`;
         if (inn.key === "b_1" || inn.key === "b") return `${bName} Innings`;
@@ -479,10 +479,10 @@
             const teamA = result.teams?.a || {};
             const teamB = result.teams?.b || {};
 
-            const nameA = teamA.shortName || teamA.name || 'Jpn';
-            const nameB = teamB.shortName || teamB.name || 'Nep';
-            const format = (result.format || 't20').toUpperCase();
-            const tournament = result.seriesName || (nameA && nameB ? `${nameA} vs${nameB}` : "Japan vs Nepal");
+            const nameA = teamA.shortName || teamA.name || 'IND';
+            const nameB = teamB.shortName || teamB.name || 'WI';
+            const format = (result.format || 'odi').toUpperCase();
+            const tournament = result.seriesName || (nameA && nameB ? `${nameA} vs${nameB}` : "India vs West Indies");
 
             document.getElementById("matchHeader").textContent = `${tournament} (${format})`;
             document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : ``;
@@ -519,7 +519,6 @@
                 result.is_completed === true ||
                 result.is_completed === 1;
 
-            // যদি খেল আৰম্ভ হৈছে, তেন্তে status নাথাকিলেও Upcoming হ'ব নোৱাৰে
             const isUpcoming = !hasStartedPlaying && (
                 rawStatus.includes("notstarted") || 
                 rawStatus.includes("upcoming") || 
@@ -568,7 +567,7 @@
                         </div>
                         <div class="hero-score-box">
                             <div class="hero-score-main">Upcoming</div>
-                            <div class="hero-score-sub">${result.announcement1 || "Match Starts Soon"}</div>
+                            <div class="hero-score-sub">${result.announcement1 || "IND vs WI 1st ODI • Match starts at 27 SEP, 2:00 PM"}</div>
                         </div>
                     </div>
                     <div style="text-align:center; padding:35px 10px; color:var(--text-muted); font-size:12px; line-height:1.6;">
@@ -579,7 +578,6 @@
                 return;
             }
 
-            // চলি থকা বা ৰাণ থকা সৰ্বশেষ ইনিংছটো ডিফল্টভাৱে নিৰ্বাচন কৰক
             if (isInitialLoad || selectedInningIndex >= innings.length) {
                 let activeIdx = innings.length - 1;
                 for (let i = innings.length - 1; i >= 0; i--) {
