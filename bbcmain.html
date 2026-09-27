@@ -465,7 +465,7 @@ window.addEventListener('click', (e) => { if (e.target === privacyModal) privacy
 
 /* Cricket Score */
 const WORKER_URL = "https://cricvoice.aminurmarch.workers.dev/";
-const MATCH_ID = "69bd420f1dbf177ca4e58e78";
+const MATCH_ID = "69bd420d1dbf177ca4e58e75";
 const OVERRIDE_NOTE = "";
 
 function getTeamScoreData(teamObj, prefix) {
@@ -494,6 +494,7 @@ async function fetchCricketScore() {
         const match = json.responseData?.result;
         if (!match) return;
 
+        // Team Scores
         const a = match.teams?.a, b = match.teams?.b;
         if (a) {
             const data = getTeamScoreData(a, "a");
@@ -508,14 +509,29 @@ async function fetchCricketScore() {
             document.getElementById('teamBOvers').textContent = data.overs;
         }
 
-        const noteEl = document.getElementById('matchNote');
+        // Live Badge, Dot & Match Note
         const badgeEl = document.getElementById('matchBadge');
+        const dotEl = document.getElementById('liveDot');
+        const noteEl = document.getElementById('matchNote');
+
         if (OVERRIDE_NOTE) {
             if (badgeEl) badgeEl.textContent = "COMPLETED";
+            if (dotEl) dotEl.style.display = "none";
             if (noteEl) noteEl.textContent = OVERRIDE_NOTE;
+        } else {
+            const isLive = match.status === "started" || match.status === "live" || match.status === "in_progress";
+            if (isLive) {
+                if (badgeEl) badgeEl.textContent = "LIVE";
+                if (dotEl) dotEl.style.display = "inline-block";
+            }
+            if (match.announcement1 && noteEl) {
+                noteEl.textContent = `ENG vs SL 3rd ODI • ${match.announcement1}`;
+            }
         }
     } catch (_) {} 
-    finally { clearTimeout(timeout); }
+    finally { 
+        clearTimeout(timeout); 
+    }
 }
 
 /* Schedule Logic with Cached UK Formatter */
@@ -589,6 +605,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 400);
 
+    // Refresh intervals
     setInterval(fetchCricketScore, 30000);
     setInterval(updatePrograms, 60000);
 
