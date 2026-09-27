@@ -411,9 +411,9 @@
 <div class="scorecard-app">
     <!-- Top Bar -->
     <div class="top-bar">
-        <div class="match-badge" id="matchBadge">
+        <div class="match-badge completed" id="matchBadge">
             <span class="live-dot" id="liveDot"></span>
-            <span id="badgeText">UPCOMING</span>
+            <span id="badgeText">COMPLETED</span>
         </div>
         <div class="refresh-status" id="refreshTimer">
             <span id="updateTime">Syncing...</span>
@@ -438,6 +438,7 @@
 <script>
     const matchId = "69bd420d1dbf177ca4e58e75";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
+    const OVERRIDE_NOTE = "England won by 223 runs";
     
     let matchData = null;
     let selectedInningIndex = 0;
@@ -536,12 +537,13 @@
 
             const innings = result.innings_batting_order || [];
 
-            const isUpcoming = cleanRawStatus.includes("notstarted") || 
+            const isUpcoming = !OVERRIDE_NOTE && (
+                               cleanRawStatus.includes("notstarted") || 
                                cleanRawStatus.includes("upcoming") || 
                                cleanRawStatus.includes("scheduled") || 
-                               (!cleanRawStatus && (!Array.isArray(innings) || innings.length === 0));
+                               (!cleanRawStatus && (!Array.isArray(innings) || innings.length === 0)));
 
-            let isCompleted = !isUpcoming && (
+            let isCompleted = Boolean(OVERRIDE_NOTE) || (!isUpcoming && (
                 completionKeywords.some(kw => rawStatus.includes(kw) || statusFieldsStr.includes(kw)) ||
                 Boolean(result.winner) ||
                 Boolean(result.winning_team) ||
@@ -551,7 +553,7 @@
                 result.status_id === 3 ||
                 result.status === 3 ||
                 result.status === "3"
-            );
+            ));
 
             // Scorecard Math Fallback
             if (!isCompleted && !isUpcoming && Array.isArray(innings) && innings.length >= 2) {
@@ -611,7 +613,7 @@
                 dotEl.style.display = "none";
             }
 
-            if (isUpcoming || !Array.isArray(innings) || innings.length === 0) {
+            if (!Array.isArray(innings) || innings.length === 0) {
                 document.getElementById("inningsTabs").innerHTML = "";
                 document.getElementById("contentView").innerHTML = `
                     <div class="hero-banner">
@@ -620,12 +622,12 @@
                             <span class="hero-status-tag">3rd ODI (${format})</span>
                         </div>
                         <div class="hero-score-box">
-                            <div class="hero-score-main">10:30 AM</div>
-                            <div class="hero-score-sub">Match starts at 10:30 am UK time</div>
+                            <div class="hero-score-main">${isCompleted ? 'COMPLETED' : '10:30 AM'}</div>
+                            <div class="hero-score-sub">${OVERRIDE_NOTE || 'Match starts at 10:30 am UK time'}</div>
                         </div>
                     </div>
                     <div style="text-align:center; padding:35px 10px; color:var(--text-muted); font-size:12px; line-height:1.6;">
-                        ⏳ Match has not started yet.<br>Full live scorecard will appear once play begins.
+                        ${isCompleted ? (OVERRIDE_NOTE || 'Match has ended.') : '⏳ Match has not started yet.<br>Full live scorecard will appear once play begins.'}
                     </div>
                 `;
                 updateLastRefresh();
@@ -753,9 +755,9 @@
         const totalScore = inn.run_str || `${inn.runs ?? 0}/${inn.wickets ?? 0} (${inn.overs ?? '0.0'} ov)`;
         const runRate = inn.run_rate ? `${inn.run_rate} CRR` : "";
 
-        let statusSubText = String(matchData?.status_note || matchData?.status_text || matchData?.result || matchData?.status || "").toUpperCase();
+        let statusSubText = OVERRIDE_NOTE || String(matchData?.status_note || matchData?.status_text || matchData?.result || matchData?.status || "").toUpperCase();
 
-        if (isMatchFinishedGlobal) {
+        if (!OVERRIDE_NOTE && isMatchFinishedGlobal) {
             if (statusSubText === "LIVE" || statusSubText === "STARTED" || statusSubText === "IN PROGRESS" || !statusSubText) {
                 if (allInnings.length >= 2) {
                     const inn1 = allInnings[0];
