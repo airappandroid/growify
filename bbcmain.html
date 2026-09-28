@@ -1,574 +1,578 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="as">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>All UK Radio App</title>
-<style>
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-    -webkit-user-select: none;
-    user-select: none;
-    margin: 0;
-    padding: 0;
-}
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: #090d16;
-    color: #fff;
-    min-height: 100vh;
-    padding-bottom: 24px;
-    -webkit-font-smoothing: antialiased;
-}
-.container { max-width: 480px; margin: 0 auto; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Akashvani Guwahati (Mahabahu)</title>
+  
+  <style>
+    :root {
+      --bg-main: #0d1117;
+      --bg-card: #161b22;
+      --bg-header: #121820;
+      --bg-live: #132d22;
+      --border-color: #30363d;
+      --border-live: #10b981;
+      --text-primary: #f0f6fc;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent-green: #10b981;
+      --accent-cyan: #38bdf8;
+      --accent-amber: #f59e0b;
+      --font-system: system-ui, -apple-system, Roboto, sans-serif;
+      --font-mono: ui-monospace, Consolas, monospace;
+    }
 
-/* Header */
-.app-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-    background: #090d16;
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-.header-brand { display: flex; align-items: center; gap: 8px; }
-.header-title { font-size: 17px; font-weight: 800; }
-.header-actions { display: flex; gap: 8px; }
-.header-btn {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #cbd5e1;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    text-decoration: none;
-}
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
-/* Modal */
-.modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(4, 7, 13, 0.85);
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s, visibility 0.2s;
-}
-.modal-overlay.active { opacity: 1; visibility: visible; }
-.modal-box {
-    background: #0f172a;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 14px;
-    width: 100%;
-    max-width: 420px;
-    color: #e2e8f0;
-    overflow: hidden;
-}
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    background: #152033;
-    font-size: 15px;
-    font-weight: 700;
-}
-.modal-close {
-    background: transparent;
-    border: none;
-    color: #94a3b8;
-    font-size: 22px;
-    cursor: pointer;
-}
-.modal-body {
-    padding: 16px;
-    max-height: 360px;
-    overflow-y: auto;
-    font-size: 13px;
-    line-height: 1.5;
-    color: #cbd5e1;
-}
-.modal-body p { margin-bottom: 10px; }
+    html {
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      font-family: var(--font-system);
+      text-rendering: optimizeSpeed;
+    }
 
-/* Sections */
-.section { padding: 0 16px; margin-top: 18px; }
-.title { font-size: 16px; font-weight: 700; color: #f1f5f9; margin-bottom: 12px; }
+    body {
+      min-height: 100vh;
+      line-height: 1.4;
+      padding: max(8px, env(safe-area-inset-top)) 10px max(24px, env(safe-area-inset-bottom));
+    }
 
-/* Banner */
-.top-banner {
-    padding: 12px 16px 0;
-    text-decoration: none;
-    display: block;
-}
-.banner-card {
-    background: linear-gradient(135deg, #0f1c3f 0%, #0d1424 60%, #1e1b4b 100%);
-    border: 1px solid rgba(59, 130, 246, 0.4);
-    border-radius: 14px;
-    padding: 12px 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-.banner-card:active { transform: scale(0.98); }
-.banner-top-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.banner-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    background: rgba(239, 68, 68, 0.16);
-    border: 1px solid rgba(239, 68, 68, 0.5);
-    color: #f87171;
-    font-size: 10px;
-    font-weight: 800;
-    padding: 2px 7px;
-    border-radius: 20px;
-    text-transform: uppercase;
-}
-.banner-dot {
-    width: 6px;
-    height: 6px;
-    background-color: #ef4444;
-    border-radius: 50%;
-}
-.banner-time { font-size: 11px; color: #94a3b8; font-weight: 600; }
-.banner-title {
-    font-size: 15px;
-    font-weight: 800;
-    color: #ffffff;
-    line-height: 1.2;
-}
-.banner-bottom-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.banner-station { font-size: 11px; color: #38bdf8; font-weight: 600; }
-.banner-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    background: #2563eb;
-    color: #ffffff;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 16px;
-}
+    .app-container { max-width: 640px; margin: 0 auto; }
 
-/* Station Cards */
-.station-card {
-    background: #131c2e;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 12px;
-    padding: 10px 12px;
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.station-logo {
-    width: 42px;
-    height: 42px;
-    border-radius: 8px;
-    object-fit: cover;
-    margin-right: 12px;
-    background: #1e293b;
-    flex-shrink: 0;
-}
-.station-info { flex: 1; min-width: 0; padding-right: 8px; }
-.station-name { font-weight: 700; font-size: 14.5px; margin-bottom: 3px; }
-.playing-row { font-size: 11.5px; color: #94a3b8; display: flex; align-items: center; }
-.live-dot {
-    width: 6px;
-    height: 6px;
-    background-color: #22c55e;
-    border-radius: 50%;
-    margin-right: 6px;
-    flex-shrink: 0;
-}
-.play-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #2563eb;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    flex-shrink: 0;
-}
-.play-btn:active { transform: scale(0.94); }
-.play-btn::before {
-    content: "";
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 6px 0 6px 10px;
-    border-color: transparent transparent transparent #fff;
-    margin-left: 2px;
-}
+    .header-box { text-align: center; padding: 6px 0; }
 
-/* View All */
-.view-all-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #1d4ed8;
-    border-radius: 12px;
-    padding: 12px 14px;
-    text-decoration: none;
-    color: #fff;
-    margin-top: 8px;
-}
-.view-all-title { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
-.view-all-sub { font-size: 11px; color: rgba(255, 255, 255, 0.8); }
-.view-all-arrow {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
+    .tag-air {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      background: #121d2f;
+      border: 1px solid #1e3a5f;
+      color: var(--accent-cyan);
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 20px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
 
-/* Updates Cards */
-.duration-tag {
-    display: inline-block;
-    padding: 1px 5px;
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.08);
-    color: #cbd5e1;
-    font-size: 10px;
-    margin-left: 6px;
-}
-</style>
-<script src="https://vividh.pages.dev/bbc.js" defer></script>
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      flex-shrink: 0;
+    }
+
+    .main-title { font-size: 20px; font-weight: 800; }
+    .frequency-line { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+    .frequency-line strong { color: var(--accent-cyan); font-family: var(--font-mono); }
+    .frequency-line .fm { color: var(--accent-green); font-family: var(--font-mono); }
+
+    .clock-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 8px 12px;
+      margin-top: 10px;
+      font-size: 12px;
+    }
+
+    .live-clock-digits {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      background: #0d1117;
+      padding: 2px 6px;
+      border-radius: 5px;
+      border: 1px solid #1f2937;
+    }
+
+    .card-now-playing {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 10px;
+    }
+
+    .card-now-playing.is-active {
+      border-color: var(--accent-green);
+    }
+
+    .card-header-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .badge-live-now {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-green);
+      text-transform: uppercase;
+    }
+
+    .card-actions { display: flex; align-items: center; gap: 6px; }
+
+    .badge-slot-time {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent-cyan);
+      background: #121e2c;
+      padding: 2px 6px;
+      border-radius: 5px;
+    }
+
+    .btn-play-station {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--accent-green);
+      color: #041f14;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 15px;
+      text-decoration: none;
+    }
+
+    .now-title { font-size: 15px; font-weight: 700; line-height: 1.3; }
+    .now-desc { font-size: 12px; color: var(--text-secondary); margin-top: 3px; }
+
+    .progress-track { margin-top: 10px; padding-top: 8px; border-top: 1px solid #21262d; }
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .progress-meta .time-left { color: var(--accent-green); font-weight: 600; }
+    .progress-bar-outer { width: 100%; height: 5px; background: #21262d; border-radius: 5px; overflow: hidden; }
+    .progress-bar-inner { height: 100%; width: 0%; background: var(--accent-green); border-radius: 5px; }
+
+    .card-next-up {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      gap: 8px;
+    }
+    .next-tag { font-size: 9.5px; font-weight: 700; color: var(--accent-amber); text-transform: uppercase; }
+    .next-title { font-size: 12.5px; font-weight: 600; margin-top: 2px; }
+    .next-time-box { text-align: right; flex-shrink: 0; }
+    .next-time-badge {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--accent-amber);
+      background: #291807;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .next-countdown { display: block; font-size: 9.5px; color: var(--text-muted); font-family: var(--font-mono); margin-top: 2px; }
+
+    .schedule-wrapper {
+      margin-top: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .table-head-row {
+      display: flex;
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border-color);
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .col-time-head { width: 105px; min-width: 105px; padding: 8px 10px; border-right: 1px solid var(--border-color); }
+    .col-prog-head { flex: 1; padding: 8px 10px; }
+
+    /* Performance critical: skips rendering elements outside viewport */
+    .schedule-row {
+      display: flex;
+      border-bottom: 1px solid #21262d;
+      content-visibility: auto;
+      contain-intrinsic-size: 65px;
+    }
+    .schedule-row:last-child { border-bottom: none; }
+    .schedule-row.live-active {
+      background: var(--bg-live);
+      border-left: 3px solid var(--accent-green);
+    }
+    .schedule-row.live-active .time-range { color: var(--accent-green); }
+    .schedule-row.live-active .prog-title { color: #a7f3d0; }
+
+    .col-time {
+      width: 105px;
+      min-width: 105px;
+      padding: 10px 8px;
+      border-right: 1px solid #21262d;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .time-sep { font-size: 9px; color: var(--text-muted); display: block; }
+    .live-indicator-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: #0d261b;
+      color: var(--accent-green);
+      font-size: 8.5px;
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 3px;
+      margin-top: 4px;
+    }
+
+    .col-prog { flex: 1; padding: 10px 10px; min-width: 0; }
+    .prog-title { font-size: 13px; font-weight: 700; line-height: 1.3; }
+    .prog-desc { font-size: 11.5px; color: var(--text-secondary); margin-top: 3px; }
+
+    .footer-credits {
+      text-align: center;
+      font-size: 10.5px;
+      color: var(--text-muted);
+      margin-top: 16px;
+      padding-bottom: 8px;
+    }
+  </style>
 </head>
 <body>
 
-<div class="container">
-    <header class="app-header">
-        <div class="header-brand">
-            <span style="font-size: 18px;">📻</span>
-            <span class="header-title">All UK Radio</span>
-        </div>
-        <div class="header-actions">
-            <a href="http://action_share" class="header-btn" aria-label="Share App">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle>
-                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                </svg>
-            </a>
-            <button type="button" class="header-btn" id="privacyBtn" aria-label="Privacy Policy">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                </svg>
-            </button>
-        </div>
+  <div class="app-container">
+    <header class="header-box">
+      <div class="tag-air">
+        <span class="pulse-dot"></span>
+        <span>All India Radio • Guwahati</span>
+      </div>
+      <h1 class="main-title">Akashvani Mahabahu</h1>
+      <p class="frequency-line">
+        <strong>MW 411.5 Mtr (729 KHz)</strong> &bull; <span class="fm">FM 101.6 MHz</span>
+      </p>
+
+      <div class="clock-bar">
+        <span id="liveDateText">--</span>
+        <span class="live-clock-digits" id="liveClockDisplay">--:--:--</span>
+      </div>
     </header>
 
-    <!-- Top Banner -->
-    <a href="go:BBC5E" class="top-banner">
-        <div class="banner-card">
-            <div class="banner-top-row">
-                <div class="banner-tag">
-                    <span class="banner-dot" id="bannerDot"></span>
-                    <span id="bannerTag">Sports Extra</span>
-                </div>
-                <div class="banner-time" id="bannerTime">Loading schedule...</div>
-            </div>
-            <div class="banner-title" id="bannerTitle">Loading event...</div>
-            <div class="banner-bottom-row">
-                <span class="banner-station">BBC Radio 5 Sports Extra</span>
-                <div class="banner-cta">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
-                    <span>Listen now</span>
-                </div>
-            </div>
+    <section>
+      <!-- Now Playing -->
+      <div class="card-now-playing" id="liveNowCard">
+        <div class="card-header-line">
+          <div class="badge-live-now">
+            <span class="pulse-dot"></span>
+            <span>Live Now</span>
+          </div>
+          <div class="card-actions">
+            <span class="badge-slot-time" id="liveSlotBadge">--:-- - --:--</span>
+            <a href="go:AS003" class="btn-play-station" title="Play">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              <span>Play</span>
+            </a>
+          </div>
         </div>
-    </a>
+        <h2 class="now-title" id="liveProgTitle">অনুষ্ঠান চিনাক্ত কৰা হৈছে...</h2>
+        <p class="now-desc" id="liveProgDesc"></p>
 
-    <!-- Popular Stations -->
-    <div class="section">
-        <div class="title">📻 Popular Stations</div>
-
-        <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(4).jpg" alt="BBC 1" width="42" height="42" loading="lazy" decoding="async">
-            <div class="station-info">
-                <div class="station-name">BBC Radio 1</div>
-                <div class="playing-row"><span class="live-dot"></span><span id="bbc1">Loading...</span></div>
-            </div>
-            <a href="go:BBC1" class="play-btn" aria-label="Play"></a>
+        <div class="progress-track">
+          <div class="progress-meta">
+            <span id="liveElapsed"></span>
+            <span class="time-left" id="liveRemaining"></span>
+          </div>
+          <div class="progress-bar-outer">
+            <div class="progress-bar-inner" id="liveProgressBar"></div>
+          </div>
         </div>
+      </div>
 
-        <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(6).jpg" alt="BBC 2" width="42" height="42" loading="lazy" decoding="async">
-            <div class="station-info">
-                <div class="station-name">BBC Radio 2</div>
-                <div class="playing-row"><span class="live-dot"></span><span id="bbc2">Loading...</span></div>
-            </div>
-            <a href="go:BBC2" class="play-btn" aria-label="Play"></a>
+      <!-- Next Up -->
+      <div class="card-next-up">
+        <div>
+          <div class="next-tag">Coming Up Next</div>
+          <div class="next-title" id="nextProgTitle">--</div>
         </div>
-
-        <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(7).jpg" alt="BBC 3" width="42" height="42" loading="lazy" decoding="async">
-            <div class="station-info">
-                <div class="station-name">BBC Radio 3</div>
-                <div class="playing-row"><span class="live-dot"></span><span id="bbc3">Loading...</span></div>
-            </div>
-            <a href="go:BBC3" class="play-btn" aria-label="Play"></a>
+        <div class="next-time-box">
+          <span class="next-time-badge" id="nextProgTime">--:--</span>
+          <span class="next-countdown" id="nextCountdownText">--</span>
         </div>
+      </div>
+    </section>
 
-        <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(1).png" alt="BBC 4" width="42" height="42" loading="lazy" decoding="async">
-            <div class="station-info">
-                <div class="station-name">BBC Radio 4</div>
-                <div class="playing-row"><span class="live-dot"></span><span id="bbc4">Loading...</span></div>
-            </div>
-            <a href="go:BBC4" class="play-btn" aria-label="Play"></a>
-        </div>
+    <main class="schedule-wrapper">
+      <div class="table-head-row">
+        <div class="col-time-head">Time</div>
+        <div class="col-prog-head">Programme & Details</div>
+      </div>
+      <div id="scheduleList"></div>
+    </main>
 
-        <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(2).png" alt="BBC World Service" width="42" height="42" loading="lazy" decoding="async">
-            <div class="station-info">
-                <div class="station-name">BBC World Service</div>
-                <div class="playing-row"><span class="live-dot"></span><span id="bbcws">Loading...</span></div>
-            </div>
-            <a href="go:BBCWS" class="play-btn" aria-label="Play"></a>
-        </div>
+    <footer class="footer-credits">
+      Akashvani Guwahati • Mahabahu Channel
+    </footer>
+  </div>
 
-        <a href="go:BBC_ALL" class="view-all-card">
-            <div>
-                <div class="view-all-title">
-                    <span>Explore All Stations</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </div>
-                <div class="view-all-sub">100+ UK & BBC Stations</div>
-            </div>
-            <div class="view-all-arrow">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            </div>
-        </a>
-    </div>
+  <script>
+    // Compact Structure: [StartMin, EndMin, Title, Description]
+    const SCH = [
+      [328, 330, "AIR Signature Tune", "Opening station signature tune."],
+      [330, 335, "Vande Mataram / Time Reading / Mangaldhwani", "Morning invocation & opening announcement."],
+      [335, 360, "Bandana (Devotional Songs)", "Borgeet, Naam, Lokageet, Tokarigeet, Bhajan."],
+      [360, 365, "News in Hindi", "National morning Hindi news bulletin."],
+      [365, 370, "News in English", "National morning English news relay."],
+      [370, 375, "Mukutamala :: Hazrat Mohammad", "Pearls of wisdom: Hazrat Mohammad."],
+      [375, 390, "Lokageet :: Nirmali Choudhury & Party", "Traditional Assamese folk songs."],
+      [390, 405, "Bhajan :: Haimanti Shukla", "Devotional bhajan recital."],
+      [405, 415, "Anusthan Parichiti & Promos", "Commercial spots & Prasar Bharati sizzle."],
+      [415, 420, "Gyan Bigyan :: Prabal Kr. Sarmah", "Science & technology broadcast presentation."],
+      [420, 425, "Niyog Batori", "Employment news read by Utpal Bora."],
+      [425, 435, "News in Assamese", "Puwar Batori relayed by RNU."],
+      [435, 450, "Aji Puwa", "Morning information programme."],
+      [450, 470, "Rupali Lahar", "Presentation & production: Rituparna Das."],
+      [470, 475, "Spots & Jingles", "Commercial announcements & Vividh Bharati promo."],
+      [475, 480, "ANCHALIK BATORI", "Regional news bulletin relay."],
+      [480, 495, "Samachar Prabhat", "National morning Hindi news relay."],
+      [495, 510, "Morning News", "National morning English news relay."],
+      [510, 540, "GEETIMALIKA :: Assamese Melodies", "Assamese modern melodies selection."],
+      [540, 555, "Puwar Anchalik Batori", "Morning regional news bulletin from RNU."],
+      [555, 560, "Jilar Rehroop", "District affairs report relayed from RNU."],
+      [560, 600, "LIVE PHONE IN KALPATARU", "Live interactive musical broadcast."],
+      [600, 630, "JEEVAN SURABHI :: Hemalata Baruah Dutta", "Guest: Hemalata Baruah Dutta, Retd. Teacher."],
+      [630, 660, "UMANG :: NCERT Sponsored Programme", "Special educational series."],
+      [660, 665, "ANCHALIK BATORI", "Mid-morning regional news bulletin relay."],
+      [665, 690, "Poragmala Live", "Live interactive magazine broadcast."],
+      [690, 720, "AMAR YUVA VANIR PORA", "Variety programme by LC Bharali College students."],
+      [720, 725, "News in Hindi", "Midday national Hindi news bulletin."],
+      [725, 735, "Anchalik Batori", "Midday regional news in Assamese."],
+      [735, 750, "Mor Sangeet Yatra :: Atul Medhi", "Interview with musician Atul Medhi."],
+      [750, 780, "Aideur Bulani :: World Heart Day Special", "Phone-in Live on Heart health."],
+      [780, 785, "News in Hindi", "Afternoon Hindi news relay."],
+      [785, 790, "News in English", "Afternoon English national news relay."],
+      [790, 800, "Adhunik Geet :: Niharika Gogoi", "Modern Assamese songs sung by Niharika Gogoi."],
+      [800, 810, "Prasangik", "Current affairs commentary relayed from RNU."],
+      [810, 820, "INSTRUMENTAL MUSIC :: Mandolin Recital", "Mandolin recital by Amar Sangam Das."],
+      [820, 830, "News in Assamese", "Regional afternoon news broadcast."],
+      [830, 840, "Lokageet :: Nirmali Choudhury & Party", "Traditional Assamese folk songs."],
+      [840, 855, "Mid-Day News", "National mid-day English news bulletin."],
+      [855, 870, "Dopahar Samachar", "National afternoon Hindi news relay."],
+      [870, 900, "Western Music", "International Western hits collection."],
+      [900, 905, "Anchalik Batori", "Regional afternoon news update."],
+      [905, 915, "ADHUNIKGEET", "Modern Assamese songs album."],
+      [915, 945, "Nepali Programme", "News, Heart Day compering, mental health talk & songs."],
+      [945, 1030, "Karbi Programme", "News, proverb, anti-tobacco slogan & songs."],
+      [960, 962, "NEWS HEADLINES", "Fast-track news headlines."],
+      [990, 1035, "Bodo Programme", "News, social media talk & modern/folk songs."],
+      [1035, 1045, "Anchalik Batori", "Regional evening news in Assamese."],
+      [1045, 1070, "Chah Gachar Maje Maje", "Tea tribe culture, Karam Parav discussion & Karam songs."],
+      [1070, 1075, "Programme Summary", "Upcoming evening & night highlights."],
+      [1075, 1080, "Vrindagaan :: Pubor Akash Pohor Hoba", "Chorus rendition by Bankim Sarma."],
+      [1080, 1090, "ANCHALIK BATORI", "Prime evening regional news bulletin."],
+      [1090, 1120, "Krishak Bani", "Flood livestock care discussion, farmer interview & market rates."],
+      [1120, 1125, "Bhajan :: Ranu Baishya", "Devotional song recital."],
+      [1125, 1140, "Sandhiyar Anchalik Batori", "Comprehensive evening regional news roundup."],
+      [1140, 1145, "Niyog Batori", "Employment news announcements."],
+      [1145, 1150, "Vrindagaan :: Mor Deshor Matir Gaan", "Chorus song by Keshab Dutta."],
+      [1150, 1160, "News In Assamese", "Night regional news bulletin."],
+      [1160, 1175, "Akou Sunu Ahok :: Evergreen Melodies", "Classics by Bhupen Hazarika and others."],
+      [1175, 1185, "Pubalir Sur / Rabha Geet", "Rabha melody recital by Preetilekha Rabha."],
+      [1185, 1200, "Adhunik Geet :: Niharika Gogoi", "Modern Assamese songs."],
+      [1200, 1202, "NEWS HEADLINES", "Fast-track headlines."],
+      [1202, 1220, "Khel Aru Kheluoi :: Discussion", "Discussion on India's sports infrastructure."],
+      [1220, 1230, "Surar Sarai :: Dipsikha Bordoloi", "Musical compositions by Kishore Das."],
+      [1230, 1245, "Adhunik Geet :: Modern Melodies", "Assamese modern tracks."],
+      [1245, 1260, "Samachar Sandhya", "Prime national Hindi news relay."],
+      [1260, 1285, "CHITRAGEET :: Assamese Film Songs", "Selected evergreen film songs."],
+      [1285, 1290, "Nishar Anchalik Batori", "Night regional news summary."],
+      [1290, 1320, "SADHAK SUNDARA :: Kanika Bhattacharya", "Commemorative feature on Kanika Bhattacharya."],
+      [1320, 1350, "Ramdhenu (Announcer's Choice)", "Special musical presentation."],
+      [1350, 1351, "Transmission Sign-Off", "Closing announcement & station sign-off."]
+    ];
 
-    <!-- Latest Updates -->
-    <div class="section">
-        <div class="title">🕒 Latest Updates</div>
-        <div class="station-card" style="border-color: rgba(59, 130, 246, 0.3);">
-            <div class="station-info">
-                <div class="station-name">📰 5 Min News Brief <span class="duration-tag">5 Min</span></div>
-                <div class="playing-row"><span>Updated: 28 Sept, 2:00 PM</span></div>
-            </div>
-            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/43dbf6-w1msm0v84n6spwp/vf_w1msm0v84n6spwp_46daaa9e-c02c-4100-b640-43faaa3298e5.ism/dash/vf_w1msm0v84n6spwp_46daaa9e-c02c-4100-b640-43faaa3298e5-audio_eng_1=96000-1.m3u8" class="play-btn" aria-label="Play"></a>
-        </div>
-
-        <div class="station-card" style="border-color: rgba(168, 85, 247, 0.3);">
-            <div class="station-info">
-                <div class="station-name">🎙️ Thought for the Day <span class="duration-tag">3 Min</span></div>
-                <div class="playing-row"><span>Updated: 28 Sept, 12:00 PM</span></div>
-            </div>
-            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/291b66-p0pctg89/vf_p0pctg89_95ed506f-ca96-4d97-9fac-d248182f9936.ism/dash/vf_p0pctg89_95ed506f-ca96-4d97-9fac-d248182f9936-audio_eng_1=96000-3.m3u8" class="play-btn" aria-label="Play"></a>
-        </div>
-    </div>
-</div>
-
-<!-- Privacy Modal -->
-<div id="privacyModal" class="modal-overlay">
-    <div class="modal-box">
-        <div class="modal-header">
-            <span>🔒 Privacy Policy</span>
-            <button type="button" class="modal-close" id="closeModal">&times;</button>
-        </div>
-        <div class="modal-body">
-            <p><strong>Welcome to All UK Radio.</strong></p>
-            <p>We are committed to protecting your privacy. This application streams publicly accessible radio broadcasts and does not collect or store personal identifying information.</p>
-            <p><strong>Contact Us:</strong> vividhbharati75@gmail.com</p>
-        </div>
-    </div>
-</div>
-
-<script>
-// Cache DOM Elements
-const DOM = {
-    modal: document.getElementById('privacyModal'),
-    privacyBtn: document.getElementById('privacyBtn'),
-    closeModal: document.getElementById('closeModal'),
-    bannerTitle: document.getElementById('bannerTitle'),
-    bannerTime: document.getElementById('bannerTime'),
-    bannerTag: document.getElementById('bannerTag'),
-    bannerDot: document.getElementById('bannerDot'),
-    stations: {
-        'Radio 1': document.getElementById('bbc1'),
-        'Radio 2': document.getElementById('bbc2'),
-        'Radio 3': document.getElementById('bbc3'),
-        'Radio 4': document.getElementById('bbc4'),
-        'BBC World Service': document.getElementById('bbcws')
-    }
-};
-
-// Modal Events
-DOM.privacyBtn?.addEventListener('click', () => DOM.modal.classList.add('active'));
-DOM.closeModal?.addEventListener('click', () => DOM.modal.classList.remove('active'));
-window.addEventListener('click', (e) => { if (e.target === DOM.modal) DOM.modal.classList.remove('active'); });
-
-// Lightweight UK Time
-const ukTimeFormatter = new Intl.DateTimeFormat('en-GB', { 
-    timeZone: 'Europe/London', 
-    hour: 'numeric', 
-    minute: 'numeric', 
-    hourCycle: 'h23' 
-});
-
-function getUKMinutesNow() {
-    const timeStr = ukTimeFormatter.format(new Date());
-    const [h, m] = timeStr.split(':').map(Number);
-    return h * 60 + m;
-}
-
-function timeStringToMinutesUK(str) {
-    if (!str) return 0;
-    const match = str.trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
-    if (!match) return 0;
-    let h = parseInt(match[1], 10);
-    const m = parseInt(match[2], 10);
-    const p = match[3]?.toUpperCase();
-    if (p === "PM" && h !== 12) h += 12;
-    if (p === "AM" && h === 12) h = 0;
-    return h * 60 + m;
-}
-
-// Global Schedules Cache
-let preparedMainSchedule = null;
-let preparedSportsShows = null;
-
-function prepareSchedules() {
-    if (typeof SCHEDULE_DATA === "undefined" || !Array.isArray(SCHEDULE_DATA)) return false;
-
-    // Cache General Schedule
-    preparedMainSchedule = SCHEDULE_DATA.map(p => ({
-        channel: (p.channel || "").toLowerCase(),
-        title: p.title || "Live",
-        startMin: timeStringToMinutesUK(p.time)
-    })).sort((a, b) => a.startMin - b.startMin);
-
-    // Cache Sports Schedule
-    preparedSportsShows = SCHEDULE_DATA.filter(p => 
-        (p.channel || "").toLowerCase().includes("sports extra")
-    ).map(p => ({
-        time: p.time,
-        title: p.title || "",
-        startMin: timeStringToMinutesUK(p.time)
-    })).sort((a, b) => a.startMin - b.startMin);
-
-    return true;
-}
-
-function getCurrentShow(channelName, now) {
-    if (!preparedMainSchedule) return "Live";
-    const list = preparedMainSchedule.filter(p => p.channel.includes(channelName.toLowerCase()));
-    if (!list.length) return "Live";
-    if (now < list[0].startMin) return list[list.length - 1].title;
-    for (let i = 0; i < list.length - 1; i++) {
-        if (now >= list[i].startMin && now < list[i + 1].startMin) return list[i].title;
-    }
-    return list[list.length - 1].title;
-}
-
-function updateAppUI() {
-    if (document.hidden) return;
-    if (!preparedMainSchedule && !prepareSchedules()) return;
-
-    const now = getUKMinutesNow();
-
-    // 1. Update Popular Stations
-    for (const [name, el] of Object.entries(DOM.stations)) {
-        if (el) el.textContent = getCurrentShow(name, now);
+    // Helper: Fast minute-to-12hr conversion
+    function minTo12(m) {
+      let h = Math.floor(m / 60);
+      let min = m % 60;
+      let ap = h >= 12 ? 'PM' : 'AM';
+      let h12 = h % 12 || 12;
+      return `${h12 < 10 ? '0' : ''}${h12}:${min < 10 ? '0' : ''}${min} ${ap}`;
     }
 
-    // 2. Update Sports Banner
-    if (!preparedSportsShows || !preparedSportsShows.length) return;
+    function fmtRemaining(sec) {
+      if (sec <= 0) return "0s";
+      let m = Math.floor(sec / 60);
+      let s = sec % 60;
+      return m >= 60 ? `${Math.floor(m / 60)}h ${m % 60}m` : (m > 0 ? `${m}m ${s}s` : `${s}s`);
+    }
 
-    let currentIndex = preparedSportsShows.length - 1;
-    for (let i = 0; i < preparedSportsShows.length - 1; i++) {
-        if (now >= preparedSportsShows[i].startMin && now < preparedSportsShows[i + 1].startMin) {
-            currentIndex = i;
+    // Cache DOM references
+    const $ = id => document.getElementById(id);
+    const UI = {
+      date: $('liveDateText'),
+      clock: $('liveClockDisplay'),
+      nowCard: $('liveNowCard'),
+      nowTitle: $('liveProgTitle'),
+      nowDesc: $('liveProgDesc'),
+      nowSlot: $('liveSlotBadge'),
+      elapsed: $('liveElapsed'),
+      remaining: $('liveRemaining'),
+      progBar: $('liveProgressBar'),
+      nextTitle: $('nextProgTitle'),
+      nextTime: $('nextProgTime'),
+      nextCountdown: $('nextCountdownText'),
+      list: $('scheduleList')
+    };
+
+    let activeIndex = -1;
+    let rendered = false;
+
+    function renderListOnce() {
+      let html = '';
+      for (let i = 0; i < SCH.length; i++) {
+        const item = SCH[i];
+        html += `
+          <div class="schedule-row" id="row-${i}">
+            <div class="col-time">
+              <span>${minTo12(item[0])}</span>
+              <span class="time-sep">to</span>
+              <span>${minTo12(item[1])}</span>
+              <div class="live-indicator-chip" id="chip-${i}" style="display:none;">
+                <span class="pulse-dot"></span><span>LIVE</span>
+              </div>
+            </div>
+            <div class="col-prog">
+              <h3 class="prog-title">${item[2]}</h3>
+              <p class="prog-desc">${item[3]}</p>
+            </div>
+          </div>`;
+      }
+      UI.list.innerHTML = html;
+      rendered = true;
+    }
+
+    function tick() {
+      // Direct IST timestamp calculation without heavy string parsing
+      const d = new Date();
+      const utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+      const ist = new Date(utc + 19800000); // UTC + 5:30
+
+      const hrs = ist.getHours();
+      const mins = ist.getMinutes();
+      const secs = ist.getSeconds();
+      const effMin = hrs * 60 + mins + (secs / 60);
+
+      const h12 = hrs % 12 || 12;
+      const ap = hrs >= 12 ? 'PM' : 'AM';
+      UI.clock.textContent = `${h12 < 10 ? '0' : ''}${h12}:${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs} ${ap}`;
+      UI.date.textContent = ist.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+
+      // Find active program
+      let newActiveIndex = -1;
+      for (let i = 0; i < SCH.length; i++) {
+        if (effMin >= SCH[i][0] && effMin < SCH[i][1]) {
+          if (newActiveIndex === -1 || (SCH[i][1] - SCH[i][0] < SCH[newActiveIndex][1] - SCH[newActiveIndex][0])) {
+            newActiveIndex = i;
+          }
+        }
+      }
+
+      // Find next program
+      let nextIndex = -1;
+      if (newActiveIndex !== -1) {
+        for (let i = 0; i < SCH.length; i++) {
+          if (SCH[i][0] >= SCH[newActiveIndex][1]) {
+            nextIndex = i;
             break;
+          }
         }
+      } else {
+        for (let i = 0; i < SCH.length; i++) {
+          if (SCH[i][0] > effMin) {
+            nextIndex = i;
+            break;
+          }
+        }
+      }
+
+      // Update Live UI
+      if (newActiveIndex !== -1) {
+        const cur = SCH[newActiveIndex];
+        UI.nowCard.classList.add('is-active');
+        UI.nowTitle.textContent = cur[2];
+        UI.nowDesc.textContent = cur[3];
+        UI.nowSlot.textContent = `${minTo12(cur[0])} - ${minTo12(cur[1])}`;
+
+        const dur = (cur[1] - cur[0]) * 60;
+        const el = Math.max(0, (effMin - cur[0]) * 60);
+        const rem = Math.max(0, dur - el);
+        UI.progBar.style.width = `${Math.min(100, (el / dur) * 100).toFixed(1)}%`;
+        UI.elapsed.textContent = `${Math.floor(el / 60)}m পাৰ হৈছে`;
+        UI.remaining.textContent = `${fmtRemaining(Math.round(rem))} বাকী`;
+      } else {
+        UI.nowCard.classList.remove('is-active');
+        UI.nowTitle.textContent = "সম্প্ৰচাৰ বন্ধ (Off-Air)";
+        UI.nowDesc.textContent = "বৰ্তমান আকাশবাণী গুৱাহাটীৰ সম্প্ৰচাৰ বন্ধ আছে।";
+        UI.nowSlot.textContent = "Off-Air";
+        UI.progBar.style.width = '0%';
+        UI.elapsed.textContent = '';
+        UI.remaining.textContent = '';
+      }
+
+      // Update Next UI
+      if (nextIndex !== -1) {
+        const nxt = SCH[nextIndex];
+        UI.nextTitle.textContent = nxt[2];
+        UI.nextTime.textContent = minTo12(nxt[0]);
+        const diffSec = Math.round((nxt[0] - effMin) * 60);
+        UI.nextCountdown.textContent = diffSec > 0 ? `${fmtRemaining(diffSec)} পিছত` : "শীঘ্ৰে আৰম্ভ হ'ব";
+      } else {
+        UI.nextTitle.textContent = SCH[0][2];
+        UI.nextTime.textContent = minTo12(SCH[0][0]);
+        UI.nextCountdown.textContent = "কাইলৈ পুৱা";
+      }
+
+      // Update Active class in Schedule list only when changed
+      if (newActiveIndex !== activeIndex) {
+        if (activeIndex !== -1) {
+          const oldRow = $(`row-${activeIndex}`);
+          const oldChip = $(`chip-${activeIndex}`);
+          if (oldRow) oldRow.classList.remove('live-active');
+          if (oldChip) oldChip.style.display = 'none';
+        }
+        if (newActiveIndex !== -1) {
+          const newRow = $(`row-${newActiveIndex}`);
+          const newChip = $(`chip-${newActiveIndex}`);
+          if (newRow) newRow.classList.add('live-active');
+          if (newChip) newChip.style.display = 'inline-flex';
+        }
+        activeIndex = newActiveIndex;
+      }
     }
 
-    const currentShow = preparedSportsShows[currentIndex];
-    const isGeneric = currentShow.title.toLowerCase().includes("this is sports extra");
-
-    let targetShow = currentShow;
-    let isUpcoming = false;
-
-    if (isGeneric) {
-        const upcoming = preparedSportsShows.find(p => p.startMin > now && !p.title.toLowerCase().includes("this is sports extra"));
-        if (upcoming) {
-            targetShow = upcoming;
-            isUpcoming = true;
-        }
-    }
-
-    let cleanTitle = targetShow.title.split("(")[0].trim();
-    if (cleanTitle.includes(":")) {
-        cleanTitle = cleanTitle.split(":").slice(1).join(":").trim();
-    }
-
-    const lower = targetShow.title.toLowerCase();
-    let tag = isUpcoming ? "UPCOMING" : "LIVE NOW";
-    if (lower.includes("football")) tag += " FOOTBALL";
-    else if (lower.includes("cricket")) tag += " CRICKET";
-    else if (lower.includes("rugby")) tag += " RUGBY";
-    else if (lower.includes("tennis")) tag += " TENNIS";
-
-    if (DOM.bannerTitle) DOM.bannerTitle.textContent = cleanTitle || "BBC Radio 5 Sports Extra";
-    if (DOM.bannerTime) DOM.bannerTime.textContent = isUpcoming ? `Today, ${targetShow.time}` : `Live Now (${targetShow.time})`;
-    if (DOM.bannerTag) DOM.bannerTag.textContent = tag;
-    if (DOM.bannerDot) DOM.bannerDot.style.display = isUpcoming ? "none" : "inline-block";
-}
-
-// Initialization & Refresh Management
-document.addEventListener("DOMContentLoaded", () => {
-    updateAppUI();
-
-    let attempts = 0;
-    const initTimer = setInterval(() => {
-        attempts++;
-        if (prepareSchedules() || attempts >= 10) {
-            updateAppUI();
-            clearInterval(initTimer);
-        }
-    }, 300);
-
-    // Single interval for updates
-    setInterval(updateAppUI, 60000);
-
-    document.addEventListener("visibilitychange", () => {
-        if (!document.hidden) updateAppUI();
+    window.addEventListener('DOMContentLoaded', () => {
+      renderListOnce();
+      tick();
+      setInterval(tick, 1000);
     });
-});
-</script>
+  </script>
 </body>
 </html>
