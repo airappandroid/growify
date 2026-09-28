@@ -164,5 +164,12 @@ window.SCHEDULE_DATA = [
   { "time": "11:00 PM", "title": "BBC News (Latest Five Minute News Bulletin)", "channel": "BBC World Service" },
   { "time": "11:06 PM", "title": "The Newsroom (Global Events as They Happen)", "channel": "BBC World Service" },
   { "time": "11:30 PM", "title": "BBC News Summary (Latest Two Minute Summary)", "channel": "BBC World Service" },
-  { "time": "11:32 PM", "title": "World Business Report (The latest business and finance news from around the world)", "channel": "BBC World Service" }
+  { "time": "11:32 PM", "title": "World Business Report (The latest business and finance news from around the world)", "channel": "BBC World Service" },
+
+  // BBC RADIO 5 Sports Extra (Monday, 28/09/2026)
+  { "time": "12:00 AM", "title": "This Is Sports Extra (This is BBC Radio 5 Sports Extra - bringing you even more live sports commentaries)", "channel": "BBC RADIO 5 Sports Extra" },
+  { "time": "6:00 AM", "title": "This Is Sports Extra (This is BBC Radio 5 Sports Extra - bringing you even more live sports commentaries)", "channel": "BBC RADIO 5 Sports Extra" },
+  { "time": "12:00 PM", "title": "This Is Sports Extra (This is BBC Radio 5 Sports Extra - bringing you even more live sports commentaries)", "channel": "BBC RADIO 5 Sports Extra" },
+  { "time": "7:30 PM", "title": "International Football 2026-27: Northern Ireland v Hungary (Live football commentary of Northern Ireland v Hungary in the UEFA Nations League)", "channel": "BBC RADIO 5 Sports Extra" },
+  { "time": "10:00 PM", "title": "This Is Sports Extra (This is BBC Radio 5 Sports Extra - bringing you even more live sports commentaries)", "channel": "BBC RADIO 5 Sports Extra" }
 ];
