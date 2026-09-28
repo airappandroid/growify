@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="as">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Akashvani Guwahati (Mahabahu) - Live Cuesheet Schedule</title>
+  <title>Akashvani Guwahati (Mahabahu)</title>
   
   <style>
     :root {
       --bg-main: #0d1117;
       --bg-card: #161b22;
       --bg-header: #121820;
-      --bg-row-hover: #1c2128;
       --bg-live: #132d22;
       --border-color: #30363d;
       --border-live: #10b981;
@@ -18,181 +17,99 @@
       --text-secondary: #8b949e;
       --text-muted: #6e7681;
       --accent-green: #10b981;
-      --accent-green-hover: #34d399;
       --accent-cyan: #38bdf8;
       --accent-amber: #f59e0b;
-      --badge-bg: #21262d;
-      /* Android Native System Fonts */
-      --font-system: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-      --font-mono: ui-monospace, "Roboto Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --font-system: system-ui, -apple-system, Roboto, sans-serif;
+      --font-mono: ui-monospace, Consolas, monospace;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
     html {
       background-color: var(--bg-main);
       color: var(--text-primary);
       font-family: var(--font-system);
-      overscroll-behavior-y: contain;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeSpeed;
     }
 
     body {
-      background-color: var(--bg-main);
       min-height: 100vh;
-      line-height: 1.45;
-      padding-top: max(8px, env(safe-area-inset-top));
-      padding-bottom: max(32px, env(safe-area-inset-bottom));
-      touch-action: manipulation;
+      line-height: 1.4;
+      padding: max(8px, env(safe-area-inset-top)) 10px max(24px, env(safe-area-inset-bottom));
     }
 
-    .app-container {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 10px 14px;
-    }
+    .app-container { max-width: 640px; margin: 0 auto; }
 
-    .header-box {
-      text-align: center;
-      padding: 10px 10px 8px;
-    }
+    .header-box { text-align: center; padding: 6px 0; }
 
     .tag-air {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 10px;
-      background-color: #121d2f;
+      padding: 3px 10px;
+      background: #121d2f;
       border: 1px solid #1e3a5f;
       color: var(--accent-cyan);
       font-size: 11px;
       font-weight: 700;
-      border-radius: 999px;
-      letter-spacing: 0.5px;
+      border-radius: 20px;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .pulse-dot {
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background-color: var(--accent-green);
-      display: inline-block;
+      background: var(--accent-green);
       flex-shrink: 0;
     }
 
-    .main-title {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.3px;
-      color: var(--text-primary);
-      margin-bottom: 4px;
-    }
-
-    .frequency-line {
-      font-size: 12.5px;
-      color: var(--text-secondary);
-      font-weight: 500;
-    }
-
-    .frequency-line strong {
-      color: var(--accent-cyan);
-      font-family: var(--font-mono);
-      font-weight: 600;
-    }
-
-    .frequency-line span.fm {
-      color: var(--accent-green);
-      font-family: var(--font-mono);
-      font-weight: 600;
-    }
+    .main-title { font-size: 20px; font-weight: 800; }
+    .frequency-line { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+    .frequency-line strong { color: var(--accent-cyan); font-family: var(--font-mono); }
+    .frequency-line .fm { color: var(--accent-green); font-family: var(--font-mono); }
 
     .clock-bar {
       display: flex;
-      flex-direction: column;
-      gap: 6px;
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 10px 14px;
-      margin-top: 12px;
-      text-align: left;
-    }
-
-    @media (min-width: 480px) {
-      .clock-bar {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-      }
-    }
-
-    .date-text {
-      font-size: 12px;
-      color: var(--text-secondary);
-      font-weight: 500;
-    }
-
-    .time-digits-box {
-      display: flex;
       align-items: center;
-      gap: 8px;
-    }
-
-    .live-label {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
+      justify-content: space-between;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 8px 12px;
+      margin-top: 10px;
+      font-size: 12px;
     }
 
     .live-clock-digits {
       font-family: var(--font-mono);
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--accent-cyan);
-      background-color: #0d1117;
+      background: #0d1117;
+      padding: 2px 6px;
+      border-radius: 5px;
       border: 1px solid #1f2937;
-      padding: 2px 8px;
-      border-radius: 6px;
-      letter-spacing: 0.5px;
-    }
-
-    .status-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 12px;
     }
 
     .card-now-playing {
-      background-color: var(--bg-card);
-      border: 1px solid #1f3d30;
-      border-radius: 14px;
-      padding: 14px;
-      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 10px;
     }
 
     .card-now-playing.is-active {
-      border-color: rgba(16, 185, 129, 0.65);
-      box-shadow: 0 0 16px rgba(16, 185, 129, 0.1);
+      border-color: var(--accent-green);
     }
 
     .card-header-line {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
+      margin-bottom: 8px;
     }
 
     .badge-live-now {
@@ -200,320 +117,149 @@
       align-items: center;
       gap: 5px;
       font-size: 11px;
-      font-weight: 800;
+      font-weight: 700;
       color: var(--accent-green);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
-    .card-header-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .card-actions { display: flex; align-items: center; gap: 6px; }
 
     .badge-slot-time {
       font-family: var(--font-mono);
       font-size: 11px;
-      font-weight: 600;
       color: var(--accent-cyan);
-      background-color: #121e2c;
-      border: 1px solid #1e3a5f;
-      padding: 3px 8px;
-      border-radius: 6px;
+      background: #121e2c;
+      padding: 2px 6px;
+      border-radius: 5px;
     }
 
     .btn-play-station {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 5px;
-      background: linear-gradient(135deg, var(--accent-green), #059669);
+      gap: 4px;
+      background: var(--accent-green);
       color: #041f14;
-      font-size: 11.5px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 4px 12px;
-      border-radius: 999px;
-      text-decoration: none;
-      border: 1px solid rgba(16, 185, 129, 0.4);
-      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .btn-play-station:active {
-      transform: scale(0.95);
-    }
-
-    .btn-play-station svg {
-      width: 12px;
-      height: 12px;
-      fill: currentColor;
-    }
-
-    .now-title {
-      font-size: 16px;
+      font-size: 11px;
       font-weight: 700;
-      color: var(--text-primary);
-      line-height: 1.35;
-      margin-bottom: 4px;
+      padding: 3px 10px;
+      border-radius: 15px;
+      text-decoration: none;
     }
 
-    .now-desc {
-      font-size: 12.5px;
-      color: var(--text-secondary);
-      line-height: 1.4;
-    }
+    .now-title { font-size: 15px; font-weight: 700; line-height: 1.3; }
+    .now-desc { font-size: 12px; color: var(--text-secondary); margin-top: 3px; }
 
-    .progress-track {
-      margin-top: 12px;
-      padding-top: 10px;
-      border-top: 1px solid #21262d;
-    }
-
+    .progress-track { margin-top: 10px; padding-top: 8px; border-top: 1px solid #21262d; }
     .progress-meta {
       display: flex;
       justify-content: space-between;
       font-family: var(--font-mono);
-      font-size: 10.5px;
+      font-size: 10px;
       color: var(--text-muted);
-      margin-bottom: 6px;
-      min-height: 14px;
+      margin-bottom: 4px;
     }
-
-    .progress-meta .time-left {
-      color: var(--accent-green);
-      font-weight: 600;
-    }
-
-    .progress-bar-outer {
-      width: 100%;
-      height: 6px;
-      background-color: #21262d;
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .progress-bar-inner {
-      height: 100%;
-      width: 0%;
-      background-color: var(--accent-green);
-      border-radius: 999px;
-      transition: width 0.3s ease;
-    }
+    .progress-meta .time-left { color: var(--accent-green); font-weight: 600; }
+    .progress-bar-outer { width: 100%; height: 5px; background: #21262d; border-radius: 5px; overflow: hidden; }
+    .progress-bar-inner { height: 100%; width: 0%; background: var(--accent-green); border-radius: 5px; }
 
     .card-next-up {
-      background-color: var(--bg-card);
+      background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 12px 14px;
+      border-radius: 10px;
+      padding: 10px 12px;
       display: flex;
-      align-items: flex-start;
       justify-content: space-between;
-      gap: 12px;
+      align-items: center;
+      margin-top: 8px;
+      gap: 8px;
     }
-
-    .next-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .next-header-tag {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--accent-amber);
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      margin-bottom: 3px;
-    }
-
-    .next-title {
-      font-size: 13.5px;
-      font-weight: 600;
-      color: var(--text-primary);
-      white-space: normal;
-      word-break: break-word;
-      line-height: 1.4;
-    }
-
-    .next-time-box {
-      text-align: right;
-      flex-shrink: 0;
-    }
-
+    .next-tag { font-size: 9.5px; font-weight: 700; color: var(--accent-amber); text-transform: uppercase; }
+    .next-title { font-size: 12.5px; font-weight: 600; margin-top: 2px; }
+    .next-time-box { text-align: right; flex-shrink: 0; }
     .next-time-badge {
       font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 700;
+      font-size: 10.5px;
       color: var(--accent-amber);
-      background-color: #291807;
-      border: 1px solid #58330d;
-      padding: 3px 8px;
-      border-radius: 6px;
-      display: inline-block;
+      background: #291807;
+      padding: 2px 6px;
+      border-radius: 4px;
     }
-
-    .next-countdown {
-      display: block;
-      font-size: 10px;
-      color: var(--text-muted);
-      font-family: var(--font-mono);
-      margin-top: 3px;
-    }
+    .next-countdown { display: block; font-size: 9.5px; color: var(--text-muted); font-family: var(--font-mono); margin-top: 2px; }
 
     .schedule-wrapper {
-      margin-top: 14px;
-      background-color: var(--bg-card);
+      margin-top: 12px;
+      background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 14px;
+      border-radius: 12px;
       overflow: hidden;
     }
-
     .table-head-row {
       display: flex;
-      background-color: var(--bg-header);
+      background: var(--bg-header);
       border-bottom: 1px solid var(--border-color);
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
       color: var(--text-muted);
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 10;
     }
+    .col-time-head { width: 105px; min-width: 105px; padding: 8px 10px; border-right: 1px solid var(--border-color); }
+    .col-prog-head { flex: 1; padding: 8px 10px; }
 
-    .col-time-header {
-      width: 120px;
-      min-width: 120px;
-      padding: 10px 12px;
-      color: var(--accent-cyan);
-      border-right: 1px solid var(--border-color);
-    }
-
-    .col-prog-header {
-      flex: 1;
-      padding: 10px 14px;
-      color: var(--text-primary);
-    }
-
-    .schedule-list {
-      display: flex;
-      flex-direction: column;
-    }
-
+    /* Performance critical: skips rendering elements outside viewport */
     .schedule-row {
       display: flex;
       border-bottom: 1px solid #21262d;
-      position: relative;
+      content-visibility: auto;
+      contain-intrinsic-size: 65px;
     }
-
-    .schedule-row:last-child {
-      border-bottom: none;
-    }
-
+    .schedule-row:last-child { border-bottom: none; }
     .schedule-row.live-active {
-      background-color: var(--bg-live) !important;
-      border-left: 4px solid var(--accent-green);
+      background: var(--bg-live);
+      border-left: 3px solid var(--accent-green);
     }
-
-    .schedule-row.live-active .time-range {
-      color: var(--accent-green);
-      font-weight: 700;
-    }
-
-    .schedule-row.live-active .prog-title {
-      color: #a7f3d0;
-    }
+    .schedule-row.live-active .time-range { color: var(--accent-green); }
+    .schedule-row.live-active .prog-title { color: #a7f3d0; }
 
     .col-time {
-      width: 120px;
-      min-width: 120px;
-      padding: 12px 10px;
+      width: 105px;
+      min-width: 105px;
+      padding: 10px 8px;
       border-right: 1px solid #21262d;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      gap: 3px;
-    }
-
-    .time-range {
       font-family: var(--font-mono);
-      font-size: 11.5px;
-      font-weight: 600;
-      color: var(--text-primary);
-      line-height: 1.35;
+      font-size: 11px;
     }
-
-    .time-sep {
-      font-size: 9.5px;
-      color: var(--text-muted);
-      margin: 1px 0;
-      display: block;
-    }
-
+    .time-sep { font-size: 9px; color: var(--text-muted); display: block; }
     .live-indicator-chip {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      background-color: #0d261b;
+      gap: 3px;
+      background: #0d261b;
       color: var(--accent-green);
-      border: 1px solid var(--border-live);
-      font-size: 9px;
-      font-weight: 800;
-      padding: 2px 6px;
-      border-radius: 4px;
-      width: fit-content;
+      font-size: 8.5px;
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 3px;
       margin-top: 4px;
     }
 
-    .col-prog {
-      flex: 1;
-      min-width: 0;
-      padding: 12px 14px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .prog-header-meta {
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 3px;
-    }
-
-    .prog-title {
-      font-size: 13.5px;
-      font-weight: 700;
-      color: var(--text-primary);
-      line-height: 1.35;
-    }
-
-    .prog-desc {
-      font-size: 11.8px;
-      color: var(--text-secondary);
-      line-height: 1.45;
-      margin-top: 3px;
-      word-break: break-word;
-    }
+    .col-prog { flex: 1; padding: 10px 10px; min-width: 0; }
+    .prog-title { font-size: 13px; font-weight: 700; line-height: 1.3; }
+    .prog-desc { font-size: 11.5px; color: var(--text-secondary); margin-top: 3px; }
 
     .footer-credits {
       text-align: center;
-      font-size: 11px;
+      font-size: 10.5px;
       color: var(--text-muted);
-      margin-top: 24px;
-      padding-bottom: 12px;
+      margin-top: 16px;
+      padding-bottom: 8px;
     }
   </style>
 </head>
 <body>
 
   <div class="app-container">
-    
     <header class="header-box">
       <div class="tag-air">
         <span class="pulse-dot"></span>
@@ -525,34 +271,29 @@
       </p>
 
       <div class="clock-bar">
-        <div class="date-text" id="liveDateText">--</div>
-        <div class="time-digits-box">
-          <span class="live-label">IST Time</span>
-          <div class="live-clock-digits" id="liveClockDisplay">--:--:-- --</div>
-        </div>
+        <span id="liveDateText">--</span>
+        <span class="live-clock-digits" id="liveClockDisplay">--:--:--</span>
       </div>
     </header>
 
-    <section class="status-cards">
-      <!-- Live Now Card -->
+    <section>
+      <!-- Now Playing -->
       <div class="card-now-playing" id="liveNowCard">
         <div class="card-header-line">
           <div class="badge-live-now">
             <span class="pulse-dot"></span>
             <span>Live Now</span>
           </div>
-          <div class="card-header-actions">
-            <span class="badge-slot-time" id="liveSlotBadge">--:-- -- - --:-- --</span>
-            <a href="go:AS003" class="btn-play-station" id="btnPlayStation" title="Play Akashvani Mahabahu">
-              <svg viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
+          <div class="card-actions">
+            <span class="badge-slot-time" id="liveSlotBadge">--:-- - --:--</span>
+            <a href="go:AS003" class="btn-play-station" title="Play">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               <span>Play</span>
             </a>
           </div>
         </div>
-        <h2 class="now-title" id="liveProgTitle">Identifying Current Broadcast...</h2>
-        <p class="now-desc" id="liveProgDesc">Checking official Akashvani Mahabahu transmission cuesheet.</p>
+        <h2 class="now-title" id="liveProgTitle">অনুষ্ঠান চিনাক্ত কৰা হৈছে...</h2>
+        <p class="now-desc" id="liveProgDesc"></p>
 
         <div class="progress-track">
           <div class="progress-meta">
@@ -565,14 +306,14 @@
         </div>
       </div>
 
-      <!-- Coming Up Next Card -->
-      <div class="card-next-up" id="nextUpCard">
-        <div class="next-info">
-          <div class="next-header-tag">Coming Up Next</div>
+      <!-- Next Up -->
+      <div class="card-next-up">
+        <div>
+          <div class="next-tag">Coming Up Next</div>
           <div class="next-title" id="nextProgTitle">--</div>
         </div>
         <div class="next-time-box">
-          <span class="next-time-badge" id="nextProgTime">--:-- --</span>
+          <span class="next-time-badge" id="nextProgTime">--:--</span>
           <span class="next-countdown" id="nextCountdownText">--</span>
         </div>
       </div>
@@ -580,950 +321,257 @@
 
     <main class="schedule-wrapper">
       <div class="table-head-row">
-        <div class="col-time-header">Time (12-Hr)</div>
-        <div class="col-prog-header">Prog. & Desc.</div>
+        <div class="col-time-head">Time</div>
+        <div class="col-prog-head">Programme & Details</div>
       </div>
-
-      <div class="schedule-list" id="scheduleList"></div>
+      <div id="scheduleList"></div>
     </main>
 
     <footer class="footer-credits">
-      <p>Akashvani Guwahati • Mahabahu Channel</p>
-      <p style="margin-top:3px;">Prasar Bharati (Broadcasting Corporation of India) &copy; 2026-2027</p>
+      Akashvani Guwahati • Mahabahu Channel
     </footer>
-
   </div>
 
   <script>
-    // Official Cuesheet: 28-09-2026 (Monday)
-    const FULL_SCHEDULE = [
-      {
-        id: 1,
-        startStr: "05:28 AM",
-        endStr: "05:30 AM",
-        startMin: 5 * 60 + 28,
-        endMin: 5 * 60 + 30,
-        title: "AIR Signature Tune",
-        desc: "Opening station signature tune.",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 2,
-        startStr: "05:30 AM",
-        endStr: "05:35 AM",
-        startMin: 5 * 60 + 30,
-        endMin: 5 * 60 + 35,
-        title: "Vande Mataram / Time Reading / Opening Announcement / Mangaldhwani",
-        desc: "Morning invocation, official transmission opening announcement & auspicious Mangaldhwani.",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 3,
-        startStr: "05:35 AM",
-        endStr: "06:00 AM",
-        startMin: 5 * 60 + 35,
-        endMin: 6 * 60 + 0,
-        title: "BANDANA (Devotional Songs with Signature Tune)",
-        desc: "1. Borgeet - Rumi Basumatary (Madhabdev - GHR-07-672 cut-2) • 2. Naam - Nalini Mahanta & Pty (GHR-26M-073 cut-5) • 3. Lokageet - Keshab Ch. Talukdar (GHR-01B-609 cut-7) • 4. Chiyageet - Aditya Nath & Pty (GHR-01B-1202 cut-1) • 5. Bhajan - Rishavi Borthakur (GHR-07-779 cut-2).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 4,
-        startStr: "06:00 AM",
-        endStr: "06:05 AM",
-        startMin: 6 * 60 + 0,
-        endMin: 6 * 60 + 5,
-        title: "News in Hindi",
-        desc: "National morning Hindi news bulletin relay from New Delhi.",
-        presenter: "RVUD",
-        studio: "Studio 7"
-      },
-      {
-        id: 5,
-        startStr: "06:05 AM",
-        endStr: "06:10 AM",
-        startMin: 6 * 60 + 5,
-        endMin: 6 * 60 + 10,
-        title: "News in English",
-        desc: "National morning English news bulletin relay.",
-        presenter: "RVUD",
-        studio: "Studio 7"
-      },
-      {
-        id: 6,
-        startStr: "06:10 AM",
-        endStr: "06:15 AM",
-        startMin: 6 * 60 + 10,
-        endMin: 6 * 60 + 15,
-        title: "Mukutamala :: Guru Nanak",
-        desc: "Pearls of wisdom: Guru Nanak (GHR-43-14).",
-        presenter: "AOD",
-        studio: "Studio B"
-      },
-      {
-        id: 7,
-        startStr: "06:15 AM",
-        endStr: "06:45 AM",
-        startMin: 6 * 60 + 15,
-        endMin: 6 * 60 + 45,
-        title: "CLASSICAL MUSIC :: Sarod Recital",
-        desc: "Artist: Sipra Banerjee, Raag: Gaud Sarong (GHR-01CLM-027).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 8,
-        startStr: "06:45 AM",
-        endStr: "06:55 AM",
-        startMin: 6 * 60 + 45,
-        endMin: 6 * 60 + 55,
-        title: "Anusthan Parichiti & Promos",
-        desc: "Mobile Apps, commercial spots & Vividh Bharati promos.",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 9,
-        startStr: "06:55 AM",
-        endStr: "07:00 AM",
-        startMin: 6 * 60 + 55,
-        endMin: 7 * 60 + 0,
-        title: "Gyan Bigyan :: Prabal Kumar Sarma",
-        desc: "Science & technology broadcast presentation by Prabal Kumar Sarma.",
-        presenter: "Prabal Kumar Sarma",
-        studio: "Studio 7"
-      },
-      {
-        id: 10,
-        startStr: "07:00 AM",
-        endStr: "07:05 AM",
-        startMin: 7 * 60 + 0,
-        endMin: 7 * 60 + 5,
-        title: "Niyog Batori",
-        desc: "Employment news read by Utpal Bora.",
-        presenter: "UTPAL BORA",
-        studio: "Studio 7"
-      },
-      {
-        id: 11,
-        startStr: "07:05 AM",
-        endStr: "07:15 AM",
-        startMin: 7 * 60 + 5,
-        endMin: 7 * 60 + 15,
-        title: "News in Assamese",
-        desc: "Puwar Batori relayed by Regional News Unit (RNU L/Dib).",
-        presenter: "RNU",
-        studio: "Studio 7"
-      },
-      {
-        id: 12,
-        startStr: "07:15 AM",
-        endStr: "07:30 AM",
-        startMin: 7 * 60 + 15,
-        endMin: 7 * 60 + 30,
-        title: "Aji Puwa (Morning Information Programme)",
-        desc: "Morning information programme. Production: Kartik Sutradhar.",
-        presenter: "Liucinya Borchetia",
-        studio: "Studio 7"
-      },
-      {
-        id: 13,
-        startStr: "07:30 AM",
-        endStr: "07:50 AM",
-        startMin: 7 * 60 + 30,
-        endMin: 7 * 60 + 50,
-        title: "Mor Sangeet Yatra :: Interview with Atul Medhi (Part 1/4)",
-        desc: "Musical journey interview with Atul Medhi. Interviewer: Sanjoy Goswami (Computer-1).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 14,
-        startStr: "07:50 AM",
-        endStr: "07:55 AM",
-        startMin: 7 * 60 + 50,
-        endMin: 7 * 60 + 55,
-        title: "Commercial Spot, Jingles, Slogans, VBS Promos & MKB",
-        desc: "Commercial announcements, slogans, Vividh Bharati promos & Mann Ki Baat promo.",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 15,
-        startStr: "07:55 AM",
-        endStr: "08:00 AM",
-        startMin: 7 * 60 + 55,
-        endMin: 8 * 60 + 0,
-        title: "Anchalik Batori",
-        desc: "Regional news bulletin relay from Dibrugarh (L/DIB).",
-        presenter: "L/DIB",
-        studio: "Studio 7"
-      },
-      {
-        id: 16,
-        startStr: "08:00 AM",
-        endStr: "08:15 AM",
-        startMin: 8 * 60 + 0,
-        endMin: 8 * 60 + 15,
-        title: "Samachar Prabhat",
-        desc: "National morning Hindi news relay from New Delhi.",
-        presenter: "RVUD",
-        studio: "Studio 7"
-      },
-      {
-        id: 17,
-        startStr: "08:15 AM",
-        endStr: "08:30 AM",
-        startMin: 8 * 60 + 15,
-        endMin: 8 * 60 + 30,
-        title: "Morning News",
-        desc: "National morning English news relay from New Delhi.",
-        presenter: "RVUD",
-        studio: "Studio 7"
-      },
-      {
-        id: 18,
-        startStr: "08:30 AM",
-        endStr: "09:00 AM",
-        startMin: 8 * 60 + 30,
-        endMin: 9 * 60 + 0,
-        title: "Geetimalika :: Assamese Melodies",
-        desc: "1. Ranu Baishya (Suwadi Surar - Kirti Kamal Bhuyan - 14M-128) • 2. Ranjit Kataky (Najanu More Hiya - Chida Das - 14M-127) • 3. Rohima Kolita Begum (Moi Nisha - Rajani Hazarika - 14M-128) • 4. Mrinal Sarma (Dur Duronire - Tarali Sarma - 14M-289) • 5. Kiran Sarma (Jiban Nadit - Keshab Dutta - 14M-77).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 19,
-        startStr: "09:00 AM",
-        endStr: "09:15 AM",
-        startMin: 9 * 60 + 0,
-        endMin: 9 * 60 + 15,
-        title: "Puwar Anchalik Batori",
-        desc: "Morning regional news bulletin from RNU (L/DIB, G1).",
-        presenter: "RNU",
-        studio: "Studio 7"
-      },
-      {
-        id: 20,
-        startStr: "09:15 AM",
-        endStr: "09:20 AM",
-        startMin: 9 * 60 + 15,
-        endMin: 9 * 60 + 20,
-        title: "Jilar Rehroop",
-        desc: "District affairs report relayed from RNU (L/DIB).",
-        presenter: "RNU",
-        studio: "Studio 7"
-      },
-      {
-        id: 21,
-        startStr: "09:20 AM",
-        endStr: "10:00 AM",
-        startMin: 9 * 60 + 20,
-        endMin: 10 * 60 + 0,
-        title: "CHITRAGEET :: Assamese & Hindi Film Songs",
-        desc: "Selected film songs: 1. Morom Trishna • 2. Nachnewale Gaanewale • 3. Annya Ek Jatra • 4. Nargis • 5. Tumi Aahibane • 6. OMG • 7. One Night Stand.",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 22,
-        startStr: "10:00 AM",
-        endStr: "10:30 AM",
-        startMin: 10 * 60 + 0,
-        endMin: 10 * 60 + 30,
-        title: "Hate Bate Surar Abesh",
-        desc: "Musical magazine presentation. Production: Kartik Sutradhar.",
-        presenter: "Pompy Baishya",
-        studio: "Studio 7"
-      },
-      {
-        id: 23,
-        startStr: "10:30 AM",
-        endStr: "11:00 AM",
-        startMin: 10 * 60 + 30,
-        endMin: 11 * 60 + 0,
-        title: "UMANG :: NCERT Sponsored Programme",
-        desc: "Special educational series (Episode no: 1381).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 24,
-        startStr: "11:00 AM",
-        endStr: "11:05 AM",
-        startMin: 11 * 60 + 0,
-        endMin: 11 * 60 + 5,
-        title: "Anchalik Batori",
-        desc: "Mid-morning regional news bulletin relay from RNU (L/DIB).",
-        presenter: "RNU",
-        studio: "Studio 7"
-      },
-      {
-        id: 25,
-        startStr: "11:05 AM",
-        endStr: "11:30 AM",
-        startMin: 11 * 60 + 5,
-        endMin: 11 * 60 + 30,
-        title: "Poragmala Live",
-        desc: "Live interactive broadcast from Studio 7.",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 26,
-        startStr: "11:30 AM",
-        endStr: "12:00 PM",
-        startMin: 11 * 60 + 30,
-        endMin: 12 * 60 + 0,
-        title: "AMAR YUVA VANIR PORA :: Geetere Kothare",
-        desc: "Presented by Bhargav Kalita. Production: Indrajit Das.",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 27,
-        startStr: "12:00 PM",
-        endStr: "12:05 PM",
-        startMin: 12 * 60 + 0,
-        endMin: 12 * 60 + 5,
-        title: "News in Hindi",
-        desc: "Midday national Hindi news bulletin relay from New Delhi.",
-        presenter: "RVUD",
-        studio: "Studio 7"
-      },
-      {
-        id: 28,
-        startStr: "12:05 PM",
-        endStr: "12:15 PM",
-        startMin: 12 * 60 + 5,
-        endMin: 12 * 60 + 15,
-        title: "Anchalik Batori",
-        desc: "Midday regional news in Assamese from RNU (L/DIB).",
-        presenter: "RNU",
-        studio: "Studio 7"
-      },
-      {
-        id: 29,
-        startStr: "12:15 PM",
-        endStr: "12:30 PM",
-        startMin: 12 * 60 + 15,
-        endMin: 12 * 60 + 30,
-        title: "GEET ARU GHAZAL",
-        desc: "Selected melodies: 1. Zindagi • 2. Deewana • 3. Pop Corn Khao • 4. Ghoonghat.",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 30,
-        startStr: "12:30 PM",
-        endStr: "01:00 PM",
-        startMin: 12 * 60 + 30,
-        endMin: 13 * 60 + 0,
-        title: "Surar Karani (Assamese Modern Songs)",
-        desc: "1. Marile Manab Deha - Birendra Kumar Bora (00EPNF-017) • 2. Daale Pori Moyur - Rameswar Pathak (00EPNF-017) • 3. Sankar Guru He - Purushottam Das (00N78-015) • 4. Eyat Rod Ulalei Akash - Suwej Bordoloi (EPNF-013) • 5. Jak Jak Pokhila Ure - Sunil Deb & Renuka Barua (00EPNF-014) • 6. O Bon Boiragi - Khagen Mahanta & Archana Mahanta (00EPNF-014).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 31,
-        startStr: "01:00 PM",
-        endStr: "01:05 PM",
-        startMin: 13 * 60 + 0,
-        endMin: 13 * 60 + 5,
-        title: "News in Hindi",
-        desc: "Afternoon Hindi news relay from New Delhi.",
-        presenter: "RVUD",
-        studio: "Studio 7"
-      },
-      {
-        id: 32,
-        startStr: "01:05 PM",
-        endStr: "01:10 PM",
-        startMin: 13 * 60 + 5,
-        endMin: 13 * 60 + 10,
-        title: "News in English",
-        desc: "Afternoon English national news relay.",
-        presenter: "RVUD",
-        studio: "Studio 7"
-      },
-      {
-        id: 33,
-        startStr: "01:10 PM",
-        endStr: "01:20 PM",
-        startMin: 13 * 60 + 10,
-        endMin: 13 * 60 + 20,
-        title: "Adhunik Geet :: Kabita Malakar",
-        desc: "Modern Assamese songs sung by Kabita Malakar (01C-455 cut-1,2).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 34,
-        startStr: "01:20 PM",
-        endStr: "01:40 PM",
-        startMin: 13 * 60 + 20,
-        endMin: 13 * 60 + 40,
-        title: "Classical Music :: Khayal",
-        desc: "Raag: Sudh Sarang. Artist: Siben Banerjee (GHR-01-CLV-039).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 35,
-        startStr: "01:40 PM",
-        endStr: "01:50 PM",
-        startMin: 13 * 60 + 40,
-        endMin: 13 * 60 + 50,
-        title: "News in Assamese",
-        desc: "Regional afternoon news broadcast from RNU (L/DIB).",
-        presenter: "RNU",
-        studio: "Studio 7"
-      },
-      {
-        id: 36,
-        startStr: "01:50 PM",
-        endStr: "02:00 PM",
-        startMin: 13 * 60 + 50,
-        endMin: 14 * 60 + 0,
-        title: "Lokageet :: Anurupa Kalita",
-        desc: "Traditional Assamese folk songs (01B-1000).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 37,
-        startStr: "02:00 PM",
-        endStr: "02:15 PM",
-        startMin: 14 * 60 + 0,
-        endMin: 14 * 60 + 15,
-        title: "Mid-Day News",
-        desc: "National mid-day English news bulletin relay.",
-        presenter: "RVUD",
-        studio: "Studio 7"
-      },
-      {
-        id: 38,
-        startStr: "02:15 PM",
-        endStr: "02:30 PM",
-        startMin: 14 * 60 + 15,
-        endMin: 14 * 60 + 30,
-        title: "Dopeher Samachar",
-        desc: "National afternoon Hindi news relay from New Delhi.",
-        presenter: "RVUD",
-        studio: "Studio 7"
-      },
-      {
-        id: 39,
-        startStr: "02:30 PM",
-        endStr: "03:00 PM",
-        startMin: 14 * 60 + 30,
-        endMin: 15 * 60 + 0,
-        title: "Western Music",
-        desc: "1. Kentucky Rain (Elvis Presley - 355) • 2. Breathe (Roxette - 626) • 3. Real Love (Cher - 292) • 4. Rules (Shakira - 464) • 5. Honey (Mariah Carey - 507) • 6. Life (Des'ree - 189).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 40,
-        startStr: "03:00 PM",
-        endStr: "03:05 PM",
-        startMin: 15 * 60 + 0,
-        endMin: 15 * 60 + 5,
-        title: "Anchalik Batori",
-        desc: "Regional afternoon news update from RNU (L/DIB).",
-        presenter: "RNU",
-        studio: "Studio 7"
-      },
-      {
-        id: 41,
-        startStr: "03:05 PM",
-        endStr: "03:15 PM",
-        startMin: 15 * 60 + 5,
-        endMin: 15 * 60 + 15,
-        title: "ADHUNIKGEET :: Album: Niyor",
-        desc: "Artist: Lupamudra Neog.",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 42,
-        startStr: "03:15 PM",
-        endStr: "03:45 PM",
-        startMin: 15 * 60 + 15,
-        endMin: 15 * 60 + 45,
-        title: "Nepali Programme",
-        desc: "1. News Summary • 2. Employment News • 3. Compering on World Rabies Day • 4. Children Variety Prog: Presented by The Children of Ajambari Sanskritik Mancha Bholaghar (Lead by Saraswati Chamlagain - GHR-16-402 Rpt) • Songs: Nar Bahadur Doogu.",
-        presenter: "Ganga Chetry & Tharka Bahadur Adhikari",
-        studio: "Studio 7"
-      },
-      {
-        id: 43,
-        startStr: "03:45 PM",
-        endStr: "04:30 PM",
-        startMin: 15 * 60 + 45,
-        endMin: 16 * 60 + 30,
-        title: "Karbi Programme",
-        desc: "1. News Summary • 2. Proverb (Sarlamthe): 'Voti Kemo Lank Chamche' • 3. Slogan on Conservation Of Forest • 4. Programme Highlights For The Next Day • 5. Short Story: 'Murti Me Keplong' (Script: Bidonsing Kro, Read by Joanish Rongphar - GHR-15-405 Cut-2) • 6. Old Songs by Harsing Teron, Kadom Terongpi, Kaban Teronpi • 7. Interview with Eminent Karbi Vocal Artist: Sarthe Rongpi (Part-2, FB).",
-        presenter: "BIKRAM SING HANSE",
-        studio: "Studio 7"
-      },
-      {
-        id: 44,
-        startStr: "04:00 PM",
-        endStr: "04:02 PM",
-        startMin: 16 * 60 + 0,
-        endMin: 16 * 60 + 2,
-        title: "NEWS HEADLINES (Karbi Prog continued)",
-        desc: "Fast-track news headlines relay from RNU (L/DIB).",
-        presenter: "RNU",
-        studio: "Studio 7"
-      },
-      {
-        id: 45,
-        startStr: "04:30 PM",
-        endStr: "05:15 PM",
-        startMin: 16 * 60 + 30,
-        endMin: 17 * 60 + 15,
-        title: "Bodo Programme",
-        desc: "1. News • 2. Women Programme: Talk on 'Patriotism Of Women in Politics' by Priyadini Brahma (GHR-17-866 Rpt) • 3. Modern Songs: Nirupama Basumatary (GHR-17-354 Rpt) & Rajani Kt Boro (GHR-17-372 Rpt) • 4. Folk Song: Phanindra Nath Brahma (GHR-17-003 Rpt) • 5. Prog Highlight For The Next Day.",
-        presenter: "BHAGYA RAMCHIARY",
-        studio: "Studio 7"
-      },
-      {
-        id: 46,
-        startStr: "05:15 PM",
-        endStr: "05:25 PM",
-        startMin: 17 * 60 + 15,
-        endMin: 17 * 60 + 25,
-        title: "Anchalik Batori",
-        desc: "Regional evening news in Assamese from RNU (L/DIB).",
-        presenter: "RNU",
-        studio: "Studio 7"
-      },
-      {
-        id: 47,
-        startStr: "05:25 PM",
-        endStr: "05:40 PM",
-        startMin: 17 * 60 + 25,
-        endMin: 17 * 60 + 40,
-        title: "Gaya Shrotar Anushtan",
-        desc: "OB Programme: Interview with Bhupesh Barman, Gram Sewak, Arora. Interviewer & Assistant: Kangkita Bharadwaj. Production: Utpal Bora (Rpt).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 48,
-        startStr: "05:40 PM",
-        endStr: "05:45 PM",
-        startMin: 17 * 60 + 40,
-        endMin: 17 * 60 + 45,
-        title: "Programme Summary",
-        desc: "Summary and highlights of upcoming evening and night transmission.",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 49,
-        startStr: "05:45 PM",
-        endStr: "06:00 PM",
-        startMin: 17 * 60 + 45,
-        endMin: 18 * 60 + 0,
-        title: "Bidyarthir Anusthan :: Assamese Lesson for Class IX",
-        desc: "Lesson: 'Andhabiswas Aru Kusanskar (Part-1)' by Sonpahi Morang (L/DIB).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 50,
-        startStr: "06:00 PM",
-        endStr: "06:10 PM",
-        startMin: 18 * 60 + 0,
-        endMin: 18 * 60 + 10,
-        title: "Anchalik Batori",
-        desc: "Prime evening regional news bulletin in Assamese (L/DIB).",
-        presenter: "RNU",
-        studio: "Studio 7"
-      },
-      {
-        id: 51,
-        startStr: "06:10 PM",
-        endStr: "06:40 PM",
-        startMin: 18 * 60 + 10,
-        endMin: 18 * 60 + 40,
-        title: "Krishi Jagat :: Discussion",
-        desc: "Discussion: 'Asamar Krishi Bipananat Krittrim Buddhimattaar Byabahaar' (FB). Participants: Dr. Dwijendra Mohan Barman, Dr. Pulin Patgiri. Moderator: Kritanjoli Barman. Production: Utpal Bora.",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 52,
-        startStr: "06:40 PM",
-        endStr: "06:45 PM",
-        startMin: 18 * 60 + 40,
-        endMin: 18 * 60 + 45,
-        title: "KRIRA BARTA (Sports News)",
-        desc: "Sports news bulletin relayed from RNU (L/DIB).",
-        presenter: "RNU",
-        studio: "Studio 7"
-      },
-      {
-        id: 53,
-        startStr: "06:45 PM",
-        endStr: "07:00 PM",
-        startMin: 18 * 60 + 45,
-        endMin: 19 * 60 + 0,
-        title: "Sandhiyar Anchalik Batori",
-        desc: "Comprehensive evening regional news roundup from RNU (L/DIB).",
-        presenter: "RNU",
-        studio: "Studio 7"
-      },
-      {
-        id: 54,
-        startStr: "07:00 PM",
-        endStr: "07:05 PM",
-        startMin: 19 * 60 + 0,
-        endMin: 19 * 60 + 5,
-        title: "Niyog Batori",
-        desc: "Employment news announcements read by Utpal Bora.",
-        presenter: "UTPAL BORA",
-        studio: "Studio 7"
-      },
-      {
-        id: 55,
-        startStr: "07:05 PM",
-        endStr: "07:10 PM",
-        startMin: 19 * 60 + 5,
-        endMin: 19 * 60 + 10,
-        title: "Vrindagaan :: Aaha Bhai Hat Milowa",
-        desc: "Chorus rendition composed by Tafajjul Ali (GHR-01G-02).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 56,
-        startStr: "07:10 PM",
-        endStr: "07:20 PM",
-        startMin: 19 * 60 + 10,
-        endMin: 19 * 60 + 20,
-        title: "News in Assamese",
-        desc: "Night regional news bulletin relayed by RNU (L/DIB).",
-        presenter: "RNU",
-        studio: "Studio 7"
-      },
-      {
-        id: 57,
-        startStr: "07:20 PM",
-        endStr: "07:35 PM",
-        startMin: 19 * 60 + 20,
-        endMin: 19 * 60 + 35,
-        title: "Akou Xunu Ahok :: Evergreen Melodies",
-        desc: "1. Akashote Jilike - Queen Das (14M/153) • 2. Xure Xure Modhujhora - Mahananda Majinder Baruah (14M/232) • 3. Sapon Sopan Abegote - Gyanada Kakoty (14M/230).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 58,
-        startStr: "07:35 PM",
-        endStr: "07:45 PM",
-        startMin: 19 * 60 + 35,
-        endMin: 19 * 60 + 45,
-        title: "Pubalir Sur / Karbi Geet",
-        desc: "Karbi melody recital by Bezeng Kathar & Party (01E-031).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 59,
-        startStr: "07:45 PM",
-        endStr: "08:00 PM",
-        startMin: 19 * 60 + 45,
-        endMin: 20 * 60 + 0,
-        title: "Adhunik Geet :: Kabita Malakar",
-        desc: "Modern Assamese songs sung by Kabita Malakar (01C-455 cut-3,4,5).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 60,
-        startStr: "08:00 PM",
-        endStr: "08:02 PM",
-        startMin: 20 * 60 + 0,
-        endMin: 20 * 60 + 2,
-        title: "News Headlines",
-        desc: "Prime national and regional news headlines relay from RNU (L/DIB).",
-        presenter: "RNU",
-        studio: "Studio 7"
-      },
-      {
-        id: 61,
-        startStr: "08:02 PM",
-        endStr: "08:30 PM",
-        startMin: 20 * 60 + 2,
-        endMin: 20 * 60 + 30,
-        title: "Pariyal Kalyan Anusthan",
-        desc: "Topic: 'Bish Aru Snayurogor Ayurvedik Sikitcha'. Interview with Dr. Dipak Sarma. Interviewer & Production: Simanta Barma (Com-1, Rpt).",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 62,
-        startStr: "08:30 PM",
-        endStr: "08:45 PM",
-        startMin: 20 * 60 + 30,
-        endMin: 20 * 60 + 45,
-        title: "Adhunik Geet :: Modern Melodies",
-        desc: "Album tracks: 1. Nila Sorai • 2. Balichanda • 3. Pansoi Mur Geetor.",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 63,
-        startStr: "08:45 PM",
-        endStr: "09:00 PM",
-        startMin: 20 * 60 + 45,
-        endMin: 21 * 60 + 0,
-        title: "Samachar Sandhya",
-        desc: "Prime national Hindi news relay from New Delhi.",
-        presenter: "RVUD",
-        studio: "Studio 7"
-      },
-      {
-        id: 64,
-        startStr: "09:00 PM",
-        endStr: "09:25 PM",
-        startMin: 21 * 60 + 0,
-        endMin: 21 * 60 + 25,
-        title: "CHITRAGEET :: Assamese Film Songs",
-        desc: "Classic Assamese film tracks: 1. Bibhrat • 2. Angikar • 3. Mamata • 4. Nayanmoni.",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 65,
-        startStr: "09:25 PM",
-        endStr: "09:30 PM",
-        startMin: 21 * 60 + 25,
-        endMin: 21 * 60 + 30,
-        title: "Nishar Anchalik Batori",
-        desc: "Night regional news summary from RNU (L/DIB).",
-        presenter: "RNU",
-        studio: "Studio 7"
-      },
-      {
-        id: 66,
-        startStr: "09:30 PM",
-        endStr: "10:30 PM",
-        startMin: 21 * 60 + 30,
-        endMin: 22 * 60 + 30,
-        title: "DRAMA :: 'EIDOREI'",
-        desc: "Radio drama written by Tarun Saikia. Production: Nilu Chakravortty (GHR-04-347). Followed by modern songs.",
-        presenter: "AOD",
-        studio: "Studio 7"
-      },
-      {
-        id: 67,
-        startStr: "10:30 PM",
-        endStr: "10:31 PM",
-        startMin: 22 * 60 + 30,
-        endMin: 22 * 60 + 31,
-        title: "Time Reading / Closing Announcement / Close Down Transmission",
-        desc: "Official transmission closing announcement and station sign-off.",
-        presenter: "AOD",
-        studio: "Studio 7"
-      }
+    // Compact Structure: [StartMin, EndMin, Title, Description]
+    const SCH = [
+      [328, 330, "AIR Signature Tune", "Opening station signature tune."],
+      [330, 335, "Vande Mataram / Time Reading / Mangaldhwani", "Morning invocation & opening announcement."],
+      [335, 360, "Bandana (Devotional Songs)", "Borgeet, Naam, Lokageet, Tokarigeet, Bhajan."],
+      [360, 365, "News in Hindi", "National morning Hindi news bulletin."],
+      [365, 370, "News in English", "National morning English news relay."],
+      [370, 375, "Mukutamala :: Hazrat Mohammad", "Pearls of wisdom: Hazrat Mohammad."],
+      [375, 390, "Lokageet :: Nirmali Choudhury & Party", "Traditional Assamese folk songs."],
+      [390, 405, "Bhajan :: Haimanti Shukla", "Devotional bhajan recital."],
+      [405, 415, "Anusthan Parichiti & Promos", "Commercial spots & Prasar Bharati sizzle."],
+      [415, 420, "Gyan Bigyan :: Prabal Kr. Sarmah", "Science & technology broadcast presentation."],
+      [420, 425, "Niyog Batori", "Employment news read by Utpal Bora."],
+      [425, 435, "News in Assamese", "Puwar Batori relayed by RNU."],
+      [435, 450, "Aji Puwa", "Morning information programme."],
+      [450, 470, "Rupali Lahar", "Presentation & production: Rituparna Das."],
+      [470, 475, "Spots & Jingles", "Commercial announcements & Vividh Bharati promo."],
+      [475, 480, "ANCHALIK BATORI", "Regional news bulletin relay."],
+      [480, 495, "Samachar Prabhat", "National morning Hindi news relay."],
+      [495, 510, "Morning News", "National morning English news relay."],
+      [510, 540, "GEETIMALIKA :: Assamese Melodies", "Assamese modern melodies selection."],
+      [540, 555, "Puwar Anchalik Batori", "Morning regional news bulletin from RNU."],
+      [555, 560, "Jilar Rehroop", "District affairs report relayed from RNU."],
+      [560, 600, "LIVE PHONE IN KALPATARU", "Live interactive musical broadcast."],
+      [600, 630, "JEEVAN SURABHI :: Hemalata Baruah Dutta", "Guest: Hemalata Baruah Dutta, Retd. Teacher."],
+      [630, 660, "UMANG :: NCERT Sponsored Programme", "Special educational series."],
+      [660, 665, "ANCHALIK BATORI", "Mid-morning regional news bulletin relay."],
+      [665, 690, "Poragmala Live", "Live interactive magazine broadcast."],
+      [690, 720, "AMAR YUVA VANIR PORA", "Variety programme by LC Bharali College students."],
+      [720, 725, "News in Hindi", "Midday national Hindi news bulletin."],
+      [725, 735, "Anchalik Batori", "Midday regional news in Assamese."],
+      [735, 750, "Mor Sangeet Yatra :: Atul Medhi", "Interview with musician Atul Medhi."],
+      [750, 780, "Aideur Bulani :: World Heart Day Special", "Phone-in Live on Heart health."],
+      [780, 785, "News in Hindi", "Afternoon Hindi news relay."],
+      [785, 790, "News in English", "Afternoon English national news relay."],
+      [790, 800, "Adhunik Geet :: Niharika Gogoi", "Modern Assamese songs sung by Niharika Gogoi."],
+      [800, 810, "Prasangik", "Current affairs commentary relayed from RNU."],
+      [810, 820, "INSTRUMENTAL MUSIC :: Mandolin Recital", "Mandolin recital by Amar Sangam Das."],
+      [820, 830, "News in Assamese", "Regional afternoon news broadcast."],
+      [830, 840, "Lokageet :: Nirmali Choudhury & Party", "Traditional Assamese folk songs."],
+      [840, 855, "Mid-Day News", "National mid-day English news bulletin."],
+      [855, 870, "Dopahar Samachar", "National afternoon Hindi news relay."],
+      [870, 900, "Western Music", "International Western hits collection."],
+      [900, 905, "Anchalik Batori", "Regional afternoon news update."],
+      [905, 915, "ADHUNIKGEET", "Modern Assamese songs album."],
+      [915, 945, "Nepali Programme", "News, Heart Day compering, mental health talk & songs."],
+      [945, 1030, "Karbi Programme", "News, proverb, anti-tobacco slogan & songs."],
+      [960, 962, "NEWS HEADLINES", "Fast-track news headlines."],
+      [990, 1035, "Bodo Programme", "News, social media talk & modern/folk songs."],
+      [1035, 1045, "Anchalik Batori", "Regional evening news in Assamese."],
+      [1045, 1070, "Chah Gachar Maje Maje", "Tea tribe culture, Karam Parav discussion & Karam songs."],
+      [1070, 1075, "Programme Summary", "Upcoming evening & night highlights."],
+      [1075, 1080, "Vrindagaan :: Pubor Akash Pohor Hoba", "Chorus rendition by Bankim Sarma."],
+      [1080, 1090, "ANCHALIK BATORI", "Prime evening regional news bulletin."],
+      [1090, 1120, "Krishak Bani", "Flood livestock care discussion, farmer interview & market rates."],
+      [1120, 1125, "Bhajan :: Ranu Baishya", "Devotional song recital."],
+      [1125, 1140, "Sandhiyar Anchalik Batori", "Comprehensive evening regional news roundup."],
+      [1140, 1145, "Niyog Batori", "Employment news announcements."],
+      [1145, 1150, "Vrindagaan :: Mor Deshor Matir Gaan", "Chorus song by Keshab Dutta."],
+      [1150, 1160, "News In Assamese", "Night regional news bulletin."],
+      [1160, 1175, "Akou Sunu Ahok :: Evergreen Melodies", "Classics by Bhupen Hazarika and others."],
+      [1175, 1185, "Pubalir Sur / Rabha Geet", "Rabha melody recital by Preetilekha Rabha."],
+      [1185, 1200, "Adhunik Geet :: Niharika Gogoi", "Modern Assamese songs."],
+      [1200, 1202, "NEWS HEADLINES", "Fast-track headlines."],
+      [1202, 1220, "Khel Aru Kheluoi :: Discussion", "Discussion on India's sports infrastructure."],
+      [1220, 1230, "Surar Sarai :: Dipsikha Bordoloi", "Musical compositions by Kishore Das."],
+      [1230, 1245, "Adhunik Geet :: Modern Melodies", "Assamese modern tracks."],
+      [1245, 1260, "Samachar Sandhya", "Prime national Hindi news relay."],
+      [1260, 1285, "CHITRAGEET :: Assamese Film Songs", "Selected evergreen film songs."],
+      [1285, 1290, "Nishar Anchalik Batori", "Night regional news summary."],
+      [1290, 1320, "SADHAK SUNDARA :: Kanika Bhattacharya", "Commemorative feature on Kanika Bhattacharya."],
+      [1320, 1350, "Ramdhenu (Announcer's Choice)", "Special musical presentation."],
+      [1350, 1351, "Transmission Sign-Off", "Closing announcement & station sign-off."]
     ];
 
-    let currentLiveProgramId = null;
-    let lastRenderedKey = "";
-
-    function padZero(num) {
-      return num < 10 ? '0' + num : num;
+    // Helper: Fast minute-to-12hr conversion
+    function minTo12(m) {
+      let h = Math.floor(m / 60);
+      let min = m % 60;
+      let ap = h >= 12 ? 'PM' : 'AM';
+      let h12 = h % 12 || 12;
+      return `${h12 < 10 ? '0' : ''}${h12}:${min < 10 ? '0' : ''}${min} ${ap}`;
     }
 
-    function formatDurationRemaining(seconds) {
-      if (seconds <= 0) return "0s";
-      let mins = Math.floor(seconds / 60);
-      let secs = seconds % 60;
-      if (mins >= 60) {
-        let hrs = Math.floor(mins / 60);
-        let remMins = mins % 60;
-        return `${hrs}h ${remMins}m`;
-      }
-      if (mins > 0) {
-        return `${mins}m ${secs}s`;
-      }
-      return `${secs}s`;
+    function fmtRemaining(sec) {
+      if (sec <= 0) return "0s";
+      let m = Math.floor(sec / 60);
+      let s = sec % 60;
+      return m >= 60 ? `${Math.floor(m / 60)}h ${m % 60}m` : (m > 0 ? `${m}m ${s}s` : `${s}s`);
     }
 
-    // Accurate Indian Standard Time (IST) Clock
-    function getISTDate() {
-      const now = new Date();
-      const istString = now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
-      return new Date(istString);
-    }
+    // Cache DOM references
+    const $ = id => document.getElementById(id);
+    const UI = {
+      date: $('liveDateText'),
+      clock: $('liveClockDisplay'),
+      nowCard: $('liveNowCard'),
+      nowTitle: $('liveProgTitle'),
+      nowDesc: $('liveProgDesc'),
+      nowSlot: $('liveSlotBadge'),
+      elapsed: $('liveElapsed'),
+      remaining: $('liveRemaining'),
+      progBar: $('liveProgressBar'),
+      nextTitle: $('nextProgTitle'),
+      nextTime: $('nextProgTime'),
+      nextCountdown: $('nextCountdownText'),
+      list: $('scheduleList')
+    };
 
-    function updateClockAndLiveDetection() {
-      const now = getISTDate();
-      let hrs = now.getHours();
-      let mins = now.getMinutes();
-      let secs = now.getSeconds();
+    let activeIndex = -1;
+    let rendered = false;
 
-      let ampm = hrs >= 12 ? 'PM' : 'AM';
-      let hrs12 = hrs % 12;
-      if (hrs12 === 0) hrs12 = 12;
-
-      const dateOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-      document.getElementById('liveDateText').textContent = now.toLocaleDateString('en-US', dateOptions);
-
-      const clockEl = document.getElementById('liveClockDisplay');
-      clockEl.textContent = `${padZero(hrs12)}:${padZero(mins)}:${padZero(secs)} ${ampm}`;
-
-      let effectiveMinutes = hrs * 60 + mins + (secs / 60);
-
-      let activeItem = null;
-      let nextItem = null;
-
-      // Active program detection with nested news headline prioritization
-      for (let i = 0; i < FULL_SCHEDULE.length; i++) {
-        const item = FULL_SCHEDULE[i];
-        if (effectiveMinutes >= item.startMin && effectiveMinutes < item.endMin) {
-          if (!activeItem || (item.endMin - item.startMin < activeItem.endMin - activeItem.startMin)) {
-            activeItem = item;
-          }
-        }
-      }
-
-      if (activeItem) {
-        for (let i = 0; i < FULL_SCHEDULE.length; i++) {
-          if (FULL_SCHEDULE[i].startMin >= activeItem.endMin) {
-            nextItem = FULL_SCHEDULE[i];
-            break;
-          }
-        }
-      } else {
-        for (let i = 0; i < FULL_SCHEDULE.length; i++) {
-          if (FULL_SCHEDULE[i].startMin > effectiveMinutes) {
-            nextItem = FULL_SCHEDULE[i];
-            break;
-          }
-        }
-      }
-
-      const liveCard = document.getElementById('liveNowCard');
-      const liveTitle = document.getElementById('liveProgTitle');
-      const liveDesc = document.getElementById('liveProgDesc');
-      const liveBadge = document.getElementById('liveSlotBadge');
-      const liveElapsed = document.getElementById('liveElapsed');
-      const liveRemaining = document.getElementById('liveRemaining');
-      const liveBar = document.getElementById('liveProgressBar');
-
-      if (activeItem) {
-        liveCard.classList.add('is-active');
-        liveTitle.textContent = activeItem.title;
-        liveDesc.textContent = activeItem.desc;
-        liveBadge.textContent = `${activeItem.startStr} - ${activeItem.endStr}`;
-
-        let totalDurationSec = (activeItem.endMin - activeItem.startMin) * 60;
-        let elapsedSec = Math.max(0, (effectiveMinutes - activeItem.startMin) * 60);
-        let remSec = Math.max(0, totalDurationSec - elapsedSec);
-        let pct = Math.min(100, Math.max(0, (elapsedSec / totalDurationSec) * 100));
-
-        liveBar.style.width = `${pct.toFixed(1)}%`;
-        liveElapsed.textContent = `${Math.floor(elapsedSec / 60)}m elapsed`;
-        liveRemaining.textContent = `${formatDurationRemaining(Math.round(remSec))} left`;
-      } else {
-        liveCard.classList.remove('is-active');
-        liveBar.style.width = '0%';
-        liveElapsed.textContent = "";
-        liveRemaining.textContent = "";
-
-        if (effectiveMinutes < FULL_SCHEDULE[0].startMin) {
-          liveTitle.textContent = "Transmission Closed (Early Morning)";
-          liveDesc.textContent = `Station transmission commences today at ${FULL_SCHEDULE[0].startStr} with the AIR Signature Tune.`;
-          liveBadge.textContent = `Starts at ${FULL_SCHEDULE[0].startStr}`;
-        } else {
-          liveTitle.textContent = "Transmission Closed / সম্প্ৰচাৰ বন্ধ (Off-Air)";
-          liveDesc.textContent = `Today's transmission has concluded. Next transmission commences tomorrow at ${FULL_SCHEDULE[0].startStr}.`;
-          liveBadge.textContent = "Off-Air";
-        }
-      }
-
-      const nextTitle = document.getElementById('nextProgTitle');
-      const nextTime = document.getElementById('nextProgTime');
-      const nextCountdown = document.getElementById('nextCountdownText');
-
-      if (nextItem) {
-        nextTitle.textContent = nextItem.title;
-        nextTime.textContent = nextItem.startStr;
-        let diffSecs = Math.round((nextItem.startMin - effectiveMinutes) * 60);
-        if (diffSecs > 0) {
-          nextCountdown.textContent = `Starts in ${formatDurationRemaining(diffSecs)}`;
-        } else {
-          nextCountdown.textContent = `Starting shortly`;
-        }
-      } else {
-        nextTitle.textContent = FULL_SCHEDULE[0].title;
-        nextTime.textContent = FULL_SCHEDULE[0].startStr;
-        nextCountdown.textContent = "Tomorrow";
-      }
-
-      currentLiveProgramId = activeItem ? activeItem.id : null;
-
-      let visibleList = FULL_SCHEDULE.filter(item => item.endMin > effectiveMinutes);
-      if (visibleList.length === 0) {
-        visibleList = FULL_SCHEDULE;
-      }
-
-      const renderKey = visibleList.map(i => i.id).join('-') + `_live_${currentLiveProgramId}`;
-
-      if (renderKey !== lastRenderedKey) {
-        lastRenderedKey = renderKey;
-        renderScheduleList(visibleList);
-      }
-    }
-
-    function renderScheduleList(programs) {
-      const container = document.getElementById('scheduleList');
+    function renderListOnce() {
       let html = '';
-
-      programs.forEach(item => {
-        const isLive = (item.id === currentLiveProgramId);
-
+      for (let i = 0; i < SCH.length; i++) {
+        const item = SCH[i];
         html += `
-          <div class="schedule-row ${isLive ? 'live-active' : ''}" id="sched-row-${item.id}">
+          <div class="schedule-row" id="row-${i}">
             <div class="col-time">
-              <div class="time-range">
-                <span>${item.startStr}</span>
-                <span class="time-sep">to</span>
-                <span>${item.endStr}</span>
+              <span>${minTo12(item[0])}</span>
+              <span class="time-sep">to</span>
+              <span>${minTo12(item[1])}</span>
+              <div class="live-indicator-chip" id="chip-${i}" style="display:none;">
+                <span class="pulse-dot"></span><span>LIVE</span>
               </div>
-              ${isLive ? `
-                <div class="live-indicator-chip">
-                  <span class="pulse-dot"></span>
-                  <span>ON AIR</span>
-                </div>
-              ` : ''}
             </div>
-
             <div class="col-prog">
-              <div class="prog-header-meta">
-                <h3 class="prog-title">${item.title}</h3>
-              </div>
-              <p class="prog-desc">${item.desc}</p>
+              <h3 class="prog-title">${item[2]}</h3>
+              <p class="prog-desc">${item[3]}</p>
             </div>
-          </div>
-        `;
-      });
+          </div>`;
+      }
+      UI.list.innerHTML = html;
+      rendered = true;
+    }
 
-      container.innerHTML = html;
+    function tick() {
+      // Direct IST timestamp calculation without heavy string parsing
+      const d = new Date();
+      const utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+      const ist = new Date(utc + 19800000); // UTC + 5:30
+
+      const hrs = ist.getHours();
+      const mins = ist.getMinutes();
+      const secs = ist.getSeconds();
+      const effMin = hrs * 60 + mins + (secs / 60);
+
+      const h12 = hrs % 12 || 12;
+      const ap = hrs >= 12 ? 'PM' : 'AM';
+      UI.clock.textContent = `${h12 < 10 ? '0' : ''}${h12}:${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs} ${ap}`;
+      UI.date.textContent = ist.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+
+      // Find active program
+      let newActiveIndex = -1;
+      for (let i = 0; i < SCH.length; i++) {
+        if (effMin >= SCH[i][0] && effMin < SCH[i][1]) {
+          if (newActiveIndex === -1 || (SCH[i][1] - SCH[i][0] < SCH[newActiveIndex][1] - SCH[newActiveIndex][0])) {
+            newActiveIndex = i;
+          }
+        }
+      }
+
+      // Find next program
+      let nextIndex = -1;
+      if (newActiveIndex !== -1) {
+        for (let i = 0; i < SCH.length; i++) {
+          if (SCH[i][0] >= SCH[newActiveIndex][1]) {
+            nextIndex = i;
+            break;
+          }
+        }
+      } else {
+        for (let i = 0; i < SCH.length; i++) {
+          if (SCH[i][0] > effMin) {
+            nextIndex = i;
+            break;
+          }
+        }
+      }
+
+      // Update Live UI
+      if (newActiveIndex !== -1) {
+        const cur = SCH[newActiveIndex];
+        UI.nowCard.classList.add('is-active');
+        UI.nowTitle.textContent = cur[2];
+        UI.nowDesc.textContent = cur[3];
+        UI.nowSlot.textContent = `${minTo12(cur[0])} - ${minTo12(cur[1])}`;
+
+        const dur = (cur[1] - cur[0]) * 60;
+        const el = Math.max(0, (effMin - cur[0]) * 60);
+        const rem = Math.max(0, dur - el);
+        UI.progBar.style.width = `${Math.min(100, (el / dur) * 100).toFixed(1)}%`;
+        UI.elapsed.textContent = `${Math.floor(el / 60)}m পাৰ হৈছে`;
+        UI.remaining.textContent = `${fmtRemaining(Math.round(rem))} বাকী`;
+      } else {
+        UI.nowCard.classList.remove('is-active');
+        UI.nowTitle.textContent = "সম্প্ৰচাৰ বন্ধ (Off-Air)";
+        UI.nowDesc.textContent = "বৰ্তমান আকাশবাণী গুৱাহাটীৰ সম্প্ৰচাৰ বন্ধ আছে।";
+        UI.nowSlot.textContent = "Off-Air";
+        UI.progBar.style.width = '0%';
+        UI.elapsed.textContent = '';
+        UI.remaining.textContent = '';
+      }
+
+      // Update Next UI
+      if (nextIndex !== -1) {
+        const nxt = SCH[nextIndex];
+        UI.nextTitle.textContent = nxt[2];
+        UI.nextTime.textContent = minTo12(nxt[0]);
+        const diffSec = Math.round((nxt[0] - effMin) * 60);
+        UI.nextCountdown.textContent = diffSec > 0 ? `${fmtRemaining(diffSec)} পিছত` : "শীঘ্ৰে আৰম্ভ হ'ব";
+      } else {
+        UI.nextTitle.textContent = SCH[0][2];
+        UI.nextTime.textContent = minTo12(SCH[0][0]);
+        UI.nextCountdown.textContent = "কাইলৈ পুৱা";
+      }
+
+      // Update Active class in Schedule list only when changed
+      if (newActiveIndex !== activeIndex) {
+        if (activeIndex !== -1) {
+          const oldRow = $(`row-${activeIndex}`);
+          const oldChip = $(`chip-${activeIndex}`);
+          if (oldRow) oldRow.classList.remove('live-active');
+          if (oldChip) oldChip.style.display = 'none';
+        }
+        if (newActiveIndex !== -1) {
+          const newRow = $(`row-${newActiveIndex}`);
+          const newChip = $(`chip-${newActiveIndex}`);
+          if (newRow) newRow.classList.add('live-active');
+          if (newChip) newChip.style.display = 'inline-flex';
+        }
+        activeIndex = newActiveIndex;
+      }
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      updateClockAndLiveDetection();
-      setInterval(updateClockAndLiveDetection, 1000);
+      renderListOnce();
+      tick();
+      setInterval(tick, 1000);
     });
   </script>
 </body>
