@@ -109,91 +109,87 @@ body {
 .section { padding: 0 16px; margin-top: 18px; }
 .title { font-size: 16px; font-weight: 700; color: #f1f5f9; margin-bottom: 12px; }
 
-/* Banner */
-.top-banner { display: flex; justify-content: center; padding: 12px 16px 0; }
-.top-banner img {
-    width: 100%;
-    max-width: 320px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 12px;
-    border: 1px solid #1e293b;
+/* Top Banner */
+.top-banner {
+    padding: 12px 16px 0;
+    text-decoration: none;
+    display: block;
 }
-
-/* Cricket Score Strip */
-.cricket-strip {
-    margin: 10px 16px 0;
-    padding: 10px 12px;
-    background: #111a2e;
-    border: 1px solid rgba(59, 130, 246, 0.3);
-    border-radius: 12px;
-    cursor: pointer;
+.banner-card {
+    background: linear-gradient(135deg, #0f1c3f 0%, #0d1424 60%, #1e1b4b 100%);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    border-radius: 14px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    position: relative;
+    overflow: hidden;
 }
-.strip-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-.live-badge {
+.banner-card:active {
+    transform: scale(0.98);
+    border-color: rgba(59, 130, 246, 0.8);
+}
+.banner-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.banner-tag {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 9px;
+    gap: 5px;
+    background: rgba(239, 68, 68, 0.16);
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    color: #f87171;
+    font-size: 10px;
     font-weight: 800;
-    background: rgba(59, 130, 246, 0.16);
-    border: 1px solid rgba(59, 130, 246, 0.45);
-    color: #60a5fa;
+    padding: 2px 7px;
+    border-radius: 20px;
+    text-transform: uppercase;
 }
-.live-badge .dot {
-    width: 5px;
-    height: 5px;
+.banner-dot {
+    width: 6px;
+    height: 6px;
     background-color: #ef4444;
     border-radius: 50%;
-    display: none;
+    box-shadow: 0 0 6px #ef4444;
 }
-.strip-top-right { display: flex; align-items: center; gap: 6px; }
-.strip-audio-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 3px 8px;
-    background: #dc2626;
-    border-radius: 12px;
+.banner-time {
     font-size: 11px;
-    font-weight: 800;
-    color: #fff;
-    text-decoration: none;
+    color: #94a3b8;
+    font-weight: 600;
 }
-.strip-audio-btn:active { opacity: 0.85; }
-.strip-action {
+.banner-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.2px;
+    line-height: 1.2;
+}
+.banner-bottom-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.banner-station {
+    font-size: 11px;
+    color: #38bdf8;
+    font-weight: 600;
+}
+.banner-cta {
     display: inline-flex;
     align-items: center;
-    gap: 3px;
-    padding: 3px 8px;
-    background: rgba(37, 99, 235, 0.15);
-    border: 1px solid rgba(59, 130, 246, 0.4);
-    border-radius: 12px;
+    gap: 5px;
+    background: #2563eb;
+    color: #ffffff;
     font-size: 11px;
     font-weight: 700;
-    color: #60a5fa;
+    padding: 4px 10px;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
 }
-.strip-status {
-    font-size: 11px;
-    color: #cbd5e1;
-    margin-bottom: 8px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-.strip-scores { display: flex; flex-direction: column; gap: 5px; }
-.strip-team { display: flex; align-items: center; gap: 6px; }
-.team-logo {
-    width: 17px;
-    height: 17px;
-    border-radius: 50%;
-    object-fit: cover;
-    background: #1e293b;
-}
-.team-code { font-weight: 800; font-size: 11.5px; }
-.team-runs { margin-left: auto; color: #38bdf8; font-size: 11.5px; font-weight: 700; }
-.team-overs { color: #94a3b8; font-size: 10px; }
 
 /* Station Cards */
 .station-card {
@@ -312,50 +308,30 @@ body {
         </div>
     </header>
 
-    <!-- Top Banner -->
-    <a href="go:BBC5E" class="top-banner">
-        <img src="https://ik.imagekit.io/sqt8ptw1k/file_00000000c51081fab114c8d554a26a2f.webp" alt="BBC 5 Sports Extra" fetchpriority="high" decoding="async" width="320" height="100">
-    </a>
-
-    <!-- Cricket Live Score Strip -->
-    <div class="cricket-strip" id="cricketStrip" onclick="window.location.href='go:card'">
-        <div class="strip-top">
-            <div class="live-badge" id="badgeContainer">
-                <span class="dot" id="liveDot"></span>
-                <span id="matchBadge">COMPLETED</span>
+    <!-- Top Banner (Auto-updated from SCHEDULE_DATA) -->
+    <a href="go:BBC5E" class="top-banner" id="bannerLink">
+        <div class="banner-card">
+            <div class="banner-top-row">
+                <div class="banner-tag">
+                    <span class="banner-dot" id="bannerDot"></span>
+                    <span id="bannerTag">Sports Extra</span>
+                </div>
+                <div class="banner-time" id="bannerTime">Loading schedule...</div>
             </div>
-            <div class="strip-top-right">
-                <a href="go:BBC5E" class="strip-audio-btn" id="stripAudioBtn" onclick="event.stopPropagation();">
+
+            <div class="banner-title" id="bannerTitle">Loading event...</div>
+
+            <div class="banner-bottom-row">
+                <span class="banner-station">BBC Radio 5 Sports Extra</span>
+                <div class="banner-cta">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                        <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
                     </svg>
-                    <span>Audio</span>
-                </a>
-                <div class="strip-action">
-                    <span>Scorecard</span>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>Listen now</span>
                 </div>
             </div>
         </div>
-
-        <div class="strip-status" id="matchNote">England won by 223 runs</div>
-
-        <div class="strip-scores">
-            <div class="strip-team">
-                <img id="teamALogo" class="team-logo" src="https://ik.imagekit.io/sqt8ptw1k/england.webp?updatedAt=1789628691703" alt="ENG" width="17" height="17">
-                <span class="team-code" id="teamACode">ENG</span>
-                <span class="team-runs" id="teamAScore">--</span>
-                <span class="team-overs" id="teamAOvers"></span>
-            </div>
-            <div class="strip-team">
-                <img id="teamBLogo" class="team-logo" src="https://ik.imagekit.io/sqt8ptw1k/sri-lanka-women.webp?updatedAt=1789308085405" alt="SL" width="17" height="17">
-                <span class="team-code" id="teamBCode">SL</span>
-                <span class="team-runs" id="teamBScore">--</span>
-                <span class="team-overs" id="teamBOvers"></span>
-            </div>
-        </div>
-    </div>
+    </a>
 
     <!-- Popular Stations -->
     <div class="section">
@@ -450,8 +426,23 @@ body {
             <button type="button" class="modal-close" id="closeModal">&times;</button>
         </div>
         <div class="modal-body">
-            <p><strong>Welcome to All UK Radio.</strong></p>
-            <p>We are committed to protecting your privacy. This application streams publicly accessible radio broadcasts and does not collect or store personal identifying information.</p>
+         <p><strong>Welcome to All UK Radio.</strong></p>
+
+    <p>
+      We are committed to protecting your privacy.
+      This application streams publicly accessible radio broadcasts
+      and does not collect or store personal identifying information.
+    </p>
+
+   <strong>Contact Us</strong>
+
+    <p>
+      For any questions or concerns regarding this Privacy Policy,
+      please contact us at:
+      <strong>vividhbharati75@gmail.com</strong>
+    </p>
+
+
         </div>
     </div>
 </div>
@@ -463,90 +454,7 @@ document.getElementById('privacyBtn')?.addEventListener('click', (e) => { e.prev
 document.getElementById('closeModal')?.addEventListener('click', (e) => { e.preventDefault(); privacyModal.classList.remove('active'); });
 window.addEventListener('click', (e) => { if (e.target === privacyModal) privacyModal.classList.remove('active'); });
 
-/* Cricket Score */
-const WORKER_URL = "https://cricvoice.aminurmarch.workers.dev/";
-const MATCH_ID = "69bd420d1dbf177ca4e58e75";
-const OVERRIDE_NOTE = "England won by 223 runs";
-
-function getTeamScoreData(teamObj, prefix) {
-    if (!teamObj) return { score: "--", overs: "" };
-    const directScore = (teamObj.score ?? teamObj.scores ?? "").toString().trim();
-    if (directScore) {
-        const ov = (teamObj.over ?? teamObj.overs ?? "").toString().trim();
-        return { score: directScore, overs: ov ? `(${ov} ov)` : "" };
-    }
-    const inn = teamObj[`${prefix}_1_score`] || teamObj[`${prefix}_2_score`];
-    if (inn && typeof inn.runs !== "undefined") {
-        return { score: `${inn.runs}/${inn.wickets ?? 0}`, overs: inn.overs ? `(${inn.overs} ov)` : "" };
-    }
-    return { score: "--", overs: "" };
-}
-
-async function fetchCricketScore() {
-    if (document.hidden) return;
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 6000);
-
-    try {
-        const res = await fetch(`${WORKER_URL}?matchId=${MATCH_ID}`, { signal: controller.signal, cache: "no-store" });
-        if (!res.ok) return;
-        const json = await res.json();
-        const match = json.responseData?.result;
-        if (!match) return;
-
-        // Team Scores
-        const a = match.teams?.a, b = match.teams?.b;
-        if (a) {
-            const data = getTeamScoreData(a, "a");
-            document.getElementById('teamACode').textContent = a.shortName || a.abbr || "ENG";
-            document.getElementById('teamAScore').textContent = data.score;
-            document.getElementById('teamAOvers').textContent = data.overs;
-        }
-        if (b) {
-            const data = getTeamScoreData(b, "b");
-            document.getElementById('teamBCode').textContent = b.shortName || b.abbr || "SL";
-            document.getElementById('teamBScore').textContent = data.score;
-            document.getElementById('teamBOvers').textContent = data.overs;
-        }
-
-        // Live Badge, Dot & Match Note
-        const badgeEl = document.getElementById('matchBadge');
-        const dotEl = document.getElementById('liveDot');
-        const noteEl = document.getElementById('matchNote');
-
-        if (OVERRIDE_NOTE) {
-            if (badgeEl) badgeEl.textContent = "COMPLETED";
-            if (dotEl) dotEl.style.display = "none";
-            if (noteEl) noteEl.textContent = OVERRIDE_NOTE;
-        } else {
-            const status = (match.status || "").toLowerCase();
-            const isLive = status === "started" || status === "live" || status === "in_progress";
-            const isCompleted = status === "completed" || status === "finished" || status === "result" || status === "ended";
-
-            if (isLive) {
-                if (badgeEl) badgeEl.textContent = "LIVE";
-                if (dotEl) dotEl.style.display = "inline-block";
-            } else if (isCompleted) {
-                if (badgeEl) badgeEl.textContent = "COMPLETED";
-                if (dotEl) dotEl.style.display = "none";
-            } else {
-                if (badgeEl) badgeEl.textContent = "UPCOMING";
-                if (dotEl) dotEl.style.display = "none";
-            }
-
-            if (match.status_note && noteEl) {
-                noteEl.textContent = match.status_note;
-            } else if (match.announcement1 && noteEl) {
-                noteEl.textContent = `ENG vs SL 3rd ODI • ${match.announcement1}`;
-            }
-        }
-    } catch (_) {} 
-    finally { 
-        clearTimeout(timeout); 
-    }
-}
-
-/* Schedule Logic with Cached UK Formatter */
+/* UK Time Helpers */
 const ukFormatter = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit', hour12: false });
 
 function getUKMinutesNow() {
@@ -568,6 +476,7 @@ function timeStringToMinutesUK(str) {
     return h * 60 + min;
 }
 
+/* Schedule Logic for Popular Stations */
 let cachedSchedule = null;
 function getPreparedSchedule() {
     if (cachedSchedule) return cachedSchedule;
@@ -604,27 +513,102 @@ function updatePrograms() {
     });
 }
 
+/* Top Banner Auto-Update Logic (from BBC Radio 5 Sports Extra) */
+function updateTopBannerFromSchedule() {
+    if (typeof SCHEDULE_DATA === "undefined" || !Array.isArray(SCHEDULE_DATA)) return;
+
+    // 1. Filter BBC Radio 5 Sports Extra shows
+    const sportsShows = SCHEDULE_DATA.filter(p => 
+        (p.channel || "").toLowerCase().includes("sports extra")
+    ).map(p => ({
+        time: p.time,
+        title: p.title || "",
+        startMin: timeStringToMinutesUK(p.time)
+    })).sort((a, b) => a.startMin - b.startMin);
+
+    if (!sportsShows.length) return;
+
+    const now = getUKMinutesNow();
+
+    // 2. Identify currently running show in UK time
+    let currentIndex = sportsShows.length - 1;
+    for (let i = 0; i < sportsShows.length - 1; i++) {
+        if (now >= sportsShows[i].startMin && now < sportsShows[i + 1].startMin) {
+            currentIndex = i;
+            break;
+        }
+    }
+
+    const currentShow = sportsShows[currentIndex];
+    const isGeneric = (title) => title.toLowerCase().includes("this is sports extra");
+
+    let targetShow = currentShow;
+    let isUpcoming = false;
+
+    // 3. If currently generic bulletin, check for an upcoming primary match today
+    if (isGeneric(currentShow.title)) {
+        const upcomingMatch = sportsShows.find(p => p.startMin > now && !isGeneric(p.title));
+        if (upcomingMatch) {
+            targetShow = upcomingMatch;
+            isUpcoming = true;
+        }
+    }
+
+    // 4. Format Title: clean brackets and strip series prefix if present
+    let cleanTitle = targetShow.title.split("(")[0].trim();
+    if (cleanTitle.includes(":")) {
+        const parts = cleanTitle.split(":");
+        cleanTitle = parts.slice(1).join(":").trim();
+    }
+
+    // 5. Dynamic Sport Tag & Badge Text
+    const lowerTitle = targetShow.title.toLowerCase();
+    let tagText = isUpcoming ? "UPCOMING" : "LIVE NOW";
+    if (lowerTitle.includes("football")) {
+        tagText = isUpcoming ? "UPCOMING FOOTBALL" : "LIVE FOOTBALL";
+    } else if (lowerTitle.includes("cricket")) {
+        tagText = isUpcoming ? "UPCOMING CRICKET" : "LIVE CRICKET";
+    } else if (lowerTitle.includes("rugby")) {
+        tagText = isUpcoming ? "UPCOMING RUGBY" : "LIVE RUGBY";
+    } else if (lowerTitle.includes("tennis")) {
+        tagText = isUpcoming ? "UPCOMING TENNIS" : "LIVE TENNIS";
+    }
+
+    // 6. Update UI elements
+    const titleEl = document.getElementById("bannerTitle");
+    const timeEl = document.getElementById("bannerTime");
+    const tagEl = document.getElementById("bannerTag");
+    const dotEl = document.getElementById("bannerDot");
+
+    if (titleEl) titleEl.textContent = cleanTitle || "BBC Radio 5 Sports Extra";
+    if (timeEl) timeEl.textContent = isUpcoming ? `Today, ${targetShow.time}` : `Live Now (${targetShow.time})`;
+    if (tagEl) tagEl.textContent = tagText;
+    if (dotEl) dotEl.style.display = isUpcoming ? "none" : "inline-block";
+}
+
+/* Init & Periodic Refresh */
 document.addEventListener("DOMContentLoaded", () => {
-    fetchCricketScore();
     updatePrograms();
+    updateTopBannerFromSchedule();
 
     let attempts = 0;
     const initTimer = setInterval(() => {
         attempts++;
         if (typeof SCHEDULE_DATA !== "undefined" || attempts >= 8) {
             updatePrograms();
+            updateTopBannerFromSchedule();
             clearInterval(initTimer);
         }
     }, 400);
 
     // Refresh intervals
-    setInterval(fetchCricketScore, 30000);
     setInterval(updatePrograms, 60000);
+    setInterval(updateTopBannerFromSchedule, 60000);
 
     document.addEventListener("visibilitychange", () => {
         if (!document.hidden) {
-            fetchCricketScore();
             updatePrograms();
+            updateTopBannerFromSchedule();
         }
     });
 });
