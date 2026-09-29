@@ -8,13 +8,11 @@
 :root {
   --bg-primary: #0a0e17;
   --surface-card: #131a29;
-  --surface-inner: rgba(0, 0, 0, 0.22);
-  --border-subtle: rgba(255, 255, 255, 0.07);
-  --border-focus: rgba(255, 255, 255, 0.15);
+  --surface-inner: rgba(0, 0, 0, 0.25);
+  --border-subtle: rgba(255, 255, 255, 0.08);
   --accent-cyan: #38bdf8;
   --text-main: #f8fafc;
   --text-sub: #94a3b8;
-  --text-muted: #64748b;
   --inter-color: #ef4444;
   --info-color: #f59e0b;
   --culture-color: #a855f7;
@@ -29,136 +27,83 @@
   user-select: none;
 }
 
-html {
-  background: var(--bg-primary);
-  scroll-behavior: auto;
-}
-
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Google Sans", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background: var(--bg-primary);
   color: var(--text-main);
-  padding: 0 16px max(32px, env(safe-area-inset-bottom));
+  padding: 0 16px max(24px, env(safe-area-inset-bottom));
   line-height: 1.4;
   min-height: 100vh;
   overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
 }
 
-/* Ambient glow accents */
-body::before,
-body::after {
-  content: "";
-  position: fixed;
-  width: 200px;
-  height: 200px;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.10;
-  border-radius: 50%;
-  filter: blur(55px);
-}
-body::before {
-  top: 10%;
-  right: -50px;
-  background: var(--accent-cyan);
-}
-body::after {
-  bottom: 20%;
-  left: -50px;
-  background: var(--culture-color);
-}
-
-/* FIXED STICKY HEADER */
+/* STICKY HEADER (Blurs removed for GPU efficiency) */
 .sticky-header {
   position: sticky;
   top: 0;
-  z-index: 1000;
-  background: rgba(10, 14, 23, 0.88);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  margin: 0 -16px 16px;
-  padding: max(14px, env(safe-area-inset-top)) 16px 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  z-index: 100;
+  background: #0a0e17;
+  margin: 0 -16px 14px;
+  padding: max(12px, env(safe-area-inset-top)) 16px 12px;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .header-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 8px;
-}
-
-.brand-section {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  flex: 1;
 }
 
 .brand-title {
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 800;
-  letter-spacing: -0.4px;
   color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
 }
 
 .brand-radio-icon {
   width: 18px;
   height: 18px;
   fill: var(--accent-cyan);
-  flex-shrink: 0;
 }
 
 .brand-subtitle {
   font-size: 11px;
-  font-weight: 500;
-  color: var(--text-muted);
-  letter-spacing: 0.2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-top: 1px;
+  color: var(--text-sub);
 }
 
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 6px;
-  flex-shrink: 0;
+  gap: 8px;
 }
 
 .time-chip {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border-subtle);
-  padding: 5px 9px;
-  border-radius: 20px;
+  padding: 4px 8px;
+  border-radius: 16px;
   font-size: 11px;
   font-weight: 600;
   color: var(--accent-cyan);
   font-variant-numeric: tabular-nums;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 
 .time-dot {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--accent-cyan);
-  box-shadow: 0 0 5px var(--accent-cyan);
 }
 
 .icon-button {
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border-subtle);
@@ -167,13 +112,10 @@ body::after {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  outline: none;
-  transition: transform 0.12s ease, background 0.12s ease, color 0.12s ease;
 }
 
 .icon-button:active {
-  transform: scale(0.90);
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.15);
   color: #fff;
 }
 
@@ -182,72 +124,56 @@ body::after {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .station-card {
   position: relative;
-  background: linear-gradient(150deg, #141c2c, #0f1523);
+  background: var(--surface-card);
   border: 1px solid var(--border-subtle);
-  border-radius: 18px;
-  padding: 14px 16px;
+  border-radius: 16px;
+  padding: 14px;
   cursor: pointer;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
-  transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
-  contain: layout paint;
-  content-visibility: auto;
-  contain-intrinsic-size: 175px;
+  gap: 10px;
 }
 
 .station-card:active {
   transform: scale(0.98);
-  border-color: var(--border-focus);
   background: #172134;
 }
 
-/* Glowing side accent bar */
 .station-card::before {
   content: "";
   position: absolute;
-  top: 14px;
+  top: 12px;
   left: 0;
-  bottom: 14px;
-  width: 3.5px;
+  bottom: 12px;
+  width: 3px;
   background: var(--station-color, var(--accent-cyan));
-  border-radius: 0 3px 3px 0;
-  box-shadow: 0 0 8px var(--station-color, var(--accent-cyan));
+  border-radius: 0 2px 2px 0;
 }
 
 .card-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 2px;
 }
 
 .station-identity {
   display: flex;
   align-items: center;
   gap: 12px;
-  min-width: 0;
 }
 
 .station-avatar {
-  width: 46px;
-  height: 46px;
-  border-radius: 13px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   background: #000;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
   flex-shrink: 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .station-avatar img {
@@ -257,18 +183,10 @@ body::after {
   display: block;
 }
 
-.station-text-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-
 .station-title {
-  font-size: 16.5px;
+  font-size: 16px;
   font-weight: 700;
   color: #fff;
-  letter-spacing: -0.3px;
 }
 
 .live-indicator {
@@ -277,16 +195,15 @@ body::after {
   gap: 5px;
   font-size: 9.5px;
   font-weight: 800;
-  letter-spacing: 0.6px;
   color: #f87171;
+  letter-spacing: 0.5px;
 }
 
-/* Smooth live equalizer */
 .equalizer {
   display: flex;
   align-items: flex-end;
   gap: 2px;
-  height: 10px;
+  height: 9px;
 }
 
 .equalizer span {
@@ -295,196 +212,160 @@ body::after {
   background: #ef4444;
   border-radius: 1px;
 }
-.equalizer span:nth-child(1) { animation: eq 0.8s ease-in-out infinite; }
-.equalizer span:nth-child(2) { animation: eq 1.1s ease-in-out infinite 0.2s; }
-.equalizer span:nth-child(3) { animation: eq 0.7s ease-in-out infinite 0.4s; }
-.equalizer span:nth-child(4) { animation: eq 0.95s ease-in-out infinite 0.1s; }
-
-@keyframes eq {
-  0%, 100% { height: 3px; }
-  50% { height: 10px; }
-}
 
 .play-circle {
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background: #1b2436;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-  transition: transform 0.12s ease, background 0.12s ease, color 0.12s ease;
 }
 
 .play-circle svg {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   fill: currentColor;
   margin-left: 2px;
 }
 
-.station-card:active .play-circle {
-  transform: scale(0.92);
-  background: #fff;
-  color: #0b0f19;
-}
-
-/* Show Content Box */
 .show-wrapper {
   background: var(--surface-inner);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 12px;
-  padding: 10px 12px;
-  min-width: 0;
+  border-radius: 10px;
+  padding: 8px 10px;
 }
 
 .show-badge-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 
 .show-time-chip {
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 700;
   background: rgba(56, 189, 248, 0.12);
   color: var(--accent-cyan);
-  padding: 2px 7px;
-  border-radius: 6px;
-  letter-spacing: 0.2px;
+  padding: 2px 6px;
+  border-radius: 4px;
 }
 
 .show-heading {
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 600;
   color: #f1f5f9;
   line-height: 1.35;
   margin-bottom: 3px;
+  /* সম্পূৰ্ণ নাম দেখুৱাবলৈ তলৰ লাইনসমূহ ব্যৱহাৰ কৰক */
+  white-space: normal;
+  word-break: break-word;
 }
 
 .show-summary {
-  font-size: 12px;
+  font-size: 11.5px;
   color: var(--text-sub);
+  line-height: 1.4;
+  margin-top: 2px;
+  /* বিৱৰণ যদি সৰ্বাধিক ২ টা শাৰীত ৰাখিব বিচাৰে */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  line-height: 1.45;
 }
-
-/* EXPLORE ALL STATIONS BUTTON */
-.explore-container {
-  margin-top: 6px;
-}
-
+/* EXPLORE BUTTON */
 .explore-btn {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(135deg, #162032, #0f1726);
-  border: 1px solid rgba(56, 189, 248, 0.22);
-  border-radius: 16px;
-  padding: 14px 16px;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 12px 14px;
   color: #fff;
   cursor: pointer;
-  outline: none;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
-  transition: transform 0.12s ease, background 0.12s ease;
 }
 
 .explore-btn:active {
-  transform: scale(0.98);
-  background: #1e2b42;
+  background: #172134;
 }
 
 .explore-content {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .explore-icon-wrap {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  background: rgba(56, 189, 248, 0.12);
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(56, 189, 248, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
 }
 
 .explore-icon-wrap svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   fill: var(--accent-cyan);
 }
 
 .explore-text {
-  display: flex;
-  flex-direction: column;
   text-align: left;
 }
 
 .explore-title {
-  font-size: 14.5px;
+  font-size: 13.5px;
   font-weight: 700;
-  color: #fff;
+  display: block;
 }
 
 .explore-sub {
-  font-size: 11.5px;
+  font-size: 11px;
   color: var(--text-sub);
-  margin-top: 1px;
 }
 
 .explore-arrow {
   width: 18px;
   height: 18px;
-  fill: var(--accent-cyan);
-  flex-shrink: 0;
+  fill: var(--text-sub);
 }
 
-/* PRIVACY MODAL */
+/* MODAL */
 .modal-overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.78);
-  backdrop-filter: blur(6px);
-  z-index: 2000;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 200;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 16px;
 }
 
 .modal-overlay.active { display: flex; }
 
 .modal-card {
-  background: #141c2c;
-  border: 1px solid var(--border-focus);
-  border-radius: 22px;
-  max-width: 350px;
+  background: #131a29;
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  max-width: 320px;
   width: 100%;
-  padding: 22px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  padding: 18px;
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .modal-title {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
   color: #fff;
 }
@@ -493,19 +374,18 @@ body::after {
   background: none;
   border: none;
   color: var(--text-sub);
-  font-size: 24px;
-  line-height: 1;
+  font-size: 22px;
   cursor: pointer;
 }
 
 .modal-content {
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--text-sub);
-  line-height: 1.55;
+  line-height: 1.5;
 }
 
 .modal-footer {
-  margin-top: 20px;
+  margin-top: 16px;
   display: flex;
   justify-content: flex-end;
 }
@@ -514,27 +394,19 @@ body::after {
   background: var(--accent-cyan);
   color: #04101f;
   border: none;
-  border-radius: 12px;
-  padding: 9px 22px;
-  font-size: 13px;
+  border-radius: 8px;
+  padding: 6px 16px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
 }
 </style>
 </head>
 <body>
 
-  <!-- FIXED STICKY HEADER -->
   <header class="sticky-header">
     <div class="header-top">
-      <div class="brand-section">
+      <div>
         <div class="brand-title">
           <svg class="brand-radio-icon" viewBox="0 0 24 24">
             <path d="M12 3a9 9 0 0 0-9 9v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a9 9 0 0 0-9-9zm0 2c3.87 0 7 3.13 7 7v1.17A2.99 2.99 0 0 0 17 13c-1.66 0-3 1.34-3 3v2h-4v-2c0-1.66-1.34-3-3-3a2.99 2.99 0 0 0-2 .17V12c0-3.87 3.13-7 7-7z"/>
@@ -545,311 +417,249 @@ body::after {
       </div>
 
       <div class="header-actions">
-        <!-- Live Clock -->
         <div class="time-chip">
           <span class="time-dot"></span>
-          <span id="paris-clock">--:--:--</span>
+          <span id="paris-clock">--:--</span>
         </div>
 
-        <!-- Share Button (Triggers: http://action_search) -->
-        <button class="icon-button" onclick="shareApp()" aria-label="Share" title="Partager">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="18" cy="5" r="3"></circle>
-            <circle cx="6" cy="12" r="3"></circle>
-            <circle cx="18" cy="19" r="3"></circle>
-            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        <button class="icon-button" onclick="actionUri('http://action_share')" aria-label="Share">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
           </svg>
         </button>
 
-        <!-- Privacy Button -->
-        <button class="icon-button" onclick="openPrivacyModal()" aria-label="Privacy" title="Confidentialité">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="16" x2="12" y2="12"></line>
-            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        <button class="icon-button" onclick="toggleModal(true)" aria-label="Privacy">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>
           </svg>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- RADIO CARDS LIST -->
-  <div class="station-list" id="stations-container"></div>
+  <!-- STATIC STATIONS FOR INSTANT LOAD -->
+  <div class="station-list">
+    <!-- France Inter -->
+    <div class="station-card" style="--station-color: var(--inter-color)" onclick="actionUri('go:finter')">
+      <div class="card-top">
+        <div class="station-identity">
+          <div class="station-avatar">
+            <img src="https://ik.imagekit.io/sqt8ptw1k/images_FOnmIj289.png" alt="France Inter" loading="lazy">
+          </div>
+          <div>
+            <div class="station-title">France Inter</div>
+            <div class="live-indicator"><div class="equalizer"><span></span><span></span><span></span></div>EN DIRECT</div>
+          </div>
+        </div>
+        <div class="play-circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      </div>
+      <div class="show-wrapper">
+        <div class="show-badge-row"><span class="show-time-chip" id="t-inter">--:--</span></div>
+        <div class="show-heading" id="h-inter">En direct</div>
+        <div class="show-summary" id="s-inter">Radio France</div>
+      </div>
+    </div>
 
-  <!-- EXPLORE ALL STATIONS BUTTON -->
+    <!-- France Info -->
+    <div class="station-card" style="--station-color: var(--info-color)" onclick="actionUri('go:finfo')">
+      <div class="card-top">
+        <div class="station-identity">
+          <div class="station-avatar">
+            <img src="https://ik.imagekit.io/sqt8ptw1k/download_iJaUHUs7R0.png" alt="France Info" loading="lazy">
+          </div>
+          <div>
+            <div class="station-title">France Info</div>
+            <div class="live-indicator"><div class="equalizer"><span></span><span></span><span></span></div>EN DIRECT</div>
+          </div>
+        </div>
+        <div class="play-circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      </div>
+      <div class="show-wrapper">
+        <div class="show-badge-row"><span class="show-time-chip" id="t-info">--:--</span></div>
+        <div class="show-heading" id="h-info">En direct</div>
+        <div class="show-summary" id="s-info">Radio France</div>
+      </div>
+    </div>
+
+    <!-- France Culture -->
+    <div class="station-card" style="--station-color: var(--culture-color)" onclick="actionUri('go:fcul')">
+      <div class="card-top">
+        <div class="station-identity">
+          <div class="station-avatar">
+            <img src="https://ik.imagekit.io/sqt8ptw1k/images%20(1)_2O3twmcLj.png" alt="France Culture" loading="lazy">
+          </div>
+          <div>
+            <div class="station-title">France Culture</div>
+            <div class="live-indicator"><div class="equalizer"><span></span><span></span><span></span></div>EN DIRECT</div>
+          </div>
+        </div>
+        <div class="play-circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      </div>
+      <div class="show-wrapper">
+        <div class="show-badge-row"><span class="show-time-chip" id="t-culture">--:--</span></div>
+        <div class="show-heading" id="h-culture">En direct</div>
+        <div class="show-summary" id="s-culture">Radio France</div>
+      </div>
+    </div>
+
+    <!-- France Musique -->
+    <div class="station-card" style="--station-color: var(--musique-color)" onclick="actionUri('go:fmusi')">
+      <div class="card-top">
+        <div class="station-identity">
+          <div class="station-avatar">
+            <img src="https://ik.imagekit.io/sqt8ptw1k/download%20(1)_wUMJsGpab.png" alt="France Musique" loading="lazy">
+          </div>
+          <div>
+            <div class="station-title">France Musique</div>
+            <div class="live-indicator"><div class="equalizer"><span></span><span></span><span></span></div>EN DIRECT</div>
+          </div>
+        </div>
+        <div class="play-circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      </div>
+      <div class="show-wrapper">
+        <div class="show-badge-row"><span class="show-time-chip" id="t-musique">--:--</span></div>
+        <div class="show-heading" id="h-musique">En direct</div>
+        <div class="show-summary" id="s-musique">Radio France</div>
+      </div>
+    </div>
+  </div>
+
   <div class="explore-container">
-    <button class="explore-btn" onclick="playStation('go:expl')">
+    <button class="explore-btn" onclick="actionUri('go:expl')">
       <div class="explore-content">
         <div class="explore-icon-wrap">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-          </svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
         </div>
         <div class="explore-text">
           <span class="explore-title">Explorer toutes les stations</span>
-          <span class="explore-sub">Découvrez toutes les radios et fréquences</span>
+          <span class="explore-sub">Découvrez toutes les radios</span>
         </div>
       </div>
-      <svg class="explore-arrow" viewBox="0 0 24 24">
-        <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
-      </svg>
+      <svg class="explore-arrow" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
     </button>
   </div>
 
   <!-- PRIVACY MODAL -->
-  <div class="modal-overlay" id="privacy-modal" onclick="closePrivacyModal(event)">
+  <div class="modal-overlay" id="privacy-modal" onclick="toggleModal(false)">
     <div class="modal-card" onclick="event.stopPropagation()">
       <div class="modal-header">
         <div class="modal-title">Confidentialité</div>
-        <button class="modal-close" onclick="closePrivacyModal()">&times;</button>
+        <button class="modal-close" onclick="toggleModal(false)">&times;</button>
       </div>
       <div class="modal-content">
-        <p>Cette application respecte votre vie privée. Aucune donnée personnelle ni identifiant de suivi n'est collecté.</p>
-        <br>
-        <p>Les flux audio sont transmis en direct et en accès libre pour une écoute fluide.</p>
+        <p>Cette application respecte votre vie privée. Aucune donnée personnelle n'est collectée.</p>
       </div>
       <div class="modal-footer">
-        <button class="modal-btn" onclick="closePrivacyModal()">Compris</button>
+        <button class="modal-btn" onclick="toggleModal(false)">Fermer</button>
       </div>
     </div>
   </div>
 
   <script>
+let scheduleByChannel = {};
+let lastCheckedMinute = -1;
+
 const STATIONS = [
-  {
-    id: "inter",
-    name: "France Inter",
-    trigger: "go:finter",
-    color: "var(--inter-color)",
-    logo: "https://ik.imagekit.io/sqt8ptw1k/images_FOnmIj289.png"
-  },
-  {
-    id: "info",
-    name: "France Info",
-    trigger: "go:finfo",
-    color: "var(--info-color)",
-    logo: "https://ik.imagekit.io/sqt8ptw1k/download_iJaUHUs7R0.png"
-  },
-  {
-    id: "culture",
-    name: "France Culture",
-    trigger: "go:fcul",
-    color: "var(--culture-color)",
-    logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_2O3twmcLj.png"
-  },
-  {
-    id: "musique",
-    name: "France Musique",
-    trigger: "go:fmusi",
-    color: "var(--musique-color)",
-    logo: "https://ik.imagekit.io/sqt8ptw1k/download%20(1)_wUMJsGpab.png"
-  }
+  { id: 'inter', name: 'france inter' },
+  { id: 'info', name: 'france info' },
+  { id: 'culture', name: 'france culture' },
+  { id: 'musique', name: 'france musique' }
 ];
 
-let scheduleData = [];
-let stationElements = new Map();
+function actionUri(uri) {
+  window.location.href = uri;
+}
 
-function getParisTime() {
-  const now = new Date();
-  const str = now.toLocaleTimeString("en-GB", {
-    timeZone: "Europe/Paris",
+function toggleModal(open) {
+  document.getElementById('privacy-modal').classList.toggle('active', open);
+}
+
+// Optimized Paris Time retrieval
+function getParisMinutes() {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/Paris',
+    hour: 'numeric',
+    minute: 'numeric',
     hour12: false
-  });
-  const parts = str.split(":").map(Number);
-  return {
-    totalMinutes: parts[0] * 60 + parts[1],
-    timeStr: str
-  };
+  }).formatToParts(new Date());
+
+  const h = parseInt(parts.find(p => p.type === 'hour').value, 10);
+  const m = parseInt(parts.find(p => p.type === 'minute').value, 10);
+  return { h, m, total: h * 60 + m };
 }
 
-function isShowLive(timeRange, nowMinutes) {
-  if (!timeRange) return false;
-
-  const parts = timeRange.split("-").map(p => p.trim());
-  if (parts.length !== 2) return false;
-
-  function parseM(tStr) {
-    const clean = tStr.replace("h", ":");
-    const p = clean.split(":").map(Number);
-    return p[0] * 60 + (p[1] || 0);
-  }
-
-  const start = parseM(parts[0]);
-  let end = parseM(parts[1]);
-
+function parseTimeRange(timeRange) {
+  if (!timeRange) return null;
+  const p = timeRange.split('-').map(s => s.trim().replace('h', ':').split(':').map(Number));
+  if (p.length !== 2) return null;
+  let start = p[0][0] * 60 + (p[0][1] || 0);
+  let end = p[1][0] * 60 + (p[1][1] || 0);
   if (end === 0) end = 1440;
-
-  if (end < start) {
-    return nowMinutes >= start || nowMinutes < end;
-  }
-
-  return nowMinutes >= start && nowMinutes < end;
+  return { start, end };
 }
 
-function getShowsByChannel() {
-  const map = new Map();
-  for (const item of scheduleData) {
-    if (!item || !item.channel) continue;
-    const key = item.channel.toLowerCase();
-    if (!map.has(key)) map.set(key, []);
-    map.get(key).push(item);
-  }
-  return map;
-}
+function updateSchedules() {
+  const paris = getParisMinutes();
+  
+  // Update clock
+  const timeStr = `${String(paris.h).padStart(2, '0')}:${String(paris.m).padStart(2, '0')}`;
+  document.getElementById('paris-clock').textContent = timeStr;
 
-let showsByChannel = new Map();
-
-function getCurrentShow(channelName, nowMinutes) {
-  if (!scheduleData.length) {
-    return {
-      title: "Chargement en direct...",
-      time: "--:--",
-      description: "Radio France en direct"
-    };
-  }
-
-  const shows = showsByChannel.get(channelName.toLowerCase()) || [];
-
-  for (const show of shows) {
-    if (isShowLive(show.time, nowMinutes)) return show;
-  }
-
-  return shows[0] || {
-    title: "Programme en cours",
-    time: "En direct",
-    description: "Radio France en direct"
-  };
-}
-
-function buildCards() {
-  const container = document.getElementById("stations-container");
-  const fragment = document.createDocumentFragment();
-
-  stationElements.clear();
+  // Only update shows if the minute changed
+  if (paris.total === lastCheckedMinute) return;
+  lastCheckedMinute = paris.total;
 
   for (const st of STATIONS) {
-    const card = document.createElement("div");
-    card.className = "station-card";
-    card.style.setProperty("--station-color", st.color);
-    card.onclick = () => playStation(st.trigger);
+    const list = scheduleByChannel[st.name] || [];
+    let currentShow = null;
 
-    card.innerHTML = `
-      <div class="card-top">
-        <div class="station-identity">
-          <div class="station-avatar">
-            <img src="${st.logo}" alt="${st.name}" width="46" height="46" decoding="async">
-          </div>
-          <div class="station-text-meta">
-            <div class="station-title">${st.name}</div>
-            <div class="live-indicator">
-              <div class="equalizer">
-                <span></span><span></span><span></span><span></span>
-              </div>
-              EN DIRECT
-            </div>
-          </div>
-        </div>
-
-        <div class="play-circle" title="Écouter">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        </div>
-      </div>
-
-      <div class="show-wrapper">
-        <div class="show-badge-row">
-          <span class="show-time-chip"></span>
-        </div>
-        <div class="show-heading"></div>
-        <div class="show-summary"></div>
-      </div>
-    `;
-
-    stationElements.set(st.id, {
-      time: card.querySelector(".show-time-chip"),
-      title: card.querySelector(".show-heading"),
-      summary: card.querySelector(".show-summary")
-    });
-
-    fragment.appendChild(card);
-  }
-
-  container.replaceChildren(fragment);
-}
-
-function updateShows() {
-  const paris = getParisTime();
-
-  for (const st of STATIONS) {
-    const el = stationElements.get(st.id);
-    if (!el) continue;
-
-    const show = getCurrentShow(st.name, paris.totalMinutes);
-
-    el.time.textContent = show.time || "En direct";
-    el.title.textContent = show.title || "Programme en cours";
-    el.summary.textContent = show.description || "";
-  }
-
-  const clock = document.getElementById("paris-clock");
-  if (clock && clock.textContent !== paris.timeStr) {
-    clock.textContent = paris.timeStr;
-  }
-}
-
-function playStation(triggerScheme) {
-  window.location.href = triggerScheme;
-}
-
-function shareApp() {
-  window.location.href = "http://action.share";
-}
-
-function startClock() {
-  updateShows();
-  setInterval(updateShows, 1000);
-}
-
-async function fetchLiveJson() {
-  try {
-    const res = await fetch("https://vividh.pages.dev/rfrance.json", { cache: "no-store" });
-    if (!res.ok) return;
-
-    const data = await res.json();
-    if (Array.isArray(data) && data.length > 0) {
-      scheduleData = data;
-      showsByChannel = getShowsByChannel();
-      updateShows();
+    for (const item of list) {
+      if (item._parsed) {
+        const { start, end } = item._parsed;
+        const isLive = end < start ? (paris.total >= start || paris.total < end) : (paris.total >= start && paris.total < end);
+        if (isLive) {
+          currentShow = item;
+          break;
+        }
+      }
     }
+
+    if (!currentShow && list.length > 0) currentShow = list[0];
+
+    if (currentShow) {
+      document.getElementById(`t-${st.id}`).textContent = currentShow.time || 'En direct';
+      document.getElementById(`h-${st.id}`).textContent = currentShow.title || 'Programme en cours';
+      document.getElementById(`s-${st.id}`).textContent = currentShow.description || '';
+    }
+  }
+}
+
+// Fetch and pre-parse
+async function initSchedule() {
+  try {
+    const res = await fetch("https://vividh.pages.dev/rfrance.json");
+    if (!res.ok) return;
+    const data = await res.json();
+    
+    scheduleByChannel = {};
+    for (const item of data) {
+      if (!item || !item.channel) continue;
+      const key = item.channel.toLowerCase();
+      if (!scheduleByChannel[key]) scheduleByChannel[key] = [];
+      item._parsed = parseTimeRange(item.time);
+      scheduleByChannel[key].push(item);
+    }
+    lastCheckedMinute = -1; // Force refresh
+    updateSchedules();
   } catch (e) {
-    console.error("Erreur de chargement du programme:", e);
+    console.error(e);
   }
 }
 
-function openPrivacyModal() {
-  const modal = document.getElementById("privacy-modal");
-  if (modal) modal.classList.add("active");
-}
-
-function closePrivacyModal(e) {
-  if (
-    !e ||
-    e.target.id === "privacy-modal" ||
-    e.target.classList.contains("modal-close") ||
-    e.target.classList.contains("modal-btn")
-  ) {
-    const modal = document.getElementById("privacy-modal");
-    if (modal) modal.classList.remove("active");
-  }
-}
-
-/* Initialisation */
-buildCards();
-updateShows();
-startClock();
-fetchLiveJson();
+updateSchedules();
+setInterval(updateSchedules, 10000); // Check every 10 seconds instead of every 1s
+initSchedule();
   </script>
 </body>
 </html>
