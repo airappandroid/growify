@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>French Radios</title>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --surface: #1e293b;
+      --surface-active: #334155;
+      --surface-border: #283548;
+      --primary: #38bdf8;
+      --accent: #6366f1;
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --gold: #f59e0b;
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    html, body {
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
+      background-color: var(--bg);
+      color: var(--text-main);
+    }
+
+    body {
+      padding: 12px 10px;
+      padding-bottom: 30px;
+      min-height: 100vh;
+    }
+
+    /* Top Controls Bar */
+    .app-bar {
+      position: sticky;
+      top: 0;
+      background: rgba(11, 17, 32, 0.96);
+      backdrop-filter: blur(12px);
+      padding: 4px 0 10px 0;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    /* Category & Favorites Switcher */
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .chip-btn {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: var(--text-main);
+      padding: 9px 12px;
+      border-radius: 12px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .chip-btn:active {
+      transform: scale(0.98);
+      background: var(--surface-active);
+    }
+
+    .chip-btn.active {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(56, 189, 248, 0.25));
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    #selectedCatLabel {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .fav-counter {
+      background: var(--gold);
+      color: #000;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 10px;
+      display: inline-flex;
+    }
+
+    /* Universal Search Bar */
+    .search-input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      color: var(--text-main);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-sub);
+    }
+
+    /* Sub-Header Status */
+    .info-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 8px 2px 12px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-sub);
+    }
+
+    /* Responsive Grid */
+    .station-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      width: 100%;
+    }
+
+    .station-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 10px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-width: 0;
+      transition: all 0.15s ease;
+    }
+
+    .station-card:active {
+      transform: scale(0.97);
+      background: var(--surface-active);
+    }
+
+    /* Native Link Container for AppCreator24 */
+    .station-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+      flex-grow: 1;
+      min-width: 0;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .station-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.72rem;
+      color: #fff;
+      flex-shrink: 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .station-details {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .station-name {
+      font-size: 0.84rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text-main);
+    }
+
+    /* Play Button Indicator */
+    .station-play-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--primary);
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .station-play-btn svg {
+      width: 11px;
+      height: 11px;
+      fill: currentColor;
+    }
+
+    /* Favorite Star Button */
+    .star-btn {
+      background: none;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 4px;
+      font-size: 1.2rem;
+      color: #475569;
+      transition: transform 0.15s ease, color 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .star-btn.active {
+      color: var(--gold);
+      transform: scale(1.15);
+    }
+
+    /* Empty Result Notice */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 50px 16px;
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* Fullscreen Modal */
+    .modal-fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 14px;
+      overflow-y: auto;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .modal-heading {
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .modal-subheading {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      margin-top: 2px;
+    }
+
+    .close-btn {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: var(--text-main);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      padding-bottom: 20px;
+    }
+
+    .cat-tile {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 14px;
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      min-height: 96px;
+    }
+
+    .cat-tile:active {
+      transform: scale(0.96);
+      border-color: var(--primary);
+      background: var(--surface-active);
+    }
+
+    .cat-tile-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cat-icon {
+      font-size: 1.4rem;
+    }
+
+    .cat-count {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--primary);
+      background: rgba(56, 189, 248, 0.12);
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+
+    .cat-tile-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fullscreen Category Selection Modal -->
+  <div id="categoryModal" class="modal-fullscreen" style="display: none;">
+    <div class="modal-header">
+      <div>
+        <div class="modal-heading">Select Category</div>
+        <div class="modal-subheading">Choose your radio preference</div>
+      </div>
+      <button id="modalCloseBtn" class="close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div class="category-grid" id="modalCategoryGrid"></div>
+  </div>
+
+  <!-- Top App Navigation / Controls -->
+  <div class="app-bar">
+    <div class="filter-row">
+      <button class="chip-btn" id="catSelectorBtn" onclick="openModal()">
+        <span id="selectedCatLabel">News & Talk</span>
+        <span style="font-size: 0.72rem; color: var(--primary);">▼</span>
+      </button>
+
+      <button class="chip-btn" id="favViewBtn" style="flex: 0 0 auto;" onclick="toggleFavoriteView()">
+        <span>⭐ Favorites</span>
+        <span class="fav-counter" id="favBadge">0</span>
+      </button>
+    </div>
+
+    <!-- Search Across All Stations -->
+    <input type="text" id="searchInput" class="search-input" placeholder="Search across all stations..." oninput="renderStations()">
+  </div>
+
+  <!-- Sub-bar Info -->
+  <div class="info-bar">
+    <span id="currentViewName">News & Talk</span>
+    <span id="stationCount">0 Stations</span>
+  </div>
+
+  <!-- Station Cards Grid -->
+  <div class="station-grid" id="stationContainer"></div>
+
+  <script>
+    // Note: Replace "s1", "s2", etc. with your exact AppCreator24 Section IDs if they are custom numbers
+    const STATIONS = [
+      // News, Generalist & Sports
+      { id: "s1", name: "RTL", tag: "RTL", cat: "news" },
+      { id: "s2", name: "RMC", tag: "RMC", cat: "news" },
+      { id: "s3", name: "Europe 1", tag: "E1", cat: "news" },
+      { id: "s4", name: "BFM Business", tag: "BFM", cat: "news" },
+      { id: "s5", name: "BFM Radio", tag: "BFR", cat: "news" },
+      { id: "s6", name: "Sud Radio", tag: "SUD", cat: "news" },
+
+      // Pop / Top 40
+      { id: "s7", name: "NRJ", tag: "NRJ", cat: "pop" },
+      { id: "s8", name: "Fun Radio", tag: "FUN", cat: "pop" },
+      { id: "s9", name: "Europe 2", tag: "E2", cat: "pop" },
+
+      // Classic & Nostalgia
+      { id: "s10", name: "Nostalgie", tag: "NOS", cat: "classic" },
+      { id: "s11", name: "RFM", tag: "RFM", cat: "classic" },
+      { id: "s12", name: "Chérie FM", tag: "CHE", cat: "classic" },
+      { id: "s13", name: "RTL2", tag: "RT2", cat: "classic" },
+      { id: "s14", name: "M Radio", tag: "MR", cat: "classic" },
+      { id: "s15", name: "Chante France", tag: "CF", cat: "classic" },
+      { id: "s16", name: "Melody Vintage", tag: "MEL", cat: "classic" },
+
+      // Rap & Hip-Hop
+      { id: "s17", name: "Skyrock", tag: "SKY", cat: "urban" },
+      { id: "s18", name: "Générations", tag: "GEN", cat: "urban" },
+      { id: "s19", name: "Ado FM", tag: "ADO", cat: "urban" },
+      { id: "s20", name: "Black Box", tag: "BB", cat: "urban" },
+
+      // Rock & Alternative
+      { id: "s21", name: "OUI FM", tag: "OUI", cat: "rock" },
+      { id: "s22", name: "Radio Nova", tag: "NOV", cat: "rock" },
+      { id: "s23", name: "Virage Radio", tag: "VIR", cat: "rock" },
+
+      // Electronic & Club
+      { id: "s24", name: "Radio FG", tag: "FG", cat: "electro" },
+      { id: "s25", name: "FG Chic", tag: "FGC", cat: "electro" },
+      { id: "s26", name: "Maxximum", tag: "MAX", cat: "electro" },
+
+      // Classical & Jazz
+      { id: "s27", name: "Radio Classique", tag: "CLA", cat: "classical" },
+      { id: "s28", name: "TSF Jazz", tag: "TSF", cat: "classical" },
+      { id: "s29", name: "Jazz Radio", tag: "JAZ", cat: "classical" },
+
+      // Comedy
+      { id: "s30", name: "Rire & Chansons", tag: "RC", cat: "comedy" },
+
+      // World & Latin
+      { id: "s31", name: "Latina", tag: "LAT", cat: "world" },
+      { id: "s32", name: "Tropiques FM", tag: "TRO", cat: "world" },
+      { id: "s33", name: "France Maghreb 2", tag: "MAG", cat: "world" },
+      { id: "s34", name: "Beur FM", tag: "BEU", cat: "world" },
+      { id: "s35", name: "Radio Alfa", tag: "ALF", cat: "world" },
+
+      // Regional Commercial
+      { id: "s36", name: "Alouette", tag: "ALO", cat: "regional" },
+      { id: "s37", name: "Hit West", tag: "HIT", cat: "regional" },
+      { id: "s38", name: "Radio Scoop", tag: "SCP", cat: "regional" },
+      { id: "s39", name: "Contact FM", tag: "CON", cat: "regional" },
+      { id: "s40", name: "Vibration", tag: "VIB", cat: "regional" },
+      { id: "s41", name: "Voltage", tag: "VOL", cat: "regional" },
+      { id: "s42", name: "Wit FM", tag: "WIT", cat: "regional" },
+      { id: "s43", name: "Toulouse FM", tag: "TLS", cat: "regional" },
+      { id: "s44", name: "Top Music", tag: "TOP", cat: "regional" },
+      { id: "s45", name: "Kiss FM", tag: "KIS", cat: "regional" },
+      { id: "s46", name: "DKL Dreyeckland", tag: "DKL", cat: "regional" },
+      { id: "s47", name: "Radio Star", tag: "STR", cat: "regional" },
+
+      // Motorway 107.7 FM
+      { id: "s48", name: "Radio Vinci (107.7)", tag: "VIN", cat: "traffic" },
+      { id: "s49", name: "Sanef 107.7", tag: "SAN", cat: "traffic" },
+      { id: "s50", name: "Autoroute Info", tag: "AUT", cat: "traffic" },
+
+      // Community & Campus
+      { id: "s51", name: "RCF", tag: "RCF", cat: "community" },
+      { id: "s52", name: "Radio Notre-Dame", tag: "RND", cat: "community" },
+      { id: "s53", name: "Radio Campus", tag: "CMP", cat: "community" },
+      { id: "s54", name: "Radio Libertaire", tag: "LIB", cat: "community" },
+      { id: "s55", name: "Radio Courtoisie", tag: "COU", cat: "community" }
+    ];
+
+    const CATEGORIES = [
+      { key: "all", name: "All Stations", icon: "🌐" },
+      { key: "news", name: "News & Talk", icon: "🎙️" },
+      { key: "pop", name: "Pop & Top 40", icon: "🔥" },
+      { key: "classic", name: "Classic Hits", icon: "📻" },
+      { key: "urban", name: "Rap & Hip-Hop", icon: "🎧" },
+      { key: "rock", name: "Rock & Alternative", icon: "🎸" },
+      { key: "electro", name: "Electro & Dance", icon: "🎛️" },
+      { key: "classical", name: "Classical & Jazz", icon: "🎷" },
+      { key: "comedy", name: "Comedy & Humour", icon: "🎭" },
+      { key: "world", name: "World & Latin", icon: "🌍" },
+      { key: "regional", name: "Regional Radios", icon: "📍" },
+      { key: "traffic", name: "Traffic 107.7 FM", icon: "🚗" },
+      { key: "community", name: "Community & Campus", icon: "🎓" }
+    ];
+
+    let selectedCategory = localStorage.getItem("selected_french_cat") || null;
+    let isFavoriteViewActive = false;
+    let favorites = JSON.parse(localStorage.getItem("french_radio_favs") || "[]");
+
+    function init() {
+      buildModalGrid();
+      updateFavBadge();
+
+      if (!selectedCategory) {
+        document.getElementById("modalCloseBtn").style.display = "none";
+        openModal();
+      } else {
+        updateCategoryButtonLabel();
+        renderStations();
+      }
+    }
+
+    function buildModalGrid() {
+      const grid = document.getElementById("modalCategoryGrid");
+      grid.innerHTML = "";
+
+      CATEGORIES.forEach(cat => {
+        const count = cat.key === "all" 
+          ? STATIONS.length 
+          : STATIONS.filter(s => s.cat === cat.key).length;
+
+        const tile = document.createElement("div");
+        tile.className = "cat-tile";
+        tile.onclick = () => selectCategory(cat.key);
+        tile.innerHTML = `
+          <div class="cat-tile-top">
+            <span class="cat-icon">${cat.icon}</span>
+            <span class="cat-count">${count}</span>
+          </div>
+          <div class="cat-tile-title">${cat.name}</div>
+        `;
+        grid.appendChild(tile);
+      });
+    }
+
+    function openModal() {
+      document.getElementById("categoryModal").style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      document.getElementById("categoryModal").style.display = "none";
+      document.body.style.overflow = "auto";
+    }
+
+    function selectCategory(catKey) {
+      selectedCategory = catKey;
+      isFavoriteViewActive = false;
+      localStorage.setItem("selected_french_cat", catKey);
+      
+      document.getElementById("favViewBtn").classList.remove("active");
+      document.getElementById("catSelectorBtn").classList.add("active");
+      document.getElementById("searchInput").value = "";
+      
+      updateCategoryButtonLabel();
+      closeModal();
+      document.getElementById("modalCloseBtn").style.display = "flex";
+      renderStations();
+    }
+
+    function updateCategoryButtonLabel() {
+      const catObj = CATEGORIES.find(c => c.key === selectedCategory);
+      const label = catObj ? catObj.name : "All Stations";
+      document.getElementById("selectedCatLabel").textContent = label;
+    }
+
+    function toggleFavoriteView() {
+      isFavoriteViewActive = !isFavoriteViewActive;
+      document.getElementById("searchInput").value = "";
+
+      const favBtn = document.getElementById("favViewBtn");
+      const catBtn = document.getElementById("catSelectorBtn");
+
+      if (isFavoriteViewActive) {
+        favBtn.classList.add("active");
+        catBtn.classList.remove("active");
+      } else {
+        favBtn.classList.remove("active");
+        catBtn.classList.add("active");
+      }
+
+      renderStations();
+    }
+
+    function toggleFavorite(event, stationId) {
+      event.preventDefault();
+      event.stopPropagation();
+      const index = favorites.indexOf(stationId);
+      if (index === -1) {
+        favorites.push(stationId);
+      } else {
+        favorites.splice(index, 1);
+      }
+
+      localStorage.setItem("french_radio_favs", JSON.stringify(favorites));
+      updateFavBadge();
+      renderStations();
+    }
+
+    function updateFavBadge() {
+      document.getElementById("favBadge").textContent = favorites.length;
+    }
+
+    // Render stations with native AppCreator24 <a> link
+    function renderStations() {
+      const container = document.getElementById("stationContainer");
+      const search = document.getElementById("searchInput").value.trim().toLowerCase();
+      const titleEl = document.getElementById("currentViewName");
+      const countEl = document.getElementById("stationCount");
+
+      container.innerHTML = "";
+      let filtered = [];
+
+      if (search !== "") {
+        titleEl.textContent = `Search: "${search}"`;
+        filtered = STATIONS.filter(s => 
+          s.name.toLowerCase().includes(search) || 
+          s.tag.toLowerCase().includes(search) ||
+          s.id.toLowerCase().includes(search)
+        );
+      } else if (isFavoriteViewActive) {
+        titleEl.textContent = "⭐ My Favorites";
+        filtered = STATIONS.filter(s => favorites.includes(s.id));
+      } else {
+        const catObj = CATEGORIES.find(c => c.key === selectedCategory);
+        titleEl.textContent = catObj ? catObj.name : "All Stations";
+
+        filtered = STATIONS.filter(s => {
+          if (selectedCategory === "all" || !selectedCategory) return true;
+          return s.cat === selectedCategory;
+        });
+      }
+
+      countEl.textContent = `${filtered.length} Station${filtered.length === 1 ? '' : 's'}`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            ${search !== "" ? 'No stations found across all categories.' : (isFavoriteViewActive ? 'No favorite stations yet.<br>Tap ★ to pin stations here.' : 'No stations in this category.')}
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(station => {
+        const isFav = favorites.includes(station.id);
+        const card = document.createElement("div");
+        card.className = "station-card";
+
+        // Wrapped with native <a href="go:..."> for reliable AppCreator24 WebView triggers
+        card.innerHTML = `
+          <a href="go:${station.id}" class="station-link">
+            <div class="station-badge">${station.tag}</div>
+            <div class="station-details">
+              <div class="station-name">${station.name}</div>
+              <div class="station-play-btn">
+                <svg viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+                <span>Play</span>
+              </div>
+            </div>
+          </a>
+          <button class="star-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, '${station.id}')">
+            ★
+          </button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    window.addEventListener("DOMContentLoaded", init);
+  </script>
+</body>
+</html>
