@@ -257,7 +257,6 @@ body {
   color: #f1f5f9;
   line-height: 1.35;
   margin-bottom: 3px;
-  /* সম্পূৰ্ণ নাম দেখুৱাবলৈ তলৰ লাইনসমূহ ব্যৱহাৰ কৰক */
   white-space: normal;
   word-break: break-word;
 }
@@ -267,12 +266,12 @@ body {
   color: var(--text-sub);
   line-height: 1.4;
   margin-top: 2px;
-  /* বিৱৰণ যদি সৰ্বাধিক ২ টা শাৰীত ৰাখিব বিচাৰে */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
 /* EXPLORE BUTTON */
 .explore-btn {
   width: 100%;
@@ -352,7 +351,7 @@ body {
   background: #131a29;
   border: 1px solid var(--border-subtle);
   border-radius: 16px;
-  max-width: 320px;
+  max-width: 340px;
   width: 100%;
   padding: 18px;
 }
@@ -361,11 +360,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .modal-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: #fff;
 }
@@ -376,12 +375,27 @@ body {
   color: var(--text-sub);
   font-size: 22px;
   cursor: pointer;
+  line-height: 1;
 }
 
 .modal-content {
   font-size: 12.5px;
   color: var(--text-sub);
   line-height: 1.5;
+}
+
+.modal-content p {
+  margin-bottom: 12px;
+}
+
+.modal-content p:last-child {
+  margin-bottom: 0;
+}
+
+.modal-content a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+  word-break: break-all;
 }
 
 .modal-footer {
@@ -544,11 +558,12 @@ body {
   <div class="modal-overlay" id="privacy-modal" onclick="toggleModal(false)">
     <div class="modal-card" onclick="event.stopPropagation()">
       <div class="modal-header">
-        <div class="modal-title">Confidentialité</div>
+        <div class="modal-title">Politique de confidentialité</div>
         <button class="modal-close" onclick="toggleModal(false)">&times;</button>
       </div>
       <div class="modal-content">
-        <p>Cette application respecte votre vie privée. Aucune donnée personnelle n'est collectée.</p>
+        <p>Radios Françaises ne collecte ni ne stocke aucune donnée personnelle. Certaines stations peuvent utiliser des services tiers soumis à leurs propres politiques de confidentialité.</p>
+        <p><strong>Contact :</strong> <a href="mailto:vividhbharati75@gmail.com">vividhbharati75@gmail.com</a></p>
       </div>
       <div class="modal-footer">
         <button class="modal-btn" onclick="toggleModal(false)">Fermer</button>
