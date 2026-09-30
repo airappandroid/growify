@@ -378,9 +378,9 @@ body {
         <div class="station-card" style="border-color: rgba(59, 130, 246, 0.3);">
             <div class="station-info">
                 <div class="station-name">📰 5 Min News Brief <span class="duration-tag">5 Min</span></div>
-                <div class="playing-row"><span>Updated: 29 Sept, 5:00 PM</span></div>
+                <div class="playing-row"><span>Updated: 30 Sept, 4:00 AM</span></div>
             </div>
-            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/3cb8c1-w1msm0v84n6wz15/vf_w1msm0v84n6wz15_a29e7b52-ea81-4129-8977-3d40cc00c8b7.ism/dash/vf_w1msm0v84n6wz15_a29e7b52-ea81-4129-8977-3d40cc00c8b7-audio_eng_1=96000-2.m3u8" class="play-btn" aria-label="Play"></a>
+            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/f5dd8b-w1msm0v84n6y97l/vf_w1msm0v84n6y97l_0fbe0c58-5f35-468d-9d5d-d58c893e24bf.ism/dash/vf_w1msm0v84n6y97l_0fbe0c58-5f35-468d-9d5d-d58c893e24bf-audio_eng_1=96000-2.m3u8" class="play-btn" aria-label="Play"></a>
         </div>
 
         <div class="station-card" style="border-color: rgba(168, 85, 247, 0.3);">
@@ -426,6 +426,24 @@ const DOM = {
         'BBC World Service': document.getElementById('bbcws')
     }
 };
+
+// ২ অক্টোবৰৰ (Friday) বিশেষ ইভেণ্ট তালিকা
+const FRIDAY_SPECIAL_EVENTS = [
+    {
+        title: "Formula 1: Bahrain GP: Practice 2",
+        dateText: "Fri, 2 Oct • 8:55 AM UK",
+        category: "F1",
+        startTime: new Date("2026-10-02T08:55:00+01:00"),
+        endTime: new Date("2026-10-02T10:15:00+01:00")
+    },
+    {
+        title: "International Football: Ukraine v Northern Ireland",
+        dateText: "Fri, 2 Oct • 7:30 PM UK",
+        category: "FOOTBALL",
+        startTime: new Date("2026-10-02T19:30:00+01:00"),
+        endTime: new Date("2026-10-02T22:00:00+01:00")
+    }
+];
 
 // Modal Events
 DOM.privacyBtn?.addEventListener('click', () => DOM.modal.classList.add('active'));
@@ -506,7 +524,29 @@ function updateAppUI() {
         if (el) el.textContent = getCurrentShow(name, now);
     }
 
-    // 2. Update Sports Banner
+    // 2. Update Sports Banner (Friday Special Logic)
+    const nowTime = new Date();
+    const activeSpecial = FRIDAY_SPECIAL_EVENTS.find(evt => nowTime < evt.endTime);
+
+    if (activeSpecial) {
+        const isLive = nowTime >= activeSpecial.startTime;
+        
+        if (DOM.bannerTitle) DOM.bannerTitle.textContent = activeSpecial.title;
+        if (DOM.bannerTime) {
+            DOM.bannerTime.textContent = isLive 
+                ? `Live Now (Started ${activeSpecial.dateText.split('•')[1].trim()})` 
+                : activeSpecial.dateText;
+        }
+        if (DOM.bannerTag) {
+            DOM.bannerTag.textContent = isLive 
+                ? `LIVE ${activeSpecial.category}` 
+                : `UPCOMING ${activeSpecial.category}`;
+        }
+        if (DOM.bannerDot) DOM.bannerDot.style.display = isLive ? "inline-block" : "none";
+        return;
+    }
+
+    // Regular schedule fallback
     if (!preparedSportsShows || !preparedSportsShows.length) return;
 
     let currentIndex = preparedSportsShows.length - 1;
@@ -571,5 +611,4 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 </body>
-    
 </html>
