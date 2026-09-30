@@ -3,50 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CricVoice - Live Cricket</title>
+    <title>CricVoice - IND vs WI Live</title>
     <style>
         :root {
-            --bg-primary: #090d16;
-            --surface-card: #111827;
-            --surface-nested: #182234;
-            --border-subtle: #1e293b;
-            --border-highlight: #334155;
-            --accent-cyan: #38bdf8;
-            --accent-blue: #2563eb;
-            --accent-live: #ef4444;
-            --accent-win: #10b981;
-            --text-main: #ffffff;
-            --text-sub: #94a3b8;
-            --text-muted: #64748b;
+            --bg: #090d16;
+            --card: #111827;
+            --nested: #182234;
+            --border: #1e293b;
+            --cyan: #38bdf8;
+            --blue: #2563eb;
+            --live: #ef4444;
+            --green: #10b981;
+            --text: #ffffff;
+            --muted: #94a3b8;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
             -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
 
         body {
-            background-color: var(--bg-primary);
-            color: var(--text-main);
+            background-color: var(--bg);
+            color: var(--text);
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
             padding: 8px 10px;
         }
 
         .app-container {
             width: 100%;
             max-width: 390px;
-            background-color: var(--surface-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 20px;
-            padding: 14px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-            position: relative;
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 12px;
+            contain: paint;
         }
 
         /* Top Bar */
@@ -54,477 +51,307 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
         }
 
         .brand-badge {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .brand-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--cyan), var(--blue));
+            display: grid;
+            place-items: center;
         }
 
-        .brand-icon svg {
-            width: 17px;
-            height: 17px;
-            fill: #ffffff;
+        .brand-icon svg, .icon-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: #fff;
         }
 
         .brand-name {
-            font-size: 17px;
-            font-weight: 800;
-            letter-spacing: -0.3px;
-            color: #ffffff;
+            font-size: 16px;
+            font-weight: 700;
         }
 
         .top-actions {
             display: flex;
-            gap: 8px;
+            gap: 6px;
         }
 
         .icon-btn {
-            background: var(--surface-nested);
-            border: 1px solid var(--border-subtle);
-            color: #cbd5e1;
-            width: 34px;
-            height: 34px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: var(--nested);
+            border: 1px solid var(--border);
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: grid;
+            place-items: center;
             cursor: pointer;
         }
 
-        .icon-btn:active {
-            background: var(--border-highlight);
-            color: var(--accent-cyan);
-        }
-
-        .icon-btn svg {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
-        }
-
-        /* Audio Commentary Capsule */
+        /* Commentary Capsule */
         .commentary-capsule {
-            margin: 12px 0;
-            background: var(--surface-nested);
+            margin: 10px 0;
+            background: var(--nested);
             border: 1px solid #1e3a5f;
-            border-radius: 14px;
-            padding: 10px 12px;
+            border-radius: 12px;
+            padding: 9px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            text-decoration: none;
             cursor: pointer;
-        }
-
-        .commentary-capsule:active {
-            background: #1e2c45;
-            border-color: var(--accent-cyan);
         }
 
         .commentary-content {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .mic-box {
-            width: 32px;
-            height: 32px;
-            border-radius: 9px;
-            background: rgba(56, 189, 248, 0.12);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 7px;
+            background: rgba(56, 189, 248, 0.15);
+            display: grid;
+            place-items: center;
         }
 
         .mic-box svg {
-            width: 16px;
-            height: 16px;
-            fill: var(--accent-cyan);
+            width: 15px;
+            height: 15px;
+            fill: var(--cyan);
         }
 
-        .commentary-texts h4 {
-            font-size: 13px;
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        .commentary-texts p {
-            font-size: 11px;
-            color: var(--accent-cyan);
-            font-weight: 500;
-            margin-top: 1px;
-        }
+        .commentary-texts h4 { font-size: 12.5px; font-weight: 700; }
+        .commentary-texts p { font-size: 10.5px; color: var(--cyan); }
 
         .listen-pill {
-            background: var(--accent-cyan);
-            color: #030712;
+            background: var(--cyan);
+            color: #000;
             font-size: 11px;
-            font-weight: 800;
-            padding: 6px 11px;
-            border-radius: 20px;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
 
-        .listen-pill svg {
-            width: 10px;
-            height: 10px;
-            fill: #030712;
-        }
-
-        /* Match Card Body */
+        /* Match Card */
         .match-card {
-            background: var(--surface-nested);
-            border: 1px solid var(--border-subtle);
-            border-radius: 16px;
-            padding: 14px;
+            background: var(--nested);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 12px;
         }
 
         .match-meta-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .match-label {
-            font-size: 12.5px;
+            font-size: 12px;
             font-weight: 700;
-            color: #e2e8f0;
-            white-space: nowrap;
+            max-width: 65%;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 65%;
+            white-space: nowrap;
         }
 
-        /* Status Badge */
         .status-tag {
             font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 0.6px;
-            text-transform: uppercase;
-            padding: 3px 8px;
-            border-radius: 6px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 5px;
             background: #1e293b;
-            color: #94a3b8;
-            border: 1px solid var(--border-highlight);
+            color: var(--muted);
         }
 
         .status-tag.live {
-            background: rgba(239, 68, 68, 0.15);
+            background: rgba(239, 68, 68, 0.2);
             color: #f87171;
-            border-color: rgba(239, 68, 68, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .status-tag.live::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            background: var(--accent-live);
-            border-radius: 50%;
         }
 
         .status-tag.completed {
-            background: rgba(16, 185, 129, 0.15);
+            background: rgba(16, 185, 129, 0.2);
             color: #34d399;
-            border-color: rgba(16, 185, 129, 0.3);
         }
 
-        /* Venue & Ball Info */
         .venue-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             font-size: 11px;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--border-subtle);
-        }
-
-        .venue-name {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .last-ball-chip {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            background: #111827;
-            padding: 3px 8px;
-            border-radius: 8px;
-            font-size: 10.5px;
-            color: #cbd5e1;
-            border: 1px solid var(--border-subtle);
+            color: var(--muted);
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border);
         }
 
         .ball-glow {
-            min-width: 18px;
-            height: 18px;
-            padding: 0 4px;
-            background: var(--accent-cyan);
-            color: #030712;
-            font-weight: 800;
-            border-radius: 9px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 9.5px;
+            background: var(--cyan);
+            color: #000;
+            font-weight: 700;
+            border-radius: 10px;
+            padding: 1px 6px;
+            font-size: 10px;
         }
 
-        /* Teams Arena */
         .teams-arena {
             display: flex;
             flex-direction: column;
-            gap: 9px;
+            gap: 8px;
         }
 
         .team-box {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #111827;
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 9px 11px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 8px 10px;
         }
 
         .team-profile {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .team-crest {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
-            object-fit: cover;
             background: #1e293b;
-            border: 1px solid var(--border-highlight);
-            flex-shrink: 0;
         }
 
         .team-name-text {
-            font-size: 14px;
-            font-weight: 700;
-            color: #f1f5f9;
+            font-size: 13.5px;
+            font-weight: 600;
         }
 
         .team-metrics {
             text-align: right;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
         }
 
         .runs-val {
-            font-size: 16px;
-            font-weight: 800;
-            color: #ffffff;
-            font-variant-numeric: tabular-nums;
+            font-size: 15px;
+            font-weight: 700;
         }
 
         .overs-val {
-            font-size: 11px;
-            color: var(--accent-cyan);
-            font-weight: 600;
+            font-size: 10.5px;
+            color: var(--cyan);
         }
 
-        /* Match Summary Box */
         .summary-status {
-            margin-top: 12px;
-            padding: 9px 12px;
-            background: #111827;
-            border: 1px solid var(--border-subtle);
-            border-radius: 10px;
+            margin-top: 10px;
+            padding: 8px 10px;
+            background: var(--card);
+            border-radius: 8px;
             text-align: center;
-            font-size: 11.5px;
-            font-weight: 600;
+            font-size: 11px;
             color: #cbd5e1;
-            line-height: 1.4;
-        }
-
-        .summary-status.live {
-            background: rgba(239, 68, 68, 0.08);
-            border-color: rgba(239, 68, 68, 0.25);
-            color: #fca5a5;
-        }
-
-        .summary-status.completed {
-            background: rgba(16, 185, 129, 0.08);
-            border-color: rgba(16, 185, 129, 0.25);
-            color: #86efac;
         }
 
         .toss-tag {
-            margin-top: 8px;
-            font-size: 11px;
+            margin-top: 6px;
+            font-size: 10.5px;
             text-align: center;
-            color: var(--text-sub);
-            background: #111827;
-            border: 1px dashed var(--border-subtle);
-            padding: 5px;
-            border-radius: 8px;
+            color: var(--muted);
         }
 
-        /* Main Action Button */
+        /* Action Button */
         .btn-action-main {
-            margin-top: 12px;
+            margin-top: 10px;
             width: 100%;
-            background: #2563eb;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--blue);
             color: #ffffff;
-            font-size: 13.5px;
+            border: none;
+            font-size: 13px;
             font-weight: 700;
-            padding: 12px;
-            border-radius: 12px;
+            padding: 11px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             cursor: pointer;
         }
 
-        .btn-action-main:active {
-            background: #1d4ed8;
-        }
-
-        .btn-action-main svg {
-            width: 15px;
-            height: 15px;
-            fill: currentColor;
-        }
-
-        /* Privacy Modal */
+        /* Modal */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.8);
             display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
+            place-items: center;
             padding: 16px;
+            z-index: 99;
         }
 
-        .modal-overlay.active {
-            display: flex;
-        }
+        .modal-overlay.active { display: grid; }
 
         .modal-box {
-            background: #111827;
-            border: 1px solid var(--border-highlight);
-            border-radius: 18px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
             width: 100%;
-            max-width: 330px;
-            padding: 18px;
+            max-width: 320px;
+            padding: 16px;
         }
 
         .modal-head {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
-        .modal-head h3 {
-            font-size: 15px;
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        .modal-close-icon {
-            background: #1e293b;
-            border: none;
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            color: #94a3b8;
-            font-size: 15px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content-text {
-            font-size: 12.5px;
-            color: #94a3b8;
-            line-height: 1.5;
-            margin-bottom: 16px;
-        }
-
-        .modal-confirm-btn {
-            width: 100%;
-            background: var(--accent-blue);
-            color: #ffffff;
-            border: none;
-            padding: 11px;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-        }
+        .modal-head h3 { font-size: 14px; }
+        .modal-close-icon { background: none; border: none; color: var(--muted); font-size: 18px; cursor: pointer; }
+        .modal-content-text { font-size: 11.5px; color: var(--muted); line-height: 1.4; margin-bottom: 12px; }
+        .modal-confirm-btn { width: 100%; background: var(--blue); color: #fff; border: none; padding: 9px; border-radius: 8px; font-weight: 700; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
+    <main class="app-container">
         <!-- Top App Bar -->
         <header class="top-bar">
             <div class="brand-badge">
                 <div class="brand-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-                    </svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
                 </div>
                 <h1 class="brand-name">CricVoice</h1>
             </div>
 
             <div class="top-actions">
-                <button class="icon-btn" onclick="openPrivacyModal()" title="Privacy Policy">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
-                    </svg>
+                <button class="icon-btn" onclick="toggleModal(true)" aria-label="Privacy">
+                    <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
                 </button>
-                <button class="icon-btn" onclick="window.location.href='http://action_share'" title="Share">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/>
-                    </svg>
+                <button class="icon-btn" onclick="location.href='http://action_share'" aria-label="Share">
+                    <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92z"/></svg>
                 </button>
             </div>
         </header>
 
         <!-- Live Commentary Capsule -->
-        <div class="commentary-capsule" onclick="window.location.href='go:commentary'">
+        <div class="commentary-capsule" onclick="location.href='go:commentary'">
             <div class="commentary-content">
                 <div class="mic-box">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-                    </svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
                 </div>
                 <div class="commentary-texts">
                     <h4>Audio Commentary</h4>
@@ -532,244 +359,211 @@
                 </div>
             </div>
             <div class="listen-pill">
-                <svg viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z"/>
-                </svg>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="#000"><path d="M8 5v14l11-7z"/></svg>
                 Listen
             </div>
         </div>
 
         <!-- Main Cricket Score Card -->
-        <div class="match-card">
+        <section class="match-card">
             <div class="match-meta-bar">
-                <span class="match-label" id="match-info">Connecting...</span>
+                <span class="match-label" id="match-info">IND vs WI • ODI</span>
                 <span class="status-tag" id="match-status">UPCOMING</span>
             </div>
 
             <div class="venue-row">
-                <span class="venue-name" id="match-format">T20 Match</span>
-                <div class="last-ball-chip" id="last-ball-container" style="display: none;">
-                    <span>Last Ball:</span>
-                    <span class="ball-glow" id="latest-ball">-</span>
+                <span id="match-format">ODI Match</span>
+                <div id="last-ball-container" style="display: none;">
+                    Last Ball: <span class="ball-glow" id="latest-ball">-</span>
                 </div>
             </div>
 
-            <!-- Teams & Runs Arena -->
+            <!-- Teams -->
             <div class="teams-arena">
-                <!-- Team A -->
                 <div class="team-box">
                     <div class="team-profile">
-                        <img class="team-crest" id="team-a-logo" src="https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg" alt="Team A">
-                        <span class="team-name-text" id="team-a-name">Loading...</span>
+                        <img class="team-crest" id="team-a-logo" src="" alt="India" width="28" height="28" decoding="async">
+                        <span class="team-name-text" id="team-a-name">India</span>
                     </div>
                     <div class="team-metrics">
-                        <span class="runs-val" id="team-a-runs">--</span>
-                        <span class="overs-val" id="team-a-overs"></span>
+                        <div class="runs-val" id="team-a-runs">--</div>
+                        <div class="overs-val" id="team-a-overs"></div>
                     </div>
                 </div>
 
-                <!-- Team B -->
                 <div class="team-box">
                     <div class="team-profile">
-                        <img class="team-crest" id="team-b-logo" src="https://ik.imagekit.io/sqt8ptw1k/japan-women.webp?updatedAt=1789707848535" alt="Team B">
-                        <span class="team-name-text" id="team-b-name">Loading...</span>
+                        <img class="team-crest" id="team-b-logo" src="" alt="West Indies" width="28" height="28" decoding="async">
+                        <span class="team-name-text" id="team-b-name">West Indies</span>
                     </div>
                     <div class="team-metrics">
-                        <span class="runs-val" id="team-b-runs">--</span>
-                        <span class="overs-val" id="team-b-overs"></span>
+                        <div class="runs-val" id="team-b-runs">--</div>
+                        <div class="overs-val" id="team-b-overs"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Summary Status -->
-            <div class="summary-status" id="status-box">
-                Match Starts 22 SEP, 9:30 AM
-            </div>
-
-            <!-- Toss Details -->
-            <div class="toss-tag" id="toss-info" style="display: none;">
-                Toss: -
-            </div>
-        </div>
+            <div class="summary-status" id="status-box">2nd ODI • IND vs WI</div>
+            <div class="toss-tag" id="toss-info" style="display: none;"></div>
+        </section>
 
         <!-- Full Scorecard Trigger -->
-        <button class="btn-action-main" onclick="window.location.href='go:card1'">
-            <span>Full Scorecard & Commentary</span>
-            <svg viewBox="0 0 24 24">
-                <path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42 5.43 5.43H5v2z"/>
-            </svg>
+        <button class="btn-action-main" onclick="location.href='go:card1'">
+            Full Scorecard & Commentary
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42 5.43 5.43H5v2z"/></svg>
         </button>
-    </div>
+    </main>
 
     <!-- Privacy Modal -->
-    <div class="modal-overlay" id="privacyModal" onclick="closePrivacyModalOnOverlay(event)">
+    <div class="modal-overlay" id="privacyModal" onclick="if(event.target===this) toggleModal(false)">
         <div class="modal-box">
             <div class="modal-head">
                 <h3>Privacy Policy</h3>
-                <button class="modal-close-icon" onclick="closePrivacyModal()">&times;</button>
+                <button class="modal-close-icon" onclick="toggleModal(false)">&times;</button>
             </div>
-            <div class="modal-content-text">
-                Your privacy is paramount. CricVoice does not collect or sell any personal identifying information. Match scores and audio links are aggregated in real-time solely for sports updates.
-            </div>
-            <button class="modal-confirm-btn" onclick="closePrivacyModal()">Got It</button>
+            <p class="modal-content-text">
+                Your privacy is paramount. CricVoice does not collect personal data. Match updates are pulled in real-time solely for scores.
+            </p>
+            <button class="modal-confirm-btn" onclick="toggleModal(false)">Got It</button>
         </div>
     </div>
 
     <script>
-        const matchId = "6a9d59f81f0f3936e9029873";
-        const cricketApiUrl = `https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=${matchId}`;
-        const cricRadioBase = "https://api.cricradio.com.au";
-        let isMatchLive = false;
+        const API_URL = "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a3103727327c23debef2654";
+        const DEFAULT_LOGO = "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg";
+        let isLive = false;
 
-        function openPrivacyModal() {
-            document.getElementById('privacyModal').classList.add('active');
+        // Cache DOM Elements এবাৰেই ধৰি ৰখা হৈছে
+        const el = {
+            modal: document.getElementById('privacyModal'),
+            info: document.getElementById('match-info'),
+            format: document.getElementById('match-format'),
+            status: document.getElementById('match-status'),
+            statusBox: document.getElementById('status-box'),
+            lastBallBox: document.getElementById('last-ball-container'),
+            latestBall: document.getElementById('latest-ball'),
+            toss: document.getElementById('toss-info'),
+            teamA: {
+                name: document.getElementById('team-a-name'),
+                logo: document.getElementById('team-a-logo'),
+                runs: document.getElementById('team-a-runs'),
+                overs: document.getElementById('team-a-overs')
+            },
+            teamB: {
+                name: document.getElementById('team-b-name'),
+                logo: document.getElementById('team-b-logo'),
+                runs: document.getElementById('team-b-runs'),
+                overs: document.getElementById('team-b-overs')
+            }
+        };
+
+        function toggleModal(open) {
+            el.modal.classList.toggle('active', open);
         }
 
-        function closePrivacyModal() {
-            document.getElementById('privacyModal').classList.remove('active');
-        }
-
-        function closePrivacyModalOnOverlay(event) {
-            if (event.target.id === 'privacyModal') {
-                closePrivacyModal();
-            }
-        }
-
-        function getTeamLogo(team) {
-            if (!team) return "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg";
-
-            const name = ((team.shortName || team.name || "") + "").toLowerCase();
-
-            if (name.includes("ind")) {
-                return "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg";
-            }
-            if (name.includes("jpn") || name.includes("japan")) {
-                return "https://ik.imagekit.io/sqt8ptw1k/japan-women.webp?updatedAt=1789707848535";
-            }
-
+        function getLogo(team) {
+            if (!team) return DEFAULT_LOGO;
+            const name = (team.shortName || team.name || "").toLowerCase();
+            if (name.includes("ind")) return DEFAULT_LOGO;
             if (team.logo) {
-                if (team.logo.startsWith("http")) return team.logo;
-                return `${cricRadioBase}${team.logo.startsWith("/") ? "" : "/"}${team.logo}`;
+                return team.logo.startsWith("http") ? team.logo : `https://api.cricradio.com.au${team.logo.startsWith('/') ? '' : '/'}${team.logo}`;
             }
-
-            return "https://ik.imagekit.io/sqt8ptw1k/images_Re-FPn8G9.jpg";
+            return DEFAULT_LOGO;
         }
 
-        function extractTeamScore(teamData, teamKey) {
+        function getScore(teamData, key) {
             if (!teamData) return { runs: "--", overs: "" };
-
-            const scoreObj = teamData[`${teamKey}_1_score`] || teamData.score;
-            if (!scoreObj || scoreObj.runs === undefined) {
-                return { runs: "Yet to bat", overs: "" };
-            }
-
-            const runs = scoreObj.runs ?? 0;
-            const wickets = scoreObj.wickets ?? 0;
-            const overs = scoreObj.overs ? `(${scoreObj.overs} ov)` : "";
-
+            const s = teamData[`${key}_1_score`] || teamData.score;
+            if (!s || s.runs === undefined) return { runs: "Yet to bat", overs: "" };
             return {
-                runs: `${runs}/${wickets}`,
-                overs: overs
+                runs: `${s.runs ?? 0}/${s.wickets ?? 0}`,
+                overs: s.overs ? `(${s.overs} ov)` : ""
             };
         }
 
-        async function fetchLiveScore() {
+        async function fetchScore() {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 ছেকেণ্ডত timeout
+
             try {
-                const response = await fetch(`${cricketApiUrl}&_t=${Date.now()}`, { cache: "no-store" });
-                if (!response.ok) throw new Error("Network error");
+                const res = await fetch(`${API_URL}&_t=${Date.now()}`, { 
+                    cache: "no-store",
+                    signal: controller.signal 
+                });
+                clearTimeout(timeoutId);
 
-                const data = await response.json();
-                const result = data?.responseData?.result;
-                if (!result) return;
+                const data = await res.json();
+                const r = data?.responseData?.result;
+                if (!r) return;
 
-                const teamA = result.teams?.a || {};
-                const teamB = result.teams?.b || {};
+                const tA = r.teams?.a || {};
+                const tB = r.teams?.b || {};
+                const nameA = tA.name || tA.shortName || 'India';
+                const nameB = tB.name || tB.shortName || 'West Indies';
+                const format = (r.format || "ODI").toUpperCase();
 
-                const nameA = teamA.name || teamA.shortName || 'Japan';
-                const nameB = teamB.name || teamB.shortName || 'India';
-                const shortA = teamA.shortName || 'JPN';
-                const shortB = teamB.shortName || 'IND';
+                el.info.textContent = `${tA.shortName || 'IND'} vs ${tB.shortName || 'WI'} • ${format}`;
+                el.format.textContent = `${format} Match`;
 
-                // হেডাৰ আৰু ফৰ্মেট
-                const matchFormat = (result.format || "T20").toUpperCase();
-                document.getElementById("match-info").textContent = `${shortA} vs ${shortB} • ${matchFormat}`;
-                document.getElementById("match-format").textContent = `${matchFormat} Match`;
-
-                // ষ্টেটাছ নিৰ্ধাৰণ (Strict Evaluation)
-                const rawStatus = (result.status || "").toLowerCase().replace(/[\s_-]+/g, "");
-                const isCompleted = rawStatus.includes("complete") || rawStatus.includes("finish") || rawStatus.includes("ended");
-                const isUpcoming = rawStatus.includes("notstarted") || rawStatus.includes("upcoming") || rawStatus.includes("scheduled") || !rawStatus;
-                
-                // কেৱল প্ৰকৃততে খেল আৰম্ভ হ'লে আৰু upcoming নহ'লেহে LIVE হ'ব
-                const isLive = !isUpcoming && !isCompleted && (rawStatus.includes("live") || rawStatus.includes("inprogress") || rawStatus === "started");
-
-                isMatchLive = isLive;
-
-                const statusBadge = document.getElementById("match-status");
-                const statusBox = document.getElementById("status-box");
+                // Status logic
+                const st = (r.status || "").toLowerCase().replace(/[\s_-]+/g, "");
+                const isCompleted = st.includes("complete") || st.includes("finish");
+                const isUpcoming = st.includes("notstarted") || st.includes("upcoming") || !st;
+                isLive = !isUpcoming && !isCompleted;
 
                 if (isCompleted) {
-                    statusBadge.textContent = "COMPLETED";
-                    statusBadge.className = "status-tag completed";
-                    statusBox.className = "summary-status completed";
-                    statusBox.textContent = result.announcement1 || "Match Finished";
+                    el.status.textContent = "COMPLETED";
+                    el.status.className = "status-tag completed";
+                    el.statusBox.textContent = r.announcement1 || "Match Finished";
                 } else if (isLive) {
-                    statusBadge.textContent = "LIVE";
-                    statusBadge.className = "status-tag live";
-                    statusBox.className = "summary-status live";
-
-                    const crr = result.now?.run_rate ? `CRR: ${result.now.run_rate}` : "";
-                    const currentTeam = result.settingObj?.currentTeam === "a" ? nameA : nameB;
-                    statusBox.textContent = crr ? `${currentTeam} batting • ${crr}` : `${currentTeam} batting`;
+                    el.status.textContent = "LIVE";
+                    el.status.className = "status-tag live";
+                    const crr = r.now?.run_rate ? ` • CRR: ${r.now.run_rate}` : "";
+                    const activeTeam = r.settingObj?.currentTeam === "a" ? nameA : nameB;
+                    el.statusBox.textContent = `${activeTeam} batting${crr}`;
                 } else {
-                    statusBadge.textContent = "UPCOMING";
-                    statusBadge.className = "status-tag";
-                    statusBox.className = "summary-status";
-                    statusBox.textContent = result.announcement1 || "Match Starts 22 SEP, 9:30 AM";
+                    el.status.textContent = "UPCOMING";
+                    el.status.className = "status-tag";
+                    el.statusBox.textContent = r.announcement1 || "Match Scheduled";
                 }
 
-                // শেষৰ বল (Last Ball)
-                const lastBallBox = document.getElementById("last-ball-container");
-                const latestBallEl = document.getElementById("latest-ball");
-                if (isLive && result.lastCommentary && result.lastCommentary.primaryText) {
-                    latestBallEl.textContent = result.lastCommentary.primaryText;
-                    lastBallBox.style.display = "flex";
+                // Last Ball
+                if (isLive && r.lastCommentary?.primaryText) {
+                    el.latestBall.textContent = r.lastCommentary.primaryText;
+                    el.lastBallBox.style.display = "block";
                 } else {
-                    lastBallBox.style.display = "none";
+                    el.lastBallBox.style.display = "none";
                 }
 
-                // Team A
-                document.getElementById("team-a-name").textContent = nameA;
-                document.getElementById("team-a-logo").src = getTeamLogo(teamA);
-                const scoreA = extractTeamScore(teamA, "a");
-                document.getElementById("team-a-runs").textContent = scoreA.runs;
-                document.getElementById("team-a-overs").textContent = scoreA.overs;
+                // Teams details
+                el.teamA.name.textContent = nameA;
+                el.teamA.logo.src = getLogo(tA);
+                const sA = getScore(tA, "a");
+                el.teamA.runs.textContent = sA.runs;
+                el.teamA.overs.textContent = sA.overs;
 
-                // Team B
-                document.getElementById("team-b-name").textContent = nameB;
-                document.getElementById("team-b-logo").src = getTeamLogo(teamB);
-                const scoreB = extractTeamScore(teamB, "b");
-                document.getElementById("team-b-runs").textContent = scoreB.runs;
-                document.getElementById("team-b-overs").textContent = scoreB.overs;
+                el.teamB.name.textContent = nameB;
+                el.teamB.logo.src = getLogo(tB);
+                const sB = getScore(tB, "b");
+                el.teamB.runs.textContent = sB.runs;
+                el.teamB.overs.textContent = sB.overs;
 
-                // টচ (Toss)
-                const tossEl = document.getElementById("toss-info");
-                if (result.announcement1 && isLive) {
-                    tossEl.textContent = `Toss: ${result.announcement1}`;
-                    tossEl.style.display = "block";
+                // Toss
+                if (r.announcement1 && isLive) {
+                    el.toss.textContent = `Toss: ${r.announcement1}`;
+                    el.toss.style.display = "block";
                 } else {
-                    tossEl.style.display = "none";
+                    el.toss.style.display = "none";
                 }
 
-            } catch (error) {
-                console.error("Score fetch failed:", error);
-                document.getElementById("status-box").textContent = "Unable to sync score. Retrying...";
+            } catch (e) {
+                // Timeout বা Network error হ'লে নিৰৱে থাকিব
             } finally {
-                setTimeout(fetchLiveScore, isMatchLive ? 15000 : 60000);
+                setTimeout(fetchScore, isLive ? 15000 : 60000);
             }
         }
 
-        fetchLiveScore();
+        fetchScore();
     </script>
 </body>
 </html>
