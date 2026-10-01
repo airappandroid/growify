@@ -414,7 +414,7 @@
     </div>
 
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">IND vs WI (ODI)</span>
+        <span class="match-title-text" id="matchHeader">IND vs SL (T20)</span>
         <span id="venueHeader">Live Match</span>
     </div>
 
@@ -426,7 +426,7 @@
 </div>
 
 <script>
-    const matchId = "6a3103727327c23debef2654";
+    const matchId = "6a9a9dfc1f0f3936e9027d77";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
@@ -449,7 +449,7 @@
     function getInningsTabLabel(inn, idx, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
         const aShort = teamA.shortName || teamA.name || "IND";
-        const bShort = teamB.shortName || teamB.name || "WI";
+        const bShort = teamB.shortName || teamB.name || "SL";
 
         if (inn.key === "a_1" || inn.key === "a") return aShort;
         if (inn.key === "b_1" || inn.key === "b") return bShort;
@@ -459,7 +459,7 @@
     function getInningsDisplayName(inn, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
         const aName = teamA.name || "India";
-        const bName = teamB.name || "West Indies";
+        const bName = teamB.name || "Sri Lanka";
 
         if (inn.key === "a_1" || inn.key === "a") return `${aName} Innings`;
         if (inn.key === "b_1" || inn.key === "b") return `${bName} Innings`;
@@ -480,16 +480,15 @@
             const teamB = result.teams?.b || {};
 
             const nameA = teamA.shortName || teamA.name || 'IND';
-            const nameB = teamB.shortName || teamB.name || 'WI';
-            const format = (result.format || 'odi').toUpperCase();
-            const tournament = result.seriesName || (nameA && nameB ? `${nameA} vs${nameB}` : "India vs West Indies");
+            const nameB = teamB.shortName || teamB.name || 'SL';
+            const format = (result.format || 't20').toUpperCase();
+            const tournament = result.seriesName || (nameA && nameB ? `${nameA} vs${nameB}` : "India vs Sri Lanka");
 
             document.getElementById("matchHeader").textContent = `${tournament} (${format})`;
             document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : ``;
 
             const innings = result.innings_batting_order || [];
 
-            // খেল ইতিমধ্যে আৰম্ভ হৈছে নে নাই নিৰীক্ষণ কৰা
             const hasStartedPlaying = Array.isArray(innings) && innings.some(inn =>
                 (inn.player_batting_order && inn.player_batting_order.length > 0) ||
                 (Number(inn.runs) > 0) ||
@@ -567,7 +566,7 @@
                         </div>
                         <div class="hero-score-box">
                             <div class="hero-score-main">Upcoming</div>
-                            <div class="hero-score-sub">${result.announcement1 || "IND vs WI, 2nd ODI, 30 Sep, 2pm"}</div>
+                            <div class="hero-score-sub">${result.announcement1 || "IND vs SL, T20"}</div>
                         </div>
                     </div>
                     <div style="text-align:center; padding:35px 10px; color:var(--text-muted); font-size:12px; line-height:1.6;">
