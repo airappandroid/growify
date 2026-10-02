@@ -6,12 +6,11 @@
     <title>Live Scorecard</title>
     <style>
         :root {
-            --bg-base: #020617;
-            --card-bg: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(3, 7, 18, 0.98) 100%);
+            --bg-base: #030712;
+            --card-bg: #0b1329;
             --accent: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.35);
             --border: rgba(255, 255, 255, 0.08);
-            --border-highlight: rgba(56, 189, 248, 0.3);
+            --border-highlight: rgba(56, 189, 248, 0.25);
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
             --text-muted: #64748b;
@@ -23,7 +22,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+            font-family: system-ui, -apple-system, Roboto, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -34,7 +33,7 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding: 12px 6px;
+            padding: 8px 4px;
             color: var(--text-primary);
         }
 
@@ -43,20 +42,18 @@
             max-width: 500px;
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 14px 10px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.95), 0 0 35px rgba(14, 165, 233, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 12px 8px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 4px 8px 4px;
+            padding: 0 4px 6px 4px;
             border-bottom: 1px solid var(--border);
         }
 
@@ -65,50 +62,41 @@
             align-items: center;
             gap: 5px;
             background: rgba(59, 130, 246, 0.12);
-            border: 1px solid rgba(59, 130, 246, 0.35);
-            padding: 3px 8px;
-            border-radius: 20px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 2px 7px;
+            border-radius: 12px;
             font-size: 9.5px;
-            font-weight: 800;
-            letter-spacing: 0.6px;
+            font-weight: 700;
             color: #60a5fa;
         }
 
         .match-badge.live {
             background: rgba(239, 68, 68, 0.12);
-            border-color: rgba(239, 68, 68, 0.35);
+            border-color: rgba(239, 68, 68, 0.3);
             color: #f87171;
         }
 
         .match-badge.completed {
             background: rgba(52, 211, 153, 0.12);
-            border-color: rgba(52, 211, 153, 0.35);
+            border-color: rgba(52, 211, 153, 0.3);
             color: var(--success);
         }
 
         .live-dot {
-            width: 5.5px;
-            height: 5.5px;
+            width: 6px;
+            height: 6px;
             background-color: var(--danger);
             border-radius: 50%;
-            box-shadow: 0 0 8px var(--danger);
-            animation: pulse 1.5s infinite;
             display: none;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(1.3); }
-        }
-
         .refresh-status {
-            font-size: 9.5px;
-            font-weight: 600;
+            font-size: 9px;
             color: var(--text-muted);
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border);
-            padding: 3px 8px;
-            border-radius: 12px;
+            padding: 2px 7px;
+            border-radius: 10px;
         }
 
         .match-meta-bar {
@@ -127,7 +115,7 @@
 
         .tabs-wrapper {
             display: flex;
-            gap: 5px;
+            gap: 6px;
             overflow-x: auto;
             scrollbar-width: none;
             padding: 1px 2px;
@@ -138,26 +126,24 @@
         }
 
         .tab-btn {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #111c38;
+            border: 1px solid var(--border);
             color: var(--text-secondary);
             font-size: 10.5px;
-            font-weight: 700;
-            padding: 6px 10px;
-            border-radius: 9px;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 8px;
             cursor: pointer;
             white-space: nowrap;
-            transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
         }
 
         .tab-btn.active {
-            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            background: #0284c7;
             color: #ffffff;
             border-color: var(--accent);
-            box-shadow: 0 3px 12px var(--accent-glow);
         }
 
         .current-indicator {
@@ -165,29 +151,27 @@
             height: 5px;
             background: var(--success);
             border-radius: 50%;
-            box-shadow: 0 0 6px var(--success);
         }
 
         .hero-banner {
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(15, 23, 42, 0.5) 100%);
+            background: #0f1c3f;
             border: 1px solid var(--border-highlight);
-            border-radius: 14px;
-            padding: 10px 12px;
+            border-radius: 12px;
+            padding: 8px 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 4px 16px rgba(0, 0, 0, 0.3);
         }
 
         .hero-team-name {
-            font-size: 14px;
-            font-weight: 800;
+            font-size: 13.5px;
+            font-weight: 700;
             color: #ffffff;
         }
 
         .hero-status-tag {
             font-size: 9.5px;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--accent);
             text-transform: uppercase;
         }
@@ -198,17 +182,17 @@
         }
 
         .hero-score-main {
-            font-size: 19px;
-            font-weight: 900;
+            font-size: 18px;
+            font-weight: 800;
             color: #ffffff;
             line-height: 1.1;
         }
 
         .hero-score-sub {
-            font-size: 10.5px;
+            font-size: 10px;
             color: var(--text-secondary);
             margin-top: 2px;
-            font-weight: 600;
+            font-weight: 500;
             max-width: 220px;
             white-space: nowrap;
             overflow: hidden;
@@ -216,13 +200,12 @@
         }
 
         .section-header {
-            font-size: 10px;
-            font-weight: 800;
+            font-size: 9.5px;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.6px;
             color: var(--text-muted);
-            margin-top: 4px;
-            margin-bottom: 2px;
+            margin-top: 2px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -236,28 +219,26 @@
         }
 
         .table-container {
-            border-radius: 12px;
+            border-radius: 10px;
             border: 1px solid var(--border);
-            background: rgba(15, 23, 42, 0.4);
+            background: #080e21;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
 
         table {
             width: 100%;
-            min-width: 100%;
             border-collapse: collapse;
             font-size: 11px;
         }
 
         th {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
             color: var(--text-muted);
-            font-weight: 800;
+            font-weight: 700;
             font-size: 9px;
             text-transform: uppercase;
-            letter-spacing: 0.4px;
-            padding: 7px 4px;
+            padding: 6px 4px;
             text-align: right;
             border-bottom: 1px solid var(--border);
             white-space: nowrap;
@@ -274,8 +255,8 @@
         }
 
         td {
-            padding: 7px 4px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 6px 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
             color: var(--text-primary);
             text-align: right;
             font-variant-numeric: tabular-nums;
@@ -300,18 +281,11 @@
             display: flex;
             flex-direction: column;
             gap: 1px;
-            max-width: 155px;
-        }
-
-        .player-name-wrapper {
-            display: inline-flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 3px;
+            max-width: 150px;
         }
 
         .player-name {
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 700;
             color: #ffffff;
             line-height: 1.2;
@@ -320,22 +294,22 @@
         .player-dismissal {
             font-size: 9px;
             color: var(--text-secondary);
-            line-height: 1.15;
+            line-height: 1.1;
             word-break: break-word;
         }
 
         .not-out {
             color: var(--success);
-            font-weight: 700;
+            font-weight: 600;
         }
 
         .highlight-val {
-            font-weight: 800;
+            font-weight: 700;
             color: #ffffff;
         }
 
         .wickets-val {
-            font-weight: 800;
+            font-weight: 700;
             color: var(--accent);
         }
 
@@ -343,60 +317,46 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 7px 8px;
-            font-size: 10.5px;
+            padding: 6px 8px;
+            font-size: 10px;
             color: var(--text-secondary);
             border-top: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.015);
         }
 
         .meta-summary-row.total-row {
-            background: rgba(14, 165, 233, 0.06);
+            background: rgba(14, 165, 233, 0.05);
             border-top: 1px solid var(--border-highlight);
             color: #ffffff;
-            font-weight: 800;
+            font-weight: 700;
         }
 
-        .fow-box {
-            background: rgba(15, 23, 42, 0.4);
+        .fow-box, .yet-to-bat-box {
+            background: #080e21;
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 8px 10px;
+            border-radius: 10px;
+            padding: 7px 9px;
             font-size: 10px;
             color: #cbd5e1;
             line-height: 1.4;
         }
 
+        .yet-to-bat-box {
+            color: var(--text-secondary);
+        }
+
         .fow-item {
             display: inline-block;
             background: rgba(255, 255, 255, 0.04);
-            padding: 3px 6px;
-            border-radius: 5px;
-            margin: 2px 2px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 2px 5px;
+            border-radius: 4px;
+            margin: 2px;
         }
 
-        .yet-to-bat-box {
-            background: rgba(15, 23, 42, 0.4);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 8px 10px;
+        .loading-ph {
+            text-align: center;
+            padding: 30px 10px;
+            color: var(--text-muted);
             font-size: 11px;
-            color: var(--text-secondary);
-            line-height: 1.4;
-        }
-
-        .shimmer {
-            height: 160px;
-            border-radius: 12px;
-            background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
         }
     </style>
 </head>
@@ -414,19 +374,19 @@
     </div>
 
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">IND vs SL (T20)</span>
-        <span id="venueHeader">Live Match</span>
+        <span class="match-title-text" id="matchHeader">Loading...</span>
+        <span id="venueHeader"></span>
     </div>
 
     <div class="tabs-wrapper" id="inningsTabs"></div>
 
     <div id="contentView">
-        <div class="shimmer"></div>
+        <div class="loading-ph">Loading live data...</div>
     </div>
 </div>
 
 <script>
-    const matchId = "6a9a9dfc1f0f3936e9027d77";
+    const matchId = "6a9a9df71f0f3936e9027d73";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
@@ -449,18 +409,16 @@
     function getInningsTabLabel(inn, idx, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
         const aShort = teamA.shortName || teamA.name || "IND";
-        const bShort = teamB.shortName || teamB.name || "SL";
-
+        const bShort = teamB.shortName || teamB.name || "PAK";
         if (inn.key === "a_1" || inn.key === "a") return aShort;
         if (inn.key === "b_1" || inn.key === "b") return bShort;
-        return `Innings ${idx + 1}`;
+        return `Inn ${idx + 1}`;
     }
 
     function getInningsDisplayName(inn, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
         const aName = teamA.name || "India";
-        const bName = teamB.name || "Sri Lanka";
-
+        const bName = teamB.name || "Pakistan";
         if (inn.key === "a_1" || inn.key === "a") return `${aName} Innings`;
         if (inn.key === "b_1" || inn.key === "b") return `${bName} Innings`;
         return "Team Innings";
@@ -478,17 +436,15 @@
 
             const teamA = result.teams?.a || {};
             const teamB = result.teams?.b || {};
-
             const nameA = teamA.shortName || teamA.name || 'IND';
-            const nameB = teamB.shortName || teamB.name || 'SL';
-            const format = (result.format || 't20').toUpperCase();
-            const tournament = result.seriesName || (nameA && nameB ? `${nameA} vs${nameB}` : "India vs Sri Lanka");
+            const nameB = teamB.shortName || teamB.name || 'PAK';
+            const format = (result.format || 'T20').toUpperCase();
+            const tournament = result.seriesName || `${nameA} vs ${nameB}`;
 
             document.getElementById("matchHeader").textContent = `${tournament} (${format})`;
-            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : ``;
+            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : '';
 
             const innings = result.innings_batting_order || [];
-
             const hasStartedPlaying = Array.isArray(innings) && innings.some(inn =>
                 (inn.player_batting_order && inn.player_batting_order.length > 0) ||
                 (Number(inn.runs) > 0) ||
@@ -497,46 +453,19 @@
 
             const rawStatus = (result.status || "").toLowerCase().replace(/\s+/g, "");
             const statusFields = [
-                result.match_status,
-                result.matchStatus,
-                result.state,
-                result.status_note,
-                result.status_text,
-                result.result,
-                result.winning_team,
-                result.winner
+                result.match_status, result.matchStatus, result.state,
+                result.status_note, result.status_text, result.result,
+                result.winning_team, result.winner
             ].filter(Boolean).map(s => String(s).toLowerCase()).join(" ");
 
-            const completionKeywords = [
-                "complete", "completed", "finish", "finished", "ended", "concluded",
-                "won", "win", "beat", "defeat", "tied", "tie", "abandon", "abandoned", "no result"
-            ];
+            const completionKeywords = ["complete", "completed", "finish", "finished", "ended", "won", "win", "tied", "tie", "abandoned"];
+            const isCompleted = completionKeywords.some(kw => rawStatus.includes(kw) || statusFields.includes(kw)) ||
+                Boolean(result.winner || result.winning_team || result.is_completed);
 
-            let isCompleted = completionKeywords.some(kw => rawStatus.includes(kw) || statusFields.includes(kw)) ||
-                Boolean(result.winner) ||
-                Boolean(result.winning_team) ||
-                result.is_completed === true ||
-                result.is_completed === 1;
-
-            const isUpcoming = !hasStartedPlaying && (
-                rawStatus.includes("notstarted") || 
-                rawStatus.includes("upcoming") || 
-                rawStatus.includes("scheduled") || 
-                !rawStatus
-            );
-
+            const isUpcoming = !hasStartedPlaying && (rawStatus.includes("notstarted") || rawStatus.includes("upcoming") || !rawStatus);
             isMatchFinishedGlobal = isCompleted;
 
-            const isLive = !isCompleted && !isUpcoming && (
-                hasStartedPlaying ||
-                rawStatus.includes("live") ||
-                rawStatus.includes("inprogress") ||
-                (rawStatus.includes("started") && !rawStatus.includes("notstarted")) ||
-                statusFields.includes("live") ||
-                result.live === true ||
-                result.is_live === true ||
-                result.is_live === 1
-            );
+            const isLive = !isCompleted && !isUpcoming && (hasStartedPlaying || rawStatus.includes("live") || result.is_live);
 
             const badgeEl = document.getElementById("matchBadge");
             const badgeText = document.getElementById("badgeText");
@@ -560,18 +489,16 @@
                 document.getElementById("inningsTabs").innerHTML = "";
                 document.getElementById("contentView").innerHTML = `
                     <div class="hero-banner">
-                        <div class="hero-team">
-                            <span class="hero-team-name">${tournament}</span>
+                        <div>
+                            <div class="hero-team-name">${tournament}</div>
                             <span class="hero-status-tag">${format}</span>
                         </div>
                         <div class="hero-score-box">
                             <div class="hero-score-main">Upcoming</div>
-                            <div class="hero-score-sub">${result.announcement1 || "IND vs SL, T20"}</div>
+                            <div class="hero-score-sub">${result.announcement1 || "Match has not started"}</div>
                         </div>
                     </div>
-                    <div style="text-align:center; padding:35px 10px; color:var(--text-muted); font-size:12px; line-height:1.6;">
-                        ⏳ Match has not started yet.<br>Full live scorecard will appear once play begins.
-                    </div>
+                    <div class="loading-ph">⏳ Match has not started yet. Full live scorecard will appear once play begins.</div>
                 `;
                 updateLastRefresh();
                 return;
@@ -607,14 +534,9 @@
             const isLatest = (idx === innings.length - 1);
             const btn = document.createElement("button");
             btn.className = `tab-btn ${idx === selectedInningIndex ? 'active' : ''}`;
-            
             const tabTitle = getInningsTabLabel(inn, idx, teamA, teamB);
             
-            btn.innerHTML = `
-                ${(isLatest && !isMatchFinishedGlobal) ? '<span class="current-indicator"></span>' : ''}
-                <span>${tabTitle}</span>
-            `;
-
+            btn.innerHTML = `${(isLatest && !isMatchFinishedGlobal) ? '<span class="current-indicator"></span>' : ''}<span>${tabTitle}</span>`;
             btn.onclick = () => {
                 selectedInningIndex = idx;
                 renderTabs(innings, teamA, teamB);
@@ -628,7 +550,6 @@
         if (!inn) return;
 
         const container = document.getElementById("contentView");
-
         const partnerships = inn.partnerships || [];
         const lastPartnership = partnerships.length > 0 ? partnerships[partnerships.length - 1] : null;
         
@@ -642,29 +563,19 @@
             if (lastPartnership.player_b) activePartnerNames.add(lastPartnership.player_b.toLowerCase().trim());
         }
 
-        const rawBatsmen = (inn.player_batting_order && inn.player_batting_order.length > 0)
-            ? inn.player_batting_order 
-            : (inn.battingOrder || []);
-
+        const rawBatsmen = (inn.player_batting_order && inn.player_batting_order.length > 0) ? inn.player_batting_order : (inn.battingOrder || []);
         const activeBatters = [];
         const unbattedFromOrder = [];
 
         rawBatsmen.forEach(b => {
             const bData = b.batting || b;
-            const isOut = Boolean(
-                bData.dismissed === true || 
-                bData.dismissed === 1 || 
-                (bData.out_str && bData.out_str.trim() !== "" && bData.out_str.trim().toLowerCase() !== "not out")
-            );
+            const isOut = Boolean(bData.dismissed === true || bData.dismissed === 1 || (bData.out_str && bData.out_str.trim().toLowerCase() !== "not out"));
             const balls = Number(bData.balls || 0);
             const runs = Number(bData.runs || 0);
-
             const pId = String(b.playerId || b._id || '');
             const pName = (b.name || b.fullname || b.mobileName || '').toLowerCase().trim();
 
-            const isPartnerBatting = activePartnerIds.has(pId) || activePartnerNames.has(pName);
-
-            if (isOut || balls > 0 || runs > 0 || isPartnerBatting) {
+            if (isOut || balls > 0 || runs > 0 || activePartnerIds.has(pId) || activePartnerNames.has(pName)) {
                 activeBatters.push(b);
             } else {
                 unbattedFromOrder.push(b);
@@ -673,21 +584,15 @@
 
         const battingHTML = activeBatters.length > 0 ? activeBatters.map(b => {
             const bData = b.batting || b;
-            const isOut = Boolean(
-                bData.dismissed === true || 
-                bData.dismissed === 1 || 
-                (bData.out_str && bData.out_str.trim() !== "" && bData.out_str.trim().toLowerCase() !== "not out")
-            );
-            let dismissal = isOut ? (bData.out_str || 'out') : '<span class="not-out">not out</span>';
+            const isOut = Boolean(bData.dismissed === true || bData.dismissed === 1 || (bData.out_str && bData.out_str.trim().toLowerCase() !== "not out"));
+            const dismissal = isOut ? (bData.out_str || 'out') : '<span class="not-out">not out</span>';
             const pName = b.mobileName || b.name || b.fullname || 'Batter';
 
             return `
                 <tr>
                     <td>
                         <div class="player-info">
-                            <div class="player-name-wrapper">
-                                <span class="player-name">${pName}</span>
-                            </div>
+                            <span class="player-name">${pName}</span>
                             <span class="player-dismissal">${dismissal}</span>
                         </div>
                     </td>
@@ -698,16 +603,12 @@
                     <td>${bData.strike_rate || '0.00'}</td>
                 </tr>
             `;
-        }).join("") : '<tr><td colspan="6" style="text-align:center; padding:12px; color:var(--text-muted);">Yet to bat in this innings</td></tr>';
+        }).join("") : '<tr><td colspan="6" style="text-align:center; padding:8px; color:var(--text-muted);">Yet to bat</td></tr>';
 
-        const rawBowlers = (inn.player_bowling_order && inn.player_bowling_order.length > 0)
-            ? inn.player_bowling_order
-            : (inn.bowlingOrder || []);
-
+        const rawBowlers = (inn.player_bowling_order && inn.player_bowling_order.length > 0) ? inn.player_bowling_order : (inn.bowlingOrder || []);
         const bowlers = rawBowlers.filter(bw => {
             const bwData = bw.bowling || bw;
-            const overs = parseFloat(bwData.overs ?? 0);
-            return overs > 0 || (bwData.wickets ?? 0) > 0 || (bwData.runs ?? 0) > 0;
+            return parseFloat(bwData.overs ?? 0) > 0 || (bwData.wickets ?? 0) > 0 || (bwData.runs ?? 0) > 0;
         });
 
         const bowlingHTML = bowlers.length > 0 ? bowlers.map(bw => {
@@ -716,11 +617,7 @@
 
             return `
                 <tr>
-                    <td>
-                        <div class="player-name-wrapper">
-                            <span class="player-name">${bwName}</span>
-                        </div>
-                    </td>
+                    <td><span class="player-name">${bwName}</span></td>
                     <td class="highlight-val">${bwData.overs ?? '0.0'}</td>
                     <td>${bwData.maiden_overs ?? bwData.maidens ?? 0}</td>
                     <td>${bwData.runs ?? 0}</td>
@@ -728,7 +625,7 @@
                     <td>${bwData.economy || '0.00'}</td>
                 </tr>
             `;
-        }).join("") : '<tr><td colspan="6" style="text-align:center; padding:12px; color:var(--text-muted);">No bowling data available</td></tr>';
+        }).join("") : '<tr><td colspan="6" style="text-align:center; padding:8px; color:var(--text-muted);">No bowling data</td></tr>';
 
         const fows = inn.fall_of_wickets || [];
         let fowList = '<span style="color:var(--text-muted)">No wickets fallen</span>';
@@ -768,8 +665,8 @@
 
         container.innerHTML = `
             <div class="hero-banner">
-                <div class="hero-team">
-                    <span class="hero-team-name">${teamDisplayName}</span>
+                <div>
+                    <div class="hero-team-name">${teamDisplayName}</div>
                     <span class="hero-status-tag">${runRate}</span>
                 </div>
                 <div class="hero-score-box">
@@ -778,7 +675,7 @@
                 </div>
             </div>
 
-            <div class="section-header">Batting Performance</div>
+            <div class="section-header">Batting</div>
             <div class="table-container">
                 <table>
                     <thead>
@@ -806,11 +703,9 @@
             ${ytbHTML}
 
             <div class="section-header">Fall of Wickets</div>
-            <div class="fow-box">
-                ${fowList}
-            </div>
+            <div class="fow-box">${fowList}</div>
 
-            <div class="section-header">Bowling Figures</div>
+            <div class="section-header">Bowling</div>
             <div class="table-container">
                 <table>
                     <thead>
@@ -832,6 +727,5 @@
     loadScorecard();
     setInterval(loadScorecard, 30000);
 </script>
-
 </body>
 </html>
