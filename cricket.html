@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CricVoice - IND vs SL Live</title>
+    <title>CricVoice - IND vs PAK Live</title>
     <style>
         :root {
             --bg: #090d16;
@@ -368,7 +368,7 @@
         <!-- Main Cricket Score Card -->
         <section class="match-card">
             <div class="match-meta-bar">
-                <span class="match-label" id="match-info">IND vs SL • T20</span>
+                <span class="match-label" id="match-info">IND vs PAK • T20</span>
                 <span class="status-tag" id="match-status">UPCOMING</span>
             </div>
 
@@ -394,8 +394,8 @@
 
                 <div class="team-box">
                     <div class="team-profile">
-                        <img class="team-crest" id="team-b-logo" src="https://ik.imagekit.io/sqt8ptw1k/sri-lanka.webp?updatedAt=1790249781336" alt="Sri Lanka" width="28" height="28" decoding="async">
-                        <span class="team-name-text" id="team-b-name">Sri Lanka</span>
+                        <img class="team-crest" id="team-b-logo" src="https://ik.imagekit.io/sqt8ptw1k/pakistan.webp" alt="Pakistan" width="28" height="28" decoding="async">
+                        <span class="team-name-text" id="team-b-name">Pakistan</span>
                     </div>
                     <div class="team-metrics">
                         <div class="runs-val" id="team-b-runs">--</div>
@@ -404,7 +404,7 @@
                 </div>
             </div>
 
-            <div class="summary-status" id="status-box">IND vs SL • T20</div>
+            <div class="summary-status" id="status-box">Ind vs Pak T20, Match starts 3 SEP, 10 AM</div>
             <div class="toss-tag" id="toss-info" style="display: none;"></div>
         </section>
 
@@ -430,14 +430,12 @@
     </div>
 
     <script>
-        const API_URL = "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a9a9dfc1f0f3936e9027d77";
+        const API_URL = "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a9a9df71f0f3936e9027d73";
         const FLAGS = {
             ind: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
             india: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
-            sl: "https://ik.imagekit.io/sqt8ptw1k/sri-lanka.webp?updatedAt=1790249781336",
-            sri: "https://ik.imagekit.io/sqt8ptw1k/sri-lanka.webp?updatedAt=1790249781336",
-            "sri lanka": "https://ik.imagekit.io/sqt8ptw1k/sri-lanka.webp?updatedAt=1790249781336",
-            srilanka: "https://ik.imagekit.io/sqt8ptw1k/sri-lanka.webp?updatedAt=1790249781336"
+            pak: "https://ik.imagekit.io/sqt8ptw1k/pakistan.webp",
+            pakistan: "https://ik.imagekit.io/sqt8ptw1k/pakistan.webp"
         };
         let isLive = false;
 
@@ -473,7 +471,7 @@
             const name = (team.shortName || team.name || "").toLowerCase().trim();
             if (FLAGS[name]) return FLAGS[name];
             if (name.includes("ind")) return FLAGS.ind;
-            if (name.includes("sl") || name.includes("lanka")) return FLAGS.sl;
+            if (name.includes("pak")) return FLAGS.pak;
             if (team.logo) {
                 return team.logo.startsWith("http") ? team.logo : `https://api.cricradio.com.au${team.logo.startsWith('/') ? '' : '/'}${team.logo}`;
             }
@@ -508,10 +506,10 @@
                 const tA = r.teams?.a || {};
                 const tB = r.teams?.b || {};
                 const nameA = tA.name || tA.shortName || 'India';
-                const nameB = tB.name || tB.shortName || 'Sri Lanka';
+                const nameB = tB.name || tB.shortName || 'Pakistan';
                 const format = (r.format || "T20").toUpperCase();
 
-                el.info.textContent = `${tA.shortName || 'IND'} vs ${tB.shortName || 'SL'} • ${format}`;
+                el.info.textContent = `${tA.shortName || 'IND'} vs ${tB.shortName || 'PAK'} • ${format}`;
                 el.format.textContent = `${format} Match`;
 
                 // Status logic
@@ -533,7 +531,7 @@
                 } else {
                     el.status.textContent = "UPCOMING";
                     el.status.className = "status-tag";
-                    el.statusBox.textContent = r.announcement1 || "Match Scheduled";
+                    el.statusBox.textContent = r.announcement1 || "Ind vs Pak T20, Match starts 3 SEP, 10 AM";
                 }
 
                 // Last Ball
@@ -552,7 +550,7 @@
                 el.teamA.overs.textContent = sA.overs;
 
                 el.teamB.name.textContent = nameB;
-                el.teamB.logo.src = getLogo(tB, FLAGS.sl);
+                el.teamB.logo.src = getLogo(tB, FLAGS.pak);
                 const sB = getScore(tB, "b");
                 el.teamB.runs.textContent = sB.runs;
                 el.teamB.overs.textContent = sB.overs;
