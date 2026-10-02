@@ -173,7 +173,7 @@ body {
     border-radius: 16px;
 }
 
-/* Station Cards */
+/* Base Station Card (Latest Updates আৰু সাধাৰণ কাৰ্ডৰ আগৰ স্বাভাৱিক ৰূপ) */
 .station-card {
     background: #131c2e;
     border: 1px solid rgba(255, 255, 255, 0.07);
@@ -224,6 +224,36 @@ body {
     border-width: 6px 0 6px 10px;
     border-color: transparent transparent transparent #fff;
     margin-left: 2px;
+}
+
+/* Popular Stations-ৰ বাবে নিৰ্দিষ্ট (Equal Height & Max 4 Lines) */
+.popular-stations .station-card {
+    min-height: 86px;
+}
+.popular-stations .station-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.popular-stations .station-name {
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.popular-stations .playing-row {
+    align-items: flex-start;
+    line-height: 1.35;
+}
+.popular-stations .playing-row span:last-child {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+}
+.popular-stations .live-dot {
+    margin-top: 4px;
 }
 
 /* View All */
@@ -309,8 +339,8 @@ body {
         </div>
     </a>
 
-    <!-- Popular Stations -->
-    <div class="section">
+    <!-- Popular Stations (কেৱল ইয়াতহে Equal Height & Max 4 Lines প্ৰযোজ্য) -->
+    <div class="section popular-stations">
         <div class="title">📻 Popular Stations</div>
 
         <div class="station-card">
@@ -372,7 +402,7 @@ body {
         </a>
     </div>
 
-    <!-- Latest Updates -->
+    <!-- Latest Updates (আগৰ দৰেই স্বাভাৱিক Compact Size) -->
     <div class="section">
         <div class="title">🕒 Latest Updates</div>
         <div class="station-card" style="border-color: rgba(59, 130, 246, 0.3);">
@@ -483,14 +513,12 @@ let preparedSportsShows = null;
 function prepareSchedules() {
     if (typeof SCHEDULE_DATA === "undefined" || !Array.isArray(SCHEDULE_DATA)) return false;
 
-    // Cache General Schedule
     preparedMainSchedule = SCHEDULE_DATA.map(p => ({
         channel: (p.channel || "").toLowerCase(),
         title: p.title || "Live",
         startMin: timeStringToMinutesUK(p.time)
     })).sort((a, b) => a.startMin - b.startMin);
 
-    // Cache Sports Schedule
     preparedSportsShows = SCHEDULE_DATA.filter(p => 
         (p.channel || "").toLowerCase().includes("sports extra")
     ).map(p => ({
@@ -524,7 +552,7 @@ function updateAppUI() {
         if (el) el.textContent = getCurrentShow(name, now);
     }
 
-    // 2. Update Sports Banner (Friday Special Logic)
+    // 2. Update Sports Banner
     const nowTime = new Date();
     const activeSpecial = FRIDAY_SPECIAL_EVENTS.find(evt => nowTime < evt.endTime);
 
@@ -546,7 +574,6 @@ function updateAppUI() {
         return;
     }
 
-    // Regular schedule fallback
     if (!preparedSportsShows || !preparedSportsShows.length) return;
 
     let currentIndex = preparedSportsShows.length - 1;
@@ -589,7 +616,7 @@ function updateAppUI() {
     if (DOM.bannerDot) DOM.bannerDot.style.display = isUpcoming ? "none" : "inline-block";
 }
 
-// Initialization & Refresh Management
+// Initialization
 document.addEventListener("DOMContentLoaded", () => {
     updateAppUI();
 
@@ -602,7 +629,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 300);
 
-    // Single interval for updates
     setInterval(updateAppUI, 60000);
 
     document.addEventListener("visibilitychange", () => {
