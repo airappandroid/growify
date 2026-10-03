@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CricVoice - IND vs PAK Live</title>
+    <title>CricVoice - IND vs WI Live</title>
     <style>
         :root {
             --bg: #090d16;
@@ -368,12 +368,12 @@
         <!-- Main Cricket Score Card -->
         <section class="match-card">
             <div class="match-meta-bar">
-                <span class="match-label" id="match-info">IND vs PAK • T20</span>
+                <span class="match-label" id="match-info">IND vs WI • ODI</span>
                 <span class="status-tag" id="match-status">UPCOMING</span>
             </div>
 
             <div class="venue-row">
-                <span id="match-format">T20 Match</span>
+                <span id="match-format">ODI Match</span>
                 <div id="last-ball-container" style="display: none;">
                     Last Ball: <span class="ball-glow" id="latest-ball">-</span>
                 </div>
@@ -394,8 +394,8 @@
 
                 <div class="team-box">
                     <div class="team-profile">
-                        <img class="team-crest" id="team-b-logo" src="https://ik.imagekit.io/sqt8ptw1k/pakistan.webp" alt="Pakistan" width="28" height="28" decoding="async">
-                        <span class="team-name-text" id="team-b-name">Pakistan</span>
+                        <img class="team-crest" id="team-b-logo" src="https://ik.imagekit.io/sqt8ptw1k/west-indies.webp?updatedAt=1790419929784" alt="West Indies" width="28" height="28" decoding="async">
+                        <span class="team-name-text" id="team-b-name">West Indies</span>
                     </div>
                     <div class="team-metrics">
                         <div class="runs-val" id="team-b-runs">--</div>
@@ -404,7 +404,7 @@
                 </div>
             </div>
 
-            <div class="summary-status" id="status-box">Ind vs Pak T20, Match starts 3 SEP, 10 AM</div>
+            <div class="summary-status" id="status-box">IND vs WI, 3rd ODI</div>
             <div class="toss-tag" id="toss-info" style="display: none;"></div>
         </section>
 
@@ -430,12 +430,12 @@
     </div>
 
     <script>
-        const API_URL = "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a9a9df71f0f3936e9027d73";
+        const API_URL = "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a3103757327c23debef2656";
         const FLAGS = {
             ind: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
             india: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
-            pak: "https://ik.imagekit.io/sqt8ptw1k/pakistan.webp",
-            pakistan: "https://ik.imagekit.io/sqt8ptw1k/pakistan.webp"
+            wi: "https://ik.imagekit.io/sqt8ptw1k/west-indies.webp?updatedAt=1790419929784",
+            "west indies": "https://ik.imagekit.io/sqt8ptw1k/west-indies.webp?updatedAt=1790419929784"
         };
         let isLive = false;
 
@@ -471,7 +471,7 @@
             const name = (team.shortName || team.name || "").toLowerCase().trim();
             if (FLAGS[name]) return FLAGS[name];
             if (name.includes("ind")) return FLAGS.ind;
-            if (name.includes("pak")) return FLAGS.pak;
+            if (name.includes("wi") || name.includes("west")) return FLAGS.wi;
             if (team.logo) {
                 return team.logo.startsWith("http") ? team.logo : `https://api.cricradio.com.au${team.logo.startsWith('/') ? '' : '/'}${team.logo}`;
             }
@@ -506,10 +506,10 @@
                 const tA = r.teams?.a || {};
                 const tB = r.teams?.b || {};
                 const nameA = tA.name || tA.shortName || 'India';
-                const nameB = tB.name || tB.shortName || 'Pakistan';
-                const format = (r.format || "T20").toUpperCase();
+                const nameB = tB.name || tB.shortName || 'West Indies';
+                const format = (r.format || "ODI").toUpperCase();
 
-                el.info.textContent = `${tA.shortName || 'IND'} vs ${tB.shortName || 'PAK'} • ${format}`;
+                el.info.textContent = `${tA.shortName || 'IND'} vs ${tB.shortName || 'WI'} • ${format}`;
                 el.format.textContent = `${format} Match`;
 
                 // Status logic
@@ -531,7 +531,7 @@
                 } else {
                     el.status.textContent = "UPCOMING";
                     el.status.className = "status-tag";
-                    el.statusBox.textContent = r.announcement1 || "Ind vs Pak T20, Match starts 3 SEP, 10 AM";
+                    el.statusBox.textContent = r.announcement1 || "IND vs WI, 3rd ODI";
                 }
 
                 // Last Ball
@@ -550,7 +550,7 @@
                 el.teamA.overs.textContent = sA.overs;
 
                 el.teamB.name.textContent = nameB;
-                el.teamB.logo.src = getLogo(tB, FLAGS.pak);
+                el.teamB.logo.src = getLogo(tB, FLAGS.wi);
                 const sB = getScore(tB, "b");
                 el.teamB.runs.textContent = sB.runs;
                 el.teamB.overs.textContent = sB.overs;
