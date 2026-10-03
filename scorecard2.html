@@ -386,7 +386,7 @@
 </div>
 
 <script>
-    const matchId = "6a9a9df71f0f3936e9027d73";
+    const matchId = "6a3103757327c23debef2656";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
@@ -409,7 +409,7 @@
     function getInningsTabLabel(inn, idx, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
         const aShort = teamA.shortName || teamA.name || "IND";
-        const bShort = teamB.shortName || teamB.name || "PAK";
+        const bShort = teamB.shortName || teamB.name || "WI";
         if (inn.key === "a_1" || inn.key === "a") return aShort;
         if (inn.key === "b_1" || inn.key === "b") return bShort;
         return `Inn ${idx + 1}`;
@@ -418,7 +418,7 @@
     function getInningsDisplayName(inn, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
         const aName = teamA.name || "India";
-        const bName = teamB.name || "Pakistan";
+        const bName = teamB.name || "West Indies";
         if (inn.key === "a_1" || inn.key === "a") return `${aName} Innings`;
         if (inn.key === "b_1" || inn.key === "b") return `${bName} Innings`;
         return "Team Innings";
@@ -437,8 +437,8 @@
             const teamA = result.teams?.a || {};
             const teamB = result.teams?.b || {};
             const nameA = teamA.shortName || teamA.name || 'IND';
-            const nameB = teamB.shortName || teamB.name || 'PAK';
-            const format = (result.format || 'T20').toUpperCase();
+            const nameB = teamB.shortName || teamB.name || 'WI';
+            const format = (result.format || 'ODI').toUpperCase();
             const tournament = result.seriesName || `${nameA} vs ${nameB}`;
 
             document.getElementById("matchHeader").textContent = `${tournament} (${format})`;
