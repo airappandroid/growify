@@ -1,4 +1,4 @@
-Window.SCHEDULE_DATA = [
+window.SCHEDULE_DATA = [
   // BBC Radio 1 (Sunday, 04/10/2026)
   { "time": "12:30 AM", "title": "Radio 1 Dance Drum & Bass Mix (Chilled D&B with Ama - Mixed up D&B from Radio 1 Dance.)", "channel": "BBC Radio 1" },
   { "time": "1:00 AM", "title": "Radio 1's Classic Essential Mix (Bonobo X TEED 2020 - Relive Bonobo's back to back set with TEED)", "channel": "BBC Radio 1" },
