@@ -8,18 +8,16 @@
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
-    -webkit-user-select: none;
     user-select: none;
     margin: 0;
     padding: 0;
 }
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: system-ui, -apple-system, Roboto, sans-serif;
     background: #090d16;
     color: #fff;
     min-height: 100vh;
     padding-bottom: 24px;
-    -webkit-font-smoothing: antialiased;
 }
 .container { max-width: 480px; margin: 0 auto; }
 
@@ -64,7 +62,7 @@ body {
     padding: 16px;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.2s, visibility 0.2s;
+    transition: opacity 0.15s ease;
 }
 .modal-overlay.active { opacity: 1; visibility: visible; }
 .modal-box {
@@ -114,17 +112,15 @@ body {
     display: block;
 }
 .banner-card {
-    background: linear-gradient(135deg, #0f1c3f 0%, #0d1424 60%, #1e1b4b 100%);
+    background: #0f1a36;
     border: 1px solid rgba(59, 130, 246, 0.4);
     border-radius: 14px;
     padding: 12px 14px;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
-
-.banner-top-row {
+.banner-top-row, .banner-bottom-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -155,11 +151,6 @@ body {
     color: #ffffff;
     line-height: 1.2;
 }
-.banner-bottom-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
 .banner-station { font-size: 11px; color: #38bdf8; font-weight: 600; }
 .banner-cta {
     display: inline-flex;
@@ -173,7 +164,7 @@ body {
     border-radius: 16px;
 }
 
-/* Base Station Card (Latest Updates আৰু সাধাৰণ কাৰ্ডৰ আগৰ স্বাভাৱিক ৰূপ) */
+/* Station Card */
 .station-card {
     background: #131c2e;
     border: 1px solid rgba(255, 255, 255, 0.07);
@@ -215,7 +206,7 @@ body {
     text-decoration: none;
     flex-shrink: 0;
 }
-.play-btn:active { transform: scale(0.94); }
+
 .play-btn::before {
     content: "";
     width: 0;
@@ -226,35 +217,20 @@ body {
     margin-left: 2px;
 }
 
-/* Popular Stations-ৰ বাবে নিৰ্দিষ্ট (Equal Height & Max 4 Lines) */
-.popular-stations .station-card {
-    min-height: 86px;
-}
-.popular-stations .station-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-.popular-stations .station-name {
-    line-height: 1.2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.popular-stations .playing-row {
-    align-items: flex-start;
-    line-height: 1.35;
-}
+/* Popular Stations */
+.popular-stations .station-card { min-height: 86px; }
+.popular-stations .station-info { display: flex; flex-direction: column; justify-content: center; }
+.popular-stations .station-name { line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.popular-stations .playing-row { align-items: flex-start; line-height: 1.35; }
 .popular-stations .playing-row span:last-child {
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     word-break: break-word;
 }
-.popular-stations .live-dot {
-    margin-top: 4px;
-}
+.popular-stations .live-dot { margin-top: 4px; }
 
 /* View All */
 .view-all-card {
@@ -280,7 +256,6 @@ body {
     justify-content: center;
 }
 
-/* Updates Cards */
 .duration-tag {
     display: inline-block;
     padding: 1px 5px;
@@ -339,7 +314,7 @@ body {
         </div>
     </a>
 
-    <!-- Popular Stations (কেৱল ইয়াতহে Equal Height & Max 4 Lines প্ৰযোজ্য) -->
+    <!-- Popular Stations -->
     <div class="section popular-stations">
         <div class="title">📻 Popular Stations</div>
 
@@ -402,7 +377,7 @@ body {
         </a>
     </div>
 
-    <!-- Latest Updates (আগৰ দৰেই স্বাভাৱিক Compact Size) -->
+    <!-- Latest Updates -->
     <div class="section">
         <div class="title">🕒 Latest Updates</div>
         <div class="station-card" style="border-color: rgba(59, 130, 246, 0.3);">
@@ -439,45 +414,24 @@ body {
 </div>
 
 <script>
-// Cache DOM Elements
 const DOM = {
     modal: document.getElementById('privacyModal'),
-    privacyBtn: document.getElementById('privacyBtn'),
-    closeModal: document.getElementById('closeModal'),
     bannerTitle: document.getElementById('bannerTitle'),
     bannerTime: document.getElementById('bannerTime'),
     bannerTag: document.getElementById('bannerTag'),
     bannerDot: document.getElementById('bannerDot'),
     stations: {
-        'Radio 1': document.getElementById('bbc1'),
-        'Radio 2': document.getElementById('bbc2'),
-        'Radio 3': document.getElementById('bbc3'),
-        'Radio 4': document.getElementById('bbc4'),
-        'BBC World Service': document.getElementById('bbcws')
+        'radio 1': document.getElementById('bbc1'),
+        'radio 2': document.getElementById('bbc2'),
+        'radio 3': document.getElementById('bbc3'),
+        'radio 4': document.getElementById('bbc4'),
+        'world service': document.getElementById('bbcws')
     }
 };
 
-// ২ অক্টোবৰৰ (Friday) বিশেষ ইভেণ্ট তালিকা
-const FRIDAY_SPECIAL_EVENTS = [
-    {
-        title: "Formula 1: Bahrain GP: Practice 2",
-        dateText: "Fri, 2 Oct • 8:55 AM UK",
-        category: "F1",
-        startTime: new Date("2026-10-02T08:55:00+01:00"),
-        endTime: new Date("2026-10-02T10:15:00+01:00")
-    },
-    {
-        title: "International Football: Ukraine v Northern Ireland",
-        dateText: "Fri, 2 Oct • 7:30 PM UK",
-        category: "FOOTBALL",
-        startTime: new Date("2026-10-02T19:30:00+01:00"),
-        endTime: new Date("2026-10-02T22:00:00+01:00")
-    }
-];
-
-// Modal Events
-DOM.privacyBtn?.addEventListener('click', () => DOM.modal.classList.add('active'));
-DOM.closeModal?.addEventListener('click', () => DOM.modal.classList.remove('active'));
+// Modal Control
+document.getElementById('privacyBtn')?.addEventListener('click', () => DOM.modal.classList.add('active'));
+document.getElementById('closeModal')?.addEventListener('click', () => DOM.modal.classList.remove('active'));
 window.addEventListener('click', (e) => { if (e.target === DOM.modal) DOM.modal.classList.remove('active'); });
 
 // Lightweight UK Time
@@ -485,56 +439,57 @@ const ukTimeFormatter = new Intl.DateTimeFormat('en-GB', {
     timeZone: 'Europe/London', 
     hour: 'numeric', 
     minute: 'numeric', 
-    hourCycle: 'h23' 
+    hour12: false 
 });
 
 function getUKMinutesNow() {
-    const timeStr = ukTimeFormatter.format(new Date());
-    const [h, m] = timeStr.split(':').map(Number);
-    return h * 60 + m;
+    const parts = ukTimeFormatter.format(new Date()).split(':');
+    return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
 }
 
 function timeStringToMinutesUK(str) {
     if (!str) return 0;
-    const match = str.trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
-    if (!match) return 0;
-    let h = parseInt(match[1], 10);
-    const m = parseInt(match[2], 10);
-    const p = match[3]?.toUpperCase();
-    if (p === "PM" && h !== 12) h += 12;
-    if (p === "AM" && h === 12) h = 0;
-    return h * 60 + m;
+    const parts = str.trim().split(/[:\s]/);
+    let h = parseInt(parts[0], 10);
+    const m = parseInt(parts[1], 10);
+    const period = parts[2]?.toUpperCase();
+    if (period === "PM" && h !== 12) h += 12;
+    if (period === "AM" && h === 12) h = 0;
+    return (h || 0) * 60 + (m || 0);
 }
 
-// Global Schedules Cache
 let preparedMainSchedule = null;
 let preparedSportsShows = null;
 
 function prepareSchedules() {
     if (typeof SCHEDULE_DATA === "undefined" || !Array.isArray(SCHEDULE_DATA)) return false;
 
-    preparedMainSchedule = SCHEDULE_DATA.map(p => ({
-        channel: (p.channel || "").toLowerCase(),
-        title: p.title || "Live",
-        startMin: timeStringToMinutesUK(p.time)
-    })).sort((a, b) => a.startMin - b.startMin);
+    preparedMainSchedule = [];
+    preparedSportsShows = [];
 
-    preparedSportsShows = SCHEDULE_DATA.filter(p => 
-        (p.channel || "").toLowerCase().includes("sports extra")
-    ).map(p => ({
-        time: p.time,
-        title: p.title || "",
-        startMin: timeStringToMinutesUK(p.time)
-    })).sort((a, b) => a.startMin - b.startMin);
+    for (let i = 0; i < SCHEDULE_DATA.length; i++) {
+        const p = SCHEDULE_DATA[i];
+        const ch = (p.channel || "").toLowerCase();
+        const startMin = timeStringToMinutesUK(p.time);
 
+        preparedMainSchedule.push({ channel: ch, title: p.title || "Live", startMin });
+
+        if (ch.includes("sports extra")) {
+            preparedSportsShows.push({ time: p.time, title: p.title || "", startMin });
+        }
+    }
+
+    preparedMainSchedule.sort((a, b) => a.startMin - b.startMin);
+    preparedSportsShows.sort((a, b) => a.startMin - b.startMin);
     return true;
 }
 
-function getCurrentShow(channelName, now) {
+function getCurrentShow(channelKey, now) {
     if (!preparedMainSchedule) return "Live";
-    const list = preparedMainSchedule.filter(p => p.channel.includes(channelName.toLowerCase()));
+    const list = preparedMainSchedule.filter(p => p.channel.includes(channelKey));
     if (!list.length) return "Live";
     if (now < list[0].startMin) return list[list.length - 1].title;
+    
     for (let i = 0; i < list.length - 1; i++) {
         if (now >= list[i].startMin && now < list[i + 1].startMin) return list[i].title;
     }
@@ -547,33 +502,12 @@ function updateAppUI() {
 
     const now = getUKMinutesNow();
 
-    // 1. Update Popular Stations
-    for (const [name, el] of Object.entries(DOM.stations)) {
-        if (el) el.textContent = getCurrentShow(name, now);
+    // 1. Stations Title Update
+    for (const [key, el] of Object.entries(DOM.stations)) {
+        if (el) el.textContent = getCurrentShow(key, now);
     }
 
-    // 2. Update Sports Banner
-    const nowTime = new Date();
-    const activeSpecial = FRIDAY_SPECIAL_EVENTS.find(evt => nowTime < evt.endTime);
-
-    if (activeSpecial) {
-        const isLive = nowTime >= activeSpecial.startTime;
-        
-        if (DOM.bannerTitle) DOM.bannerTitle.textContent = activeSpecial.title;
-        if (DOM.bannerTime) {
-            DOM.bannerTime.textContent = isLive 
-                ? `Live Now (Started ${activeSpecial.dateText.split('•')[1].trim()})` 
-                : activeSpecial.dateText;
-        }
-        if (DOM.bannerTag) {
-            DOM.bannerTag.textContent = isLive 
-                ? `LIVE ${activeSpecial.category}` 
-                : `UPCOMING ${activeSpecial.category}`;
-        }
-        if (DOM.bannerDot) DOM.bannerDot.style.display = isLive ? "inline-block" : "none";
-        return;
-    }
-
+    // 2. Banner Update
     if (!preparedSportsShows || !preparedSportsShows.length) return;
 
     let currentIndex = preparedSportsShows.length - 1;
@@ -616,14 +550,12 @@ function updateAppUI() {
     if (DOM.bannerDot) DOM.bannerDot.style.display = isUpcoming ? "none" : "inline-block";
 }
 
-// Initialization
 document.addEventListener("DOMContentLoaded", () => {
     updateAppUI();
 
     let attempts = 0;
     const initTimer = setInterval(() => {
-        attempts++;
-        if (prepareSchedules() || attempts >= 10) {
+        if (prepareSchedules() || ++attempts >= 10) {
             updateAppUI();
             clearInterval(initTimer);
         }
