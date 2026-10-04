@@ -1,4 +1,4 @@
-window.SCHEDULE_DATA = [
+Window.SCHEDULE_DATA = [
   // BBC Radio 1 (Sunday, 04/10/2026)
   { "time": "12:30 AM", "title": "Radio 1 Dance Drum & Bass Mix (Chilled D&B with Ama - Mixed up D&B from Radio 1 Dance.)", "channel": "BBC Radio 1" },
   { "time": "1:00 AM", "title": "Radio 1's Classic Essential Mix (Bonobo X TEED 2020 - Relive Bonobo's back to back set with TEED)", "channel": "BBC Radio 1" },
@@ -176,10 +176,10 @@ window.SCHEDULE_DATA = [
   { "time": "11:32 PM", "title": "The Fifth Floor (Follow the money: India's 'paper parties' - The shadowy political parties raking in millions)", "channel": "BBC World Service" },
 
   // BBC RADIO 5 Sports Extra (Sunday, 04/10/2026)
-  { "time": "1:00 AM", "title": "This Is Sports Extra (This is BBC Radio 5 Sports Extra - bringing you even more live sports commentaries)", "channel": "BBC RADIO 5 Sports Extra" },
-  { "time": "6:00 AM", "title": "This Is Sports Extra (This is BBC Radio 5 Sports Extra - bringing you even more live sports commentaries)", "channel": "BBC RADIO 5 Sports Extra" },
-  { "time": "9:00 AM", "title": "Rugby League 2026: NRL Grand Final: Sydney Roosters v Newcastle Knights (Live commentary of the NRL Grand Final)", "channel": "BBC RADIO 5 Sports Extra" },
-  { "time": "1:00 PM", "title": "This Is Sports Extra (This is BBC Radio 5 Sports Extra - bringing you even more live sports commentaries)", "channel": "BBC RADIO 5 Sports Extra" },
-  { "time": "7:00 PM", "title": "International Football 2026-27: Wales v Denmark (Live international football commentary in the UEFA Nations League)", "channel": "BBC RADIO 5 Sports Extra" },
-  { "time": "10:00 PM", "title": "This Is Sports Extra (This is BBC Radio 5 Sports Extra - bringing you even more live sports commentaries)", "channel": "BBC RADIO 5 Sports Extra" }
+  { "time": "1:00 AM", "title": "This Is Sports Extra (This is BBC Radio 5 Sports Extra - bringing you even more live sports commentaries.)", "channel": "BBC RADIO 5 Sports Extra" },
+  { "time": "6:00 AM", "title": "This Is Sports Extra (This is BBC Radio 5 Sports Extra - bringing you even more live sports commentaries.)", "channel": "BBC RADIO 5 Sports Extra" },
+  { "time": "9:00 AM", "title": "Formula 1: 2026 FORMULA 1 Bahrain Grand Prix in Malaysia (Live F1 commentary of the 2026 Bahrain Grand Prix in Malaysia.)", "channel": "BBC RADIO 5 Sports Extra" },
+  { "time": "12:00 PM", "title": "This Is Sports Extra (This is BBC Radio 5 Sports Extra - bringing you even more live sports commentaries.)", "channel": "BBC RADIO 5 Sports Extra" },
+  { "time": "7:00 PM", "title": "International Football 2026-27: Wales v Denmark (Live international football commentary of Wales v Denmark in the UEFA Nations League.)", "channel": "BBC RADIO 5 Sports Extra" },
+  { "time": "10:00 PM", "title": "This Is Sports Extra (This is BBC Radio 5 Sports Extra - bringing you even more live sports commentaries.)", "channel": "BBC RADIO 5 Sports Extra" }
 ];
