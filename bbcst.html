@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- viewport-fit=cover য়ে কেমেৰা নচ আৰু ষ্টেটাছ বাৰৰ সুৰক্ষিত স্থান নিশ্চিত কৰে -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>UK Radio Hub</title>
   <style>
@@ -10,7 +9,7 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       -webkit-tap-highlight-color: transparent !important;
       outline: none;
       -webkit-touch-callout: none;
@@ -32,7 +31,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Top Control Bar */
+    /* Top Bar */
     .top-bar {
       display: flex;
       gap: 8px;
@@ -41,7 +40,6 @@
       width: 100%;
     }
 
-    /* Category Switcher Button */
     .category-btn {
       flex: 1;
       min-width: 0;
@@ -56,7 +54,6 @@
       border: 1px solid #202d47;
       border-radius: 12px;
       cursor: pointer;
-      overflow: hidden;
       user-select: none;
     }
 
@@ -64,7 +61,6 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      text-align: left;
     }
 
     .category-btn svg {
@@ -75,11 +71,10 @@
       margin-left: 8px;
     }
 
-    /* Search Toggle Button */
     .search-btn {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       padding: 12px;
       background-color: #131b2e;
       border: 1px solid #202d47;
@@ -87,7 +82,6 @@
       color: #8e9fb5;
       cursor: pointer;
       flex-shrink: 0;
-      user-select: none;
     }
 
     .search-btn svg {
@@ -107,7 +101,6 @@
       stroke: #ffffff;
     }
 
-    /* Favorites Toggle Button */
     .fav-toggle-btn {
       display: flex;
       align-items: center;
@@ -122,7 +115,6 @@
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
-      user-select: none;
     }
 
     .fav-toggle-btn.active {
@@ -131,7 +123,7 @@
       color: #ffffff;
     }
 
-    /* Search Input Container */
+    /* Search Box */
     .search-container {
       display: none;
       width: 100%;
@@ -162,13 +154,12 @@
 
     .search-input {
       width: 100%;
-      padding: 11px 40px 11px 40px;
+      padding: 11px 40px;
       background-color: #131b2e;
       border: 1px solid #202d47;
       border-radius: 12px;
       color: #ffffff;
       font-size: 14px;
-      outline: none;
     }
 
     .search-input:focus {
@@ -185,10 +176,9 @@
       cursor: pointer;
       display: none;
       padding: 4px;
-      user-select: none;
     }
 
-    /* 2x2 Fixed Grid for Stations */
+    /* Grid & Cards - GPU Optimization */
     .grid-container {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -196,7 +186,6 @@
       width: 100%;
     }
 
-    /* Station Card */
     .station-card {
       position: relative;
       display: flex;
@@ -209,10 +198,8 @@
       color: #ffffff;
       cursor: pointer;
       user-select: none;
-      -webkit-user-select: none;
-      min-width: 0;
-      width: 100%;
       overflow: hidden;
+      contain: content; /* Rendering performance booster */
     }
 
     .thumb-wrapper {
@@ -231,7 +218,6 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      border-radius: 12px;
       pointer-events: none;
     }
 
@@ -250,8 +236,8 @@
     }
 
     .play-btn svg {
-      width: 16px;
-      height: 16px;
+      width: 15px;
+      height: 15px;
       fill: #ffffff;
       margin-left: 2px;
     }
@@ -269,8 +255,7 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      z-index: 10;
-      user-select: none;
+      z-index: 5;
     }
 
     .fav-btn svg {
@@ -296,8 +281,6 @@
       overflow: hidden;
       text-overflow: ellipsis;
       width: 100%;
-      display: block;
-      letter-spacing: 0.2px;
       pointer-events: none;
     }
 
@@ -310,7 +293,7 @@
       line-height: 1.6;
     }
 
-    /* Modal Overlay */
+    /* Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -318,13 +301,11 @@
       z-index: 999;
       display: flex;
       flex-direction: column;
-      padding-top: max(14px, env(safe-area-inset-top));
-      padding-bottom: max(10px, env(safe-area-inset-bottom));
-      padding-left: max(14px, env(safe-area-inset-left));
-      padding-right: max(14px, env(safe-area-inset-right));
+      padding: max(14px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.15s ease, visibility 0.15s ease;
+      contain: strict;
     }
 
     .modal-overlay.active {
@@ -340,17 +321,8 @@
       flex-shrink: 0;
     }
 
-    .modal-header h2 {
-      font-size: 18px;
-      font-weight: 800;
-      color: #ffffff;
-    }
-
-    .modal-header p {
-      font-size: 12px;
-      color: #8e9fb5;
-      margin-top: 2px;
-    }
+    .modal-header h2 { font-size: 18px; font-weight: 800; color: #ffffff; }
+    .modal-header p { font-size: 12px; color: #8e9fb5; margin-top: 2px; }
 
     .modal-close-btn {
       background: #18233c;
@@ -363,8 +335,6 @@
       justify-content: center;
       cursor: pointer;
       color: #ffffff;
-      flex-shrink: 0;
-      user-select: none;
     }
 
     .modal-close-btn svg {
@@ -374,7 +344,6 @@
       stroke-width: 2.2;
     }
 
-    /* Category Modal 2x Grid Layout */
     .category-list {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -382,12 +351,10 @@
       flex: 1;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      overscroll-behavior: contain;
-      padding: 2px 2px 20px 2px;
+      padding-bottom: 20px;
     }
 
     .category-item {
-      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -396,20 +363,12 @@
       border: 1.5px solid #1f2b45;
       border-radius: 14px;
       cursor: pointer;
-      user-select: none;
-      transition: all 0.15s ease-in-out;
       min-height: 108px;
-    }
-
-    .category-item:active {
-      transform: scale(0.96);
-      background-color: #17223b;
     }
 
     .category-item.selected {
       background: linear-gradient(145deg, #162a52, #101a33);
       border-color: #1e6bff;
-      box-shadow: 0 4px 12px rgba(30, 107, 255, 0.25);
     }
 
     .cat-top-row {
@@ -429,11 +388,6 @@
       align-items: center;
       justify-content: center;
       font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    .category-item.selected .cat-icon {
-      background: rgba(30, 107, 255, 0.25);
     }
 
     .cat-check {
@@ -444,7 +398,6 @@
       background: #1e6bff;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
     }
 
     .cat-check svg {
@@ -455,19 +408,12 @@
       fill: none;
     }
 
-    .category-item.selected .cat-check {
-      display: flex;
-    }
-
-    .cat-text {
-      width: 100%;
-    }
+    .category-item.selected .cat-check { display: flex; }
 
     .cat-text h3 {
       font-size: 13px;
       font-weight: 700;
       color: #ffffff;
-      line-height: 1.25;
       margin-bottom: 3px;
       white-space: nowrap;
       overflow: hidden;
@@ -477,7 +423,6 @@
     .cat-text p {
       font-size: 10.5px;
       color: #8e9fb5;
-      line-height: 1.25;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -487,11 +432,26 @@
 </head>
 <body>
 
-  <!-- Top Controls -->
+  <!-- Reusable Global SVG Cache -->
+  <svg style="display:none;" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <symbol id="icon-heart" viewBox="0 0 24 24">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+      </symbol>
+      <symbol id="icon-play" viewBox="0 0 24 24">
+        <path d="M8 5v14l11-7z"/>
+      </symbol>
+      <symbol id="icon-arrow" viewBox="0 0 24 24">
+        <path d="M7 10l5 5 5-5z"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- Controls -->
   <div class="top-bar">
     <button id="categoryBtn" class="category-btn" onclick="openCategoryModal()">
       <span id="currentCategoryTitle">Select Category</span>
-      <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      <svg><use href="#icon-arrow"/></svg>
     </button>
 
     <button id="searchToggleBtn" class="search-btn" onclick="toggleSearchBar()" title="Search">
@@ -520,17 +480,16 @@
         placeholder="Search any station..." 
         oninput="handleSearch(this.value)"
         autocomplete="off"
-        autocorrect="off"
         spellcheck="false"
       />
       <button id="clearSearchBtn" class="search-clear-btn" onclick="clearSearch()">✕</button>
     </div>
   </div>
 
-  <!-- 2x2 Station Grid -->
+  <!-- Station Grid Container (Event Delegation Active) -->
   <div id="radioGrid" class="grid-container"></div>
 
-  <!-- Full-Screen Category Selection Modal (Grid Style) -->
+  <!-- Category Modal -->
   <div id="categoryModal" class="modal-overlay">
     <div class="modal-header">
       <div>
@@ -538,13 +497,9 @@
         <p>Choose a category to start listening</p>
       </div>
       <button id="modalCloseBtn" class="modal-close-btn" onclick="closeCategoryModal(true)" style="display: none;">
-        <svg viewBox="0 0 24 24" fill="none">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
+        <svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
     </div>
-
     <div class="category-list" id="categoryOptions"></div>
   </div>
 
@@ -555,9 +510,7 @@
     let isSearchOpen = false;
     let searchDebounceTimer = null;
     let cachedAllStations = null;
-
     let memoryFavs = [];
-    let memoryCategory = null;
 
     const categories = [
       { key: "pop_hits", title: "Pop & Chart Hits", desc: "Top 40, Chart & Contemporary Hits", icon: "🎵" },
@@ -573,181 +526,144 @@
 
     const radioData = {
       pop_hits: [
-        { id: "uk1",          name: "Capital FM",       trigger: "go:capitalfm",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_UwAtO9d7X.jpg" },
-        { id: "cap_dance",    name: "Capital Dance",    trigger: "go:capitalda",    logo: "https://ik.imagekit.io/sqt8ptw1k/images_cJJvU0cKk.jpg" },
-        { id: "cap_xtra",     name: "Capital Xtra",     trigger: "go:capitalxt",     logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_niVjWGT0i.jpg" },
-        { id: "cap_anthems",  name: "Capital Anthems",  trigger: "go:capitalan",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_fW92XZlmD.png" },
+        { id: "uk1", name: "Capital FM", trigger: "go:capitalfm", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_UwAtO9d7X.jpg" },
+        { id: "cap_dance", name: "Capital Dance", trigger: "go:capitalda", logo: "https://ik.imagekit.io/sqt8ptw1k/images_cJJvU0cKk.jpg" },
+        { id: "cap_xtra", name: "Capital Xtra", trigger: "go:capitalxt", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_niVjWGT0i.jpg" },
+        { id: "cap_anthems", name: "Capital Anthems", trigger: "go:capitalan", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_fW92XZlmD.png" },
         { id: "cap_scotland", name: "Capital Scotland", trigger: "go:capitalsc", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)__1h2vKVdO.png" },
-        { id: "uk2",          name: "Heart UK",         trigger: "go:heartuk",         logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_aBHdeVmf6i.png" },
-        { id: "hrt_dance",    name: "Heart Dance",      trigger: "go:heartd",      logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_IVbEygpPf.jpg" },
-        { id: "hrt_love",     name: "Heart Love",       trigger: "go:heartl",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_he9kyFKwc.jpg" },
-        { id: "hrt_scotland", name: "Heart Scotland",   trigger: "go:heartsc",   logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_Kxq613Si_.jpg" },
-        { id: "pop_hits_1",   name: "Hits Radio",       trigger: "go:hits",       logo: "https://ik.imagekit.io/sqt8ptw1k/images_NUCvopDPG.png" },
-        { id: "uk6",          name: "Smooth Radio",     trigger: "go:smooth",          logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_sXWmm_kFH.jpg" },
-        { id: "uk10",         name: "Magic Radio",      trigger: "go:magicradio",      logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_Vm4_-n2EM.png" },
-        { id: "uk4",          name: "Virgin Radio",     trigger: "go:virgin",          logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_AZbHRpx0o.png" }
+        { id: "uk2", name: "Heart UK", trigger: "go:heartuk", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_aBHdeVmf6i.png" },
+        { id: "hrt_dance", name: "Heart Dance", trigger: "go:heartd", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_IVbEygpPf.jpg" },
+        { id: "hrt_love", name: "Heart Love", trigger: "go:heartl", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_he9kyFKwc.jpg" },
+        { id: "hrt_scotland", name: "Heart Scotland", trigger: "go:heartsc", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_Kxq613Si_.jpg" },
+        { id: "pop_hits_1", name: "Hits Radio", trigger: "go:hits", logo: "https://ik.imagekit.io/sqt8ptw1k/images_NUCvopDPG.png" },
+        { id: "uk6", name: "Smooth Radio", trigger: "go:smooth", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_sXWmm_kFH.jpg" },
+        { id: "uk10", name: "Magic Radio", trigger: "go:magicradio", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_Vm4_-n2EM.png" },
+        { id: "uk4", name: "Virgin Radio", trigger: "go:virgin", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_AZbHRpx0o.png" }
       ],
       news_sport: [
-        { id: "nr3",          name: "LBC",              trigger: "go:LBC1",             logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_nHTDY1ahv.jpg" },
-        { id: "nr_lbcnews",   name: "LBC News",         trigger: "go:lbcnews",         logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_nHTDY1ahv.jpg" },
-        { id: "sr1",          name: "talkSPORT",        trigger: "go:talksport",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)_MTxN5yXMFY.jpg" },
-        { id: "sr2",          name: "talkSPORT 2",      trigger: "go:talksport2",      logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(13)_lb-tkQH-6.png" },
-        { id: "nr1",          name: "Times Radio",      trigger: "go:timesradio",      logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7)_StZmG6MaR.png" },
-        { id: "nr4",          name: "Talk",             trigger: "go:talkradio",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(9)_YUdKs9Dsu.png" },
-        { id: "nr7",          name: "GB News",          trigger: "go:gbnews",          logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(12)_wvEMvRXLl.png" },
-        { id: "nr2",          name: "BBC World Service",trigger: "go:BBCWS",           logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(8)_le1kPe5Fs.png" },
-        { id: "nr6",          name: "CNN",              trigger: "go:cnn",             logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(11)_L6MbWLoL6.png" },
-        { id: "nr5",          name: "Al Jazeera",       trigger: "go:aljazeera",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(10)_ZvPCSQdqa.png" }
+        { id: "nr3", name: "LBC", trigger: "go:LBC1", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_nHTDY1ahv.jpg" },
+        { id: "nr_lbcnews", name: "LBC News", trigger: "go:lbcnews", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_nHTDY1ahv.jpg" },
+        { id: "sr1", name: "talkSPORT", trigger: "go:talksport", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)_MTxN5yXMFY.jpg" },
+        { id: "sr2", name: "talkSPORT 2", trigger: "go:talksport2", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(13)_lb-tkQH-6.png" },
+        { id: "nr1", name: "Times Radio", trigger: "go:timesradio", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7)_StZmG6MaR.png" },
+        { id: "nr4", name: "Talk", trigger: "go:talkradio", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(9)_YUdKs9Dsu.png" },
+        { id: "nr7", name: "GB News", trigger: "go:gbnews", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(12)_wvEMvRXLl.png" },
+        { id: "nr2", name: "BBC World Service", trigger: "go:BBCWS", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(8)_le1kPe5Fs.png" },
+        { id: "nr6", name: "CNN", trigger: "go:cnn", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(11)_L6MbWLoL6.png" },
+        { id: "nr5", name: "Al Jazeera", trigger: "go:aljazeera", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(10)_ZvPCSQdqa.png" }
       ],
       rock_alt: [
-        { id: "rk1",          name: "Radio X",          trigger: "go:radiox",          logo: "https://ik.imagekit.io/sqt8ptw1k/download_j206gtRI8.jpg" },
-        { id: "rk2",          name: "Absolute Radio",   trigger: "go:absoluter",   logo: "https://ik.imagekit.io/sqt8ptw1k/absolute-radio.webp" },
-        { id: "rk3",          name: "Planet Rock",      trigger: "go:planetrock",      logo: "https://ik.imagekit.io/sqt8ptw1k/planet-rock.webp" },
-        { id: "rk4",          name: "Kerrang! Radio",   trigger: "go:kerrang",         logo: "https://ik.imagekit.io/sqt8ptw1k/kerrang-radio.webp" }
+        { id: "rk1", name: "Radio X", trigger: "go:radiox", logo: "https://ik.imagekit.io/sqt8ptw1k/download_j206gtRI8.jpg" },
+        { id: "rk2", name: "Absolute Radio", trigger: "go:absoluter", logo: "https://ik.imagekit.io/sqt8ptw1k/absolute-radio.webp" },
+        { id: "rk3", name: "Planet Rock", trigger: "go:planetrock", logo: "https://ik.imagekit.io/sqt8ptw1k/planet-rock.webp" },
+        { id: "rk4", name: "Kerrang! Radio", trigger: "go:kerrang", logo: "https://ik.imagekit.io/sqt8ptw1k/kerrang-radio.webp" }
       ],
       decades_oldies: [
-        { id: "hrt_70s",      name: "Heart 70s",        trigger: "go:heart70",        logo: "https://ik.imagekit.io/sqt8ptw1k/download_XoAI6YUyA.png" },
-        { id: "hrt_80s",      name: "Heart 80s",        trigger: "go:heart80",        logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)_lXqoI4Mrw.jpg" },
-        { id: "hrt_90s",      name: "Heart 90s",        trigger: "go:heart90",        logo: "https://ik.imagekit.io/sqt8ptw1k/download%20(1)_Ke1KyTkIW.png" },
-        { id: "dec1",         name: "Greatest Hits",    trigger: "go:greatest",    logo: "https://ik.imagekit.io/sqt8ptw1k/20lZIrUwZ3suPMeA3pzH5132KgaH1K-metaMzgxLnBuZw==--lg.webp" },
-        { id: "dec2",         name: "Gold",             trigger: "go:gold",            logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_OKOcEusPsV.jpg" },
-        { id: "uk8",          name: "Boom Radio",       trigger: "go:boomradio",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)_eBmEi5A2F.png" }
+        { id: "hrt_70s", name: "Heart 70s", trigger: "go:heart70", logo: "https://ik.imagekit.io/sqt8ptw1k/download_XoAI6YUyA.png" },
+        { id: "hrt_80s", name: "Heart 80s", trigger: "go:heart80", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)_lXqoI4Mrw.jpg" },
+        { id: "hrt_90s", name: "Heart 90s", trigger: "go:heart90", logo: "https://ik.imagekit.io/sqt8ptw1k/download%20(1)_Ke1KyTkIW.png" },
+        { id: "dec1", name: "Greatest Hits", trigger: "go:greatest", logo: "https://ik.imagekit.io/sqt8ptw1k/20lZIrUwZ3suPMeA3pzH5132KgaH1K-metaMzgxLnBuZw==--lg.webp" },
+        { id: "dec2", name: "Gold", trigger: "go:gold", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_OKOcEusPsV.jpg" },
+        { id: "uk8", name: "Boom Radio", trigger: "go:boomradio", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)_eBmEi5A2F.png" }
       ],
       classical_specialist: [
-        { id: "uk3",          name: "Classic FM",       trigger: "go:classicfm",       logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_PvFAUskpR.jpg" },
-        { id: "uk9",          name: "Jazz FM",          trigger: "go:jazzfm",          logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_orT7IE_xk.jpg" },
-        { id: "cap_chill",    name: "Capital Chill",    trigger: "go:capitalch",    logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_PxxWieEEsS.jpg" },
-        { id: "uk5",          name: "Fix Radio",        trigger: "go:fixradio",        logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_76lUfgFpJ.png" },
-        { id: "uk7",          name: "BFBS UK",          trigger: "go:bfbsuk",          logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_WuwmnZ2cf.png" }
+        { id: "uk3", name: "Classic FM", trigger: "go:classicfm", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_PvFAUskpR.jpg" },
+        { id: "uk9", name: "Jazz FM", trigger: "go:jazzfm", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_orT7IE_xk.jpg" },
+        { id: "cap_chill", name: "Capital Chill", trigger: "go:capitalch", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_PxxWieEEsS.jpg" },
+        { id: "uk5", name: "Fix Radio", trigger: "go:fixradio", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_76lUfgFpJ.png" },
+        { id: "uk7", name: "BFBS UK", trigger: "go:bfbsuk", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_WuwmnZ2cf.png" }
       ],
       national: [
-        { id: "s1",  name: "BBC 1",             trigger: "go:BBC1",  logo: "https://ik.imagekit.io/sqt8ptw1k/images_PSlF8kUWN.jpg" },
-        { id: "s2",  name: "BBC 1Xtra",         trigger: "go:BB1x",  logo: "https://ik.imagekit.io/sqt8ptw1k/images_vnTRG2ZUIX.png" },
-        { id: "s3",  name: "BBC 1 Anthems",     trigger: "go:BBan",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1).png" },
-        { id: "s4",  name: "BBC 1 Dance",       trigger: "go:BBd",   logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2).png" },
-        { id: "s5",  name: "BBC 2",             trigger: "go:BBC2",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3).png" },
-        { id: "s6",  name: "BBC 3",             trigger: "go:BBC3",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_IqqMmykGi.jpg" },
-        { id: "s7",  name: "BBC 4",             trigger: "go:BBC4",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_IqqMmykGi.jpg" },
-        { id: "s8",  name: "BBC 4 Extra",       trigger: "go:s8",    logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5).png" },
-        { id: "s9",  name: "BBC 5 Live",        trigger: "go:BBC5",  logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6).png" },
-        { id: "s10", name: "BBC 5 Extra",       trigger: "go:BBC5E", logo: "https://ik.imagekit.io/sqt8ptw1k/images.webp" },
-        { id: "s11", name: "BBC 6 Music",       trigger: "go:s11",   logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7).png" },
-        { id: "s12", name: "BBC Asian Network", trigger: "go:s12",   logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_b0cfqxKx5.jpg" }
+        { id: "s1", name: "BBC 1", trigger: "go:BBC1", logo: "https://ik.imagekit.io/sqt8ptw1k/images_PSlF8kUWN.jpg" },
+        { id: "s2", name: "BBC 1Xtra", trigger: "go:BB1x", logo: "https://ik.imagekit.io/sqt8ptw1k/images_vnTRG2ZUIX.png" },
+        { id: "s3", name: "BBC 1 Anthems", trigger: "go:BBan", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1).png" },
+        { id: "s4", name: "BBC 1 Dance", trigger: "go:BBd", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2).png" },
+        { id: "s5", name: "BBC 2", trigger: "go:BBC2", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3).png" },
+        { id: "s6", name: "BBC 3", trigger: "go:BBC3", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_IqqMmykGi.jpg" },
+        { id: "s7", name: "BBC 4", trigger: "go:BBC4", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_IqqMmykGi.jpg" },
+        { id: "s8", name: "BBC 4 Extra", trigger: "go:s8", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5).png" },
+        { id: "s9", name: "BBC 5 Live", trigger: "go:BBC5", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6).png" },
+        { id: "s10", name: "BBC 5 Extra", trigger: "go:BBC5E", logo: "https://ik.imagekit.io/sqt8ptw1k/images.webp" },
+        { id: "s11", name: "BBC 6 Music", trigger: "go:s11", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7).png" },
+        { id: "s12", name: "BBC Asian Network", trigger: "go:s12", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_b0cfqxKx5.jpg" }
       ],
       scotland: [
-        { id: "s13", name: "BBC Scotland",      trigger: "go:s13", logo: "https://ik.imagekit.io/sqt8ptw1k/bbcradioscotland.jpeg" },
-        { id: "s14", name: "BBC nan Gàidheal",  trigger: "go:s14", logo: "https://ik.imagekit.io/sqt8ptw1k/images_8BBs9S0zr.png" }
+        { id: "s13", name: "BBC Scotland", trigger: "go:s13", logo: "https://ik.imagekit.io/sqt8ptw1k/bbcradioscotland.jpeg" },
+        { id: "s14", name: "BBC nan Gàidheal", trigger: "go:s14", logo: "https://ik.imagekit.io/sqt8ptw1k/images_8BBs9S0zr.png" }
       ],
       wales: [
-        { id: "s15", name: "BBC Wales",   trigger: "go:s15", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_mGGymaeQP.png" },
-        { id: "s16", name: "BBC Cymru",   trigger: "go:s16", logo: "https://ik.imagekit.io/sqt8ptw1k/images_FDIVpdlyx.jpg" },
+        { id: "s15", name: "BBC Wales", trigger: "go:s15", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_mGGymaeQP.png" },
+        { id: "s16", name: "BBC Cymru", trigger: "go:s16", logo: "https://ik.imagekit.io/sqt8ptw1k/images_FDIVpdlyx.jpg" },
         { id: "s17", name: "BBC Cymru 2", trigger: "go:s17", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_4SdO69eAs.png" }
       ],
       local: [
-        { id: "s18", name: "BBC Berkshire",       trigger: "go:s18", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_sR4Rnh4_M.png" },
-        { id: "s19", name: "BBC Bristol",         trigger: "go:s19", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_qf8xk6kos.jpg" },
-        { id: "s20", name: "BBC Cambridgeshire",   trigger: "go:s20", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_tewndzBYI.jpg" },
-        { id: "s21", name: "BBC Cornwall",        trigger: "go:s21", logo: "https://ik.imagekit.io/sqt8ptw1k/download_fJT5q55vY.png" },
-        { id: "s22", name: "BBC CWR",             trigger: "go:s22", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_J2chOXENY.jpg" },
-        { id: "s23", name: "BBC Cumbria",         trigger: "go:s23", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_1Dmf3Gn4A.png" },
-        { id: "s24", name: "BBC Derby",           trigger: "go:s24", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)__-G6XjIE9.png" },
-        { id: "s25", name: "BBC Devon",           trigger: "go:s25", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_DZ8_be12T.png" },
-        { id: "s26", name: "BBC Essex",           trigger: "go:s26", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_ZGE2X22PC.jpg" },
+        { id: "s18", name: "BBC Berkshire", trigger: "go:s18", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_sR4Rnh4_M.png" },
+        { id: "s19", name: "BBC Bristol", trigger: "go:s19", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_qf8xk6kos.jpg" },
+        { id: "s20", name: "BBC Cambridgeshire", trigger: "go:s20", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_tewndzBYI.jpg" },
+        { id: "s21", name: "BBC Cornwall", trigger: "go:s21", logo: "https://ik.imagekit.io/sqt8ptw1k/download_fJT5q55vY.png" },
+        { id: "s22", name: "BBC CWR", trigger: "go:s22", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_J2chOXENY.jpg" },
+        { id: "s23", name: "BBC Cumbria", trigger: "go:s23", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_1Dmf3Gn4A.png" },
+        { id: "s24", name: "BBC Derby", trigger: "go:s24", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)__-G6XjIE9.png" },
+        { id: "s25", name: "BBC Devon", trigger: "go:s25", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_DZ8_be12T.png" },
+        { id: "s26", name: "BBC Essex", trigger: "go:s26", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_ZGE2X22PC.jpg" },
         { id: "s27", name: "BBC Gloucestershire", trigger: "go:s27", logo: "https://ik.imagekit.io/sqt8ptw1k/bbc-gloucestershire.300e0e6b.png" },
-        { id: "s28", name: "BBC Guernsey",        trigger: "go:s28", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7)_zML9rtdye.png" },
+        { id: "s28", name: "BBC Guernsey", trigger: "go:s28", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7)_zML9rtdye.png" },
         { id: "s29", name: "BBC Hereford & Worc.", trigger: "go:s29", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(5)_vud8m4Z31.jpg" },
-        { id: "s30", name: "BBC Humberside",      trigger: "go:s30", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(8).png" },
-        { id: "s31", name: "BBC Jersey",          trigger: "go:s31", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(9).png" },
-        { id: "s32", name: "BBC Kent",            trigger: "go:s32", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(10).png" },
-        { id: "s33", name: "BBC Lancashire",      trigger: "go:s33", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_64FXrwjZS.jpg" },
-        { id: "s34", name: "BBC Leeds",           trigger: "go:s34", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(11).png" },
-        { id: "s35", name: "BBC Leicester",       trigger: "go:s35", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7)_DJ6yprrEE.jpg" },
-        { id: "s36", name: "BBC Lincolnshire",    trigger: "go:s36", logo: "https://ik.imagekit.io/sqt8ptw1k/download%20(1).png" },
-        { id: "s37", name: "BBC London",          trigger: "go:s37", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(8)_rY4LRdAPC.jpg" },
-        { id: "s38", name: "BBC Manchester",      trigger: "go:s38", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(12).png" },
-        { id: "s39", name: "BBC Merseyside",      trigger: "go:s39", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(13).png" },
-        { id: "s40", name: "BBC Newcastle",       trigger: "go:s40", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(14).png" },
-        { id: "s41", name: "BBC Norfolk",         trigger: "go:s41", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(15).png" },
-        { id: "s42", name: "BBC Northampton",     trigger: "go:s42", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(16).png" },
-        { id: "s43", name: "BBC Nottingham",      trigger: "go:s43", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(9)_9fWrsfrwb.jpg" },
-        { id: "s44", name: "BBC Oxford",          trigger: "go:s44", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(17).png" },
-        { id: "s45", name: "BBC Radio WM",        trigger: "go:s45", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(10)_So_ZA5enga.jpg" },
-        { id: "s46", name: "BBC Sheffield",       trigger: "go:s46", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(11).jpg" },
-        { id: "s47", name: "BBC Shropshire",      trigger: "go:s47", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(12).jpg" },
-        { id: "s48", name: "BBC Solent",          trigger: "go:s48", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(18).png" },
-        { id: "s49", name: "BBC Somerset",        trigger: "go:s49", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(19).png" },
-        { id: "s50", name: "BBC Stoke",           trigger: "go:s50", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(20).png" },
-        { id: "s51", name: "BBC Suffolk",         trigger: "go:s51", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(21).png" },
-        { id: "s52", name: "BBC Surrey",          trigger: "go:s52", logo: "https://ik.imagekit.io/sqt8ptw1k/download%20(2).png" },
-        { id: "s53", name: "BBC Sussex",          trigger: "go:s53", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(13).jpg" },
-        { id: "s54", name: "BBC Tees",            trigger: "go:s54", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(14).jpg" },
-        { id: "s55", name: "BBC Three Counties",  trigger: "go:s55", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(15).jpg" },
-        { id: "s56", name: "BBC Wiltshire",       trigger: "go:s56", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(22).png" },
-        { id: "s57", name: "BBC York",            trigger: "go:s57", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(23).png" }
+        { id: "s30", name: "BBC Humberside", trigger: "go:s30", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(8).png" },
+        { id: "s31", name: "BBC Jersey", trigger: "go:s31", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(9).png" },
+        { id: "s32", name: "BBC Kent", trigger: "go:s32", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(10).png" },
+        { id: "s33", name: "BBC Lancashire", trigger: "go:s33", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_64FXrwjZS.jpg" },
+        { id: "s34", name: "BBC Leeds", trigger: "go:s34", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(11).png" },
+        { id: "s35", name: "BBC Leicester", trigger: "go:s35", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(7)_DJ6yprrEE.jpg" },
+        { id: "s36", name: "BBC Lincolnshire", trigger: "go:s36", logo: "https://ik.imagekit.io/sqt8ptw1k/download%20(1).png" },
+        { id: "s37", name: "BBC London", trigger: "go:s37", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(8)_rY4LRdAPC.jpg" },
+        { id: "s38", name: "BBC Manchester", trigger: "go:s38", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(12).png" },
+        { id: "s39", name: "BBC Merseyside", trigger: "go:s39", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(13).png" },
+        { id: "s40", name: "BBC Newcastle", trigger: "go:s40", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(14).png" },
+        { id: "s41", name: "BBC Norfolk", trigger: "go:s41", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(15).png" },
+        { id: "s42", name: "BBC Northampton", trigger: "go:s42", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(16).png" },
+        { id: "s43", name: "BBC Nottingham", trigger: "go:s43", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(9)_9fWrsfrwb.jpg" },
+        { id: "s44", name: "BBC Oxford", trigger: "go:s44", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(17).png" },
+        { id: "s45", name: "BBC Radio WM", trigger: "go:s45", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(10)_So_ZA5enga.jpg" },
+        { id: "s46", name: "BBC Sheffield", trigger: "go:s46", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(11).jpg" },
+        { id: "s47", name: "BBC Shropshire", trigger: "go:s47", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(12).jpg" },
+        { id: "s48", name: "BBC Solent", trigger: "go:s48", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(18).png" },
+        { id: "s49", name: "BBC Somerset", trigger: "go:s49", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(19).png" },
+        { id: "s50", name: "BBC Stoke", trigger: "go:s50", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(20).png" },
+        { id: "s51", name: "BBC Suffolk", trigger: "go:s51", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(21).png" },
+        { id: "s52", name: "BBC Surrey", trigger: "go:s52", logo: "https://ik.imagekit.io/sqt8ptw1k/download%20(2).png" },
+        { id: "s53", name: "BBC Sussex", trigger: "go:s53", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(13).jpg" },
+        { id: "s54", name: "BBC Tees", trigger: "go:s54", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(14).jpg" },
+        { id: "s55", name: "BBC Three Counties", trigger: "go:s55", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(15).jpg" },
+        { id: "s56", name: "BBC Wiltshire", trigger: "go:s56", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(22).png" },
+        { id: "s57", name: "BBC York", trigger: "go:s57", logo: "https://ik.imagekit.io/sqt8ptw1k/images%20(23).png" }
       ]
     };
 
+    // ImageKit CDN URL Optimization Helper (forces 150px WebP)
+    function optimizeThumb(url) {
+      if (!url) return "";
+      if (url.includes("imagekit.io")) {
+        return url + (url.includes("?") ? "&" : "?") + "tr=w-150,q-75,f-webp";
+      }
+      return url;
+    }
+
     function getAllStationsCached() {
       if (!cachedAllStations) {
-        let allStations = [];
-        for (let key in radioData) {
-          allStations = allStations.concat(radioData[key]);
+        const set = new Map();
+        for (const k in radioData) {
+          radioData[k].forEach(s => {
+            if (!set.has(s.id)) {
+              set.set(s.id, { ...s, _search: s.name.toLowerCase() });
+            }
+          });
         }
-        cachedAllStations = Array.from(new Map(allStations.map(s => [s.id, s])).values());
+        cachedAllStations = Array.from(set.values());
       }
       return cachedAllStations;
     }
 
-    function getStationColor(name) {
-      if (name.includes("Capital")) return "#00325b";
-      if (name.includes("Heart")) return "#d81734";
-      if (name.includes("Classic")) return "#5d001e";
-      if (name.includes("Virgin")) return "#d60000";
-      if (name.includes("Smooth")) return "#4a235a";
-      if (name.includes("LBC")) return "#0a3871";
-      if (name.includes("talkSPORT")) return "#007a33";
-      if (name.includes("Hits Radio")) return "#e71d73";
-      if (name.includes("KISS") || name.includes("KISSTORY")) return "#00d1b2";
-      if (name.includes("Radio X")) return "#009944";
-      if (name.includes("Absolute")) return "#1c1c1c";
-      if (name.includes("Planet Rock")) return "#c0392b";
-      if (name.includes("Kerrang")) return "#111111";
-      if (name.includes("Greatest Hits")) return "#e67e22";
-      if (name.includes("Gold")) return "#d4af37";
-      if (name.includes("Scala")) return "#4a148c";
-      if (name.includes("CNN")) return "#cc0000";
-      if (name.includes("Al Jazeera")) return "#e06d10";
-      if (name.includes("GB News")) return "#172b4d";
-      if (name.includes("Times")) return "#1c2333";
-      if (name.includes("Talk")) return "#e74c3c";
-      if (name.includes("Magic")) return "#273c75";
-      if (name.includes("Jazz")) return "#2c3e50";
-      if (name.includes("Fix")) return "#e67e22";
-      if (name.includes("Boom")) return "#16a085";
-      if (name.includes("BBC 1")) return "#4a1262";
-      if (name.includes("BBC 2")) return "#dc4a00";
-      if (name.includes("BBC 3")) return "#b71427";
-      if (name.includes("BBC 4")) return "#00477e";
-      if (name.includes("BBC 5")) return "#007a72";
-      return "#18263f";
-    }
-
-    function generateStationLogo(title) {
-      const bgColor = encodeURIComponent(getStationColor(title));
-      const cleanTitle = encodeURIComponent(title);
-
-      if (title.startsWith("BBC")) {
-        const subTitle = encodeURIComponent(title.replace("BBC ", ""));
-        return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"><rect width="200" height="200" rx="20" fill="${bgColor}"/><g transform="translate(38, 46)"><rect x="0" y="0" width="36" height="36" rx="5" fill="%23ffffff"/><text x="18" y="26" font-family="sans-serif" font-weight="900" font-size="24" fill="%23000" text-anchor="middle">B</text><rect x="44" y="0" width="36" height="36" rx="5" fill="%23ffffff"/><text x="62" y="26" font-family="sans-serif" font-weight="900" font-size="24" fill="%23000" text-anchor="middle">B</text><rect x="88" y="0" width="36" height="36" rx="5" fill="%23ffffff"/><text x="106" y="26" font-family="sans-serif" font-weight="900" font-size="24" fill="%23000" text-anchor="middle">C</text></g><text x="100" y="142" font-family="sans-serif" font-weight="800" font-size="20" fill="%23ffffff" text-anchor="middle">${subTitle}</text></svg>`;
-      }
-
-      const words = title.split(" ");
-      const initials = words.length > 1 ? (words[0][0] + words[1][0]).toUpperCase() : title.slice(0, 3).toUpperCase();
-
-      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"><rect width="200" height="200" rx="20" fill="${bgColor}"/><circle cx="100" cy="80" r="42" fill="rgba(255,255,255,0.15)"/><text x="100" y="93" font-family="sans-serif" font-weight="900" font-size="28" fill="%23ffffff" text-anchor="middle">${initials}</text><text x="100" y="152" font-family="sans-serif" font-weight="700" font-size="16" fill="%23ffffff" text-anchor="middle">${cleanTitle}</text></svg>`;
-    }
-
-    /* Storage Handlers */
     function getFavorites() {
       try {
         const stored = localStorage.getItem("uk_radio_favs");
@@ -761,111 +677,56 @@
       memoryFavs = favs;
       try {
         localStorage.setItem("uk_radio_favs", JSON.stringify(favs));
-      } catch (e) {
-        console.warn("LocalStorage restricted, stored in memory");
-      }
-      updateFavCount();
-    }
-
-    function getSavedCategory() {
-      try {
-        return localStorage.getItem("preferred_radio_category") || memoryCategory;
-      } catch (e) {
-        return memoryCategory;
-      }
-    }
-
-    function saveSavedCategory(catKey) {
-      memoryCategory = catKey;
-      try {
-        localStorage.setItem("preferred_radio_category", catKey);
-      } catch (e) {
-        console.warn("LocalStorage restricted, stored in memory");
-      }
-    }
-
-    function updateFavCount() {
-      const favs = getFavorites();
+      } catch (e) {}
       document.getElementById("favCount").innerText = favs.length;
     }
 
-    function toggleFavorite(event, stationId) {
-      event.preventDefault();
-      event.stopPropagation();
-
+    function toggleFavorite(stationId, btnElem) {
       let favs = getFavorites();
-      const index = favs.indexOf(stationId);
-
-      if (index > -1) {
-        favs.splice(index, 1);
-      } else {
-        favs.push(stationId);
-      }
-
+      const idx = favs.indexOf(stationId);
+      if (idx > -1) favs.splice(idx, 1);
+      else favs.push(stationId);
       saveFavorites(favs);
 
-      if (isShowingFavsOnly) {
-        renderStations();
-      } else {
-        const btn = event.currentTarget;
-        btn.classList.toggle("active", favs.includes(stationId));
-      }
+      if (isShowingFavsOnly) renderStations();
+      else if (btnElem) btnElem.classList.toggle("active", favs.includes(stationId));
     }
 
     function toggleFavoritesView() {
       isShowingFavsOnly = !isShowingFavsOnly;
-      const favBtn = document.getElementById("favToggle");
-      favBtn.classList.toggle("active", isShowingFavsOnly);
-
-      if (isSearchOpen) {
-        closeSearchBar(false);
-      }
-
-      const titleElem = document.getElementById("currentCategoryTitle");
-      if (isShowingFavsOnly) {
-        titleElem.innerText = "Favorites";
-      } else {
-        const selected = categories.find(c => c.key === currentCategory);
-        titleElem.innerText = selected ? selected.title : "Select Category";
-      }
-
+      document.getElementById("favToggle").classList.toggle("active", isShowingFavsOnly);
+      if (isSearchOpen) closeSearchBar(false);
+      document.getElementById("currentCategoryTitle").innerText = isShowingFavsOnly 
+        ? "Favorites" 
+        : (categories.find(c => c.key === currentCategory)?.title || "Select Category");
       renderStations();
     }
 
     function playStation(trigger) {
-      if (trigger) {
-        window.location.href = trigger;
-      }
+      if (trigger) window.location.href = trigger;
     }
 
-    /* Debounced Search Handler */
     function handleSearch(val) {
       const trimmed = val.trim();
       document.getElementById("clearSearchBtn").style.display = trimmed ? "block" : "none";
-
       clearTimeout(searchDebounceTimer);
       searchDebounceTimer = setTimeout(() => {
         searchQuery = trimmed.toLowerCase();
         renderStations();
-      }, 150);
+      }, 120);
     }
 
     function clearSearch() {
       clearTimeout(searchDebounceTimer);
       searchQuery = "";
-      const input = document.getElementById("searchInput");
-      if (input) input.value = "";
+      const inp = document.getElementById("searchInput");
+      if (inp) inp.value = "";
       document.getElementById("clearSearchBtn").style.display = "none";
       renderStations();
     }
 
-    /* Search Bar Toggle */
     function toggleSearchBar() {
-      if (isSearchOpen) {
-        closeSearchBar(true);
-      } else {
-        openSearchBar();
-      }
+      isSearchOpen ? closeSearchBar(true) : openSearchBar();
     }
 
     function openSearchBar() {
@@ -882,62 +743,42 @@
       document.getElementById("searchContainer").classList.remove("active");
       document.getElementById("searchToggleBtn").classList.remove("active");
       clearSearch();
-
-      if (shouldGoBack && history.state && history.state.view === "search") {
-        history.back();
-      }
+      if (shouldGoBack && history.state?.view === "search") history.back();
     }
 
-    /* 2x Grid Modal Builder */
     function buildCategoryModalOnce() {
       const container = document.getElementById("categoryOptions");
-      container.innerHTML = "";
-
-      const fragment = document.createDocumentFragment();
+      let html = "";
       categories.forEach(cat => {
-        const item = document.createElement("div");
-        item.className = `category-item ${cat.key === currentCategory ? 'selected' : ''}`;
-        item.setAttribute("data-cat", cat.key);
-        item.onclick = () => selectCategory(cat.key);
-
-        item.innerHTML = `
-          <div class="cat-top-row">
-            <div class="cat-icon">${cat.icon}</div>
-            <div class="cat-check">
-              <svg viewBox="0 0 24 24">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
+        html += `
+          <div class="category-item ${cat.key === currentCategory ? 'selected' : ''}" data-cat="${cat.key}">
+            <div class="cat-top-row">
+              <div class="cat-icon">${cat.icon}</div>
+              <div class="cat-check">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
             </div>
-          </div>
-          <div class="cat-text">
-            <h3>${cat.title}</h3>
-            <p>${cat.desc}</p>
-          </div>
-        `;
-        fragment.appendChild(item);
+            <div class="cat-text">
+              <h3>${cat.title}</h3>
+              <p>${cat.desc}</p>
+            </div>
+          </div>`;
       });
-      container.appendChild(fragment);
-    }
+      container.innerHTML = html;
 
-    function updateCategoryModalSelection() {
-      const items = document.querySelectorAll(".category-item");
-      items.forEach(el => {
-        if (el.getAttribute("data-cat") === currentCategory) {
-          el.classList.add("selected");
-        } else {
-          el.classList.remove("selected");
-        }
+      // Event delegation for Category selection
+      container.addEventListener("click", (e) => {
+        const item = e.target.closest(".category-item");
+        if (item) selectCategory(item.dataset.cat);
       });
     }
 
     function openCategoryModal() {
-      updateCategoryModalSelection();
-      const modal = document.getElementById("categoryModal");
-      const closeBtn = document.getElementById("modalCloseBtn");
-      
-      closeBtn.style.display = currentCategory ? "flex" : "none";
-      modal.classList.add("active");
-
+      document.querySelectorAll(".category-item").forEach(el => {
+        el.classList.toggle("selected", el.dataset.cat === currentCategory);
+      });
+      document.getElementById("modalCloseBtn").style.display = currentCategory ? "flex" : "none";
+      document.getElementById("categoryModal").classList.add("active");
       history.pushState({ view: "modal" }, "");
     }
 
@@ -945,116 +786,93 @@
       const modal = document.getElementById("categoryModal");
       if (modal.classList.contains("active")) {
         modal.classList.remove("active");
-        if (shouldGoBack && history.state && history.state.view === "modal") {
-          history.back();
-        }
+        if (shouldGoBack && history.state?.view === "modal") history.back();
       }
     }
 
     function selectCategory(catKey) {
       currentCategory = catKey;
-      saveSavedCategory(catKey);
-
-      const selected = categories.find(c => c.key === catKey);
-      if (selected) {
-        document.getElementById("currentCategoryTitle").innerText = selected.title;
-      }
-
+      try { localStorage.setItem("preferred_radio_category", catKey); } catch(e) {}
+      const sel = categories.find(c => c.key === catKey);
+      if (sel) document.getElementById("currentCategoryTitle").innerText = sel.title;
       isShowingFavsOnly = false;
       document.getElementById("favToggle").classList.remove("active");
-
-      if (isSearchOpen) {
-        closeSearchBar(false);
-      }
-
+      if (isSearchOpen) closeSearchBar(false);
       closeCategoryModal(true);
       renderStations();
     }
 
+    /* Fast InnerHTML Renderer */
     function renderStations() {
       const grid = document.getElementById("radioGrid");
       const favs = getFavorites();
-      grid.innerHTML = "";
-
-      let stations = [];
+      let list = [];
 
       if (searchQuery !== "") {
-        const all = getAllStationsCached();
-        stations = all.filter(s => s.name.toLowerCase().includes(searchQuery));
-
-        if (stations.length === 0) {
+        list = getAllStationsCached().filter(s => s._search.includes(searchQuery));
+        if (!list.length) {
           grid.innerHTML = `<div class="empty-msg">No station found matching "<b>${searchQuery}</b>"</div>`;
           return;
         }
       } else if (isShowingFavsOnly) {
-        const all = getAllStationsCached();
-        stations = all.filter(s => favs.includes(s.id));
-
-        if (stations.length === 0) {
+        list = getAllStationsCached().filter(s => favs.includes(s.id));
+        if (!list.length) {
           grid.innerHTML = `<div class="empty-msg">No favorite stations added yet.<br>Tap the heart icon on any station to add.</div>`;
           return;
         }
       } else {
-        stations = radioData[currentCategory] || [];
+        list = radioData[currentCategory] || [];
       }
 
-      const fragment = document.createDocumentFragment();
+      let out = "";
+      for (let i = 0; i < list.length; i++) {
+        const s = list[i];
+        const isFav = favs.includes(s.id);
+        const img = optimizeThumb(s.logo);
 
-      stations.forEach(station => {
-        const isFav = favs.includes(station.id);
-        const card = document.createElement("div");
-        card.className = "station-card";
-        card.onclick = () => playStation(station.trigger);
-
-        const logoUrl = (station.logo && station.logo.trim() !== "") ? station.logo : generateStationLogo(station.name);
-
-        card.innerHTML = `
-          <div class="thumb-wrapper">
-            <img src="${logoUrl}" alt="${station.name}" class="station-logo" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='${generateStationLogo(station.name)}'">
-            <div class="fav-btn ${isFav ? 'active' : ''}" role="button" tabindex="0" onclick="toggleFavorite(event, '${station.id}')" title="Favorite">
-              <svg viewBox="0 0 24 24">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-              </svg>
+        out += `
+          <div class="station-card" data-trigger="${s.trigger}">
+            <div class="thumb-wrapper">
+              <img src="${img}" alt="${s.name}" class="station-logo" loading="lazy" decoding="async">
+              <div class="fav-btn ${isFav ? 'active' : ''}" data-id="${s.id}">
+                <svg><use href="#icon-heart"/></svg>
+              </div>
+              <div class="play-btn">
+                <svg><use href="#icon-play"/></svg>
+              </div>
             </div>
-            <div class="play-btn">
-              <svg viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-            </div>
-          </div>
-          <span class="station-name">${station.name}</span>
-        `;
-
-        fragment.appendChild(card);
-      });
-
-      grid.appendChild(fragment);
+            <span class="station-name">${s.name}</span>
+          </div>`;
+      }
+      grid.innerHTML = out;
     }
 
-    /* System Back Button Listener */
+    /* Single Event Delegation for Whole Grid */
+    document.getElementById("radioGrid").addEventListener("click", (e) => {
+      const favBtn = e.target.closest(".fav-btn");
+      if (favBtn) {
+        e.stopPropagation();
+        toggleFavorite(favBtn.dataset.id, favBtn);
+        return;
+      }
+      const card = e.target.closest(".station-card");
+      if (card && card.dataset.trigger) {
+        playStation(card.dataset.trigger);
+      }
+    });
+
     window.addEventListener("popstate", () => {
       const modal = document.getElementById("categoryModal");
-      if (modal.classList.contains("active")) {
-        closeCategoryModal(false);
-        return;
-      }
-      if (isSearchOpen) {
-        closeSearchBar(false);
-        return;
-      }
+      if (modal.classList.contains("active")) { closeCategoryModal(false); return; }
+      if (isSearchOpen) { closeSearchBar(false); return; }
     });
 
     document.addEventListener("DOMContentLoaded", () => {
       buildCategoryModalOnce();
-      updateFavCount();
-
-      const savedCategory = getSavedCategory();
-
-      if (savedCategory && radioData[savedCategory]) {
-        selectCategory(savedCategory);
-      } else {
-        selectCategory("pop_hits");
-      }
+      document.getElementById("favCount").innerText = getFavorites().length;
+      let saved = null;
+      try { saved = localStorage.getItem("preferred_radio_category"); } catch(e) {}
+      selectCategory(saved && radioData[saved] ? saved : "pop_hits");
     });
   </script>
 </body>
