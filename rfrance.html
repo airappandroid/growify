@@ -37,7 +37,7 @@ body {
   overflow-x: hidden;
 }
 
-/* STICKY HEADER (Blurs removed for GPU efficiency) */
+/* STICKY HEADER */
 .sticky-header {
   position: sticky;
   top: 0;
@@ -55,7 +55,7 @@ body {
 }
 
 .brand-title {
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 800;
   color: #fff;
   display: flex;
@@ -64,14 +64,9 @@ body {
 }
 
 .brand-radio-icon {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   fill: var(--accent-cyan);
-}
-
-.brand-subtitle {
-  font-size: 11px;
-  color: var(--text-sub);
 }
 
 .header-actions {
@@ -80,30 +75,9 @@ body {
   gap: 8px;
 }
 
-.time-chip {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-subtle);
-  padding: 4px 8px;
-  border-radius: 16px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--accent-cyan);
-  font-variant-numeric: tabular-nums;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.time-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent-cyan);
-}
-
 .icon-button {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border-subtle);
@@ -213,22 +187,30 @@ body {
   border-radius: 1px;
 }
 
+/* PLAY CIRCLE HIGHLIGHT */
 .play-circle {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  background: var(--accent-cyan);
+  color: #04101f;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow: 0 3px 10px rgba(56, 189, 248, 0.4);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.station-card:active .play-circle {
+  transform: scale(0.9);
+  opacity: 0.9;
 }
 
 .play-circle svg {
-  width: 15px;
-  height: 15px;
-  fill: currentColor;
+  width: 16px;
+  height: 16px;
+  fill: #04101f;
   margin-left: 2px;
 }
 
@@ -272,44 +254,48 @@ body {
   overflow: hidden;
 }
 
-/* EXPLORE BUTTON */
+/* EXPLORE BUTTON HIGHLIGHT */
 .explore-btn {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--surface-card);
-  border: 1px solid var(--border-subtle);
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(14, 165, 233, 0.05));
+  border: 1px solid rgba(56, 189, 248, 0.35);
   border-radius: 14px;
-  padding: 12px 14px;
+  padding: 13px 15px;
   color: #fff;
   cursor: pointer;
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.1);
+  transition: all 0.2s ease;
 }
 
 .explore-btn:active {
-  background: #172134;
+  background: rgba(56, 189, 248, 0.25);
+  transform: scale(0.98);
 }
 
 .explore-content {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .explore-icon-wrap {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 10px;
-  background: rgba(56, 189, 248, 0.1);
+  background: var(--accent-cyan);
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.3);
 }
 
 .explore-icon-wrap svg {
-  width: 18px;
-  height: 18px;
-  fill: var(--accent-cyan);
+  width: 19px;
+  height: 19px;
+  fill: #04101f;
 }
 
 .explore-text {
@@ -317,20 +303,21 @@ body {
 }
 
 .explore-title {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 700;
   display: block;
+  color: #ffffff;
 }
 
 .explore-sub {
   font-size: 11px;
-  color: var(--text-sub);
+  color: var(--accent-cyan);
 }
 
 .explore-arrow {
-  width: 18px;
-  height: 18px;
-  fill: var(--text-sub);
+  width: 19px;
+  height: 19px;
+  fill: var(--accent-cyan);
 }
 
 /* MODAL */
@@ -414,7 +401,7 @@ body {
   font-weight: 700;
   cursor: pointer;
 }
-</style>
+  </style>
 </head>
 <body>
 
@@ -427,15 +414,9 @@ body {
           </svg>
           Radios Françaises
         </div>
-        <div class="brand-subtitle">Direct National & Podcasts</div>
       </div>
 
       <div class="header-actions">
-        <div class="time-chip">
-          <span class="time-dot"></span>
-          <span id="paris-clock">--:--</span>
-        </div>
-
         <button class="icon-button" onclick="actionUri('http://action_share')" aria-label="Share">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle>
@@ -616,10 +597,6 @@ function parseTimeRange(timeRange) {
 
 function updateSchedules() {
   const paris = getParisMinutes();
-  
-  // Update clock
-  const timeStr = `${String(paris.h).padStart(2, '0')}:${String(paris.m).padStart(2, '0')}`;
-  document.getElementById('paris-clock').textContent = timeStr;
 
   // Only update shows if the minute changed
   if (paris.total === lastCheckedMinute) return;
@@ -673,7 +650,7 @@ async function initSchedule() {
 }
 
 updateSchedules();
-setInterval(updateSchedules, 10000); // Check every 10 seconds instead of every 1s
+setInterval(updateSchedules, 10000);
 initSchedule();
   </script>
 </body>
