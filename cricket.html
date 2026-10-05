@@ -368,12 +368,12 @@
         <!-- Main Cricket Score Card -->
         <section class="match-card">
             <div class="match-meta-bar">
-                <span class="match-label" id="match-info">IND vs WI • ODI</span>
+                <span class="match-label" id="match-info">IND vs WI • T20</span>
                 <span class="status-tag" id="match-status">UPCOMING</span>
             </div>
 
             <div class="venue-row">
-                <span id="match-format">ODI Match</span>
+                <span id="match-format">T20 Match</span>
                 <div id="last-ball-container" style="display: none;">
                     Last Ball: <span class="ball-glow" id="latest-ball">-</span>
                 </div>
@@ -404,7 +404,7 @@
                 </div>
             </div>
 
-            <div class="summary-status" id="status-box">IND vs WI, 3rd ODI</div>
+            <div class="summary-status" id="status-box">IND vs WI 1st T20, Match Starts Today at 7 PM</div>
             <div class="toss-tag" id="toss-info" style="display: none;"></div>
         </section>
 
@@ -430,7 +430,7 @@
     </div>
 
     <script>
-        const API_URL = "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a3103757327c23debef2656";
+        const API_URL = "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a3103777327c23debef2658";
         const FLAGS = {
             ind: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
             india: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
@@ -507,7 +507,7 @@
                 const tB = r.teams?.b || {};
                 const nameA = tA.name || tA.shortName || 'India';
                 const nameB = tB.name || tB.shortName || 'West Indies';
-                const format = (r.format || "ODI").toUpperCase();
+                const format = (r.format || "T20").toUpperCase();
 
                 el.info.textContent = `${tA.shortName || 'IND'} vs ${tB.shortName || 'WI'} • ${format}`;
                 el.format.textContent = `${format} Match`;
@@ -531,7 +531,7 @@
                 } else {
                     el.status.textContent = "UPCOMING";
                     el.status.className = "status-tag";
-                    el.statusBox.textContent = r.announcement1 || "IND vs WI, 3rd ODI";
+                    el.statusBox.textContent = r.announcement1 || "IND vs WI 1st T20, Match Starts Today at 7 PM";
                 }
 
                 // Last Ball
@@ -560,11 +560,11 @@
                     el.toss.textContent = `Toss: ${r.announcement1}`;
                     el.toss.style.display = "block";
                 } else {
-                    el.toss.style.display = "none";
+                    el.toss.display = "none";
                 }
 
             } catch (e) {
-                // Network error বা Timeout নিৰৱে হেণ্ডেল কৰা হ'ব
+                // Network error বা Timeout নিৰৱে নিয়ন্ত্ৰণ কৰা হৈছে
             } finally {
                 setTimeout(fetchScore, isLive ? 15000 : 60000);
             }
