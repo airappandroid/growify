@@ -297,11 +297,11 @@ body {
             <div class="banner-top-row">
                 <div class="banner-tag">
                     <span class="banner-dot" id="bannerDot"></span>
-                    <span id="bannerTag">Sports Extra</span>
+                    <span id="bannerTag">LIVE NOW FOOTBALL</span>
                 </div>
                 <div class="banner-time" id="bannerTime">Loading schedule...</div>
             </div>
-            <div class="banner-title" id="bannerTitle">Loading event...</div>
+            <div class="banner-title" id="bannerTitle">Nations League: Scotland v Slovenia</div>
             <div class="banner-bottom-row">
                 <span class="banner-station">BBC Radio 5 Sports Extra</span>
                 <div class="banner-cta">
@@ -383,17 +383,17 @@ body {
         <div class="station-card" style="border-color: rgba(59, 130, 246, 0.3);">
             <div class="station-info">
                 <div class="station-name">📰 5 Min News Brief <span class="duration-tag">5 Min</span></div>
-                <div class="playing-row"><span>Updated: 6 OCT, 10:00 AM</span></div>
+                <div class="playing-row"><span>Updated: 6 OCT, 5:00 PM</span></div>
             </div>
-            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/d89a92-w1msm0v8hxjn8f3/vf_w1msm0v8hxjn8f3_efb794de-2a2e-479e-92c5-725c934c1ef8.ism/dash/vf_w1msm0v8hxjn8f3_efb794de-2a2e-479e-92c5-725c934c1ef8-audio_eng_1=96000-2.m3u8" class="play-btn" aria-label="Play"></a>
+            <a href="https://aod-dash-ww-gcomm.live.cf.md.bbci.co.uk/usp/auth/vod/piff_abr_full_audio/83fbc4-w1msm0v8hxjp3n0/vf_w1msm0v8hxjp3n0_d5cdb7a8-dd19-425b-9bae-bd2939e99a22.ism/dash/vf_w1msm0v8hxjp3n0_d5cdb7a8-dd19-425b-9bae-bd2939e99a22-audio_eng_1=96000-4.m3u8" class="play-btn" aria-label="Play"></a>
         </div>
 
         <div class="station-card" style="border-color: rgba(168, 85, 247, 0.3);">
             <div class="station-info">
                 <div class="station-name">🎙️ Thought for the Day <span class="duration-tag">3 Min</span></div>
-                <div class="playing-row"><span>Updated: 5 OCT, 1:00 PM</span></div>
+                <div class="playing-row"><span>Updated: 6 OCT, 5:00 PM</span></div>
             </div>
-            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/a0d887-p0pf0dt9/vf_p0pf0dt9_2dc044c1-a162-4f09-a675-aa6172f2a862.ism/dash/vf_p0pf0dt9_2dc044c1-a162-4f09-a675-aa6172f2a862-audio_eng_1=96000-2.m3u8" class="play-btn" aria-label="Play"></a>
+            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/98301b-p0pf625h/vf_p0pf625h_962d62af-290e-41f8-b005-c8d318b109df.ism/dash/vf_p0pf625h_962d62af-290e-41f8-b005-c8d318b109df-audio_eng_1=96000-3.m3u8" class="play-btn" aria-label="Play"></a>
         </div>
     </div>
 </div>
@@ -475,7 +475,12 @@ function prepareSchedules() {
         preparedMainSchedule.push({ channel: ch, title: p.title || "Live", startMin });
 
         if (ch.includes("sports extra")) {
-            preparedSportsShows.push({ time: p.time, title: p.title || "", startMin });
+            preparedSportsShows.push({
+                time: p.time,
+                title: p.title || "",
+                subtitle: p.subtitle || p.secondary_title || p.desc || p.synopsis || "",
+                startMin
+            });
         }
     }
 
@@ -519,7 +524,7 @@ function updateAppUI() {
     }
 
     const currentShow = preparedSportsShows[currentIndex];
-    const isGeneric = currentShow.title.toLowerCase().includes("this is sports extra");
+    const isGeneric = (currentShow.title || "").toLowerCase().includes("this is sports extra");
 
     let targetShow = currentShow;
     let isUpcoming = false;
@@ -532,19 +537,32 @@ function updateAppUI() {
         }
     }
 
-    let cleanTitle = targetShow.title.split("(")[0].trim();
-    if (cleanTitle.includes(":")) {
-        cleanTitle = cleanTitle.split(":").slice(1).join(":").trim();
+    let rawTitle = targetShow.title || "";
+    let cleanTitle = rawTitle.split("(")[0].trim();
+
+    // ডেটা থেকে 'Sportsound' আসলে তা স্বয়ংক্রিয়ভাবে মূল ইভেন্ট নামে পরিবর্তন
+    const lowerRaw = cleanTitle.toLowerCase();
+    if (lowerRaw === "sportsound" || lowerRaw.startsWith("sportsound")) {
+        if (targetShow.subtitle && targetShow.subtitle.trim().length > 3) {
+            cleanTitle = targetShow.subtitle.split("(")[0].trim();
+        } else {
+            cleanTitle = "Nations League: Scotland v Slovenia";
+        }
     }
 
-    const lower = targetShow.title.toLowerCase();
+    // জেনেরিক বা খালি টাইটেল চেক
+    if (!cleanTitle || lowerRaw.includes("this is sports extra")) {
+        cleanTitle = "Nations League: Scotland v Slovenia";
+    }
+
+    const lower = (rawTitle + " " + cleanTitle).toLowerCase();
     let tag = isUpcoming ? "UPCOMING" : "LIVE NOW";
-    if (lower.includes("football")) tag += " FOOTBALL";
+    if (lower.includes("football") || lower.includes("scotland") || lower.includes("nations league")) tag += " FOOTBALL";
     else if (lower.includes("cricket")) tag += " CRICKET";
     else if (lower.includes("rugby")) tag += " RUGBY";
     else if (lower.includes("tennis")) tag += " TENNIS";
 
-    if (DOM.bannerTitle) DOM.bannerTitle.textContent = cleanTitle || "BBC Radio 5 Sports Extra";
+    if (DOM.bannerTitle) DOM.bannerTitle.textContent = cleanTitle;
     if (DOM.bannerTime) DOM.bannerTime.textContent = isUpcoming ? `Today, ${targetShow.time}` : `Live Now (${targetShow.time})`;
     if (DOM.bannerTag) DOM.bannerTag.textContent = tag;
     if (DOM.bannerDot) DOM.bannerDot.style.display = isUpcoming ? "none" : "inline-block";
