@@ -95,12 +95,7 @@ window.SCHEDULE_DATA = [
   { "time": "11:15 PM", "title": "Big Little Questions (Freddie Asks... - Amy Gledhill and Chris Cantrill with an inventive question from Freddie.)", "channel": "BBC Radio 4" },
   { "time": "11:30 PM", "title": "Great Lives (Lea Ypi on Kant - Biographical series in which guests choose someone who has inspired their lives.)", "channel": "BBC Radio 4" },
 
-  // BBC Radio 5 Sports Extra (Wednesday, 07/10/2026)
-  { "time": "12:00 AM", "title": "This Is Sports Extra (This is BBC Radio 5 Sports Extra - bringing you even more live sports commentaries.)", "channel": "BBC Radio 5 Sports Extra" },
-  { "time": "6:00 AM", "title": "This Is Sports Extra (This is BBC Radio 5 Sports Extra - bringing you even more live sports commentaries.)", "channel": "BBC Radio 5 Sports Extra" },
-  { "time": "12:00 PM", "title": "This Is Sports Extra (This is BBC Radio 5 Sports Extra - bringing you even more live sports commentaries.)", "channel": "BBC Radio 5 Sports Extra" },
-  { "time": "6:00 PM", "title": "This Is Sports Extra (This is BBC Radio 5 Sports Extra - bringing you even more live sports commentaries.)", "channel": "BBC Radio 5 Sports Extra" },
-
+ 
   // BBC World Service (Wednesday, 07/10/2026)
   { "time": "12:06 AM", "title": "The Arts Hour (Four-time Oscar nominated star Saoirse Ronan - American Irish actor Saoirse Ronan)", "channel": "BBC World Service" },
   { "time": "1:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
