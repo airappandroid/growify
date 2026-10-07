@@ -3,15 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>All UK Radio App</title>
+<title>All UK Radio</title>
 <style>
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; margin: 0; padding: 0; }
 body {
     font-family: system-ui, -apple-system, Roboto, sans-serif;
     background: #090d16;
@@ -31,14 +25,13 @@ body {
     position: sticky;
     top: 0;
     z-index: 50;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
 }
-.header-brand { display: flex; align-items: center; gap: 8px; }
-.header-title { font-size: 17px; font-weight: 800; }
+.header-brand { display: flex; align-items: center; gap: 8px; font-size: 17px; font-weight: 800; }
 .header-actions { display: flex; gap: 8px; }
 .header-btn {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
     color: #cbd5e1;
     width: 34px;
     height: 34px;
@@ -54,7 +47,7 @@ body {
 .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(4, 7, 13, 0.85);
+    background: rgba(4,7,13,0.85);
     z-index: 100;
     display: flex;
     align-items: center;
@@ -67,38 +60,26 @@ body {
 .modal-overlay.active { opacity: 1; visibility: visible; }
 .modal-box {
     background: #0f172a;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255,255,255,0.12);
     border-radius: 14px;
     width: 100%;
     max-width: 420px;
-    color: #e2e8f0;
+    color: #cbd5e1;
     overflow: hidden;
+    font-size: 13px;
+    line-height: 1.5;
 }
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 12px 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     background: #152033;
-    font-size: 15px;
     font-weight: 700;
+    color: #e2e8f0;
 }
-.modal-close {
-    background: transparent;
-    border: none;
-    color: #94a3b8;
-    font-size: 22px;
-    cursor: pointer;
-}
-.modal-body {
-    padding: 16px;
-    max-height: 360px;
-    overflow-y: auto;
-    font-size: 13px;
-    line-height: 1.5;
-    color: #cbd5e1;
-}
+.modal-close { background: none; border: none; color: #94a3b8; font-size: 22px; cursor: pointer; }
+.modal-body { padding: 16px; max-height: 360px; overflow-y: auto; }
 .modal-body p { margin-bottom: 10px; }
 
 /* Sections */
@@ -106,31 +87,23 @@ body {
 .title { font-size: 16px; font-weight: 700; color: #f1f5f9; margin-bottom: 12px; }
 
 /* Banner */
-.top-banner {
-    padding: 12px 16px 0;
-    text-decoration: none;
-    display: block;
-}
+.top-banner { padding: 12px 16px 0; text-decoration: none; display: block; }
 .banner-card {
     background: #0f1a36;
-    border: 1px solid rgba(59, 130, 246, 0.4);
+    border: 1px solid rgba(59,130,246,0.4);
     border-radius: 14px;
     padding: 12px 14px;
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
-.banner-top-row, .banner-bottom-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
+.banner-top-row, .banner-bottom-row { display: flex; align-items: center; justify-content: space-between; }
 .banner-tag {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    background: rgba(59, 130, 246, 0.18);
-    border: 1px solid rgba(59, 130, 246, 0.5);
+    background: rgba(59,130,246,0.18);
+    border: 1px solid rgba(59,130,246,0.5);
     color: #60a5fa;
     font-size: 10px;
     font-weight: 800;
@@ -138,32 +111,17 @@ body {
     border-radius: 20px;
     text-transform: uppercase;
 }
-.banner-tag.live {
-    background: rgba(239, 68, 68, 0.16);
-    border-color: rgba(239, 68, 68, 0.5);
-    color: #f87171;
-}
-.banner-dot {
-    width: 6px;
-    height: 6px;
-    background-color: #ef4444;
-    border-radius: 50%;
-    display: none;
-}
+.banner-tag.live { background: rgba(239,68,68,0.16); border-color: rgba(239,68,68,0.5); color: #f87171; }
+.banner-dot { width: 6px; height: 6px; background: #ef4444; border-radius: 50%; display: none; }
 .banner-time { font-size: 11px; color: #94a3b8; font-weight: 600; }
-.banner-title {
-    font-size: 15px;
-    font-weight: 800;
-    color: #ffffff;
-    line-height: 1.2;
-}
+.banner-title { font-size: 15px; font-weight: 800; color: #fff; line-height: 1.2; }
 .banner-station { font-size: 11px; color: #38bdf8; font-weight: 600; }
 .banner-cta {
     display: inline-flex;
     align-items: center;
     gap: 5px;
     background: #2563eb;
-    color: #ffffff;
+    color: #fff;
     font-size: 11px;
     font-weight: 700;
     padding: 4px 10px;
@@ -173,34 +131,22 @@ body {
 /* Station Card */
 .station-card {
     background: #131c2e;
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255,255,255,0.07);
     border-radius: 12px;
     padding: 10px 12px;
     margin-bottom: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    min-height: 72px;
 }
-.station-logo {
-    width: 42px;
-    height: 42px;
-    border-radius: 8px;
-    object-fit: cover;
-    margin-right: 12px;
-    background: #1e293b;
-    flex-shrink: 0;
-}
-.station-info { flex: 1; min-width: 0; padding-right: 8px; }
-.station-name { font-weight: 700; font-size: 14.5px; margin-bottom: 3px; }
-.playing-row { font-size: 11.5px; color: #94a3b8; display: flex; align-items: center; }
-.live-dot {
-    width: 6px;
-    height: 6px;
-    background-color: #22c55e;
-    border-radius: 50%;
-    margin-right: 6px;
-    flex-shrink: 0;
-}
+.station-logo { width: 42px; height: 42px; border-radius: 8px; object-fit: cover; margin-right: 12px; background: #1e293b; flex-shrink: 0; }
+.station-info { flex: 1; min-width: 0; padding-right: 8px; display: flex; flex-direction: column; justify-content: center; }
+.station-name { font-weight: 700; font-size: 14.5px; margin-bottom: 3px; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.playing-row { font-size: 11.5px; color: #94a3b8; display: flex; align-items: flex-start; line-height: 1.35; }
+.live-dot { width: 6px; height: 6px; background: #22c55e; border-radius: 50%; margin-right: 6px; margin-top: 4px; flex-shrink: 0; }
+.playing-text { display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+
 .play-btn {
     width: 40px;
     height: 40px;
@@ -212,7 +158,6 @@ body {
     text-decoration: none;
     flex-shrink: 0;
 }
-
 .play-btn::before {
     content: "";
     width: 0;
@@ -223,22 +168,7 @@ body {
     margin-left: 2px;
 }
 
-/* Popular Stations */
-.popular-stations .station-card { min-height: 86px; }
-.popular-stations .station-info { display: flex; flex-direction: column; justify-content: center; }
-.popular-stations .station-name { line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.popular-stations .playing-row { align-items: flex-start; line-height: 1.35; }
-.popular-stations .playing-row span:last-child {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    word-break: break-word;
-}
-.popular-stations .live-dot { margin-top: 4px; }
-
-/* View All */
+/* View All & Updates */
 .view-all-card {
     display: flex;
     align-items: center;
@@ -251,22 +181,20 @@ body {
     margin-top: 8px;
 }
 .view-all-title { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
-.view-all-sub { font-size: 11px; color: rgba(255, 255, 255, 0.8); }
+.view-all-sub { font-size: 11px; color: rgba(255,255,255,0.8); }
 .view-all-arrow {
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255,255,255,0.2);
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
-
 .duration-tag {
-    display: inline-block;
     padding: 1px 5px;
     border-radius: 4px;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255,255,255,0.08);
     color: #cbd5e1;
     font-size: 10px;
     margin-left: 6px;
@@ -278,26 +206,23 @@ body {
 
 <div class="container">
     <header class="app-header">
-        <div class="header-brand">
-            <span style="font-size: 18px;">📻</span>
-            <span class="header-title">All UK Radio</span>
-        </div>
+        <div class="header-brand">📻 All UK Radio</div>
         <div class="header-actions">
-            <a href="http://action_share" class="header-btn" aria-label="Share App">
+            <a href="http://action_share" class="header-btn" aria-label="Share">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle>
-                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                    <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
                 </svg>
             </a>
-            <button type="button" class="header-btn" id="privacyBtn" aria-label="Privacy Policy">
+            <button type="button" class="header-btn" id="privacyBtn" aria-label="Privacy">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                 </svg>
             </button>
         </div>
     </header>
 
-    <!-- Top Banner (Upcoming Friday Event) -->
+    <!-- Top Banner -->
     <a href="go:BBC5E" class="top-banner">
         <div class="banner-card">
             <div class="banner-top-row">
@@ -311,9 +236,7 @@ body {
             <div class="banner-bottom-row">
                 <span class="banner-station">BBC Radio 5 Sports Extra</span>
                 <div class="banner-cta">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                     <span>Listen now</span>
                 </div>
             </div>
@@ -321,50 +244,50 @@ body {
     </a>
 
     <!-- Popular Stations -->
-    <div class="section popular-stations">
+    <div class="section">
         <div class="title">📻 Popular Stations</div>
 
         <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(4).jpg" alt="BBC 1" width="42" height="42" loading="lazy" decoding="async">
+            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(4).jpg" alt="BBC 1" width="42" height="42" loading="lazy">
             <div class="station-info">
                 <div class="station-name">BBC Radio 1</div>
-                <div class="playing-row"><span class="live-dot"></span><span id="bbc1">Loading...</span></div>
+                <div class="playing-row"><span class="live-dot"></span><span id="bbc1" class="playing-text">Loading...</span></div>
             </div>
             <a href="go:BBC1" class="play-btn" aria-label="Play"></a>
         </div>
 
         <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(6).jpg" alt="BBC 2" width="42" height="42" loading="lazy" decoding="async">
+            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(6).jpg" alt="BBC 2" width="42" height="42" loading="lazy">
             <div class="station-info">
                 <div class="station-name">BBC Radio 2</div>
-                <div class="playing-row"><span class="live-dot"></span><span id="bbc2">Loading...</span></div>
+                <div class="playing-row"><span class="live-dot"></span><span id="bbc2" class="playing-text">Loading...</span></div>
             </div>
             <a href="go:BBC2" class="play-btn" aria-label="Play"></a>
         </div>
 
         <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(7).jpg" alt="BBC 3" width="42" height="42" loading="lazy" decoding="async">
+            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(7).jpg" alt="BBC 3" width="42" height="42" loading="lazy">
             <div class="station-info">
                 <div class="station-name">BBC Radio 3</div>
-                <div class="playing-row"><span class="live-dot"></span><span id="bbc3">Loading...</span></div>
+                <div class="playing-row"><span class="live-dot"></span><span id="bbc3" class="playing-text">Loading...</span></div>
             </div>
             <a href="go:BBC3" class="play-btn" aria-label="Play"></a>
         </div>
 
         <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(1).png" alt="BBC 4" width="42" height="42" loading="lazy" decoding="async">
+            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(1).png" alt="BBC 4" width="42" height="42" loading="lazy">
             <div class="station-info">
                 <div class="station-name">BBC Radio 4</div>
-                <div class="playing-row"><span class="live-dot"></span><span id="bbc4">Loading...</span></div>
+                <div class="playing-row"><span class="live-dot"></span><span id="bbc4" class="playing-text">Loading...</span></div>
             </div>
             <a href="go:BBC4" class="play-btn" aria-label="Play"></a>
         </div>
 
         <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(2).png" alt="BBC World Service" width="42" height="42" loading="lazy" decoding="async">
+            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(2).png" alt="BBC World Service" width="42" height="42" loading="lazy">
             <div class="station-info">
                 <div class="station-name">BBC World Service</div>
-                <div class="playing-row"><span class="live-dot"></span><span id="bbcws">Loading...</span></div>
+                <div class="playing-row"><span class="live-dot"></span><span id="bbcws" class="playing-text">Loading...</span></div>
             </div>
             <a href="go:BBCWS" class="play-btn" aria-label="Play"></a>
         </div>
@@ -372,13 +295,13 @@ body {
         <a href="go:BBC_ALL" class="view-all-card">
             <div>
                 <div class="view-all-title">
-                    <span>Explore All Stations</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    Explore All Stations
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </div>
                 <div class="view-all-sub">100+ UK & BBC Stations</div>
             </div>
             <div class="view-all-arrow">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
         </a>
     </div>
@@ -386,7 +309,7 @@ body {
     <!-- Latest Updates -->
     <div class="section">
         <div class="title">🕒 Latest Updates</div>
-        <div class="station-card" style="border-color: rgba(59, 130, 246, 0.3);">
+        <div class="station-card" style="border-color: rgba(59,130,246,0.3);">
             <div class="station-info">
                 <div class="station-name">📰 5 Min News Brief <span class="duration-tag">5 Min</span></div>
                 <div class="playing-row"><span>Updated: 7 OCT, 3:00 AM</span></div>
@@ -394,7 +317,7 @@ body {
             <a href="https://aod-dash-ww-gcomm.live.cf.md.bbci.co.uk/usp/auth/vod/piff_abr_full_audio/392077-w1msm0v8hxjqb39/vf_w1msm0v8hxjqb39_49207318-8764-41c4-8261-120e397c1bba.ism/dash/vf_w1msm0v8hxjqb39_49207318-8764-41c4-8261-120e397c1bba-audio_eng_1=96000-3.m3u8" class="play-btn" aria-label="Play"></a>
         </div>
 
-        <div class="station-card" style="border-color: rgba(168, 85, 247, 0.3);">
+        <div class="station-card" style="border-color: rgba(168,85,247,0.3);">
             <div class="station-info">
                 <div class="station-name">🎙️ Thought for the Day <span class="duration-tag">3 Min</span></div>
                 <div class="playing-row"><span>Updated: 6 OCT, 5:00 PM</span></div>
@@ -427,19 +350,19 @@ const DOM = {
     bannerTag: document.getElementById('bannerTag'),
     bannerTagWrapper: document.getElementById('bannerTagWrapper'),
     bannerDot: document.getElementById('bannerDot'),
-    stations: {
-        'radio 1': document.getElementById('bbc1'),
-        'radio 2': document.getElementById('bbc2'),
-        'radio 3': document.getElementById('bbc3'),
-        'radio 4': document.getElementById('bbc4'),
-        'world service': document.getElementById('bbcws')
-    }
+    stations: [
+        { key: 'radio 1', el: document.getElementById('bbc1') },
+        { key: 'radio 2', el: document.getElementById('bbc2') },
+        { key: 'radio 3', el: document.getElementById('bbc3') },
+        { key: 'radio 4', el: document.getElementById('bbc4') },
+        { key: 'world service', el: document.getElementById('bbcws') }
+    ]
 };
 
 // Modal Control
 document.getElementById('privacyBtn')?.addEventListener('click', () => DOM.modal.classList.add('active'));
 document.getElementById('closeModal')?.addEventListener('click', () => DOM.modal.classList.remove('active'));
-window.addEventListener('click', (e) => { if (e.target === DOM.modal) DOM.modal.classList.remove('active'); });
+DOM.modal?.addEventListener('click', (e) => { if (e.target === DOM.modal) DOM.modal.classList.remove('active'); });
 
 // UK Time Formatter
 const ukTimeFormatter = new Intl.DateTimeFormat('en-GB', { 
@@ -450,54 +373,58 @@ const ukTimeFormatter = new Intl.DateTimeFormat('en-GB', {
 });
 
 function getUKMinutesNow() {
-    const parts = ukTimeFormatter.format(new Date()).split(':');
-    return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+    const [h, m] = ukTimeFormatter.format(new Date()).split(':');
+    return (+h * 60) + (+m);
 }
 
 function timeStringToMinutesUK(str) {
     if (!str) return 0;
     const parts = str.trim().split(/[:\s]/);
-    let h = parseInt(parts[0], 10);
-    const m = parseInt(parts[1], 10);
+    let h = +parts[0] || 0;
+    const m = +parts[1] || 0;
     const period = parts[2]?.toUpperCase();
     if (period === "PM" && h !== 12) h += 12;
     if (period === "AM" && h === 12) h = 0;
-    return (h || 0) * 60 + (m || 0);
+    return (h * 60) + m;
 }
 
-// ২৪ ঘণ্টীয়া সময়ক ১২ ঘণ্টীয়া (AM/PM) ফৰ্মেটলৈ ৰূপান্তৰ কৰা ফাংচন
-function formatTo12Hour(timeStr) {
-    if (!timeStr || /AM|PM/i.test(timeStr)) return timeStr;
-    return timeStr.replace(/\b(\d{1,2}):(\d{2})\b/, (_, h, m) => {
-        let hour = parseInt(h, 10);
-        const period = hour >= 12 ? 'PM' : 'AM';
-        hour = hour % 12 || 12;
-        return `${hour}:${m} ${period}`;
-    });
-}
-
-let preparedMainSchedule = null;
+let channelSchedules = null;
 
 function prepareSchedules() {
-    if (typeof SCHEDULE_DATA === "undefined" || !Array.isArray(SCHEDULE_DATA)) return false;
+    if (channelSchedules || typeof SCHEDULE_DATA === "undefined" || !Array.isArray(SCHEDULE_DATA)) return false;
 
-    preparedMainSchedule = [];
+    channelSchedules = {};
     for (let i = 0; i < SCHEDULE_DATA.length; i++) {
-        const p = SCHEDULE_DATA[i];
-        const ch = (p.channel || "").toLowerCase();
-        const startMin = timeStringToMinutesUK(p.time);
-        preparedMainSchedule.push({ channel: ch, title: p.title || "Live", startMin });
+        const item = SCHEDULE_DATA[i];
+        const ch = (item.channel || "").toLowerCase();
+        if (!channelSchedules[ch]) channelSchedules[ch] = [];
+        channelSchedules[ch].push({
+            title: item.title || "Live",
+            startMin: timeStringToMinutesUK(item.time)
+        });
     }
-    preparedMainSchedule.sort((a, b) => a.startMin - b.startMin);
+
+    // চৰ্ট কেৱল এবাৰহে কৰা হয়
+    for (const ch in channelSchedules) {
+        channelSchedules[ch].sort((a, b) => a.startMin - b.startMin);
+    }
     return true;
 }
 
 function getCurrentShow(channelKey, now) {
-    if (!preparedMainSchedule) return "Live";
-    const list = preparedMainSchedule.filter(p => p.channel.includes(channelKey));
-    if (!list.length) return "Live";
-    if (now < list[0].startMin) return list[list.length - 1].title;
+    if (!channelSchedules) return "Live";
     
+    // নিৰ্দিষ্ট চেনেলৰ তালিকা বিচৰা
+    let list = null;
+    for (const ch in channelSchedules) {
+        if (ch.includes(channelKey)) {
+            list = channelSchedules[ch];
+            break;
+        }
+    }
+    if (!list || !list.length) return "Live";
+    if (now < list[0].startMin) return list[list.length - 1].title;
+
     for (let i = 0; i < list.length - 1; i++) {
         if (now >= list[i].startMin && now < list[i + 1].startMin) return list[i].title;
     }
@@ -510,26 +437,11 @@ function updateAppUI() {
 
     const now = getUKMinutesNow();
 
-    // ১. ৰেডিঅ' ষ্টেচনসমূহৰ লাইভ প্ৰগ্ৰাম আপডেট
-    for (const [key, el] of Object.entries(DOM.stations)) {
-        if (el) el.textContent = getCurrentShow(key, now);
+    // ১. লাইভ প্ৰগ্ৰাম আপডেট
+    for (let i = 0; i < DOM.stations.length; i++) {
+        const s = DOM.stations[i];
+        if (s.el) s.el.textContent = getCurrentShow(s.key, now);
     }
-
-    // ২. শীৰ্ষ বেনাৰ: ৯ অক্টোবৰ, শুকুৰবাৰৰ খেল (১২ ঘণ্টীয়া ফৰ্মেট: 4:45 PM)
-    const featuredMatch = {
-        title: "Albania v Wales",
-        timeText: "Fri 9 Oct, 4:45 PM",
-        tag: "UPCOMING FOOTBALL",
-        isLive: false
-    };
-
-    if (DOM.bannerTitle) DOM.bannerTitle.textContent = featuredMatch.title;
-    if (DOM.bannerTime) DOM.bannerTime.textContent = formatTo12Hour(featuredMatch.timeText);
-    if (DOM.bannerTag) DOM.bannerTag.textContent = featuredMatch.tag;
-
-    // লাইভ ডট লুকুৱাই ৰখা আৰু বেনাৰ টেগ নীলা ৰং কৰা (Upcoming Style)
-    if (DOM.bannerDot) DOM.bannerDot.style.display = "none";
-    if (DOM.bannerTagWrapper) DOM.bannerTagWrapper.classList.remove("live");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -537,15 +449,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let attempts = 0;
     const initTimer = setInterval(() => {
-        if (++attempts >= 10) {
+        attempts++;
+        if (prepareSchedules()) {
+            updateAppUI();
+            clearInterval(initTimer); // ডেটা পোৱাৰ লগে লগে টাইমাৰ বন্ধ
+        } else if (attempts >= 10) {
             clearInterval(initTimer);
-        } else {
-            if (prepareSchedules()) updateAppUI();
         }
     }, 300);
 
     setInterval(updateAppUI, 60000);
-
     document.addEventListener("visibilitychange", () => {
         if (!document.hidden) updateAppUI();
     });
