@@ -129,20 +129,26 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    background: rgba(239, 68, 68, 0.16);
-    border: 1px solid rgba(239, 68, 68, 0.5);
-    color: #f87171;
+    background: rgba(59, 130, 246, 0.18);
+    border: 1px solid rgba(59, 130, 246, 0.5);
+    color: #60a5fa;
     font-size: 10px;
     font-weight: 800;
     padding: 2px 7px;
     border-radius: 20px;
     text-transform: uppercase;
 }
+.banner-tag.live {
+    background: rgba(239, 68, 68, 0.16);
+    border-color: rgba(239, 68, 68, 0.5);
+    color: #f87171;
+}
 .banner-dot {
     width: 6px;
     height: 6px;
     background-color: #ef4444;
     border-radius: 50%;
+    display: none;
 }
 .banner-time { font-size: 11px; color: #94a3b8; font-weight: 600; }
 .banner-title {
@@ -291,17 +297,17 @@ body {
         </div>
     </header>
 
-    <!-- Top Banner -->
+    <!-- Top Banner (Upcoming Friday Event) -->
     <a href="go:BBC5E" class="top-banner">
         <div class="banner-card">
             <div class="banner-top-row">
-                <div class="banner-tag">
+                <div class="banner-tag" id="bannerTagWrapper">
                     <span class="banner-dot" id="bannerDot"></span>
-                    <span id="bannerTag">LIVE NOW FOOTBALL</span>
+                    <span id="bannerTag">UPCOMING FOOTBALL</span>
                 </div>
-                <div class="banner-time" id="bannerTime">Loading schedule...</div>
+                <div class="banner-time" id="bannerTime">Fri 9 Oct, 4:45 PM</div>
             </div>
-            <div class="banner-title" id="bannerTitle">Nations League: Scotland v Slovenia</div>
+            <div class="banner-title" id="bannerTitle">Albania v Wales</div>
             <div class="banner-bottom-row">
                 <span class="banner-station">BBC Radio 5 Sports Extra</span>
                 <div class="banner-cta">
@@ -419,6 +425,7 @@ const DOM = {
     bannerTitle: document.getElementById('bannerTitle'),
     bannerTime: document.getElementById('bannerTime'),
     bannerTag: document.getElementById('bannerTag'),
+    bannerTagWrapper: document.getElementById('bannerTagWrapper'),
     bannerDot: document.getElementById('bannerDot'),
     stations: {
         'radio 1': document.getElementById('bbc1'),
@@ -434,7 +441,7 @@ document.getElementById('privacyBtn')?.addEventListener('click', () => DOM.modal
 document.getElementById('closeModal')?.addEventListener('click', () => DOM.modal.classList.remove('active'));
 window.addEventListener('click', (e) => { if (e.target === DOM.modal) DOM.modal.classList.remove('active'); });
 
-// Lightweight UK Time
+// UK Time Formatter
 const ukTimeFormatter = new Intl.DateTimeFormat('en-GB', { 
     timeZone: 'Europe/London', 
     hour: 'numeric', 
@@ -458,34 +465,30 @@ function timeStringToMinutesUK(str) {
     return (h || 0) * 60 + (m || 0);
 }
 
+// ২৪ ঘণ্টীয়া সময়ক ১২ ঘণ্টীয়া (AM/PM) ফৰ্মেটলৈ ৰূপান্তৰ কৰা ফাংচন
+function formatTo12Hour(timeStr) {
+    if (!timeStr || /AM|PM/i.test(timeStr)) return timeStr;
+    return timeStr.replace(/\b(\d{1,2}):(\d{2})\b/, (_, h, m) => {
+        let hour = parseInt(h, 10);
+        const period = hour >= 12 ? 'PM' : 'AM';
+        hour = hour % 12 || 12;
+        return `${hour}:${m} ${period}`;
+    });
+}
+
 let preparedMainSchedule = null;
-let preparedSportsShows = null;
 
 function prepareSchedules() {
     if (typeof SCHEDULE_DATA === "undefined" || !Array.isArray(SCHEDULE_DATA)) return false;
 
     preparedMainSchedule = [];
-    preparedSportsShows = [];
-
     for (let i = 0; i < SCHEDULE_DATA.length; i++) {
         const p = SCHEDULE_DATA[i];
         const ch = (p.channel || "").toLowerCase();
         const startMin = timeStringToMinutesUK(p.time);
-
         preparedMainSchedule.push({ channel: ch, title: p.title || "Live", startMin });
-
-        if (ch.includes("sports extra")) {
-            preparedSportsShows.push({
-                time: p.time,
-                title: p.title || "",
-                subtitle: p.subtitle || p.secondary_title || p.desc || p.synopsis || "",
-                startMin
-            });
-        }
     }
-
     preparedMainSchedule.sort((a, b) => a.startMin - b.startMin);
-    preparedSportsShows.sort((a, b) => a.startMin - b.startMin);
     return true;
 }
 
@@ -503,69 +506,30 @@ function getCurrentShow(channelKey, now) {
 
 function updateAppUI() {
     if (document.hidden) return;
-    if (!preparedMainSchedule && !prepareSchedules()) return;
+    prepareSchedules();
 
     const now = getUKMinutesNow();
 
-    // 1. Stations Title Update
+    // ১. ৰেডিঅ' ষ্টেচনসমূহৰ লাইভ প্ৰগ্ৰাম আপডেট
     for (const [key, el] of Object.entries(DOM.stations)) {
         if (el) el.textContent = getCurrentShow(key, now);
     }
 
-    // 2. Banner Update
-    if (!preparedSportsShows || !preparedSportsShows.length) return;
+    // ২. শীৰ্ষ বেনাৰ: ৯ অক্টোবৰ, শুকুৰবাৰৰ খেল (১২ ঘণ্টীয়া ফৰ্মেট: 4:45 PM)
+    const featuredMatch = {
+        title: "Albania v Wales",
+        timeText: "Fri 9 Oct, 4:45 PM",
+        tag: "UPCOMING FOOTBALL",
+        isLive: false
+    };
 
-    let currentIndex = preparedSportsShows.length - 1;
-    for (let i = 0; i < preparedSportsShows.length - 1; i++) {
-        if (now >= preparedSportsShows[i].startMin && now < preparedSportsShows[i + 1].startMin) {
-            currentIndex = i;
-            break;
-        }
-    }
+    if (DOM.bannerTitle) DOM.bannerTitle.textContent = featuredMatch.title;
+    if (DOM.bannerTime) DOM.bannerTime.textContent = formatTo12Hour(featuredMatch.timeText);
+    if (DOM.bannerTag) DOM.bannerTag.textContent = featuredMatch.tag;
 
-    const currentShow = preparedSportsShows[currentIndex];
-    const isGeneric = (currentShow.title || "").toLowerCase().includes("this is sports extra");
-
-    let targetShow = currentShow;
-    let isUpcoming = false;
-
-    if (isGeneric) {
-        const upcoming = preparedSportsShows.find(p => p.startMin > now && !p.title.toLowerCase().includes("this is sports extra"));
-        if (upcoming) {
-            targetShow = upcoming;
-            isUpcoming = true;
-        }
-    }
-
-    let rawTitle = targetShow.title || "";
-    let cleanTitle = rawTitle.split("(")[0].trim();
-
-    // ডেটা থেকে 'Sportsound' আসলে তা স্বয়ংক্রিয়ভাবে মূল ইভেন্ট নামে পরিবর্তন
-    const lowerRaw = cleanTitle.toLowerCase();
-    if (lowerRaw === "sportsound" || lowerRaw.startsWith("sportsound")) {
-        if (targetShow.subtitle && targetShow.subtitle.trim().length > 3) {
-            cleanTitle = targetShow.subtitle.split("(")[0].trim();
-        } else {
-            cleanTitle = "Nations League: Scotland v Slovenia";
-        }
-    }
-
-    // জেনেরিক বা খালি টাইটেল চেক
-    if (!cleanTitle || lowerRaw.includes("this is sports extra")) {
-        cleanTitle = "Nations League: Scotland v Slovenia";
-    }
-
-    const lower = (rawTitle + " " + cleanTitle).toLowerCase();
-    let tag = isUpcoming ? "UPCOMING" : "LIVE NOW";
-    if (lower.includes("football") || lower.includes("scotland") || lower.includes("nations league")) tag += " FOOTBALL";
-    else if (lower.includes("cricket")) tag += " CRICKET";
-    else if (lower.includes("rugby")) tag += " RUGBY";
-    else if (lower.includes("tennis")) tag += " TENNIS";
-
-    if (DOM.bannerTitle) DOM.bannerTitle.textContent = cleanTitle;
-    if (DOM.bannerTime) DOM.bannerTime.textContent = isUpcoming ? `Today, ${targetShow.time}` : `Live Now (${targetShow.time})`;
-    if (DOM.bannerTag) DOM.bannerTag.textContent = tag;
-    if (DOM.bannerDot) DOM.bannerDot.style.display = isUpcoming ? "none" : "inline-block";
+    // লাইভ ডট লুকুৱাই ৰখা আৰু বেনাৰ টেগ নীলা ৰং কৰা (Upcoming Style)
+    if (DOM.bannerDot) DOM.bannerDot.style.display = "none";
+    if (DOM.bannerTagWrapper) DOM.bannerTagWrapper.classList.remove("live");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -573,9 +537,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let attempts = 0;
     const initTimer = setInterval(() => {
-        if (prepareSchedules() || ++attempts >= 10) {
-            updateAppUI();
+        if (++attempts >= 10) {
             clearInterval(initTimer);
+        } else {
+            if (prepareSchedules()) updateAppUI();
         }
     }, 300);
 
