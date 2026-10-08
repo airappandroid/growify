@@ -228,11 +228,11 @@ body {
             <div class="banner-top-row">
                 <div class="banner-tag" id="bannerTagWrapper">
                     <span class="banner-dot" id="bannerDot"></span>
-                    <span id="bannerTag">UPCOMING FOOTBALL</span>
+                    <span id="bannerTag">UPCOMING CRICKET</span>
                 </div>
-                <div class="banner-time" id="bannerTime">Fri 9 Oct, 4:45 PM</div>
+                <div class="banner-time" id="bannerTime">Fri 9 Oct, 4:45 AM</div>
             </div>
-            <div class="banner-title" id="bannerTitle">Albania v Wales</div>
+            <div class="banner-title" id="bannerTitle">International Cricket — Australia Women v Bangladesh Women, 1st ODI</div>
             <div class="banner-bottom-row">
                 <span class="banner-station">BBC Radio 5 Sports Extra</span>
                 <div class="banner-cta">
@@ -312,9 +312,9 @@ body {
         <div class="station-card" style="border-color: rgba(59,130,246,0.3);">
             <div class="station-info">
                 <div class="station-name">📰 5 Min News Brief <span class="duration-tag">5 Min</span></div>
-                <div class="playing-row"><span>Updated: 8 OCT, 10:00 AM</span></div>
+                <div class="playing-row"><span>Updated: 8 OCT, 11:00 AM</span></div>
             </div>
-            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/b59039-w1msm0v8hxjv279/vf_w1msm0v8hxjv279_f90f0bad-6f56-483d-bd38-993a4795719c.ism/dash/vf_w1msm0v8hxjv279_f90f0bad-6f56-483d-bd38-993a4795719c-audio_eng_1=96000-1.m3u8" class="play-btn" aria-label="Play"></a>
+            <a href="https://aod-dash-ww-gcomm.live.cf.md.bbci.co.uk/usp/auth/vod/piff_abr_full_audio/f296d1-w1msm0v8hxjv5zf/vf_w1msm0v8hxjv5zf_ecc1a7fb-5b6c-41ec-ac27-74aa3121e72b.ism/dash/vf_w1msm0v8hxjv5zf_ecc1a7fb-5b6c-41ec-ac27-74aa3121e72b-audio_eng_1=96000-4.m3u8" class="play-btn" aria-label="Play"></a>
         </div>
 
         <div class="station-card" style="border-color: rgba(168,85,247,0.3);">
@@ -364,28 +364,138 @@ document.getElementById('privacyBtn')?.addEventListener('click', () => DOM.modal
 document.getElementById('closeModal')?.addEventListener('click', () => DOM.modal.classList.remove('active'));
 DOM.modal?.addEventListener('click', (e) => { if (e.target === DOM.modal) DOM.modal.classList.remove('active'); });
 
-// UK Time Formatter
-const ukTimeFormatter = new Intl.DateTimeFormat('en-GB', { 
-    timeZone: 'Europe/London', 
-    hour: 'numeric', 
-    minute: 'numeric', 
-    hour12: false 
-});
+// UK Time & Date Fetcher
+function getUKDateTime() {
+    const parts = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/London',
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: false
+    }).formatToParts(new Date());
 
-function getUKMinutesNow() {
-    const [h, m] = ukTimeFormatter.format(new Date()).split(':');
-    return (+h * 60) + (+m);
+    const d = {};
+    parts.forEach(p => d[p.type] = +p.value);
+    return {
+        year: d.year,
+        month: d.month,
+        day: d.day,
+        minutesNow: (d.hour * 60) + d.minute
+    };
 }
 
-function timeStringToMinutesUK(str) {
-    if (!str) return 0;
-    const parts = str.trim().split(/[:\s]/);
-    let h = +parts[0] || 0;
-    const m = +parts[1] || 0;
-    const period = parts[2]?.toUpperCase();
-    if (period === "PM" && h !== 12) h += 12;
-    if (period === "AM" && h === 12) h = 0;
-    return (h * 60) + m;
+// Friday 9th October Sports Events Schedule
+const BANNER_MATCHES = [
+    {
+        sport: "CRICKET",
+        title: "International Cricket — Australia Women v Bangladesh Women, 1st ODI",
+        time: "Fri 9 Oct, 4:45 AM",
+        startMin: 285,  // 4:45 AM
+        endMin: 565     // 9:25 AM
+    },
+    {
+        sport: "F1",
+        title: "Formula 1 — Singapore: Practice 1",
+        time: "Fri 9 Oct, 9:25 AM",
+        startMin: 565,  // 9:25 AM
+        endMin: 635     // 10:35 AM
+    },
+    {
+        sport: "CRICKET",
+        title: "International Cricket — Australia Women v Bangladesh Women, 1st ODI",
+        time: "Fri 9 Oct, 10:35 AM",
+        startMin: 635,  // 10:35 AM
+        endMin: 780     // 1:00 PM
+    },
+    {
+        sport: "F1",
+        title: "Formula 1 — Singapore: Sprint Qualifying",
+        time: "Fri 9 Oct, 1:25 PM",
+        startMin: 805,  // 1:25 PM
+        endMin: 870     // 2:30 PM
+    },
+    {
+        sport: "FOOTBALL",
+        title: "Women's International Football — Albania v Wales",
+        time: "Fri 9 Oct, 4:45 PM",
+        startMin: 1005, // 4:45 PM
+        endMin: 1140    // 7:00 PM
+    },
+    {
+        sport: "RUGBY",
+        title: "Rugby Union — Leicester Tigers v Gloucester",
+        time: "Fri 9 Oct, 7:00 PM",
+        startMin: 1140, // 7:00 PM
+        endMin: 1320    // 10:00 PM
+    }
+];
+
+function updateBannerUI() {
+    if (!DOM.bannerTitle || !BANNER_MATCHES.length) return;
+
+    const uk = getUKDateTime();
+    const isFriday9Oct = (uk.year === 2026 && uk.month === 10 && uk.day === 9);
+    const nowMin = uk.minutesNow;
+
+    let activeMatch = null;
+    let isLive = false;
+
+    if (isFriday9Oct) {
+        // 1. Check karein kya koi match abhi LIVE chal raha hai
+        for (let i = 0; i < BANNER_MATCHES.length; i++) {
+            const match = BANNER_MATCHES[i];
+            if (nowMin >= match.startMin && nowMin < match.endMin) {
+                activeMatch = match;
+                isLive = true;
+                break;
+            }
+        }
+
+        // 2. Agar koi match abhi LIVE nahi hai, toh agla UPCOMING match chunein
+        if (!activeMatch) {
+            for (let i = 0; i < BANNER_MATCHES.length; i++) {
+                const match = BANNER_MATCHES[i];
+                if (match.startMin > nowMin) {
+                    activeMatch = match;
+                    isLive = false;
+                    break;
+                }
+            }
+        }
+    }
+
+    // 3. Agar Friday 9 Oct se pehle ka din hai (e.g. Thursday 8 Oct)
+    if (!activeMatch) {
+        if (uk.day < 9 || uk.month < 10) {
+            // Future event: current time ke mutabiq aage aane wala match select karein
+            for (let i = 0; i < BANNER_MATCHES.length; i++) {
+                if (BANNER_MATCHES[i].endMin > nowMin) {
+                    activeMatch = BANNER_MATCHES[i];
+                    break;
+                }
+            }
+            if (!activeMatch) activeMatch = BANNER_MATCHES[0];
+        } else {
+            activeMatch = BANNER_MATCHES[BANNER_MATCHES.length - 1];
+        }
+        isLive = false;
+    }
+
+    // UI Render
+    DOM.bannerTitle.textContent = activeMatch.title;
+    DOM.bannerTime.textContent = activeMatch.time;
+
+    if (isLive) {
+        DOM.bannerTag.textContent = `LIVE ${activeMatch.sport}`;
+        DOM.bannerTagWrapper.classList.add('live');
+        DOM.bannerDot.style.display = 'inline-block';
+    } else {
+        DOM.bannerTag.textContent = `UPCOMING ${activeMatch.sport}`;
+        DOM.bannerTagWrapper.classList.remove('live');
+        DOM.bannerDot.style.display = 'none';
+    }
 }
 
 let channelSchedules = null;
@@ -404,17 +514,25 @@ function prepareSchedules() {
         });
     }
 
-    // চৰ্ট কেৱল এবাৰহে কৰা হয়
     for (const ch in channelSchedules) {
         channelSchedules[ch].sort((a, b) => a.startMin - b.startMin);
     }
     return true;
 }
 
+function timeStringToMinutesUK(str) {
+    if (!str) return 0;
+    const parts = str.trim().split(/[:\s]/);
+    let h = +parts[0] || 0;
+    const m = +parts[1] || 0;
+    const period = parts[2]?.toUpperCase();
+    if (period === "PM" && h !== 12) h += 12;
+    if (period === "AM" && h === 12) h = 0;
+    return (h * 60) + m;
+}
+
 function getCurrentShow(channelKey, now) {
     if (!channelSchedules) return "Live";
-    
-    // নিৰ্দিষ্ট চেনেলৰ তালিকা বিচৰা
     let list = null;
     for (const ch in channelSchedules) {
         if (ch.includes(channelKey)) {
@@ -435,12 +553,15 @@ function updateAppUI() {
     if (document.hidden) return;
     prepareSchedules();
 
-    const now = getUKMinutesNow();
+    const uk = getUKDateTime();
 
-    // ১. লাইভ প্ৰগ্ৰাম আপডেট
+    // 1. Top Banner Auto-Status (UPCOMING / LIVE)
+    updateBannerUI();
+
+    // 2. Radio Channels Status
     for (let i = 0; i < DOM.stations.length; i++) {
         const s = DOM.stations[i];
-        if (s.el) s.el.textContent = getCurrentShow(s.key, now);
+        if (s.el) s.el.textContent = getCurrentShow(s.key, uk.minutesNow);
     }
 }
 
@@ -452,7 +573,7 @@ document.addEventListener("DOMContentLoaded", () => {
         attempts++;
         if (prepareSchedules()) {
             updateAppUI();
-            clearInterval(initTimer); // ডেটা পোৱাৰ লগে লগে টাইমাৰ বন্ধ
+            clearInterval(initTimer);
         } else if (attempts >= 10) {
             clearInterval(initTimer);
         }
