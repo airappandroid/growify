@@ -404,7 +404,7 @@
                 </div>
             </div>
 
-            <div class="summary-status" id="status-box">IND vs WI 1st T20, Match Starts Today at 7 PM</div>
+            <div class="summary-status" id="status-box">IND vs WI 2nd T20, Match starts today at 7 PM</div>
             <div class="toss-tag" id="toss-info" style="display: none;"></div>
         </section>
 
@@ -430,7 +430,7 @@
     </div>
 
     <script>
-        const API_URL = "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a3103777327c23debef2658";
+        const API_URL = "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a3103747327c23debef2655";
         const FLAGS = {
             ind: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
             india: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
@@ -531,7 +531,7 @@
                 } else {
                     el.status.textContent = "UPCOMING";
                     el.status.className = "status-tag";
-                    el.statusBox.textContent = r.announcement1 || "IND vs WI 1st T20, Match Starts Today at 7 PM";
+                    el.statusBox.textContent = r.announcement1 || "IND vs WI 2nd T20, Match starts today at 7 PM";
                 }
 
                 // Last Ball
@@ -560,7 +560,7 @@
                     el.toss.textContent = `Toss: ${r.announcement1}`;
                     el.toss.style.display = "block";
                 } else {
-                    el.toss.display = "none";
+                    el.toss.style.display = "none";
                 }
 
             } catch (e) {
