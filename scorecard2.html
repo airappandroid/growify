@@ -386,7 +386,7 @@
 </div>
 
 <script>
-    const matchId = "6a3103777327c23debef2658";
+    const matchId = "6a3103747327c23debef2655";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
     
     let matchData = null;
@@ -438,7 +438,7 @@
             const teamB = result.teams?.b || {};
             const nameA = teamA.shortName || teamA.name || 'IND';
             const nameB = teamB.shortName || teamB.name || 'WI';
-            const format = (result.format || 'ODI').toUpperCase();
+            const format = (result.format || 'T20').toUpperCase();
             const tournament = result.seriesName || `${nameA} vs ${nameB}`;
 
             document.getElementById("matchHeader").textContent = `${tournament} (${format})`;
@@ -495,7 +495,7 @@
                         </div>
                         <div class="hero-score-box">
                             <div class="hero-score-main">Upcoming</div>
-                            <div class="hero-score-sub">${result.announcement1 || "Match has not started"}</div>
+                            <div class="hero-score-sub">${result.announcement1 || "IND vs WI 2nd T20, Match starts today at 7 PM"}</div>
                         </div>
                     </div>
                     <div class="loading-ph">⏳ Match has not started yet. Full live scorecard will appear once play begins.</div>
