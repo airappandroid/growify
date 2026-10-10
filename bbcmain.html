@@ -228,11 +228,11 @@ body {
             <div class="banner-top-row">
                 <div class="banner-tag" id="bannerTagWrapper">
                     <span class="banner-dot" id="bannerDot"></span>
-                    <span id="bannerTag">UPCOMING CRICKET</span>
+                    <span id="bannerTag">UPCOMING F1</span>
                 </div>
-                <div class="banner-time" id="bannerTime">Fri 9 Oct, 4:45 AM</div>
+                <div class="banner-time" id="bannerTime">Sat 10 Oct, 9:55 AM</div>
             </div>
-            <div class="banner-title" id="bannerTitle">International Cricket — Australia Women v Bangladesh Women, 1st ODI</div>
+            <div class="banner-title" id="bannerTitle">Formula 1 — Singapore: Sprint</div>
             <div class="banner-bottom-row">
                 <span class="banner-station">BBC Radio 5 Sports Extra</span>
                 <div class="banner-cta">
@@ -386,49 +386,35 @@ function getUKDateTime() {
     };
 }
 
-// Friday 9th October Sports Events Schedule
+// Saturday 10th October Sports Events Schedule
 const BANNER_MATCHES = [
     {
-        sport: "CRICKET",
-        title: "International Cricket — Australia Women v Bangladesh Women, 1st ODI",
-        time: "Fri 9 Oct, 4:45 AM",
-        startMin: 285,  // 4:45 AM
-        endMin: 565     // 9:25 AM
+        sport: "F1",
+        title: "Formula 1 — Singapore: Sprint",
+        time: "Sat 10 Oct, 9:55 AM",
+        startMin: 595,  // 09:55
+        endMin: 675     // 11:15
     },
     {
         sport: "F1",
-        title: "Formula 1 — Singapore: Practice 1",
-        time: "Fri 9 Oct, 9:25 AM",
-        startMin: 565,  // 9:25 AM
-        endMin: 635     // 10:35 AM
-    },
-    {
-        sport: "CRICKET",
-        title: "International Cricket — Australia Women v Bangladesh Women, 1st ODI",
-        time: "Fri 9 Oct, 10:35 AM",
-        startMin: 635,  // 10:35 AM
-        endMin: 780     // 1:00 PM
-    },
-    {
-        sport: "F1",
-        title: "Formula 1 — Singapore: Sprint Qualifying",
-        time: "Fri 9 Oct, 1:25 PM",
-        startMin: 805,  // 1:25 PM
-        endMin: 870     // 2:30 PM
+        title: "Formula 1 — Singapore: Qualifying",
+        time: "Sat 10 Oct, 1:55 PM",
+        startMin: 835,  // 13:55
+        endMin: 915     // 15:15
     },
     {
         sport: "FOOTBALL",
-        title: "Women's International Football — Albania v Wales",
-        time: "Fri 9 Oct, 4:45 PM",
-        startMin: 1005, // 4:45 PM
-        endMin: 1140    // 7:00 PM
+        title: "Premier League — Aston Villa v Brentford",
+        time: "Sat 10 Oct, 3:15 PM",
+        startMin: 915,  // 15:15
+        endMin: 1020    // 17:00
     },
     {
         sport: "RUGBY",
-        title: "Rugby Union — Leicester Tigers v Gloucester",
-        time: "Fri 9 Oct, 7:00 PM",
-        startMin: 1140, // 7:00 PM
-        endMin: 1320    // 10:00 PM
+        title: "Rugby Union — Saracens v Bristol Bears",
+        time: "Sat 10 Oct, 5:25 PM",
+        startMin: 1045, // 17:25
+        endMin: 1170    // 19:30
     }
 ];
 
@@ -436,14 +422,14 @@ function updateBannerUI() {
     if (!DOM.bannerTitle || !BANNER_MATCHES.length) return;
 
     const uk = getUKDateTime();
-    const isFriday9Oct = (uk.year === 2026 && uk.month === 10 && uk.day === 9);
+    const isSaturday10Oct = (uk.year === 2026 && uk.month === 10 && uk.day === 10);
     const nowMin = uk.minutesNow;
 
     let activeMatch = null;
     let isLive = false;
 
-    if (isFriday9Oct) {
-        // 1. Check karein kya koi match abhi LIVE chal raha hai
+    if (isSaturday10Oct) {
+        // 1. বৰ্তমান LIVE চলি থকা খেল পৰীক্ষা কৰক
         for (let i = 0; i < BANNER_MATCHES.length; i++) {
             const match = BANNER_MATCHES[i];
             if (nowMin >= match.startMin && nowMin < match.endMin) {
@@ -453,7 +439,7 @@ function updateBannerUI() {
             }
         }
 
-        // 2. Agar koi match abhi LIVE nahi hai, toh agla UPCOMING match chunein
+        // 2. যদি কোনো খেল LIVE নহয়, তেন্তে আগন্তুক (UPCOMING) খেল নির্বাচন কৰক
         if (!activeMatch) {
             for (let i = 0; i < BANNER_MATCHES.length; i++) {
                 const match = BANNER_MATCHES[i];
@@ -466,17 +452,10 @@ function updateBannerUI() {
         }
     }
 
-    // 3. Agar Friday 9 Oct se pehle ka din hai (e.g. Thursday 8 Oct)
+    // 3. সময় বা দিনৰ সালসলনি হ'লে ফলবেক (Fallback)
     if (!activeMatch) {
-        if (uk.day < 9 || uk.month < 10) {
-            // Future event: current time ke mutabiq aage aane wala match select karein
-            for (let i = 0; i < BANNER_MATCHES.length; i++) {
-                if (BANNER_MATCHES[i].endMin > nowMin) {
-                    activeMatch = BANNER_MATCHES[i];
-                    break;
-                }
-            }
-            if (!activeMatch) activeMatch = BANNER_MATCHES[0];
+        if (!isSaturday10Oct && (uk.day < 10 || uk.month < 10)) {
+            activeMatch = BANNER_MATCHES[0];
         } else {
             activeMatch = BANNER_MATCHES[BANNER_MATCHES.length - 1];
         }
