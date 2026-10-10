@@ -141,7 +141,14 @@ body {
     min-height: 72px;
 }
 .station-logo { width: 42px; height: 42px; border-radius: 8px; object-fit: cover; margin-right: 12px; background: #1e293b; flex-shrink: 0; }
-.station-info { flex: 1; min-width: 0; padding-right: 8px; display: flex; flex-direction: column; justify-content: center; }
+.station-info { 
+    flex: 1; 
+    min-width: 0; 
+    padding-right: 8px; 
+    display: flex; 
+    flex-direction: column; /* 'center' ৰ সলনি 'column' দিয়ক */
+    justify-content: center; 
+}
 .station-name { font-weight: 700; font-size: 14.5px; margin-bottom: 3px; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .playing-row { font-size: 11.5px; color: #94a3b8; display: flex; align-items: flex-start; line-height: 1.35; }
 .live-dot { width: 6px; height: 6px; background: #22c55e; border-radius: 50%; margin-right: 6px; margin-top: 4px; flex-shrink: 0; }
@@ -312,9 +319,9 @@ body {
         <div class="station-card" style="border-color: rgba(59,130,246,0.3);">
             <div class="station-info">
                 <div class="station-name">📰 5 Min News Brief <span class="duration-tag">5 Min</span></div>
-                <div class="playing-row"><span>Updated: 10 OCT, 4:00 PM</span></div>
+                <div class="playing-row"><span>Updated: 10 OCT, 9:00 PM</span></div>
             </div>
-            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/5b1a84-w1msm0v8hxk1lj8/vf_w1msm0v8hxk1lj8_dd74833c-056c-4689-a322-878d8b16bf8b.ism/dash/vf_w1msm0v8hxk1lj8_dd74833c-056c-4689-a322-878d8b16bf8b-audio_eng_1=96000-3.m3u8" class="play-btn" aria-label="Play"></a>
+            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/208424-w1msm0v8hxk267x/vf_w1msm0v8hxk267x_4919f1db-7759-47f3-b476-96fe1a87147f.ism/dash/vf_w1msm0v8hxk267x_4919f1db-7759-47f3-b476-96fe1a87147f-audio_eng_1=96000-2.m3u8" class="play-btn" aria-label="Play"></a>
         </div>
 
         <div class="station-card" style="border-color: rgba(168,85,247,0.3);">
@@ -344,6 +351,7 @@ body {
 
 <script>
 const DOM = {
+    topBanner: document.querySelector('.top-banner'),
     modal: document.getElementById('privacyModal'),
     bannerTitle: document.getElementById('bannerTitle'),
     bannerTime: document.getElementById('bannerTime'),
@@ -419,7 +427,7 @@ const BANNER_MATCHES = [
 ];
 
 function updateBannerUI() {
-    if (!DOM.bannerTitle || !BANNER_MATCHES.length) return;
+    if (!DOM.topBanner || !BANNER_MATCHES.length) return;
 
     const uk = getUKDateTime();
     const isSaturday10Oct = (uk.year === 2026 && uk.month === 10 && uk.day === 10);
@@ -429,7 +437,7 @@ function updateBannerUI() {
     let isLive = false;
 
     if (isSaturday10Oct) {
-        // 1. বৰ্তমান LIVE চলি থকা খেল পৰীক্ষা কৰক
+        // ১. বৰ্তমান LIVE চলি থকা খেল পৰীক্ষা কৰক
         for (let i = 0; i < BANNER_MATCHES.length; i++) {
             const match = BANNER_MATCHES[i];
             if (nowMin >= match.startMin && nowMin < match.endMin) {
@@ -439,7 +447,7 @@ function updateBannerUI() {
             }
         }
 
-        // 2. যদি কোনো খেল LIVE নহয়, তেন্তে আগন্তুক (UPCOMING) খেল নির্বাচন কৰক
+        // ২. যদি কোনো খেল LIVE নহয়, পৰৱৰ্তী UPCOMING খেল নির্বাচন কৰক
         if (!activeMatch) {
             for (let i = 0; i < BANNER_MATCHES.length; i++) {
                 const match = BANNER_MATCHES[i];
@@ -452,17 +460,14 @@ function updateBannerUI() {
         }
     }
 
-    // 3. সময় বা দিনৰ সালসলনি হ'লে ফলবেক (Fallback)
+    // ৩. কোনো খেল বাকী নাথাকিলে বেনাৰ সম্পূৰ্ণ হাইড (Hide) কৰক
     if (!activeMatch) {
-        if (!isSaturday10Oct && (uk.day < 10 || uk.month < 10)) {
-            activeMatch = BANNER_MATCHES[0];
-        } else {
-            activeMatch = BANNER_MATCHES[BANNER_MATCHES.length - 1];
-        }
-        isLive = false;
+        DOM.topBanner.style.display = 'none';
+        return;
     }
 
-    // UI Render
+    // ৪. খেল থাকিলে বেনাৰ প্ৰদৰ্শন কৰক (Show) আৰু ডাটা আপডেট কৰক
+    DOM.topBanner.style.display = 'block';
     DOM.bannerTitle.textContent = activeMatch.title;
     DOM.bannerTime.textContent = activeMatch.time;
 
@@ -534,10 +539,10 @@ function updateAppUI() {
 
     const uk = getUKDateTime();
 
-    // 1. Top Banner Auto-Status (UPCOMING / LIVE)
+    // ১. Top Banner Auto-Status (UPCOMING / LIVE / Hide)
     updateBannerUI();
 
-    // 2. Radio Channels Status
+    // ২. Radio Channels Status
     for (let i = 0; i < DOM.stations.length; i++) {
         const s = DOM.stations[i];
         if (s.el) s.el.textContent = getCurrentShow(s.key, uk.minutesNow);
