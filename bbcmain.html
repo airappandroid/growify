@@ -229,7 +229,7 @@ body {
         </div>
     </header>
 
-    <!-- Top Banner (Always Visible - Showing Tomorrow's Match) -->
+    <!-- Top Banner -->
     <a href="go:BBC5E" class="top-banner">
         <div class="banner-card">
             <div class="banner-top-row">
@@ -319,9 +319,9 @@ body {
         <div class="station-card" style="border-color: rgba(59,130,246,0.3);">
             <div class="station-info">
                 <div class="station-name">📰 5 Min News Brief <span class="duration-tag">5 Min</span></div>
-                <div class="playing-row"><span>Updated: 11 OCT, 2:00 PM</span></div>
+                <div class="playing-row"><span>Updated: 12 OCT, 3:00 AM</span></div>
             </div>
-            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/035c73-w1msm0v8hxk47y3/vf_w1msm0v8hxk47y3_fb99a123-db33-404e-839e-aea6bd4d4276.ism/dash/vf_w1msm0v8hxk47y3_fb99a123-db33-404e-839e-aea6bd4d4276-audio_eng_1=96000-4.m3u8" class="play-btn" aria-label="Play"></a>
+            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/ad7e2e-w1msm0v8w5v9nwy/vf_w1msm0v8w5v9nwy_0308696f-d8c5-437b-ba4d-2abcab1c8fff.ism/dash/vf_w1msm0v8w5v9nwy_0308696f-d8c5-437b-ba4d-2abcab1c8fff-audio_eng_1=96000-4.m3u8" class="play-btn" aria-label="Play"></a>
         </div>
 
         <div class="station-card" style="border-color: rgba(168,85,247,0.3);">
@@ -394,30 +394,70 @@ function getUKDateTime() {
     };
 }
 
-// Sports Event Schedule (Set for Tomorrow)
-const BANNER_MATCHES = [
-    {
-        sport: "FOOTBALL",
-        title: "England vs Greece — Women's World Cup Play-off",
-        time: "Tomorrow, 7:25 PM",
-        isTomorrow: true
-    }
-];
+// কাইলৈৰ খেলৰ কনফিগাৰেচন (১৩ অক্টোবৰ ২০২৬, UK Time অনুসৰি)
+const MATCH_CONFIG = {
+    sport: "FOOTBALL",
+    title: "England vs Greece — Women's World Cup Play-off",
+    year: 2026,
+    month: 10,
+    day: 13,        // কাইলৈৰ তাৰিখ
+    startMin: 1165, // 07:25 PM (19 * 60 + 25)
+    endMin: 1290    // 09:30 PM (21 * 60 + 30)
+};
 
 function updateBannerUI() {
-    if (!DOM.topBanner || !BANNER_MATCHES.length) return;
+    if (!DOM.topBanner) return;
 
-    const activeMatch = BANNER_MATCHES[0];
+    const uk = getUKDateTime();
 
-    // বেনাৰ সদায় দৃশ্যমান থাকিব
-    DOM.topBanner.style.display = 'block';
-    DOM.bannerTitle.textContent = activeMatch.title;
-    DOM.bannerTime.textContent = activeMatch.time;
+    // UK সময় আৰু খেলৰ দিনৰ মাজৰ পাৰ্থক্য গণনা
+    const matchDate = new Date(Date.UTC(MATCH_CONFIG.year, MATCH_CONFIG.month - 1, MATCH_CONFIG.day));
+    const currentDate = new Date(Date.UTC(uk.year, uk.month - 1, uk.day));
+    const diffDays = Math.round((matchDate - currentDate) / (1000 * 60 * 60 * 24));
 
-    // যিহেতু খেলখন কাইলৈৰ বাবে, সেয়েহে ই সদায় UPCOMING অৱস্থাত থাকিব
-    DOM.bannerTag.textContent = `UPCOMING ${activeMatch.sport}`;
-    DOM.bannerTagWrapper.classList.remove('live');
-    DOM.bannerDot.style.display = 'none';
+    if (diffDays === 1) {
+        // ১. আজি (১ দিন আগত): "Tomorrow" হিচাপে দেখুৱাব
+        DOM.topBanner.style.display = 'block';
+        DOM.bannerTitle.textContent = MATCH_CONFIG.title;
+        DOM.bannerTime.textContent = "Tomorrow, 7:25 PM";
+        DOM.bannerTag.textContent = `UPCOMING ${MATCH_CONFIG.sport}`;
+        DOM.bannerTagWrapper.classList.remove('live');
+        DOM.bannerDot.style.display = 'none';
+
+    } else if (diffDays === 0) {
+        // ২. কাইলৈ (UK তাৰিখ হোৱাৰ লগে লগে): নিজে নিজে "Today" হৈ যাব
+        DOM.topBanner.style.display = 'block';
+        DOM.bannerTitle.textContent = MATCH_CONFIG.title;
+        DOM.bannerTime.textContent = "Today, 7:25 PM";
+
+        if (uk.minutesNow >= MATCH_CONFIG.startMin && uk.minutesNow < MATCH_CONFIG.endMin) {
+            // ৭:২৫ PM ৰ পৰা ৯:৩০ PM বজালৈ LIVE চলিব
+            DOM.bannerTag.textContent = `LIVE ${MATCH_CONFIG.sport}`;
+            DOM.bannerTagWrapper.classList.add('live');
+            DOM.bannerDot.style.display = 'inline-block';
+        } else if (uk.minutesNow < MATCH_CONFIG.startMin) {
+            // খেল আৰম্ভ হোৱাৰ পূৰ্বে
+            DOM.bannerTag.textContent = `UPCOMING ${MATCH_CONFIG.sport}`;
+            DOM.bannerTagWrapper.classList.remove('live');
+            DOM.bannerDot.style.display = 'none';
+        } else {
+            // খেল সমাপ্ত হ'লে বেনাৰ হাইড হ'ব
+            DOM.topBanner.style.display = 'none';
+        }
+
+    } else if (diffDays > 1) {
+        // ৩. খেললৈ কেইবাদিনো বাকী থাকিলে নিৰ্দিষ্ট তাৰিখ দেখুৱাব
+        DOM.topBanner.style.display = 'block';
+        DOM.bannerTitle.textContent = MATCH_CONFIG.title;
+        DOM.bannerTime.textContent = `${MATCH_CONFIG.day} Oct, 7:25 PM`;
+        DOM.bannerTag.textContent = `UPCOMING ${MATCH_CONFIG.sport}`;
+        DOM.bannerTagWrapper.classList.remove('live');
+        DOM.bannerDot.style.display = 'none';
+
+    } else {
+        // ৪. খেলৰ দিন পাৰ হৈ গ'লে বেনাৰ বন্ধ হ'ব
+        DOM.topBanner.style.display = 'none';
+    }
 }
 
 let channelSchedules = null;
@@ -477,7 +517,7 @@ function updateAppUI() {
 
     const uk = getUKDateTime();
 
-    // ১. Top Banner Status Update
+    // ১. Top Banner Status Update (স্বয়ংক্ৰিয় তাৰিখ আৰু লাইভ টেগ)
     updateBannerUI();
 
     // ২. Radio Channels Status Update
