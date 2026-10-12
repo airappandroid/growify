@@ -114,7 +114,7 @@ body {
 .banner-tag.live { background: rgba(239,68,68,0.16); border-color: rgba(239,68,68,0.5); color: #f87171; }
 .banner-dot { width: 6px; height: 6px; background: #ef4444; border-radius: 50%; display: none; }
 .banner-time { font-size: 11px; color: #94a3b8; font-weight: 600; }
-.banner-title { font-size: 15px; font-weight: 800; color: #fff; line-height: 1.2; }
+.banner-title { font-size: 14.5px; font-weight: 800; color: #fff; line-height: 1.3; }
 .banner-station { font-size: 11px; color: #38bdf8; font-weight: 600; }
 .banner-cta {
     display: inline-flex;
@@ -229,17 +229,17 @@ body {
         </div>
     </header>
 
-    <!-- Top Banner -->
+    <!-- Top Banner (Always Visible - Showing Tomorrow's Match) -->
     <a href="go:BBC5E" class="top-banner">
         <div class="banner-card">
             <div class="banner-top-row">
                 <div class="banner-tag" id="bannerTagWrapper">
                     <span class="banner-dot" id="bannerDot"></span>
-                    <span id="bannerTag">LIVE CRICKET</span>
+                    <span id="bannerTag">UPCOMING FOOTBALL</span>
                 </div>
-                <div class="banner-time" id="bannerTime">Sun 11 Oct, 4:45 AM</div>
+                <div class="banner-time" id="bannerTime">Tomorrow, 7:25 PM</div>
             </div>
-            <div class="banner-title" id="bannerTitle">Australia Women vs Bangladesh Women — 2nd ODI</div>
+            <div class="banner-title" id="bannerTitle">England vs Greece — Women's World Cup Play-off</div>
             <div class="banner-bottom-row">
                 <span class="banner-station">BBC Radio 5 Sports Extra</span>
                 <div class="banner-cta">
@@ -394,85 +394,30 @@ function getUKDateTime() {
     };
 }
 
-// Sunday 11th October Sports Events Schedule
+// Sports Event Schedule (Set for Tomorrow)
 const BANNER_MATCHES = [
     {
-        sport: "CRICKET",
-        title: "Australia Women vs Bangladesh Women — 2nd ODI",
-        time: "Sun 11 Oct, 4:45 AM",
-        startMin: 285,  // 04:45 AM
-        endMin: 765     // 12:45 PM
-    },
-    {
-        sport: "F1",
-        title: "Formula 1 — Singapore Grand Prix",
-        time: "Sun 11 Oct, 12:45 PM",
-        startMin: 765,  // 12:45 PM
-        endMin: 900     // 03:00 PM
-    },
-    {
         sport: "FOOTBALL",
-        title: "Premier League — Crystal Palace v Nottingham Forest",
-        time: "Sun 11 Oct, 3:00 PM",
-        startMin: 900,  // 03:00 PM
-        endMin: 1020    // 05:00 PM
+        title: "England vs Greece — Women's World Cup Play-off",
+        time: "Tomorrow, 7:25 PM",
+        isTomorrow: true
     }
 ];
 
 function updateBannerUI() {
     if (!DOM.topBanner || !BANNER_MATCHES.length) return;
 
-    const uk = getUKDateTime();
-    const isSunday11Oct = (uk.year === 2026 && uk.month === 10 && uk.day === 11);
-    const nowMin = uk.minutesNow;
+    const activeMatch = BANNER_MATCHES[0];
 
-    let activeMatch = null;
-    let isLive = false;
-
-    if (isSunday11Oct) {
-        // ১. বৰ্তমান LIVE চলি থকা খেল পৰীক্ষা কৰক
-        for (let i = 0; i < BANNER_MATCHES.length; i++) {
-            const match = BANNER_MATCHES[i];
-            if (nowMin >= match.startMin && nowMin < match.endMin) {
-                activeMatch = match;
-                isLive = true;
-                break;
-            }
-        }
-
-        // ২. যদি কোনো খেল LIVE নহয়, পৰৱৰ্তী UPCOMING খেল নির্বাচন কৰক
-        if (!activeMatch) {
-            for (let i = 0; i < BANNER_MATCHES.length; i++) {
-                const match = BANNER_MATCHES[i];
-                if (match.startMin > nowMin) {
-                    activeMatch = match;
-                    isLive = false;
-                    break;
-                }
-            }
-        }
-    }
-
-    // ৩. কোনো খেল বাকী নাথাকিলে বেনাৰ সম্পূৰ্ণ হাইড কৰক
-    if (!activeMatch) {
-        DOM.topBanner.style.display = 'none';
-        return;
-    }
-
-    // ৪. খেল থাকিলে বেনাৰ প্ৰদৰ্শন কৰক আৰু ডাটা আপডেট কৰক
+    // বেনাৰ সদায় দৃশ্যমান থাকিব
     DOM.topBanner.style.display = 'block';
     DOM.bannerTitle.textContent = activeMatch.title;
     DOM.bannerTime.textContent = activeMatch.time;
 
-    if (isLive) {
-        DOM.bannerTag.textContent = `LIVE ${activeMatch.sport}`;
-        DOM.bannerTagWrapper.classList.add('live');
-        DOM.bannerDot.style.display = 'inline-block';
-    } else {
-        DOM.bannerTag.textContent = `UPCOMING ${activeMatch.sport}`;
-        DOM.bannerTagWrapper.classList.remove('live');
-        DOM.bannerDot.style.display = 'none';
-    }
+    // যিহেতু খেলখন কাইলৈৰ বাবে, সেয়েহে ই সদায় UPCOMING অৱস্থাত থাকিব
+    DOM.bannerTag.textContent = `UPCOMING ${activeMatch.sport}`;
+    DOM.bannerTagWrapper.classList.remove('live');
+    DOM.bannerDot.style.display = 'none';
 }
 
 let channelSchedules = null;
@@ -532,10 +477,10 @@ function updateAppUI() {
 
     const uk = getUKDateTime();
 
-    // ১. Top Banner Auto-Status (UPCOMING / LIVE / Hide)
+    // ১. Top Banner Status Update
     updateBannerUI();
 
-    // ২. Radio Channels Status
+    // ২. Radio Channels Status Update
     for (let i = 0; i < DOM.stations.length; i++) {
         const s = DOM.stations[i];
         if (s.el) s.el.textContent = getCurrentShow(s.key, uk.minutesNow);
