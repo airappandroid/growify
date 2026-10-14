@@ -229,17 +229,17 @@ body {
         </div>
     </header>
 
-    <!-- Top Banner (Australia Women vs Bangladesh Women) -->
+    <!-- Top Banner (BBC Radio 5 Sports Extra) -->
     <a href="go:BBC5E" class="top-banner">
         <div class="banner-card">
             <div class="banner-top-row">
                 <div class="banner-tag" id="bannerTagWrapper">
                     <span class="banner-dot" id="bannerDot"></span>
-                    <span id="bannerTag">CRICKET</span>
+                    <span id="bannerTag">SPORTS</span>
                 </div>
-                <div class="banner-time" id="bannerTime">Today, 4:45 AM</div>
+                <div class="banner-time" id="bannerTime">Loading...</div>
             </div>
-            <div class="banner-title" id="bannerTitle">Australia Women vs Bangladesh Women — 3rd ODI</div>
+            <div class="banner-title" id="bannerTitle">Loading Sports Schedule...</div>
             <div class="banner-bottom-row">
                 <span class="banner-station">BBC Radio 5 Sports Extra</span>
                 <div class="banner-cta">
@@ -372,7 +372,7 @@ document.getElementById('privacyBtn')?.addEventListener('click', () => DOM.modal
 document.getElementById('closeModal')?.addEventListener('click', () => DOM.modal.classList.remove('active'));
 DOM.modal?.addEventListener('click', (e) => { if (e.target === DOM.modal) DOM.modal.classList.remove('active'); });
 
-// UK Time & Date Fetcher (সঠিক UK সময় আনিব)
+// UK Time & Date Fetcher
 function getUKDateTime() {
     const parts = new Intl.DateTimeFormat('en-GB', {
         timeZone: 'Europe/London',
@@ -394,73 +394,94 @@ function getUKDateTime() {
     };
 }
 
-// খেলৰ কনফিগাৰেচন (১৪ অক্টোবৰ ২০২৬ - UK Time)
-const MATCH_CONFIG = {
-    sport: "CRICKET",
-    title: "Australia Women vs Bangladesh Women — 3rd ODI",
-    timeDisplay: "4:45 AM",
-    year: 2026,
-    month: 10,
-    day: 14,
-    startMin: 285, // 04:45 AM (4 * 60 + 45)
-    endMin: 780    // 01:00 PM (13 * 60)
-};
+// ১৫ অক্টোবৰ ২০২৬ ৰ ক্ৰীড়া সূচী (UK Time অনুসৰি)
+const EVENTS_CONFIG = [
+    {
+        sport: "RUGBY",
+        title: "Australia vs New Zealand — Men's World Cup 2026",
+        timeDisplay: "9:50 AM",
+        year: 2026,
+        month: 10,
+        day: 15,
+        startMin: 590, // 09:50 AM (9 * 60 + 50)
+        endMin: 720    // 12:00 PM (12 * 60)
+    },
+    {
+        sport: "FOOTBALL",
+        title: "Europa League: Benfica vs Celtic (Kick-off: 8:00 PM)",
+        timeDisplay: "7:00 PM",
+        year: 2026,
+        month: 10,
+        day: 15,
+        startMin: 1140, // 07:00 PM (19 * 60)
+        endMin: 1320   // 10:00 PM (22 * 60)
+    }
+];
 
 // স্বয়ংক্ৰিয়ভাৱে UPCOMING আৰু LIVE সলনি কৰা ফাংচন
 function updateBannerUI() {
     if (!DOM.topBanner) return;
 
     const uk = getUKDateTime();
-
-    // UK দিন আৰু খেলৰ দিনৰ পাৰ্থক্য গণনা
-    const matchDate = new Date(Date.UTC(MATCH_CONFIG.year, MATCH_CONFIG.month - 1, MATCH_CONFIG.day));
     const currentDate = new Date(Date.UTC(uk.year, uk.month - 1, uk.day));
-    const diffDays = Math.round((matchDate - currentDate) / (1000 * 60 * 60 * 24));
 
-    if (diffDays === 1) {
-        // খেলৰ ১ দিন আগত
-        DOM.topBanner.style.display = 'block';
-        DOM.bannerTitle.textContent = MATCH_CONFIG.title;
-        DOM.bannerTime.textContent = `Tomorrow, ${MATCH_CONFIG.timeDisplay}`;
-        DOM.bannerTag.textContent = `UPCOMING ${MATCH_CONFIG.sport}`;
-        DOM.bannerTagWrapper.classList.remove('live');
-        DOM.bannerDot.style.display = 'none';
+    let activeEvent = null;
+    let eventStatus = null; // 'live', 'upcoming_today', 'upcoming_tomorrow', 'upcoming_future'
 
-    } else if (diffDays === 0) {
-        // আজি (UK দিন অনুসৰি ১৪ অক্টোবৰ)
-        if (uk.minutesNow >= MATCH_CONFIG.startMin && uk.minutesNow < MATCH_CONFIG.endMin) {
-            // ৪:৪৫ AM ৰ পৰা ১:০০ PM বজালৈ -> LIVE CRICKET
-            DOM.topBanner.style.display = 'block';
-            DOM.bannerTitle.textContent = MATCH_CONFIG.title;
-            DOM.bannerTime.textContent = "LIVE NOW";
-            DOM.bannerTag.textContent = `LIVE ${MATCH_CONFIG.sport}`;
-            DOM.bannerTagWrapper.classList.add('live');
-            DOM.bannerDot.style.display = 'inline-block';
-        } else if (uk.minutesNow < MATCH_CONFIG.startMin) {
-            // পুৱা ৪:৪৫ AM ৰ আগলৈকে -> UPCOMING CRICKET
-            DOM.topBanner.style.display = 'block';
-            DOM.bannerTitle.textContent = MATCH_CONFIG.title;
-            DOM.bannerTime.textContent = `Today, ${MATCH_CONFIG.timeDisplay}`;
-            DOM.bannerTag.textContent = `UPCOMING ${MATCH_CONFIG.sport}`;
-            DOM.bannerTagWrapper.classList.remove('live');
-            DOM.bannerDot.style.display = 'none';
-        } else {
-            // ১:০০ PM ত খেল সমাপ্ত হোৱাৰ পিছত বেনাৰ হাইড হ'ব
-            DOM.topBanner.style.display = 'none';
+    for (let i = 0; i < EVENTS_CONFIG.length; i++) {
+        const ev = EVENTS_CONFIG[i];
+        const eventDate = new Date(Date.UTC(ev.year, ev.month - 1, ev.day));
+        const diffDays = Math.round((eventDate - currentDate) / (1000 * 60 * 60 * 24));
+
+        if (diffDays === 0) {
+            // আজিৰ দিনত
+            if (uk.minutesNow >= ev.startMin && uk.minutesNow < ev.endMin) {
+                activeEvent = ev;
+                eventStatus = 'live';
+                break;
+            } else if (uk.minutesNow < ev.startMin) {
+                activeEvent = ev;
+                eventStatus = 'upcoming_today';
+                break;
+            }
+        } else if (diffDays === 1) {
+            // ১ দিন আগত (কাইলৈ)
+            activeEvent = ev;
+            eventStatus = 'upcoming_tomorrow';
+            break;
+        } else if (diffDays > 1) {
+            // ১ দিনতকৈ বেছি সময় বাকী থাকিলে
+            activeEvent = ev;
+            eventStatus = 'upcoming_future';
+            break;
         }
+    }
 
-    } else if (diffDays > 1) {
-        // ১ দিনতকৈ বেছি সময় থাকিলে
-        DOM.topBanner.style.display = 'block';
-        DOM.bannerTitle.textContent = MATCH_CONFIG.title;
-        DOM.bannerTime.textContent = `${MATCH_CONFIG.day} Oct, ${MATCH_CONFIG.timeDisplay}`;
-        DOM.bannerTag.textContent = `UPCOMING ${MATCH_CONFIG.sport}`;
+    if (!activeEvent) {
+        DOM.topBanner.style.display = 'none';
+        return;
+    }
+
+    DOM.topBanner.style.display = 'block';
+    DOM.bannerTitle.textContent = activeEvent.title;
+
+    if (eventStatus === 'live') {
+        DOM.bannerTime.textContent = "LIVE NOW";
+        DOM.bannerTag.textContent = `LIVE ${activeEvent.sport}`;
+        DOM.bannerTagWrapper.classList.add('live');
+        DOM.bannerDot.style.display = 'inline-block';
+    } else {
+        DOM.bannerTag.textContent = `UPCOMING ${activeEvent.sport}`;
         DOM.bannerTagWrapper.classList.remove('live');
         DOM.bannerDot.style.display = 'none';
 
-    } else {
-        // খেলৰ তাৰিখ পাৰ হৈ গ'লে বেনাৰ বন্ধ
-        DOM.topBanner.style.display = 'none';
+        if (eventStatus === 'upcoming_today') {
+            DOM.bannerTime.textContent = `Today, ${activeEvent.timeDisplay}`;
+        } else if (eventStatus === 'upcoming_tomorrow') {
+            DOM.bannerTime.textContent = `Tomorrow, ${activeEvent.timeDisplay}`;
+        } else {
+            DOM.bannerTime.textContent = `${activeEvent.day} Oct, ${activeEvent.timeDisplay}`;
+        }
     }
 }
 
@@ -488,10 +509,13 @@ function prepareSchedules() {
 
 function timeStringToMinutesUK(str) {
     if (!str) return 0;
-    const parts = str.trim().split(/[:\s]/);
-    let h = +parts[0] || 0;
-    const m = +parts[1] || 0;
-    const period = parts[2]?.toUpperCase();
+    const match = str.trim().match(/^(\d{1,2}):(\d{2})(?:\s*([APap][Mm]))?/);
+    if (!match) return 0;
+    
+    let h = parseInt(match[1], 10);
+    const m = parseInt(match[2], 10);
+    const period = match[3] ? match[3].toUpperCase() : null;
+
     if (period === "PM" && h !== 12) h += 12;
     if (period === "AM" && h === 12) h = 0;
     return (h * 60) + m;
@@ -545,7 +569,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 300);
 
-    // প্ৰতি ১ মিনিটৰ মূৰে মূৰে সময় পৰীক্ষা কৰি আপোনা-আপুনি সলনি হ'ব
+    // প্ৰতি ১ মিনিটৰ মূৰে মূৰে সময় পৰীক্ষা কৰি আপোনা-আপুনি আপডেট হ'ব
     setInterval(updateAppUI, 60000);
     
     document.addEventListener("visibilitychange", () => {
