@@ -127,138 +127,6 @@
 
         .tab-btn {
             background: #111c38;
-আপোনাৰ লাইভ স্ক’ৰকাৰ্ড (Live Scorecard) পেজটোৰ বাবে নতুন মেচ আইডি (`6a4b53d3f96b301cc0895785`), দলৰ ডিফল্ট নাম (`IND W` vs `ZIM W`), আৰু ফলবেক টেক্সট আপডেট কৰি সম্পূৰ্ণ ক’ড তলত সাজু কৰি দিয়া হ’ল: 🏏📊✨
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Live Scorecard</title>
-    <style>
-        :root {
-            --bg-base: #030712;
-            --card-bg: #0b1329;
-            --accent: #38bdf8;
-            --border: rgba(255, 255, 255, 0.08);
-            --border-highlight: rgba(56, 189, 248, 0.25);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-            --success: #34d399;
-            --danger: #ef4444;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, Roboto, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            min-height: 100vh;
-            width: 100vw;
-            background-color: var(--bg-base);
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 8px 4px;
-            color: var(--text-primary);
-        }
-
-        .scorecard-app {
-            width: 100%;
-            max-width: 500px;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 12px 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 4px 6px 4px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .match-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: rgba(59, 130, 246, 0.12);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            padding: 2px 7px;
-            border-radius: 12px;
-            font-size: 9.5px;
-            font-weight: 700;
-            color: #60a5fa;
-        }
-
-        .match-badge.live {
-            background: rgba(239, 68, 68, 0.12);
-            border-color: rgba(239, 68, 68, 0.3);
-            color: #f87171;
-        }
-
-        .match-badge.completed {
-            background: rgba(52, 211, 153, 0.12);
-            border-color: rgba(52, 211, 153, 0.3);
-            color: var(--success);
-        }
-
-        .live-dot {
-            width: 6px;
-            height: 6px;
-            background-color: var(--danger);
-            border-radius: 50%;
-            display: none;
-        }
-
-        .refresh-status {
-            font-size: 9px;
-            color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            padding: 2px 7px;
-            border-radius: 10px;
-        }
-
-        .match-meta-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 4px;
-            font-size: 11px;
-            color: var(--text-secondary);
-        }
-
-        .match-title-text {
-            font-weight: 700;
-            color: var(--accent);
-        }
-
-        .tabs-wrapper {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            padding: 1px 2px;
-        }
-
-        .tabs-wrapper::-webkit-scrollbar {
-            display: none;
-        }
-
-        .tab-btn {
-            background: #111c38;
             border: 1px solid var(--border);
             color: var(--text-secondary);
             font-size: 10.5px;
@@ -519,7 +387,8 @@
 
 <script>
     const matchId = "6a4b53d3f96b301cc0895785";
-    const API_URL = `[https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=$](https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=$){matchId}`;
+    // ✅ শুদ্ধ URL:
+    const API_URL = "https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=" + matchId;
     
     let matchData = null;
     let selectedInningIndex = 0;
@@ -535,7 +404,8 @@
             second: '2-digit',
             hour12: true 
         });
-        document.getElementById("updateTime").textContent = `Sync: ${time} IST`;
+        const updateEl = document.getElementById("updateTime");
+        if (updateEl) updateEl.textContent = `Sync: ${time} IST`;
     }
 
     function getInningsTabLabel(inn, idx, teamA, teamB) {
@@ -549,8 +419,8 @@
 
     function getInningsDisplayName(inn, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
-        const aName = teamA.name || "India Women";
-        const bName = teamB.name || "Zimbabwe Women";
+        const aName = teamA.name || teamA.shortName || "India Women";
+        const bName = teamB.name || teamB.shortName || "Zimbabwe Women";
         if (inn.key === "a_1" || inn.key === "a") return `${aName} Innings`;
         if (inn.key === "b_1" || inn.key === "b") return `${bName} Innings`;
         return "Team Innings";
@@ -573,10 +443,17 @@
             const format = (result.format || 'T20').toUpperCase();
             const tournament = result.seriesName || `${nameA} vs ${nameB}`;
 
-            document.getElementById("matchHeader").textContent = `${tournament} (${format})`;
-            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : '';
+            const matchHdr = document.getElementById("matchHeader");
+            const venueHdr = document.getElementById("venueHeader");
+            if (matchHdr) matchHdr.textContent = `${tournament} (${format})`;
+            if (venueHdr) venueHdr.textContent = result.venue ? `📍 ${result.venue}` : '';
 
-            const innings = result.innings_batting_order || [];
+            // ইনিংছ ডাটা উলিয়াই অনা (innings_batting_order বা scoreCard)
+            let innings = result.innings_batting_order || result.scoreCard || [];
+            if (!Array.isArray(innings) && typeof innings === 'object') {
+                innings = Object.values(innings);
+            }
+
             const hasStartedPlaying = Array.isArray(innings) && innings.some(inn =>
                 (inn.player_batting_order && inn.player_batting_order.length > 0) ||
                 (Number(inn.runs) > 0) ||
@@ -604,34 +481,38 @@
             const dotEl = document.getElementById("liveDot");
 
             if (isCompleted) {
-                badgeText.textContent = "COMPLETED";
-                badgeEl.className = "match-badge completed";
-                dotEl.style.display = "none";
+                if (badgeText) badgeText.textContent = "COMPLETED";
+                if (badgeEl) badgeEl.className = "match-badge completed";
+                if (dotEl) dotEl.style.display = "none";
             } else if (isLive) {
-                badgeText.textContent = "LIVE";
-                badgeEl.className = "match-badge live";
-                dotEl.style.display = "inline-block";
+                if (badgeText) badgeText.textContent = "LIVE";
+                if (badgeEl) badgeEl.className = "match-badge live";
+                if (dotEl) dotEl.style.display = "inline-block";
             } else {
-                badgeText.textContent = "UPCOMING";
-                badgeEl.className = "match-badge";
-                dotEl.style.display = "none";
+                if (badgeText) badgeText.textContent = "UPCOMING";
+                if (badgeEl) badgeEl.className = "match-badge";
+                if (dotEl) dotEl.style.display = "none";
             }
 
             if (isUpcoming || !Array.isArray(innings) || innings.length === 0) {
-                document.getElementById("inningsTabs").innerHTML = "";
-                document.getElementById("contentView").innerHTML = `
-                    <div class="hero-banner">
-                        <div>
-                            <div class="hero-team-name">${tournament}</div>
-                            <span class="hero-status-tag">${format}</span>
+                const tabsEl = document.getElementById("inningsTabs");
+                const viewEl = document.getElementById("contentView");
+                if (tabsEl) tabsEl.innerHTML = "";
+                if (viewEl) {
+                    viewEl.innerHTML = `
+                        <div class="hero-banner">
+                            <div>
+                                <div class="hero-team-name">${tournament}</div>
+                                <span class="hero-status-tag">${format}</span>
+                            </div>
+                            <div class="hero-score-box">
+                                <div class="hero-score-main">Upcoming</div>
+                                <div class="hero-score-sub">${result.announcement1 || "IND w vs ZIM w 1st T20, match starts today at 7 pm"}</div>
+                            </div>
                         </div>
-                        <div class="hero-score-box">
-                            <div class="hero-score-main">Upcoming</div>
-                            <div class="hero-score-sub">${result.announcement1 || "IND w vs ZIM w 1st T20, match starts today at 7 pm"}</div>
-                        </div>
-                    </div>
-                    <div class="loading-ph">⏳ Match has not started yet. Full live scorecard will appear once play begins.</div>
-                `;
+                        <div class="loading-ph">⏳ Match has not started yet. Full live scorecard will appear once play begins.</div>
+                    `;
+                }
                 updateLastRefresh();
                 return;
             }
@@ -660,6 +541,7 @@
 
     function renderTabs(innings, teamA, teamB) {
         const tabContainer = document.getElementById("inningsTabs");
+        if (!tabContainer) return;
         tabContainer.innerHTML = "";
 
         innings.forEach((inn, idx) => {
@@ -682,6 +564,8 @@
         if (!inn) return;
 
         const container = document.getElementById("contentView");
+        if (!container) return;
+
         const partnerships = inn.partnerships || [];
         const lastPartnership = partnerships.length > 0 ? partnerships[partnerships.length - 1] : null;
         
