@@ -394,27 +394,37 @@ function getUKDateTime() {
     };
 }
 
-// ১৫ অক্টোবৰ ২০২৬ ৰ ক্ৰীড়া সূচী (UK Time অনুসৰি)
+// ১৬ অক্টোবৰ ২০২৬ ৰ কেৱল মুখ্য খেলসমূহৰ সূচী
 const EVENTS_CONFIG = [
     {
-        sport: "RUGBY",
-        title: "Australia vs New Zealand — Men's World Cup 2026",
+        sport: "RUGBY LEAGUE",
+        title: "Rugby League World Cup – Men's: Samoa vs France",
+        timeDisplay: "7:30 AM",
+        year: 2026,
+        month: 10,
+        day: 16,
+        startMin: 450,  // 07:30 AM
+        endMin: 590     // 09:50 AM
+    },
+    {
+        sport: "RUGBY LEAGUE",
+        title: "Rugby League World Cup – Women's: Australia vs Samoa",
         timeDisplay: "9:50 AM",
         year: 2026,
         month: 10,
-        day: 15,
-        startMin: 590, // 09:50 AM (9 * 60 + 50)
-        endMin: 720    // 12:00 PM (12 * 60)
+        day: 16,
+        startMin: 590,  // 09:50 AM
+        endMin: 725     // 12:05 PM
     },
     {
-        sport: "FOOTBALL",
-        title: "Europa League: Benfica vs Celtic (Kick-off: 8:00 PM)",
-        timeDisplay: "7:00 PM",
+        sport: "RUGBY UNION",
+        title: "European Champions Cup: Gloucester vs Bordeaux Bègles",
+        timeDisplay: "7:45 PM",
         year: 2026,
         month: 10,
-        day: 15,
-        startMin: 1140, // 07:00 PM (19 * 60)
-        endMin: 1320   // 10:00 PM (22 * 60)
+        day: 16,
+        startMin: 1185, // 07:45 PM
+        endMin: 1320    // 10:00 PM
     }
 ];
 
@@ -425,8 +435,8 @@ function updateBannerUI() {
     const uk = getUKDateTime();
     const currentDate = new Date(Date.UTC(uk.year, uk.month - 1, uk.day));
 
-    let activeEvent = null;
-    let eventStatus = null; // 'live', 'upcoming_today', 'upcoming_tomorrow', 'upcoming_future'
+    let currentLive = null;
+    let nextUpcoming = null;
 
     for (let i = 0; i < EVENTS_CONFIG.length; i++) {
         const ev = EVENTS_CONFIG[i];
@@ -434,54 +444,43 @@ function updateBannerUI() {
         const diffDays = Math.round((eventDate - currentDate) / (1000 * 60 * 60 * 24));
 
         if (diffDays === 0) {
-            // আজিৰ দিনত
+            // বৰ্তমান লাইভ খেল চলি থাকিলে
             if (uk.minutesNow >= ev.startMin && uk.minutesNow < ev.endMin) {
-                activeEvent = ev;
-                eventStatus = 'live';
-                break;
-            } else if (uk.minutesNow < ev.startMin) {
-                activeEvent = ev;
-                eventStatus = 'upcoming_today';
+                currentLive = ev;
                 break;
             }
-        } else if (diffDays === 1) {
-            // ১ দিন আগত (কাইলৈ)
-            activeEvent = ev;
-            eventStatus = 'upcoming_tomorrow';
-            break;
-        } else if (diffDays > 1) {
-            // ১ দিনতকৈ বেছি সময় বাকী থাকিলে
-            activeEvent = ev;
-            eventStatus = 'upcoming_future';
-            break;
+            // আজিৰ পৰৱৰ্তী খেল
+            if (uk.minutesNow < ev.startMin && !nextUpcoming) {
+                nextUpcoming = ev;
+            }
+        } else if (diffDays > 0 && !nextUpcoming) {
+            // অনাগত দিনৰ খেল
+            nextUpcoming = ev;
         }
     }
 
-    if (!activeEvent) {
-        DOM.topBanner.style.display = 'none';
-        return;
-    }
-
-    DOM.topBanner.style.display = 'block';
-    DOM.bannerTitle.textContent = activeEvent.title;
-
-    if (eventStatus === 'live') {
+    if (currentLive) {
+        DOM.topBanner.style.display = 'block';
+        DOM.bannerTitle.textContent = currentLive.title;
         DOM.bannerTime.textContent = "LIVE NOW";
-        DOM.bannerTag.textContent = `LIVE ${activeEvent.sport}`;
+        DOM.bannerTag.textContent = `LIVE • ${currentLive.sport}`;
         DOM.bannerTagWrapper.classList.add('live');
         DOM.bannerDot.style.display = 'inline-block';
-    } else {
-        DOM.bannerTag.textContent = `UPCOMING ${activeEvent.sport}`;
+    } else if (nextUpcoming) {
+        DOM.topBanner.style.display = 'block';
+        DOM.bannerTitle.textContent = nextUpcoming.title;
+        DOM.bannerTime.textContent = `Today, ${nextUpcoming.timeDisplay}`;
+        DOM.bannerTag.textContent = `UPCOMING • ${nextUpcoming.sport}`;
         DOM.bannerTagWrapper.classList.remove('live');
         DOM.bannerDot.style.display = 'none';
-
-        if (eventStatus === 'upcoming_today') {
-            DOM.bannerTime.textContent = `Today, ${activeEvent.timeDisplay}`;
-        } else if (eventStatus === 'upcoming_tomorrow') {
-            DOM.bannerTime.textContent = `Tomorrow, ${activeEvent.timeDisplay}`;
-        } else {
-            DOM.bannerTime.textContent = `${activeEvent.day} Oct, ${activeEvent.timeDisplay}`;
-        }
+    } else {
+        // সকলো খেল সমাপ্ত হ'লে
+        DOM.topBanner.style.display = 'block';
+        DOM.bannerTitle.textContent = "Live Sports Coverage";
+        DOM.bannerTime.textContent = "Stay Tuned";
+        DOM.bannerTag.textContent = "BBC 5 SPORTS EXTRA";
+        DOM.bannerTagWrapper.classList.remove('live');
+        DOM.bannerDot.style.display = 'none';
     }
 }
 
@@ -544,11 +543,8 @@ function updateAppUI() {
     prepareSchedules();
 
     const uk = getUKDateTime();
-
-    // ১. Top Banner Status Update
     updateBannerUI();
 
-    // ২. Radio Channels Status Update
     for (let i = 0; i < DOM.stations.length; i++) {
         const s = DOM.stations[i];
         if (s.el) s.el.textContent = getCurrentShow(s.key, uk.minutesNow);
@@ -569,7 +565,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 300);
 
-    // প্ৰতি ১ মিনিটৰ মূৰে মূৰে সময় পৰীক্ষা কৰি আপোনা-আপুনি আপডেট হ'ব
     setInterval(updateAppUI, 60000);
     
     document.addEventListener("visibilitychange", () => {
