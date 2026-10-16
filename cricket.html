@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CricVoice - IND vs WI Live</title>
+    <title>CricVoice - IND W vs ZIM W Live</title>
     <style>
         :root {
             --bg: #090d16;
@@ -368,7 +368,7 @@
         <!-- Main Cricket Score Card -->
         <section class="match-card">
             <div class="match-meta-bar">
-                <span class="match-label" id="match-info">IND vs WI • T20</span>
+                <span class="match-label" id="match-info">IND W vs ZIM W • T20</span>
                 <span class="status-tag" id="match-status">UPCOMING</span>
             </div>
 
@@ -383,28 +383,28 @@
             <div class="teams-arena">
                 <div class="team-box">
                     <div class="team-profile">
-                        <img class="team-crest" id="team-a-logo" src="https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690" alt="India" width="28" height="28" decoding="async">
-                        <span class="team-name-text" id="team-a-name">India</span>
+                        <img class="team-crest" id="team-a-logo" src="https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690" alt="IND W" width="28" height="28" decoding="async">
+                        <span class="team-name-text" id="team-a-name">India Women</span>
                     </div>
                     <div class="team-metrics">
-                        <div class="runs-val" id="team-a-runs">--</div>
+                        <div class="runs-val" id="team-a-runs">Yet to bat</div>
                         <div class="overs-val" id="team-a-overs"></div>
                     </div>
                 </div>
 
                 <div class="team-box">
                     <div class="team-profile">
-                        <img class="team-crest" id="team-b-logo" src="https://ik.imagekit.io/sqt8ptw1k/west-indies.webp?updatedAt=1790419929784" alt="West Indies" width="28" height="28" decoding="async">
-                        <span class="team-name-text" id="team-b-name">West Indies</span>
+                        <img class="team-crest" id="team-b-logo" src="https://ik.imagekit.io/sqt8ptw1k/zimbabwe.webp?updatedAt=1789455540523" alt="ZIM W" width="28" height="28" decoding="async">
+                        <span class="team-name-text" id="team-b-name">Zimbabwe Women</span>
                     </div>
                     <div class="team-metrics">
-                        <div class="runs-val" id="team-b-runs">--</div>
+                        <div class="runs-val" id="team-b-runs">Yet to bat</div>
                         <div class="overs-val" id="team-b-overs"></div>
                     </div>
                 </div>
             </div>
 
-            <div class="summary-status" id="status-box">IND vs WI 4th T20, Match Starts Today at 7 PM</div>
+            <div class="summary-status" id="status-box">IND w vs ZIM w 1st T20, match starts today at 7 pm</div>
             <div class="toss-tag" id="toss-info" style="display: none;"></div>
         </section>
 
@@ -430,12 +430,16 @@
     </div>
 
     <script>
-        const API_URL = "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a3103707327c23debef2652";
+        const API_URL = "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a4b53d3f96b301cc0895785";
         const FLAGS = {
             ind: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
             india: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
-            wi: "https://ik.imagekit.io/sqt8ptw1k/west-indies.webp?updatedAt=1790419929784",
-            "west indies": "https://ik.imagekit.io/sqt8ptw1k/west-indies.webp?updatedAt=1790419929784"
+            "ind w": "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
+            "india women": "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
+            zim: "https://ik.imagekit.io/sqt8ptw1k/zimbabwe.webp?updatedAt=1789455540523",
+            zimbabwe: "https://ik.imagekit.io/sqt8ptw1k/zimbabwe.webp?updatedAt=1789455540523",
+            "zim w": "https://ik.imagekit.io/sqt8ptw1k/zimbabwe.webp?updatedAt=1789455540523",
+            "zimbabwe women": "https://ik.imagekit.io/sqt8ptw1k/zimbabwe.webp?updatedAt=1789455540523"
         };
         let isLive = false;
 
@@ -470,8 +474,8 @@
             if (!team) return defaultFallback;
             const name = (team.shortName || team.name || "").toLowerCase().trim();
             if (FLAGS[name]) return FLAGS[name];
+            if (name.includes("zim")) return FLAGS.zim;
             if (name.includes("ind")) return FLAGS.ind;
-            if (name.includes("wi") || name.includes("west")) return FLAGS.wi;
             if (team.logo) {
                 return team.logo.startsWith("http") ? team.logo : `https://api.cricradio.com.au${team.logo.startsWith('/') ? '' : '/'}${team.logo}`;
             }
@@ -479,7 +483,7 @@
         }
 
         function getScore(teamData, key) {
-            if (!teamData) return { runs: "--", overs: "" };
+            if (!teamData) return { runs: "Yet to bat", overs: "" };
             const s = teamData[`${key}_1_score`] || teamData.score;
             if (!s || s.runs === undefined) return { runs: "Yet to bat", overs: "" };
             return {
@@ -505,11 +509,11 @@
 
                 const tA = r.teams?.a || {};
                 const tB = r.teams?.b || {};
-                const nameA = tA.name || tA.shortName || 'India';
-                const nameB = tB.name || tB.shortName || 'West Indies';
+                const nameA = tA.name || tA.shortName || 'India Women';
+                const nameB = tB.name || tB.shortName || 'Zimbabwe Women';
                 const format = (r.format || "T20").toUpperCase();
 
-                el.info.textContent = `${tA.shortName || 'IND'} vs ${tB.shortName || 'WI'} • ${format}`;
+                el.info.textContent = `${tA.shortName || 'IND W'} vs ${tB.shortName || 'ZIM W'} • ${format}`;
                 el.format.textContent = `${format} Match`;
 
                 // Status logic
@@ -531,7 +535,7 @@
                 } else {
                     el.status.textContent = "UPCOMING";
                     el.status.className = "status-tag";
-                    el.statusBox.textContent = r.announcement1 || "IND vs WI 4th T20, Match Starts Today at 7 PM";
+                    el.statusBox.textContent = r.announcement1 || "IND w vs ZIM w 1st T20, match starts today at 7 pm";
                 }
 
                 // Last Ball
@@ -550,7 +554,7 @@
                 el.teamA.overs.textContent = sA.overs;
 
                 el.teamB.name.textContent = nameB;
-                el.teamB.logo.src = getLogo(tB, FLAGS.wi);
+                el.teamB.logo.src = getLogo(tB, FLAGS.zim);
                 const sB = getScore(tB, "b");
                 el.teamB.runs.textContent = sB.runs;
                 el.teamB.overs.textContent = sB.overs;
