@@ -336,12 +336,25 @@
         .modal-head {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
+            align-items: center;
+            margin-bottom: 10px;
         }
 
         .modal-head h3 { font-size: 14px; }
         .modal-close-icon { background: none; border: none; color: var(--muted); font-size: 18px; cursor: pointer; }
-        .modal-content-text { font-size: 11.5px; color: var(--muted); line-height: 1.4; margin-bottom: 12px; }
+        .modal-content-text { 
+            font-size: 11.5px; 
+            color: var(--muted); 
+            line-height: 1.5; 
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .modal-content-text a {
+            color: var(--cyan);
+            text-decoration: none;
+        }
         .modal-confirm-btn { width: 100%; background: var(--blue); color: #fff; border: none; padding: 9px; border-radius: 8px; font-weight: 700; cursor: pointer; }
     </style>
 </head>
@@ -438,12 +451,15 @@
     <div class="modal-overlay" id="privacyModal" onclick="if(event.target===this) toggleModal(false)">
         <div class="modal-box">
             <div class="modal-head">
-                <h3>Privacy Policy</h3>
+                <h3>CricVoice Privacy Policy</h3>
                 <button class="modal-close-icon" onclick="toggleModal(false)">&times;</button>
             </div>
-            <p class="modal-content-text">
-                Your privacy is paramount. CricVoice does not collect personal data. Match updates are pulled in real-time solely for scores.
-            </p>
+            <div class="modal-content-text">
+                <p>Welcome to <strong>CricVoice</strong>. Your privacy is paramount to us. We do not collect, track, or share any personal user data.</p>
+                <p>Match updates and live audio streams are fetched in real-time solely to deliver seamless cricket scores.</p>
+                <p>We do not store cookies or personal identifiers on your device.</p>
+                <p>For inquiries or feedback, contact us at: <a href="mailto:vividhbharati75@gmail.com">vividhbharati75@gmail.com</a></p>
+            </div>
             <button class="modal-confirm-btn" onclick="toggleModal(false)">Got It</button>
         </div>
     </div>
@@ -544,7 +560,6 @@
                 const isCompleted = rawSt.includes("complete") || rawSt.includes("finish") || rawSt.includes("ended") || Boolean(r.winner || r.winning_team);
                 
                 isLive = !isCompleted && (rawSt.includes("live") || rawSt.includes("progress") || Boolean(r.is_live) || hasScore);
-                const isUpcoming = !isCompleted && !isLive;
 
                 if (isCompleted) {
                     el.status.textContent = "COMPLETED";
