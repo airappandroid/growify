@@ -68,6 +68,7 @@
             font-size: 9.5px;
             font-weight: 700;
             color: #60a5fa;
+            text-transform: uppercase;
         }
 
         .match-badge.live {
@@ -88,6 +89,13 @@
             background-color: var(--danger);
             border-radius: 50%;
             display: none;
+            animation: pulse 1.2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.85); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
         .refresh-status {
@@ -374,7 +382,7 @@
     </div>
 
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">Loading...</span>
+        <span class="match-title-text" id="matchHeader">IND vs WI 5th T20</span>
         <span id="venueHeader"></span>
     </div>
 
@@ -386,8 +394,8 @@
 </div>
 
 <script>
-    const matchId = "6a4b53d3f96b301cc0895785";
-    // ✅ শুদ্ধ URL:
+    // ✅ Updated Match ID
+    const matchId = "6a3103717327c23debef2653";
     const API_URL = "https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=" + matchId;
     
     let matchData = null;
@@ -410,8 +418,8 @@
 
     function getInningsTabLabel(inn, idx, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
-        const aShort = teamA.shortName || teamA.name || "IND W";
-        const bShort = teamB.shortName || teamB.name || "ZIM W";
+        const aShort = teamA.shortName || teamA.name || "IND";
+        const bShort = teamB.shortName || teamB.name || "WI";
         if (inn.key === "a_1" || inn.key === "a") return aShort;
         if (inn.key === "b_1" || inn.key === "b") return bShort;
         return `Inn ${idx + 1}`;
@@ -419,8 +427,8 @@
 
     function getInningsDisplayName(inn, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
-        const aName = teamA.name || teamA.shortName || "India Women";
-        const bName = teamB.name || teamB.shortName || "Zimbabwe Women";
+        const aName = teamA.name || teamA.shortName || "India";
+        const bName = teamB.name || teamB.shortName || "West Indies";
         if (inn.key === "a_1" || inn.key === "a") return `${aName} Innings`;
         if (inn.key === "b_1" || inn.key === "b") return `${bName} Innings`;
         return "Team Innings";
@@ -438,8 +446,8 @@
 
             const teamA = result.teams?.a || {};
             const teamB = result.teams?.b || {};
-            const nameA = teamA.shortName || teamA.name || 'IND W';
-            const nameB = teamB.shortName || teamB.name || 'ZIM W';
+            const nameA = teamA.shortName || teamA.name || 'IND';
+            const nameB = teamB.shortName || teamB.name || 'WI';
             const format = (result.format || 'T20').toUpperCase();
             const tournament = result.seriesName || `${nameA} vs ${nameB}`;
 
@@ -448,7 +456,7 @@
             if (matchHdr) matchHdr.textContent = `${tournament} (${format})`;
             if (venueHdr) venueHdr.textContent = result.venue ? `📍 ${result.venue}` : '';
 
-            // ইনিংছ ডাটা উলিয়াই অনা (innings_batting_order বা scoreCard)
+            // ইনিংছ ডাটা উলিয়াই অনা
             let innings = result.innings_batting_order || result.scoreCard || [];
             if (!Array.isArray(innings) && typeof innings === 'object') {
                 innings = Object.values(innings);
@@ -460,7 +468,7 @@
                 (parseFloat(inn.overs || 0) > 0)
             );
 
-            const rawStatus = (result.status || "").toLowerCase().replace(/\s+/g, "");
+            const rawStatus = (result.status || result.matchStatus || result.state || "").toLowerCase().replace(/\s+/g, "");
             const statusFields = [
                 result.match_status, result.matchStatus, result.state,
                 result.status_note, result.status_text, result.result,
@@ -471,10 +479,11 @@
             const isCompleted = completionKeywords.some(kw => rawStatus.includes(kw) || statusFields.includes(kw)) ||
                 Boolean(result.winner || result.winning_team || result.is_completed);
 
-            const isUpcoming = !hasStartedPlaying && (rawStatus.includes("notstarted") || rawStatus.includes("upcoming") || !rawStatus);
             isMatchFinishedGlobal = isCompleted;
 
-            const isLive = !isCompleted && !isUpcoming && (hasStartedPlaying || rawStatus.includes("live") || result.is_live);
+            // AUTO LIVE DETECTION
+            const isLive = !isCompleted && (hasStartedPlaying || rawStatus.includes("live") || rawStatus.includes("progress") || result.is_live);
+            const isUpcoming = !isCompleted && !isLive;
 
             const badgeEl = document.getElementById("matchBadge");
             const badgeText = document.getElementById("badgeText");
@@ -507,7 +516,7 @@
                             </div>
                             <div class="hero-score-box">
                                 <div class="hero-score-main">Upcoming</div>
-                                <div class="hero-score-sub">${result.announcement1 || "IND w vs ZIM w 1st T20, match starts today at 7 pm"}</div>
+                                <div class="hero-score-sub">${result.announcement1 || "IND vs WI 5th T20"}</div>
                             </div>
                         </div>
                         <div class="loading-ph">⏳ Match has not started yet. Full live scorecard will appear once play begins.</div>
