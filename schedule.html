@@ -3,305 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>India Match Schedule</title>
+    <title>India Upcoming Matches</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-
-        body {
-            background-color: #0b0f19;
-            color: #f1f5f9;
-            padding: 12px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .schedule-container {
-            width: 100%;
-            max-width: 550px;
-        }
-
-        /* Top Banner */
-        .page-header {
-            background: #161f30;
-            border: 1px solid #283548;
-            border-radius: 14px;
-            padding: 16px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .header-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #38bdf8;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .match-count {
-            background: #1e293b;
-            color: #94a3b8;
-            font-size: 11px;
-            padding: 3px 8px;
-            border-radius: 12px;
-            border: 1px solid #334155;
-        }
-
-        /* Filter Tabs */
-        .filter-tabs {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            margin-bottom: 4px;
-            scrollbar-width: none;
-        }
-
-        .filter-tabs::-webkit-scrollbar {
-            display: none;
-        }
-
-        .tab-btn {
-            background: #161f30;
-            color: #94a3b8;
-            border: 1px solid #283548;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s ease;
-        }
-
-        .tab-btn.active {
-            background: #2563eb;
-            color: #ffffff;
-            border-color: #3b82f6;
-        }
-
-        /* Match List Cards */
-        .match-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .match-card {
-            background: #161f30;
-            border: 1px solid #283548;
-            border-radius: 12px;
-            padding: 14px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.15s ease, border-color 0.2s ease;
-        }
-
-        .match-card:hover {
-            border-color: #38bdf8;
-        }
-
-        .card-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .match-no {
-            font-size: 11px;
-            color: #64748b;
-            font-weight: 600;
-        }
-
-        .format-badge {
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 2px 7px;
-            border-radius: 6px;
-            letter-spacing: 0.5px;
-        }
-
-        .format-t20i {
-            background: rgba(56, 189, 248, 0.15);
-            color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.3);
-        }
-
-        .format-odi {
-            background: rgba(52, 211, 153, 0.15);
-            color: #34d399;
-            border: 1px solid rgba(52, 211, 153, 0.3);
-        }
-
-        .format-test {
-            background: rgba(248, 113, 113, 0.15);
-            color: #f87171;
-            border: 1px solid rgba(248, 113, 113, 0.3);
-        }
-
-        .match-title-text {
-            font-size: 14px;
-            font-weight: 600;
-            color: #f1f5f9;
-            margin-bottom: 10px;
-            line-height: 1.3;
-        }
-
-        .card-bottom {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            border-top: 1px solid #232e42;
-            padding-top: 9px;
-            font-size: 11.5px;
-        }
-
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: #cbd5e1;
-        }
-
-        .info-item.venue {
-            color: #94a3b8;
-        }
-
-        .date-time-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .time-badge {
-            background: #1e293b;
-            color: #38bdf8;
-            font-weight: 600;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 11px;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background: #0b0f19; color: #f1f5f9; padding: 12px; display: flex; justify-content: center; }
+        .schedule-container { width: 100%; max-width: 520px; }
+        .header { display: flex; justify-content: space-between; align-items: center; background: #161f30; padding: 12px 14px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #232e42; }
+        .title { font-size: 15px; font-weight: 700; color: #38bdf8; }
+        .count { background: #1e293b; color: #94a3b8; font-size: 11px; padding: 2px 8px; border-radius: 10px; }
+        .tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 6px; scrollbar-width: none; }
+        .tabs::-webkit-scrollbar { display: none; }
+        .tab-btn { background: #161f30; color: #94a3b8; border: 1px solid #283548; padding: 5px 12px; border-radius: 16px; font-size: 11px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+        .tab-btn.active { background: #2563eb; color: #fff; border-color: #3b82f6; }
+        .list { display: flex; flex-direction: column; gap: 8px; }
+        .card { background: #161f30; border: 1px solid #232e42; border-radius: 10px; padding: 10px 12px; }
+        .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .match-id { font-size: 10px; color: #64748b; font-weight: 700; }
+        .badge { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
+        .t20i { background: rgba(56,189,248,0.15); color: #38bdf8; }
+        .odi { background: rgba(52,211,153,0.15); color: #34d399; }
+        .test { background: rgba(248,113,113,0.15); color: #f87171; }
+        .match-name { font-size: 13px; font-weight: 600; color: #f8fafc; margin-bottom: 8px; }
+        .card-info { border-top: 1px solid #1e293b; padding-top: 6px; display: flex; flex-direction: column; gap: 4px; font-size: 11px; color: #94a3b8; }
+        .row { display: flex; justify-content: space-between; align-items: center; }
+        .time { background: #1e293b; color: #38bdf8; padding: 1px 5px; border-radius: 3px; font-weight: 600; }
     </style>
 </head>
 <body>
 
     <div class="schedule-container">
-        <!-- Header -->
-        <div class="page-header">
-            <span class="header-title">🏏 India Fixtures</span>
-            <span class="match-count" id="count-badge">38 Matches</span>
+        <div class="header">
+            <span class="title">🏏 Upcoming Fixtures</span>
+            <span class="count" id="count-badge">0 Matches</span>
         </div>
 
-        <!-- Filter Tabs -->
-        <div class="filter-tabs">
+        <div class="tabs">
             <button class="tab-btn active" onclick="filterSchedule('ALL')">All</button>
             <button class="tab-btn" onclick="filterSchedule('T20I')">T20I</button>
             <button class="tab-btn" onclick="filterSchedule('ODI')">ODI</button>
             <button class="tab-btn" onclick="filterSchedule('TEST')">Test</button>
         </div>
 
-        <!-- Dynamic Match List -->
-        <div class="match-list" id="match-list-container"></div>
+        <div class="list" id="match-list"></div>
     </div>
 
     <script>
         const matches = [
-            { id: 1, name: "Afghanistan vs India — 1st T20I", date: "13 Sep 2026", stadium: "Arun Jaitley Stadium, Delhi", time: "7:00 PM", format: "T20I" },
-            { id: 2, name: "Afghanistan vs India — 2nd T20I", date: "15 Sep 2026", stadium: "Arun Jaitley Stadium, Delhi", time: "7:00 PM", format: "T20I" },
-            { id: 3, name: "Afghanistan vs India — 3rd T20I", date: "17 Sep 2026", stadium: "Arun Jaitley Stadium, Delhi", time: "7:00 PM", format: "T20I" },
-            { id: 4, name: "India vs West Indies — 1st ODI", date: "27 Sep 2026", stadium: "Greenfield International Stadium, Thiruvananthapuram", time: "2:00 PM", format: "ODI" },
-            { id: 5, name: "India vs TBC — 2nd Quarter-Final", date: "28 Sep 2026", stadium: "Korogi Sports Park, Nisshin", time: "2:00 PM", format: "T20I" },
-            { id: 6, name: "India vs West Indies — 2nd ODI", date: "30 Sep 2026", stadium: "Barsapara Cricket Stadium, Guwahati", time: "2:00 PM", format: "ODI" },
-            { id: 7, name: "India vs West Indies — 3rd ODI", date: "3 Oct 2026", stadium: "Maharaja Yadavindra Singh Stadium, Mullanpur", time: "2:00 PM", format: "ODI" },
-            { id: 8, name: "India vs West Indies — 1st T20I", date: "6 Oct 2026", stadium: "Ekana Cricket Stadium, Lucknow", time: "7:00 PM", format: "T20I" },
-            { id: 9, name: "India vs West Indies — 2nd T20I", date: "9 Oct 2026", stadium: "JSCA International Stadium, Ranchi", time: "7:00 PM", format: "T20I" },
-            { id: 10, name: "India vs West Indies — 3rd T20I", date: "11 Oct 2026", stadium: "Holkar Stadium, Indore", time: "7:00 PM", format: "T20I" },
-            { id: 11, name: "India vs West Indies — 4th T20I", date: "14 Oct 2026", stadium: "Rajiv Gandhi International Stadium, Hyderabad", time: "7:00 PM", format: "T20I" },
-            { id: 12, name: "India vs West Indies — 5th T20I", date: "17 Oct 2026", stadium: "M. Chinnaswamy Stadium, Bengaluru", time: "7:00 PM", format: "T20I" },
-            { id: 13, name: "New Zealand vs India — 1st T20I", date: "22 Oct 2026", stadium: "Hagley Oval, Christchurch", time: "12:30 PM", format: "T20I" },
-            { id: 14, name: "New Zealand vs India — 2nd T20I", date: "24 Oct 2026", stadium: "Hagley Oval, Christchurch", time: "12:30 PM", format: "T20I" },
-            { id: 15, name: "New Zealand vs India — 3rd T20I", date: "27 Oct 2026", stadium: "Sky Stadium, Wellington", time: "12:30 PM", format: "T20I" },
-            { id: 16, name: "New Zealand vs India — 4th T20I", date: "30 Oct 2026", stadium: "Eden Park, Auckland", time: "12:30 PM", format: "T20I" },
-            { id: 17, name: "New Zealand vs India — 5th T20I", date: "1 Nov 2026", stadium: "Seddon Park, Hamilton", time: "12:30 PM", format: "T20I" },
-            { id: 18, name: "New Zealand vs India — 1st ODI", date: "4 Nov 2026", stadium: "Eden Park, Auckland", time: "7:30 AM", format: "ODI" },
-            { id: 19, name: "New Zealand vs India — 2nd ODI", date: "7 Nov 2026", stadium: "Sky Stadium, Wellington", time: "7:30 AM", format: "ODI" },
-            { id: 20, name: "New Zealand vs India — 3rd ODI", date: "10 Nov 2026", stadium: "Seddon Park, Hamilton", time: "7:30 AM", format: "ODI" },
-            { id: 21, name: "New Zealand vs India — 4th ODI", date: "13 Nov 2026", stadium: "Bay Oval, Mount Maunganui", time: "7:30 AM", format: "ODI" },
-            { id: 22, name: "New Zealand vs India — 5th ODI", date: "15 Nov 2026", stadium: "Bay Oval, Mount Maunganui", time: "7:30 AM", format: "ODI" },
-            { id: 23, name: "New Zealand vs India — 1st Test", date: "19–23 Nov 2026", stadium: "Basin Reserve, Wellington", time: "3:30 AM", format: "Test" },
-            { id: 24, name: "New Zealand vs India — 2nd Test", date: "27 Nov–1 Dec 2026", stadium: "Hagley Oval, Christchurch", time: "3:30 AM", format: "Test" },
-            { id: 25, name: "India vs Sri Lanka — 1st ODI", date: "13 Dec 2026", stadium: "Arun Jaitley Stadium, Delhi", time: "2:00 PM", format: "ODI" },
-            { id: 26, name: "India vs Sri Lanka — 2nd ODI", date: "16 Dec 2026", stadium: "M. Chinnaswamy Stadium, Bengaluru", time: "2:00 PM", format: "ODI" },
-            { id: 27, name: "India vs Sri Lanka — 3rd ODI", date: "19 Dec 2026", stadium: "Narendra Modi Stadium, Ahmedabad", time: "2:00 PM", format: "ODI" },
-            { id: 28, name: "India vs Sri Lanka — 1st T20I", date: "22 Dec 2026", stadium: "Niranjan Shah Stadium, Rajkot", time: "7:00 PM", format: "T20I" },
-            { id: 29, name: "India vs Sri Lanka — 2nd T20I", date: "24 Dec 2026", stadium: "Barabati Stadium, Cuttack", time: "7:00 PM", format: "T20I" },
-            { id: 30, name: "India vs Sri Lanka — 3rd T20I", date: "27 Dec 2026", stadium: "MCA Stadium, Pune", time: "7:00 PM", format: "T20I" },
-            { id: 31, name: "India vs Zimbabwe — 1st ODI", date: "3 Jan 2027", stadium: "Eden Gardens, Kolkata", time: "2:00 PM", format: "ODI" },
-            { id: 32, name: "India vs Zimbabwe — 2nd ODI", date: "6 Jan 2027", stadium: "Rajiv Gandhi International Stadium, Hyderabad", time: "2:00 PM", format: "ODI" },
-            { id: 33, name: "India vs Zimbabwe — 3rd ODI", date: "9 Jan 2027", stadium: "Wankhede Stadium, Mumbai", time: "2:00 PM", format: "ODI" },
-            { id: 34, name: "India vs Australia — 1st Test", date: "21–25 Jan 2027", stadium: "VCA Stadium, Nagpur", time: "9:30 AM", format: "Test" },
-            { id: 35, name: "India vs Australia — 2nd Test", date: "29 Jan–2 Feb 2027", stadium: "MA Chidambaram Stadium, Chennai", time: "9:30 AM", format: "Test" },
-            { id: 36, name: "India vs Australia — 3rd Test", date: "11–15 Feb 2027", stadium: "Barsapara Cricket Stadium, Guwahati", time: "9:00 AM", format: "Test" },
-            { id: 37, name: "India vs Australia — 4th Test", date: "19–23 Feb 2027", stadium: "JSCA International Stadium, Ranchi", time: "9:30 AM", format: "Test" },
-            { id: 38, name: "India vs Australia — 5th Test", date: "27 Feb–3 Mar 2027", stadium: "Narendra Modi Stadium, Ahmedabad", time: "9:30 AM", format: "Test" }
+            { id: 1, name: "New Zealand vs India — 1st T20I", date: "22 Oct 2026", stadium: "Hagley Oval, Christchurch", time: "12:30 PM", format: "T20I" },
+            { id: 2, name: "New Zealand vs India — 2nd T20I", date: "24 Oct 2026", stadium: "Hagley Oval, Christchurch", time: "12:30 PM", format: "T20I" },
+            { id: 3, name: "New Zealand vs India — 3rd T20I", date: "27 Oct 2026", stadium: "Hnry Stadium, Wellington", time: "12:30 PM", format: "T20I" },
+            { id: 4, name: "New Zealand vs India — 4th T20I", date: "30 Oct 2026", stadium: "Eden Park, Auckland", time: "12:30 PM", format: "T20I" },
+            { id: 5, name: "United Arab Emirates vs India — Group C", date: "31 Oct 2026", stadium: "Mission Road Ground, Mong Kok", time: "8:05 AM", format: "T20I" },
+            { id: 6, name: "New Zealand vs India — 5th T20I", date: "1 Nov 2026", stadium: "Seddon Park, Hamilton", time: "12:30 PM", format: "T20I" },
+            { id: 7, name: "New Zealand vs India — 1st ODI", date: "4 Nov 2026", stadium: "Eden Park, Auckland", time: "7:30 AM", format: "ODI" },
+            { id: 8, name: "New Zealand vs India — 2nd ODI", date: "7 Nov 2026", stadium: "Hnry Stadium, Wellington", time: "7:30 AM", format: "ODI" },
+            { id: 9, name: "New Zealand vs India — 3rd ODI", date: "10 Nov 2026", stadium: "Seddon Park, Hamilton", time: "7:30 AM", format: "ODI" },
+            { id: 10, name: "New Zealand vs India — 4th ODI", date: "13 Nov 2026", stadium: "Bay Oval, Mount Maunganui", time: "7:30 AM", format: "ODI" },
+            { id: 11, name: "New Zealand vs India — 5th ODI", date: "15 Nov 2026", stadium: "Bay Oval, Mount Maunganui", time: "7:30 AM", format: "ODI" },
+            { id: 12, name: "New Zealand vs India — 1st Test", date: "19–23 Nov 2026", stadium: "Basin Reserve, Wellington", time: "3:30 AM", format: "Test" },
+            { id: 13, name: "New Zealand vs India — 2nd Test", date: "27 Nov–1 Dec 2026", stadium: "Hagley Oval, Christchurch", time: "3:30 AM", format: "Test" },
+            { id: 14, name: "India vs Sri Lanka — 1st ODI", date: "13 Dec 2026", stadium: "Arun Jaitley Stadium, Delhi", time: "2:00 PM", format: "ODI" },
+            { id: 15, name: "India vs Sri Lanka — 2nd ODI", date: "16 Dec 2026", stadium: "M.Chinnaswamy Stadium, Bengaluru", time: "2:00 PM", format: "ODI" },
+            { id: 16, name: "India vs Sri Lanka — 3rd ODI", date: "19 Dec 2026", stadium: "Narendra Modi Stadium, Ahmedabad", time: "2:00 PM", format: "ODI" },
+            { id: 17, name: "India vs Sri Lanka — 1st T20I", date: "22 Dec 2026", stadium: "Niranjan Shah Stadium, Rajkot", time: "7:00 PM", format: "T20I" },
+            { id: 18, name: "India vs Sri Lanka — 2nd T20I", date: "24 Dec 2026", stadium: "Barabati Stadium, Cuttack", time: "7:00 PM", format: "T20I" },
+            { id: 19, name: "India vs Sri Lanka — 3rd T20I", date: "27 Dec 2026", stadium: "MCA Stadium, Pune", time: "7:00 PM", format: "T20I" },
+            { id: 20, name: "India vs Zimbabwe — 1st ODI", date: "3 Jan 2027", stadium: "Eden Gardens, Kolkata", time: "2:00 PM", format: "ODI" },
+            { id: 21, name: "India vs Zimbabwe — 2nd ODI", date: "6 Jan 2027", stadium: "Rajiv Gandhi Stadium, Hyderabad", time: "2:00 PM", format: "ODI" },
+            { id: 22, name: "India vs Zimbabwe — 3rd ODI", date: "9 Jan 2027", stadium: "Wankhede Stadium, Mumbai", time: "2:00 PM", format: "ODI" },
+            { id: 23, name: "India vs Australia — 1st Test", date: "21–25 Jan 2027", stadium: "VCA Stadium, Nagpur", time: "9:30 AM", format: "Test" },
+            { id: 24, name: "India vs Australia — 2nd Test", date: "29 Jan–2 Feb 2027", stadium: "MA Chidambaram Stadium, Chennai", time: "9:30 AM", format: "Test" },
+            { id: 25, name: "India vs Australia — 3rd Test", date: "11–15 Feb 2027", stadium: "Barsapara Cricket Stadium, Guwahati", time: "9:00 AM", format: "Test" },
+            { id: 26, name: "India vs Australia — 4th Test", date: "19–23 Feb 2027", stadium: "JSCA Stadium, Ranchi", time: "9:30 AM", format: "Test" },
+            { id: 27, name: "India vs Australia — 5th Test", date: "27 Feb–3 Mar 2027", stadium: "Narendra Modi Stadium, Ahmedabad", time: "9:30 AM", format: "Test" },
+            { id: 28, name: "India vs Australia — Group A", date: "7 Oct 2027", stadium: "Newlands, Cape Town", time: "1:30 PM", format: "ODI" },
+            { id: 29, name: "India vs Pakistan — Group A", date: "10 Oct 2027", stadium: "Wanderers Stadium, Johannesburg", time: "1:30 PM", format: "ODI" },
+            { id: 30, name: "India vs Afghanistan — Group A", date: "14 Oct 2027", stadium: "SuperSport Park, Centurion", time: "1:30 PM", format: "ODI" },
+            { id: 31, name: "India vs TBC — Group A", date: "17 Oct 2027", stadium: "Mangaung Oval, Bloemfontein", time: "1:30 PM", format: "ODI" },
+            { id: 32, name: "Zimbabwe vs India — Group A", date: "24 Oct 2027", stadium: "Mosi-oa-Tunya Stadium, Victoria Falls", time: "1:30 PM", format: "ODI" }
         ];
 
-        function renderMatches(list) {
-            const container = document.getElementById("match-list-container");
+        function render(list) {
+            const container = document.getElementById("match-list");
             container.innerHTML = "";
-
             list.forEach(m => {
-                const formatClass = m.format.toLowerCase() === 'test' ? 'format-test' : (m.format.toLowerCase() === 'odi' ? 'format-odi' : 'format-t20i');
-                
+                const f = m.format.toLowerCase();
+                const badgeClass = f === 'test' ? 'test' : (f === 'odi' ? 'odi' : 't20i');
                 const card = document.createElement("div");
-                card.className = "match-card";
+                card.className = "card";
                 card.innerHTML = `
                     <div class="card-top">
-                        <span class="match-no">MATCH #${m.id}</span>
-                        <span class="format-badge ${formatClass}">${m.format}</span>
+                        <span class="match-id">#${m.id}</span>
+                        <span class="badge ${badgeClass}">${m.format}</span>
                     </div>
-                    <div class="match-title-text">${m.name}</div>
-                    <div class="card-bottom">
-                        <div class="date-time-row">
-                            <span class="info-item">📅 ${m.date}</span>
-                            <span class="time-badge">⏰ ${m.time} IST</span>
+                    <div class="match-name">${m.name}</div>
+                    <div class="card-info">
+                        <div class="row">
+                            <span>📅 ${m.date}</span>
+                            <span class="time">⏰ ${m.time} IST</span>
                         </div>
-                        <div class="info-item venue">📍 ${m.stadium}</div>
+                        <div>📍 ${m.stadium}</div>
                     </div>
                 `;
                 container.appendChild(card);
             });
-
             document.getElementById("count-badge").textContent = `${list.length} Matches`;
         }
 
         function filterSchedule(type) {
-            // Tab Active Switch
-            const buttons = document.querySelectorAll(".tab-btn");
-            buttons.forEach(btn => {
+            document.querySelectorAll(".tab-btn").forEach(btn => {
                 btn.classList.toggle("active", btn.textContent.toUpperCase() === type);
             });
-
-            if (type === 'ALL') {
-                renderMatches(matches);
-            } else {
-                const filtered = matches.filter(m => m.format.toUpperCase() === type);
-                renderMatches(filtered);
-            }
+            if (type === 'ALL') render(matches);
+            else render(matches.filter(m => m.format.toUpperCase() === type));
         }
 
-        // প্ৰথমবাৰ সম্পূৰ্ণ সূচী লোড হ'ব
-        renderMatches(matches);
+        render(matches);
     </script>
 </body>
 </html>
