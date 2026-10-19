@@ -8,10 +8,10 @@
   },
   {
     "id": "radio2",
-    "name": "Vividh Bharati Radio",
+    "name": "Radio Namkin",
     "category": "Hindi",
-    "trigger": "go:N002",
-    "logo": "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_BeGMc3xrh.jpg?updatedAt=1789288044654"
+    "trigger": "go:NAMKEEN",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_Td9fBY-LD.jpg"
   },
   {
     "id": "radio3",
