@@ -10,15 +10,15 @@
     "id": "radio2",
     "name": "Vividh Bharati Radio",
     "category": "Hindi",
-    "trigger": "go:radio2",
-    "logo": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&auto=format&fit=crop&q=80"
+    "trigger": "go:N002",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/images%20(1)_BeGMc3xrh.jpg?updatedAt=1789288044654"
   },
   {
     "id": "radio3",
-    "name": "Radio City Hindi",
+    "name": "BIG FM Hindi",
     "category": "Hindi",
-    "trigger": "go:radio3",
-    "logo": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&auto=format&fit=crop&q=80"
+    "trigger": "go:bigfm",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/images_8ColMPfnE.jpg"
   },
   {
     "id": "radio4",
