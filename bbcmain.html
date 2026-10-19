@@ -394,58 +394,17 @@ function getUKDateTime() {
     };
 }
 
-// ১৭ অক্টোবৰ ২০২৬ ৰ মুখ্য খেলসমূহৰ সূচী
-// ১৮ অক্টোবৰ ২০২৬ ৰ মুখ্য খেলসমূহৰ সূচী (BBC Radio 5 Sports Extra)
+// ২০ অক্টোবৰ ২০২৬ ৰ খেলৰ সূচী (BBC Radio 5 Sports Extra)
 const EVENTS_CONFIG = [
     {
-        sport: "RUGBY LEAGUE",
-        title: "Rugby League World Cup: Fiji v Cook Islands",
-        timeDisplay: "5:30 AM",
-        year: 2026,
-        month: 10,
-        day: 18,
-        startMin: 330,  // 05:30 AM
-        endMin: 525     // 08:45 AM
-    },
-    {
         sport: "CRICKET",
-        title: "Test Match Special: Pakistan v Sri Lanka",
-        timeDisplay: "8:45 AM",
+        title: "Test Match Special: Pakistan v England (ODI Tri-Series)",
+        timeDisplay: "9:15 AM",
         year: 2026,
         month: 10,
-        day: 18,
-        startMin: 525,  // 08:45 AM
-        endMin: 835     // 01:55 PM
-    },
-    {
-        sport: "FOOTBALL",
-        title: "Premier League: Brighton & Hove Albion v Crystal Palace",
-        timeDisplay: "1:55 PM",
-        year: 2026,
-        month: 10,
-        day: 18,
-        startMin: 835,  // 01:55 PM
-        endMin: 960     // 04:00 PM
-    },
-    {
-        sport: "CRICKET",
-        title: "Test Match Special: Pakistan v Sri Lanka",
-        timeDisplay: "4:00 PM",
-        year: 2026,
-        month: 10,
-        day: 18,
-        startMin: 960,  // 04:00 PM
-        endMin: 1020    // 05:00 PM
-    },
-    {
-        sport: "RUGBY UNION",
-        title: "Rugby Union: Northampton Saints v Cardiff",
-        timeDisplay: "5:00 PM",
-        year: 2026,
-        month: 10,
-        day: 18,
-        startMin: 1020, // 05:00 PM
-        endMin: 1140    // 07:00 PM
+        day: 20,
+        startMin: 555,  // 09:15 AM
+        endMin: 1050    // 05:30 PM (আনুমানিক সমাপ্তি সময়)
     }
 ];
 
@@ -490,7 +449,7 @@ function updateBannerUI() {
     } else if (nextUpcoming) {
         DOM.topBanner.style.display = 'block';
         DOM.bannerTitle.textContent = nextUpcoming.title;
-        DOM.bannerTime.textContent = `Today, ${nextUpcoming.timeDisplay}`;
+        DOM.bannerTime.textContent = `Tue, ${nextUpcoming.timeDisplay}`;
         DOM.bannerTag.textContent = `UPCOMING • ${nextUpcoming.sport}`;
         DOM.bannerTagWrapper.classList.remove('live');
         DOM.bannerDot.style.display = 'none';
