@@ -3,8 +3,8 @@
     "id": "hindi",
     "tabTitle": "Hindi",
     "name": "AIR Hindi Samachar",
-    "time": "20 OCT • 9:00 AM",
-    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/10/Samachar-Prabhat-0800-0815-19.mp3"
+    "time": "20 OCT • 9:00 PM",
+    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/10/sndhya-5.mp3"
   },
   {
     "id": "english",
@@ -17,7 +17,7 @@
     "id": "bbc",
     "tabTitle": "BBC",
     "name": "BBC Hindi Dinbhar",
-    "time": "19 OCT • 9:00 PM",
-    "streamUrl": "https://aod-dash-ww-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/eda1c7-p0phht5y/vf_p0phht5y_c4177659-fc80-4eb0-8131-f37ece46ca6e.ism/dash/vf_p0phht5y_c4177659-fc80-4eb0-8131-f37ece46ca6e-audio_eng_1=96000-5.m3u8"
+    "time": "20 OCT • 9:00 PM",
+    "streamUrl": "https://aod-dash-ww-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/d2ef6c-p0phnhyn/vf_p0phnhyn_99b409b3-91c6-49c1-bba7-6ee91a006b21.ism/dash/vf_p0phnhyn_99b409b3-91c6-49c1-bba7-6ee91a006b21-audio_eng_1=96000-3.m3u8"
   }
 ]
