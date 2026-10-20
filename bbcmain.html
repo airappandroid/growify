@@ -394,7 +394,7 @@ function getUKDateTime() {
     };
 }
 
-// ২০ অক্টোবৰ ২০২৬ ৰ খেলৰ সূচী (BBC Radio 5 Sports Extra)
+// খেলৰ সূচী (BBC Radio 5 Sports Extra)
 const EVENTS_CONFIG = [
     {
         sport: "CRICKET",
@@ -408,33 +408,37 @@ const EVENTS_CONFIG = [
     }
 ];
 
-// স্বয়ংক্ৰিয়ভাৱে UPCOMING আৰু LIVE সলনি কৰা ফাংচন
+// স্বয়ংক্ৰিয়ভাৱে UPCOMING আৰু LIVE সলনি কৰা নিখুঁত ফাংচন
 function updateBannerUI() {
     if (!DOM.topBanner) return;
 
     const uk = getUKDateTime();
-    const currentDate = new Date(Date.UTC(uk.year, uk.month - 1, uk.day));
-
     let currentLive = null;
     let nextUpcoming = null;
 
     for (let i = 0; i < EVENTS_CONFIG.length; i++) {
         const ev = EVENTS_CONFIG[i];
-        const eventDate = new Date(Date.UTC(ev.year, ev.month - 1, ev.day));
-        const diffDays = Math.round((eventDate - currentDate) / (1000 * 60 * 60 * 24));
 
-        if (diffDays === 0) {
-            // বৰ্তমান লাইভ খেল চলি থাকিলে
+        // আজিৰ খেল হয়নে নহয় পৰীক্ষা
+        const isToday = (ev.year === uk.year && ev.month === uk.month && ev.day === uk.day);
+
+        // ভৱিষ্যতৰ খেল নেকি পৰীক্ষা
+        const isFutureDay = (ev.year > uk.year) ||
+                            (ev.year === uk.year && ev.month > uk.month) ||
+                            (ev.year === uk.year && ev.month === uk.month && ev.day > uk.day);
+
+        if (isToday) {
+            // খেল বৰ্তমান চলি থাকিলে -> LIVE
             if (uk.minutesNow >= ev.startMin && uk.minutesNow < ev.endMin) {
                 currentLive = ev;
                 break;
             }
-            // আজিৰ পৰৱৰ্তী খেল
+            // আজিৰ দিনটোত খেল আৰম্ভ হ'বলৈ বাকী থাকিলে -> UPCOMING
             if (uk.minutesNow < ev.startMin && !nextUpcoming) {
                 nextUpcoming = ev;
             }
-        } else if (diffDays > 0 && !nextUpcoming) {
-            // অনাগত দিনৰ খেল
+        } else if (isFutureDay && !nextUpcoming) {
+            // অনাগত দিনৰ খেল -> UPCOMING
             nextUpcoming = ev;
         }
     }
@@ -449,7 +453,7 @@ function updateBannerUI() {
     } else if (nextUpcoming) {
         DOM.topBanner.style.display = 'block';
         DOM.bannerTitle.textContent = nextUpcoming.title;
-        DOM.bannerTime.textContent = `Tue, ${nextUpcoming.timeDisplay}`;
+        DOM.bannerTime.textContent = `${nextUpcoming.timeDisplay}`;
         DOM.bannerTag.textContent = `UPCOMING • ${nextUpcoming.sport}`;
         DOM.bannerTagWrapper.classList.remove('live');
         DOM.bannerDot.style.display = 'none';
@@ -545,8 +549,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 300);
 
+    // প্রতি ১ মিনিটৰ মূৰে মূৰে সময় আৰু ষ্টেটাস পৰীক্ষা
     setInterval(updateAppUI, 60000);
     
+    // ব্যৱহাৰকাৰীয়ে মিনিমাইজ কৰা টেব পুনৰ খুলিলে লগে লগে আপডেট কৰিবলৈ
     document.addEventListener("visibilitychange", () => {
         if (!document.hidden) updateAppUI();
     });
