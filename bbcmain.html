@@ -258,7 +258,7 @@ body {
         </div>
     </header>
 
-    <!-- Top Banner (Cricket Live Score & TMS Audio Stream) -->
+    <!-- Top Banner (5 Sports Extra Dynamic Schedule) -->
     <a href="go:BBC5E" class="top-banner">
         <div class="banner-card">
             <div class="banner-top-row">
@@ -268,11 +268,11 @@ body {
                 </div>
                 <div class="banner-time" id="bannerTime">Loading...</div>
             </div>
-            <div class="banner-title" id="bannerTitle">Test Match Special: Pakistan v England</div>
+            <div class="banner-title" id="bannerTitle">5 Sports Extra</div>
             <div class="banner-bottom-row">
-                <!-- Score and Announcement in Two Rows -->
                 <div class="banner-score-box">
-                    <span class="banner-score" id="bannerScore">Fetching score...</span>
+                    <!-- লাইভ স্ক'ৰৰ ঠাইত মূল মেচ/অনুষ্ঠানৰ শিৰোনাম দেখুওৱা হ'ব -->
+                    <span class="banner-score" id="bannerScore">Loading match...</span>
                     <div class="banner-announcement" id="bannerAnnouncement"></div>
                 </div>
                 <div class="banner-cta">
@@ -352,9 +352,9 @@ body {
         <div class="station-card" style="border-color: rgba(59,130,246,0.3);">
             <div class="station-info">
                 <div class="station-name">📰 5 Min News Brief <span class="duration-tag">5 Min</span></div>
-                <div class="playing-row"><span>Updated: 20 OCT, 10:00 AM</span></div>
+                <div class="playing-row"><span>Updated: 20 OCT, 4:00 PM</span></div>
             </div>
-            <a href="https://aod-dash-ww-gcomm.live.cf.md.bbci.co.uk/usp/auth/vod/piff_abr_full_audio/b070c5-w1msm0v97g56kms/vf_w1msm0v97g56kms_082a4074-c42b-49ee-97f0-70f096dcaf14.ism/dash/vf_w1msm0v97g56kms_082a4074-c42b-49ee-97f0-70f096dcaf14-audio_eng_1=96000-1.m3u8" class="play-btn" aria-label="Play"></a>
+            <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/35e123-w1msm0v97g5793k/vf_w1msm0v97g5793k_ca5f16f6-1e32-4c3a-8413-00506724d463.ism/dash/vf_w1msm0v97g5793k_ca5f16f6-1e32-4c3a-8413-00506724d463-audio_eng_1=96000-1.m3u8" class="play-btn" aria-label="Play"></a>
         </div>
 
         <div class="station-card" style="border-color: rgba(168,85,247,0.3);">
@@ -429,95 +429,48 @@ function getUKDateTime() {
     };
 }
 
-// ক্ৰিকেট খেলৰ সূচী (UK Time)
+// BBC Radio 5 Sports Extra - 22 October 2026 Schedule (UK Time)
 const EVENTS_CONFIG = [
     {
         sport: "CRICKET",
-        title: "Test Match Special: Pakistan v England",
-        timeDisplay: "9:15 AM",
+        program: "Test Match Special",
+        title: "Sri Lanka v England",
+        details: "Live commentary from the Pakistan ODI Tri-Series in Rawalpindi.",
+        timeDisplay: "8:45 AM",
+        dateDisplay: "Thu, 22 Oct",
         year: 2026,
         month: 10,
-        day: 20,
-        startMin: 555,  // 09:15 AM
+        day: 22,
+        startMin: 525,  // 08:45 AM
         endMin: 1050    // 05:30 PM
+    },
+    {
+        sport: "FOOTBALL",
+        program: "Sportsound",
+        title: "Trabzonspor v Hearts",
+        details: "Europa Conference League • Live commentary.",
+        timeDisplay: "5:30 PM",
+        dateDisplay: "Thu, 22 Oct",
+        year: 2026,
+        month: 10,
+        day: 22,
+        startMin: 1050, // 05:30 PM
+        endMin: 1185    // 07:45 PM
+    },
+    {
+        sport: "FOOTBALL",
+        program: "Sportsound",
+        title: "Celtic v Celta Vigo",
+        details: "Europa League • Live commentary.",
+        timeDisplay: "7:45 PM",
+        dateDisplay: "Thu, 22 Oct",
+        year: 2026,
+        month: 10,
+        day: 22,
+        startMin: 1185, // 07:45 PM
+        endMin: 1320    // 10:00 PM
     }
 ];
-
-// Cricket Live Score Parsing
-const CRICKET_API_URL = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a865c0f78dcf06570325448";
-let currentMatchState = { isLive: false, scoreText: "", announcement: "" };
-
-async function fetchCricketScore() {
-    try {
-        const res = await fetch(CRICKET_API_URL);
-        const data = await res.json();
-        const result = data?.responseData?.result;
-
-        if (!result) return;
-
-        const teamA = result.teams?.a?.shortName || result.teams?.a?.name || "PAK";
-        const teamB = result.teams?.b?.shortName || result.teams?.b?.name || "ENG";
-        const status = (result.status || "").toLowerCase();
-
-        // মেচ লাইভ নে নহয় পৰীক্ষা
-        if (status === "started" || status === "live" || status === "inprogress") {
-            currentMatchState.isLive = true;
-            
-            // বৰ্তমান বেটিং দল চিনাক্তকৰণ
-            const currentTeamKey = result.settingObj?.currentTeam || "a";
-            const currentInning = result.settingObj?.currentInning || 1;
-            const battingTeamObj = result.teams?.[currentTeamKey] || result.teams?.a;
-            const battingTeamName = (battingTeamObj?.shortName || (currentTeamKey === "a" ? teamA : teamB)).toUpperCase();
-
-            // স্ক'ৰ উলিওৱা
-            const inningScoreKey = `${currentTeamKey}_${currentInning}_score`;
-            const scoreData = battingTeamObj?.[inningScoreKey] || battingTeamObj?.a_1_score || battingTeamObj?.b_1_score;
-
-            if (scoreData) {
-                const runs = scoreData.runs ?? 0;
-                const wickets = scoreData.wickets ?? 0;
-                const overs = scoreData.overs ?? 0;
-                currentMatchState.scoreText = `🏏 ${battingTeamName} ${runs}/${wickets} (${overs} ov)`;
-            } else {
-                currentMatchState.scoreText = `🏏 ${teamA} vs ${teamB} (Live)`;
-            }
-
-            // ঘোষণা বা টচৰ তথ্য পৃথক চাব-লাইনলৈ লৈ যোৱা হৈছে
-            currentMatchState.announcement = result.announcement1 || "";
-        } else if (status === "completed") {
-            currentMatchState.isLive = false;
-            currentMatchState.scoreText = `Match Ended: ${teamA} vs ${teamB}`;
-            currentMatchState.announcement = result.announcement1 || "";
-        } else {
-            // notstarted বা আন অৱস্থাত
-            currentMatchState.isLive = false;
-            currentMatchState.scoreText = `${teamA} vs ${teamB}`;
-            currentMatchState.announcement = result.announcement1 || "Match yet to begin";
-        }
-
-        renderBannerCricketUI();
-        updateBannerUI();
-    } catch (e) {
-        console.error("Score fetch error:", e);
-        if (DOM.bannerScore && !currentMatchState.scoreText) {
-            DOM.bannerScore.textContent = "PAK vs ENG (TMS)";
-        }
-    }
-}
-
-function renderBannerCricketUI() {
-    if (DOM.bannerScore && currentMatchState.scoreText) {
-        DOM.bannerScore.textContent = currentMatchState.scoreText;
-    }
-    if (DOM.bannerAnnouncement) {
-        if (currentMatchState.announcement) {
-            DOM.bannerAnnouncement.textContent = currentMatchState.announcement;
-            DOM.bannerAnnouncement.style.display = 'block';
-        } else {
-            DOM.bannerAnnouncement.style.display = 'none';
-        }
-    }
-}
 
 // বেনাৰ UPCOMING আৰু LIVE সলনি কৰা ফাংচন
 function updateBannerUI() {
@@ -535,7 +488,7 @@ function updateBannerUI() {
                             (ev.year === uk.year && ev.month === uk.month && ev.day > uk.day);
 
         if (isToday) {
-            if (currentMatchState.isLive || (uk.minutesNow >= ev.startMin && uk.minutesNow < ev.endMin)) {
+            if (uk.minutesNow >= ev.startMin && uk.minutesNow < ev.endMin) {
                 currentLive = ev;
                 break;
             }
@@ -549,28 +502,48 @@ function updateBannerUI() {
 
     if (currentLive) {
         DOM.topBanner.style.display = 'block';
-        DOM.bannerTitle.textContent = currentLive.title;
+        DOM.bannerTitle.textContent = currentLive.program ? `${currentLive.program}: ${currentLive.title}` : currentLive.title;
         DOM.bannerTime.textContent = "LIVE NOW";
         DOM.bannerTag.textContent = `LIVE • ${currentLive.sport}`;
         DOM.bannerTagWrapper.classList.add('live');
         DOM.bannerDot.style.display = 'inline-block';
+        
+        if (DOM.bannerScore) DOM.bannerScore.textContent = `🎙️ ${currentLive.title} (Live)`;
+        if (DOM.bannerAnnouncement) {
+            DOM.bannerAnnouncement.textContent = currentLive.details;
+            DOM.bannerAnnouncement.style.display = 'block';
+        }
     } else if (nextUpcoming) {
         DOM.topBanner.style.display = 'block';
-        DOM.bannerTitle.textContent = nextUpcoming.title;
-        DOM.bannerTime.textContent = `${nextUpcoming.timeDisplay}`;
+        DOM.bannerTitle.textContent = nextUpcoming.program ? `${nextUpcoming.program}: ${nextUpcoming.title}` : nextUpcoming.title;
+        
+        // আজিৰ নহৈ ভৱিষ্যতৰ দিন হ'লে তাৰিখো দেখুৱাব
+        const isToday = (nextUpcoming.year === uk.year && nextUpcoming.month === uk.month && nextUpcoming.day === uk.day);
+        DOM.bannerTime.textContent = isToday ? `${nextUpcoming.timeDisplay}` : `${nextUpcoming.dateDisplay}, ${nextUpcoming.timeDisplay}`;
+        
         DOM.bannerTag.textContent = `UPCOMING • ${nextUpcoming.sport}`;
         DOM.bannerTagWrapper.classList.remove('live');
         DOM.bannerDot.style.display = 'none';
+
+        if (DOM.bannerScore) DOM.bannerScore.textContent = `🔜 ${nextUpcoming.title}`;
+        if (DOM.bannerAnnouncement) {
+            DOM.bannerAnnouncement.textContent = nextUpcoming.details;
+            DOM.bannerAnnouncement.style.display = 'block';
+        }
     } else {
         DOM.topBanner.style.display = 'block';
-        DOM.bannerTitle.textContent = "Live Sports Coverage";
+        DOM.bannerTitle.textContent = "BBC Radio 5 Sports Extra";
         DOM.bannerTime.textContent = "Stay Tuned";
-        DOM.bannerTag.textContent = "TMS CRICKET";
+        DOM.bannerTag.textContent = "SPORTS EXTRA";
         DOM.bannerTagWrapper.classList.remove('live');
         DOM.bannerDot.style.display = 'none';
+        
+        if (DOM.bannerScore) DOM.bannerScore.textContent = "Live Sports Coverage";
+        if (DOM.bannerAnnouncement) {
+            DOM.bannerAnnouncement.textContent = "Check back soon for upcoming live fixtures.";
+            DOM.bannerAnnouncement.style.display = 'block';
+        }
     }
-
-    renderBannerCricketUI();
 }
 
 let channelSchedules = null;
@@ -642,7 +615,6 @@ function updateAppUI() {
 
 document.addEventListener("DOMContentLoaded", () => {
     updateAppUI();
-    fetchCricketScore();
 
     let attempts = 0;
     const initTimer = setInterval(() => {
@@ -655,16 +627,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 300);
 
-    // ষ্টেচনৰ সময়সূচী প্রতি ১ মিনিটত আপডেট হ'ব
+    // ষ্টেচন আৰু বেনাৰৰ সময়সূচী প্রতি ১ মিনিটত আপডেট হ'ব
     setInterval(updateAppUI, 60000);
-
-    // ক্ৰিকেট স্ক'ৰ প্রতি ২০ চেকেণ্ডত ৰিফ্ৰেছ হ'ব
-    setInterval(fetchCricketScore, 20000);
     
     document.addEventListener("visibilitychange", () => {
         if (!document.hidden) {
             updateAppUI();
-            fetchCricketScore();
         }
     });
 });
