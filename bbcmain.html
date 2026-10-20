@@ -115,7 +115,17 @@ body {
 .banner-dot { width: 6px; height: 6px; background: #ef4444; border-radius: 50%; display: none; }
 .banner-time { font-size: 11px; color: #94a3b8; font-weight: 600; }
 .banner-title { font-size: 14.5px; font-weight: 800; color: #fff; line-height: 1.3; }
-.banner-station { font-size: 11px; color: #38bdf8; font-weight: 600; }
+
+/* Live Score Style in Banner */
+.banner-score { 
+    font-size: 13px; 
+    color: #38bdf8; 
+    font-weight: 700; 
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
 .banner-cta {
     display: inline-flex;
     align-items: center;
@@ -229,7 +239,7 @@ body {
         </div>
     </header>
 
-    <!-- Top Banner (BBC Radio 5 Sports Extra) -->
+    <!-- Top Banner (Cricket Live Score & TMS Radio) -->
     <a href="go:BBC5E" class="top-banner">
         <div class="banner-card">
             <div class="banner-top-row">
@@ -239,12 +249,13 @@ body {
                 </div>
                 <div class="banner-time" id="bannerTime">Loading...</div>
             </div>
-            <div class="banner-title" id="bannerTitle">Loading Sports Schedule...</div>
+            <div class="banner-title" id="bannerTitle">Test Match Special: Pakistan v England</div>
             <div class="banner-bottom-row">
-                <span class="banner-station">BBC Radio 5 Sports Extra</span>
+                <!-- Cricket Score replaces "BBC Radio 5 Sports Extra" -->
+                <span class="banner-score" id="bannerScore">Fetching score...</span>
                 <div class="banner-cta">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    <span>Listen now</span>
+                    <span>Listen live</span>
                 </div>
             </div>
         </div>
@@ -358,6 +369,7 @@ const DOM = {
     bannerTag: document.getElementById('bannerTag'),
     bannerTagWrapper: document.getElementById('bannerTagWrapper'),
     bannerDot: document.getElementById('bannerDot'),
+    bannerScore: document.getElementById('bannerScore'),
     stations: [
         { key: 'radio 1', el: document.getElementById('bbc1') },
         { key: 'radio 2', el: document.getElementById('bbc2') },
@@ -394,21 +406,83 @@ function getUKDateTime() {
     };
 }
 
-// খেলৰ সূচী (BBC Radio 5 Sports Extra)
+// ক্ৰিকেট খেলৰ সূচী (UK Time অনুসৰি)
 const EVENTS_CONFIG = [
     {
         sport: "CRICKET",
-        title: "Test Match Special: Pakistan v England (ODI Tri-Series)",
+        title: "Test Match Special: Pakistan v England",
         timeDisplay: "9:15 AM",
         year: 2026,
         month: 10,
         day: 20,
         startMin: 555,  // 09:15 AM
-        endMin: 1050    // 05:30 PM (আনুমানিক সমাপ্তি সময়)
+        endMin: 1050    // 05:30 PM
     }
 ];
 
-// স্বয়ংক্ৰিয়ভাৱে UPCOMING আৰু LIVE সলনি কৰা নিখুঁত ফাংচন
+// ক্ৰিকেট লাইভ স্ক’ৰ ফেচ কৰা ফাংচন
+const CRICKET_API_URL = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a865c0f78dcf06570325448";
+let currentMatchState = { isLive: false, scoreText: "" };
+
+async function fetchCricketScore() {
+    try {
+        const res = await fetch(CRICKET_API_URL);
+        const data = await res.json();
+        const result = data?.responseData?.result;
+
+        if (!result) return;
+
+        const teamA = result.teams?.a?.shortName || result.teams?.a?.name || "PAK";
+        const teamB = result.teams?.b?.shortName || result.teams?.b?.name || "ENG";
+        const status = (result.status || "").toLowerCase();
+
+        // স্ক’ৰ তৈয়াৰ কৰা
+        if (status === "notstarted") {
+            currentMatchState.isLive = false;
+            currentMatchState.scoreText = `🏏 ${teamA} vs ${teamB} • Match yet to begin`;
+        } else if (status === "completed") {
+            currentMatchState.isLive = false;
+            currentMatchState.scoreText = result.announcement1 || `🏏 Match Ended: ${teamA} vs ${teamB}`;
+        } else {
+            // লাইভ চলি থকা অৱস্থাত
+            currentMatchState.isLive = true;
+            const battingTeamKey = result.settingObj?.currentTeam || "a";
+            const battingTeamName = result.teams?.[battingTeamKey]?.shortName || (battingTeamKey === "a" ? teamA : teamB);
+            
+            // Runs/Wickets & Overs
+            const scoreObj = result.score || result.now;
+            const runs = scoreObj?.runs ?? scoreObj?.score ?? "";
+            const wickets = scoreObj?.wickets ?? "";
+            const overs = scoreObj?.overs ?? "";
+
+            if (runs !== "") {
+                const scoreDisplay = wickets !== "" ? `${runs}/${wickets}` : `${runs}`;
+                const overDisplay = overs ? ` (${overs} ov)` : "";
+                currentMatchState.scoreText = `🏏 ${battingTeamName}: ${scoreDisplay}${overDisplay}`;
+            } else {
+                currentMatchState.scoreText = `🏏 ${teamA} vs ${teamB} (Live)`;
+            }
+
+            if (result.announcement1) {
+                currentMatchState.scoreText += ` • ${result.announcement1}`;
+            }
+        }
+
+        if (DOM.bannerScore) {
+            DOM.bannerScore.textContent = currentMatchState.scoreText;
+        }
+
+        // স্ক’ৰৰ ষ্টেটাছৰ লগত বেনাৰ চিনক কৰা
+        updateBannerUI();
+    } catch (e) {
+        console.error("Score fetch failed", e);
+        if (DOM.bannerScore && !currentMatchState.scoreText) {
+            DOM.bannerScore.textContent = "🏏 PAK vs ENG (Live TMS)";
+        }
+    }
+}
+
+// বেনাৰ UPCOMING আৰু LIVE সলনি কৰা ফাংচন
 function updateBannerUI() {
     if (!DOM.topBanner) return;
 
@@ -418,27 +492,21 @@ function updateBannerUI() {
 
     for (let i = 0; i < EVENTS_CONFIG.length; i++) {
         const ev = EVENTS_CONFIG[i];
-
-        // আজিৰ খেল হয়নে নহয় পৰীক্ষা
         const isToday = (ev.year === uk.year && ev.month === uk.month && ev.day === uk.day);
-
-        // ভৱিষ্যতৰ খেল নেকি পৰীক্ষা
         const isFutureDay = (ev.year > uk.year) ||
                             (ev.year === uk.year && ev.month > uk.month) ||
                             (ev.year === uk.year && ev.month === uk.month && ev.day > uk.day);
 
         if (isToday) {
-            // খেল বৰ্তমান চলি থাকিলে -> LIVE
-            if (uk.minutesNow >= ev.startMin && uk.minutesNow < ev.endMin) {
+            // API লাইভ হ'লে বা নিৰ্ধাৰিত সময়ৰ ভিতৰত থাকিলে
+            if (currentMatchState.isLive || (uk.minutesNow >= ev.startMin && uk.minutesNow < ev.endMin)) {
                 currentLive = ev;
                 break;
             }
-            // আজিৰ দিনটোত খেল আৰম্ভ হ'বলৈ বাকী থাকিলে -> UPCOMING
             if (uk.minutesNow < ev.startMin && !nextUpcoming) {
                 nextUpcoming = ev;
             }
         } else if (isFutureDay && !nextUpcoming) {
-            // অনাগত দিনৰ খেল -> UPCOMING
             nextUpcoming = ev;
         }
     }
@@ -458,13 +526,16 @@ function updateBannerUI() {
         DOM.bannerTagWrapper.classList.remove('live');
         DOM.bannerDot.style.display = 'none';
     } else {
-        // সকলো খেল সমাপ্ত হ'লে
         DOM.topBanner.style.display = 'block';
         DOM.bannerTitle.textContent = "Live Sports Coverage";
         DOM.bannerTime.textContent = "Stay Tuned";
-        DOM.bannerTag.textContent = "BBC 5 SPORTS EXTRA";
+        DOM.bannerTag.textContent = "TMS CRICKET";
         DOM.bannerTagWrapper.classList.remove('live');
         DOM.bannerDot.style.display = 'none';
+    }
+
+    if (currentMatchState.scoreText && DOM.bannerScore) {
+        DOM.bannerScore.textContent = currentMatchState.scoreText;
     }
 }
 
@@ -537,6 +608,7 @@ function updateAppUI() {
 
 document.addEventListener("DOMContentLoaded", () => {
     updateAppUI();
+    fetchCricketScore();
 
     let attempts = 0;
     const initTimer = setInterval(() => {
@@ -549,12 +621,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 300);
 
-    // প্রতি ১ মিনিটৰ মূৰে মূৰে সময় আৰু ষ্টেটাস পৰীক্ষা
+    // ষ্টেচনৰ সময়সূচী প্ৰতি ১ মিনিটৰ মূৰে মূৰে আপডেট হ'ব
     setInterval(updateAppUI, 60000);
+
+    // ক্ৰিকেট স্ক'ৰ প্ৰতি ৩০ চেকেণ্ডৰ মূৰে মূৰে অটো-ৰিফ্ৰেছ হ'ব
+    setInterval(fetchCricketScore, 30000);
     
-    // ব্যৱহাৰকাৰীয়ে মিনিমাইজ কৰা টেব পুনৰ খুলিলে লগে লগে আপডেট কৰিবলৈ
     document.addEventListener("visibilitychange", () => {
-        if (!document.hidden) updateAppUI();
+        if (!document.hidden) {
+            updateAppUI();
+            fetchCricketScore();
+        }
     });
 });
 </script>
