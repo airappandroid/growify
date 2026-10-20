@@ -400,7 +400,7 @@
         <!-- Main Cricket Score Card -->
         <section class="match-card">
             <div class="match-meta-bar">
-                <span class="match-label" id="match-info">IND-W vs ZIM-W • 2nd T20</span>
+                <span class="match-label" id="match-info">IND-W vs ZIM-W • T20</span>
                 <span class="status-tag" id="match-status">UPCOMING</span>
             </div>
 
@@ -436,7 +436,7 @@
                 </div>
             </div>
 
-            <div class="summary-status" id="status-box">IND-W vs ZIM-W 2nd T20, Today • 7PM</div>
+            <div class="summary-status" id="status-box">IND-W vs ZIM-W T20</div>
             <div class="toss-tag" id="toss-info" style="display: none;"></div>
         </section>
 
@@ -465,7 +465,7 @@
     </div>
 
     <script>
-        const API_URL = "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a4b53d6f96b301cc0895787";
+        const API_URL = "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a4b53d1f96b301cc0895783";
         const FLAGS = {
             ind: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
             india: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
@@ -577,7 +577,7 @@
                 } else {
                     el.status.textContent = "UPCOMING";
                     el.status.className = "status-tag";
-                    el.statusBox.textContent = r.announcement1 || "IND-W vs ZIM-W 2nd T20, Today • 7PM";
+                    el.statusBox.textContent = r.announcement1 || "IND-W vs ZIM-W T20";
                 }
 
                 // Last Ball
