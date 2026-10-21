@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Live Scorecard - ENG vs SL, 3rd ODI</title>
+    <title>Live Scorecard - AFG vs BAN, 3rd ODI</title>
     <style>
         :root {
             --bg-base: #020617;
@@ -52,7 +52,7 @@
             gap: 12px;
         }
 
-        /* Top Header */
+        /* Top Bar */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -411,9 +411,9 @@
 <div class="scorecard-app">
     <!-- Top Bar -->
     <div class="top-bar">
-        <div class="match-badge completed" id="matchBadge">
+        <div class="match-badge" id="matchBadge">
             <span class="live-dot" id="liveDot"></span>
-            <span id="badgeText">COMPLETED</span>
+            <span id="badgeText">SYNCING</span>
         </div>
         <div class="refresh-status" id="refreshTimer">
             <span id="updateTime">Syncing...</span>
@@ -422,8 +422,8 @@
 
     <!-- Match Information Row -->
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">ENG vs SL, 3rd ODI</span>
-        <span id="venueHeader">📍 The Oval, London</span>
+        <span class="match-title-text" id="matchHeader">AFG vs BAN, 3rd ODI</span>
+        <span id="venueHeader">📍 UAE</span>
     </div>
 
     <!-- Innings Navigation Tabs -->
@@ -436,9 +436,9 @@
 </div>
 
 <script>
-    const matchId = "69bd420d1dbf177ca4e58e75";
+    const matchId = "6ab0510e346214d85006e49b";
     const API_URL = `https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=${matchId}`;
-    const OVERRIDE_NOTE = "England won by 223 runs";
+    const OVERRIDE_NOTE = ""; 
     
     let matchData = null;
     let selectedInningIndex = 0;
@@ -460,13 +460,13 @@
     function getInningsTabLabel(inn, idx, teamA, teamB) {
         if (inn.teamName) {
             const lower = inn.teamName.toLowerCase();
-            if (lower.includes("eng")) return "ENG";
-            if (lower.includes("sl")) return "SL";
+            if (lower.includes("afg") || lower.includes("afghanistan")) return "AFG";
+            if (lower.includes("ban") || lower.includes("bangladesh")) return "BAN";
             return inn.teamName;
         }
 
-        const aShort = teamA.shortName || "ENG";
-        const bShort = teamB.shortName || "SL";
+        const aShort = teamA.shortName || "AFG";
+        const bShort = teamB.shortName || "BAN";
 
         if (inn.key === "a_1" || inn.key === "a") return aShort;
         if (inn.key === "b_1" || inn.key === "b") return bShort;
@@ -475,8 +475,8 @@
 
     function getInningsDisplayName(inn, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
-        const aName = teamA.name || "England";
-        const bName = teamB.name || "Sri Lanka";
+        const aName = teamA.name || "Afghanistan";
+        const bName = teamB.name || "Bangladesh";
 
         if (inn.key === "a_1" || inn.key === "a") return `${aName} Innings`;
         if (inn.key === "b_1" || inn.key === "b") return `${bName} Innings`;
@@ -496,18 +496,18 @@
             const teamA = result.teams?.a || {};
             const teamB = result.teams?.b || {};
 
-            const nameA = teamA.shortName || teamA.name || 'ENG';
-            const nameB = teamB.shortName || teamB.name || 'SL';
+            const nameA = teamA.shortName || teamA.name || 'AFG';
+            const nameB = teamB.shortName || teamB.name || 'BAN';
             const format = (result.format || 'ODI').toUpperCase();
-            const tournament = result.seriesName || `${nameA} vs ${nameB}, 3rd ODI`;
+            const tournament = result.seriesName || `${nameA} vs ${nameB}, 3rd Match, ODI Tri-Nation Series in UAE, 2026`;
 
             // 1. Header update
             document.getElementById("matchHeader").textContent = tournament;
-            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : `📍 The Oval, London`;
+            document.getElementById("venueHeader").textContent = result.venue ? `📍 ${result.venue}` : `📍 Sharjah / UAE`;
 
-            // 2. Match Status Determination
+            // 2. Status Determination
             const rawStatus = String(result.status || "").toLowerCase().trim();
-            const cleanRawStatus = rawStatus.replace(/\s+/g, "");
+            const cleanRawStatus = rawStatus.replace(/[\s_-]+/g, "");
 
             const statusFieldsList = [
                 result.match_status,
@@ -530,20 +530,22 @@
             const statusFieldsStr = statusFieldsList.filter(Boolean).map(s => String(s).toLowerCase()).join(" ");
 
             const completionKeywords = [
-                "complete", "completed", "finish", "finished", "ended", "end", "concluded",
+                "complete", "completed", "finish", "finished", "ended", "concluded",
                 "won", "win", "beat", "defeat", "tied", "tie", "abandon", "abandoned", 
                 "no result", "result", "post", "closed", "stumps", "drawn", "draw", "loss", "lost"
             ];
 
             const innings = result.innings_batting_order || [];
 
-            const isUpcoming = !OVERRIDE_NOTE && (
-                               cleanRawStatus.includes("notstarted") || 
-                               cleanRawStatus.includes("upcoming") || 
-                               cleanRawStatus.includes("scheduled") || 
-                               (!cleanRawStatus && (!Array.isArray(innings) || innings.length === 0)));
+            // ইনিংছ বা কোনো বেটছমেনৰ ৰাণ আৰম্ভ হৈছে নে নাই নিৰীক্ষণ কৰক
+            const hasInningsData = Array.isArray(innings) && innings.length > 0 && (
+                Boolean(innings[0]?.runs !== undefined && innings[0]?.runs !== null && innings[0]?.runs !== "") ||
+                Boolean(innings[0]?.overs) ||
+                (Array.isArray(innings[0]?.player_batting_order) && innings[0]?.player_batting_order.length > 0)
+            );
 
-            let isCompleted = Boolean(OVERRIDE_NOTE) || (!isUpcoming && (
+            // সমাপ্তি পৰীক্ষা
+            let isCompleted = Boolean(OVERRIDE_NOTE) || (
                 completionKeywords.some(kw => rawStatus.includes(kw) || statusFieldsStr.includes(kw)) ||
                 Boolean(result.winner) ||
                 Boolean(result.winning_team) ||
@@ -553,10 +555,10 @@
                 result.status_id === 3 ||
                 result.status === 3 ||
                 result.status === "3"
-            ));
+            );
 
-            // Scorecard Math Fallback
-            if (!isCompleted && !isUpcoming && Array.isArray(innings) && innings.length >= 2) {
+            // Scorecard Math Fallback for Completed
+            if (!isCompleted && Array.isArray(innings) && innings.length >= 2) {
                 const inn1 = innings[0] || {};
                 const inn2 = innings[1] || {};
 
@@ -585,15 +587,19 @@
 
             isMatchFinishedGlobal = isCompleted;
 
-            const isLive = !isCompleted && !isUpcoming && (
+            // লাইভ চৰ্ত (যদি খেলৰ ডেটা বা live flag আছে, নিশ্চিতভাৱে Live)
+            const isLive = !isCompleted && (
                 cleanRawStatus.includes("live") ||
-                cleanRawStatus.includes("inprogress") ||
-                cleanRawStatus === "started" ||
+                cleanRawStatus.includes("progress") ||
+                cleanRawStatus.includes("started") ||
                 statusFieldsStr.includes("live") ||
                 result.live === true ||
                 result.is_live === true ||
-                result.is_live === 1
+                result.is_live === 1 ||
+                hasInningsData
             );
+
+            const isUpcoming = !isCompleted && !isLive;
 
             const badgeEl = document.getElementById("matchBadge");
             const badgeText = document.getElementById("badgeText");
@@ -613,6 +619,7 @@
                 dotEl.style.display = "none";
             }
 
+            // কোনো ইনিংছৰ তালিকা নাথাকিলে
             if (!Array.isArray(innings) || innings.length === 0) {
                 document.getElementById("inningsTabs").innerHTML = "";
                 document.getElementById("contentView").innerHTML = `
@@ -622,12 +629,12 @@
                             <span class="hero-status-tag">3rd ODI (${format})</span>
                         </div>
                         <div class="hero-score-box">
-                            <div class="hero-score-main">${isCompleted ? 'COMPLETED' : '10:30 AM'}</div>
-                            <div class="hero-score-sub">${OVERRIDE_NOTE || 'Match starts at 10:30 am UK time'}</div>
+                            <div class="hero-score-main">${isCompleted ? 'COMPLETED' : (isLive ? 'LIVE' : 'UPCOMING')}</div>
+                            <div class="hero-score-sub">${OVERRIDE_NOTE || result.status_note || result.announcement1 || 'Match in progress'}</div>
                         </div>
                     </div>
                     <div style="text-align:center; padding:35px 10px; color:var(--text-muted); font-size:12px; line-height:1.6;">
-                        ${isCompleted ? (OVERRIDE_NOTE || 'Match has ended.') : '⏳ Match has not started yet.<br>Full live scorecard will appear once play begins.'}
+                        ${isCompleted ? (OVERRIDE_NOTE || 'Match has ended.') : (isLive ? '🔴 Match is LIVE.<br>Scorecard will render with live ball events.' : '⏳ Match has not started yet.<br>Full live scorecard will appear once play begins.')}
                     </div>
                 `;
                 updateLastRefresh();
@@ -765,8 +772,8 @@
                     const r1 = parseInt(inn1.runs ?? 0, 10);
                     const r2 = parseInt(inn2.runs ?? 0, 10);
                     const w2 = parseInt(inn2.wickets ?? 0, 10);
-                    const nameA = teamA.shortName || teamA.name || 'ENG';
-                    const nameB = teamB.shortName || teamB.name || 'SL';
+                    const nameA = teamA.shortName || teamA.name || 'AFG';
+                    const nameB = teamB.shortName || teamB.name || 'BAN';
 
                     if (r2 > r1) {
                         statusSubText = `${nameB} WON BY ${10 - w2} WICKETS`;
@@ -849,7 +856,7 @@
     }
 
     loadScorecard();
-    setInterval(loadScorecard, 30000);
+    setInterval(loadScorecard, 15000); // 15 ছেকেণ্ডৰ মূৰে মূৰে অটো ৰিফ্ৰেছ হ'ব
 </script>
 
 </body>
