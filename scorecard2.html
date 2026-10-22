@@ -394,7 +394,6 @@
 </div>
 
 <script>
-    // ✅ Updated Match ID for IND vs NZ 1st T20I
     const matchId = "6a552bd85a2a46d5d350525f";
     const API_URL = "https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=" + matchId;
     
@@ -416,22 +415,67 @@
         if (updateEl) updateEl.textContent = `Sync: ${time} IST`;
     }
 
-    function getInningsTabLabel(inn, idx, teamA, teamB) {
-        if (inn.teamName) return inn.teamName;
+    // দলৰ নাম সঠিকভাৱে নিৰ্ধাৰণ কৰা স্মাৰ্ট ফাংকচন
+    function resolveInningTeam(inn, teamA, teamB) {
         const aShort = teamA.shortName || teamA.name || "IND";
         const bShort = teamB.shortName || teamB.name || "NZ";
-        if (inn.key === "a_1" || inn.key === "a") return aShort;
-        if (inn.key === "b_1" || inn.key === "b") return bShort;
-        return `Inn ${idx + 1}`;
+        const aFull = teamA.name || aShort;
+        const bFull = teamB.name || bShort;
+
+        // ১. যদি ইনিংছ অবজেক্টত স্পষ্টভাৱে teamName / battingTeam থাকে
+        const explicitName = inn.teamName || inn.battingTeam || inn.team_name || inn.name;
+        if (explicitName) {
+            const clean = explicitName.toLowerCase();
+            if (clean.includes(aShort.toLowerCase()) || clean.includes(aFull.toLowerCase())) {
+                return { shortName: aShort, fullName: aFull };
+            }
+            if (clean.includes(bShort.toLowerCase()) || clean.includes(bFull.toLowerCase())) {
+                return { shortName: bShort, fullName: bFull };
+            }
+            return { shortName: explicitName, fullName: explicitName };
+        }
+
+        // ২. যদি teamId উপলব্ধ থাকে
+        const innTeamId = String(inn.teamId || inn.team_id || '');
+        if (innTeamId) {
+            if (innTeamId === String(teamA._id || teamA.teamId || teamA.id)) {
+                return { shortName: aShort, fullName: aFull };
+            }
+            if (innTeamId === String(teamB._id || teamB.teamId || teamB.id)) {
+                return { shortName: bShort, fullName: bFull };
+            }
+        }
+
+        // ৩. বেটিং দল চিনাক্ত কৰা (খেলুৱৈৰ টিম আইডি বা স্কোৱাডৰ জৰিয়তে)
+        const batters = inn.player_batting_order || inn.battingOrder || [];
+        for (let b of batters) {
+            const pTeam = String(b.teamId || b.team || '').toLowerCase();
+            if (pTeam.includes('a') || pTeam === String(teamA._id || teamA.teamId)) {
+                return { shortName: aShort, fullName: aFull };
+            }
+            if (pTeam.includes('b') || pTeam === String(teamB._id || teamB.teamId)) {
+                return { shortName: bShort, fullName: bFull };
+            }
+        }
+
+        // ৪. ইনিংছ কী (Key) পৰীক্ষা
+        const k = String(inn.key || inn.inning || '').toLowerCase();
+        if (k.startsWith('a')) return { shortName: aShort, fullName: aFull };
+        if (k.startsWith('b')) return { shortName: bShort, fullName: bFull };
+
+        // ৫. ফলবেক: প্ৰথম ইনিংছত সাধাৰণতে teamA বেটিং কৰে
+        return (inn._idx === 1) ? { shortName: bShort, fullName: bFull } : { shortName: aShort, fullName: aFull };
+    }
+
+    function getInningsTabLabel(inn, idx, teamA, teamB) {
+        inn._idx = idx;
+        const res = resolveInningTeam(inn, teamA, teamB);
+        return res.shortName;
     }
 
     function getInningsDisplayName(inn, teamA, teamB) {
-        if (inn.teamName) return inn.teamName;
-        const aName = teamA.name || teamA.shortName || "India";
-        const bName = teamB.name || teamB.shortName || "New Zealand";
-        if (inn.key === "a_1" || inn.key === "a") return `${aName} Innings`;
-        if (inn.key === "b_1" || inn.key === "b") return `${bName} Innings`;
-        return "Team Innings";
+        const res = resolveInningTeam(inn, teamA, teamB);
+        return `${res.fullName} Innings`;
     }
 
     async function loadScorecard() {
@@ -456,10 +500,21 @@
             if (matchHdr) matchHdr.textContent = result.announcement1 || `${tournament} (${format})`;
             if (venueHdr) venueHdr.textContent = result.venue ? `📍 ${result.venue}` : '';
 
-            // ইনিংছ ডাটা উলিয়াই অনা
-            let innings = result.innings_batting_order || result.scoreCard || [];
-            if (!Array.isArray(innings) && typeof innings === 'object') {
-                innings = Object.values(innings);
+            // ইনিংছ ডাটা উলিয়াই লোৱা
+            let rawInnings = result.innings_batting_order || result.scoreCard || [];
+            let innings = [];
+
+            if (Array.isArray(rawInnings)) {
+                innings = rawInnings;
+            } else if (typeof rawInnings === 'object' && rawInnings !== null) {
+                // অবজেক্টৰ পৰা key সংৰক্ষণ কৰি এৰে’লৈ পৰিৱৰ্তন
+                innings = Object.keys(rawInnings).map(k => {
+                    const item = rawInnings[k];
+                    if (typeof item === 'object' && item !== null) {
+                        return { ...item, key: item.key || k };
+                    }
+                    return item;
+                });
             }
 
             const hasStartedPlaying = Array.isArray(innings) && innings.some(inn =>
@@ -481,7 +536,7 @@
 
             isMatchFinishedGlobal = isCompleted;
 
-            // AUTO LIVE DETECTION
+            // লাইভ ডিটেকচন
             const isLive = !isCompleted && (hasStartedPlaying || rawStatus.includes("live") || rawStatus.includes("progress") || result.is_live);
             const isUpcoming = !isCompleted && !isLive;
 
@@ -516,7 +571,7 @@
                             </div>
                             <div class="hero-score-box">
                                 <div class="hero-score-main">Upcoming</div>
-                                <div class="hero-score-sub">${result.announcement1 || "IND vs NZ 1st T20I, Today•12:30PM"}</div>
+                                <div class="hero-score-sub">${result.announcement1 || "IND vs NZ 1st T20I"}</div>
                             </div>
                         </div>
                         <div class="loading-ph">⏳ Match has not started yet. Full live scorecard will appear once play begins.</div>
@@ -526,8 +581,9 @@
                 return;
             }
 
+            // সক্ৰিয় ইনিংছ বাছি লোৱা
             if (isInitialLoad || selectedInningIndex >= innings.length) {
-                let activeIdx = innings.length - 1;
+                let activeIdx = 0;
                 for (let i = innings.length - 1; i >= 0; i--) {
                     const inn = innings[i];
                     if ((inn.player_batting_order && inn.player_batting_order.length > 0) || (inn.runs > 0) || (parseFloat(inn.overs || 0) > 0)) {
