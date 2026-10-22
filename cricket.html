@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cricket Score App - AFG vs BAN Live</title>
+    <title>Cricket Score App - IND vs NZ Live</title>
     <style>
         :root {
             --bg: #090d16;
@@ -400,12 +400,12 @@
         <!-- Main Cricket Score Card -->
         <section class="match-card">
             <div class="match-meta-bar">
-                <span class="match-label" id="match-info">AFG vs BAN • ODI</span>
+                <span class="match-label" id="match-info">IND vs NZ • T20I</span>
                 <span class="status-tag" id="match-status">UPCOMING</span>
             </div>
 
             <div class="venue-row">
-                <span id="match-format">ODI Tri-Nation Series</span>
+                <span id="match-format">India Tour of New Zealand 2026</span>
                 <div id="last-ball-container" style="display: none;">
                     Last Ball: <span class="ball-glow" id="latest-ball">-</span>
                 </div>
@@ -415,8 +415,8 @@
             <div class="teams-arena">
                 <div class="team-box">
                     <div class="team-profile">
-                        <img class="team-crest" id="team-a-logo" src="https://ik.imagekit.io/sqt8ptw1k/afghanistan.webp?updatedAt=1790568292618" alt="AFG" width="28" height="28" decoding="async">
-                        <span class="team-name-text" id="team-a-name">AFG</span>
+                        <img class="team-crest" id="team-a-logo" src="https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690" alt="IND" width="28" height="28" decoding="async">
+                        <span class="team-name-text" id="team-a-name">IND</span>
                     </div>
                     <div class="team-metrics">
                         <div class="runs-val" id="team-a-runs">Yet to bat</div>
@@ -426,8 +426,8 @@
 
                 <div class="team-box">
                     <div class="team-profile">
-                        <img class="team-crest" id="team-b-logo" src="https://ik.imagekit.io/sqt8ptw1k/299037.webp?updatedAt=1789880457854" alt="BAN" width="28" height="28" decoding="async">
-                        <span class="team-name-text" id="team-b-name">BAN</span>
+                        <img class="team-crest" id="team-b-logo" src="https://ik.imagekit.io/sqt8ptw1k/images_ZyDOMUciT.png" alt="NZ" width="28" height="28" decoding="async">
+                        <span class="team-name-text" id="team-b-name">NZ</span>
                     </div>
                     <div class="team-metrics">
                         <div class="runs-val" id="team-b-runs">Yet to bat</div>
@@ -436,12 +436,12 @@
                 </div>
             </div>
 
-            <div class="summary-status" id="status-box">AFG vs BAN, 3rd Match, ODI Tri-Nation Series in UAE, 2026</div>
+            <div class="summary-status" id="status-box">IND vs NZ 1st T20I, Today•12:30PM</div>
             <div class="toss-tag" id="toss-info" style="display: none;"></div>
         </section>
 
         <!-- Full Scorecard Trigger -->
-        <button class="btn-action-main" onclick="location.href='go:card'">
+        <button class="btn-action-main" onclick="location.href='go:card1'">
             Full Scorecard & Commentary
             <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42 5.43 5.43H5v2z"/></svg>
         </button>
@@ -465,12 +465,16 @@
     </div>
 
     <script>
-        const API_URL = "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6ab0510e346214d85006e49b";
+        const API_URL = "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a552bd85a2a46d5d350525f";
         const FLAGS = {
-            afg: "https://ik.imagekit.io/sqt8ptw1k/afghanistan.webp?updatedAt=1790568292618",
-            afghanistan: "https://ik.imagekit.io/sqt8ptw1k/afghanistan.webp?updatedAt=1790568292618",
-            ban: "https://ik.imagekit.io/sqt8ptw1k/299037.webp?updatedAt=1789880457854",
-            bangladesh: "https://ik.imagekit.io/sqt8ptw1k/299037.webp?updatedAt=1789880457854"
+            ind: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
+            india: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
+            "ind w": "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
+            "ind-w": "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
+            nz: "https://ik.imagekit.io/sqt8ptw1k/images_ZyDOMUciT.png",
+            "new zealand": "https://ik.imagekit.io/sqt8ptw1k/images_ZyDOMUciT.png",
+            "nz w": "https://ik.imagekit.io/sqt8ptw1k/images_ZyDOMUciT.png",
+            "nz-w": "https://ik.imagekit.io/sqt8ptw1k/images_ZyDOMUciT.png"
         };
         let isLive = false;
 
@@ -505,8 +509,8 @@
             if (!team) return defaultFallback;
             const name = (team.shortName || team.name || "").toLowerCase().trim();
             if (FLAGS[name]) return FLAGS[name];
-            if (name.includes("afg") || name.includes("afghanistan")) return FLAGS.afg;
-            if (name.includes("ban") || name.includes("bangladesh")) return FLAGS.ban;
+            if (name.includes("ind") || name.includes("india")) return FLAGS.ind;
+            if (name.includes("nz") || name.includes("new zealand")) return FLAGS.nz;
             if (team.logo) {
                 return team.logo.startsWith("http") ? team.logo : `https://api.cricradio.com.au${team.logo.startsWith('/') ? '' : '/'}${team.logo}`;
             }
@@ -540,12 +544,12 @@
 
                 const tA = r.teams?.a || {};
                 const tB = r.teams?.b || {};
-                const nameA = tA.shortName || tA.name || 'AFG';
-                const nameB = tB.shortName || tB.name || 'BAN';
-                const format = (r.format || "ODI").toUpperCase();
+                const nameA = tA.shortName || tA.name || 'IND';
+                const nameB = tB.shortName || tB.name || 'NZ';
+                const format = (r.format || "T20I").toUpperCase();
 
                 el.info.textContent = `${nameA} vs ${nameB} • ${format}`;
-                el.format.textContent = `${format} Tri-Nation Series`;
+                el.format.textContent = r.seriesName || `${nameA} Tour of ${nameB} 2026`;
 
                 // Team Scores Check
                 const sA = getScore(tA, "a");
@@ -571,7 +575,7 @@
                 } else {
                     el.status.textContent = "UPCOMING";
                     el.status.className = "status-tag";
-                    el.statusBox.textContent = r.announcement1 || "AFG vs BAN, 3rd Match, ODI Tri-Nation Series in UAE, 2026";
+                    el.statusBox.textContent = r.announcement1 || "IND vs NZ 1st T20I, Today•12:30PM";
                 }
 
                 // Last Ball
@@ -584,12 +588,12 @@
 
                 // Teams details
                 el.teamA.name.textContent = tA.name || nameA;
-                el.teamA.logo.src = getLogo(tA, FLAGS.afg);
+                el.teamA.logo.src = getLogo(tA, FLAGS.ind);
                 el.teamA.runs.textContent = sA.runs;
                 el.teamA.overs.textContent = sA.overs;
 
                 el.teamB.name.textContent = tB.name || nameB;
-                el.teamB.logo.src = getLogo(tB, FLAGS.ban);
+                el.teamB.logo.src = getLogo(tB, FLAGS.nz);
                 el.teamB.runs.textContent = sB.runs;
                 el.teamB.overs.textContent = sB.overs;
 
