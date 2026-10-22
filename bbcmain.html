@@ -117,7 +117,7 @@ body {
 .banner-time { font-size: 11px; color: #94a3b8; font-weight: 600; white-space: nowrap; }
 .banner-title { font-size: 14.5px; font-weight: 800; color: #fff; line-height: 1.3; }
 
-/* Live Score & Announcement Box */
+/* Live Score & Announcement Box (Left side of Listen Now) */
 .banner-score-box {
     display: flex;
     flex-direction: column;
@@ -258,8 +258,8 @@ body {
         </div>
     </header>
 
-    <!-- Top Banner (5 Sports Extra Dynamic Schedule) -->
-    <a href="go:BBC5E" class="top-banner">
+    <!-- Top Banner (5 Sports Extra Dynamic Schedule & Live Score) -->
+    <a href="go:BBC5E" class="top-banner" id="bannerLink">
         <div class="banner-card">
             <div class="banner-top-row">
                 <div class="banner-tag" id="bannerTagWrapper">
@@ -270,14 +270,14 @@ body {
             </div>
             <div class="banner-title" id="bannerTitle">5 Sports Extra</div>
             <div class="banner-bottom-row">
+                <!-- Listen Now ৰ বাওঁফালে লাইভ স্ক'ৰ আৰু ঘোষণা -->
                 <div class="banner-score-box">
-                    <!-- লাইভ স্ক'ৰৰ ঠাইত মূল মেচ/অনুষ্ঠানৰ শিৰোনাম দেখুওৱা হ'ব -->
-                    <span class="banner-score" id="bannerScore">Loading match...</span>
-                    <div class="banner-announcement" id="bannerAnnouncement"></div>
+                    <span class="banner-score" id="bannerScore">Loading score...</span>
+                    <div class="banner-announcement" id="bannerAnnouncement">SL vs ENG</div>
                 </div>
                 <div class="banner-cta">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    <span>Listen live</span>
+                    <span>Listen now</span>
                 </div>
             </div>
         </div>
@@ -434,7 +434,8 @@ const EVENTS_CONFIG = [
     {
         sport: "CRICKET",
         program: "Test Match Special",
-        title: "Sri Lanka v England",
+        title: "SL vs ENG",
+        matchId: "6a865c0878dcf06570325445",
         details: "Live commentary from the Pakistan ODI Tri-Series in Rawalpindi.",
         timeDisplay: "8:45 AM",
         dateDisplay: "Thu, 22 Oct",
@@ -472,6 +473,56 @@ const EVENTS_CONFIG = [
     }
 ];
 
+// CricVoice Cloudflare Worker API ৰ পৰা লাইভ স্ক'ৰ Fetch কৰা ফাংচন
+const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a865c0878dcf06570325445";
+
+async function fetchLiveCricketScore() {
+    if (!DOM.bannerScore) return;
+    try {
+        const response = await fetch(CRIC_API_ENDPOINT);
+        if (!response.ok) throw new Error("API Network error");
+        const json = await response.json();
+        const data = json?.data || json;
+
+        if (data) {
+            let scoreText = "";
+            let statusText = "";
+
+            // এপিআইৰ পৰা স্ক'ৰ আৰু ষ্টেটাছ উলিয়াই অনা হৈছে
+            if (data.score) {
+                scoreText = data.score;
+            } else if (data.liveScore) {
+                scoreText = data.liveScore;
+            } else if (data.team1Score || data.team2Score) {
+                const t1 = data.team1ShortName || data.team1?.shortName || "SL";
+                const t2 = data.team2ShortName || data.team2?.shortName || "ENG";
+                const s1 = data.team1Score || (data.team1?.score ? `${data.team1.score}${data.team1.overs ? ' (' + data.team1.overs + ')' : ''}` : "");
+                const s2 = data.team2Score || (data.team2?.score ? `${data.team2.score}${data.team2.overs ? ' (' + data.team2.overs + ')' : ''}` : "");
+                scoreText = `${t1} ${s1} vs ${t2} ${s2}`.trim();
+            } else if (data.currentScore) {
+                scoreText = data.currentScore;
+            }
+
+            statusText = data.status || data.matchStatus || data.result || data.announcement || data.statusMessage || "";
+
+            // Listen now ৰ বাওঁফালে স্ক'ৰ আপডেট
+            if (scoreText) {
+                DOM.bannerScore.textContent = `🏏 ${scoreText}`;
+            } else {
+                DOM.bannerScore.textContent = `🏏 SL vs ENG (Live)`;
+            }
+
+            if (statusText && DOM.bannerAnnouncement) {
+                DOM.bannerAnnouncement.textContent = statusText;
+                DOM.bannerAnnouncement.style.display = "block";
+            }
+        }
+    } catch (err) {
+        // ফলবেক হিচাপে মেচৰ নাম দেখুওৱা হ'ব
+        if (DOM.bannerScore) DOM.bannerScore.textContent = `🏏 SL vs ENG`;
+    }
+}
+
 // বেনাৰ UPCOMING আৰু LIVE সলনি কৰা ফাংচন
 function updateBannerUI() {
     if (!DOM.topBanner) return;
@@ -507,17 +558,20 @@ function updateBannerUI() {
         DOM.bannerTag.textContent = `LIVE • ${currentLive.sport}`;
         DOM.bannerTagWrapper.classList.add('live');
         DOM.bannerDot.style.display = 'inline-block';
-        
-        if (DOM.bannerScore) DOM.bannerScore.textContent = `🎙️ ${currentLive.title} (Live)`;
-        if (DOM.bannerAnnouncement) {
-            DOM.bannerAnnouncement.textContent = currentLive.details;
-            DOM.bannerAnnouncement.style.display = 'block';
+
+        if (currentLive.sport === "CRICKET") {
+            fetchLiveCricketScore();
+        } else {
+            if (DOM.bannerScore) DOM.bannerScore.textContent = `🎙️ ${currentLive.title} (Live)`;
+            if (DOM.bannerAnnouncement) {
+                DOM.bannerAnnouncement.textContent = currentLive.details;
+                DOM.bannerAnnouncement.style.display = 'block';
+            }
         }
     } else if (nextUpcoming) {
         DOM.topBanner.style.display = 'block';
         DOM.bannerTitle.textContent = nextUpcoming.program ? `${nextUpcoming.program}: ${nextUpcoming.title}` : nextUpcoming.title;
         
-        // আজিৰ নহৈ ভৱিষ্যতৰ দিন হ'লে তাৰিখো দেখুৱাব
         const isToday = (nextUpcoming.year === uk.year && nextUpcoming.month === uk.month && nextUpcoming.day === uk.day);
         DOM.bannerTime.textContent = isToday ? `${nextUpcoming.timeDisplay}` : `${nextUpcoming.dateDisplay}, ${nextUpcoming.timeDisplay}`;
         
@@ -525,10 +579,14 @@ function updateBannerUI() {
         DOM.bannerTagWrapper.classList.remove('live');
         DOM.bannerDot.style.display = 'none';
 
-        if (DOM.bannerScore) DOM.bannerScore.textContent = `🔜 ${nextUpcoming.title}`;
-        if (DOM.bannerAnnouncement) {
-            DOM.bannerAnnouncement.textContent = nextUpcoming.details;
-            DOM.bannerAnnouncement.style.display = 'block';
+        if (nextUpcoming.sport === "CRICKET") {
+            fetchLiveCricketScore();
+        } else {
+            if (DOM.bannerScore) DOM.bannerScore.textContent = `🔜 ${nextUpcoming.title}`;
+            if (DOM.bannerAnnouncement) {
+                DOM.bannerAnnouncement.textContent = nextUpcoming.details;
+                DOM.bannerAnnouncement.style.display = 'block';
+            }
         }
     } else {
         DOM.topBanner.style.display = 'block';
@@ -615,6 +673,9 @@ function updateAppUI() {
 
 document.addEventListener("DOMContentLoaded", () => {
     updateAppUI();
+    
+    // পেজ ল'ড হোৱাৰ লগে লগে লাইভ স্ক'ৰ ফেচ কৰা হ'ব
+    fetchLiveCricketScore();
 
     let attempts = 0;
     const initTimer = setInterval(() => {
@@ -627,12 +688,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 300);
 
-    // ষ্টেচন আৰু বেনাৰৰ সময়সূচী প্রতি ১ মিনিটত আপডেট হ'ব
+    // প্ৰতি ১৫ ছেকেণ্ডৰ মূৰে মূৰে স্ক'ৰ স্বয়ংক্ৰিয়ভাৱে সতেজ হৈ থাকিব
+    setInterval(() => {
+        if (!document.hidden) {
+            fetchLiveCricketScore();
+        }
+    }, 15000);
+
+    // ষ্টেচনৰ তালিকা প্রতি ১ মিনিটত আপডেট হ'ব
     setInterval(updateAppUI, 60000);
     
     document.addEventListener("visibilitychange", () => {
         if (!document.hidden) {
             updateAppUI();
+            fetchLiveCricketScore();
         }
     });
 });
