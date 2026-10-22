@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cricket Score App - IND vs NZ Live</title>
+    <title>Cricket Scores - Live & Fixtures</title>
     <style>
         :root {
             --bg: #090d16;
@@ -38,12 +38,14 @@
 
         .app-container {
             width: 100%;
-            max-width: 390px;
+            max-width: 420px;
             background-color: var(--card);
             border: 1px solid var(--border);
             border-radius: 18px;
             padding: 12px;
-            contain: paint;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         /* Top Bar */
@@ -62,8 +64,8 @@
         }
 
         .brand-icon {
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             border-radius: 8px;
             background: linear-gradient(135deg, var(--cyan), var(--blue));
             display: grid;
@@ -97,9 +99,53 @@
             cursor: pointer;
         }
 
+        /* Filter Tabs */
+        .tabs-nav {
+            display: flex;
+            background: var(--nested);
+            padding: 4px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            gap: 4px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 8px 4px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--muted);
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--blue);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+        }
+
+        .tab-badge {
+            font-size: 10px;
+            padding: 1px 6px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .tab-btn.active .tab-badge {
+            background: #ffffff;
+            color: var(--blue);
+        }
+
         /* Commentary Capsule */
         .commentary-capsule {
-            margin: 10px 0;
             background: var(--nested);
             border: 1px solid #1e3a5f;
             border-radius: 12px;
@@ -131,27 +177,40 @@
             fill: var(--cyan);
         }
 
-        .commentary-texts h4 { font-size: 12.5px; font-weight: 700; }
-        .commentary-texts p { font-size: 10.5px; color: var(--cyan); }
+        .commentary-texts h4 { font-size: 12px; font-weight: 700; }
+        .commentary-texts p { font-size: 10px; color: var(--cyan); }
 
         .listen-pill {
             background: var(--cyan);
             color: #000;
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 700;
-            padding: 5px 10px;
+            padding: 4px 10px;
             border-radius: 15px;
             display: flex;
             align-items: center;
             gap: 4px;
         }
 
-        /* Match Card */
+        /* Matches Stream */
+        .matches-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
         .match-card {
             background: var(--nested);
             border: 1px solid var(--border);
             border-radius: 14px;
             padding: 12px;
+            cursor: pointer;
+            transition: transform 0.15s ease, border-color 0.15s ease;
+        }
+
+        .match-card:active {
+            transform: scale(0.985);
+            border-color: var(--cyan);
         }
 
         .match-meta-bar {
@@ -194,8 +253,8 @@
         }
 
         .live-dot {
-            width: 5px;
-            height: 5px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: #ef4444;
             display: inline-block;
@@ -204,13 +263,14 @@
 
         @keyframes pulse {
             0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(0.85); }
+            50% { opacity: 0.3; transform: scale(0.8); }
             100% { opacity: 1; transform: scale(1); }
         }
 
         .venue-row {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             font-size: 11px;
             color: var(--muted);
             margin-bottom: 10px;
@@ -230,7 +290,7 @@
         .teams-arena {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 7px;
         }
 
         .team-box {
@@ -250,15 +310,21 @@
         }
 
         .team-crest {
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
             background: #1e293b;
             object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--muted);
         }
 
         .team-name-text {
-            font-size: 13.5px;
+            font-size: 13px;
             font-weight: 600;
         }
 
@@ -267,7 +333,7 @@
         }
 
         .runs-val {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
         }
 
@@ -278,7 +344,7 @@
 
         .summary-status {
             margin-top: 10px;
-            padding: 8px 10px;
+            padding: 7px 10px;
             background: var(--card);
             border-radius: 8px;
             text-align: center;
@@ -286,29 +352,14 @@
             color: #cbd5e1;
         }
 
-        .toss-tag {
-            margin-top: 6px;
-            font-size: 10.5px;
+        .empty-placeholder {
             text-align: center;
+            padding: 40px 10px;
             color: var(--muted);
-        }
-
-        /* Action Button */
-        .btn-action-main {
-            margin-top: 10px;
-            width: 100%;
-            background: var(--blue);
-            color: #ffffff;
-            border: none;
-            font-size: 13px;
-            font-weight: 700;
-            padding: 11px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            cursor: pointer;
+            font-size: 12.5px;
+            background: var(--nested);
+            border-radius: 12px;
+            border: 1px dashed var(--border);
         }
 
         /* Modal */
@@ -340,22 +391,8 @@
             margin-bottom: 10px;
         }
 
-        .modal-head h3 { font-size: 14px; }
         .modal-close-icon { background: none; border: none; color: var(--muted); font-size: 18px; cursor: pointer; }
-        .modal-content-text { 
-            font-size: 11.5px; 
-            color: var(--muted); 
-            line-height: 1.5; 
-            margin-bottom: 12px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 6px; 
-        }
-        .modal-content-text a {
-            color: var(--cyan);
-            text-decoration: none;
-        }
-        .modal-confirm-btn { width: 100%; background: var(--blue); color: #fff; border: none; padding: 9px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        .modal-confirm-btn { width: 100%; background: var(--blue); color: #fff; border: none; padding: 9px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 12px; }
     </style>
 </head>
 <body>
@@ -380,15 +417,15 @@
             </div>
         </header>
 
-        <!-- Live Commentary Capsule -->
+        <!-- Commentary Capsule -->
         <div class="commentary-capsule" onclick="location.href='go:commentary'">
             <div class="commentary-content">
                 <div class="mic-box">
                     <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
                 </div>
                 <div class="commentary-texts">
-                    <h4>Audio Commentary</h4>
-                    <p>Live ball-by-ball radio</p>
+                    <h4>Live Audio Feed</h4>
+                    <p>Ball-by-ball commentary</p>
                 </div>
             </div>
             <div class="listen-pill">
@@ -397,222 +434,209 @@
             </div>
         </div>
 
-        <!-- Main Cricket Score Card -->
-        <section class="match-card">
-            <div class="match-meta-bar">
-                <span class="match-label" id="match-info">IND vs NZ • T20I</span>
-                <span class="status-tag" id="match-status">UPCOMING</span>
-            </div>
+        <!-- Filter Tabs -->
+        <nav class="tabs-nav">
+            <button class="tab-btn" id="tab-btn-live" onclick="switchTab('live')">
+                Live <span class="tab-badge" id="badge-live">0</span>
+            </button>
+            <button class="tab-btn" id="tab-btn-upcoming" onclick="switchTab('upcoming')">
+                Upcoming <span class="tab-badge" id="badge-upcoming">0</span>
+            </button>
+            <button class="tab-btn" id="tab-btn-completed" onclick="switchTab('completed')">
+                Completed <span class="tab-badge" id="badge-completed">0</span>
+            </button>
+        </nav>
 
-            <div class="venue-row">
-                <span id="match-format">India Tour of New Zealand 2026</span>
-                <div id="last-ball-container" style="display: none;">
-                    Last Ball: <span class="ball-glow" id="latest-ball">-</span>
-                </div>
-            </div>
-
-            <!-- Teams -->
-            <div class="teams-arena">
-                <div class="team-box">
-                    <div class="team-profile">
-                        <img class="team-crest" id="team-a-logo" src="https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690" alt="IND" width="28" height="28" decoding="async">
-                        <span class="team-name-text" id="team-a-name">IND</span>
-                    </div>
-                    <div class="team-metrics">
-                        <div class="runs-val" id="team-a-runs">Yet to bat</div>
-                        <div class="overs-val" id="team-a-overs"></div>
-                    </div>
-                </div>
-
-                <div class="team-box">
-                    <div class="team-profile">
-                        <img class="team-crest" id="team-b-logo" src="https://ik.imagekit.io/sqt8ptw1k/images_ZyDOMUciT.png" alt="NZ" width="28" height="28" decoding="async">
-                        <span class="team-name-text" id="team-b-name">NZ</span>
-                    </div>
-                    <div class="team-metrics">
-                        <div class="runs-val" id="team-b-runs">Yet to bat</div>
-                        <div class="overs-val" id="team-b-overs"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="summary-status" id="status-box">IND vs NZ 1st T20I, Today•12:30PM</div>
-            <div class="toss-tag" id="toss-info" style="display: none;"></div>
-        </section>
-
-        <!-- Full Scorecard Trigger -->
-        <button class="btn-action-main" onclick="location.href='go:card1'">
-            Full Scorecard & Commentary
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42 5.43 5.43H5v2z"/></svg>
-        </button>
+        <!-- Matches Container -->
+        <section class="matches-list" id="matches-container"></section>
     </main>
 
     <!-- Privacy Modal -->
     <div class="modal-overlay" id="privacyModal" onclick="if(event.target===this) toggleModal(false)">
         <div class="modal-box">
             <div class="modal-head">
-                <h3>Cricket Score App Privacy Policy</h3>
+                <h3 style="font-size: 14px;">Privacy Policy</h3>
                 <button class="modal-close-icon" onclick="toggleModal(false)">&times;</button>
             </div>
-            <div class="modal-content-text">
-                <p>Welcome to <strong>Cricket Score App</strong>. Your privacy is paramount to us. We do not collect, track, or share any personal user data.</p>
-                <p>Match updates and live audio streams are fetched in real-time solely to deliver seamless cricket scores.</p>
-                <p>We do not store cookies or personal identifiers on your device.</p>
-                <p>For inquiries or feedback, contact us at: <a href="mailto:vividhbharati75@gmail.com">vividhbharati75@gmail.com</a></p>
-            </div>
+            <p style="font-size: 11.5px; color: var(--muted); line-height: 1.5;">
+                We respect your privacy. Real-time scores and live streaming data are collected solely to deliver cricket updates. No personal data is stored.
+            </p>
             <button class="modal-confirm-btn" onclick="toggleModal(false)">Got It</button>
         </div>
     </div>
 
     <script>
-        const API_URL = "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a552bd85a2a46d5d350525f";
         const FLAGS = {
             ind: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
-            india: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
-            "ind w": "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
-            "ind-w": "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
-            nz: "https://ik.imagekit.io/sqt8ptw1k/images_ZyDOMUciT.png",
-            "new zealand": "https://ik.imagekit.io/sqt8ptw1k/images_ZyDOMUciT.png",
-            "nz w": "https://ik.imagekit.io/sqt8ptw1k/images_ZyDOMUciT.png",
-            "nz-w": "https://ik.imagekit.io/sqt8ptw1k/images_ZyDOMUciT.png"
+            indw: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
+            afg: "https://ik.imagekit.io/sqt8ptw1k/afghanistan.webp?updatedAt=1790568292618",
+            zim: "https://ik.imagekit.io/sqt8ptw1k/zimbabwe.webp?updatedAt=1789455540523",
+            zimw: "https://ik.imagekit.io/sqt8ptw1k/zimbabwe.webp?updatedAt=1789455540523"
         };
-        let isLive = false;
 
-        const el = {
-            modal: document.getElementById('privacyModal'),
-            info: document.getElementById('match-info'),
-            format: document.getElementById('match-format'),
-            status: document.getElementById('match-status'),
-            statusBox: document.getElementById('status-box'),
-            lastBallBox: document.getElementById('last-ball-container'),
-            latestBall: document.getElementById('latest-ball'),
-            toss: document.getElementById('toss-info'),
-            teamA: {
-                name: document.getElementById('team-a-name'),
-                logo: document.getElementById('team-a-logo'),
-                runs: document.getElementById('team-a-runs'),
-                overs: document.getElementById('team-a-overs')
+        // Scheduled Matches (Timing set in IST)
+        let matchesData = [
+            {
+                id: "match_indw_zimw",
+                series: "India Women Tour of Zimbabwe 2026",
+                matchInfo: "INDW vs ZIMW • 1st ODI",
+                startTime: "2026-10-23T14:00:00+05:30", // 23 Oct, 2:00 PM IST
+                durationHours: 8,
+                category: "upcoming",
+                lastBall: null,
+                teamA: { name: "IND-W", score: "Yet to bat", overs: "", logo: FLAGS.indw },
+                teamB: { name: "ZIM-W", score: "Yet to bat", overs: "", logo: FLAGS.zimw },
+                upcomingText: "Starts 23 Oct, 02:00 PM IST",
+                actionUrl: "go:card_indw"
             },
-            teamB: {
-                name: document.getElementById('team-b-name'),
-                logo: document.getElementById('team-b-logo'),
-                runs: document.getElementById('team-b-runs'),
-                overs: document.getElementById('team-b-overs')
+            {
+                id: "match_afg_zim",
+                series: "ODI Tri-Nation Series 2026",
+                matchInfo: "AFG vs ZIM • Final",
+                startTime: "2026-10-23T17:00:00+05:30", // 23 Oct, 5:00 PM IST
+                durationHours: 8,
+                category: "upcoming",
+                lastBall: null,
+                teamA: { name: "AFG", score: "Yet to bat", overs: "", logo: FLAGS.afg },
+                teamB: { name: "ZIM", score: "Yet to bat", overs: "", logo: FLAGS.zim },
+                upcomingText: "Starts 23 Oct, 05:00 PM IST",
+                actionUrl: "go:card_afg"
             }
-        };
+        ];
+
+        let currentTab = "upcoming";
 
         function toggleModal(open) {
-            el.modal.classList.toggle('active', open);
+            document.getElementById('privacyModal').classList.toggle('active', open);
         }
 
-        function getLogo(team, defaultFallback) {
-            if (!team) return defaultFallback;
-            const name = (team.shortName || team.name || "").toLowerCase().trim();
-            if (FLAGS[name]) return FLAGS[name];
-            if (name.includes("ind") || name.includes("india")) return FLAGS.ind;
-            if (name.includes("nz") || name.includes("new zealand")) return FLAGS.nz;
-            if (team.logo) {
-                return team.logo.startsWith("http") ? team.logo : `https://api.cricradio.com.au${team.logo.startsWith('/') ? '' : '/'}${team.logo}`;
+        // Automatic transition logic from Upcoming to Live and Completed
+        function checkAutoLiveTransitions() {
+            const now = Date.now();
+
+            matchesData.forEach(m => {
+                const matchStart = new Date(m.startTime).getTime();
+                const matchEnd = matchStart + (m.durationHours * 3600000);
+
+                if (now < matchStart) {
+                    m.category = "upcoming";
+                } else if (now >= matchStart && now < matchEnd) {
+                    m.category = "live";
+                } else {
+                    m.category = "completed";
+                }
+            });
+        }
+
+        function updateTabBadges() {
+            const counts = { live: 0, upcoming: 0, completed: 0 };
+            matchesData.forEach(m => {
+                if (counts[m.category] !== undefined) counts[m.category]++;
+            });
+            document.getElementById('badge-live').textContent = counts.live;
+            document.getElementById('badge-upcoming').textContent = counts.upcoming;
+            document.getElementById('badge-completed').textContent = counts.completed;
+
+            return counts;
+        }
+
+        function renderMatches() {
+            const container = document.getElementById('matches-container');
+            const filtered = matchesData.filter(m => m.category === currentTab);
+
+            if (filtered.length === 0) {
+                const messages = {
+                    live: "No live matches in progress right now 🏏",
+                    upcoming: "No upcoming fixtures scheduled 📅",
+                    completed: "No completed matches found 🏆"
+                };
+                container.innerHTML = `<div class="empty-placeholder">${messages[currentTab]}</div>`;
+                return;
             }
-            return defaultFallback;
+
+            container.innerHTML = filtered.map(m => {
+                const isLive = m.category === "live";
+                const isCompleted = m.category === "completed";
+                const statusClass = isLive ? "live" : (isCompleted ? "completed" : "");
+                const statusText = isLive 
+                    ? `<span class="live-dot"></span> LIVE` 
+                    : (isCompleted ? "COMPLETED" : "UPCOMING");
+
+                const summaryText = isLive 
+                    ? (m.liveSummary || "Match in progress • Ball-by-ball updates live")
+                    : (isCompleted ? (m.resultText || "Match Finished") : m.upcomingText);
+
+                return `
+                    <article class="match-card" onclick="location.href='${m.actionUrl}'">
+                        <div class="match-meta-bar">
+                            <span class="match-label">${m.matchInfo}</span>
+                            <span class="status-tag ${statusClass}">${statusText}</span>
+                        </div>
+
+                        <div class="venue-row">
+                            <span>${m.series}</span>
+                            ${isLive && m.lastBall ? `<div>Last Ball: <span class="ball-glow">${m.lastBall}</span></div>` : ''}
+                        </div>
+
+                        <div class="teams-arena">
+                            <div class="team-box">
+                                <div class="team-profile">
+                                    <img class="team-crest" src="${m.teamA.logo}" alt="${m.teamA.name}" onerror="this.outerHTML='<div class=\\'team-crest\\'>${m.teamA.name.slice(0,3)}</div>'">
+                                    <span class="team-name-text">${m.teamA.name}</span>
+                                </div>
+                                <div class="team-metrics">
+                                    <div class="runs-val">${m.teamA.score}</div>
+                                    <div class="overs-val">${m.teamA.overs}</div>
+                                </div>
+                            </div>
+
+                            <div class="team-box">
+                                <div class="team-profile">
+                                    <img class="team-crest" src="${m.teamB.logo}" alt="${m.teamB.name}" onerror="this.outerHTML='<div class=\\'team-crest\\'>${m.teamB.name.slice(0,3)}</div>'">
+                                    <span class="team-name-text">${m.teamB.name}</span>
+                                </div>
+                                <div class="team-metrics">
+                                    <div class="runs-val">${m.teamB.score}</div>
+                                    <div class="overs-val">${m.teamB.overs}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="summary-status">${summaryText}</div>
+                    </article>
+                `;
+            }).join('');
         }
 
-        function getScore(teamData, key) {
-            if (!teamData) return { runs: "Yet to bat", overs: "" };
-            const s = teamData[`${key}_1_score`] || teamData.score;
-            if (!s || s.runs === undefined) return { runs: "Yet to bat", overs: "" };
-            return {
-                runs: `${s.runs ?? 0}/${s.wickets ?? 0}`,
-                overs: s.overs ? `(${s.overs} ov)` : ""
-            };
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            const activeBtn = document.getElementById(`tab-btn-${tab}`);
+            if (activeBtn) activeBtn.classList.add('active');
+            renderMatches();
         }
 
-        async function fetchScore() {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 8000);
+        // Automatic scheduler checking every 10 seconds
+        function startMatchScheduler() {
+            checkAutoLiveTransitions();
+            const counts = updateTabBadges();
 
-            try {
-                const res = await fetch(`${API_URL}&_t=${Date.now()}`, { 
-                    cache: "no-store", 
-                    signal: controller.signal 
-                });
-                clearTimeout(timeoutId);
-
-                const data = await res.json();
-                const r = data?.responseData?.result;
-                if (!r) return;
-
-                const tA = r.teams?.a || {};
-                const tB = r.teams?.b || {};
-                const nameA = tA.shortName || tA.name || 'IND';
-                const nameB = tB.shortName || tB.name || 'NZ';
-                const format = (r.format || "T20I").toUpperCase();
-
-                el.info.textContent = `${nameA} vs ${nameB} • ${format}`;
-                el.format.textContent = r.seriesName || `${nameA} Tour of ${nameB} 2026`;
-
-                // Team Scores Check
-                const sA = getScore(tA, "a");
-                const sB = getScore(tB, "b");
-                const hasScore = (sA.runs !== "Yet to bat") || (sB.runs !== "Yet to bat");
-
-                // Auto Live & Completion Logic
-                const rawSt = (r.status || r.matchStatus || r.state || "").toLowerCase().replace(/[\s_-]+/g, "");
-                const isCompleted = rawSt.includes("complete") || rawSt.includes("finish") || rawSt.includes("ended") || Boolean(r.winner || r.winning_team);
-                
-                isLive = !isCompleted && (rawSt.includes("live") || rawSt.includes("progress") || Boolean(r.is_live) || hasScore);
-
-                if (isCompleted) {
-                    el.status.textContent = "COMPLETED";
-                    el.status.className = "status-tag completed";
-                    el.statusBox.textContent = r.lastCommentary?.secondaryText || r.announcement1 || "Match Finished";
-                } else if (isLive) {
-                    el.status.innerHTML = '<span class="live-dot"></span> LIVE';
-                    el.status.className = "status-tag live";
-                    const crr = r.now?.run_rate ? ` • CRR: ${r.now.run_rate}` : "";
-                    const activeTeam = r.settingObj?.currentTeam === "a" ? nameA : nameB;
-                    el.statusBox.textContent = r.lastCommentary?.secondaryText || `${activeTeam} batting${crr}`;
-                } else {
-                    el.status.textContent = "UPCOMING";
-                    el.status.className = "status-tag";
-                    el.statusBox.textContent = r.announcement1 || "IND vs NZ 1st T20I, Today•12:30PM";
-                }
-
-                // Last Ball
-                if (isLive && r.lastCommentary?.primaryText) {
-                    el.latestBall.textContent = r.lastCommentary.primaryText;
-                    el.lastBallBox.style.display = "block";
-                } else {
-                    el.lastBallBox.style.display = "none";
-                }
-
-                // Teams details
-                el.teamA.name.textContent = tA.name || nameA;
-                el.teamA.logo.src = getLogo(tA, FLAGS.ind);
-                el.teamA.runs.textContent = sA.runs;
-                el.teamA.overs.textContent = sA.overs;
-
-                el.teamB.name.textContent = tB.name || nameB;
-                el.teamB.logo.src = getLogo(tB, FLAGS.nz);
-                el.teamB.runs.textContent = sB.runs;
-                el.teamB.overs.textContent = sB.overs;
-
-                // Toss
-                if (r.announcement1 && isLive) {
-                    el.toss.textContent = `Toss: ${r.announcement1}`;
-                    el.toss.style.display = "block";
-                } else {
-                    el.toss.style.display = "none";
-                }
-
-            } catch (e) {
-                // Silently handled
-            } finally {
-                setTimeout(fetchScore, isLive ? 15000 : 60000);
+            if (counts.live > 0) {
+                switchTab('live');
+            } else {
+                switchTab('upcoming');
             }
+
+            setInterval(() => {
+                checkAutoLiveTransitions();
+                updateTabBadges();
+                renderMatches();
+            }, 60000);
         }
 
-        fetchScore();
+        startMatchScheduler();
     </script>
 </body>
 </html>
