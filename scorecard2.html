@@ -382,7 +382,7 @@
     </div>
 
     <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">IND-W vs ZIM-W T20</span>
+        <span class="match-title-text" id="matchHeader">IND vs NZ 1st T20I</span>
         <span id="venueHeader"></span>
     </div>
 
@@ -394,8 +394,8 @@
 </div>
 
 <script>
-    // ✅ Updated Match ID
-    const matchId = "6a4b53d1f96b301cc0895783";
+    // ✅ Updated Match ID for IND vs NZ 1st T20I
+    const matchId = "6a552bd85a2a46d5d350525f";
     const API_URL = "https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=" + matchId;
     
     let matchData = null;
@@ -418,8 +418,8 @@
 
     function getInningsTabLabel(inn, idx, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
-        const aShort = teamA.shortName || teamA.name || "IND-W";
-        const bShort = teamB.shortName || teamB.name || "ZIM-W";
+        const aShort = teamA.shortName || teamA.name || "IND";
+        const bShort = teamB.shortName || teamB.name || "NZ";
         if (inn.key === "a_1" || inn.key === "a") return aShort;
         if (inn.key === "b_1" || inn.key === "b") return bShort;
         return `Inn ${idx + 1}`;
@@ -427,8 +427,8 @@
 
     function getInningsDisplayName(inn, teamA, teamB) {
         if (inn.teamName) return inn.teamName;
-        const aName = teamA.name || teamA.shortName || "India Women";
-        const bName = teamB.name || teamB.shortName || "Zimbabwe Women";
+        const aName = teamA.name || teamA.shortName || "India";
+        const bName = teamB.name || teamB.shortName || "New Zealand";
         if (inn.key === "a_1" || inn.key === "a") return `${aName} Innings`;
         if (inn.key === "b_1" || inn.key === "b") return `${bName} Innings`;
         return "Team Innings";
@@ -446,8 +446,8 @@
 
             const teamA = result.teams?.a || {};
             const teamB = result.teams?.b || {};
-            const nameA = teamA.shortName || teamA.name || 'IND-W';
-            const nameB = teamB.shortName || teamB.name || 'ZIM-W';
+            const nameA = teamA.shortName || teamA.name || 'IND';
+            const nameB = teamB.shortName || teamB.name || 'NZ';
             const format = (result.format || 'T20').toUpperCase();
             const tournament = result.seriesName || `${nameA} vs ${nameB}`;
 
@@ -516,7 +516,7 @@
                             </div>
                             <div class="hero-score-box">
                                 <div class="hero-score-main">Upcoming</div>
-                                <div class="hero-score-sub">${result.announcement1 || "IND-W vs ZIM-W T20"}</div>
+                                <div class="hero-score-sub">${result.announcement1 || "IND vs NZ 1st T20I, Today•12:30PM"}</div>
                             </div>
                         </div>
                         <div class="loading-ph">⏳ Match has not started yet. Full live scorecard will appear once play begins.</div>
