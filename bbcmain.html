@@ -476,6 +476,24 @@ const EVENTS_CONFIG = [
 // CricVoice Cloudflare Worker API ৰ পৰা লাইভ স্ক'ৰ Fetch কৰা ফাংচন
 const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a865c0878dcf06570325445";
 
+// ইননিংসৰ স্ক'ৰ ফৰ্মেট কৰাৰ সহায়ক ফাংচন
+function formatInningScore(teamObj, prefix) {
+    if (!teamObj) return "";
+    const s1 = teamObj[`${prefix}_1_score`];
+    const s2 = teamObj[`${prefix}_2_score`];
+    
+    let str = "";
+    if (s1 && typeof s1.runs !== 'undefined') {
+        const overs = s1.overs ? ` (${s1.overs})` : "";
+        str = `${s1.runs}/${s1.wickets !== undefined ? s1.wickets : 0}${overs}`;
+    }
+    if (s2 && typeof s2.runs !== 'undefined') {
+        const overs2 = s2.overs ? ` (${s2.overs})` : "";
+        str += ` & ${s2.runs}/${s2.wickets !== undefined ? s2.wickets : 0}${overs2}`;
+    }
+    return str;
+}
+
 async function fetchLiveCricketScore() {
     if (!DOM.bannerScore) return;
     try {
@@ -487,39 +505,43 @@ async function fetchLiveCricketScore() {
         const match = json?.responseData?.result || json?.data || json;
 
         if (match) {
-            const teamA = match.teams?.a?.shortName || "Eng";
-            const teamB = match.teams?.b?.shortName || "SL";
+            const teamAData = match.teams?.a || {};
+            const teamBData = match.teams?.b || {};
+
+            const teamAName = teamAData.shortName || teamAData.name || "Eng";
+            const teamBName = teamBData.shortName || teamBData.name || "SL";
+
+            const scoreA = formatInningScore(teamAData, "a");
+            const scoreB = formatInningScore(teamBData, "b");
+
             const status = match.status || "";
-            let statusText = match.announcement1 || "";
+            let announcement = match.announcement1 || "";
 
             let scoreText = "";
 
-            if (status === "notstarted") {
-                scoreText = `🏏 ${teamB} vs ${teamA}`;
-                if (!statusText) {
-                    statusText = "Match yet to start";
-                }
+            if (scoreA && scoreB) {
+                scoreText = `🏏 ${teamAName} ${scoreA} vs ${teamBName} ${scoreB}`;
+            } else if (scoreA) {
+                scoreText = `🏏 ${teamAName} ${scoreA} vs ${teamBName}`;
+            } else if (scoreB) {
+                scoreText = `🏏 ${teamBName} ${scoreB} vs ${teamAName}`;
             } else {
-                // মেচ লাইভ বা সমাপ্ত হ'লে স্ক'ৰ দেখুওৱাৰ ব্যৱস্থা
-                const scoreA = match.teams?.a?.score || match.teams?.a?.scores || "";
-                const scoreB = match.teams?.b?.score || match.teams?.b?.scores || "";
+                scoreText = `🏏 ${teamBName} vs ${teamAName}`;
+            }
 
-                if (scoreA || scoreB) {
-                    scoreText = `🏏 ${teamB} ${scoreB} vs ${teamA} ${scoreA}`.trim();
-                } else {
-                    scoreText = `🏏 ${teamB} vs ${teamA} (Live)`;
-                }
-
-                if (!statusText && status) {
-                    statusText = status.toUpperCase();
+            if (!announcement) {
+                if (status === "notstarted") {
+                    announcement = "Match yet to start";
+                } else if (status) {
+                    announcement = status.toUpperCase();
                 }
             }
 
-            // Listen now ৰ বাওঁফালে স্ক'ৰ আৰু ঘোষণা দেখুওৱা হ'ব
+            // Listen now ৰ বাওঁফালে স্ক'ৰ আৰু ঘোষণা আপডেট
             DOM.bannerScore.textContent = scoreText;
             if (DOM.bannerAnnouncement) {
-                DOM.bannerAnnouncement.textContent = statusText;
-                DOM.bannerAnnouncement.style.display = statusText ? "block" : "none";
+                DOM.bannerAnnouncement.textContent = announcement;
+                DOM.bannerAnnouncement.style.display = announcement ? "block" : "none";
             }
         }
     } catch (err) {
@@ -678,7 +700,7 @@ function updateAppUI() {
 document.addEventListener("DOMContentLoaded", () => {
     updateAppUI();
     
-    // পেজ লোড হ'লে লগে লগে স্ক'ৰ ফেচ হ'ব
+    // পেজ লোড হোৱাৰ লগে লগে স্ক'ৰ ফেচ কৰিব
     fetchLiveCricketScore();
 
     let attempts = 0;
@@ -692,14 +714,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 300);
 
-    // প্ৰতি ১৫ ছেকেণ্ডত স্বয়ংক্ৰিয়ভাৱে স্ক'ৰ সতেজ হ'ব
+    // প্ৰতি ১৫ ছেকেণ্ডৰ মূৰে মূৰে স্ক'ৰ সতেজ হ'ব
     setInterval(() => {
         if (!document.hidden) {
             fetchLiveCricketScore();
         }
     }, 15000);
 
-    // ষ্টেচনৰ তালিকা প্রতি ১ মিনিটত আপডেট হ'ব
+    // ষ্টেচনৰ সময়সূচী প্রতি ১ মিনিটত আপডেট হ'ব
     setInterval(updateAppUI, 60000);
     
     document.addEventListener("visibilitychange", () => {
