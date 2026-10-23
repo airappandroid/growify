@@ -2,30 +2,102 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b1020">
 <title>Cricket Score App</title>
 <style>
-:root{--bg:#0b1020;--card:#161d33;--text:#fff;--muted:#a7b1c9;--accent:#ff7a45;--green:#4cd964;--line:rgba(255,255,255,.09)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px Arial,Roboto,sans-serif;-webkit-tap-highlight-color:transparent}button{font:inherit;cursor:pointer}
+:root{--bg:#0b1020;--card:#161d33;--card2:#202940;--text:#fff;--muted:#a7b1c9;--accent:#ff7a45;--green:#4cd964;--line:rgba(255,255,255,.09);--yellow:#ffbd59}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--text);font:14px Arial,Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
+button{font:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .topbar{position:sticky;top:0;z-index:10;background:var(--bg);padding:12px 14px;border-bottom:1px solid var(--line)}
-.topline{display:flex;align-items:center;justify-content:space-between;gap:10px}.brand{display:flex;align-items:center;gap:9px;min-width:0}.logo{width:37px;height:37px;display:grid;place-items:center;background:var(--accent);border-radius:10px;font-size:20px}.name{font-size:17px;font-weight:800}.tagline{font-size:10px;color:var(--muted);margin-top:3px}.actions{display:flex;gap:6px}.icon-btn{background:#202941;border:1px solid var(--line);color:white;border-radius:9px;padding:9px 10px;font-size:12px;white-space:nowrap}.audio-btn{display:block;width:100%;background:var(--accent);color:#101827;border:0;border-radius:11px;padding:13px 8px;font-size:14px;font-weight:800;margin-top:11px}
-.container{max-width:600px;margin:auto;padding:15px}.heading{font-size:17px;font-weight:800;margin:4px 0 13px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}.match-head{padding:14px;border-bottom:1px solid var(--line)}.live{display:flex;align-items:center;gap:7px;font-size:12px}.dot{width:8px;height:8px;border-radius:50%;background:var(--green)}.live-text{color:var(--green);font-weight:800}.status{color:var(--muted);margin-left:auto;text-align:right}.note{color:var(--muted);font-size:12px;margin-top:9px}.innings{padding:17px 14px}.teamline{display:flex;align-items:center;justify-content:space-between;gap:12px}.team{font-weight:800;font-size:16px}.score{font-size:28px;font-weight:800}.small{font-size:12px;color:var(--muted);margin-top:6px}.stats{display:flex;gap:8px;border-top:1px solid var(--line);padding-top:13px;margin-top:16px}.stat{flex:1;min-width:0;background:#202940;padding:10px 7px;border-radius:9px}.stat-label{font-size:10px;color:var(--muted)}.stat-value{font-size:15px;font-weight:800;margin-top:6px}.scorecard-btn{display:block;width:calc(100% - 28px);margin:0 14px 14px;padding:13px;background:transparent;color:var(--accent);border:1px solid var(--accent);border-radius:10px;font-weight:800}.panel{margin-top:14px;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:14px}.panel-title{font-size:15px;font-weight:800;margin-bottom:12px}.player-row{display:grid;grid-template-columns:minmax(0,1fr) 48px 48px 53px;gap:4px;padding:10px 0;border-bottom:1px solid var(--line);font-size:12px;align-items:center}.player-row:last-child{border-bottom:0}.player-row.header{color:var(--muted);font-size:11px;padding-top:0}.num{text-align:right;font-variant-numeric:tabular-nums}.player-name{overflow-wrap:anywhere}.center{text-align:center;padding:24px 12px;color:var(--muted)}.footer{text-align:center;color:#8996b2;font-size:11px;padding:22px 5px}.error{color:#ffb49a}
-.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}.modal-backdrop.show{display:flex}.modal{width:100%;max-width:350px;background:#1a233a;border:1px solid #364159;border-radius:16px;padding:20px;box-shadow:0 15px 40px #0008}.modal-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.modal h2{font-size:18px;margin:0}.close-btn{background:#303a51;border:0;color:white;border-radius:8px;padding:7px 11px;font-size:18px}.modal p{color:#d3dbea;font-size:13px;line-height:1.65;margin:15px 0 0}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:9px;min-width:0}
+.logo{width:37px;height:37px;display:grid;place-items:center;background:var(--accent);border-radius:10px;font-size:20px;flex-shrink:0}
+.name{font-size:17px;font-weight:800}
+.tagline{font-size:10px;color:var(--muted);margin-top:3px}
+.actions{display:flex;gap:6px}
+.icon-btn{display:grid;place-items:center;width:40px;height:40px;padding:0;background:#202941;border:1px solid var(--line);color:white;border-radius:9px;flex-shrink:0}
+.audio-btn{display:block;width:100%;background:var(--accent);color:#101827;border:0;border-radius:11px;padding:13px 8px;font-size:14px;font-weight:800;margin-top:11px}
+.container{max-width:600px;margin:auto;padding:15px}
+.heading{font-size:17px;font-weight:800;margin:4px 0 13px}
+.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.match-head{padding:14px;border-bottom:1px solid var(--line)}
+.live{display:flex;align-items:center;gap:7px;font-size:12px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
+.live-text{color:var(--green);font-weight:800}
+.status{color:var(--muted);margin-left:auto;text-align:right}
+.note{color:var(--muted);font-size:12px;margin-top:9px;line-height:1.5}
+.team-scores{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 14px 0}
+.team-card{background:var(--card2);border-radius:11px;padding:10px;min-width:0}
+.team-top{display:flex;align-items:center;gap:7px;min-width:0}
+.team-logo{width:28px;height:28px;object-fit:contain;flex-shrink:0}
+.team-title{font-size:12px;font-weight:700;overflow-wrap:anywhere}
+.team-score{font-size:18px;font-weight:800;margin-top:7px}
+.team-overs{font-size:11px;color:var(--muted);margin-top:3px}
+.innings{padding:15px 14px}
+.teamline{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.team{font-weight:800;font-size:16px;overflow-wrap:anywhere}
+.score{font-size:28px;font-weight:800;white-space:nowrap}
+.small{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.45}
+.stats{display:flex;gap:8px;border-top:1px solid var(--line);padding-top:13px;margin-top:16px}
+.stat{flex:1;min-width:0;background:var(--card2);padding:10px 7px;border-radius:9px}
+.stat-label{font-size:10px;color:var(--muted)}
+.stat-value{font-size:15px;font-weight:800;margin-top:6px;overflow-wrap:anywhere}
+.scorecard-btn{display:block;width:calc(100% - 28px);margin:0 14px 14px;padding:13px;background:transparent;color:var(--accent);border:1px solid var(--accent);border-radius:10px;font-weight:800}
+.panel{margin-top:14px;padding:14px}
+.panel-title{font-size:15px;font-weight:800;margin-bottom:12px}
+.player-row{display:grid;grid-template-columns:minmax(0,1fr) 42px 42px 54px;gap:5px;padding:10px 0;border-bottom:1px solid var(--line);font-size:12px;align-items:center}
+.player-row:last-child{border-bottom:0}
+.player-row.header{color:var(--muted);font-size:11px;padding-top:0}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.player-name{overflow-wrap:anywhere}
+.center{text-align:center;padding:24px 12px;color:var(--muted)}
+.footer{text-align:center;color:#8996b2;font-size:11px;padding:22px 5px}
+.error{color:#ffb49a}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-backdrop.show{display:flex}
+.modal{width:100%;max-width:350px;max-height:80vh;overflow:auto;background:#1a233a;border:1px solid #364159;border-radius:16px;padding:20px;box-shadow:0 15px 40px #0008}
+.modal-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.modal h2{font-size:18px;margin:0}
+.close-btn{background:#303a51;border:0;color:white;border-radius:8px;padding:7px 11px;font-size:18px}
+.modal p{color:#d3dbea;font-size:13px;line-height:1.65;margin:15px 0 0}
+@media(max-width:360px){.container{padding:11px}.team-scores{padding-left:10px;padding-right:10px}.score{font-size:24px}.stats{gap:5px}.stat{padding:9px 5px}.stat-value{font-size:13px}.player-row{grid-template-columns:minmax(0,1fr) 34px 34px 46px;font-size:11px}}
 </style>
 </head>
 <body>
 <header class="topbar">
   <div class="topline">
     <div class="brand"><div class="logo">🏏</div><div><div class="name">Cricket Score App</div><div class="tagline">Live Cricket Scores</div></div></div>
-    <div class="actions"><button class="icon-btn" id="privacyBtn" type="button" aria-label="Privacy Policy">Privacy</button><button class="icon-btn" id="shareBtn" type="button" aria-label="Share App">Share</button></div>
+    <div class="actions">
+      <button class="icon-btn" id="privacyBtn" type="button" aria-label="Privacy Policy" title="Privacy Policy">
+        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
+      </button>
+      <button class="icon-btn" id="shareBtn" type="button" aria-label="Share App" title="Share App">
+        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="18" cy="5" r="3"/>
+          <circle cx="6" cy="12" r="3"/>
+          <circle cx="18" cy="19" r="3"/>
+          <path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"/>
+        </svg>
+      </button>
+    </div>
   </div>
   <button class="audio-btn" id="audioBtn" type="button">🎙️ Listen to Hindi Audio Commentary</button>
 </header>
+
 <main class="container">
   <div class="heading">🏏 Live Match</div>
   <section class="card">
-    <div class="match-head"><div class="live"><span class="dot" id="liveDot"></span><span class="live-text" id="liveLabel">LIVE SCORE</span><span class="status" id="status">Loading...</span></div><div class="note" id="matchNote">Loading match information...</div></div>
+    <div class="match-head">
+      <div class="live"><span class="dot" id="liveDot"></span><span class="live-text" id="liveLabel">MATCH UPDATE</span><span class="status" id="status">Loading...</span></div>
+      <div class="note" id="matchNote">Loading match information...</div>
+    </div>
     <div id="scoreContent" class="center">Loading live score...</div>
     <button class="scorecard-btn" id="scorecardBtn" type="button">Full Scorecard →</button>
   </section>
@@ -33,71 +105,131 @@
   <section class="panel"><div class="panel-title">🎯 Bowlers</div><div id="bowlers" class="center">Loading bowling details...</div></section>
   <div class="footer" id="updated">Cricket Score App</div>
 </main>
+
 <div class="modal-backdrop" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle" aria-hidden="true">
-  <div class="modal"><div class="modal-top"><h2 id="privacyTitle">Privacy Policy</h2><button class="close-btn" id="closePrivacy" type="button" aria-label="Close">×</button></div>
-  <p>Cricket Score App displays cricket information from an external score service. The app does not require account registration. Match data is requested from a third-party API, which may receive technical information such as your IP address. We do not directly request or store your personal details through this page. For privacy questions, contact the app developer.</p>
+  <div class="modal">
+    <div class="modal-top"><h2 id="privacyTitle">Privacy Policy</h2><button class="close-btn" id="closePrivacy" type="button" aria-label="Close">×</button></div>
+    <p>Cricket Score App displays cricket information from an external score service. The app does not require account registration. Match data is requested from a third-party API, which may receive technical information such as your IP address. We do not directly request or store your personal details through this page. For privacy questions, contact the app developer.</p>
   </div>
 </div>
+
 <script>
 (function(){
 'use strict';
+
 const API='https://bdcr.aminurmarch.workers.dev/?id=99754';
+const REFRESH_MS=60000;
 const $=id=>document.getElementById(id);
-const text=v=>v===null||v===undefined||v===''?'—':String(v);
+const text=v=>(v===null||v===undefined||v===''?'—':String(v));
 const esc=v=>text(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const first=(...values)=>values.find(v=>v!==undefined&&v!==null&&v!=='');
-let busy=false,hasData=false;
-$('scorecardBtn').onclick=()=>{location.href='go:card1'};
-$('audioBtn').onclick=()=>{location.href='go:commentary'};
-$('shareBtn').onclick=()=>{location.href='http://action_share'};
-function showPrivacy(show){$('privacyModal').classList.toggle('show',show);$('privacyModal').setAttribute('aria-hidden',String(!show));}
+let busy=false,hasData=false,controller=null;
+
+$('scorecardBtn').onclick=()=>{location.href='go:card1';};
+$('audioBtn').onclick=()=>{location.href='go:commentary';};
+$('shareBtn').onclick=()=>{location.href='http://action_share';};
+
+function showPrivacy(show){
+  $('privacyModal').classList.toggle('show',show);
+  $('privacyModal').setAttribute('aria-hidden',String(!show));
+}
 $('privacyBtn').onclick=()=>showPrivacy(true);
 $('closePrivacy').onclick=()=>showPrivacy(false);
-$('privacyModal').onclick=e=>{if(e.target===$('privacyModal'))showPrivacy(false)};
-document.addEventListener('keydown',e=>{if(e.key==='Escape')showPrivacy(false)});
-function playerTable(items,bat){
- if(!Array.isArray(items)||!items.length)return '<div class="center">Details not available</div>';
- const cols=bat?['Batter','R','B','SR']:['Bowler','O','R','W'];
- let html='<div class="player-row header">'+cols.map((c,i)=>'<div class="'+(i?'num':'')+'">'+c+'</div>').join('')+'</div>';
- items.forEach(p=>{
-  const v=bat?[first(p.name,p.batsman,p.batter),first(p.runs,p.r),first(p.balls_faced,p.balls,p.b),first(p.strike_rate,p.sr)]:[first(p.name,p.bowler),first(p.overs,p.o),first(p.runs_conceded,p.runs,p.r),first(p.wickets,p.w)];
-  html+='<div class="player-row">'+v.map((x,i)=>'<div class="'+(i?'num':'player-name')+'">'+esc(x)+'</div>').join('')+'</div>';
- });
- return html;
+$('privacyModal').onclick=e=>{if(e.target===$('privacyModal'))showPrivacy(false);};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')showPrivacy(false);});
+
+function playerTable(items,isBatting){
+  if(!Array.isArray(items)||!items.length) return '<div class="center">Details not available</div>';
+  const cols=isBatting?['Batter','R','B','SR']:['Bowler','O','R','W'];
+  let out='<div class="player-row header">'+cols.map((c,i)=>'<div class="'+(i?'num':'')+'">'+c+'</div>').join('')+'</div>';
+  items.forEach(p=>{
+    const values=isBatting
+      ?[first(p.name,p.batsman,p.batter),first(p.runs,p.r),first(p.balls_faced,p.balls,p.b),first(p.strike_rate,p.sr)]
+      :[first(p.name,p.bowler),first(p.overs,p.o),first(p.runs_conceded,p.runs,p.r),first(p.wickets,p.w)];
+    out+='<div class="player-row">'+values.map((v,i)=>'<div class="'+(i?'num':'player-name')+'">'+esc(v)+'</div>').join('')+'</div>';
+  });
+  return out;
 }
+
 function render(data){
- const m=data.response||data.data||data;
- const s=m.live_score||m.score||{};
- const state=first(m.status_str,m.match_status,m.status,'Match update');
- $('status').textContent=text(state);
- $('matchNote').textContent=text(first(m.status_note,m.note,m.match_title,m.title,'Live cricket score'));
- const live=/live|ongoing|in progress/i.test(String(state));
- $('liveLabel').textContent=live?'LIVE':'MATCH UPDATE';
- $('liveDot').style.background=live?'var(--green)':'#ffb454';
- $('scoreContent').className='';
- $('scoreContent').innerHTML='<div class="innings"><div class="teamline"><div><div class="team">'+esc(first(m.team_batting,m.batting_team,'Batting Team'))+'</div><div class="small">Batting</div></div><div class="score">'+esc(first(s.runs,m.runs))+'/'+esc(first(s.wickets,m.wickets))+'</div></div><div class="small">Overs: '+esc(first(s.overs,m.overs))+'</div><div class="stats"><div class="stat"><div class="stat-label">Run Rate</div><div class="stat-value">'+esc(first(s.runrate,s.run_rate,s.crr))+'</div></div><div class="stat"><div class="stat-label">Target</div><div class="stat-value">'+esc(first(s.target,m.target))+'</div></div><div class="stat"><div class="stat-label">Required RR</div><div class="stat-value">'+esc(first(s.required_runrate,s.rrr))+'</div></div></div><div class="small">Bowling: '+esc(first(m.team_bowling,m.bowling_team))+'</div></div>';
- $('batters').className='';$('bowlers').className='';
- $('batters').innerHTML=playerTable(first(m.batsmen,m.batters,[]),true);
- $('bowlers').innerHTML=playerTable(first(m.bowlers,[]),false);
- $('updated').textContent='Last updated: '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
-}
-async function update(){
- if(busy||document.hidden)return;busy=true;
- const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),8000);
- try{
-  const res=await fetch(API,{cache:'no-store',signal:controller.signal});
-  if(!res.ok)throw Error('HTTP '+res.status);
-  const data=await res.json();
   const m=data.response||data.data||data;
-  if(!m||typeof m!=='object'||(!m.live_score&&!m.score&&m.runs===undefined))throw Error('No score data');
-  render(data);hasData=true;
- }catch(e){
-  if(hasData){$('updated').textContent='Connection issue — showing last available score';}
-  else{$('scoreContent').className='center error';$('scoreContent').textContent='Unable to load score. Check your internet connection.';$('batters').textContent='Details not available';$('bowlers').textContent='Details not available';}
- }finally{clearTimeout(timeout);busy=false;}
+  const s=m.live_score||m.score||{};
+  const state=first(m.status_str,m.match_status,m.status,'Match update');
+  const gameState=String(first(m.game_state_str,''));
+  const note=first(m.status_note,m.note,m.match_title,m.title,'Live cricket score');
+  const inningBreak=/inning\s*break|innings\s*break/i.test(gameState+' '+String(note));
+  const live=/live|ongoing|in progress/i.test(String(state))&&!inningBreak;
+  $('status').textContent=inningBreak?'Innings Break':text(state);
+  $('matchNote').textContent=text(note);
+  $('liveLabel').textContent=inningBreak?'INNINGS BREAK':(live?'LIVE':'MATCH UPDATE');
+  $('liveDot').style.background=live?'var(--green)':(inningBreak?'var(--yellow)':'#8996b2');
+
+  const batting=first(m.team_batting,m.batting_team,'Batting Team');
+  const bowling=first(m.team_bowling,m.bowling_team,'Bowling Team');
+  const runs=first(s.runs,m.runs);
+  const wickets=first(s.wickets,m.wickets);
+  const score=(runs!==undefined&&wickets!==undefined)?String(runs)+'/'+String(wickets):'—';
+  const overs=first(s.overs,m.overs);
+  const rr=first(s.runrate,s.run_rate,s.crr);
+  const target=first(s.target,m.target);
+  const rrr=first(s.required_runrate,s.rrr);
+  const showTarget=target!==undefined&&Number(target)>0;
+  const showRRR=rrr!==undefined&&rrr!==''&&Number.isFinite(Number(rrr))&&Number(rrr)>0;
+
+  $('scoreContent').className='';
+  $('scoreContent').innerHTML=
+    '<div class="innings">'+
+      '<div class="teamline"><div><div class="team">'+esc(batting)+'</div><div class="small">Batting</div></div><div class="score">'+esc(score)+'</div></div>'+
+      (overs!==undefined?'<div class="small">Overs: '+esc(overs)+'</div>':'')+
+      '<div class="stats">'+
+        '<div class="stat"><div class="stat-label">Run Rate</div><div class="stat-value">'+esc(rr)+'</div></div>'+
+        '<div class="stat"><div class="stat-label">Target</div><div class="stat-value">'+(showTarget?esc(target):'—')+'</div></div>'+
+        '<div class="stat"><div class="stat-label">Required RR</div><div class="stat-value">'+(showRRR?esc(rrr):'—')+'</div></div>'+
+      '</div>'+
+      '<div class="small">Bowling: '+esc(bowling)+'</div>'+
+    '</div>';
+
+  $('batters').className='';
+  $('bowlers').className='';
+  $('batters').innerHTML=playerTable(first(m.batsmen,m.batters,[]),true);
+  $('bowlers').innerHTML=playerTable(first(m.bowlers,[]),false);
+  $('updated').textContent='Last updated: '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
 }
-update();setInterval(update,60000);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)update()});
+
+async function update(){
+  if(busy||document.hidden)return;
+  busy=true;
+  controller=new AbortController();
+  const timeout=setTimeout(()=>controller&&controller.abort(),8000);
+  try{
+    const res=await fetch(API,{cache:'no-store',signal:controller.signal});
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    const data=await res.json();
+    const m=data&& (data.response||data.data||data);
+    if(!m||typeof m!=='object'||(!m.live_score&&!m.score&&!Array.isArray(m.teams)&&m.runs===undefined)){
+      throw new Error('No score data');
+    }
+    render(data);
+    hasData=true;
+  }catch(e){
+    if(hasData){
+      $('updated').textContent='Connection issue — showing last available score';
+    }else{
+      $('scoreContent').className='center error';
+      $('scoreContent').textContent='Unable to load score. Check your internet connection.';
+      $('batters').textContent='Details not available';
+      $('bowlers').textContent='Details not available';
+    }
+  }finally{
+    clearTimeout(timeout);
+    controller=null;
+    busy=false;
+  }
+}
+
+update();
+setInterval(update,REFRESH_MS);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)update();});
 })();
 </script>
 </body>
