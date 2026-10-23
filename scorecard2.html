@@ -111,7 +111,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <script>
 (function(){
 'use strict';
-const API='https://bdcr2.aminurmarch.workers.dev/?id=99754';
+const API='https://bdcr2.aminurmarch.workers.dev/?id=98440';
 const REFRESH_MS=60000;
 const $=id=>document.getElementById(id);
 const val=v=>(v===null||v===undefined||v===''?'—':String(v));
@@ -301,7 +301,7 @@ function render(data){
 }
 function renderScorecards(innings){
   if(!innings.length){
-    $('scorecards').innerHTML='<section class="panel"><div class="empty">Full scorecard data is not available. The API may return only live-score details for this match.</div></section>';
+    $('scorecards').innerHTML='<section class="panel"><div class="empty">Full scorecard is not available yet. Live match details may be shown here instead.</div></section>';
     return;
   }
   if(innings.length>1){
@@ -326,7 +326,7 @@ async function loadData(){
     if(!hasData){
       $('scorecards').innerHTML='<section class="panel"><div class="empty error">Unable to load scorecard. Please check your internet connection and try again.</div></section>';
       $('matchTitle').textContent='Scorecard unavailable';
-      $('matchNote').textContent='The API could not be reached.';
+      $('matchNote').textContent='Unable to connect right now. Please try again later.';
     }else{
       $('updatedTop').textContent='Connection issue';
       $('updated').textContent='Connection issue — showing last available scorecard';
