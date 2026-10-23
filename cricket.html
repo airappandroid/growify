@@ -474,10 +474,11 @@
             zimw: "https://ik.imagekit.io/sqt8ptw1k/zimbabwe.webp?updatedAt=1789455540523"
         };
 
-        // Scheduled Matches (Timing set in IST)
+        // Scheduled Matches with added CricRadio API Endpoints
         let matchesData = [
             {
                 id: "match_indw_zimw",
+                apiUrl: "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a4b53d5f96b301cc0895786",
                 series: "India Women Tour of Zimbabwe 2026",
                 matchInfo: "INDW vs ZIMW • 1st ODI",
                 startTime: "2026-10-23T14:00:00+05:30", // 23 Oct, 2:00 PM IST
@@ -491,6 +492,7 @@
             },
             {
                 id: "match_afg_zim",
+                apiUrl: "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6abf701d1c313bb3df5a1a79",
                 series: "ODI Tri-Nation Series 2026",
                 matchInfo: "AFG vs ZIM • Final",
                 startTime: "2026-10-23T17:00:00+05:30", // 23 Oct, 5:00 PM IST
@@ -510,11 +512,14 @@
             document.getElementById('privacyModal').classList.toggle('active', open);
         }
 
-        // Automatic transition logic from Upcoming to Live and Completed
+        // Automatic fallback transition logic based on device time
         function checkAutoLiveTransitions() {
             const now = Date.now();
 
             matchesData.forEach(m => {
+                // If API already defined category dynamically, retain unless still in upcoming time
+                if (m.hasApiStatus) return;
+
                 const matchStart = new Date(m.startTime).getTime();
                 const matchEnd = matchStart + (m.durationHours * 3600000);
 
@@ -526,6 +531,83 @@
                     m.category = "completed";
                 }
             });
+        }
+
+        // Fetch Real-time Updates from CricRadio API
+        async function fetchMatchUpdates() {
+            for (let m of matchesData) {
+                if (!m.apiUrl) continue;
+                try {
+                    const response = await fetch(m.apiUrl);
+                    if (!response.ok) continue;
+
+                    const resJson = await response.json();
+                    const d = resJson.data || resJson;
+
+                    if (!d) continue;
+
+                    // Match Header & Series Info
+                    if (d.series_name || d.seriesName) {
+                        m.series = d.series_name || d.seriesName;
+                    }
+                    if (d.match_name || d.matchInfo || d.name) {
+                        m.matchInfo = d.match_name || d.matchInfo || d.name;
+                    }
+
+                    // Live Status mapping
+                    const rawStatus = (d.status || d.state || d.match_status || "").toLowerCase();
+                    if (rawStatus.includes("live") || rawStatus.includes("progress") || rawStatus.includes("running") || rawStatus.includes("in progress")) {
+                        m.category = "live";
+                        m.hasApiStatus = true;
+                    } else if (rawStatus.includes("complete") || rawStatus.includes("finish") || rawStatus.includes("ended") || rawStatus.includes("result") || rawStatus.includes("won")) {
+                        m.category = "completed";
+                        m.hasApiStatus = true;
+                    } else if (rawStatus.includes("upcom") || rawStatus.includes("schedul")) {
+                        m.category = "upcoming";
+                        m.hasApiStatus = true;
+                    }
+
+                    // Last Ball Feed
+                    if (d.last_ball || d.lastBall || d.recent_ball) {
+                        m.lastBall = d.last_ball || d.lastBall || d.recent_ball;
+                    }
+
+                    // Match Status note / result
+                    if (d.status_note || d.result || d.summary || d.statusText) {
+                        if (m.category === "completed") {
+                            m.resultText = d.result || d.status_note || d.summary;
+                        } else {
+                            m.liveSummary = d.status_note || d.summary || d.statusText;
+                        }
+                    }
+
+                    // Team A Score details
+                    const t1 = d.team_a || d.teamA || d.team1 || (Array.isArray(d.teams) ? d.teams[0] : null);
+                    if (t1) {
+                        if (t1.name || t1.short_name) m.teamA.name = t1.short_name || t1.name;
+                        const score1 = t1.score || (t1.runs !== undefined ? `${t1.runs}${t1.wickets !== undefined ? '/' + t1.wickets : ''}` : null);
+                        if (score1) m.teamA.score = score1;
+                        if (t1.overs !== undefined && t1.overs !== "") m.teamA.overs = `${t1.overs} ov`;
+                        if (t1.logo || t1.flag) m.teamA.logo = t1.logo || t1.flag;
+                    }
+
+                    // Team B Score details
+                    const t2 = d.team_b || d.teamB || d.team2 || (Array.isArray(d.teams) ? d.teams[1] : null);
+                    if (t2) {
+                        if (t2.name || t2.short_name) m.teamB.name = t2.short_name || t2.name;
+                        const score2 = t2.score || (t2.runs !== undefined ? `${t2.runs}${t2.wickets !== undefined ? '/' + t2.wickets : ''}` : null);
+                        if (score2) m.teamB.score = score2;
+                        if (t2.overs !== undefined && t2.overs !== "") m.teamB.overs = `${t2.overs} ov`;
+                        if (t2.logo || t2.flag) m.teamB.logo = t2.logo || t2.flag;
+                    }
+
+                } catch (err) {
+                    console.warn("Unable to fetch live feed for " + m.id, err);
+                }
+            }
+
+            updateTabBadges();
+            renderMatches();
         }
 
         function updateTabBadges() {
@@ -618,8 +700,8 @@
             renderMatches();
         }
 
-        // Automatic scheduler checking every 10 seconds
-        function startMatchScheduler() {
+        // Initialize Scheduler and Live API Polling
+        async function startMatchScheduler() {
             checkAutoLiveTransitions();
             const counts = updateTabBadges();
 
@@ -629,6 +711,13 @@
                 switchTab('upcoming');
             }
 
+            // Fetch live API data immediately
+            await fetchMatchUpdates();
+
+            // Auto-refresh scores every 60 seconds
+            setInterval(fetchMatchUpdates, 60000);
+
+            // Time schedule checker every 60 seconds
             setInterval(() => {
                 checkAutoLiveTransitions();
                 updateTabBadges();
