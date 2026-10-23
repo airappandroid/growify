@@ -96,7 +96,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   <section class="card">
     <div class="match-head">
       <div class="live"><span class="dot" id="liveDot"></span><span class="live-text" id="liveLabel">MATCH UPDATE</span><span class="status" id="status">Loading...</span></div>
-      <div class="note" id="matchNote">Loading match information...</div>
+      <div class="note" id="matchNote">IND vs NZ 2nd T20I, Today · 12:30 PM</div>
     </div>
     <div id="scoreContent" class="center">Loading live score...</div>
     <button class="scorecard-btn" id="scorecardBtn" type="button">Full Scorecard →</button>
@@ -109,7 +109,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <div class="modal-backdrop" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle" aria-hidden="true">
   <div class="modal">
     <div class="modal-top"><h2 id="privacyTitle">Privacy Policy</h2><button class="close-btn" id="closePrivacy" type="button" aria-label="Close">×</button></div>
-    <p>Cricket Score App displays cricket information from an external score service. The app does not require account registration. Match data is requested from a third-party API, which may receive technical information such as your IP address. We do not directly request or store your personal details through this page. For privacy questions, contact the app developer.</p>
+    <p>Cricket Score App displays cricket information from an external score service. The app does not require account registration. Match data is requested from a third-party score service, which may receive technical information such as your IP address. We do not directly request or store your personal details through this page. For privacy questions, contact the app developer.</p>
   </div>
 </div>
 
@@ -117,7 +117,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 (function(){
 'use strict';
 
-const API='https://bdcr.aminurmarch.workers.dev/?id=99754';
+const API='https://bdcr.aminurmarch.workers.dev/?id=98440';
 const REFRESH_MS=60000;
 const $=id=>document.getElementById(id);
 const text=v=>(v===null||v===undefined||v===''?'—':String(v));
@@ -154,9 +154,9 @@ function playerTable(items,isBatting){
 function render(data){
   const m=data.response||data.data||data;
   const s=m.live_score||m.score||{};
-  const state=first(m.status_str,m.match_status,m.status,'Match update');
+  const state=first(m.status_str,m.match_status,m.status,'Scheduled');
   const gameState=String(first(m.game_state_str,''));
-  const note=first(m.status_note,m.note,m.match_title,m.title,'Live cricket score');
+  const note=first(m.status_note,m.note,m.match_title,m.title,'IND vs NZ 2nd T20I, Today · 12:30 PM');
   const inningBreak=/inning\s*break|innings\s*break/i.test(gameState+' '+String(note));
   const live=/live|ongoing|in progress/i.test(String(state))&&!inningBreak;
   $('status').textContent=inningBreak?'Innings Break':text(state);
@@ -164,8 +164,8 @@ function render(data){
   $('liveLabel').textContent=inningBreak?'INNINGS BREAK':(live?'LIVE':'MATCH UPDATE');
   $('liveDot').style.background=live?'var(--green)':(inningBreak?'var(--yellow)':'#8996b2');
 
-  const batting=first(m.team_batting,m.batting_team,'Batting Team');
-  const bowling=first(m.team_bowling,m.bowling_team,'Bowling Team');
+  const batting=first(m.team_batting,m.batting_team,'India');
+  const bowling=first(m.team_bowling,m.bowling_team,'New Zealand');
   const runs=first(s.runs,m.runs);
   const wickets=first(s.wickets,m.wickets);
   const score=(runs!==undefined&&wickets!==undefined)?String(runs)+'/'+String(wickets):'—';
@@ -206,19 +206,21 @@ async function update(){
     if(!res.ok)throw new Error('HTTP '+res.status);
     const data=await res.json();
     const m=data&& (data.response||data.data||data);
-    if(!m||typeof m!=='object'||(!m.live_score&&!m.score&&!Array.isArray(m.teams)&&m.runs===undefined)){
-      throw new Error('No score data');
-    }
+    if(!m||typeof m!=='object') throw new Error('Invalid match response');
     render(data);
     hasData=true;
   }catch(e){
     if(hasData){
       $('updated').textContent='Connection issue — showing last available score';
     }else{
-      $('scoreContent').className='center error';
-      $('scoreContent').textContent='Unable to load score. Check your internet connection.';
-      $('batters').textContent='Details not available';
-      $('bowlers').textContent='Details not available';
+      $('scoreContent').className='center';
+      $('scoreContent').innerHTML='<div class="innings"><div class="teamline"><div><div class="team">India</div><div class="small">Scheduled</div></div><div class="score">—</div></div><div class="small">Match starts today at 12:30 PM</div><div class="teamline" style="margin-top:12px"><div class="team">New Zealand</div><div class="score">—</div></div></div>';
+      $('matchNote').textContent='IND vs NZ 2nd T20I, Today · 12:30 PM';
+      $('status').textContent='Scheduled';
+      $('liveLabel').textContent='UPCOMING';
+      $('liveDot').style.background='#8996b2';
+      $('batters').textContent='Batting details will appear when the match starts.';
+      $('bowlers').textContent='Bowling details will appear when the match starts.';
     }
   }finally{
     clearTimeout(timeout);
