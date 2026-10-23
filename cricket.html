@@ -474,14 +474,13 @@
             zimw: "https://ik.imagekit.io/sqt8ptw1k/zimbabwe.webp?updatedAt=1789455540523"
         };
 
-        // Scheduled Matches with added CricRadio API Endpoints
         let matchesData = [
             {
                 id: "match_indw_zimw",
                 apiUrl: "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6a4b53d5f96b301cc0895786",
                 series: "India Women Tour of Zimbabwe 2026",
                 matchInfo: "INDW vs ZIMW • 1st ODI",
-                startTime: "2026-10-23T14:00:00+05:30", // 23 Oct, 2:00 PM IST
+                startTime: "2026-10-23T14:00:00+05:30",
                 durationHours: 8,
                 category: "upcoming",
                 lastBall: null,
@@ -495,7 +494,7 @@
                 apiUrl: "https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=6abf701d1c313bb3df5a1a79",
                 series: "ODI Tri-Nation Series 2026",
                 matchInfo: "AFG vs ZIM • Final",
-                startTime: "2026-10-23T17:00:00+05:30", // 23 Oct, 5:00 PM IST
+                startTime: "2026-10-23T17:00:00+05:30",
                 durationHours: 8,
                 category: "upcoming",
                 lastBall: null,
@@ -512,12 +511,11 @@
             document.getElementById('privacyModal').classList.toggle('active', open);
         }
 
-        // Automatic fallback transition logic based on device time
+        // Fallback: সময় অনুসূচী অনুসৰি স্থিতি পৰীক্ষা
         function checkAutoLiveTransitions() {
             const now = Date.now();
 
             matchesData.forEach(m => {
-                // If API already defined category dynamically, retain unless still in upcoming time
                 if (m.hasApiStatus) return;
 
                 const matchStart = new Date(m.startTime).getTime();
@@ -533,7 +531,7 @@
             });
         }
 
-        // Fetch Real-time Updates from CricRadio API
+        // CricRadio API ৰ responseData.result অনুসৰি আপডেট লোৱা ফাংচন
         async function fetchMatchUpdates() {
             for (let m of matchesData) {
                 if (!m.apiUrl) continue;
@@ -542,67 +540,72 @@
                     if (!response.ok) continue;
 
                     const resJson = await response.json();
-                    const d = resJson.data || resJson;
+                    const result = resJson?.responseData?.result;
 
-                    if (!d) continue;
+                    if (!result) continue;
 
-                    // Match Header & Series Info
-                    if (d.series_name || d.seriesName) {
-                        m.series = d.series_name || d.seriesName;
-                    }
-                    if (d.match_name || d.matchInfo || d.name) {
-                        m.matchInfo = d.match_name || d.matchInfo || d.name;
-                    }
-
-                    // Live Status mapping
-                    const rawStatus = (d.status || d.state || d.match_status || "").toLowerCase();
-                    if (rawStatus.includes("live") || rawStatus.includes("progress") || rawStatus.includes("running") || rawStatus.includes("in progress")) {
+                    // ১. খেলৰ স্থিতি (Match Status Mapping)
+                    const status = (result.status || "").toLowerCase();
+                    if (status.includes("live") || status.includes("inprogress") || status.includes("running")) {
                         m.category = "live";
                         m.hasApiStatus = true;
-                    } else if (rawStatus.includes("complete") || rawStatus.includes("finish") || rawStatus.includes("ended") || rawStatus.includes("result") || rawStatus.includes("won")) {
+                    } else if (status.includes("complete") || status.includes("finished") || status.includes("result") || status.includes("won")) {
                         m.category = "completed";
                         m.hasApiStatus = true;
-                    } else if (rawStatus.includes("upcom") || rawStatus.includes("schedul")) {
+                    } else if (status.includes("notstarted") || status.includes("upcoming") || status.includes("scheduled")) {
                         m.category = "upcoming";
                         m.hasApiStatus = true;
                     }
 
-                    // Last Ball Feed
-                    if (d.last_ball || d.lastBall || d.recent_ball) {
-                        m.lastBall = d.last_ball || d.lastBall || d.recent_ball;
-                    }
+                    // ২. দলৰ নাম আৰু স্ক'ৰ (Team A & B Extraction)
+                    if (result.teams) {
+                        // Team A
+                        if (result.teams.a) {
+                            const tA = result.teams.a;
+                            if (tA.shortName || tA.name) {
+                                m.teamA.name = (tA.shortName || tA.name).toUpperCase();
+                            }
+                            if (tA.score || tA.runs !== undefined) {
+                                m.teamA.score = tA.score || `${tA.runs}${tA.wickets !== undefined ? '/' + tA.wickets : ''}`;
+                            }
+                            if (tA.overs || tA.over || result.settingObj?.teamAOver) {
+                                m.teamA.overs = `${tA.overs || tA.over || result.settingObj?.teamAOver} ov`;
+                            }
+                        }
 
-                    // Match Status note / result
-                    if (d.status_note || d.result || d.summary || d.statusText) {
-                        if (m.category === "completed") {
-                            m.resultText = d.result || d.status_note || d.summary;
-                        } else {
-                            m.liveSummary = d.status_note || d.summary || d.statusText;
+                        // Team B
+                        if (result.teams.b) {
+                            const tB = result.teams.b;
+                            if (tB.shortName || tB.name) {
+                                m.teamB.name = (tB.shortName || tB.name).toUpperCase();
+                            }
+                            if (tB.score || tB.runs !== undefined) {
+                                m.teamB.score = tB.score || `${tB.runs}${tB.wickets !== undefined ? '/' + tB.wickets : ''}`;
+                            }
+                            if (tB.overs || tB.over || result.settingObj?.teamBOver) {
+                                m.teamB.overs = `${tB.overs || tB.over || result.settingObj?.teamBOver} ov`;
+                            }
                         }
                     }
 
-                    // Team A Score details
-                    const t1 = d.team_a || d.teamA || d.team1 || (Array.isArray(d.teams) ? d.teams[0] : null);
-                    if (t1) {
-                        if (t1.name || t1.short_name) m.teamA.name = t1.short_name || t1.name;
-                        const score1 = t1.score || (t1.runs !== undefined ? `${t1.runs}${t1.wickets !== undefined ? '/' + t1.wickets : ''}` : null);
-                        if (score1) m.teamA.score = score1;
-                        if (t1.overs !== undefined && t1.overs !== "") m.teamA.overs = `${t1.overs} ov`;
-                        if (t1.logo || t1.flag) m.teamA.logo = t1.logo || t1.flag;
+                    // ৩. মেচ ঘোষণা / ঘোষণা বাৰ্তা (Announcement or Status Note)
+                    if (result.announcement1) {
+                        if (m.category === "completed") {
+                            m.resultText = result.announcement1;
+                        } else if (m.category === "live") {
+                            m.liveSummary = result.announcement1;
+                        } else {
+                            m.upcomingText = result.announcement1;
+                        }
                     }
 
-                    // Team B Score details
-                    const t2 = d.team_b || d.teamB || d.team2 || (Array.isArray(d.teams) ? d.teams[1] : null);
-                    if (t2) {
-                        if (t2.name || t2.short_name) m.teamB.name = t2.short_name || t2.name;
-                        const score2 = t2.score || (t2.runs !== undefined ? `${t2.runs}${t2.wickets !== undefined ? '/' + t2.wickets : ''}` : null);
-                        if (score2) m.teamB.score = score2;
-                        if (t2.overs !== undefined && t2.overs !== "") m.teamB.overs = `${t2.overs} ov`;
-                        if (t2.logo || t2.flag) m.teamB.logo = t2.logo || t2.flag;
+                    // ৪. শেষ বলৰ আপডেট (Last Ball Feed)
+                    if (result.last_ball || result.lastBall) {
+                        m.lastBall = result.last_ball || result.lastBall;
                     }
 
                 } catch (err) {
-                    console.warn("Unable to fetch live feed for " + m.id, err);
+                    console.warn("API Error for " + m.id, err);
                 }
             }
 
@@ -700,7 +703,7 @@
             renderMatches();
         }
 
-        // Initialize Scheduler and Live API Polling
+        // প্ৰাৰম্ভিক লোডিং আৰু প্ৰতি ১০ ছেকেণ্ডত স্বয়ংক্ৰিয় লাইভ কল
         async function startMatchScheduler() {
             checkAutoLiveTransitions();
             const counts = updateTabBadges();
@@ -711,13 +714,13 @@
                 switchTab('upcoming');
             }
 
-            // Fetch live API data immediately
+            // লগে লগে API কল কৰা
             await fetchMatchUpdates();
 
-            // Auto-refresh scores every 60 seconds
-            setInterval(fetchMatchUpdates, 60000);
+            // প্ৰতি ১০ ছেকেণ্ডৰ অন্তৰে অন্তৰে API ৰ পৰা সতেজ তথ্য অনা
+            setInterval(fetchMatchUpdates, 50000);
 
-            // Time schedule checker every 60 seconds
+            // প্ৰতি ১ মিনিটত সময়ৰ অনুসূচী পৰীক্ষা
             setInterval(() => {
                 checkAutoLiveTransitions();
                 updateTabBadges();
