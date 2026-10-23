@@ -89,7 +89,7 @@
             background-color: var(--danger);
             border-radius: 50%;
             display: none;
-            animation: pulse 1.2s infinite;
+            
         }
 
         @keyframes pulse {
@@ -394,17 +394,91 @@
 </div>
 
 <script>
-    const matchId = "6a552bd85a2a46d5d350525f";
-    const API_URL = "https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=" + matchId;
+    const API_URL = "https://bdcr2.aminurmarch.workers.dev/?id=99754";
     
     let matchData = null;
     let selectedInningIndex = 0;
     let isInitialLoad = true;
     let isMatchFinishedGlobal = false;
 
-    // টীম আৰু খেলুৱৈ সঠিকভাৱে চিনাক্ত কৰিবলৈ তালিকা
-    const KNOWN_INDIA_PLAYERS = ["samson", "abhishek", "ishan", "shreyas", "tilak", "nitish", "naman", "axar", "bhuvneshwar", "arshdeep", "mayank"];
-    const KNOWN_NZ_PLAYERS = ["seifert", "allen", "daryl", "mitchell", "phillips", "jacobs", "bracewell", "santner", "smith", "henry", "milne", "ferguson"];
+    function normalizeApiResponse(data) {
+        const src = data?.response;
+        if (!src) return null;
+
+        const teamA = src.teama || {};
+        const teamB = src.teamb || {};
+        const teams = {
+            a: { name: teamA.name || "Team A", shortName: teamA.short_name || teamA.name || "A", id: teamA.team_id, logo: teamA.logo_url },
+            b: { name: teamB.name || "Team B", shortName: teamB.short_name || teamB.name || "B", id: teamB.team_id, logo: teamB.logo_url }
+        };
+
+        const innings = (Array.isArray(src.innings) ? src.innings : []).map((inn) => {
+            const batsmen = Array.isArray(inn.batsmen) ? inn.batsmen : [];
+            const bowlers = Array.isArray(inn.bowlers) ? inn.bowlers : [];
+            const eq = inn.equations || {};
+            const extras = inn.extra_runs || {};
+            return {
+                name: inn.name || inn.short_name || "Innings",
+                batting_team_id: inn.batting_team_id,
+                runs: Number(eq.runs ?? inn.scores?.split("/")?.[0] ?? 0),
+                wickets: Number(eq.wickets ?? inn.scores?.split("/")?.[1] ?? 0),
+                overs: eq.overs || inn.overs || "0.0",
+                run_rate: eq.runrate || "",
+                run_str: inn.scores_full || `${inn.scores || "0/0"} (${eq.overs || inn.overs || "0.0"} ov)`,
+                extras: Number(extras.total ?? 0),
+                bye: Number(extras.byes ?? 0),
+                legbye: Number(extras.legbyes ?? 0),
+                wide: Number(extras.wides ?? 0),
+                noball: Number(extras.noballs ?? 0),
+                player_batting_order: batsmen.map(b => ({
+                    name: b.name || "Batter",
+                    mobileName: b.name || "Batter",
+                    batting: {
+                        runs: Number(b.runs ?? 0),
+                        balls: Number(b.balls_faced ?? 0),
+                        fours: Number(b.fours ?? 0),
+                        sixes: Number(b.sixes ?? 0),
+                        strike_rate: b.strike_rate || "0.00",
+                        dismissed: String(b.how_out || "").toLowerCase() !== "not out",
+                        out_str: String(b.how_out || "").toLowerCase() === "not out" ? "" : (b.how_out || "")
+                    }
+                })),
+                player_bowling_order: bowlers.map(bw => ({
+                    name: bw.name || "Bowler",
+                    mobileName: bw.name || "Bowler",
+                    bowling: {
+                        overs: bw.overs ?? "0.0",
+                        maidens: Number(bw.maidens ?? 0),
+                        runs: Number(bw.runs_conceded ?? 0),
+                        wickets: Number(bw.wickets ?? 0),
+                        economy: bw.econ || "0.00"
+                    }
+                })),
+                fall_of_wickets: (inn.fows || []).map(f => ({
+                    score: f.score_at_dismissal,
+                    number: f.number,
+                    name: f.name,
+                    overs: f.overs_at_dismissal
+                })),
+                yet_to_bat: batsmen.filter(b => String(b.how_out || "").toLowerCase() === "not out" && Number(b.balls_faced || 0) === 0)
+            };
+        });
+
+        return {
+            teams,
+            seriesName: src.competition?.title || "",
+            format: src.format_str || "Cricket",
+            venue: src.venue?.name ? `${src.venue.name}, ${src.venue.location || ""}` : "",
+            announcement1: `${src.title || `${teams.a.name} vs ${teams.b.name}`} • ${src.status_note || src.status_str || ""}`.trim(),
+            status: src.status_str || "",
+            status_note: src.status_note || "",
+            result: src.result || "",
+            winner: src.winning_team_id ? String(src.winning_team_id) : "",
+            is_completed: String(src.status_str || "").toLowerCase() === "completed",
+            is_live: String(src.status_str || "").toLowerCase() === "live",
+            innings_batting_order: innings
+        };
+    }
 
     function updateLastRefresh() {
         const d = new Date();
@@ -419,53 +493,16 @@
         if (updateEl) updateEl.textContent = `Sync: ${time} IST`;
     }
 
-    // নিখুঁতভাৱে টীম চিনাক্তকৰণ
     function resolveInningTeam(inn, teamA, teamB, idx) {
-        const aShort = teamA.shortName || teamA.name || "IND";
-        const bShort = teamB.shortName || teamB.name || "NZ";
-        const aFull = teamA.name || "India";
-        const bFull = teamB.name || "New Zealand";
-
-        // ১. বেটিং বা য়েট-টু-বেট খেলুৱৈৰ পৰা নিখুঁত স্কেন
-        const allBatters = [
-            ...(inn.player_batting_order || []),
-            ...(inn.yet_to_bat || [])
-        ];
-
-        let indCount = 0;
-        let nzCount = 0;
-
-        for (let p of allBatters) {
-            const pName = (p.fullname || p.name || p.mobileName || "").toLowerCase();
-            if (KNOWN_INDIA_PLAYERS.some(k => pName.includes(k))) indCount++;
-            if (KNOWN_NZ_PLAYERS.some(k => pName.includes(k))) nzCount++;
+        const battingId = String(inn.batting_team_id ?? "");
+        if (battingId && battingId === String(teamA.id ?? "")) {
+            return { shortName: teamA.shortName || teamA.name || "A", fullName: teamA.name || "Team A" };
         }
-
-        if (indCount > nzCount && indCount > 0) {
-            return { shortName: "IND", fullName: "India" };
+        if (battingId && battingId === String(teamB.id ?? "")) {
+            return { shortName: teamB.shortName || teamB.name || "B", fullName: teamB.name || "Team B" };
         }
-        if (nzCount > indCount && nzCount > 0) {
-            return { shortName: "NZ", fullName: "New Zealand" };
-        }
-
-        // ২. যদি বলিং কৰাসকলৰ পৰা ওলোটাকৈ ধৰিব লাগে
-        const allBowlers = inn.player_bowling_order || [];
-        let indBowlCount = 0;
-        let nzBowlCount = 0;
-        for (let bw of allBowlers) {
-            const bwName = (bw.fullname || bw.name || bw.mobileName || "").toLowerCase();
-            if (KNOWN_INDIA_PLAYERS.some(k => bwName.includes(k))) indBowlCount++;
-            if (KNOWN_NZ_PLAYERS.some(k => bwName.includes(k))) nzBowlCount++;
-        }
-        if (indBowlCount > nzBowlCount && indBowlCount > 0) {
-            return { shortName: "NZ", fullName: "New Zealand" }; // ভাৰতৰ বলিং মানে নিউজিলেণ্ডৰ বেটিং
-        }
-        if (nzBowlCount > indBowlCount && nzBowlCount > 0) {
-            return { shortName: "IND", fullName: "India" }; // নিউজিলেণ্ডৰ বলিং মানে ভাৰতৰ বেটিং
-        }
-
-        // ৩. ফলবেক: ইনিংছ ইনডেক্স
-        return (idx === 0) ? { shortName: "NZ", fullName: "New Zealand" } : { shortName: "IND", fullName: "India" };
+        const label = inn.name || inn.short_name || `Innings ${idx + 1}`;
+        return { shortName: label.replace(/\s+Inning.*/i, "").slice(0, 12), fullName: label };
     }
 
     function getInningsTabLabel(inn, idx, teamA, teamB) {
@@ -482,8 +519,8 @@
             if (!response.ok) return;
             const resData = await response.json();
 
-            const result = resData?.responseData?.result;
-            if (!result) return;
+            const result = normalizeApiResponse(resData);
+            if (!result) throw new Error("API response format was not recognized");
             matchData = result;
 
             const teamA = result.teams?.a || {};
@@ -761,7 +798,7 @@
     }
 
     loadScorecard();
-    setInterval(loadScorecard, 30000);
+    setInterval(loadScorecard, 60000);
 </script>
 </body>
 </html>
