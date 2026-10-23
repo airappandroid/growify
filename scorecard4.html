@@ -3,477 +3,764 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AFG vs ZIM - Live Match Center</title>
+    <title>Live Scorecard</title>
     <style>
         :root {
-            --bg: #090d16;
-            --card: #111827;
-            --nested: #182234;
-            --border: #1e293b;
-            --cyan: #38bdf8;
-            --blue: #2563eb;
-            --live: #ef4444;
-            --green: #10b981;
-            --text: #ffffff;
-            --muted: #94a3b8;
+            --bg-base: #030712;
+            --card-bg: #0b1329;
+            --accent: #38bdf8;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-highlight: rgba(56, 189, 248, 0.25);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --success: #34d399;
+            --danger: #ef4444;
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: system-ui, -apple-system, sans-serif;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, Roboto, sans-serif;
             -webkit-tap-highlight-color: transparent;
-            user-select: none;
         }
 
         body {
-            background-color: var(--bg);
-            color: var(--text);
             min-height: 100vh;
+            width: 100vw;
+            background-color: var(--bg-base);
             display: flex;
             justify-content: center;
-            padding: 8px 10px;
+            align-items: flex-start;
+            padding: 8px 4px;
+            color: var(--text-primary);
         }
 
-        .match-container {
+        .scorecard-app {
             width: 100%;
-            max-width: 420px;
-            background-color: var(--card);
+            max-width: 500px;
+            background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 14px;
+            border-radius: 16px;
+            padding: 12px 8px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
-        /* Top Nav Bar */
-        .top-nav {
+        .top-bar {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding-bottom: 10px;
+            align-items: center;
+            padding: 0 4px 6px 4px;
             border-bottom: 1px solid var(--border);
         }
 
-        .nav-btn {
-            background: var(--nested);
-            border: 1px solid var(--border);
-            width: 34px;
-            height: 34px;
-            border-radius: 9px;
-            display: grid;
-            place-items: center;
-            cursor: pointer;
-            color: #fff;
-        }
-
-        .nav-btn svg {
-            width: 16px;
-            height: 16px;
-            fill: #fff;
-        }
-
-        .page-title {
-            font-size: 15px;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-        }
-
-        /* Match Header Card */
-        .header-card {
-            background: linear-gradient(145deg, #182234, #101726);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            text-align: center;
-        }
-
-        .series-info {
-            font-size: 12px;
-            color: var(--muted);
-            font-weight: 600;
-        }
-
-        .status-pill {
-            align-self: center;
-            font-size: 10.5px;
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 12px;
-            background: #1e293b;
-            color: var(--muted);
-            text-transform: uppercase;
+        .match-badge {
             display: inline-flex;
             align-items: center;
             gap: 5px;
+            background: rgba(59, 130, 246, 0.12);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 2px 7px;
+            border-radius: 12px;
+            font-size: 9.5px;
+            font-weight: 700;
+            color: #60a5fa;
+            text-transform: uppercase;
         }
 
-        .status-pill.live {
-            background: rgba(239, 68, 68, 0.2);
+        .match-badge.live {
+            background: rgba(239, 68, 68, 0.12);
+            border-color: rgba(239, 68, 68, 0.3);
             color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.4);
         }
 
-        .status-pill.completed {
-            background: rgba(16, 185, 129, 0.2);
-            color: #34d399;
-            border: 1px solid rgba(16, 185, 129, 0.4);
+        .match-badge.completed {
+            background: rgba(52, 211, 153, 0.12);
+            border-color: rgba(52, 211, 153, 0.3);
+            color: var(--success);
         }
 
         .live-dot {
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
+            background-color: var(--danger);
             border-radius: 50%;
-            background: #ef4444;
-            display: inline-block;
+            display: none;
             animation: pulse 1.2s infinite;
         }
 
         @keyframes pulse {
             0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 0.3; transform: scale(0.85); }
             100% { opacity: 1; transform: scale(1); }
         }
 
-        /* Main Scoreboard Arena */
-        .scoreboard-grid {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            align-items: center;
-            gap: 10px;
-            background: var(--nested);
+        .refresh-status {
+            font-size: 9px;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 16px 12px;
+            padding: 2px 7px;
+            border-radius: 10px;
         }
 
-        .team-column {
+        .match-meta-bar {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            text-align: center;
+            padding: 0 4px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .match-title-text {
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .tabs-wrapper {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 1px 2px;
+        }
+
+        .tabs-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
+            background: #111c38;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 10.5px;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tab-btn.active {
+            background: #0284c7;
+            color: #ffffff;
+            border-color: var(--accent);
+        }
+
+        .current-indicator {
+            width: 5px;
+            height: 5px;
+            background: var(--success);
+            border-radius: 50%;
+        }
+
+        .hero-banner {
+            background: #0f1c3f;
+            border: 1px solid var(--border-highlight);
+            border-radius: 12px;
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hero-team-name {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .hero-status-tag {
+            font-size: 9.5px;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        .hero-score-box {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .hero-score-main {
+            font-size: 18px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.1;
+        }
+
+        .hero-score-sub {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+            font-weight: 500;
+            max-width: 220px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .section-header {
+            font-size: 9.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
             gap: 6px;
         }
 
-        .team-flag {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #1e293b;
-            border: 2px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 13px;
+        .section-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.05);
         }
 
-        .team-name {
-            font-size: 14px;
-            font-weight: 700;
+        .table-container {
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: #080e21;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
-        .team-score-big {
-            font-size: 18px;
-            font-weight: 800;
-            color: #fff;
-        }
-
-        .team-overs {
+        table {
+            width: 100%;
+            border-collapse: collapse;
             font-size: 11px;
-            color: var(--cyan);
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 9px;
+            text-transform: uppercase;
+            padding: 6px 4px;
+            text-align: right;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        th:first-child {
+            text-align: left;
+            padding-left: 8px;
+            width: 44%;
+        }
+
+        th:last-child {
+            padding-right: 8px;
+        }
+
+        td {
+            padding: 6px 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            color: var(--text-primary);
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+
+        td:first-child {
+            text-align: left;
+            padding-left: 8px;
+            white-space: normal;
+        }
+
+        td:last-child {
+            padding-right: 8px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .player-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            max-width: 150px;
+        }
+
+        .player-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .player-dismissal {
+            font-size: 9px;
+            color: var(--text-secondary);
+            line-height: 1.1;
+            word-break: break-word;
+        }
+
+        .not-out {
+            color: var(--success);
             font-weight: 600;
         }
 
-        .vs-divider {
-            font-size: 12px;
-            font-weight: 800;
-            color: var(--muted);
-            background: var(--card);
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            display: grid;
-            place-items: center;
-            border: 1px solid var(--border);
+        .highlight-val {
+            font-weight: 700;
+            color: #ffffff;
         }
 
-        /* Announcement & Note */
-        .announcement-box {
-            background: rgba(56, 189, 248, 0.08);
-            border: 1px dashed #1e3a5f;
+        .wickets-val {
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .meta-summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 8px;
+            font-size: 10px;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+        }
+
+        .meta-summary-row.total-row {
+            background: rgba(14, 165, 233, 0.05);
+            border-top: 1px solid var(--border-highlight);
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .fow-box, .yet-to-bat-box {
+            background: #080e21;
+            border: 1px solid var(--border);
             border-radius: 10px;
-            padding: 10px;
-            font-size: 11.5px;
+            padding: 7px 9px;
+            font-size: 10px;
             color: #cbd5e1;
-            text-align: center;
             line-height: 1.4;
         }
 
-        /* Match Stats Matrix */
-        .stats-matrix {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+        .yet-to-bat-box {
+            color: var(--text-secondary);
         }
 
-        .stat-item {
-            background: var(--nested);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 8px 6px;
+        .fow-item {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 2px 5px;
+            border-radius: 4px;
+            margin: 2px;
+        }
+
+        .loading-ph {
             text-align: center;
-        }
-
-        .stat-label {
-            font-size: 10px;
-            color: var(--muted);
-            margin-bottom: 3px;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .stat-value {
-            font-size: 12.5px;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        /* Audio Commentary Button */
-        .audio-bar {
-            background: linear-gradient(135deg, #1e3a5f, var(--nested));
-            border: 1px solid var(--cyan);
-            border-radius: 12px;
-            padding: 10px 14px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            transition: transform 0.15s ease;
-        }
-
-        .audio-bar:active {
-            transform: scale(0.985);
-        }
-
-        .audio-content {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .mic-icon-circle {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            background: rgba(56, 189, 248, 0.2);
-            display: grid;
-            place-items: center;
-        }
-
-        .mic-icon-circle svg {
-            width: 17px;
-            height: 17px;
-            fill: var(--cyan);
-        }
-
-        .audio-text h4 {
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        .audio-text p {
-            font-size: 10.5px;
-            color: var(--cyan);
-        }
-
-        .audio-tag {
-            background: var(--cyan);
-            color: #000;
+            padding: 30px 10px;
+            color: var(--text-muted);
             font-size: 11px;
-            font-weight: 700;
-            padding: 5px 12px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
         }
     </style>
 </head>
 <body>
 
-    <main class="match-container">
-        <!-- Top Nav -->
-        <header class="top-nav">
-            <button class="nav-btn" onclick="history.back()" aria-label="Go Back">
-                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-            </button>
-            <div class="page-title" id="page-title">AFG vs ZIM</div>
-            <button class="nav-btn" onclick="fetchLiveMatchDetails()" aria-label="Refresh">
-                <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
-            </button>
-        </header>
-
-        <!-- Match Header Info -->
-        <section class="header-card">
-            <div class="series-info" id="series-name">ODI Tri-Nation Series 2026 • Final</div>
-            <div class="status-pill" id="status-pill">Loading...</div>
-        </section>
-
-        <!-- Scoreboard Grid -->
-        <section class="scoreboard-grid">
-            <!-- Afghanistan (Team A) -->
-            <div class="team-column">
-                <img id="teamA-logo" class="team-flag" src="https://ik.imagekit.io/sqt8ptw1k/afghanistan.webp?updatedAt=1790568292618" alt="AFG" onerror="this.outerHTML='<div class=\\'team-flag\\'>AFG</div>'">
-                <div class="team-name" id="teamA-name">AFG</div>
-                <div class="team-score-big" id="teamA-score">-</div>
-                <div class="team-overs" id="teamA-overs">0.0 ov</div>
-            </div>
-
-            <!-- VS Divider -->
-            <div class="vs-divider">VS</div>
-
-            <!-- Zimbabwe (Team B) -->
-            <div class="team-column">
-                <img id="teamB-logo" class="team-flag" src="https://ik.imagekit.io/sqt8ptw1k/zimbabwe.webp?updatedAt=1789455540523" alt="ZIM" onerror="this.outerHTML='<div class=\\'team-flag\\'>ZIM</div>'">
-                <div class="team-name" id="teamB-name">ZIM</div>
-                <div class="team-score-big" id="teamB-score">-</div>
-                <div class="team-overs" id="teamB-overs">0.0 ov</div>
-            </div>
-        </section>
-
-        <!-- Announcement / Toss / Summary -->
-        <div class="announcement-box" id="announcement-text">
-            Connecting to live match feed...
+<div class="scorecard-app">
+    <div class="top-bar">
+        <div class="match-badge" id="matchBadge">
+            <span class="live-dot" id="liveDot"></span>
+            <span id="badgeText">UPCOMING</span>
         </div>
-
-        <!-- Real-Time Metrics Matrix -->
-        <section class="stats-matrix">
-            <div class="stat-item">
-                <div class="stat-label">Format</div>
-                <div class="stat-value" id="stat-format">ODI</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Current RR</div>
-                <div class="stat-value" id="stat-crr">-</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Req. RR</div>
-                <div class="stat-value" id="stat-rrr">-</div>
-            </div>
-        </section>
-
-        <!-- Commentary Capsule Action -->
-        <div class="audio-bar" onclick="location.href='go:commentary'">
-            <div class="audio-content">
-                <div class="mic-icon-circle">
-                    <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
-                </div>
-                <div class="audio-text">
-                    <h4>Live Commentary</h4>
-                    <p>Ball-by-ball audio stream</p>
-                </div>
-            </div>
-            <div class="audio-tag">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="#000"><path d="M8 5v14l11-7z"/></svg>
-                Listen
-            </div>
+        <div class="refresh-status" id="refreshTimer">
+            <span id="updateTime">Syncing...</span>
         </div>
-    </main>
+    </div>
 
-    <script>
-        const MATCH_ID = "6abf701d1c313bb3df5a1a79";
-        const API_URL = `https://api.cricradio.com.au/api/v2/match/mini-match-card?matchId=${MATCH_ID}`;
+    <div class="match-meta-bar">
+        <span class="match-title-text" id="matchHeader">AFG vs ZIM</span>
+        <span id="venueHeader"></span>
+    </div>
 
-        const DEFAULT_FLAGS = {
-            afg: "https://ik.imagekit.io/sqt8ptw1k/afghanistan.webp?updatedAt=1790568292618",
-            zim: "https://ik.imagekit.io/sqt8ptw1k/zimbabwe.webp?updatedAt=1789455540523"
-        };
+    <div class="tabs-wrapper" id="inningsTabs"></div>
 
-        async function fetchLiveMatchDetails() {
-            try {
-                const response = await fetch(API_URL);
-                if (!response.ok) throw new Error("Network response was not ok");
+    <div id="contentView">
+        <div class="loading-ph">Loading live data...</div>
+    </div>
+</div>
 
-                const json = await response.json();
-                const res = json?.responseData?.result;
+<script>
+    const matchId = "6abf701d1c313bb3df5a1a79";
+    const API_URL = "https://api.cricradio.com.au/api/v2/match/scoreCard?matchId=" + matchId;
+    
+    let matchData = null;
+    let selectedInningIndex = 0;
+    let isInitialLoad = true;
+    let isMatchFinishedGlobal = false;
 
-                if (!res) return;
+    // আফগানিস্তান আৰু জিম্বাবুৱেৰ খেলুৱৈ চিনাক্তকৰণৰ তালিকা
+    const KNOWN_AFG_PLAYERS = ["gurbaz", "ibrahim", "zadran", "omarzai", "nabi", "rashid", "kharote", "noor", "farooqi", "naveen", "shahidi", "mujeeb", "janat", "naib"];
+    const KNOWN_ZIM_PLAYERS = ["bennett", "marumani", "madande", "raza", "campbell", "burl", "myers", "jongwe", "muzarabani", "ngarava", "akram", "williams", "ervine"];
 
-                // ১. মেচৰ স্থিতি (Match Status)
-                const statusPill = document.getElementById("status-pill");
-                const rawStatus = (res.status || "").toLowerCase();
+    function updateLastRefresh() {
+        const d = new Date();
+        const time = d.toLocaleTimeString('en-IN', { 
+            timeZone: 'Asia/Kolkata',
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit',
+            hour12: true 
+        });
+        const updateEl = document.getElementById("updateTime");
+        if (updateEl) updateEl.textContent = `Sync: ${time} IST`;
+    }
 
-                if (rawStatus.includes("live") || rawStatus.includes("inprogress") || rawStatus.includes("running")) {
-                    statusPill.className = "status-pill live";
-                    statusPill.innerHTML = `<span class="live-dot"></span> LIVE`;
-                } else if (rawStatus.includes("complete") || rawStatus.includes("finish") || rawStatus.includes("won")) {
-                    statusPill.className = "status-pill completed";
-                    statusPill.textContent = "COMPLETED";
-                } else {
-                    statusPill.className = "status-pill";
-                    statusPill.textContent = "UPCOMING";
-                }
+    // নিখুঁতভাৱে টীম চিনাক্তকৰণ (AFG vs ZIM)
+    function resolveInningTeam(inn, teamA, teamB, idx) {
+        const aShort = teamA.shortName || teamA.name || "AFG";
+        const bShort = teamB.shortName || teamB.name || "ZIM";
+        const aFull = teamA.name || "Afghanistan";
+        const bFull = teamB.name || "Zimbabwe";
 
-                // ২. দলৰ নাম আৰু স্ক'ৰ (Team A & B)
-                if (res.teams) {
-                    // Team A (Afghanistan)
-                    if (res.teams.a) {
-                        const tA = res.teams.a;
-                        document.getElementById("teamA-name").textContent = tA.shortName || tA.name || "AFG";
-                        
-                        const scoreA = tA.score || (tA.runs !== undefined ? `${tA.runs}${tA.wickets !== undefined ? '/' + tA.wickets : ''}` : "Yet to bat");
-                        document.getElementById("teamA-score").textContent = scoreA;
+        // ১. বেটিং বা য়েট-টু-বেট খেলুৱৈৰ পৰা নিখুঁত স্কেন
+        const allBatters = [
+            ...(inn.player_batting_order || []),
+            ...(inn.yet_to_bat || [])
+        ];
 
-                        const oversA = tA.overs || tA.over || res.settingObj?.teamAOver || 0;
-                        document.getElementById("teamA-overs").textContent = `${oversA} ov`;
-                    }
+        let afgCount = 0;
+        let zimCount = 0;
 
-                    // Team B (Zimbabwe)
-                    if (res.teams.b) {
-                        const tB = res.teams.b;
-                        document.getElementById("teamB-name").textContent = tB.shortName || tB.name || "ZIM";
-
-                        const scoreB = tB.score || (tB.runs !== undefined ? `${tB.runs}${tB.wickets !== undefined ? '/' + tB.wickets : ''}` : "Yet to bat");
-                        document.getElementById("teamB-score").textContent = scoreB;
-
-                        const oversB = tB.overs || tB.over || res.settingObj?.teamBOver || 0;
-                        document.getElementById("teamB-overs").textContent = `${oversB} ov`;
-                    }
-                }
-
-                // ৩. ঘোষণা বা মেচৰ বাৰ্তা (Announcement / Summary)
-                const annText = document.getElementById("announcement-text");
-                if (res.announcement1) {
-                    annText.textContent = res.announcement1;
-                } else if (rawStatus.includes("notstarted")) {
-                    annText.textContent = "Match has not started yet. Stay tuned for the toss and live score updates! 🏏";
-                } else {
-                    annText.textContent = "Match in progress • Ball-by-ball real-time commentary enabled";
-                }
-
-                // ৪. মেট্ৰিক্স (Format, Run Rate, RRR)
-                if (res.format) {
-                    document.getElementById("stat-format").textContent = res.format.toUpperCase();
-                }
-                document.getElementById("stat-crr").textContent = res.now?.run_rate ? res.now.run_rate : "-";
-                document.getElementById("stat-rrr").textContent = res.now?.req_run_rate ? res.now.req_run_rate : "-";
-
-            } catch (err) {
-                console.warn("Match details fetch error: ", err);
-                document.getElementById("announcement-text").textContent = "Unable to fetch live feed. Retrying shortly...";
-            }
+        for (let p of allBatters) {
+            const pName = (p.fullname || p.name || p.mobileName || "").toLowerCase();
+            if (KNOWN_AFG_PLAYERS.some(k => pName.includes(k))) afgCount++;
+            if (KNOWN_ZIM_PLAYERS.some(k => pName.includes(k))) zimCount++;
         }
 
-        // প্ৰথম কল আৰু প্ৰতি ৮ ছেকেণ্ডত স্বয়ংক্ৰিয় লাইভ আপডেট
-        fetchLiveMatchDetails();
-        setInterval(fetchLiveMatchDetails, 8000);
-    </script>
+        if (afgCount > zimCount && afgCount > 0) {
+            return { shortName: "AFG", fullName: "Afghanistan" };
+        }
+        if (zimCount > afgCount && zimCount > 0) {
+            return { shortName: "ZIM", fullName: "Zimbabwe" };
+        }
+
+        // ২. বলিং কৰাসকলৰ পৰা ওলোটাকৈ ধৰা
+        const allBowlers = inn.player_bowling_order || [];
+        let afgBowlCount = 0;
+        let zimBowlCount = 0;
+        for (let bw of allBowlers) {
+            const bwName = (bw.fullname || bw.name || bw.mobileName || "").toLowerCase();
+            if (KNOWN_AFG_PLAYERS.some(k => bwName.includes(k))) afgBowlCount++;
+            if (KNOWN_ZIM_PLAYERS.some(k => bwName.includes(k))) zimBowlCount++;
+        }
+        if (afgBowlCount > zimBowlCount && afgBowlCount > 0) {
+            return { shortName: "ZIM", fullName: "Zimbabwe" };
+        }
+        if (zimBowlCount > afgBowlCount && zimBowlCount > 0) {
+            return { shortName: "AFG", fullName: "Afghanistan" };
+        }
+
+        // ৩. ফলবেক: ইনিংছ ইনডেক্স
+        return (idx === 0) ? { shortName: "AFG", fullName: "Afghanistan" } : { shortName: "ZIM", fullName: "Zimbabwe" };
+    }
+
+    function getInningsTabLabel(inn, idx, teamA, teamB) {
+        return resolveInningTeam(inn, teamA, teamB, idx).shortName;
+    }
+
+    function getInningsDisplayName(inn, idx, teamA, teamB) {
+        return `${resolveInningTeam(inn, teamA, teamB, idx).fullName} Innings`;
+    }
+
+    async function loadScorecard() {
+        try {
+            const response = await fetch(`${API_URL}&_t=${Date.now()}`, { cache: "no-store" });
+            if (!response.ok) return;
+            const resData = await response.json();
+
+            const result = resData?.responseData?.result;
+            if (!result) return;
+            matchData = result;
+
+            const teamA = result.teams?.a || {};
+            const teamB = result.teams?.b || {};
+            const nameA = teamA.shortName || teamA.name || 'AFG';
+            const nameB = teamB.shortName || teamB.name || 'ZIM';
+            const format = (result.format || 'T20').toUpperCase();
+            const tournament = result.seriesName || `${nameA} vs ${nameB}`;
+
+            const matchHdr = document.getElementById("matchHeader");
+            const venueHdr = document.getElementById("venueHeader");
+            if (matchHdr) matchHdr.textContent = result.announcement1 || `${tournament} (${format})`;
+            if (venueHdr) venueHdr.textContent = result.venue ? `📍 ${result.venue}` : '';
+
+            let rawInnings = result.innings_batting_order || result.scoreCard || [];
+            let innings = [];
+
+            if (Array.isArray(rawInnings)) {
+                innings = rawInnings;
+            } else if (typeof rawInnings === 'object' && rawInnings !== null) {
+                innings = Object.keys(rawInnings).map(k => ({ ...rawInnings[k], key: rawInnings[k].key || k }));
+            }
+
+            const hasStartedPlaying = Array.isArray(innings) && innings.some(inn =>
+                (inn.player_batting_order && inn.player_batting_order.length > 0) ||
+                (Number(inn.runs) > 0) ||
+                (parseFloat(inn.overs || 0) > 0)
+            );
+
+            const rawStatus = (result.status || result.matchStatus || result.state || "").toLowerCase().replace(/\s+/g, "");
+            const statusFields = [
+                result.match_status, result.matchStatus, result.state,
+                result.status_note, result.status_text, result.result,
+                result.winning_team, result.winner
+            ].filter(Boolean).map(s => String(s).toLowerCase()).join(" ");
+
+            const completionKeywords = ["complete", "completed", "finish", "finished", "ended", "won", "win", "tied", "tie", "abandoned"];
+            const isCompleted = completionKeywords.some(kw => rawStatus.includes(kw) || statusFields.includes(kw)) ||
+                Boolean(result.winner || result.winning_team || result.is_completed);
+
+            isMatchFinishedGlobal = isCompleted;
+
+            const isLive = !isCompleted && (hasStartedPlaying || rawStatus.includes("live") || rawStatus.includes("progress") || result.is_live);
+            const isUpcoming = !isCompleted && !isLive;
+
+            const badgeEl = document.getElementById("matchBadge");
+            const badgeText = document.getElementById("badgeText");
+            const dotEl = document.getElementById("liveDot");
+
+            if (isCompleted) {
+                if (badgeText) badgeText.textContent = "COMPLETED";
+                if (badgeEl) badgeEl.className = "match-badge completed";
+                if (dotEl) dotEl.style.display = "none";
+            } else if (isLive) {
+                if (badgeText) badgeText.textContent = "LIVE";
+                if (badgeEl) badgeEl.className = "match-badge live";
+                if (dotEl) dotEl.style.display = "inline-block";
+            } else {
+                if (badgeText) badgeText.textContent = "UPCOMING";
+                if (badgeEl) badgeEl.className = "match-badge";
+                if (dotEl) dotEl.style.display = "none";
+            }
+
+            if (isUpcoming || !Array.isArray(innings) || innings.length === 0) {
+                const tabsEl = document.getElementById("inningsTabs");
+                const viewEl = document.getElementById("contentView");
+                if (tabsEl) tabsEl.innerHTML = "";
+                if (viewEl) {
+                    viewEl.innerHTML = `
+                        <div class="hero-banner">
+                            <div>
+                                <div class="hero-team-name">${tournament}</div>
+                                <span class="hero-status-tag">${format}</span>
+                            </div>
+                            <div class="hero-score-box">
+                                <div class="hero-score-main">Upcoming</div>
+                                <div class="hero-score-sub">${result.announcement1 || "AFG vs ZIM"}</div>
+                            </div>
+                        </div>
+                        <div class="loading-ph">⏳ Match has not started yet. Full live scorecard will appear once play begins.</div>
+                    `;
+                }
+                updateLastRefresh();
+                return;
+            }
+
+            if (isInitialLoad || selectedInningIndex >= innings.length) {
+                selectedInningIndex = innings.length - 1;
+                isInitialLoad = false;
+            }
+
+            renderTabs(innings, teamA, teamB);
+            renderScorecard(innings[selectedInningIndex], selectedInningIndex, teamA, teamB);
+            updateLastRefresh();
+
+        } catch (err) {
+            console.error("Scorecard Load Error:", err);
+        }
+    }
+
+    function renderTabs(innings, teamA, teamB) {
+        const tabContainer = document.getElementById("inningsTabs");
+        if (!tabContainer) return;
+        tabContainer.innerHTML = "";
+
+        innings.forEach((inn, idx) => {
+            const isLatest = (idx === innings.length - 1);
+            const btn = document.createElement("button");
+            btn.className = `tab-btn ${idx === selectedInningIndex ? 'active' : ''}`;
+            const tabTitle = getInningsTabLabel(inn, idx, teamA, teamB);
+            
+            btn.innerHTML = `${(isLatest && !isMatchFinishedGlobal) ? '<span class="current-indicator"></span>' : ''}<span>${tabTitle}</span>`;
+            btn.onclick = () => {
+                selectedInningIndex = idx;
+                renderTabs(innings, teamA, teamB);
+                renderScorecard(innings[idx], idx, teamA, teamB);
+            };
+            tabContainer.appendChild(btn);
+        });
+    }
+
+    function renderScorecard(inn, idx, teamA, teamB) {
+        if (!inn) return;
+
+        const container = document.getElementById("contentView");
+        if (!container) return;
+
+        const rawBatsmen = (inn.player_batting_order && inn.player_batting_order.length > 0) ? inn.player_batting_order : (inn.battingOrder || []);
+        const activeBatters = [];
+        const unbattedFromOrder = [];
+
+        rawBatsmen.forEach(b => {
+            const bData = b.batting || b;
+            const isOut = Boolean(bData.dismissed === true || bData.dismissed === 1 || (bData.out_str && bData.out_str.trim().toLowerCase() !== "not out"));
+            const balls = Number(bData.balls || 0);
+            const runs = Number(bData.runs || 0);
+
+            if (isOut || balls > 0 || runs > 0 || bData.dismissed === false) {
+                activeBatters.push(b);
+            } else {
+                unbattedFromOrder.push(b);
+            }
+        });
+
+        const battingHTML = activeBatters.length > 0 ? activeBatters.map(b => {
+            const bData = b.batting || b;
+            const isOut = Boolean(bData.dismissed === true || bData.dismissed === 1 || (bData.out_str && bData.out_str.trim().toLowerCase() !== "not out"));
+            const dismissal = isOut ? (bData.out_str || 'out') : '<span class="not-out">not out</span>';
+            const pName = b.mobileName || b.name || b.fullname || 'Batter';
+
+            return `
+                <tr>
+                    <td>
+                        <div class="player-info">
+                            <span class="player-name">${pName}</span>
+                            <span class="player-dismissal">${dismissal}</span>
+                        </div>
+                    </td>
+                    <td class="highlight-val">${bData.runs ?? 0}</td>
+                    <td>${bData.balls ?? 0}</td>
+                    <td>${bData.fours ?? 0}</td>
+                    <td>${bData.sixes ?? 0}</td>
+                    <td>${bData.strike_rate || '0.00'}</td>
+                </tr>
+            `;
+        }).join("") : '<tr><td colspan="6" style="text-align:center; padding:8px; color:var(--text-muted);">Yet to bat</td></tr>';
+
+        const rawBowlers = (inn.player_bowling_order && inn.player_bowling_order.length > 0) ? inn.player_bowling_order : (inn.bowlingOrder || []);
+        const bowlingHTML = rawBowlers.length > 0 ? rawBowlers.map(bw => {
+            const bwData = bw.bowling || bw;
+            const bwName = bw.mobileName || bw.name || bw.fullname || 'Bowler';
+
+            return `
+                <tr>
+                    <td><span class="player-name">${bwName}</span></td>
+                    <td class="highlight-val">${bwData.overs ?? '0.0'}</td>
+                    <td>${bwData.maiden_overs ?? bwData.maidens ?? 0}</td>
+                    <td>${bwData.runs ?? 0}</td>
+                    <td class="wickets-val">${bwData.wickets ?? 0}</td>
+                    <td>${bwData.economy || '0.00'}</td>
+                </tr>
+            `;
+        }).join("") : '<tr><td colspan="6" style="text-align:center; padding:8px; color:var(--text-muted);">No bowling data</td></tr>';
+
+        const fows = inn.fall_of_wickets || [];
+        let fowList = '<span style="color:var(--text-muted)">No wickets fallen</span>';
+        if (Array.isArray(fows) && fows.length > 0) {
+            fowList = fows.map(f => {
+                if (typeof f === 'string') return `<span class="fow-item">${f}</span>`;
+                const wkt = `${f.score ?? f.runs ?? 0}-${f.number ?? f.wicket ?? ''}`;
+                return `<span class="fow-item"><b>${wkt}</b> (${f.name || ''}, ${f.overs ?? 0} ov)</span>`;
+            }).join(" ");
+        }
+
+        const fullYetToBat = inn.yet_to_bat || [];
+        const ytbHTML = fullYetToBat.length > 0 ? `
+            <div class="section-header">Yet to Bat</div>
+            <div class="yet-to-bat-box">
+                ${fullYetToBat.map(p => p.name || p.mobileName || p.fullname).join(", ")}
+            </div>
+        ` : '';
+
+        const extrasDetail = `b ${inn.bye ?? 0}, lb ${inn.legbye ?? 0}, w ${inn.wide ?? 0}, nb ${inn.noball ?? 0}`;
+        const totalExtras = inn.extras ?? 0;
+        const totalScore = inn.run_str || `${inn.runs ?? 0}/${inn.wickets ?? 0} in ${inn.overs ?? '0.0'}`;
+        const runRate = inn.run_rate ? `${inn.run_rate} CRR` : "";
+
+        let statusSubText = (matchData?.status_note || matchData?.status_text || matchData?.result || matchData?.status || "").toUpperCase();
+        if (isMatchFinishedGlobal && (statusSubText === "LIVE" || statusSubText === "STARTED" || !statusSubText)) {
+            statusSubText = "MATCH COMPLETED";
+        }
+
+        const teamDisplayName = getInningsDisplayName(inn, idx, teamA, teamB);
+
+        container.innerHTML = `
+            <div class="hero-banner">
+                <div>
+                    <div class="hero-team-name">${teamDisplayName}</div>
+                    <span class="hero-status-tag">${runRate}</span>
+                </div>
+                <div class="hero-score-box">
+                    <div class="hero-score-main">${totalScore}</div>
+                    <div class="hero-score-sub" title="${statusSubText}">${statusSubText}</div>
+                </div>
+            </div>
+
+            <div class="section-header">Batting</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Batter</th>
+                            <th>R</th>
+                            <th>B</th>
+                            <th>4s</th>
+                            <th>6s</th>
+                            <th>SR</th>
+                        </tr>
+                    </thead>
+                    <tbody>${battingHTML}</tbody>
+                </table>
+                <div class="meta-summary-row">
+                    <span>Extras (${extrasDetail})</span>
+                    <span class="highlight-val">${totalExtras}</span>
+                </div>
+                <div class="meta-summary-row total-row">
+                    <span>TOTAL</span>
+                    <span>${totalScore}</span>
+                </div>
+            </div>
+
+            ${ytbHTML}
+
+            <div class="section-header">Fall of Wickets</div>
+            <div class="fow-box">${fowList}</div>
+
+            <div class="section-header">Bowling</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bowler</th>
+                            <th>O</th>
+                            <th>M</th>
+                            <th>R</th>
+                            <th>W</th>
+                            <th>ECO</th>
+                        </tr>
+                    </thead>
+                    <tbody>${bowlingHTML}</tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    loadScorecard();
+    setInterval(loadScorecard, 30000);
+</script>
 </body>
 </html>
