@@ -265,7 +265,7 @@ body {
         </div>
     </header>
 
-    <!-- Top Banner (5 Sports Extra Dynamic Schedule & Live Score) -->
+    <!-- Top Banner (5 Sports Extra Dynamic Schedule & Live Broadcast) -->
     <a href="go:BBC5E" class="top-banner" id="bannerLink">
         <div class="banner-card">
             <div class="banner-top-row">
@@ -277,10 +277,9 @@ body {
             </div>
             <div class="banner-title" id="bannerTitle">5 Sports Extra</div>
             <div class="banner-bottom-row">
-                <!-- Listen now ৰ বাওঁফালে লাইভ স্ক'ৰ আৰু মেচৰ ঘোষণা -->
                 <div class="banner-score-box">
-                    <div class="banner-score" id="bannerScore">Loading score...</div>
-                    <div class="banner-announcement" id="bannerAnnouncement">SL vs Eng</div>
+                    <div class="banner-score" id="bannerScore">Loading...</div>
+                    <div class="banner-announcement" id="bannerAnnouncement">Live Coverage</div>
                 </div>
                 <div class="banner-cta">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -367,7 +366,7 @@ body {
         <div class="station-card" style="border-color: rgba(168,85,247,0.3);">
             <div class="station-info">
                 <div class="station-name">🎙️ Thought for the Day <span class="duration-tag">3 Min</span></div>
-                <div class="playing-row"><span>Updated: 22 OCT, 5:00 AM</span></div>
+                <div class="playing-row"><span>Updated: 23 OCT, 5:00 AM</span></div>
             </div>
             <a href="https://aod-dash-ww-gcomm-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/d8ee31-p0phzr4r/vf_p0phzr4r_2bcb4d2e-7468-4988-8e7e-e8e7fc917570.ism/dash/vf_p0phzr4r_2bcb4d2e-7468-4988-8e7e-e8e7fc917570-audio_eng_1=96000-2.m3u8" class="play-btn" aria-label="Play"></a>
         </div>
@@ -436,54 +435,78 @@ function getUKDateTime() {
     };
 }
 
-// BBC Radio 5 Sports Extra - 22 October 2026 Schedule (UK Time)
+// BBC Radio 5 Sports Extra - 23 October 2026 Schedule (UK Time)
 const EVENTS_CONFIG = [
     {
-        sport: "CRICKET",
-        program: "ODI Tri-Series",
-        title: "SL vs ENG",
-        matchId: "6a865c0878dcf06570325445",
-        details: "Live commentary from the Pakistan ODI Tri-Series in Rawalpindi.",
-        timeDisplay: "8:45 AM",
-        dateDisplay: "Thu, 22 Oct",
+        sport: "RUGBY LEAGUE",
+        program: "World Cup (Women's)",
+        title: "Samoa vs Wales",
+        details: "Rugby League World Cup • Women's live commentary.",
+        timeDisplay: "7:30 AM",
+        dateDisplay: "Fri, 23 Oct",
         year: 2026,
         month: 10,
-        day: 22,
-        startMin: 525,  // 08:45 AM
-        endMin: 1050    // 05:30 PM
+        day: 23,
+        startMin: 450,  // 07:30 AM (7*60 + 30)
+        endMin: 570     // 09:30 AM (9*60 + 30)
     },
     {
-        sport: "FOOTBALL",
-        program: "Sportsound",
-        title: "Trabzonspor v Hearts",
-        details: "Europa Conference League • Live commentary.",
-        timeDisplay: "5:30 PM",
-        dateDisplay: "Thu, 22 Oct",
+        sport: "RUGBY LEAGUE",
+        program: "World Cup (Men's)",
+        title: "Tonga vs Lebanon",
+        details: "Rugby League World Cup • Men's live commentary.",
+        timeDisplay: "9:30 AM",
+        dateDisplay: "Fri, 23 Oct",
         year: 2026,
         month: 10,
-        day: 22,
-        startMin: 1050, // 05:30 PM
-        endMin: 1185    // 07:45 PM
+        day: 23,
+        startMin: 570,  // 09:30 AM
+        endMin: 720     // 12:00 PM
     },
     {
-        sport: "FOOTBALL",
-        program: "Sportsound",
-        title: "Celtic v Celta Vigo",
-        details: "Europa League • Live commentary.",
-        timeDisplay: "7:45 PM",
-        dateDisplay: "Thu, 22 Oct",
+        sport: "FORMULA 1",
+        program: "US Grand Prix",
+        title: "Practice 1",
+        details: "United States Grand Prix • Live practice commentary.",
+        timeDisplay: "6:25 PM",
+        dateDisplay: "Fri, 23 Oct",
         year: 2026,
         month: 10,
-        day: 22,
-        startMin: 1185, // 07:45 PM
-        endMin: 1320    // 10:00 PM
+        day: 23,
+        startMin: 1105, // 06:25 PM (18*60 + 25)
+        endMin: 1175    // 07:35 PM (19*60 + 35)
+    },
+    {
+        sport: "RUGBY UNION",
+        program: "Premiership",
+        title: "Gloucester vs Bath",
+        details: "Premiership Rugby • Live match commentary.",
+        timeDisplay: "7:35 PM",
+        dateDisplay: "Fri, 23 Oct",
+        year: 2026,
+        month: 10,
+        day: 23,
+        startMin: 1175, // 07:35 PM
+        endMin: 1315    // 09:55 PM (21*60 + 55)
+    },
+    {
+        sport: "FORMULA 1",
+        program: "US Grand Prix",
+        title: "Practice 2",
+        details: "United States Grand Prix • Live practice commentary.",
+        timeDisplay: "9:55 PM",
+        dateDisplay: "Fri, 23 Oct",
+        year: 2026,
+        month: 10,
+        day: 23,
+        startMin: 1315, // 09:55 PM
+        endMin: 1395    // 11:15 PM (23*60 + 15)
     }
 ];
 
-// CricVoice Cloudflare Worker API
+// CricVoice Cloudflare Worker API (যতিয়া ক্রিকেট মেচ থাকিব)
 const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a865c0878dcf06570325445";
 
-// ইননিংসৰ স্ক'ৰ ফৰ্মেট কৰাৰ সহায়ক ফাংচন
 function formatInningScore(teamObj, prefix) {
     if (!teamObj) return "";
     const s1 = teamObj[`${prefix}_1_score`];
@@ -501,22 +524,20 @@ function formatInningScore(teamObj, prefix) {
     return str;
 }
 
-// উপায় ২ ব্যৱহাৰ কৰি স্ক'ৰ Fetch আৰু Stacked UI প্ৰদৰ্শন
 async function fetchLiveCricketScore() {
     if (!DOM.bannerScore) return;
     try {
         const response = await fetch(CRIC_API_ENDPOINT);
         if (!response.ok) throw new Error("API Network error");
         const json = await response.json();
-        
         const match = json?.responseData?.result || json?.data || json;
 
         if (match) {
             const teamAData = match.teams?.a || {};
             const teamBData = match.teams?.b || {};
 
-            const teamAName = teamAData.shortName || teamAData.name || "Eng";
-            const teamBName = teamBData.shortName || teamBData.name || "SL";
+            const teamAName = teamAData.shortName || teamAData.name || "Team A";
+            const teamBName = teamBData.shortName || teamBData.name || "Team B";
 
             const scoreA = formatInningScore(teamAData, "a");
             const scoreB = formatInningScore(teamBData, "b");
@@ -524,7 +545,6 @@ async function fetchLiveCricketScore() {
             const status = match.status || "";
             let announcement = match.announcement1 || "";
 
-            // উপায় ২: দল দুটাৰ স্ক'ৰ ওপৰা-উপৰিকৈ দুটা শাৰীত সজোৱা হ'ল
             let scoreHtml = "";
             if (scoreA && scoreB) {
                 scoreHtml = `<span class="score-line">🏏 ${teamAName} ${scoreA}</span><span class="score-line sub">${teamBName} ${scoreB}</span>`;
@@ -544,7 +564,6 @@ async function fetchLiveCricketScore() {
                 }
             }
 
-            // কেৱল ক্ৰিকেট সক্ৰিয় হৈ থাকিলেহে বেনাৰ আপডেট হ'ব
             const tagText = DOM.bannerTag ? DOM.bannerTag.textContent : "";
             if (tagText.includes("CRICKET")) {
                 DOM.bannerScore.innerHTML = scoreHtml;
@@ -562,7 +581,7 @@ async function fetchLiveCricketScore() {
     }
 }
 
-// বেনাৰ UPCOMING আৰু LIVE সলনি কৰা ফাংচন
+// ব্যানাৰ UPCOMING আৰু LIVE সলনি কৰা লজিক
 function updateBannerUI() {
     if (!DOM.topBanner) return;
 
@@ -713,7 +732,6 @@ function updateAppUI() {
 document.addEventListener("DOMContentLoaded", () => {
     updateAppUI();
     
-    // পেজ লোডৰ সময়ত স্ক'ৰ ফেচ
     const tag = DOM.bannerTag?.textContent || "";
     if (tag.includes("CRICKET")) {
         fetchLiveCricketScore();
@@ -730,7 +748,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 300);
 
-    // প্ৰতি ১৫ ছেকেণ্ডত কেৱল ক্ৰিকেট চলি থাকিলেহে স্ক'ৰ আপডেট হ'ব
+    // প্ৰতি ১৫ ছেকেণ্ডত কেৱল ক্ৰিকেট থাকিলেহে এপিআই কল হ'ব
     setInterval(() => {
         if (!document.hidden) {
             const currentTag = DOM.bannerTag?.textContent || "";
@@ -740,7 +758,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 15000);
 
-    // ১ মিনিটৰ মূৰে মূৰে সময়সূচী আপডেট
+    // প্ৰতি ১ মিনিটৰ মূৰে মূৰে সময়সূচী আপডেট
     setInterval(updateAppUI, 60000);
     
     document.addEventListener("visibilitychange", () => {
