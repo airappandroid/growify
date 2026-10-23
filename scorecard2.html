@@ -1,804 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Live Scorecard</title>
-    <style>
-        :root {
-            --bg-base: #030712;
-            --card-bg: #0b1329;
-            --accent: #38bdf8;
-            --border: rgba(255, 255, 255, 0.08);
-            --border-highlight: rgba(56, 189, 248, 0.25);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-            --success: #34d399;
-            --danger: #ef4444;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, Roboto, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            min-height: 100vh;
-            width: 100vw;
-            background-color: var(--bg-base);
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 8px 4px;
-            color: var(--text-primary);
-        }
-
-        .scorecard-app {
-            width: 100%;
-            max-width: 500px;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 12px 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 4px 6px 4px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .match-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: rgba(59, 130, 246, 0.12);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            padding: 2px 7px;
-            border-radius: 12px;
-            font-size: 9.5px;
-            font-weight: 700;
-            color: #60a5fa;
-            text-transform: uppercase;
-        }
-
-        .match-badge.live {
-            background: rgba(239, 68, 68, 0.12);
-            border-color: rgba(239, 68, 68, 0.3);
-            color: #f87171;
-        }
-
-        .match-badge.completed {
-            background: rgba(52, 211, 153, 0.12);
-            border-color: rgba(52, 211, 153, 0.3);
-            color: var(--success);
-        }
-
-        .live-dot {
-            width: 6px;
-            height: 6px;
-            background-color: var(--danger);
-            border-radius: 50%;
-            display: none;
-            
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(0.85); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        .refresh-status {
-            font-size: 9px;
-            color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            padding: 2px 7px;
-            border-radius: 10px;
-        }
-
-        .match-meta-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 4px;
-            font-size: 11px;
-            color: var(--text-secondary);
-        }
-
-        .match-title-text {
-            font-weight: 700;
-            color: var(--accent);
-        }
-
-        .tabs-wrapper {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            padding: 1px 2px;
-        }
-
-        .tabs-wrapper::-webkit-scrollbar {
-            display: none;
-        }
-
-        .tab-btn {
-            background: #111c38;
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            font-size: 10.5px;
-            font-weight: 600;
-            padding: 5px 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .tab-btn.active {
-            background: #0284c7;
-            color: #ffffff;
-            border-color: var(--accent);
-        }
-
-        .current-indicator {
-            width: 5px;
-            height: 5px;
-            background: var(--success);
-            border-radius: 50%;
-        }
-
-        .hero-banner {
-            background: #0f1c3f;
-            border: 1px solid var(--border-highlight);
-            border-radius: 12px;
-            padding: 8px 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .hero-team-name {
-            font-size: 13.5px;
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        .hero-status-tag {
-            font-size: 9.5px;
-            font-weight: 600;
-            color: var(--accent);
-            text-transform: uppercase;
-        }
-
-        .hero-score-box {
-            text-align: right;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .hero-score-main {
-            font-size: 18px;
-            font-weight: 800;
-            color: #ffffff;
-            line-height: 1.1;
-        }
-
-        .hero-score-sub {
-            font-size: 10px;
-            color: var(--text-secondary);
-            margin-top: 2px;
-            font-weight: 500;
-            max-width: 220px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .section-header {
-            font-size: 9.5px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            color: var(--text-muted);
-            margin-top: 2px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .section-header::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .table-container {
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            background: #080e21;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 11px;
-        }
-
-        th {
-            background: rgba(255, 255, 255, 0.02);
-            color: var(--text-muted);
-            font-weight: 700;
-            font-size: 9px;
-            text-transform: uppercase;
-            padding: 6px 4px;
-            text-align: right;
-            border-bottom: 1px solid var(--border);
-            white-space: nowrap;
-        }
-
-        th:first-child {
-            text-align: left;
-            padding-left: 8px;
-            width: 44%;
-        }
-
-        th:last-child {
-            padding-right: 8px;
-        }
-
-        td {
-            padding: 6px 4px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
-            color: var(--text-primary);
-            text-align: right;
-            font-variant-numeric: tabular-nums;
-            white-space: nowrap;
-        }
-
-        td:first-child {
-            text-align: left;
-            padding-left: 8px;
-            white-space: normal;
-        }
-
-        td:last-child {
-            padding-right: 8px;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        .player-info {
-            display: flex;
-            flex-direction: column;
-            gap: 1px;
-            max-width: 150px;
-        }
-
-        .player-name {
-            font-size: 11px;
-            font-weight: 700;
-            color: #ffffff;
-            line-height: 1.2;
-        }
-
-        .player-dismissal {
-            font-size: 9px;
-            color: var(--text-secondary);
-            line-height: 1.1;
-            word-break: break-word;
-        }
-
-        .not-out {
-            color: var(--success);
-            font-weight: 600;
-        }
-
-        .highlight-val {
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        .wickets-val {
-            font-weight: 700;
-            color: var(--accent);
-        }
-
-        .meta-summary-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 6px 8px;
-            font-size: 10px;
-            color: var(--text-secondary);
-            border-top: 1px solid var(--border);
-        }
-
-        .meta-summary-row.total-row {
-            background: rgba(14, 165, 233, 0.05);
-            border-top: 1px solid var(--border-highlight);
-            color: #ffffff;
-            font-weight: 700;
-        }
-
-        .fow-box, .yet-to-bat-box {
-            background: #080e21;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 7px 9px;
-            font-size: 10px;
-            color: #cbd5e1;
-            line-height: 1.4;
-        }
-
-        .yet-to-bat-box {
-            color: var(--text-secondary);
-        }
-
-        .fow-item {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.04);
-            padding: 2px 5px;
-            border-radius: 4px;
-            margin: 2px;
-        }
-
-        .loading-ph {
-            text-align: center;
-            padding: 30px 10px;
-            color: var(--text-muted);
-            font-size: 11px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1020">
+<title>Full Scorecard</title>
+<style>
+:root{--bg:#0b1020;--card:#161d33;--card2:#202940;--text:#fff;--muted:#a7b1c9;--accent:#ff7a45;--green:#4cd964;--line:rgba(255,255,255,.09);--yellow:#ffbd59}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:14px Arial,Roboto,sans-serif}
+body{-webkit-tap-highlight-color:transparent}
+button{font:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.topbar{position:sticky;top:0;z-index:10;background:var(--bg);padding:12px 14px;border-bottom:1px solid var(--line)}
+.topline{display:flex;align-items:center;gap:10px}
+.back-btn{width:40px;height:40px;display:grid;place-items:center;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:white;flex-shrink:0}
+.brand{min-width:0;flex:1}
+.name{font-size:17px;font-weight:800}
+.tagline{font-size:11px;color:var(--muted);margin-top:4px}
+.icon-btn{display:grid;place-items:center;width:40px;height:40px;padding:0;background:var(--card2);border:1px solid var(--line);color:white;border-radius:10px;flex-shrink:0}
+.container{width:100%;max-width:650px;margin:0 auto;padding:12px}
+.match-card{background:linear-gradient(135deg,#202a46,#161d33);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
+.status-row{display:flex;align-items:center;gap:7px;color:var(--green);font-weight:800;font-size:11px;letter-spacing:.4px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.status-text{margin-left:auto;color:var(--muted);font-weight:500;letter-spacing:0}
+.match-title{font-size:14px;font-weight:700;margin-top:12px;line-height:1.45}
+.match-note{font-size:12px;color:var(--muted);margin-top:7px;line-height:1.5}
+.teams{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:14px}
+.team{min-width:0;background:rgba(8,13,27,.36);border:1px solid var(--line);border-radius:12px;padding:10px}
+.team-head{display:flex;align-items:center;gap:7px}
+.team-logo{width:27px;height:27px;object-fit:contain;flex-shrink:0}
+.team-name{font-size:12px;font-weight:800;overflow-wrap:anywhere}
+.team-score{font-size:clamp(17px,5vw,20px);font-weight:800;margin-top:8px;overflow-wrap:anywhere;line-height:1.35}
+.team-overs{display:none}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none;overscroll-behavior-x:contain}
+.tabs::-webkit-scrollbar{display:none}
+.tab{white-space:nowrap;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:10px 14px;font-weight:700;font-size:12px}
+.tab.active{background:var(--accent);border-color:var(--accent);color:#101827}
+.innings-card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:14px}
+.innings-head{padding:12px;background:var(--card2);display:flex;justify-content:space-between;align-items:center;gap:8px;min-width:0}
+.innings-name{font-weight:800;font-size:14px}
+.innings-total{text-align:right;font-size:16px;font-weight:800;white-space:nowrap}
+.innings-sub{font-size:11px;color:var(--muted);font-weight:500;margin-top:4px}
+.table-wrap{width:100%;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.score-table{width:100%;border-collapse:collapse;min-width:0;table-layout:fixed;font-size:12px}
+.score-table th{background:rgba(255,255,255,.025);color:var(--muted);font-size:10px;font-weight:700;text-align:right;padding:10px 7px;white-space:nowrap}
+.score-table th:first-child,.score-table td:first-child{text-align:left;padding-left:13px}
+.score-table td{padding:10px 7px;border-top:1px solid var(--line);text-align:right;vertical-align:top;font-variant-numeric:tabular-nums}
+.score-table td:first-child{width:40%;min-width:0;overflow-wrap:break-word;word-break:normal}
+.player{font-weight:700;font-size:12px;overflow-wrap:break-word;word-break:normal;line-height:1.35}
+.dismissal{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.35;font-weight:400}.dismissal.not-out{color:var(--green);font-weight:700}
+.total-row td{font-weight:800;background:rgba(255,255,255,.025)}
+.section-label{padding:12px 13px 8px;font-weight:800;font-size:12px}
+.extras-line{display:flex;justify-content:space-between;gap:12px;padding:9px 13px;color:var(--muted);font-size:12px}
+.extras-line strong{color:var(--text)}
+.fow{padding:0 13px 13px;color:var(--muted);font-size:11px;line-height:1.7}
+.fow strong{color:var(--text)}
+.fow-item{padding:3px 0;overflow-wrap:anywhere}.fow-item span{white-space:nowrap}
+.empty{padding:22px 14px;text-align:center;color:var(--muted);font-size:12px;line-height:1.6}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden}
+.panel-title{font-size:14px;font-weight:800;padding:14px;border-bottom:1px solid var(--line)}
+.footer{text-align:center;color:#8996b2;font-size:11px;padding:12px 5px 24px}
+.error{color:#ffb49a}
+.score-table th,.score-table td{padding:10px 5px}
+@media(max-width:390px){
+ .container{padding:10px 8px}
+ .match-card{padding:12px}
+ .status-row{font-size:10px}
+ .match-title{font-size:13px}
+ .team{padding:9px}
+ .team-name{font-size:11px}
+ .team-logo{width:24px;height:24px}
+ .score-table{font-size:11px}
+ .score-table th{font-size:9px;padding:9px 3px}
+ .score-table td{padding:10px 3px}
+ .score-table th:first-child,.score-table td:first-child{padding-left:9px}
+ .score-table td:first-child{width:40%}
+ .player{font-size:11px}
+ .dismissal{font-size:9px}
+}
+@media(max-width:330px){
+ .container{padding:8px 5px}
+ .team-score{font-size:16px}
+ .innings-name{font-size:12px}
+ .innings-total{font-size:14px}
+ .score-table th,.score-table td{padding-left:2px;padding-right:2px}
+}
+</style>
 </head>
 <body>
 
-<div class="scorecard-app">
-    <div class="top-bar">
-        <div class="match-badge" id="matchBadge">
-            <span class="live-dot" id="liveDot"></span>
-            <span id="badgeText">UPCOMING</span>
-        </div>
-        <div class="refresh-status" id="refreshTimer">
-            <span id="updateTime">Syncing...</span>
-        </div>
-    </div>
 
-    <div class="match-meta-bar">
-        <span class="match-title-text" id="matchHeader">IND vs NZ 1st T20I</span>
-        <span id="venueHeader"></span>
-    </div>
+<main class="container">
+  <section class="match-card">
+    <div class="status-row"><span class="dot" id="statusDot"></span><span id="statusLabel">LOADING</span><span class="status-text" id="updatedTop">Updating...</span></div>
+    <div class="match-title" id="matchTitle">Loading match details...</div>
+    <div class="match-note" id="matchNote">Please wait while the scorecard loads.</div>
+    <div class="teams" id="teams"></div>
+  </section>
 
-    <div class="tabs-wrapper" id="inningsTabs"></div>
-
-    <div id="contentView">
-        <div class="loading-ph">Loading live data...</div>
-    </div>
-</div>
+  <div class="tabs" id="inningsTabs" aria-label="Innings navigation"></div>
+  <div id="scorecards"><div class="panel"><div class="empty">Loading full scorecard...</div></div></div>
+  <section class="panel" id="currentPlayersPanel" hidden>
+    <div class="panel-title">Current Batters</div><div id="currentBatters"></div>
+    <div class="panel-title">Current Bowlers</div><div id="currentBowlers"></div>
+  </section>
+  <div class="footer" id="updated">Cricket Score App · Auto refresh every 60 seconds</div>
+</main>
 
 <script>
-    const API_URL = "https://bdcr2.aminurmarch.workers.dev/?id=99754";
-    
-    let matchData = null;
-    let selectedInningIndex = 0;
-    let isInitialLoad = true;
-    let isMatchFinishedGlobal = false;
+(function(){
+'use strict';
+const API='https://bdcr2.aminurmarch.workers.dev/?id=99754';
+const REFRESH_MS=60000;
+const $=id=>document.getElementById(id);
+const val=v=>(v===null||v===undefined||v===''?'—':String(v));
+const esc=v=>val(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+const first=(...a)=>a.find(v=>v!==undefined&&v!==null&&v!=='');
+let busy=false,hasData=false,lastData=null,activeInnings=0;
 
-    function normalizeApiResponse(data) {
-        const src = data?.response;
-        if (!src) return null;
 
-        const teamA = src.teama || {};
-        const teamB = src.teamb || {};
-        const teams = {
-            a: { name: teamA.name || "Team A", shortName: teamA.short_name || teamA.name || "A", id: teamA.team_id, logo: teamA.logo_url },
-            b: { name: teamB.name || "Team B", shortName: teamB.short_name || teamB.name || "B", id: teamB.team_id, logo: teamB.logo_url }
-        };
+function getTeams(m){
+  if(Array.isArray(m.teams)&&m.teams.length)return m.teams;
+  const a=m.teama||m.team_a||{},b=m.teamb||m.team_b||{};
+  return [a,b].filter(t=>Object.keys(t).length);
+}
+function cleanTeamScore(t){
+  const full=first(t.scores_full,t.score_full);
+  if(full!==undefined){
+    const cleaned=String(full).replace(/\s*\(\s*ov\s*\)/i,'').trim();
+    if(cleaned)return cleaned;
+  }
+  return first(t.scores,t.score,'—');
+}
+function teamName(t){return first(t.title,t.name,t.team_name,t.short_name,t.abbr,'Team');}
+function teamScore(t){return cleanTeamScore(t);}
+function renderTeams(m){
+  const teams=getTeams(m);
+  $('teams').innerHTML=teams.slice(0,2).map(t=>{
+    const logo=first(t.logo_url,t.thumb_url,t.image);
+    const score=teamScore(t);
+    const overs=first(t.overs,t.over);
+    return '<div class="team"><div class="team-head">'+(logo?'<img class="team-logo" src="'+esc(logo)+'" alt="" loading="lazy" onerror="this.style.display=\'none\'">':'')+
+      '<div class="team-name">'+esc(teamName(t))+'</div></div>'+
+      (score?'<div class="team-score">'+esc(score)+'</div>':'<div class="team-score">—</div>')+'</div>';
+  }).join('');
+}
+function asArray(v){return Array.isArray(v)?v:[];}
+function inningsFrom(m){
+  const candidates=[
+    m.innings,m.scorecard&&m.scorecard.innings,
+    m.match_scorecard&&m.match_scorecard.innings,
+    m.response&&m.response.innings
+  ];
+  for(const c of candidates)if(Array.isArray(c)&&c.length)return c;
+  // Fallback to the live innings object exposed by the current API shape.
+  if(m.live_inning&&typeof m.live_inning==='object')return [Object.assign({},m.live_inning,{
+    batsmen:first(m.batsmen,m.live_inning.batsmen,[]),
+    bowlers:first(m.bowlers,m.live_inning.bowlers,[]),
+    equations:first(m.live_inning.equations,m.live_score,{})
+  })];
+  if(m.live_score||m.score||m.batsmen||m.bowlers){
+    return [Object.assign({},m,{
+      name:first(m.live_inning_name,m.team_batting,m.batting_team,'Current Innings'),
+      batsmen:first(m.batsmen,m.batters,[]),bowlers:first(m.bowlers,[]),
+      equations:first(m.live_score,m.score,{})
+    })];
+  }
+  return [];
+}
+function getBatters(i){return asArray(first(i.batsmen,i.batting,i.batters,[]));}
+function getBowlers(i){return asArray(first(i.bowlers,i.bowling,[]));}
+function scoreTotals(i){
+  const e=i.equations||{};
+  const runs=first(e.runs,i.runs,i.score_runs);
+  const wickets=first(e.wickets,i.wickets);
+  const overs=first(e.overs,i.overs);
+  return {runs,wickets,overs,rr:first(e.runrate,e.run_rate,i.runrate,i.run_rate)};
+}
+function inningsLabel(i,index){
+  return first(i.name,i.short_name,i.innings_name,i.team&&i.team.name,i.batting_team,`Innings ${index+1}`);
+}
+function batterRow(p){
+  const name=first(p.name,p.title,p.batter,p.player_name,'Batter');
+  const rawHow=first(p.how_out,p.dismissal,p.out_str,p.status_str,p.notout===true?'not out':'');
+  const isNotOut=p.notout===true || /\\bnot\\s*out\\b/i.test(String(rawHow||'')) || /\\bnot\\s*out\\b/i.test(String(p.status||''));
+  const how=isNotOut?'not out':rawHow;
+  return '<tr><td><div class="player">'+esc(name)+'</div>'+(how?'<div class="dismissal'+(isNotOut?' not-out':'')+'">'+esc(how)+'</div>':'')+'</td>'+
+    '<td>'+esc(first(p.runs,p.r,0))+'</td><td>'+esc(first(p.balls_faced,p.balls,p.b,0))+'</td>'+
+    '<td>'+esc(first(p.fours,p.boundaries,0))+'</td><td>'+esc(first(p.sixes,0))+'</td>'+
+    '<td>'+esc(first(p.strike_rate,p.sr,'—'))+'</td></tr>';
+}
+function bowlerRow(p){
+  return '<tr><td><div class="player">'+esc(first(p.name,p.title,p.bowler,p.player_name,'Bowler'))+'</div></td>'+
+    '<td>'+esc(first(p.overs,p.o,'—'))+'</td><td>'+esc(first(p.maidens,p.m,0))+'</td>'+
+    '<td>'+esc(first(p.runs_conceded,p.runs,p.r,0))+'</td><td>'+esc(first(p.wickets,p.w,0))+'</td>'+
+    '<td>'+esc(first(p.econ,p.economy,p.economy_rate,'—'))+'</td></tr>';
+}
+function extrasText(extras){
+  if(extras===undefined||extras===null)return '';
+  if(typeof extras!=='object')return '<div class="extras-line"><span>Extras</span><strong>'+esc(extras)+'</strong></div>';
+  const total=first(extras.total,extras.runs,extras.extra_runs);
+  const bits=[
+    ['b',first(extras.byes,extras.b)],['lb',first(extras.legbyes,extras.lb)],
+    ['w',first(extras.wides,extras.w)],['nb',first(extras.noballs,extras.nb)],
+    ['p',first(extras.penalty,extras.p)]
+  ].filter(x=>x[1]!==undefined&&x[1]!==null&&x[1]!=='');
+  const detail=bits.map(x=>x[0]+' '+x[1]).join(', ');
+  return '<div class="extras-line"><span>Extras'+(detail?' ('+esc(detail)+')':'')+'</span><strong>'+esc(total!==undefined?total:bits.reduce((n,x)=>n+(Number(x[1])||0),0))+'</strong></div>';
+}
+function renderFow(i){
+  const list=asArray(first(i.fows,i.fall_of_wickets,i.fall_of_wicket,[]));
+  if(list.length){
+    return '<div class="section-label">Fall of Wickets</div><div class="fow">'+list.map(w=>{
+      const score=first(w.score_at_dismissal,w.score,w.runs,w.total,'—');
+      const wicket=first(w.number,w.wicket,w.wkt,'—');
+      const over=first(w.overs_at_dismissal,w.overs,w.over,'—');
+      const name=first(w.name,w.batsman,w.player_name,'');
+      return '<div class="fow-item"><strong>'+esc(wicket)+'/'+esc(score)+'</strong> <span>('+esc(over)+' ov)</span>'+(name?' — '+esc(name):'')+'</div>';
+    }).join('')+'</div>';
+  }
+  const lw=i.last_wicket;
+  if(lw&&typeof lw==='object'&&!Array.isArray(lw)&&Object.keys(lw).length)return '<div class="section-label">Fall of Wickets</div><div class="fow"><div class="fow-item"><strong>'+esc(first(lw.number,'—'))+'/'+esc(first(lw.score_at_dismissal,lw.runs,'—'))+'</strong> <span>('+esc(first(lw.overs_at_dismissal,lw.overs,'—'))+' ov)</span> — '+esc(first(lw.name,lw.batsman,'Batter'))+'</div></div>';
+  const totals=scoreTotals(i);
+  if(Number(totals.wickets)===0)return '<div class="section-label">Fall of Wickets</div><div class="fow">No wickets fallen</div>';
+  return '';
+}
+function renderInnings(i,index){
+  const total=scoreTotals(i);
+  const batters=getBatters(i),bowlers=getBowlers(i);
+  const ex=first(i.extra_runs,i.extras,i.extra);
+  const didNotBat=asArray(first(i.did_not_bat,i.did_not_bat_list,[]));
+  const totalText=(total.runs!==undefined?total.runs:'—')+'/'+(total.wickets!==undefined?total.wickets:'—');
+  const oversText=(total.overs!==undefined&&total.overs!=='')?total.overs:'';
+  const rrText=total.rr!==undefined?total.rr:'—';
+  let out='<section class="innings-card" id="innings-'+index+'"><div class="innings-head"><div><div class="innings-name">'+esc(inningsLabel(i,index))+'</div><div class="innings-sub">Run Rate: '+esc(rrText)+'</div></div><div class="innings-total">'+esc(totalText)+(oversText!==''?'<div class="innings-sub">'+esc(oversText)+' overs</div>':'')+'</div></div>';
+  if(batters.length){
+    out+='<div class="table-wrap"><table class="score-table"><thead><tr><th>Batter</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th></tr></thead><tbody>'+batters.map(batterRow).join('')+
+      '<tr class="total-row"><td>Innings Total</td><td colspan="5">'+esc(totalText)+'</td></tr></tbody></table></div>';
+  }else out+='<div class="empty">Batting scorecard is not available in this API response.</div>';
+  if(ex!==undefined)out+=extrasText(ex);
+  if(bowlers.length){
+    out+='<div class="section-label">Bowling</div><div class="table-wrap"><table class="score-table"><thead><tr><th>Bowler</th><th>O</th><th>M</th><th>R</th><th>W</th><th> Econ</th></tr></thead><tbody>'+bowlers.map(bowlerRow).join('')+'</tbody></table></div>';
+  }else out+='<div class="section-label">Bowling</div><div class="empty">Bowling figures are not available in this API response.</div>';
+  if(didNotBat.length)out+='<div class="section-label">Did Not Bat</div><div class="fow">'+didNotBat.map(p=>esc(typeof p==='string'?p:first(p.name,p.title,p.player_name,'Player'))).join(', ')+'</div>';
+  out+=renderFow(i)+'</section>';
+  return out;
+}
+function renderCurrentPlayers(m){
+  const bat=asArray(first(m.batsmen,m.batters,[]));
+  const bowl=asArray(first(m.bowlers,[]));
+  if(!bat.length&&!bowl.length){$('currentPlayersPanel').hidden=true;return;}
+  $('currentPlayersPanel').hidden=false;
+  $('currentBatters').innerHTML=bat.length?'<div class="table-wrap"><table class="score-table"><thead><tr><th>Batter</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th></tr></thead><tbody>'+bat.map(batterRow).join('')+'</tbody></table></div>':'<div class="empty">No batting details available.</div>';
+  $('currentBowlers').innerHTML=bowl.length?'<div class="table-wrap"><table class="score-table"><thead><tr><th>Bowler</th><th>O</th><th>M</th><th>R</th><th>W</th><th>Econ</th></tr></thead><tbody>'+bowl.map(bowlerRow).join('')+'</tbody></table></div>':'<div class="empty">No bowling details available.</div>';
+}
+function findCurrentInnings(innings,m){
+  if(!innings.length)return 0;
+  const teams=getTeams(m);
+  const liveTeam=teams.find(t=>/\*/.test(String(first(t.scores_full,t.score_full,''))));
+  const liveId=liveTeam&&first(liveTeam.team_id,liveTeam.id);
+  if(liveId!==undefined&&liveId!==null){
+    const found=innings.findIndex(i=>String(first(i.batting_team_id,i.team_id,i.team&&i.team.id,''))===String(liveId));
+    if(found>=0)return found;
+  }
+  const ongoing=innings.findIndex(i=>Number(i.status)===3 && Number(scoreTotals(i).wickets)<10);
+  if(ongoing>=0)return ongoing;
+  return Math.max(0,innings.length-1);
+}
+function render(data){
+  const m=data.response||data.data||data;
+  const state=String(first(m.status_str,m.match_status,m.status,'Match Update'));
+  const game=String(first(m.game_state_str,''));
+  const note=first(m.status_note,m.note,m.match_note,'');
+  const breakNow=/innings?\s*break/i.test(game+' '+String(note));
+  const live=/live|ongoing|in progress/i.test(state)&&!breakNow;
+  $('statusLabel').textContent=breakNow?'INNINGS BREAK':(live?'LIVE MATCH':state.toUpperCase());
+  $('statusDot').style.background=live?'var(--green)':(breakNow?'var(--yellow)':'#8996b2');
+  $('matchTitle').textContent=first(m.title,m.match_title,m.short_title,m.subtitle,'Full Match Scorecard');
+  $('matchNote').textContent=note||'Full innings scorecard and player figures';
+  renderTeams(m);
 
-        const innings = (Array.isArray(src.innings) ? src.innings : []).map((inn) => {
-            const batsmen = Array.isArray(inn.batsmen) ? inn.batsmen : [];
-            const bowlers = Array.isArray(inn.bowlers) ? inn.bowlers : [];
-            const eq = inn.equations || {};
-            const extras = inn.extra_runs || {};
-            return {
-                name: inn.name || inn.short_name || "Innings",
-                batting_team_id: inn.batting_team_id,
-                runs: Number(eq.runs ?? inn.scores?.split("/")?.[0] ?? 0),
-                wickets: Number(eq.wickets ?? inn.scores?.split("/")?.[1] ?? 0),
-                overs: eq.overs || inn.overs || "0.0",
-                run_rate: eq.runrate || "",
-                run_str: inn.scores_full || `${inn.scores || "0/0"} (${eq.overs || inn.overs || "0.0"} ov)`,
-                extras: Number(extras.total ?? 0),
-                bye: Number(extras.byes ?? 0),
-                legbye: Number(extras.legbyes ?? 0),
-                wide: Number(extras.wides ?? 0),
-                noball: Number(extras.noballs ?? 0),
-                player_batting_order: batsmen.map(b => ({
-                    name: b.name || "Batter",
-                    mobileName: b.name || "Batter",
-                    batting: {
-                        runs: Number(b.runs ?? 0),
-                        balls: Number(b.balls_faced ?? 0),
-                        fours: Number(b.fours ?? 0),
-                        sixes: Number(b.sixes ?? 0),
-                        strike_rate: b.strike_rate || "0.00",
-                        dismissed: String(b.how_out || "").toLowerCase() !== "not out",
-                        out_str: String(b.how_out || "").toLowerCase() === "not out" ? "" : (b.how_out || "")
-                    }
-                })),
-                player_bowling_order: bowlers.map(bw => ({
-                    name: bw.name || "Bowler",
-                    mobileName: bw.name || "Bowler",
-                    bowling: {
-                        overs: bw.overs ?? "0.0",
-                        maidens: Number(bw.maidens ?? 0),
-                        runs: Number(bw.runs_conceded ?? 0),
-                        wickets: Number(bw.wickets ?? 0),
-                        economy: bw.econ || "0.00"
-                    }
-                })),
-                fall_of_wickets: (inn.fows || []).map(f => ({
-                    score: f.score_at_dismissal,
-                    number: f.number,
-                    name: f.name,
-                    overs: f.overs_at_dismissal
-                })),
-                yet_to_bat: batsmen.filter(b => String(b.how_out || "").toLowerCase() === "not out" && Number(b.balls_faced || 0) === 0)
-            };
-        });
-
-        return {
-            teams,
-            seriesName: src.competition?.title || "",
-            format: src.format_str || "Cricket",
-            venue: src.venue?.name ? `${src.venue.name}, ${src.venue.location || ""}` : "",
-            announcement1: `${src.title || `${teams.a.name} vs ${teams.b.name}`} • ${src.status_note || src.status_str || ""}`.trim(),
-            status: src.status_str || "",
-            status_note: src.status_note || "",
-            result: src.result || "",
-            winner: src.winning_team_id ? String(src.winning_team_id) : "",
-            is_completed: String(src.status_str || "").toLowerCase() === "completed",
-            is_live: String(src.status_str || "").toLowerCase() === "live",
-            innings_batting_order: innings
-        };
+  const innings=inningsFrom(m);
+  activeInnings=findCurrentInnings(innings,m);
+  const tabs=$('inningsTabs');
+  if(innings.length>1){
+    tabs.style.display='flex';
+    tabs.innerHTML=innings.map((inn,index)=>'<button type="button" class="tab '+(index===activeInnings?'active':'')+'" data-innings="'+index+'">'+esc(inningsLabel(inn,index))+'</button>').join('');
+    tabs.querySelectorAll('[data-innings]').forEach(btn=>btn.onclick=()=>{
+      activeInnings=Number(btn.getAttribute('data-innings'));
+      tabs.querySelectorAll('[data-innings]').forEach(tab=>tab.classList.toggle('active',Number(tab.getAttribute('data-innings'))===activeInnings));
+      renderScorecards(innings);
+    });
+  }else{tabs.style.display='none';tabs.innerHTML='';}
+  renderScorecards(innings);
+  renderCurrentPlayers(m);
+  const time=new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
+  $('updatedTop').textContent='Updated '+time;
+  $('updated').textContent='Last updated: '+time+' · Auto refresh every 60 seconds';
+}
+function renderScorecards(innings){
+  if(!innings.length){
+    $('scorecards').innerHTML='<section class="panel"><div class="empty">Full scorecard data is not available. The API may return only live-score details for this match.</div></section>';
+    return;
+  }
+  if(innings.length>1){
+    $('scorecards').innerHTML=innings.map((inn,index)=>'<div style="'+(index===activeInnings?'':'display:none')+'">'+renderInnings(inn,index)+'</div>').join('');
+  }else{
+    $('scorecards').innerHTML=innings.map(renderInnings).join('');
+  }
+}
+async function loadData(){
+  if(busy||document.hidden)return;
+  busy=true;
+  const ctrl=new AbortController();
+  const timeout=setTimeout(()=>ctrl.abort(),10000);
+  try{
+    const res=await fetch(API,{cache:'no-store',signal:ctrl.signal});
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    const data=await res.json();
+    const m=data&&(data.response||data.data||data);
+    if(!m||typeof m!=='object')throw new Error('Invalid API response');
+    lastData=data;render(data);hasData=true;
+  }catch(err){
+    if(!hasData){
+      $('scorecards').innerHTML='<section class="panel"><div class="empty error">Unable to load scorecard. Please check your internet connection and try again.</div></section>';
+      $('matchTitle').textContent='Scorecard unavailable';
+      $('matchNote').textContent='The API could not be reached.';
+    }else{
+      $('updatedTop').textContent='Connection issue';
+      $('updated').textContent='Connection issue — showing last available scorecard';
     }
-
-    function updateLastRefresh() {
-        const d = new Date();
-        const time = d.toLocaleTimeString('en-IN', { 
-            timeZone: 'Asia/Kolkata',
-            hour: '2-digit', 
-            minute: '2-digit', 
-            second: '2-digit',
-            hour12: true 
-        });
-        const updateEl = document.getElementById("updateTime");
-        if (updateEl) updateEl.textContent = `Sync: ${time} IST`;
-    }
-
-    function resolveInningTeam(inn, teamA, teamB, idx) {
-        const battingId = String(inn.batting_team_id ?? "");
-        if (battingId && battingId === String(teamA.id ?? "")) {
-            return { shortName: teamA.shortName || teamA.name || "A", fullName: teamA.name || "Team A" };
-        }
-        if (battingId && battingId === String(teamB.id ?? "")) {
-            return { shortName: teamB.shortName || teamB.name || "B", fullName: teamB.name || "Team B" };
-        }
-        const label = inn.name || inn.short_name || `Innings ${idx + 1}`;
-        return { shortName: label.replace(/\s+Inning.*/i, "").slice(0, 12), fullName: label };
-    }
-
-    function getInningsTabLabel(inn, idx, teamA, teamB) {
-        return resolveInningTeam(inn, teamA, teamB, idx).shortName;
-    }
-
-    function getInningsDisplayName(inn, idx, teamA, teamB) {
-        return `${resolveInningTeam(inn, teamA, teamB, idx).fullName} Innings`;
-    }
-
-    async function loadScorecard() {
-        try {
-            const response = await fetch(`${API_URL}&_t=${Date.now()}`, { cache: "no-store" });
-            if (!response.ok) return;
-            const resData = await response.json();
-
-            const result = normalizeApiResponse(resData);
-            if (!result) throw new Error("API response format was not recognized");
-            matchData = result;
-
-            const teamA = result.teams?.a || {};
-            const teamB = result.teams?.b || {};
-            const nameA = teamA.shortName || teamA.name || 'IND';
-            const nameB = teamB.shortName || teamB.name || 'NZ';
-            const format = (result.format || 'T20').toUpperCase();
-            const tournament = result.seriesName || `${nameA} vs ${nameB}`;
-
-            const matchHdr = document.getElementById("matchHeader");
-            const venueHdr = document.getElementById("venueHeader");
-            if (matchHdr) matchHdr.textContent = result.announcement1 || `${tournament} (${format})`;
-            if (venueHdr) venueHdr.textContent = result.venue ? `📍 ${result.venue}` : '';
-
-            let rawInnings = result.innings_batting_order || result.scoreCard || [];
-            let innings = [];
-
-            if (Array.isArray(rawInnings)) {
-                innings = rawInnings;
-            } else if (typeof rawInnings === 'object' && rawInnings !== null) {
-                innings = Object.keys(rawInnings).map(k => ({ ...rawInnings[k], key: rawInnings[k].key || k }));
-            }
-
-            const hasStartedPlaying = Array.isArray(innings) && innings.some(inn =>
-                (inn.player_batting_order && inn.player_batting_order.length > 0) ||
-                (Number(inn.runs) > 0) ||
-                (parseFloat(inn.overs || 0) > 0)
-            );
-
-            const rawStatus = (result.status || result.matchStatus || result.state || "").toLowerCase().replace(/\s+/g, "");
-            const statusFields = [
-                result.match_status, result.matchStatus, result.state,
-                result.status_note, result.status_text, result.result,
-                result.winning_team, result.winner
-            ].filter(Boolean).map(s => String(s).toLowerCase()).join(" ");
-
-            const completionKeywords = ["complete", "completed", "finish", "finished", "ended", "won", "win", "tied", "tie", "abandoned"];
-            const isCompleted = completionKeywords.some(kw => rawStatus.includes(kw) || statusFields.includes(kw)) ||
-                Boolean(result.winner || result.winning_team || result.is_completed);
-
-            isMatchFinishedGlobal = isCompleted;
-
-            const isLive = !isCompleted && (hasStartedPlaying || rawStatus.includes("live") || rawStatus.includes("progress") || result.is_live);
-            const isUpcoming = !isCompleted && !isLive;
-
-            const badgeEl = document.getElementById("matchBadge");
-            const badgeText = document.getElementById("badgeText");
-            const dotEl = document.getElementById("liveDot");
-
-            if (isCompleted) {
-                if (badgeText) badgeText.textContent = "COMPLETED";
-                if (badgeEl) badgeEl.className = "match-badge completed";
-                if (dotEl) dotEl.style.display = "none";
-            } else if (isLive) {
-                if (badgeText) badgeText.textContent = "LIVE";
-                if (badgeEl) badgeEl.className = "match-badge live";
-                if (dotEl) dotEl.style.display = "inline-block";
-            } else {
-                if (badgeText) badgeText.textContent = "UPCOMING";
-                if (badgeEl) badgeEl.className = "match-badge";
-                if (dotEl) dotEl.style.display = "none";
-            }
-
-            if (isUpcoming || !Array.isArray(innings) || innings.length === 0) {
-                const tabsEl = document.getElementById("inningsTabs");
-                const viewEl = document.getElementById("contentView");
-                if (tabsEl) tabsEl.innerHTML = "";
-                if (viewEl) {
-                    viewEl.innerHTML = `
-                        <div class="hero-banner">
-                            <div>
-                                <div class="hero-team-name">${tournament}</div>
-                                <span class="hero-status-tag">${format}</span>
-                            </div>
-                            <div class="hero-score-box">
-                                <div class="hero-score-main">Upcoming</div>
-                                <div class="hero-score-sub">${result.announcement1 || "IND vs NZ 1st T20I"}</div>
-                            </div>
-                        </div>
-                        <div class="loading-ph">⏳ Match has not started yet. Full live scorecard will appear once play begins.</div>
-                    `;
-                }
-                updateLastRefresh();
-                return;
-            }
-
-            // সক্ৰিয়ভাৱে চলি থকা শেষৰ ইনিংছটো বাচি লোৱা (যেনে: 2nd Inning - IND)
-            if (isInitialLoad || selectedInningIndex >= innings.length) {
-                selectedInningIndex = innings.length - 1;
-                isInitialLoad = false;
-            }
-
-            renderTabs(innings, teamA, teamB);
-            renderScorecard(innings[selectedInningIndex], selectedInningIndex, teamA, teamB);
-            updateLastRefresh();
-
-        } catch (err) {
-            console.error("Scorecard Load Error:", err);
-        }
-    }
-
-    function renderTabs(innings, teamA, teamB) {
-        const tabContainer = document.getElementById("inningsTabs");
-        if (!tabContainer) return;
-        tabContainer.innerHTML = "";
-
-        innings.forEach((inn, idx) => {
-            const isLatest = (idx === innings.length - 1);
-            const btn = document.createElement("button");
-            btn.className = `tab-btn ${idx === selectedInningIndex ? 'active' : ''}`;
-            const tabTitle = getInningsTabLabel(inn, idx, teamA, teamB);
-            
-            btn.innerHTML = `${(isLatest && !isMatchFinishedGlobal) ? '<span class="current-indicator"></span>' : ''}<span>${tabTitle}</span>`;
-            btn.onclick = () => {
-                selectedInningIndex = idx;
-                renderTabs(innings, teamA, teamB);
-                renderScorecard(innings[idx], idx, teamA, teamB);
-            };
-            tabContainer.appendChild(btn);
-        });
-    }
-
-    function renderScorecard(inn, idx, teamA, teamB) {
-        if (!inn) return;
-
-        const container = document.getElementById("contentView");
-        if (!container) return;
-
-        const rawBatsmen = (inn.player_batting_order && inn.player_batting_order.length > 0) ? inn.player_batting_order : (inn.battingOrder || []);
-        const activeBatters = [];
-        const unbattedFromOrder = [];
-
-        rawBatsmen.forEach(b => {
-            const bData = b.batting || b;
-            const isOut = Boolean(bData.dismissed === true || bData.dismissed === 1 || (bData.out_str && bData.out_str.trim().toLowerCase() !== "not out"));
-            const balls = Number(bData.balls || 0);
-            const runs = Number(bData.runs || 0);
-
-            if (isOut || balls > 0 || runs > 0 || bData.dismissed === false) {
-                activeBatters.push(b);
-            } else {
-                unbattedFromOrder.push(b);
-            }
-        });
-
-        const battingHTML = activeBatters.length > 0 ? activeBatters.map(b => {
-            const bData = b.batting || b;
-            const isOut = Boolean(bData.dismissed === true || bData.dismissed === 1 || (bData.out_str && bData.out_str.trim().toLowerCase() !== "not out"));
-            const dismissal = isOut ? (bData.out_str || 'out') : '<span class="not-out">not out</span>';
-            const pName = b.mobileName || b.name || b.fullname || 'Batter';
-
-            return `
-                <tr>
-                    <td>
-                        <div class="player-info">
-                            <span class="player-name">${pName}</span>
-                            <span class="player-dismissal">${dismissal}</span>
-                        </div>
-                    </td>
-                    <td class="highlight-val">${bData.runs ?? 0}</td>
-                    <td>${bData.balls ?? 0}</td>
-                    <td>${bData.fours ?? 0}</td>
-                    <td>${bData.sixes ?? 0}</td>
-                    <td>${bData.strike_rate || '0.00'}</td>
-                </tr>
-            `;
-        }).join("") : '<tr><td colspan="6" style="text-align:center; padding:8px; color:var(--text-muted);">Yet to bat</td></tr>';
-
-        const rawBowlers = (inn.player_bowling_order && inn.player_bowling_order.length > 0) ? inn.player_bowling_order : (inn.bowlingOrder || []);
-        const bowlingHTML = rawBowlers.length > 0 ? rawBowlers.map(bw => {
-            const bwData = bw.bowling || bw;
-            const bwName = bw.mobileName || bw.name || bw.fullname || 'Bowler';
-
-            return `
-                <tr>
-                    <td><span class="player-name">${bwName}</span></td>
-                    <td class="highlight-val">${bwData.overs ?? '0.0'}</td>
-                    <td>${bwData.maiden_overs ?? bwData.maidens ?? 0}</td>
-                    <td>${bwData.runs ?? 0}</td>
-                    <td class="wickets-val">${bwData.wickets ?? 0}</td>
-                    <td>${bwData.economy || '0.00'}</td>
-                </tr>
-            `;
-        }).join("") : '<tr><td colspan="6" style="text-align:center; padding:8px; color:var(--text-muted);">No bowling data</td></tr>';
-
-        const fows = inn.fall_of_wickets || [];
-        let fowList = '<span style="color:var(--text-muted)">No wickets fallen</span>';
-        if (Array.isArray(fows) && fows.length > 0) {
-            fowList = fows.map(f => {
-                if (typeof f === 'string') return `<span class="fow-item">${f}</span>`;
-                const wkt = `${f.score ?? f.runs ?? 0}-${f.number ?? f.wicket ?? ''}`;
-                return `<span class="fow-item"><b>${wkt}</b> (${f.name || ''}, ${f.overs ?? 0} ov)</span>`;
-            }).join(" ");
-        }
-
-        const fullYetToBat = inn.yet_to_bat || [];
-        const ytbHTML = fullYetToBat.length > 0 ? `
-            <div class="section-header">Yet to Bat</div>
-            <div class="yet-to-bat-box">
-                ${fullYetToBat.map(p => p.name || p.mobileName || p.fullname).join(", ")}
-            </div>
-        ` : '';
-
-        const extrasDetail = `b ${inn.bye ?? 0}, lb ${inn.legbye ?? 0}, w ${inn.wide ?? 0}, nb ${inn.noball ?? 0}`;
-        const totalExtras = inn.extras ?? 0;
-        const totalScore = inn.run_str || `${inn.runs ?? 0}/${inn.wickets ?? 0} in ${inn.overs ?? '0.0'}`;
-        const runRate = inn.run_rate ? `${inn.run_rate} CRR` : "";
-
-        let statusSubText = (matchData?.status_note || matchData?.status_text || matchData?.result || matchData?.status || "").toUpperCase();
-        if (isMatchFinishedGlobal && (statusSubText === "LIVE" || statusSubText === "STARTED" || !statusSubText)) {
-            statusSubText = "MATCH COMPLETED";
-        }
-
-        const teamDisplayName = getInningsDisplayName(inn, idx, teamA, teamB);
-
-        container.innerHTML = `
-            <div class="hero-banner">
-                <div>
-                    <div class="hero-team-name">${teamDisplayName}</div>
-                    <span class="hero-status-tag">${runRate}</span>
-                </div>
-                <div class="hero-score-box">
-                    <div class="hero-score-main">${totalScore}</div>
-                    <div class="hero-score-sub" title="${statusSubText}">${statusSubText}</div>
-                </div>
-            </div>
-
-            <div class="section-header">Batting</div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Batter</th>
-                            <th>R</th>
-                            <th>B</th>
-                            <th>4s</th>
-                            <th>6s</th>
-                            <th>SR</th>
-                        </tr>
-                    </thead>
-                    <tbody>${battingHTML}</tbody>
-                </table>
-                <div class="meta-summary-row">
-                    <span>Extras (${extrasDetail})</span>
-                    <span class="highlight-val">${totalExtras}</span>
-                </div>
-                <div class="meta-summary-row total-row">
-                    <span>TOTAL</span>
-                    <span>${totalScore}</span>
-                </div>
-            </div>
-
-            ${ytbHTML}
-
-            <div class="section-header">Fall of Wickets</div>
-            <div class="fow-box">${fowList}</div>
-
-            <div class="section-header">Bowling</div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Bowler</th>
-                            <th>O</th>
-                            <th>M</th>
-                            <th>R</th>
-                            <th>W</th>
-                            <th>ECO</th>
-                        </tr>
-                    </thead>
-                    <tbody>${bowlingHTML}</tbody>
-                </table>
-            </div>
-        `;
-    }
-
-    loadScorecard();
-    setInterval(loadScorecard, 60000);
+  }finally{clearTimeout(timeout);busy=false;}
+}
+loadData();
+setInterval(loadData,REFRESH_MS);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadData();});
+})();
 </script>
 </body>
 </html>
