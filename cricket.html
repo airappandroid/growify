@@ -466,6 +466,8 @@
     </div>
 
     <script>
+        const CDN_BASE = "https://api.cricradio.com.au";
+
         const FLAGS = {
             ind: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
             indw: "https://ik.imagekit.io/sqt8ptw1k/india.webp?updatedAt=1790419929690",
@@ -511,7 +513,7 @@
             document.getElementById('privacyModal').classList.toggle('active', open);
         }
 
-        // Fallback: সময় অনুসূচী অনুসৰি স্থিতি পৰীক্ষা
+        // সময় অনুসূচী অনুসৰি স্থিতি পৰীক্ষা (Fallback)
         function checkAutoLiveTransitions() {
             const now = Date.now();
 
@@ -531,7 +533,7 @@
             });
         }
 
-        // CricRadio API ৰ responseData.result অনুসৰি আপডেট লোৱা ফাংচন
+        // CricRadio API ৰ responseData.result অনুসৰি স্ক'ৰ আৰু স্থিতি আপডেট
         async function fetchMatchUpdates() {
             for (let m of matchesData) {
                 if (!m.apiUrl) continue;
@@ -544,7 +546,7 @@
 
                     if (!result) continue;
 
-                    // ১. খেলৰ স্থিতি (Match Status Mapping)
+                    // ১. খেলৰ স্থিতি নিৰ্ণয় (Match Status Mapping)
                     const status = (result.status || "").toLowerCase();
                     if (status.includes("live") || status.includes("inprogress") || status.includes("running")) {
                         m.category = "live";
@@ -557,7 +559,7 @@
                         m.hasApiStatus = true;
                     }
 
-                    // ২. দলৰ নাম আৰু স্ক'ৰ (Team A & B Extraction)
+                    // ২. দলৰ নাম, ল'গ' আৰু স্ক'ৰ সংগ্ৰহ (Team A & B Extraction)
                     if (result.teams) {
                         // Team A
                         if (result.teams.a) {
@@ -565,11 +567,20 @@
                             if (tA.shortName || tA.name) {
                                 m.teamA.name = (tA.shortName || tA.name).toUpperCase();
                             }
-                            if (tA.score || tA.runs !== undefined) {
-                                m.teamA.score = tA.score || `${tA.runs}${tA.wickets !== undefined ? '/' + tA.wickets : ''}`;
+
+                            // ল'গ' প্ৰচেছিং
+                            if (tA.logo) {
+                                m.teamA.logo = tA.logo.startsWith("http") ? tA.logo : `${CDN_BASE}${tA.logo}`;
                             }
-                            if (tA.overs || tA.over || result.settingObj?.teamAOver) {
-                                m.teamA.overs = `${tA.overs || tA.over || result.settingObj?.teamAOver} ov`;
+
+                            // a_2_score বা a_1_score সংগ্ৰহ
+                            const scA = tA.a_2_score || tA.a_1_score;
+                            if (scA && scA.runs !== undefined) {
+                                const wkts = scA.wickets !== undefined ? `/${scA.wickets}` : '';
+                                m.teamA.score = `${scA.runs}${wkts}`;
+                                m.teamA.overs = scA.overs ? `${scA.overs} ov` : (result.settingObj?.teamAOver ? `${result.settingObj.teamAOver} ov` : '');
+                            } else if (tA.score) {
+                                m.teamA.score = tA.score;
                             }
                         }
 
@@ -579,27 +590,40 @@
                             if (tB.shortName || tB.name) {
                                 m.teamB.name = (tB.shortName || tB.name).toUpperCase();
                             }
-                            if (tB.score || tB.runs !== undefined) {
-                                m.teamB.score = tB.score || `${tB.runs}${tB.wickets !== undefined ? '/' + tB.wickets : ''}`;
+
+                            // ল'গ' প্ৰচেছিং
+                            if (tB.logo) {
+                                m.teamB.logo = tB.logo.startsWith("http") ? tB.logo : `${CDN_BASE}${tB.logo}`;
                             }
-                            if (tB.overs || tB.over || result.settingObj?.teamBOver) {
-                                m.teamB.overs = `${tB.overs || tB.over || result.settingObj?.teamBOver} ov`;
+
+                            // b_2_score বা b_1_score সংগ্ৰহ
+                            const scB = tB.b_2_score || tB.b_1_score;
+                            if (scB && scB.runs !== undefined) {
+                                const wkts = scB.wickets !== undefined ? `/${scB.wickets}` : '';
+                                m.teamB.score = `${scB.runs}${wkts}`;
+                                m.teamB.overs = scB.overs ? `${scB.overs} ov` : (result.settingObj?.teamBOver ? `${result.settingObj.teamBOver} ov` : '');
+                            } else if (tB.score) {
+                                m.teamB.score = tB.score;
                             }
                         }
                     }
 
-                    // ৩. মেচ ঘোষণা / ঘোষণা বাৰ্তা (Announcement or Status Note)
-                    if (result.announcement1) {
-                        if (m.category === "completed") {
-                            m.resultText = result.announcement1;
-                        } else if (m.category === "live") {
-                            m.liveSummary = result.announcement1;
-                        } else {
-                            m.upcomingText = result.announcement1;
+                    // ৩. মেচ ঘোষণা আৰু লাইভ ৰাণ ৰেট বাৰ্তা
+                    if (m.category === "completed") {
+                        m.resultText = result.announcement1 || "Match Finished 🏆";
+                    } else if (m.category === "live") {
+                        let note = result.announcement1 || "";
+                        if (result.now?.run_rate) {
+                            const crr = `CRR: ${result.now.run_rate}`;
+                            const rrr = (result.now.req_run_rate && result.now.req_run_rate !== "0.00") ? ` • RRR: ${result.now.req_run_rate}` : '';
+                            note = note ? `${note} (${crr}${rrr})` : `${crr}${rrr}`;
                         }
+                        m.liveSummary = note || "Match in progress • Ball-by-ball updates live 🔴";
+                    } else {
+                        m.upcomingText = result.announcement1 || m.upcomingText;
                     }
 
-                    // ৪. শেষ বলৰ আপডেট (Last Ball Feed)
+                    // ৪. শেষ বলৰ আপডেট
                     if (result.last_ball || result.lastBall) {
                         m.lastBall = result.last_ball || result.lastBall;
                     }
@@ -703,7 +727,7 @@
             renderMatches();
         }
 
-        // প্ৰাৰম্ভিক লোডিং আৰু প্ৰতি ১০ ছেকেণ্ডত স্বয়ংক্ৰিয় লাইভ কল
+        // প্ৰাৰম্ভিক লোডিং আৰু প্ৰতি ১৫ ছেকেণ্ডত স্বয়ংক্ৰিয় লাইভ কল
         async function startMatchScheduler() {
             checkAutoLiveTransitions();
             const counts = updateTabBadges();
@@ -714,11 +738,11 @@
                 switchTab('upcoming');
             }
 
-            // লগে লগে API কল কৰা
+            // প্ৰথমবাৰ API কল
             await fetchMatchUpdates();
 
-            // প্ৰতি ১০ ছেকেণ্ডৰ অন্তৰে অন্তৰে API ৰ পৰা সতেজ তথ্য অনা
-            setInterval(fetchMatchUpdates, 50000);
+            // প্ৰতি ১৫ ছেকেণ্ডৰ মূৰে মূৰে API ৰ পৰা লাইভ স্ক'ৰ আপডেট
+            setInterval(fetchMatchUpdates, 15000);
 
             // প্ৰতি ১ মিনিটত সময়ৰ অনুসূচী পৰীক্ষা
             setInterval(() => {
