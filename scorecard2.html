@@ -112,7 +112,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 (function(){
 'use strict';
 const API='https://bdcr2.aminurmarch.workers.dev/?id=98440';
-const REFRESH_MS=60000;
+const REFRESH_MS=120000;
 const $=id=>document.getElementById(id);
 const val=v=>(v===null||v===undefined||v===''?'—':String(v));
 const esc=v=>val(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
