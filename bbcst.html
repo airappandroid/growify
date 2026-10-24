@@ -640,11 +640,13 @@
       ]
     };
 
-    // ImageKit CDN URL Optimization Helper (forces 150px WebP)
+    // Lightweight thumbnails: smaller WebP images for mobile cards.
     function optimizeThumb(url) {
       if (!url) return "";
       if (url.includes("imagekit.io")) {
-        return url + (url.includes("?") ? "&" : "?") + "tr=w-150,q-75,f-webp";
+        if (url.includes("tr=")) return url;
+        const separator = url.includes("?") ? "&" : "?";
+        return url + separator + "tr=w-120,q-70,f-webp";
       }
       return url;
     }
@@ -806,6 +808,7 @@
     function renderStations() {
       const grid = document.getElementById("radioGrid");
       const favs = getFavorites();
+      const favSet = new Set(favs);
       let list = [];
 
       if (searchQuery !== "") {
@@ -827,13 +830,16 @@
       let out = "";
       for (let i = 0; i < list.length; i++) {
         const s = list[i];
-        const isFav = favs.includes(s.id);
+        const isFav = favSet.has(s.id);
         const img = optimizeThumb(s.logo);
+        // Load only the first two visible card images eagerly; defer the rest.
+        const imageLoading = i < 2 ? "eager" : "lazy";
+        const imagePriority = i === 0 ? 'fetchpriority="high"' : "";
 
         out += `
           <div class="station-card" data-trigger="${s.trigger}">
             <div class="thumb-wrapper">
-              <img src="${img}" alt="${s.name}" class="station-logo" loading="lazy" decoding="async">
+              <img src="${img}" alt="${s.name}" class="station-logo" loading="${imageLoading}" decoding="async" ${imagePriority}>
               <div class="fav-btn ${isFav ? 'active' : ''}" data-id="${s.id}">
                 <svg><use href="#icon-heart"/></svg>
               </div>
