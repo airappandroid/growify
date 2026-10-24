@@ -20,8 +20,15 @@
     "trigger": "go:bigfm",
     "logo": "https://ik.imagekit.io/sqt8ptw1k/images_8ColMPfnE.jpg"
   },
-  {
+    {
     "id": "radio4",
+    "name": "BIG FM Hindi",
+    "category": "Hindi",
+    "trigger": "go:techno",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/images_c-ZN1u2vM.jpg"
+  },
+  {
+    "id": "radio44",
     "name": "BBC World Service",
     "category": "English",
     "trigger": "go:radio4",
