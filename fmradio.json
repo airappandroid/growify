@@ -27,6 +27,34 @@
     "trigger": "go:techno",
     "logo": "https://ik.imagekit.io/sqt8ptw1k/images_c-ZN1u2vM.jpg"
   },
+    {
+    "id": "radio5",
+    "name": "Diverse FM",
+    "category": "Hindi",
+    "trigger": "go:diver",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/images_oFhHvUqVJ.png"
+  },
+   {
+    "id": "radio6",
+    "name": "BollyHits Radio",
+    "category": "Hindi",
+    "trigger": "go:bolly",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/images_-TfG5xKBN.jpg"
+  },
+   {
+    "id": "radio7",
+    "name": "Nostalgic 90s",
+    "category": "Hindi",
+    "trigger": "go:nosta",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/images%20(2)_EtmSwrDzw.jpg"
+  },
+  {
+    "id": "radio8",
+    "name": "Evergreen Bollywood",
+    "category": "Hindi",
+    "trigger": "go:everg",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_z7w5J7D8lo.jpg"
+  },
   {
     "id": "radio44",
     "name": "BBC World Service",
