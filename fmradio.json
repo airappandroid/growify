@@ -55,6 +55,13 @@
     "trigger": "go:everg",
     "logo": "https://ik.imagekit.io/sqt8ptw1k/images%20(3)_z7w5J7D8lo.jpg"
   },
+   {
+    "id": "radio9",
+    "name": "Bollywood Gaane Purane",
+    "category": "Hindi",
+    "trigger": "go:gaanep",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_TLtv13-Hm.jpg"
+  },
   {
     "id": "radio44",
     "name": "BBC World Service",
