@@ -62,6 +62,20 @@
     "trigger": "go:gaanep",
     "logo": "https://ik.imagekit.io/sqt8ptw1k/images%20(4)_TLtv13-Hm.jpg"
   },
+   {
+    "id": "radio10",
+    "name": "Radio Active 90.4 FM",
+    "category": "Hindi",
+    "trigger": "go:activeb",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/images%20(6)_H9Re2woqL.jpg"
+  },
+   {
+    "id": "radio11",
+    "name": "Radio Active Godda",
+    "category": "Hindi",
+    "trigger": "go:activeg",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32609089_ico.png"
+  },
   {
     "id": "radio44",
     "name": "BBC World Service",
