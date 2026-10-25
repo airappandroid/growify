@@ -24,21 +24,21 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background
 .modal-body{padding:18px;max-height:60vh;overflow-y:auto}.modal-body p{margin-bottom:11px}.modal-body p:last-child{margin-bottom:0}
 .section{padding:0 15px;margin-top:23px}
 .title{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800;letter-spacing:-.25px;color:#f5f8ff;margin-bottom:12px}
-.top-banner{padding:14px 15px 0;text-decoration:none;display:block}
-.banner-card{position:relative;overflow:hidden;background:linear-gradient(135deg,#152c4c,#102033 68%,#14233b);border:1px solid #2c5278;border-radius:19px;padding:15px;display:flex;flex-direction:column;gap:11px}
+.top-banner{padding:14px 11px 0;text-decoration:none;display:block}
+.banner-card{position:relative;overflow:hidden;background:linear-gradient(135deg,#152c4c,#102033 68%,#14233b);border:1px solid #2c5278;border-radius:19px;padding:15px;display:flex;flex-direction:column;gap:11px;min-height:155px}
 .banner-card:after{content:"";position:absolute;right:-35px;top:-55px;width:145px;height:145px;border:22px solid rgba(98,217,232,.07);border-radius:50%;pointer-events:none}
 .banner-top-row,.banner-bottom-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .banner-tag{display:inline-flex;align-items:center;gap:6px;background:#1b3a5d;border:1px solid #315b83;color:#8fc7ff;font-size:10px;font-weight:850;padding:5px 9px;border-radius:7px;text-transform:uppercase;letter-spacing:.5px}
 .banner-tag.live{background:#48232d;border-color:#84404c;color:#ff9ba8}
 .banner-dot{width:7px;height:7px;background:#ff6578;border-radius:50%;display:none}
 .banner-time{font-size:10px;color:#b0bfd2;font-weight:750;white-space:nowrap;letter-spacing:.45px}
-.banner-title{font-size:17px;font-weight:850;color:#fff;line-height:1.3;letter-spacing:-.3px;overflow-wrap:anywhere}
+.banner-title{font-size:17px;font-weight:850;color:#fff;line-height:1.3;letter-spacing:-.3px;overflow-wrap:anywhere;position:relative;z-index:1}
 .banner-score-box{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
 .banner-score{font-size:12px;color:#83e6f2;font-weight:800;line-height:1.45}
-.score-line{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.score-line.sub{padding-left:18px;color:#b0dce7}
+.score-line{display:block;white-space:normal;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.score-line.sub{padding-left:0;color:#b0dce7}
 .banner-announcement{font-size:11px;color:#b0bfd2;font-weight:500;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.banner-cta{display:inline-flex;align-items:center;gap:6px;background:var(--cyan);color:#071522;font-size:11px;font-weight:850;padding:9px 12px;border-radius:10px;flex-shrink:0}
+.banner-cta{display:inline-flex;align-items:center;gap:6px;background:var(--cyan);color:#071522;font-size:11px;font-weight:850;padding:9px 12px;border-radius:10px;flex-shrink:0;position:relative;z-index:1}
 .banner-cta svg{width:12px;height:12px}
 .station-card{background:var(--panel);border:1px solid #202f45;border-radius:16px;padding:12px;margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;min-height:78px}
 .station-logo{width:47px;height:47px;border-radius:12px;object-fit:cover;margin-right:12px;background:#202d42;flex-shrink:0}
@@ -253,83 +253,9 @@ function getUKDateTime() {
 
 // BBC Radio 5 Sports Extra - Saturday, 24 October 2026 Schedule (UK Time)
 const EVENTS_CONFIG = [
-    {
-        sport: "RUGBY LEAGUE",
-        program: "Rugby League World Cup",
-        title: "Papua New Guinea v Samoa",
-        details: "Rugby League World Cup • Live commentary.",
-        timeDisplay: "5:00 AM",
-        dateDisplay: "Sat, 24 Oct",
-        year: 2026, month: 10, day: 24,
-        startMin: 300,
-        endMin: 435
-    },
-    {
-        sport: "RUGBY LEAGUE",
-        program: "Rugby League World Cup",
-        title: "England v France",
-        details: "Rugby League World Cup • Live commentary.",
-        timeDisplay: "7:15 AM",
-        dateDisplay: "Sat, 24 Oct",
-        year: 2026, month: 10, day: 24,
-        startMin: 435,
-        endMin: 585
-    },
-    {
-        sport: "RUGBY LEAGUE",
-        program: "Women's Rugby League World Cup",
-        title: "Australia v England",
-        details: "Women's Rugby League World Cup • Live commentary.",
-        timeDisplay: "9:45 AM",
-        dateDisplay: "Sat, 24 Oct",
-        year: 2026, month: 10, day: 24,
-        startMin: 585,
-        endMin: 895
-    },
-    {
-        sport: "FOOTBALL",
-        program: "Premier League Football",
-        title: "Coventry City v Fulham",
-        details: "Premier League Football • Live commentary.",
-        timeDisplay: "2:55 PM",
-        dateDisplay: "Sat, 24 Oct",
-        year: 2026, month: 10, day: 24,
-        startMin: 895,
-        endMin: 1105
-    },
-    {
-        sport: "FORMULA 1",
-        program: "Formula 1 — United States",
-        title: "Practice 3",
-        details: "United States Grand Prix • Practice 3 live coverage.",
-        timeDisplay: "6:25 PM",
-        dateDisplay: "Sat, 24 Oct",
-        year: 2026, month: 10, day: 24,
-        startMin: 1105,
-        endMin: 1175
-    },
-    {
-        sport: "BOXING",
-        program: "Boxing",
-        title: "Dalton Smith v Alberto Puello (Undercard)",
-        details: "Boxing • Undercard coverage.",
-        timeDisplay: "7:35 PM",
-        dateDisplay: "Sat, 24 Oct",
-        year: 2026, month: 10, day: 24,
-        startMin: 1175,
-        endMin: 1315
-    },
-    {
-        sport: "FORMULA 1",
-        program: "Formula 1 — United States",
-        title: "Qualifying",
-        details: "United States Grand Prix • Qualifying live coverage.",
-        timeDisplay: "9:55 PM",
-        dateDisplay: "Sat, 24 Oct",
-        year: 2026, month: 10, day: 24,
-        startMin: 1315,
-        endMin: 1440
-    }
+    { sport:"RUGBY LEAGUE", program:"Rugby League World Cup: Men's World Cup 2026", title:"New Zealand v Cook Islands", details:"Men's World Cup 2026 • Live commentary.", timeDisplay:"4:30 AM", dateDisplay:"Sun, 25 Oct", year:2026, month:10, day:25, startMin:270, endMin:465 },
+    { sport:"CRICKET", program:"Pakistan v England", title:"Pakistan v England", details:"Live cricket commentary of the Pakistan ODI Tri-Series in Lahore.", timeDisplay:"7:45 AM", dateDisplay:"Sun, 25 Oct", year:2026, month:10, day:25, startMin:465, endMin:1065 },
+    { sport:"FOOTBALL", program:"Women's Super League Football 2026–27", title:"Manchester United v Manchester City", details:"Women's Super League Football 2026–27 • Live commentary.", timeDisplay:"5:45 PM", dateDisplay:"Sun, 25 Oct", year:2026, month:10, day:25, startMin:1065, endMin:1440 }
 ];
 
 // Schedule and live broadcast logic.
@@ -412,81 +338,40 @@ async function fetchLiveCricketScore() {
 // Schedule and live broadcast logic.
 function updateBannerUI() {
     if (!DOM.topBanner) return;
-
     const uk = getUKDateTime();
-    let currentLive = null;
-    let nextUpcoming = null;
-
-    for (let i = 0; i < EVENTS_CONFIG.length; i++) {
-        const ev = EVENTS_CONFIG[i];
-        const isToday = (ev.year === uk.year && ev.month === uk.month && ev.day === uk.day);
-        const isFutureDay = (ev.year > uk.year) ||
-                            (ev.year === uk.year && ev.month > uk.month) ||
-                            (ev.year === uk.year && ev.month === uk.month && ev.day > uk.day);
-
-        if (isToday) {
-            if (uk.minutesNow >= ev.startMin && uk.minutesNow < ev.endMin) {
-                currentLive = ev;
-                break;
-            }
-            if (uk.minutesNow < ev.startMin && !nextUpcoming) {
-                nextUpcoming = ev;
-            }
-        } else if (isFutureDay && !nextUpcoming) {
-            nextUpcoming = ev;
-        }
+    let currentLive = null, nextUpcoming = null;
+    for (const ev of EVENTS_CONFIG) {
+        const today = ev.year === uk.year && ev.month === uk.month && ev.day === uk.day;
+        const future = ev.year > uk.year || (ev.year === uk.year && ev.month > uk.month) || (ev.year === uk.year && ev.month === uk.month && ev.day > uk.day);
+        if (today && uk.minutesNow >= ev.startMin && uk.minutesNow < ev.endMin) { currentLive = ev; break; }
+        if ((today && uk.minutesNow < ev.startMin) || future) { if (!nextUpcoming) nextUpcoming = ev; }
     }
-
+    DOM.topBanner.style.display = 'block';
     if (currentLive) {
-        DOM.topBanner.style.display = 'block';
-        DOM.bannerTitle.textContent = currentLive.program ? `${currentLive.program}: ${currentLive.title}` : currentLive.title;
-        DOM.bannerTime.textContent = "LIVE NOW";
-        DOM.bannerTag.textContent = `LIVE • ${currentLive.sport}`;
+        DOM.bannerTitle.textContent = currentLive.program + (currentLive.title !== currentLive.program ? ': ' + currentLive.title : '');
+        DOM.bannerTime.textContent = '';
+        DOM.bannerTag.textContent = 'LIVE • ' + currentLive.sport;
         DOM.bannerTagWrapper.classList.add('live');
         DOM.bannerDot.style.display = 'inline-block';
-
-        if (currentLive.sport === "CRICKET") {
-            fetchLiveCricketScore();
-        } else {
-            if (DOM.bannerScore) DOM.bannerScore.innerHTML = `<span class="score-line">🎙️ ${currentLive.title} (Live)</span>`;
-            if (DOM.bannerAnnouncement) {
-                DOM.bannerAnnouncement.textContent = currentLive.details;
-                DOM.bannerAnnouncement.style.display = 'block';
-            }
-        }
+        DOM.bannerScore.textContent = currentLive.title;
+        DOM.bannerAnnouncement.textContent = currentLive.details;
     } else if (nextUpcoming) {
-        DOM.topBanner.style.display = 'block';
-        DOM.bannerTitle.textContent = nextUpcoming.program ? `${nextUpcoming.program}: ${nextUpcoming.title}` : nextUpcoming.title;
-        
-        const isToday = (nextUpcoming.year === uk.year && nextUpcoming.month === uk.month && nextUpcoming.day === uk.day);
-        DOM.bannerTime.textContent = isToday ? `${nextUpcoming.timeDisplay}` : `${nextUpcoming.dateDisplay}, ${nextUpcoming.timeDisplay}`;
-        
-        DOM.bannerTag.textContent = `UPCOMING • ${nextUpcoming.sport}`;
+        DOM.bannerTitle.textContent = nextUpcoming.program + (nextUpcoming.title !== nextUpcoming.program ? ': ' + nextUpcoming.title : '');
+        const today = nextUpcoming.year === uk.year && nextUpcoming.month === uk.month && nextUpcoming.day === uk.day;
+        DOM.bannerTime.textContent = (today ? '' : nextUpcoming.dateDisplay + ' • ') + nextUpcoming.timeDisplay;
+        DOM.bannerTag.textContent = 'UPCOMING • ' + nextUpcoming.sport;
         DOM.bannerTagWrapper.classList.remove('live');
         DOM.bannerDot.style.display = 'none';
-
-        if (nextUpcoming.sport === "CRICKET") {
-            fetchLiveCricketScore();
-        } else {
-            if (DOM.bannerScore) DOM.bannerScore.innerHTML = `<span class="score-line">🔜 ${nextUpcoming.title}</span>`;
-            if (DOM.bannerAnnouncement) {
-                DOM.bannerAnnouncement.textContent = nextUpcoming.details;
-                DOM.bannerAnnouncement.style.display = 'block';
-            }
-        }
+        DOM.bannerScore.textContent = nextUpcoming.title;
+        DOM.bannerAnnouncement.textContent = nextUpcoming.details;
     } else {
-        DOM.topBanner.style.display = 'block';
-        DOM.bannerTitle.textContent = "BBC Radio 5 Sports Extra";
-        DOM.bannerTime.textContent = "Stay Tuned";
-        DOM.bannerTag.textContent = "SPORTS EXTRA";
+        DOM.bannerTitle.textContent = 'BBC Radio 5 Sports Extra';
+        DOM.bannerTime.textContent = 'Stay Tuned';
+        DOM.bannerTag.textContent = 'SPORTS EXTRA';
         DOM.bannerTagWrapper.classList.remove('live');
         DOM.bannerDot.style.display = 'none';
-        
-        if (DOM.bannerScore) DOM.bannerScore.innerHTML = `<span class="score-line">Live Sports Coverage</span>`;
-        if (DOM.bannerAnnouncement) {
-            DOM.bannerAnnouncement.textContent = "Check back soon for upcoming live fixtures.";
-            DOM.bannerAnnouncement.style.display = 'block';
-        }
+        DOM.bannerScore.textContent = 'Live Sports Coverage';
+        DOM.bannerAnnouncement.textContent = 'Check back soon for upcoming live fixtures.';
     }
 }
 
