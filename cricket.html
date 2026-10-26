@@ -117,7 +117,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 (function(){
 'use strict';
 
-const API='https://bdcr.aminurmarch.workers.dev/?id=98440';
+const API='https://bdcr.aminurmarch.workers.dev/?id=98441';
 const REFRESH_MS=120000;
 const $=id=>document.getElementById(id);
 const text=v=>(v===null||v===undefined||v===''?'—':String(v));
@@ -156,7 +156,7 @@ function render(data){
   const s=m.live_score||m.score||{};
   const state=first(m.status_str,m.match_status,m.status,'Scheduled');
   const gameState=String(first(m.game_state_str,''));
-  const note=first(m.status_note,m.note,m.match_title,m.title,'IND vs NZ 2nd T20I, Today · 12:30 PM');
+  const note=first(m.status_note,m.note,m.match_title,m.title,'IND vs NZ 3rd T20I, Today · 12:30 PM');
   const inningBreak=/inning\s*break|innings\s*break/i.test(gameState+' '+String(note));
   const live=/live|ongoing|in progress/i.test(String(state))&&!inningBreak;
   $('status').textContent=inningBreak?'Innings Break':text(state);
@@ -214,8 +214,8 @@ async function update(){
       $('updated').textContent='Connection issue — showing last available score';
     }else{
       $('scoreContent').className='center';
-      $('scoreContent').innerHTML='<div class="innings"><div class="teamline"><div><div class="team">India</div><div class="small">Scheduled</div></div><div class="score">—</div></div><div class="small">Match starts today at 12:30 PM</div><div class="teamline" style="margin-top:12px"><div class="team">New Zealand</div><div class="score">—</div></div></div>';
-      $('matchNote').textContent='IND vs NZ 2nd T20I, Today · 12:30 PM';
+      $('scoreContent').innerHTML='<div class="innings"><div class="teamline"><div><div class="team">India</div><div class="small">Scheduled</div></div><div class="score">—</div></div><div class="small">Match starts 27 OCT at 12:30 PM</div><div class="teamline" style="margin-top:12px"><div class="team">New Zealand</div><div class="score">—</div></div></div>';
+      $('matchNote').textContent='IND vs NZ 3rd T20I, 27 OCT · 12:30 PM';
       $('status').textContent='Scheduled';
       $('liveLabel').textContent='UPCOMING';
       $('liveDot').style.background='#8996b2';
