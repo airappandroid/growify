@@ -252,13 +252,37 @@ function getUKDateTime() {
 }
 
 // BBC Radio 5 Sports Extra Schedule (UK Time)
+// BBC Radio 5 Sports Extra Schedule (UK Time)
 const EVENTS_CONFIG = [
-    { sport:"RUGBY LEAGUE", program:"Rugby League World Cup: Men's World Cup 2026", title:"New Zealand v Cook Islands", details:"Men's World Cup 2026 • Live commentary.", timeDisplay:"4:30 AM", dateDisplay:"Sun, 25 Oct", year:2026, month:10, day:25, startMin:270, endMin:465 },
-    { sport:"CRICKET", program:"Pakistan v England ", title:"Live Cricket Commentary", details:"Live cricket commentary of the Pakistan ODI Tri-Series in Lahore.", timeDisplay:"7:45 AM", dateDisplay:"Sun, 25 Oct", year:2026, month:10, day:25, startMin:465, endMin:1065 },
-    { sport:"FOOTBALL", program:"Women's Super League Football 2026–27", title:"Manchester United v Manchester City", details:"Women's Super League Football 2026–27 • Live commentary.", timeDisplay:"5:45 PM", dateDisplay:"Sun, 25 Oct", year:2026, month:10, day:25, startMin:1065, endMin:1440 }
+    { 
+        sport: "CRICKET", 
+        program: "Cricket Commentary", 
+        title: "Pakistan v Sri Lanka", 
+        details: "Test Match Special • Live cricket commentary.", 
+        timeDisplay: "8:15 AM", 
+        dateDisplay: "Tue, 27 Oct", 
+        year: 2026, 
+        month: 10, 
+        day: 27, 
+        startMin: 495,   // 8:15 AM (8 * 60 + 15)
+        endMin: 1020     // 5:00 PM লৈকে Live থাকিব
+    },
+    { 
+        sport: "FOOTBALL", 
+        program: "EFL Cup Football", 
+        title: "Bradford City v Peterborough United", 
+        details: "EFL Cup Football • Live commentary.", 
+        timeDisplay: "7:00 PM", 
+        dateDisplay: "Tue, 27 Oct", 
+        year: 2026, 
+        month: 10, 
+        day: 27, 
+        startMin: 1140,  // 7:00 PM (19 * 60)
+        endMin: 1320     // 10:00 PM লৈকে Live থাকিব
+    }
 ];
 
-const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a865c1078dcf06570325449";
+const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a865c1078dcf0657032544";
 
 function formatInningScore(teamObj, prefix) {
     if (!teamObj) return "";
