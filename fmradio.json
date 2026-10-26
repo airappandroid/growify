@@ -77,6 +77,27 @@
     "logo": "https://ik.imagekit.io/sqt8ptw1k/32609089_ico.png"
   },
   {
+    "id": "radio12",
+    "name": "Radio Rimjhim",
+    "category": "Hindi",
+    "trigger": "go:rimjh",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32681841_ico.png"
+  },
+  {
+    "id": "radio13",
+    "name": "Radio Srinagar",
+    "category": "Hindi",
+    "trigger": "go:srin",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32592758_ico.png"
+  },
+   {
+    "id": "radio14",
+    "name": "Radio Manpasand",
+    "category": "Hindi",
+    "trigger": "go:manp",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32592517_ico.png"
+  },
+  {
     "id": "radio44",
     "name": "BBC World Service",
     "category": "English",
