@@ -3,15 +3,15 @@
     "id": "hindi",
     "tabTitle": "Hindi",
     "name": "AIR Hindi Samachar",
-    "time": "27 OCT • 2:00 PM",
-    "streamUrl": "https://archive.org/serve/midday-hindi-3_202610/midday-hindi-3.mp3"
+    "time": "27 OCT • 9:00 PM",
+    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/10/2045ss.mp3"
   },
   {
     "id": "english",
     "tabTitle": "English",
     "name": "AIR English News",
-    "time": "27 OCT • 2:00 PM",
-    "streamUrl": "https://archive.org/serve/mid-day-news-english/MidDay-News-English.mp3"
+    "time": "27 OCT • 9:00 PM",
+    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/10/News-At-Nine-2.mp3"
   },
   {
     "id": "bbc",
