@@ -97,6 +97,34 @@
     "trigger": "go:manp",
     "logo": "https://ik.imagekit.io/sqt8ptw1k/32592517_ico.png"
   },
+   {
+    "id": "radio15",
+    "name": "Suno Sharda 90.8",
+    "category": "Hindi",
+    "trigger": "go:sunos",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32738181_ico.png"
+  },
+   {
+    "id": "radio16",
+    "name": "Radio Nyra",
+    "category": "Hindi",
+    "trigger": "go:nyra",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32592494_ico.png"
+  },
+  {
+    "id": "radio17",
+    "name": "Radio Gunjan",
+    "category": "Hindi",
+    "trigger": "go:gunjan",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32754811_ico.png"
+  },
+   {
+    "id": "radio18",
+    "name": "Radio Dras",
+    "category": "Hindi",
+    "trigger": "go:dras",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32754857_ico.png"
+  },
   {
     "id": "radio44",
     "name": "BBC World Service",
