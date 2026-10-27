@@ -252,19 +252,18 @@ function getUKDateTime() {
 }
 
 // BBC Radio 5 Sports Extra Schedule (UK Time)
-// BBC Radio 5 Sports Extra Schedule (UK Time)
 const EVENTS_CONFIG = [
     { 
         sport: "CRICKET", 
         program: "Cricket Commentary", 
         title: "Pakistan v Sri Lanka", 
         details: "Test Match Special • Live cricket commentary.", 
-        timeDisplay: "8:15 AM", 
+        timeDisplay: "8:00 AM", 
         dateDisplay: "Tue, 27 Oct", 
         year: 2026, 
         month: 10, 
         day: 27, 
-        startMin: 495,   // 8:15 AM (8 * 60 + 15)
+        startMin: 480,   // 8:00 AM UK Time (1:30 PM IST) - এতিয়াই Live হৈ যাব
         endMin: 1020     // 5:00 PM লৈকে Live থাকিব
     },
     { 
@@ -282,7 +281,7 @@ const EVENTS_CONFIG = [
     }
 ];
 
-const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a865c1078dcf0657032544";
+const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a865c0278dcf06570325440";
 
 function formatInningScore(teamObj, prefix) {
     if (!teamObj) return "";
@@ -375,7 +374,8 @@ function updateBannerUI() {
         DOM.bannerTag.textContent = 'LIVE • ' + currentLive.sport;
         DOM.bannerTagWrapper.classList.add('live');
         DOM.bannerDot.style.display = 'inline-block';
-        DOM.bannerScore.textContent = currentLive.title;
+        if (currentLive.sport !== "CRICKET") DOM.bannerScore.textContent = currentLive.title;
+        else DOM.bannerScore.textContent = "Loading live score...";
         DOM.bannerAnnouncement.textContent = currentLive.details;
     } else if (nextUpcoming) {
         DOM.bannerTitle.textContent = nextUpcoming.program + (nextUpcoming.title !== nextUpcoming.program ? ': ' + nextUpcoming.title : '');
@@ -384,7 +384,8 @@ function updateBannerUI() {
         DOM.bannerTag.textContent = 'UPCOMING • ' + nextUpcoming.sport;
         DOM.bannerTagWrapper.classList.remove('live');
         DOM.bannerDot.style.display = 'none';
-        DOM.bannerScore.textContent = nextUpcoming.title;
+        if (nextUpcoming.sport !== "CRICKET") DOM.bannerScore.textContent = nextUpcoming.title;
+        else DOM.bannerScore.textContent = "Score updates when available";
         DOM.bannerAnnouncement.textContent = nextUpcoming.details;
     } else {
         DOM.bannerTitle.textContent = 'BBC Radio 5 Sports Extra';
@@ -467,10 +468,7 @@ function updateAppUI() {
 document.addEventListener("DOMContentLoaded", () => {
     updateAppUI();
     
-    const tag = DOM.bannerTag?.textContent || "";
-    if (tag.includes("CRICKET")) {
-        fetchLiveCricketScore();
-    }
+    fetchLiveCricketScore();
 
     let attempts = 0;
     const initTimer = setInterval(() => {
@@ -484,23 +482,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 300);
 
     setInterval(() => {
-        if (!document.hidden) {
-            const currentTag = DOM.bannerTag?.textContent || "";
-            if (currentTag.includes("CRICKET")) {
-                fetchLiveCricketScore();
-            }
-        }
+        updateAppUI();
+        fetchLiveCricketScore();
     }, 60000);
-
-    setInterval(updateAppUI, 60000);
     
     document.addEventListener("visibilitychange", () => {
         if (!document.hidden) {
             updateAppUI();
-            const currentTag = DOM.bannerTag?.textContent || "";
-            if (currentTag.includes("CRICKET")) {
-                fetchLiveCricketScore();
-            }
+            fetchLiveCricketScore();
         }
     });
 });
