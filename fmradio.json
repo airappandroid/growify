@@ -125,6 +125,13 @@
     "trigger": "go:dras",
     "logo": "https://ik.imagekit.io/sqt8ptw1k/32754857_ico.png"
   },
+   {
+    "id": "radio19",
+    "name": "Kumar Sanu",
+    "category": "Artist Radio",
+    "trigger": "go:kumars",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32618570_ico.png"
+  },
   {
     "id": "radio44",
     "name": "BBC World Service",
