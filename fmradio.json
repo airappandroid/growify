@@ -132,6 +132,55 @@
     "trigger": "go:kumars",
     "logo": "https://ik.imagekit.io/sqt8ptw1k/32618570_ico.png"
   },
+   {
+    "id": "radio20",
+    "name": "Udit Narayan",
+    "category": "Artist Radio",
+    "trigger": "go:uditn",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32618582_ico.png"
+  },
+   {
+    "id": "radio21",
+    "name": "Kishore Kumar",
+    "category": "Artist Radio",
+    "trigger": "go:kishore",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32618593_ico.png"
+  },
+   {
+    "id": "radio22",
+    "name": "Mohammed Rafi",
+    "category": "Artist Radio",
+    "trigger": "go:rafi",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32618600_ico.png"
+  },
+   {
+    "id": "radio23",
+    "name": "Lata Mangeshkar",
+    "category": "Artist Radio",
+    "trigger": "go:lata",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32618610_ico.png"
+  },
+   {
+    "id": "radio24",
+    "name": "Asha Bhosle",
+    "category": "Artist Radio",
+    "trigger": "go:asha",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/images_beV0nsftw.webp"
+  },
+   {
+    "id": "radio25",
+    "name": "Mukesh",
+    "category": "Artist Radio",
+    "trigger": "go:mukesh",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32738077_ico.png"
+  },
+  {
+    "id": "radio26",
+    "name": "Mohammad Aziz",
+    "category": "Artist Radio",
+    "trigger": "go:aziz",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/34965366_ico.png"
+  },
   {
     "id": "radio44",
     "name": "BBC World Service",
