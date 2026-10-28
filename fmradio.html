@@ -118,13 +118,74 @@
     }
 
     /* =========================
-       SEARCH BUTTON
+       CATEGORY DROPDOWN (EXPANDED)
+    ========================= */
+
+    .category-dropdown-btn {
+      flex: 1;
+      height: 42px;
+      min-width: 0;
+      background: var(--surface-color);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      cursor: pointer;
+      color: var(--text-main);
+      gap: 8px;
+      transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+    }
+
+    .category-dropdown-btn:active {
+      border-color: var(--accent);
+      background: rgba(244, 63, 94, 0.12);
+      box-shadow: 0 0 0 2px var(--accent-glow);
+    }
+
+    .cat-dropdown-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .cat-dropdown-icon {
+      width: 16px;
+      height: 16px;
+      stroke: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .cat-dropdown-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cat-dropdown-chevron {
+      width: 15px;
+      height: 15px;
+      stroke: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    /* =========================
+       SEARCH BUTTON (COMPACT)
     ========================= */
 
     .search-wrapper {
       position: relative;
-      flex: 1;
-      min-width: 0;
+      flex: 0 0 115px;
+      min-width: 95px;
       display: flex;
       align-items: center;
       text-decoration: none;
@@ -133,9 +194,9 @@
 
     .search-icon {
       position: absolute;
-      left: 12px;
-      width: 16px;
-      height: 16px;
+      left: 10px;
+      width: 15px;
+      height: 15px;
       stroke: var(--text-muted);
       fill: none;
       pointer-events: none;
@@ -144,17 +205,21 @@
 
     .search-input {
       width: 100%;
+      height: 42px;
       background: var(--surface-color);
       color: var(--text-muted);
-      font-size: 13px;
+      font-size: 12px;
       border: 1px solid var(--card-border);
       border-radius: 14px;
-      padding: 10px 14px 10px 36px;
+      padding: 10px 10px 10px 30px;
       outline: none;
       cursor: pointer;
       pointer-events: none;
       user-select: none;
       -webkit-user-select: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       transition:
         border-color 0.15s ease,
         box-shadow 0.15s ease;
@@ -167,13 +232,13 @@
     }
 
     /* =========================
-       ACTION BUTTONS
+       ACTION BUTTONS (FAVORITES)
     ========================= */
 
     .action-btn {
-      width: 40px;
-      height: 40px;
-      min-width: 40px;
+      width: 42px;
+      height: 42px;
+      min-width: 42px;
       background: var(--surface-color);
       border: 1px solid var(--card-border);
       border-radius: 14px;
@@ -194,16 +259,6 @@
       background: rgba(244, 63, 94, 0.14);
       border-color: var(--accent);
       color: var(--accent);
-    }
-
-    .action-btn .active-indicator-dot {
-      position: absolute;
-      top: 6px;
-      right: 6px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background-color: var(--accent);
     }
 
     /* =========================
@@ -333,7 +388,6 @@
       letter-spacing: 0.3px;
     }
 
-    /* LIVE BLINK BANDH KIYA GAYA (ANIMATION REMOVED) */
     .live-dot {
       width: 6px;
       height: 6px;
@@ -480,10 +534,6 @@
       justify-content: space-between;
       margin-bottom: 14px;
       padding-top: 4px;
-    }
-
-    .modal-title-group {
-      min-width: 0;
     }
 
     .modal-title-group h2 {
@@ -672,6 +722,9 @@
         padding-left: 10px;
         padding-right: 10px;
       }
+      .search-wrapper {
+        flex: 0 0 95px;
+      }
       .stations-grid {
         gap: 8px;
       }
@@ -689,21 +742,6 @@
         gap: 8px;
       }
     }
-
-    /* =========================
-       REDUCE MOTION
-    ========================= */
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-    }
   </style>
 </head>
 
@@ -715,7 +753,28 @@
     <header class="top-controls">
       <div class="search-row">
 
-        <!-- Search Button (Triggers http://action_search) -->
+        <!-- Category Dropdown Button (Expanded & Prominent) -->
+        <button
+          id="pref-btn"
+          class="category-dropdown-btn"
+          title="Select Category"
+          aria-label="Select Category"
+          type="button"
+        >
+          <div class="cat-dropdown-left">
+            <svg class="cat-dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18V5l12-2v13"></path>
+              <circle cx="6" cy="18" r="3"></circle>
+              <circle cx="18" cy="16" r="3"></circle>
+            </svg>
+            <span id="current-category-name" class="cat-dropdown-title">Hindi</span>
+          </div>
+          <svg class="cat-dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+
+        <!-- Search Button (Compact) -->
         <a
           href="http://action_search"
           id="search-btn"
@@ -732,7 +791,7 @@
             type="text"
             id="search-input"
             class="search-input"
-            placeholder="Search stations..."
+            placeholder="Search..."
             tabindex="-1"
             readonly
           />
@@ -749,28 +808,6 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
           </svg>
-        </button>
-
-        <!-- Category Preferences -->
-        <button
-          id="pref-btn"
-          class="action-btn"
-          title="Select Category"
-          aria-label="Select Category"
-          type="button"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="4" y1="21" x2="4" y2="14"></line>
-            <line x1="4" y1="10" x2="4" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="12"></line>
-            <line x1="12" y1="8" x2="12" y2="3"></line>
-            <line x1="20" y1="21" x2="20" y2="16"></line>
-            <line x1="20" y1="12" x2="20" y2="3"></line>
-            <line x1="1" y1="14" x2="7" y2="14"></line>
-            <line x1="9" y1="8" x2="15" y2="8"></line>
-            <line x1="17" y1="16" x2="23" y2="16"></line>
-          </svg>
-          <span class="active-indicator-dot" aria-hidden="true"></span>
         </button>
 
       </div>
@@ -797,8 +834,8 @@
           <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path>
         </svg>
         <p class="empty-title">No stations found</p>
-        <p class="empty-subtitle">Select a different category or show all stations</p>
-        <button id="reset-filter-btn" class="reset-btn" type="button">Show All Stations</button>
+        <p class="empty-subtitle">Select a different category</p>
+        <button id="reset-filter-btn" class="reset-btn" type="button">Reset to Hindi</button>
       </div>
 
     </main>
@@ -816,8 +853,8 @@
     <div>
       <div class="modal-top-bar">
         <div class="modal-title-group">
-          <h2 id="category-title">Select Your Category</h2>
-          <p>Choose your preferred radio language</p>
+          <h2 id="category-title">Select Category</h2>
+          <p>Choose your preferred radio category</p>
         </div>
         <button id="close-modal-btn" class="modal-close-icon-btn" aria-label="Close modal" type="button">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
@@ -852,15 +889,16 @@
     const STORAGE_KEY_PREF = "preferred_radio_category";
     const STORAGE_KEY_FAVS = "favorite_radio_ids";
 
+    // "All" removed, "Artist Radio" added right next to "Hindi"
     const PRIMARY_CATEGORIES = [
-      "All", "Hindi", "English", "Bhakti", "Bangla", "Assamese", "Odia",
+      "Hindi", "Artist Radio", "English", "Bhakti", "Bangla", "Assamese", "Odia",
       "Bhojpuri", "Nepali", "Punjabi", "Marathi", "Gujarati", "Tamil",
       "Telugu", "Kannada", "Sport"
     ];
 
     const CATEGORY_LOCAL_LABELS = {
-      "All": "All Languages (सभी)",
       "Hindi": "हिंदी संगीत व समाचार",
+      "Artist Radio": "कलाकार / Singer Specials 🎤",
       "English": "Global Hits & News",
       "Bhakti": "भक्ति, भजन व आरती",
       "Bangla": "বাংলা গান ও খবর",
@@ -879,6 +917,8 @@
 
     const FALLBACK_DATA = [
       { id: "radio1", name: "Mirchi Bollywood Hits", category: "Hindi", logo: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&q=80" },
+      { id: "radio_art1", name: "Arijit Singh Special", category: "Artist Radio", logo: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&q=80" },
+      { id: "radio_art2", name: "Kishore Kumar Classics", category: "Artist Radio", logo: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&q=80" },
       { id: "radio2", name: "Vividh Bharati Radio", category: "Hindi", logo: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&q=80" },
       { id: "radio3", name: "BBC World Service", category: "English", logo: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=300&q=80" },
       { id: "radio4", name: "Dance Wave Global", category: "English", logo: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=300&q=80" },
@@ -902,7 +942,7 @@
     ========================= */
 
     let allStations = [];
-    let activeCategory = "All";
+    let activeCategory = "Hindi";
     let onlyFavorites = false;
     let favorites = new Set();
     let toastTimer = null;
@@ -916,6 +956,7 @@
     const searchBtn = document.getElementById("search-btn");
     const favFilterBtn = document.getElementById("fav-filter-btn");
     const prefBtn = document.getElementById("pref-btn");
+    const currentCategoryName = document.getElementById("current-category-name");
     const stationsGrid = document.getElementById("stations-grid");
     const skeletonGrid = document.getElementById("skeleton-grid");
     const emptyState = document.getElementById("empty-state");
@@ -1069,7 +1110,7 @@
     function buildCategoryList() {
       const catSet = new Set(PRIMARY_CATEGORIES);
       allStations.forEach((station) => {
-        if (station.category && station.category.trim()) {
+        if (station.category && station.category.trim() && station.category.toLowerCase() !== "all") {
           catSet.add(station.category.trim());
         }
       });
@@ -1077,8 +1118,14 @@
     }
 
     /* =========================================================
-       LOCAL STORAGE HANDLING
+       LOCAL STORAGE HANDLING & UI SYNC
     ========================================================= */
+
+    function updateCategoryDropdownLabel() {
+      if (currentCategoryName) {
+        currentCategoryName.textContent = activeCategory;
+      }
+    }
 
     function initUserPreferences() {
       try {
@@ -1095,16 +1142,18 @@
 
       try {
         const savedPref = localStorage.getItem(STORAGE_KEY_PREF);
-        if (savedPref) {
+        if (savedPref && savedPref !== "All") {
           activeCategory = savedPref;
           modalSelectedCategory = savedPref;
-          prefBtn.classList.toggle("active", activeCategory !== "All");
         } else {
+          activeCategory = "Hindi";
           modalSelectedCategory = "Hindi";
         }
       } catch (e) {
-        activeCategory = "All";
+        activeCategory = "Hindi";
       }
+
+      updateCategoryDropdownLabel();
     }
 
     function saveFavorites() {
@@ -1124,7 +1173,7 @@
     ========================================================= */
 
     function openModal(isFirstLaunch = false) {
-      modalSelectedCategory = (activeCategory === "All" && isFirstLaunch) ? "Hindi" : activeCategory;
+      modalSelectedCategory = activeCategory || "Hindi";
       renderModalPreferences();
       prefModal.classList.add("open");
       closeModalBtn.style.display = isFirstLaunch ? "none" : "flex";
@@ -1171,13 +1220,12 @@
     confirmPrefBtn.onclick = () => {
       activeCategory = modalSelectedCategory;
       savePreferredCategory(activeCategory);
+      updateCategoryDropdownLabel();
       closeModal();
 
       onlyFavorites = false;
       favFilterBtn.classList.remove("active");
       favFilterBtn.querySelector("svg").setAttribute("fill", "none");
-
-      prefBtn.classList.toggle("active", activeCategory !== "All");
 
       renderStations();
       showToast(`Category: ${activeCategory}`);
@@ -1200,7 +1248,7 @@
     }
 
     /* =========================================================
-       FAVORITE TOGGLE & BUTTON UPDATE
+       FAVORITE TOGGLE
     ========================================================= */
 
     function toggleFavorite(id, event) {
@@ -1242,7 +1290,7 @@
       return allStations.filter((station) => {
         const matchCategory = onlyFavorites
           ? true
-          : (activeCategory === "All" || station._categoryLower === activeCategory.toLowerCase());
+          : (station._categoryLower === activeCategory.toLowerCase());
 
         const matchFavorite = onlyFavorites ? favorites.has(station.id) : true;
 
@@ -1394,14 +1442,14 @@
     };
 
     resetFilterBtn.onclick = () => {
-      activeCategory = "All";
+      activeCategory = "Hindi";
       onlyFavorites = false;
 
       favFilterBtn.classList.remove("active");
       favFilterBtn.querySelector("svg").setAttribute("fill", "none");
-      prefBtn.classList.remove("active");
 
-      savePreferredCategory("All");
+      savePreferredCategory("Hindi");
+      updateCategoryDropdownLabel();
       renderStations();
     };
 
