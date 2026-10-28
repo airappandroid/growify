@@ -254,20 +254,20 @@ function getUKDateTime() {
 }
 
 // BBC Radio 5 Sports Extra Schedule (UK Time)
-// 7:00 PM UK Time (19 * 60 = 1140 minutes)
+// 8:00 PM UK Time (20 * 60 = 1200 minutes)
 const EVENTS_CONFIG = [
     { 
         sport: "FOOTBALL", 
         program: "EFL Cup Football", 
-        title: "Bradford City v Peterborough United", 
+        title: "Manchester City v Brighton & Hove Albion", 
         details: "EFL Cup Football • Live commentary.", 
-        timeDisplay: "7:00 PM", 
-        dateDisplay: "Tue, 27 Oct", 
+        timeDisplay: "8:00 PM", 
+        dateDisplay: "Wed, 28 Oct", 
         year: 2026, 
         month: 10, 
-        day: 27, 
-        startMin: 1140,  // 7:00 PM UK Time -> এতিয়া Upcoming দেখাব
-        endMin: 1320     // 10:00 PM UK Time লৈকে Live থাকিব
+        day: 28, 
+        startMin: 1200,  // 8:00 PM UK Time (Upcoming দেখাব)
+        endMin: 1350     // 10:30 PM UK Time লৈকে Live থাকিব
     }
 ];
 
@@ -485,11 +485,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 300);
 
-    // প্ৰতি ৩০ ছেকেণ্ডৰ মূৰে মূৰে সময় চেক কৰিব
+    // ৰেডিঅ' ষ্টেচন আৰু ব্যানাৰ UI প্ৰতি ৩০ ছেকেণ্ডৰ মূৰে মূৰে আপডেট হ'ব
     setInterval(() => {
         updateAppUI();
-        fetchLiveCricketScore();
     }, 30000);
+
+    // ক্ৰিকেট লাইভ স্ক'ৰ প্ৰতি ১২০ ছেকেণ্ডৰ (২ মিনিট) মূৰে মূৰে আপডেট হ'ব
+    setInterval(() => {
+        fetchLiveCricketScore();
+    }, 120000);
     
     document.addEventListener("visibilitychange", () => {
         if (!document.hidden) {
