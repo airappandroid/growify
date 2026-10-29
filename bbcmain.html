@@ -31,7 +31,14 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background
 .banner-tag{display:inline-flex;align-items:center;gap:6px;background:#1b3a5d;border:1px solid #315b83;color:#8fc7ff;font-size:9.5px;font-weight:850;padding:4px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.5px}
 .banner-tag.live{background:#48232d;border-color:#84404c;color:#ff9ba8}
 .banner-dot{width:6px;height:6px;background:#ff6578;border-radius:50%;display:none;animation:pulseDot 1.4s infinite}
-@keyframes pulseDot{0%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}100%{opacity:1;transform:scale(1)}}
+.banner-dot {
+    width: 6px;
+    height: 6px;
+    background: #ff6578;
+    border-radius: 50%;
+    display: none;
+    animation: none !important;
+}
 .banner-time{font-size:10px;color:#b0bfd2;font-weight:750;white-space:nowrap;letter-spacing:.45px}
 .banner-title{font-size:15px;font-weight:850;color:#fff;line-height:1.25;letter-spacing:-.3px;overflow-wrap:anywhere;position:relative;z-index:1}
 .banner-score-box{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
@@ -199,8 +206,10 @@ a,button{-webkit-touch-callout:none}
         </div>
         <div class="modal-body">
             <p><strong>Welcome to All UK Radio.</strong></p>
-            <p>We are committed to protecting your privacy. This application streams publicly accessible radio broadcasts and does not collect or store personal identifying information.</p>
-            <p><strong>Contact Us:</strong> vividhbharati75@gmail.com</p>
+            <p>This app provides access to publicly available radio streams and audio content. The app does not require you to create an account, and it does not directly ask you to provide personal information.</p>
+            <p>Radio streams and other content may be hosted by third parties. If the app displays advertisements or uses third-party services, those providers may collect technical information such as device or advertising identifiers under their own privacy policies.</p>
+            <p>You can contact us with privacy questions or requests. We will review and respond to your message.</p>
+            <p><strong>Contact Us:</strong> <a href="mailto:vividhbharati75@gmail.com" style="color:#62d9e8;">vividhbharati75@gmail.com</a></p>
         </div>
     </div>
 </div>
@@ -290,6 +299,10 @@ function formatInningScore(teamObj, prefix) {
     return str;
 }
 
+// Keep the latest API score in memory so the banner refresh cannot overwrite it.
+let lastCricketScoreHtml = "";
+let lastCricketAnnouncement = "";
+
 async function fetchLiveCricketScore() {
     if (!DOM.bannerScore) return;
     try {
@@ -330,19 +343,25 @@ async function fetchLiveCricketScore() {
                 }
             }
 
+            // Save the latest result even if the banner is currently showing Upcoming.
+            lastCricketScoreHtml = scoreHtml;
+            lastCricketAnnouncement = announcement;
+
             const tagText = DOM.bannerTag ? DOM.bannerTag.textContent : "";
             if (tagText.includes("CRICKET")) {
-                DOM.bannerScore.innerHTML = scoreHtml;
-                if (DOM.bannerAnnouncement) {
-                    DOM.bannerAnnouncement.textContent = announcement;
-                    DOM.bannerAnnouncement.style.display = announcement ? "block" : "none";
+                DOM.bannerScore.innerHTML = lastCricketScoreHtml;
+                if (DOM.bannerAnnouncement && lastCricketAnnouncement) {
+                    // Keep the schedule details while live; use API announcement only when useful.
+                    DOM.bannerAnnouncement.textContent = lastCricketAnnouncement;
+                    DOM.bannerAnnouncement.style.display = "block";
                 }
             }
         }
     } catch (err) {
+        // Do not erase a previously fetched score when a temporary API request fails.
         const tagText = DOM.bannerTag ? DOM.bannerTag.textContent : "";
-        if (tagText.includes("CRICKET") && DOM.bannerScore) {
-            DOM.bannerScore.innerHTML = `<span class="score-line">🏏 Live Cricket</span>`;
+        if (tagText.includes("CRICKET") && DOM.bannerScore && !lastCricketScoreHtml) {
+            DOM.bannerScore.innerHTML = `<span class="score-line">🏏 Cricket score temporarily unavailable</span>`;
         }
     }
 }
@@ -376,7 +395,8 @@ function updateBannerUI() {
         if (currentLive.sport !== "CRICKET") {
             DOM.bannerScore.textContent = currentLive.title;
         } else {
-            DOM.bannerScore.textContent = "Loading live score...";
+            // Restore the latest fetched score instead of resetting it every UI refresh.
+            DOM.bannerScore.innerHTML = lastCricketScoreHtml || `<span class="score-line">Loading live score...</span>`;
         }
         DOM.bannerAnnouncement.textContent = currentLive.details;
     } else if (nextUpcoming) {
