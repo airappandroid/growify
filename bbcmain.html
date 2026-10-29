@@ -30,15 +30,7 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background
 .banner-top-row,.banner-bottom-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .banner-tag{display:inline-flex;align-items:center;gap:6px;background:#1b3a5d;border:1px solid #315b83;color:#8fc7ff;font-size:9.5px;font-weight:850;padding:4px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.5px}
 .banner-tag.live{background:#48232d;border-color:#84404c;color:#ff9ba8}
-.banner-dot{width:6px;height:6px;background:#ff6578;border-radius:50%;display:none;animation:pulseDot 1.4s infinite}
-.banner-dot {
-    width: 6px;
-    height: 6px;
-    background: #ff6578;
-    border-radius: 50%;
-    display: none;
-    animation: none !important;
-}
+.banner-dot{width:6px;height:6px;background:#ff6578;border-radius:50%;display:none;animation:none !important}
 .banner-time{font-size:10px;color:#b0bfd2;font-weight:750;white-space:nowrap;letter-spacing:.45px}
 .banner-title{font-size:15px;font-weight:850;color:#fff;line-height:1.25;letter-spacing:-.3px;overflow-wrap:anywhere;position:relative;z-index:1}
 .banner-score-box{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
@@ -89,13 +81,13 @@ a,button{-webkit-touch-callout:none}
         </div>
     </header>
 
-    <!-- Top Banner (5 Sports Extra Dynamic Schedule & Live Broadcast) -->
+    <!-- Top Banner (5 Sports Extra Dynamic Schedule) -->
     <a href="go:BBC5E" class="top-banner" id="bannerLink">
         <div class="banner-card">
             <div class="banner-top-row">
                 <div class="banner-tag" id="bannerTagWrapper">
                     <span class="banner-dot" id="bannerDot"></span>
-                    <span id="bannerTag">CRICKET</span>
+                    <span id="bannerTag">SPORTS EXTRA</span>
                 </div>
                 <div class="banner-time" id="bannerTime">Loading...</div>
             </div>
@@ -103,7 +95,7 @@ a,button{-webkit-touch-callout:none}
             <div class="banner-bottom-row">
                 <div class="banner-score-box">
                     <div class="banner-score" id="bannerScore">Loading...</div>
-                    <div class="banner-announcement" id="bannerAnnouncement">Live Coverage</div>
+                    <div class="banner-announcement" id="bannerAnnouncement">Live Sports Coverage</div>
                 </div>
                 <div class="banner-cta">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -262,21 +254,72 @@ function getUKDateTime() {
     };
 }
 
-// BBC Radio 5 Sports Extra Schedule (UK Time)
-// 7:45 AM UK Time = (7 * 60) + 45 = 465 minutes
+// BBC Radio 5 Sports Extra Schedule (UK Time - Friday, 30 October 2026)
 const EVENTS_CONFIG = [
     { 
-        sport: "CRICKET", 
-        program: "Cricket Commentary", 
-        title: "Sri Lanka v England", 
-        details: "Cricket Commentary • Live ball-by-ball coverage.", 
-        timeDisplay: "7:45 AM", 
-        dateDisplay: "Thu, 29 Oct", 
+        sport: "RUGBY LEAGUE", 
+        program: "Women's Rugby League World Cup", 
+        title: "England v Samoa", 
+        details: "Women's Rugby League World Cup • Live coverage.", 
+        timeDisplay: "6:30 AM", 
+        dateDisplay: "Fri, 30 Oct", 
         year: 2026, 
         month: 10, 
-        day: 29, 
-        startMin: 465,  // 7:45 AM UK Time (Upcoming / Live আৰম্ভ)
-        endMin: 960     // 4:00 PM UK Time লৈকে Live ষ্ট্ৰীমিং থাকিব
+        day: 30, 
+        startMin: 390,  // 6:30 AM
+        endMin: 510     // 8:30 AM
+    },
+    { 
+        sport: "RUGBY LEAGUE", 
+        program: "Men's Rugby League World Cup", 
+        title: "England v Papua New Guinea", 
+        details: "Men's Rugby League World Cup • Live commentary.", 
+        timeDisplay: "8:30 AM", 
+        dateDisplay: "Fri, 30 Oct", 
+        year: 2026, 
+        month: 10, 
+        day: 30, 
+        startMin: 510,  // 8:30 AM
+        endMin: 645     // 10:45 AM
+    },
+    { 
+        sport: "FORMULA 1", 
+        program: "Formula 1", 
+        title: "Mexico Practice 1", 
+        details: "Mexico City Grand Prix: Free Practice 1 live coverage.", 
+        timeDisplay: "6:25 PM", 
+        dateDisplay: "Fri, 30 Oct", 
+        year: 2026, 
+        month: 10, 
+        day: 30, 
+        startMin: 1105, // 6:25 PM
+        endMin: 1175    // 7:35 PM
+    },
+    { 
+        sport: "RUGBY UNION", 
+        program: "Rugby Union", 
+        title: "Bristol Bears v Leicester Tigers", 
+        details: "Gallagher Premiership Rugby • Live match commentary.", 
+        timeDisplay: "7:35 PM", 
+        dateDisplay: "Fri, 30 Oct", 
+        year: 2026, 
+        month: 10, 
+        day: 30, 
+        startMin: 1175, // 7:35 PM
+        endMin: 1315    // 9:55 PM
+    },
+    { 
+        sport: "FORMULA 1", 
+        program: "Formula 1", 
+        title: "Mexico Practice 2", 
+        details: "Mexico City Grand Prix: Free Practice 2 live commentary.", 
+        timeDisplay: "9:55 PM", 
+        dateDisplay: "Fri, 30 Oct", 
+        year: 2026, 
+        month: 10, 
+        day: 30, 
+        startMin: 1315, // 9:55 PM
+        endMin: 1410    // 11:30 PM
     }
 ];
 
@@ -299,7 +342,6 @@ function formatInningScore(teamObj, prefix) {
     return str;
 }
 
-// Keep the latest API score in memory so the banner refresh cannot overwrite it.
 let lastCricketScoreHtml = "";
 let lastCricketAnnouncement = "";
 
@@ -343,7 +385,6 @@ async function fetchLiveCricketScore() {
                 }
             }
 
-            // Save the latest result even if the banner is currently showing Upcoming.
             lastCricketScoreHtml = scoreHtml;
             lastCricketAnnouncement = announcement;
 
@@ -351,14 +392,12 @@ async function fetchLiveCricketScore() {
             if (tagText.includes("CRICKET")) {
                 DOM.bannerScore.innerHTML = lastCricketScoreHtml;
                 if (DOM.bannerAnnouncement && lastCricketAnnouncement) {
-                    // Keep the schedule details while live; use API announcement only when useful.
                     DOM.bannerAnnouncement.textContent = lastCricketAnnouncement;
                     DOM.bannerAnnouncement.style.display = "block";
                 }
             }
         }
     } catch (err) {
-        // Do not erase a previously fetched score when a temporary API request fails.
         const tagText = DOM.bannerTag ? DOM.bannerTag.textContent : "";
         if (tagText.includes("CRICKET") && DOM.bannerScore && !lastCricketScoreHtml) {
             DOM.bannerScore.innerHTML = `<span class="score-line">🏏 Cricket score temporarily unavailable</span>`;
@@ -395,7 +434,6 @@ function updateBannerUI() {
         if (currentLive.sport !== "CRICKET") {
             DOM.bannerScore.textContent = currentLive.title;
         } else {
-            // Restore the latest fetched score instead of resetting it every UI refresh.
             DOM.bannerScore.innerHTML = lastCricketScoreHtml || `<span class="score-line">Loading live score...</span>`;
         }
         DOM.bannerAnnouncement.textContent = currentLive.details;
@@ -505,12 +543,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 300);
 
-    // ৰেডিঅ' ষ্টেচন আৰু ব্যানাৰ UI প্ৰতি ৩০ ছেকেণ্ডৰ মূৰে মূৰে আপডেট হ'ব
     setInterval(() => {
         updateAppUI();
     }, 120000);
 
-    // ক্ৰিকেট লাইভ স্ক'ৰ প্ৰতি ১২০ ছেকেণ্ডৰ (২ মিনিট) মূৰে মূৰে আপডেট হ'ব
     setInterval(() => {
         fetchLiveCricketScore();
     }, 120000);
