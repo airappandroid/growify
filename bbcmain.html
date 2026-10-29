@@ -88,7 +88,7 @@ a,button{-webkit-touch-callout:none}
             <div class="banner-top-row">
                 <div class="banner-tag" id="bannerTagWrapper">
                     <span class="banner-dot" id="bannerDot"></span>
-                    <span id="bannerTag">FOOTBALL</span>
+                    <span id="bannerTag">CRICKET</span>
                 </div>
                 <div class="banner-time" id="bannerTime">Loading...</div>
             </div>
@@ -254,24 +254,24 @@ function getUKDateTime() {
 }
 
 // BBC Radio 5 Sports Extra Schedule (UK Time)
-// 8:00 PM UK Time (20 * 60 = 1200 minutes)
+// 7:45 AM UK Time = (7 * 60) + 45 = 465 minutes
 const EVENTS_CONFIG = [
     { 
-        sport: "FOOTBALL", 
-        program: "EFL Cup Football", 
-        title: "Manchester City v Brighton & Hove Albion", 
-        details: "EFL Cup Football • Live commentary.", 
-        timeDisplay: "8:00 PM", 
-        dateDisplay: "Wed, 28 Oct", 
+        sport: "CRICKET", 
+        program: "Cricket Commentary", 
+        title: "Sri Lanka v England", 
+        details: "Cricket Commentary • Live ball-by-ball coverage.", 
+        timeDisplay: "7:45 AM", 
+        dateDisplay: "Thu, 29 Oct", 
         year: 2026, 
         month: 10, 
-        day: 28, 
-        startMin: 1200,  // 8:00 PM UK Time (Upcoming দেখাব)
-        endMin: 1350     // 10:30 PM UK Time লৈকে Live থাকিব
+        day: 29, 
+        startMin: 465,  // 7:45 AM UK Time (Upcoming / Live আৰম্ভ)
+        endMin: 960     // 4:00 PM UK Time লৈকে Live ষ্ট্ৰীমিং থাকিব
     }
 ];
 
-const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a865c0278dcf06570325440";
+const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a865c0a78dcf06570325446";
 
 function formatInningScore(teamObj, prefix) {
     if (!teamObj) return "";
@@ -488,7 +488,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ৰেডিঅ' ষ্টেচন আৰু ব্যানাৰ UI প্ৰতি ৩০ ছেকেণ্ডৰ মূৰে মূৰে আপডেট হ'ব
     setInterval(() => {
         updateAppUI();
-    }, 30000);
+    }, 120000);
 
     // ক্ৰিকেট লাইভ স্ক'ৰ প্ৰতি ১২০ ছেকেণ্ডৰ (২ মিনিট) মূৰে মূৰে আপডেট হ'ব
     setInterval(() => {
