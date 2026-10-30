@@ -43,53 +43,61 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .innings-total{text-align:right;font-size:16px;font-weight:800;white-space:nowrap}
 .innings-sub{font-size:11px;color:var(--muted);font-weight:500;margin-top:4px}
 .table-wrap{width:100%;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
-.score-table{width:100%;border-collapse:collapse;min-width:0;table-layout:fixed;font-size:12px}
-.score-table th{background:rgba(255,255,255,.025);color:var(--muted);font-size:10px;font-weight:700;text-align:right;padding:10px 7px;white-space:nowrap}
-.score-table th:first-child,.score-table td:first-child{text-align:left;padding-left:13px}
-.score-table td{padding:10px 7px;border-top:1px solid var(--line);text-align:right;vertical-align:top;font-variant-numeric:tabular-nums}
-.score-table td:first-child{width:40%;min-width:0;overflow-wrap:break-word;word-break:normal}
+
+/* টেবুল আৰু কলমৰ মূল ষ্টাইল */
+.score-table{width:100%;border-collapse:collapse;min-width:340px;table-layout:fixed;font-size:12px}
+.score-table th{background:rgba(255,255,255,.025);color:var(--muted);font-size:10px;font-weight:700;text-align:right;padding:10px 5px;white-space:nowrap}
+.score-table td{padding:10px 5px;border-top:1px solid var(--line);text-align:right;vertical-align:top;font-variant-numeric:tabular-nums}
+
+/* বেটাৰ আৰু বলাৰৰ নাম বহল কৰিবলৈ প্ৰথম স্তম্ভ */
+.score-table th:first-child,.score-table td:first-child{text-align:left;padding-left:12px;width:48%;min-width:140px;overflow-wrap:break-word;word-break:normal}
+
+/* সংখ্যা থকা বাকী ৫টা স্তম্ভ */
+.score-table th:not(:first-child),.score-table td:not(:first-child){text-align:right;width:10.4%;white-space:nowrap}
+
 .player{font-weight:700;font-size:12px;overflow-wrap:break-word;word-break:normal;line-height:1.35}
-.dismissal{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.35;font-weight:400}.dismissal.not-out{color:var(--green);font-weight:700}
+.dismissal{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.35;font-weight:400}
+.dismissal.not-out{color:var(--green);font-weight:700}
 .total-row td{font-weight:800;background:rgba(255,255,255,.025)}
 .section-label{padding:12px 13px 8px;font-weight:800;font-size:12px}
 .extras-line{display:flex;justify-content:space-between;gap:12px;padding:9px 13px;color:var(--muted);font-size:12px}
 .extras-line strong{color:var(--text)}
 .fow{padding:0 13px 13px;color:var(--muted);font-size:11px;line-height:1.7}
 .fow strong{color:var(--text)}
-.fow-item{padding:3px 0;overflow-wrap:anywhere}.fow-item span{white-space:nowrap}
+.fow-item{padding:3px 0;overflow-wrap:anywhere}
+.fow-item span{white-space:nowrap}
 .empty{padding:22px 14px;text-align:center;color:var(--muted);font-size:12px;line-height:1.6}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden}
 .panel-title{font-size:14px;font-weight:800;padding:14px;border-bottom:1px solid var(--line)}
 .footer{text-align:center;color:#8996b2;font-size:11px;padding:12px 5px 24px}
 .error{color:#ffb49a}
-.score-table th,.score-table td{padding:10px 5px}
+
+/* মোবাইল স্ক্ৰীণৰ বাবে ৰেচপন্সিভ বিন্দুবোৰ */
 @media(max-width:390px){
- .container{padding:10px 8px}
- .match-card{padding:12px}
- .status-row{font-size:10px}
- .match-title{font-size:13px}
- .team{padding:9px}
- .team-name{font-size:11px}
- .team-logo{width:24px;height:24px}
- .score-table{font-size:11px}
- .score-table th{font-size:9px;padding:9px 3px}
- .score-table td{padding:10px 3px}
- .score-table th:first-child,.score-table td:first-child{padding-left:9px}
- .score-table td:first-child{width:40%}
- .player{font-size:11px}
- .dismissal{font-size:9px}
+  .container{padding:10px 8px}
+  .match-card{padding:12px}
+  .status-row{font-size:10px}
+  .match-title{font-size:13px}
+  .team{padding:9px}
+  .team-name{font-size:11px}
+  .team-logo{width:24px;height:24px}
+  .score-table{font-size:11px}
+  .score-table th{font-size:9px;padding:9px 3px}
+  .score-table td{padding:10px 3px}
+  .score-table th:first-child,.score-table td:first-child{padding-left:8px;width:48%;min-width:130px}
+  .player{font-size:11px}
+  .dismissal{font-size:9px}
 }
 @media(max-width:330px){
- .container{padding:8px 5px}
- .team-score{font-size:16px}
- .innings-name{font-size:12px}
- .innings-total{font-size:14px}
- .score-table th,.score-table td{padding-left:2px;padding-right:2px}
+  .container{padding:8px 5px}
+  .team-score{font-size:16px}
+  .innings-name{font-size:12px}
+  .innings-total{font-size:14px}
+  .score-table th,.score-table td{padding-left:2px;padding-right:2px}
 }
 </style>
 </head>
 <body>
-
 
 <main class="container">
   <section class="match-card">
@@ -119,7 +127,6 @@ const esc=v=>val(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt
 const first=(...a)=>a.find(v=>v!==undefined&&v!==null&&v!=='');
 let busy=false,hasData=false,lastData=null,activeInnings=0;
 
-
 function getTeams(m){
   if(Array.isArray(m.teams)&&m.teams.length)return m.teams;
   const a=m.teama||m.team_a||{},b=m.teamb||m.team_b||{};
@@ -140,7 +147,6 @@ function renderTeams(m){
   $('teams').innerHTML=teams.slice(0,2).map(t=>{
     const logo=first(t.logo_url,t.thumb_url,t.image);
     const score=teamScore(t);
-    const overs=first(t.overs,t.over);
     return '<div class="team"><div class="team-head">'+(logo?'<img class="team-logo" src="'+esc(logo)+'" alt="" loading="lazy" onerror="this.style.display=\'none\'">':'')+
       '<div class="team-name">'+esc(teamName(t))+'</div></div>'+
       (score?'<div class="team-score">'+esc(score)+'</div>':'<div class="team-score">—</div>')+'</div>';
@@ -154,7 +160,6 @@ function inningsFrom(m){
     m.response&&m.response.innings
   ];
   for(const c of candidates)if(Array.isArray(c)&&c.length)return c;
-  // Fallback to the live innings object exposed by the current API shape.
   if(m.live_inning&&typeof m.live_inning==='object')return [Object.assign({},m.live_inning,{
     batsmen:first(m.batsmen,m.live_inning.batsmen,[]),
     bowlers:first(m.bowlers,m.live_inning.bowlers,[]),
@@ -184,7 +189,7 @@ function inningsLabel(i,index){
 function batterRow(p){
   const name=first(p.name,p.title,p.batter,p.player_name,'Batter');
   const rawHow=first(p.how_out,p.dismissal,p.out_str,p.status_str,p.notout===true?'not out':'');
-  const isNotOut=p.notout===true || /\\bnot\\s*out\\b/i.test(String(rawHow||'')) || /\\bnot\\s*out\\b/i.test(String(p.status||''));
+  const isNotOut=p.notout===true || /\bnot\s*out\b/i.test(String(rawHow||'')) || /\bnot\s*out\b/i.test(String(p.status||''));
   const how=isNotOut?'not out':rawHow;
   return '<tr><td><div class="player">'+esc(name)+'</div>'+(how?'<div class="dismissal'+(isNotOut?' not-out':'')+'">'+esc(how)+'</div>':'')+'</td>'+
     '<td>'+esc(first(p.runs,p.r,0))+'</td><td>'+esc(first(p.balls_faced,p.balls,p.b,0))+'</td>'+
@@ -241,7 +246,7 @@ function renderInnings(i,index){
   }else out+='<div class="empty">Batting scorecard is not available in this API response.</div>';
   if(ex!==undefined)out+=extrasText(ex);
   if(bowlers.length){
-    out+='<div class="section-label">Bowling</div><div class="table-wrap"><table class="score-table"><thead><tr><th>Bowler</th><th>O</th><th>M</th><th>R</th><th>W</th><th> Econ</th></tr></thead><tbody>'+bowlers.map(bowlerRow).join('')+'</tbody></table></div>';
+    out+='<div class="section-label">Bowling</div><div class="table-wrap"><table class="score-table"><thead><tr><th>Bowler</th><th>O</th><th>M</th><th>R</th><th>W</th><th>Econ</th></tr></thead><tbody>'+bowlers.map(bowlerRow).join('')+'</tbody></table></div>';
   }else out+='<div class="section-label">Bowling</div><div class="empty">Bowling figures are not available in this API response.</div>';
   if(didNotBat.length)out+='<div class="section-label">Did Not Bat</div><div class="fow">'+didNotBat.map(p=>esc(typeof p==='string'?p:first(p.name,p.title,p.player_name,'Player'))).join(', ')+'</div>';
   out+=renderFow(i)+'</section>';
