@@ -196,18 +196,18 @@
     "logo": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=300&auto=format&fit=crop&q=80"
   },
   {
-    "id": "radio6",
-    "name": "Bhakti Sagar Tarang",
+    "id": "radio27",
+    "name": "DEVI MAA",
     "category": "Bhakti",
-    "trigger": "go:radio6",
-    "logo": "https://images.unsplash.com/photo-1609342122563-a43ac8917a3a?w=300&auto=format&fit=crop&q=80"
+    "trigger": "go:devi",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/36365536_ico.webp"
   },
   {
-    "id": "radio7",
-    "name": "Krishna Katha & Kirtan",
+    "id": "radio28",
+    "name": "MANTRA SHAKTI",
     "category": "Bhakti",
-    "trigger": "go:radio7",
-    "logo": "https://images.unsplash.com/photo-1545239351-ef35f43d514b?w=300&auto=format&fit=crop&q=80"
+    "trigger": "go:mantra",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/36365540_ico.png"
   },
   {
     "id": "radio8",
