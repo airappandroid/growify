@@ -45,15 +45,18 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .table-wrap{width:100%;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
 
 /* টেবুল আৰু কলমৰ মূল ষ্টাইল */
-.score-table{width:100%;border-collapse:collapse;min-width:340px;table-layout:fixed;font-size:12px}
-.score-table th{background:rgba(255,255,255,.025);color:var(--muted);font-size:10px;font-weight:700;text-align:right;padding:10px 5px;white-space:nowrap}
-.score-table td{padding:10px 5px;border-top:1px solid var(--line);text-align:right;vertical-align:top;font-variant-numeric:tabular-nums}
+.score-table{width:100%;border-collapse:collapse;min-width:320px;table-layout:fixed;font-size:12px}
+.score-table th{background:rgba(255,255,255,.025);color:var(--muted);font-size:10px;font-weight:700;text-align:right;padding:10px 4px;white-space:nowrap}
+.score-table td{padding:10px 4px;border-top:1px solid var(--line);text-align:right;vertical-align:top;font-variant-numeric:tabular-nums}
 
 /* বেটাৰ আৰু বলাৰৰ নাম বহল কৰিবলৈ প্ৰথম স্তম্ভ */
-.score-table th:first-child,.score-table td:first-child{text-align:left;padding-left:12px;width:48%;min-width:140px;overflow-wrap:break-word;word-break:normal}
+.score-table th:first-child,.score-table td:first-child{text-align:left;padding-left:10px;width:38%;min-width:110px;overflow-wrap:break-word;word-break:normal}
 
-/* সংখ্যা থকা বাকী ৫টা স্তম্ভ */
-.score-table th:not(:first-child),.score-table td:not(:first-child){text-align:right;width:10.4%;white-space:nowrap}
+/* সংখ্যা থকা মাজৰ ৪টা স্তম্ভ (R, B, 4s, 6s) */
+.score-table th:not(:first-child),.score-table td:not(:first-child){text-align:right;width:10.5%;padding:10px 2px;white-space:nowrap}
+
+/* শেষৰ স্তম্ভ (SR / Econ) দশমিকৰ বাবে বেছি ঠাই আৰু পেডিং */
+.score-table th:last-child,.score-table td:last-child{width:20%;padding-right:10px}
 
 .player{font-weight:700;font-size:12px;overflow-wrap:break-word;word-break:normal;line-height:1.35}
 .dismissal{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.35;font-weight:400}
@@ -82,9 +85,10 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   .team-name{font-size:11px}
   .team-logo{width:24px;height:24px}
   .score-table{font-size:11px}
-  .score-table th{font-size:9px;padding:9px 3px}
-  .score-table td{padding:10px 3px}
-  .score-table th:first-child,.score-table td:first-child{padding-left:8px;width:48%;min-width:130px}
+  .score-table th{font-size:9px;padding:9px 2px}
+  .score-table td{padding:10px 2px}
+  .score-table th:first-child,.score-table td:first-child{padding-left:6px;width:36%;min-width:95px}
+  .score-table th:last-child,.score-table td:last-child{padding-right:6px;width:20%}
   .player{font-size:11px}
   .dismissal{font-size:9px}
 }
@@ -93,7 +97,9 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   .team-score{font-size:16px}
   .innings-name{font-size:12px}
   .innings-total{font-size:14px}
-  .score-table th,.score-table td{padding-left:2px;padding-right:2px}
+  .score-table th,.score-table td{padding-left:1px;padding-right:1px}
+  .score-table th:first-child,.score-table td:first-child{padding-left:4px;width:34%;min-width:85px}
+  .score-table th:last-child,.score-table td:last-child{padding-right:4px;width:22%}
 }
 </style>
 </head>
@@ -119,7 +125,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <script>
 (function(){
 'use strict';
-const API='https://bdcr2.aminurmarch.workers.dev/?id=98442';
+const API='https://bdcr2.aminurmarch.workers.dev/?id=98443';
 const REFRESH_MS=120000;
 const $=id=>document.getElementById(id);
 const val=v=>(v===null||v===undefined||v===''?'—':String(v));
