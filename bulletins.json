@@ -3,15 +3,15 @@
     "id": "hindi",
     "tabTitle": "Hindi",
     "name": "AIR Hindi Samachar",
-    "time": "1 NOV • 9:00 AM",
-    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/11/Samachar-Prabhat.mp3"
+    "time": "1 NOV • 9:00 PM",
+    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/11/Samachar-Sandhya-2045-2100.mp3"
   },
   {
     "id": "english",
     "tabTitle": "English",
     "name": "AIR English News",
-    "time": "1 NOV • 9:00 AM",
-    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/11/morniang-news.mp3"
+    "time": "1 NOV • 9:00 PM",
+    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/11/nine.mp3"
   },
   {
     "id": "bbc",
