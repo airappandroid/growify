@@ -254,76 +254,24 @@ function getUKDateTime() {
     };
 }
 
-// BBC Radio 5 Sports Extra Schedule (UK Time - Sunday, 1 November 2026)
+// BBC Radio 5 Sports Extra Schedule (UK Time - Monday, 2 November 2026)
 const EVENTS_CONFIG = [
     { 
-        sport: "RUGBY LEAGUE", 
-        program: "Rugby League World Cup", 
-        title: "Australia v Wales", 
-        details: "Women's World Cup 2026 (Pool A) • Live match commentary.", 
-        timeDisplay: "4:30 AM", 
-        dateDisplay: "Sun, 1 Nov", 
+        sport: "CRICKET", 
+        program: "Big Bash League", 
+        title: "Melbourne Stars v Perth Scorchers", 
+        details: "Women's Big Bash League 2026 • Live commentary of Melbourne Stars v Perth Scorchers in the Women's Big Bash League.", 
+        timeDisplay: "8:00 AM", 
+        dateDisplay: "Mon, 2 Nov", 
         year: 2026, 
         month: 11, 
-        day: 1, 
-        startMin: 270,  // 4:30 AM
-        endMin: 390     // 6:30 AM
-    },
-    { 
-        sport: "RUGBY LEAGUE", 
-        program: "Rugby League World Cup", 
-        title: "Lebanon v France", 
-        details: "Men's World Cup 2026 (Pool B) • Live match commentary.", 
-        timeDisplay: "6:30 AM", 
-        dateDisplay: "Sun, 1 Nov", 
-        year: 2026, 
-        month: 11, 
-        day: 1, 
-        startMin: 390,  // 6:30 AM
-        endMin: 540     // 9:00 AM
-    },
-    { 
-        sport: "RUGBY LEAGUE", 
-        program: "Rugby League World Cup", 
-        title: "Tonga v Samoa", 
-        details: "Men's World Cup 2026 (Pool B) • Live match commentary.", 
-        timeDisplay: "9:00 AM", 
-        dateDisplay: "Sun, 1 Nov", 
-        year: 2026, 
-        month: 11, 
-        day: 1, 
-        startMin: 540,  // 9:00 AM
-        endMin: 720     // 12:00 PM
-    },
-    { 
-        sport: "FOOTBALL", 
-        program: "Scottish Premiership", 
-        title: "Falkirk v Celtic", 
-        details: "Scottish Premiership • Live match commentary.", 
-        timeDisplay: "12:00 PM", 
-        dateDisplay: "Sun, 1 Nov", 
-        year: 2026, 
-        month: 11, 
-        day: 1, 
-        startMin: 720,  // 12:00 PM
-        endMin: 895     // 2:55 PM
-    },
-    { 
-        sport: "FOOTBALL", 
-        program: "Scottish League Cup", 
-        title: "Hearts v Hibernian", 
-        details: "Semi-Final • Live match commentary.", 
-        timeDisplay: "2:55 PM", 
-        dateDisplay: "Sun, 1 Nov", 
-        year: 2026, 
-        month: 11, 
-        day: 1, 
-        startMin: 895,  // 2:55 PM
-        endMin: 1045    // 5:25 PM
+        day: 2, 
+        startMin: 480,  // 8:00 AM (8 * 60)
+        endMin: 690     // 11:30 AM (আনুমানিক ৩.৫ ঘণ্টা)
     }
 ];
 
-const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a865c0b78dcf06570325447";
+const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589bbe5a2a46d5d3506fdb";
 
 function formatInningScore(teamObj, prefix) {
     if (!teamObj) return "";
