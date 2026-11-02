@@ -254,24 +254,24 @@ function getUKDateTime() {
     };
 }
 
-// BBC Radio 5 Sports Extra Schedule (UK Time - Monday, 2 November 2026)
+// BBC Radio 5 Sports Extra Schedule (UK Time - Wednesday, 4 November 2026)
 const EVENTS_CONFIG = [
     { 
         sport: "CRICKET", 
         program: "Big Bash League", 
-        title: "Melbourne Stars v Perth Scorchers", 
-        details: "Women's Big Bash League 2026 • Live commentary of Melbourne Stars v Perth Scorchers in the Women's Big Bash League.", 
+        title: "Hobart Hurricanes v Melbourne Renegades", 
+        details: "Women's Big Bash League 2026 • Live commentary of Hobart Hurricanes v Melbourne Renegades in the Women's Big Bash League.", 
         timeDisplay: "8:00 AM", 
-        dateDisplay: "Mon, 2 Nov", 
+        dateDisplay: "Wed, 4 Nov", 
         year: 2026, 
         month: 11, 
-        day: 2, 
+        day: 4, 
         startMin: 480,  // 8:00 AM (8 * 60)
         endMin: 690     // 11:30 AM (আনুমানিক ৩.৫ ঘণ্টা)
     }
 ];
 
-const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589bbe5a2a46d5d3506fdb";
+const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589bbe5a2a46d5d3506fd";
 
 function formatInningScore(teamObj, prefix) {
     if (!teamObj) return "";
