@@ -119,13 +119,13 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
     <div class="panel-title">Current Batters</div><div id="currentBatters"></div>
     <div class="panel-title">Current Bowlers</div><div id="currentBowlers"></div>
   </section>
-  <div class="footer" id="updated">Cricket Score App · Auto refresh every 60 seconds</div>
+  <div class="footer" id="updated">Cricket Score App · Auto refresh every 2 minutes</div>
 </main>
 
 <script>
 (function(){
 'use strict';
-const API='https://bdcr2.aminurmarch.workers.dev/?id=98443';
+const API='https://cricvoice2.aminurmarch.workers.dev/?matchId=6a552bd15a2a46d5d3505259';
 const REFRESH_MS=120000;
 const $=id=>document.getElementById(id);
 const val=v=>(v===null||v===undefined||v===''?'—':String(v));
@@ -160,70 +160,71 @@ function renderTeams(m){
 }
 function asArray(v){return Array.isArray(v)?v:[];}
 function inningsFrom(m){
-  const candidates=[
-    m.innings,m.scorecard&&m.scorecard.innings,
-    m.match_scorecard&&m.match_scorecard.innings,
-    m.response&&m.response.innings
-  ];
-  for(const c of candidates)if(Array.isArray(c)&&c.length)return c;
-  if(m.live_inning&&typeof m.live_inning==='object')return [Object.assign({},m.live_inning,{
-    batsmen:first(m.batsmen,m.live_inning.batsmen,[]),
-    bowlers:first(m.bowlers,m.live_inning.bowlers,[]),
-    equations:first(m.live_inning.equations,m.live_score,{})
-  })];
-  if(m.live_score||m.score||m.batsmen||m.bowlers){
-    return [Object.assign({},m,{
-      name:first(m.live_inning_name,m.team_batting,m.batting_team,'Current Innings'),
-      batsmen:first(m.batsmen,m.batters,[]),bowlers:first(m.bowlers,[]),
-      equations:first(m.live_score,m.score,{})
-    })];
-  }
-  return [];
+  const list = m && m.innings_batting_order;
+  return Array.isArray(list) ? list : [];
 }
-function getBatters(i){return asArray(first(i.batsmen,i.batting,i.batters,[]));}
-function getBowlers(i){return asArray(first(i.bowlers,i.bowling,[]));}
+function getBatters(i){
+  return asArray(first(i.player_batting_order, i.batsmen, []));
+}
+function getBowlers(i){
+  return asArray(first(i.player_bowling_order, i.bowlers, []));
+}
 function scoreTotals(i){
-  const e=i.equations||{};
-  const runs=first(e.runs,i.runs,i.score_runs);
-  const wickets=first(e.wickets,i.wickets);
-  const overs=first(e.overs,i.overs);
-  return {runs,wickets,overs,rr:first(e.runrate,e.run_rate,i.runrate,i.run_rate)};
+  return {
+    runs: first(i.runs, i.score_runs),
+    wickets: first(i.wickets),
+    overs: first(i.overs),
+    rr: first(i.run_rate, i.runrate)
+  };
 }
 function inningsLabel(i,index){
-  return first(i.name,i.short_name,i.innings_name,i.team&&i.team.name,i.batting_team,`Innings ${index+1}`);
+  const key = String(first(i.key, ''));
+  // Team names for this NZ vs India match; scorecard API itself only supplies a_1 / b_1 keys.
+  const side = key.startsWith('a_') ? 'New Zealand' : (key.startsWith('b_') ? 'India' : '');
+  return first(i.name, i.innings_name, i.batting_team, side ? side+' · Innings '+(index+1) : 'Innings '+(index+1));
 }
 function batterRow(p){
-  const name=first(p.name,p.title,p.batter,p.player_name,'Batter');
-  const rawHow=first(p.how_out,p.dismissal,p.out_str,p.status_str,p.notout===true?'not out':'');
-  const isNotOut=p.notout===true || /\bnot\s*out\b/i.test(String(rawHow||'')) || /\bnot\s*out\b/i.test(String(p.status||''));
-  const how=isNotOut?'not out':rawHow;
-  return '<tr><td><div class="player">'+esc(name)+'</div>'+(how?'<div class="dismissal'+(isNotOut?' not-out':'')+'">'+esc(how)+'</div>':'')+'</td>'+
-    '<td>'+esc(first(p.runs,p.r,0))+'</td><td>'+esc(first(p.balls_faced,p.balls,p.b,0))+'</td>'+
-    '<td>'+esc(first(p.fours,p.boundaries,0))+'</td><td>'+esc(first(p.sixes,0))+'</td>'+
-    '<td>'+esc(first(p.strike_rate,p.sr,'—'))+'</td></tr>';
+  const b = p.batting || {};
+  const name = first(p.fullname, p.name, p.mobileName, p.player_name, 'Batter');
+  const how = first(b.out_str, p.out_str, p.dismissal, '');
+  const isNotOut = b.dismissed === false || p.dismissed === false || /not\s*out/i.test(String(how));
+  return '<tr><td><div class="player">'+esc(name)+'</div>'+
+    (how ? '<div class="dismissal'+(isNotOut?' not-out':'')+'">'+esc(how)+'</div>' :
+      (isNotOut ? '<div class="dismissal not-out">not out</div>' : ''))+
+    '</td>'+
+    '<td>'+esc(first(b.runs,p.runs,p.r,0))+'</td>'+
+    '<td>'+esc(first(b.balls,p.balls_faced,p.balls,p.b,0))+'</td>'+
+    '<td>'+esc(first(b.fours,p.fours,0))+'</td>'+
+    '<td>'+esc(first(b.sixes,p.sixes,0))+'</td>'+
+    '<td>'+esc(first(b.strike_rate,p.strike_rate,p.sr,'—'))+'</td></tr>';
 }
 function bowlerRow(p){
-  return '<tr><td><div class="player">'+esc(first(p.name,p.title,p.bowler,p.player_name,'Bowler'))+'</div></td>'+
-    '<td>'+esc(first(p.overs,p.o,'—'))+'</td><td>'+esc(first(p.maidens,p.m,0))+'</td>'+
-    '<td>'+esc(first(p.runs_conceded,p.runs,p.r,0))+'</td><td>'+esc(first(p.wickets,p.w,0))+'</td>'+
-    '<td>'+esc(first(p.econ,p.economy,p.economy_rate,'—'))+'</td></tr>';
+  const b = p.bowling || {};
+  return '<tr><td><div class="player">'+esc(first(p.fullname,p.name,p.mobileName,p.title,'Bowler'))+'</div></td>'+
+    '<td>'+esc(first(b.overs,p.overs,p.o,'—'))+'</td>'+
+    '<td>'+esc(first(b.maiden_overs,b.maidens,p.maidens,p.m,0))+'</td>'+
+    '<td>'+esc(first(b.runs,p.runs_conceded,p.runs,p.r,0))+'</td>'+
+    '<td>'+esc(first(b.wickets,p.wickets,p.w,0))+'</td>'+
+    '<td>'+esc(first(b.economy,p.econ,p.economy_rate,'—'))+'</td></tr>';
 }
-function extrasText(extras){
-  if(extras===undefined||extras===null)return '';
-  if(typeof extras!=='object')return '<div class="extras-line"><span>Extras</span><strong>'+esc(extras)+'</strong></div>';
-  const total=first(extras.total,extras.runs,extras.extra_runs);
-  const bits=[
-    ['b',first(extras.byes,extras.b)],['lb',first(extras.legbyes,extras.lb)],
-    ['w',first(extras.wides,extras.w)],['nb',first(extras.noballs,extras.nb)],
-    ['p',first(extras.penalty,extras.p)]
-  ].filter(x=>x[1]!==undefined&&x[1]!==null&&x[1]!=='');
-  const detail=bits.map(x=>x[0]+' '+x[1]).join(', ');
-  return '<div class="extras-line"><span>Extras'+(detail?' ('+esc(detail)+')':'')+'</span><strong>'+esc(total!==undefined?total:bits.reduce((n,x)=>n+(Number(x[1])||0),0))+'</strong></div>';
+function extrasText(i){
+  const total = Number(first(i.extras, 0)) || 0;
+  const bits = [
+    ['b', Number(first(i.bye,0)) || 0],
+    ['lb', Number(first(i.legbye,0)) || 0],
+    ['w', Number(first(i.wide,0)) || 0],
+    ['nb', Number(first(i.noball,0)) || 0],
+    ['p', Number(first(i.penalty,0)) || 0]
+  ];
+  const detail = bits.filter(x=>x[1] > 0).map(x=>x[0]+' '+x[1]).join(', ');
+  return '<div class="extras-line"><span>Extras'+(detail?' ('+esc(detail)+')':'')+'</span><strong>'+esc(total)+'</strong></div>';
 }
 function renderFow(i){
   const list=asArray(first(i.fows,i.fall_of_wickets,i.fall_of_wicket,[]));
   if(list.length){
     return '<div class="section-label">Fall of Wickets</div><div class="fow">'+list.map(w=>{
+      // Cricradio sends FOW as text, e.g. 22/1 (W Young, 4.3 ov).
+      if(typeof w==='string') return '<div class="fow-item">'+esc(w)+'</div>';
       const score=first(w.score_at_dismissal,w.score,w.runs,w.total,'—');
       const wicket=first(w.number,w.wicket,w.wkt,'—');
       const over=first(w.overs_at_dismissal,w.overs,w.over,'—');
@@ -240,8 +241,8 @@ function renderFow(i){
 function renderInnings(i,index){
   const total=scoreTotals(i);
   const batters=getBatters(i),bowlers=getBowlers(i);
-  const ex=first(i.extra_runs,i.extras,i.extra);
-  const didNotBat=asArray(first(i.did_not_bat,i.did_not_bat_list,[]));
+  const ex=i;
+  const didNotBat=asArray(first(i.yet_to_bat,i.did_not_bat,i.did_not_bat_list,[]));
   const totalText=(total.runs!==undefined?total.runs:'—')+'/'+(total.wickets!==undefined?total.wickets:'—');
   const oversText=(total.overs!==undefined&&total.overs!=='')?total.overs:'';
   const rrText=total.rr!==undefined?total.rr:'—';
@@ -250,7 +251,7 @@ function renderInnings(i,index){
     out+='<div class="table-wrap"><table class="score-table"><thead><tr><th>Batter</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th></tr></thead><tbody>'+batters.map(batterRow).join('')+
       '<tr class="total-row"><td>Innings Total</td><td colspan="5">'+esc(totalText)+'</td></tr></tbody></table></div>';
   }else out+='<div class="empty">Batting scorecard is not available in this API response.</div>';
-  if(ex!==undefined)out+=extrasText(ex);
+  out+=extrasText(ex);
   if(bowlers.length){
     out+='<div class="section-label">Bowling</div><div class="table-wrap"><table class="score-table"><thead><tr><th>Bowler</th><th>O</th><th>M</th><th>R</th><th>W</th><th>Econ</th></tr></thead><tbody>'+bowlers.map(bowlerRow).join('')+'</tbody></table></div>';
   }else out+='<div class="section-label">Bowling</div><div class="empty">Bowling figures are not available in this API response.</div>';
@@ -280,10 +281,10 @@ function findCurrentInnings(innings,m){
   return Math.max(0,innings.length-1);
 }
 function render(data){
-  const m=data.response||data.data||data;
-  const state=String(first(m.status_str,m.match_status,m.status,'Match Update'));
+  const m=data && data.responseData && data.responseData.result;
+  const state=String(first(m.status_str,m.match_status,m.status,'SCORECARD'));
   const game=String(first(m.game_state_str,''));
-  const note=first(m.status_note,m.note,m.match_note,'');
+  const note=first(m.status_note,m.note,m.match_note,'Innings scorecard');
   const breakNow=/innings?\s*break/i.test(game+' '+String(note));
   const live=/live|ongoing|in progress/i.test(state)&&!breakNow;
   $('statusLabel').textContent=breakNow?'INNINGS BREAK':(live?'LIVE MATCH':state.toUpperCase());
@@ -305,10 +306,10 @@ function render(data){
     });
   }else{tabs.style.display='none';tabs.innerHTML='';}
   renderScorecards(innings);
-  renderCurrentPlayers(m);
+  $('currentPlayersPanel').hidden=true;
   const time=new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
   $('updatedTop').textContent='Updated '+time;
-  $('updated').textContent='Last updated: '+time+' · Auto refresh every 60 seconds';
+  $('updated').textContent='Last updated: '+time+' · Auto refresh every 2 minutes';
 }
 function renderScorecards(innings){
   if(!innings.length){
@@ -330,8 +331,8 @@ async function loadData(){
     const res=await fetch(API,{cache:'no-store',signal:ctrl.signal});
     if(!res.ok)throw new Error('HTTP '+res.status);
     const data=await res.json();
-    const m=data&&(data.response||data.data||data);
-    if(!m||typeof m!=='object')throw new Error('Invalid API response');
+    const m=data && data.responseData && data.responseData.result;
+    if(!m||typeof m!=='object')throw new Error('Invalid API response structure: expected responseData.result');
     lastData=data;render(data);hasData=true;
   }catch(err){
     if(!hasData){
