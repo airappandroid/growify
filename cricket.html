@@ -101,8 +101,8 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
     <div id="scoreContent" class="center">Loading live score...</div>
     <button class="scorecard-btn" id="scorecardBtn" type="button">Full Scorecard →</button>
   </section>
-  <section class="panel"><div class="panel-title">🏏 Batters</div><div id="batters" class="center">Loading batting details...</div></section>
-  <section class="panel"><div class="panel-title">🎯 Bowlers</div><div id="bowlers" class="center">Loading bowling details...</div></section>
+  
+  
   <div class="footer" id="updated">Cricket Score App</div>
 </main>
 
@@ -117,7 +117,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 (function(){
 'use strict';
 
-const API='https://bdcr.aminurmarch.workers.dev/?id=98443';
+const API='https://cricvoice.aminurmarch.workers.dev/?matchId=6a552bd15a2a46d5d3505259';
 const REFRESH_MS=120000;
 const $=id=>document.getElementById(id);
 const text=v=>(v===null||v===undefined||v===''?'—':String(v));
@@ -152,48 +152,115 @@ function playerTable(items,isBatting){
 }
 
 function render(data){
-  const m=data.response||data.data||data;
-  const s=m.live_score||m.score||{};
-  const state=first(m.status_str,m.match_status,m.status,'Scheduled');
-  const gameState=String(first(m.game_state_str,''));
-  const note=first(m.status_note,m.note,m.match_title,m.title,'IND vs NZ 5th T20I, Today · 12:30 PM');
-  const inningBreak=/inning\s*break|innings\s*break/i.test(gameState+' '+String(note));
-  const live=/live|ongoing|in progress/i.test(String(state))&&!inningBreak;
-  $('status').textContent=inningBreak?'Innings Break':text(state);
-  $('matchNote').textContent=text(note);
-  $('liveLabel').textContent=inningBreak?'INNINGS BREAK':(live?'LIVE':'MATCH UPDATE');
-  $('liveDot').style.background=live?'var(--green)':(inningBreak?'var(--yellow)':'#8996b2');
+  // Supports both the older score API and the responseData.result format.
+  const m = data?.responseData?.result ||
+            data?.response?.responseData?.result ||
+            data?.response ||
+            data?.data ||
+            data?.result ||
+            data;
 
-  const batting=first(m.team_batting,m.batting_team,'India');
-  const bowling=first(m.team_bowling,m.bowling_team,'New Zealand');
-  const runs=first(s.runs,m.runs);
-  const wickets=first(s.wickets,m.wickets);
-  const score=(runs!==undefined&&wickets!==undefined)?String(runs)+'/'+String(wickets):'—';
-  const overs=first(s.overs,m.overs);
-  const rr=first(s.runrate,s.run_rate,s.crr);
-  const target=first(s.target,m.target);
-  const rrr=first(s.required_runrate,s.rrr);
-  const showTarget=target!==undefined&&Number(target)>0;
-  const showRRR=rrr!==undefined&&rrr!==''&&Number.isFinite(Number(rrr))&&Number(rrr)>0;
+  if(!m || typeof m !== 'object') throw new Error('Invalid match response');
 
-  $('scoreContent').className='';
-  $('scoreContent').innerHTML=
+  const teams = m.teams && !Array.isArray(m.teams) ? m.teams : null;
+  const settings = m.settingObj || {};
+  const currentTeamKey = String(settings.currentTeam || '').toLowerCase() ||
+    (Number(m.currentBattingOrder) === 2 ? 'b' : 'a');
+  const currentInning = Number(settings.currentInning || 1);
+
+  let batting = first(m.team_batting,m.batting_team);
+  let bowling = first(m.team_bowling,m.bowling_team);
+  let scoreRuns, scoreWickets, overs, rr, target, rrr;
+  let batsmen = first(m.batsmen,m.batters,[]);
+  let bowlers = first(m.bowlers,[]);
+
+  if(teams){
+    const teamA = teams.a || {};
+    const teamB = teams.b || {};
+    const activeTeam = currentTeamKey === 'b' ? teamB : teamA;
+    const otherTeam = currentTeamKey === 'b' ? teamA : teamB;
+
+    batting = first(activeTeam.name,activeTeam.shortName,batting,'—');
+    bowling = first(otherTeam.name,otherTeam.shortName,bowling,'—');
+
+    const scoreKey = `${currentTeamKey || 'a'}_${currentInning}_score`;
+    let inningScore = activeTeam[scoreKey];
+
+    if(!inningScore){
+      const availableScoreKey = Object.keys(activeTeam).find(key =>
+        /^([ab])_\d+_score$/.test(key) &&
+        activeTeam[key] && typeof activeTeam[key] === 'object'
+      );
+      if(availableScoreKey) inningScore = activeTeam[availableScoreKey];
+    }
+
+    if(!inningScore){
+      inningScore = activeTeam.score || activeTeam.live_score || {};
+    }
+
+    scoreRuns = first(inningScore.runs,inningScore.run);
+    scoreWickets = first(inningScore.wickets,inningScore.wicket);
+    overs = first(inningScore.overs,inningScore.over);
+    rr = first(inningScore.run_rate,inningScore.runrate,m.now?.run_rate);
+    target = first(inningScore.target,m.target);
+    rrr = first(inningScore.required_run_rate,inningScore.required_runrate,m.now?.req_run_rate);
+
+    // Some API versions provide a ready-made score string.
+    const readyScore = first(inningScore.run_str,inningScore.score_str);
+    if(readyScore){
+      const parsed = String(readyScore).match(/(\d+)\s*\/\s*(\d+)/);
+      if(parsed){
+        scoreRuns = parsed[1];
+        scoreWickets = parsed[2];
+      }
+      const overMatch = String(readyScore).match(/\bin\s+([0-9]+(?:\.[0-9]+)?)/i);
+      if(overMatch) overs = overMatch[1];
+    }
+  }else{
+    const s = m.live_score || m.score || {};
+    scoreRuns = first(s.runs,m.runs);
+    scoreWickets = first(s.wickets,m.wickets);
+    overs = first(s.overs,m.overs);
+    rr = first(s.runrate,s.run_rate,s.crr,m.now?.run_rate);
+    target = first(s.target,m.target);
+    rrr = first(s.required_runrate,s.rrr,m.now?.req_run_rate);
+  }
+
+  const state = first(m.status_str,m.match_status,m.status,'Scheduled');
+  const gameState = String(first(m.game_state_str,''));
+  const note = first(m.announcement1,m.status_note,m.note,m.match_title,m.title,'Match update');
+  const inningBreak = /inning\s*break|innings\s*break/i.test(gameState+' '+String(note));
+  const statusText = String(state).toLowerCase()+' '+gameState.toLowerCase();
+  const live = /live|ongoing|in progress|started/i.test(statusText) && !inningBreak;
+
+  $('status').textContent = inningBreak ? 'Innings Break' : text(state).toUpperCase();
+  $('matchNote').textContent = text(note);
+  $('liveLabel').textContent = inningBreak ? 'INNINGS BREAK' : (live ? 'LIVE' : 'MATCH UPDATE');
+  $('liveDot').style.background = live ? 'var(--green)' : (inningBreak ? 'var(--yellow)' : '#8996b2');
+
+  const score = (scoreRuns !== undefined && scoreWickets !== undefined)
+    ? String(scoreRuns)+'/'+String(scoreWickets)
+    : '—';
+  const showTarget = target !== undefined && Number(target)>0;
+  const showRRR = rrr !== undefined && rrr!=='' && Number.isFinite(Number(rrr)) && Number(rrr)>0;
+
+  $('scoreContent').className = '';
+  $('scoreContent').innerHTML =
     '<div class="innings">'+
-      '<div class="teamline"><div><div class="team">'+esc(batting)+'</div><div class="small">Batting</div></div><div class="score">'+esc(score)+'</div></div>'+
+      '<div class="teamline"><div><div class="team">'+esc(batting || 'Batting team')+'</div><div class="small">Batting</div></div><div class="score">'+esc(score)+'</div></div>'+
       (overs!==undefined?'<div class="small">Overs: '+esc(overs)+'</div>':'')+
       '<div class="stats">'+
         '<div class="stat"><div class="stat-label">Run Rate</div><div class="stat-value">'+esc(rr)+'</div></div>'+
         '<div class="stat"><div class="stat-label">Target</div><div class="stat-value">'+(showTarget?esc(target):'—')+'</div></div>'+
         '<div class="stat"><div class="stat-label">Required RR</div><div class="stat-value">'+(showRRR?esc(rrr):'—')+'</div></div>'+
       '</div>'+
-      '<div class="small">Bowling: '+esc(bowling)+'</div>'+
+      '<div class="small">Bowling: '+esc(bowling || '—')+'</div>'+
     '</div>';
 
-  $('batters').className='';
-  $('bowlers').className='';
-  $('batters').innerHTML=playerTable(first(m.batsmen,m.batters,[]),true);
-  $('bowlers').innerHTML=playerTable(first(m.bowlers,[]),false);
-  $('updated').textContent='Last updated: '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
+
+
+
+  $('updated').textContent = 'Last updated: '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
 }
 
 async function update(){
@@ -205,7 +272,7 @@ async function update(){
     const res=await fetch(API,{cache:'no-store',signal:controller.signal});
     if(!res.ok)throw new Error('HTTP '+res.status);
     const data=await res.json();
-    const m=data&& (data.response||data.data||data);
+    const m=data && (data.responseData?.result || data.response?.responseData?.result || data.response || data.data || data.result || data);
     if(!m||typeof m!=='object') throw new Error('Invalid match response');
     render(data);
     hasData=true;
@@ -219,8 +286,8 @@ async function update(){
       $('status').textContent='Scheduled';
       $('liveLabel').textContent='UPCOMING';
       $('liveDot').style.background='#8996b2';
-      $('batters').textContent='Batting details will appear when the match starts.';
-      $('bowlers').textContent='Bowling details will appear when the match starts.';
+
+
     }
   }finally{
     clearTimeout(timeout);
