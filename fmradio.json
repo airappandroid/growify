@@ -252,6 +252,34 @@
     "logo": "https://ik.imagekit.io/sqt8ptw1k/32609353_ico.png"
   },
   {
+    "id": "radio35",
+    "name": "Bhajan Radio",
+    "category": "Bhakti",
+    "trigger": "go:bhajan",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32583790_ico.png"
+  },
+   {
+    "id": "radio36",
+    "name": "Bhakti Sangeet",
+    "category": "Bhakti",
+    "trigger": "go:bhak",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32583794_ico.png"
+  },
+   {
+    "id": "radio37",
+    "name": "Bhakti World",
+    "category": "Bhakti",
+    "trigger": "go:bhw",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32583798_ico.png"
+  },
+  {
+    "id": "radio38",
+    "name": "Bhaktisudha",
+    "category": "Bhakti",
+    "trigger": "go:bhs",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32583803_ico.png"
+  },
+  {
     "id": "radio8",
     "name": "Bangla Gaan Radio",
     "category": "Bangla",
