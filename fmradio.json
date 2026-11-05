@@ -210,6 +210,34 @@
     "logo": "https://ik.imagekit.io/sqt8ptw1k/36365540_ico.png"
   },
   {
+    "id": "radio29",
+    "name": "Raam Bhakti",
+    "category": "Bhakti",
+    "trigger": "go:ram",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32609338_ico.png"
+  },
+  {
+    "id": "radio30",
+    "name": "Hanuman Bhakti",
+    "category": "Bhakti",
+    "trigger": "go:hanu",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32609341_ico.png"
+  },
+  {
+    "id": "radio31",
+    "name": "Krishna Bhakti",
+    "category": "Bhakti",
+    "trigger": "go:krish",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32609348_ico.png"
+  },
+  {
+    "id": "radio32",
+    "name": "Krishna Bhakti 2",
+    "category": "Bhakti",
+    "trigger": "go:krish2",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/35715013_ico.png"
+  },
+  {
     "id": "radio8",
     "name": "Bangla Gaan Radio",
     "category": "Bangla",
