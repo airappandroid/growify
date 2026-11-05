@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f5f7fb">
+<meta name="description" content="Tip Calculator makes everyday calculations simple: tips, sales tax, discounts, paychecks, overtime and percentages.">
+<title>Tip Calculator</title>
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f4f6fa;--surface:#ffffff;--surface2:#f0f3f8;--text:#172033;
+  --muted:#68748a;--line:#e3e8f0;--accent:#e97836;--accent-soft:#fff0e6;
+  --blue:#315b9a;--green:#16845b;--shadow:0 8px 28px rgba(24,39,75,.07);
+  --radius:18px;--ad-bg:#f0f2f5;
+}
+[data-theme="dark"]{
+  color-scheme:dark;--bg:#0d1422;--surface:#151f30;--surface2:#1d2a3e;
+  --text:#f2f5fb;--muted:#a4b0c3;--line:#2a3850;--accent:#ff9658;
+  --accent-soft:#39291f;--blue:#9bbcff;--green:#54d6a1;
+  --shadow:0 8px 28px rgba(0,0,0,.22);--ad-bg:#182235;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:15px;
+  line-height:1.45;
+  -webkit-tap-highlight-color:transparent;
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+button, .tool-card, .logo, .header-actions {
+  -webkit-user-select:none;
+  user-select:none;
+}
+.app{
+  width:min(100%,760px);
+  margin:0 auto;
+  padding:max(18px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(30px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+}
+.header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:2px 0 18px}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.logo{width:44px;height:44px;border-radius:14px;background:#172b4d;color:#fff;display:grid;place-items:center;font-size:22px;font-weight:800;box-shadow:var(--shadow)}
+.brand h1{font-size:18px;line-height:1.1;margin:0;font-weight:800;letter-spacing:-.4px}
+.brand p{margin:4px 0 0;color:var(--muted);font-size:11px}
+.header-actions{display:flex;align-items:center;gap:8px}
+.icon-btn{border:1px solid var(--line);background:var(--surface);color:var(--text);width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-size:19px}
+.hero{background:linear-gradient(135deg,#172b4d,#315b9a);border-radius:22px;padding:21px;color:#fff;box-shadow:var(--shadow);margin-bottom:20px}
+.hero .eyebrow{font-size:10px;letter-spacing:1.3px;font-weight:800;opacity:.75;text-transform:uppercase}
+.hero h2{font-size:23px;line-height:1.18;margin:8px 0 7px;letter-spacing:-.6px}
+.hero p{font-size:13px;color:#dbe6f7;margin:0;max-width:440px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:21px 1px 11px;gap:10px}
+.section-head h3{font-size:15px;margin:0;font-weight:800}
+.section-head small{color:var(--muted);font-size:11px}
+.tools-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.tool-card{position:relative;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:17px;padding:15px 13px;min-height:116px;color:var(--text);box-shadow:0 3px 12px rgba(20,35,60,.025);transition:transform .15s,border-color .15s}
+.tool-card:active{transform:scale(.98)}
+.tool-icon{width:38px;height:38px;border-radius:12px;background:var(--accent-soft);display:grid;place-items:center;color:var(--accent);font-size:19px;margin-bottom:10px}
+.tool-card strong{display:block;font-size:13px}
+.tool-card span.desc{display:block;color:var(--muted);font-size:11px;margin-top:4px;line-height:1.35}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:17px;box-shadow:var(--shadow);margin-top:13px}
+.panel-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.panel-title h3{font-size:17px;margin:0}
+.back-btn{border:0;background:var(--surface2);color:var(--text);border-radius:11px;padding:8px 11px;font-size:12px;font-weight:700}
+.field{margin:12px 0}
+.field label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin:0 0 6px}
+/* 16px font-size prevents unwanted auto-zoom in Android WebViews */
+.field input,.field select{width:100%;height:48px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--text);padding:0 12px;outline:none;min-width:0;font-size:16px}
+.field input:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.primary-btn{border:0;background:var(--accent);color:#fff;border-radius:12px;min-height:48px;padding:11px 16px;font-weight:800;width:100%;margin-top:8px}
+.secondary-btn{border:1px solid var(--line);background:var(--surface2);color:var(--text);border-radius:12px;min-height:43px;padding:9px 13px;font-weight:700}
+.button-row{display:flex;gap:9px;margin-top:9px}
+.button-row>*{flex:1}
+.result{background:var(--surface2);border:1px solid var(--line);border-radius:15px;padding:14px;margin-top:14px}
+.result .label{font-size:11px;color:var(--muted);font-weight:700}
+.result .amount{font-size:27px;font-weight:850;letter-spacing:-.7px;margin:3px 0;color:var(--green);overflow-wrap:anywhere}
+.result .details{font-size:12px;color:var(--muted);line-height:1.65;white-space:pre-line}
+.note{font-size:11px;color:var(--muted);margin:11px 2px 0;line-height:1.5}
+.hidden{display:none!important}
+.list{display:grid;gap:8px}
+.list-item{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--surface2);border-radius:12px;padding:11px 12px}
+.list-item strong{font-size:12px;display:block}
+.list-item small{font-size:10px;color:var(--muted);display:block;margin-top:3px}
+.list-item b{font-size:13px;white-space:nowrap}
+.empty{padding:18px;text-align:center;color:var(--muted);font-size:12px;background:var(--surface2);border-radius:13px}
+.footer{text-align:center;color:var(--muted);font-size:10px;padding:8px 10px 22px}
+.small-link{border:0;background:transparent;color:var(--blue);font-size:11px;font-weight:700;padding:5px}
+.modal-backdrop{position:fixed;inset:0;background:rgba(8,15,28,.58);display:flex;align-items:center;justify-content:center;padding:20px;z-index:30}
+.privacy-modal{width:min(100%,440px);background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 18px 60px rgba(0,0,0,.25)}
+.privacy-modal h3{margin:0;font-size:18px}
+.privacy-modal p{font-size:13px;color:var(--muted);line-height:1.6}
+.privacy-modal a{color:var(--blue);font-weight:700;text-decoration:none}
+.modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.modal-close{border:0;background:var(--surface2);color:var(--text);width:34px;height:34px;border-radius:10px;font-size:19px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#172b4d;color:#fff;padding:11px 16px;border-radius:12px;font-size:12px;z-index:40;transition:.2s;max-width:90%;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(min-width:600px){.app{padding:24px}.tools-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{padding:26px}.hero h2{font-size:27px}}
+@media(max-width:360px){.app{padding:13px 11px}.tool-card{padding:12px 10px}.two-col{gap:7px}.hero h2{font-size:21px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <div class="brand">
+      <div class="logo">₿</div>
+      <div><h1>Tip Calculator</h1><p>Everyday calculations made simple</p></div>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="privacyBtn" type="button" aria-label="Privacy Policy" title="Privacy Policy">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 19 6v5c0 4.8-3 8-7 10-4-2-7-5.2-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+      </button>
+      <button class="icon-btn" id="themeBtn" aria-label="Toggle theme" title="Toggle light and dark theme">☾</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">SMART EVERYDAY TOOLS</div>
+    <h2>What do you need<br>to calculate today?</h2>
+    <p>Quick, simple and useful calculators for everyday money decisions.</p>
+  </section>
+
+  <main id="homeView">
+    <div class="section-head"><h3>All Calculators</h3><small>6 useful tools</small></div>
+    <div class="tools-grid" id="toolsGrid"></div>
+
+    <div class="section-head"><h3>Recent Calculations</h3><button class="small-link" id="clearHistory">Clear history</button></div>
+    <div id="historyList" class="list"></div>
+  </main>
+
+  <section id="calculatorView" class="panel hidden" aria-live="polite">
+    <div class="panel-title"><h3 id="calcTitle">Calculator</h3><button class="back-btn" id="backBtn">← All tools</button></div>
+    <div id="calcFields"></div>
+    <button class="primary-btn" id="calculateBtn">Calculate</button>
+    <div id="resultBox" class="result hidden">
+      <div class="label" id="resultLabel">YOUR RESULT</div>
+      <div class="amount" id="resultAmount">$0.00</div>
+      <div class="details" id="resultDetails"></div>
+      <div class="button-row"><button class="secondary-btn" id="copyBtn">Copy result</button><button class="secondary-btn" id="resetBtn">Reset</button></div>
+    </div>
+    <p class="note" id="calcNote"></p>
+  </section>
+
+  <footer class="footer">
+    Tip Calculator · For informational and estimation purposes only.<br>
+    Paycheck estimates are not tax or legal advice.
+  </footer>
+</div>
+
+<div class="modal-backdrop hidden" id="privacyModal" role="presentation">
+  <section class="privacy-modal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+    <div class="modal-head">
+      <h3 id="privacyTitle">Privacy Policy</h3>
+      <button class="modal-close" id="closePrivacy" type="button" aria-label="Close privacy policy">×</button>
+    </div>
+    <p><strong>Tip Calculator</strong> is designed to provide simple everyday calculators.</p>
+    <p><strong>Information:</strong> The app does not require an account. Calculator entries are processed on your device. Recent calculation history and your theme preference may be stored locally on your device.</p>
+    <p><strong>Advertising:</strong> If ads are enabled, third-party advertising providers such as Google AdMob may collect or use device and advertising information to serve and measure ads, in accordance with their own privacy policies and settings.</p>
+    <p><strong>Contact:</strong> For privacy questions, contact <a href="mailto:vividhbharati75@gmail.com">vividhbharati75@gmail.com</a>.</p>
+    <button class="primary-btn" id="donePrivacy" type="button">Done</button>
+  </section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+"use strict";
+const $ = id => document.getElementById(id);
+const money = n => new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(Number.isFinite(n)?n:0);
+const formatNum = n => new Intl.NumberFormat("en-US",{maximumFractionDigits:4}).format(Number.isFinite(n)?n:0);
+const num = id => {
+  const el=$(id), v=el ? Number(el.value) : NaN;
+  return Number.isFinite(v) ? v : NaN;
+};
+const tools=[
+ {id:"tip",name:"Tip Calculator",desc:"Tip, total and split the bill",icon:"🧾"},
+ {id:"tax",name:"Sales Tax",desc:"Estimate tax and final price",icon:"🛍️"},
+ {id:"discount",name:"Discount",desc:"Find sale price and savings",icon:"🏷️"},
+ {id:"paycheck",name:"Paycheck",desc:"Estimate gross earnings",icon:"💵"},
+ {id:"overtime",name:"Overtime",desc:"Calculate regular and OT pay",icon:"⏱️"},
+ {id:"percentage",name:"Percentage",desc:"Calculate everyday percentages",icon:"％"}
+];
+let current=null, lastResult="", lastDetails="";
+let history=readStore("pmusa_history",[]);
+
+function readStore(key,fallback){try{const v=JSON.parse(localStorage.getItem(key));return Array.isArray(v)?v:fallback}catch(e){return fallback}}
+function saveStore(){try{localStorage.setItem("pmusa_history",JSON.stringify(history))}catch(e){}}
+function safeText(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function showToast(message){const t=$("toast");t.textContent=message;t.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.classList.remove("show"),2100)}
+
+function renderTools(){
+ $("toolsGrid").innerHTML=tools.map(t=>`<div class="tool-card" data-open="${t.id}" role="button" tabindex="0"><div class="tool-icon">${t.icon}</div><strong>${t.name}</strong><span class="desc">${t.desc}</span></div>`).join("");
+ $("historyList").innerHTML=history.length?history.slice(0,6).map(h=>`<div class="list-item"><div><strong>${safeText(h.name)}</strong><small>${safeText(h.when)}</small></div><b>${safeText(h.amount)}</b></div>`).join(""):'<div class="empty">Your recent calculations will appear here.</div>';
+}
+
+const field=(id,label,placeholder,type="number",value="",step="0.01",min="0",inputmode="decimal")=>`<div class="field"><label for="${id}">${label}</label><input id="${id}" type="${type}" inputmode="${inputmode}" placeholder="${placeholder}" ${value!==""?`value="${value}"`:""} ${type==="number"?`min="${min}" step="${step}"`:""}></div>`;
+const selectField=(id,label,options)=>`<div class="field"><label for="${id}">${label}</label><select id="${id}">${options.map(o=>`<option value="${o[0]}">${o[1]}</option>`).join("")}</select></div>`;
+
+const noteText={
+ tip:"Tip percentages are suggestions. Enter the tip rate you want to use.",
+ tax:"Sales tax rates vary by state, county and city. Enter the rate that applies to your purchase.",
+ discount:"Enter the discount shown by the retailer. Results do not include any additional taxes or fees.",
+ paycheck:"This is a gross-pay estimate before taxes, deductions or benefits.",
+ overtime:"This is a simple estimate. Overtime eligibility and rates can vary under federal and state rules.",
+ percentage:"Use this tool for basic percentage calculations."
+};
+
+function renderPercentFields(mode){
+  const el=$("percentFields");
+  if(!el) return;
+  if(mode==="of"){
+    el.innerHTML=`${field("percentX","Percentage (%)","e.g. 15","number","","0.01","0","decimal")}${field("percentY","Total amount / value","e.g. 200","number","","0.01","","decimal")}`;
+  }else if(mode==="change"){
+    el.innerHTML=`${field("percentX","Starting value (A)","e.g. 50","number","","0.01","","decimal")}${field("percentY","New value (B)","e.g. 75","number","","0.01","","decimal")}`;
+  }else{
+    el.innerHTML=`${field("percentX","Part value (X)","e.g. 25","number","","0.01","","decimal")}${field("percentY","Total / whole value (Y)","e.g. 100","number","","0.01","","decimal")}`;
+  }
+  bindInputEvents();
+}
+
+function fieldsFor(id){
+ if(id==="tip")return `<div class="two-col">${field("bill","Bill amount ($)","e.g. 48.50")}${field("tipRate","Tip (%)","e.g. 18","number","18","0.1")}</div><div class="two-col">${field("people","Number of people","e.g. 2","number","1","1","1","numeric")}${selectField("roundTip","Tip rounding",[["none","No rounding"],["up","Round tip up to next dollar"]])}</div>`;
+ if(id==="tax")return `${field("price","Purchase price ($)","e.g. 49.99")}<div class="two-col">${field("taxRate","Sales tax (%)","e.g. 8.875","number","","0.001")}${selectField("taxMode","Tax calculation",[["add","Add tax to price"],["included","Tax is included in price"]])}</div>`;
+ if(id==="discount")return `${field("originalPrice","Original price ($)","e.g. 80")}<div class="two-col">${field("discountRate","Discount (%)","e.g. 25","number","","0.1")}${field("extraDiscount","Extra discount ($) (optional)","e.g. 0","number","0","0.01")}</div>`;
+ if(id==="paycheck")return `<div class="two-col">${field("hourlyRate","Hourly rate ($)","e.g. 22")}${field("workHours","Hours worked per week","e.g. 40","number","40","0.25")}</div>${selectField("payPeriod","Pay period", [["weekly","Weekly"],["biweekly","Every two weeks"],["semimonthly","Twice a month"],["monthly","Monthly"]])}`;
+ if(id==="overtime")return `<div class="two-col">${field("otRate","Hourly rate ($)","e.g. 20")}${field("regularHours","Regular hours","e.g. 40","number","40","0.25")}</div><div class="two-col">${field("overtimeHours","Overtime hours","e.g. 5","number","0","0.25")}${field("otMultiplier","Overtime multiplier","e.g. 1.5","number","1.5","0.1","0.01")}</div>`;
+ if(id==="percentage")return `${selectField("percentMode","Calculation type",[["of","What is X% of Y?"],["change","Percentage change from A to B"],["is","X is what percentage of Y?"]])}<div id="percentFields"></div>`;
+ return "";
+}
+
+function bindInputEvents(){
+  const inputs=$("calcFields").querySelectorAll("input");
+  inputs.forEach(input=>{
+    input.addEventListener("keydown",e=>{
+      if(e.key==="Enter"){
+        e.preventDefault();
+        calculate();
+      }
+    });
+  });
+}
+
+function openCalc(id){
+ current=id;const t=tools.find(x=>x.id===id);if(!t)return;
+ window.history.pushState({view:"calc",id:id},"");
+ $("homeView").classList.add("hidden");$("calculatorView").classList.remove("hidden");
+ $("calcTitle").textContent=t.name;$("calcNote").textContent=noteText[id];
+ $("resultBox").classList.add("hidden");$("calcFields").innerHTML=fieldsFor(id);
+ $("calculateBtn").textContent="Calculate";window.scrollTo(0,0);
+ 
+ if(id==="percentage"){
+   const modeSelect=$("percentMode");
+   renderPercentFields(modeSelect.value);
+   modeSelect.addEventListener("change",e=>renderPercentFields(e.target.value));
+ }else{
+   bindInputEvents();
+ }
+}
+
+function showHome(){
+  $("calculatorView").classList.add("hidden");
+  $("homeView").classList.remove("hidden");
+  current=null;
+  window.scrollTo(0,0);
+}
+
+function getVal(id){const v=num(id);if(!Number.isFinite(v))throw new Error("Please enter valid numbers in all required fields.");return v}
+function nonnegative(v,label){if(v<0)throw new Error(label+" cannot be negative.");return v}
+
+function calculate(){
+ try{
+  let amount="",details="",title=tools.find(t=>t.id===current).name;
+  if(current==="tip"){
+   const bill=nonnegative(getVal("bill"),"Bill amount"),rate=nonnegative(getVal("tipRate"),"Tip rate"),people=Math.max(1,Math.floor(getVal("people")));
+   let tip=bill*rate/100;if($("roundTip").value==="up")tip=Math.ceil(tip);
+   const total=bill+tip;amount=money(total/people);
+   details=`Bill: ${money(bill)}\nTip: ${money(tip)} (${rate}%)\nTotal: ${money(total)}\nEach person (${people}): ${money(total/people)}`;
+  }else if(current==="tax"){
+   const price=nonnegative(getVal("price"),"Price"),rate=nonnegative(getVal("taxRate"),"Tax rate");
+   const isAdd=$("taxMode").value==="add";
+   const tax=isAdd?price*rate/100:price-(price/(1+rate/100));
+   const total=isAdd?price+tax:price;
+   amount=money(total);
+   details=`Pre-tax price: ${money(isAdd?price:price-tax)}\nSales tax: ${money(tax)} (${rate}%)\nFinal price: ${money(total)}`;
+  }else if(current==="discount"){
+   const original=nonnegative(getVal("originalPrice"),"Original price"),rate=nonnegative(getVal("discountRate"),"Discount"),extra=nonnegative(getVal("extraDiscount"),"Extra discount"),first=original*rate/100,final=Math.max(0,original-first-extra);
+   amount=money(final);details=`Original price: ${money(original)}\nPercentage discount: ${money(first)}\nExtra discount: ${money(extra)}\nTotal savings: ${money(original-final)}`;
+  }else if(current==="paycheck"){
+   const rate=nonnegative(getVal("hourlyRate"),"Hourly rate"),hours=nonnegative(getVal("workHours"),"Hours per week"),weekly=rate*hours,mult={"weekly":1,"biweekly":2,"semimonthly":52/24,"monthly":52/12}[$("payPeriod").value],gross=weekly*mult;
+   amount=money(gross);details=`Hours per week: ${hours}\nHourly rate: ${money(rate)}\nEstimated gross pay (${ $("payPeriod").selectedOptions[0].text }): ${money(gross)}\nBefore taxes and deductions`;
+  }else if(current==="overtime"){
+   const rate=nonnegative(getVal("otRate"),"Hourly rate"),regular=nonnegative(getVal("regularHours"),"Regular hours"),ot=nonnegative(getVal("overtimeHours"),"Overtime hours"),mult=nonnegative(getVal("otMultiplier"),"Overtime multiplier");
+   const regularPay=rate*regular,otPay=rate*mult*ot,total=regularPay+otPay;
+   amount=money(total);details=`Regular pay: ${money(regularPay)} (${regular} hrs)\nOvertime pay: ${money(otPay)} (${ot} hrs at ${mult}×)\nTotal gross pay: ${money(total)}`;
+  }else if(current==="percentage"){
+   const mode=$("percentMode").value,x=getVal("percentX"),y=getVal("percentY");
+   if(mode==="of"){
+     const res=x*y/100;
+     amount=formatNum(res);
+     details=`${x}% of ${y} = ${amount}`;
+   }else if(mode==="change"){
+     if(x===0)throw new Error("Starting value cannot be zero for percentage change.");
+     const change=(y-x)/Math.abs(x)*100;
+     amount=(change>0?"+":"")+change.toFixed(2)+"%";
+     details=`Starting value: ${x}\nNew value: ${y}\n${change>=0?"Increase":"Decrease"}: ${Math.abs(change).toFixed(2)}%`;
+   }else{
+     if(y===0)throw new Error("The total/whole value cannot be zero.");
+     const p=x/y*100;
+     amount=p.toFixed(2)+"%";
+     details=`${x} is ${p.toFixed(2)}% of ${y}`;
+   }
+  }
+  $("resultAmount").textContent=amount;$("resultDetails").textContent=details;$("resultBox").classList.remove("hidden");
+  lastResult=title+"\n"+details+"\nResult: "+amount;lastDetails=details;
+  history.unshift({name:title,amount:amount,when:new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})});
+  history=history.slice(0,20);saveStore();renderTools();
+ }catch(err){showToast(err.message||"Please check your entries.");}
+}
+
+function resetCalc(){
+ $("calcFields").innerHTML=fieldsFor(current);
+ if(current==="percentage"){
+   const modeSelect=$("percentMode");
+   renderPercentFields(modeSelect.value);
+   modeSelect.addEventListener("change",e=>renderPercentFields(e.target.value));
+ }else{
+   bindInputEvents();
+ }
+ $("resultBox").classList.add("hidden");lastResult="";lastDetails="";
+}
+
+document.addEventListener("click",e=>{
+ const open=e.target.closest("[data-open]");if(open){openCalc(open.dataset.open);return;}
+});
+
+$("calculateBtn").addEventListener("click",calculate);
+$("backBtn").addEventListener("click",()=>{
+  if(window.history.state&&window.history.state.view==="calc"){
+    window.history.back();
+  }else{
+    showHome();
+  }
+});
+$("resetBtn").addEventListener("click",resetCalc);
+$("copyBtn").addEventListener("click",()=>{
+  if(!lastResult)return;
+  const fallback=()=>{
+    const ta=document.createElement("textarea");ta.value=lastResult;document.body.appendChild(ta);ta.select();
+    try{document.execCommand("copy");showToast("Result copied")}catch(e){showToast("Copy not available on this device")}
+    ta.remove();
+  };
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(lastResult).then(()=>showToast("Result copied")).catch(fallback);
+  else fallback();
+});
+
+$("clearHistory").addEventListener("click",()=>{history=[];saveStore();renderTools();showToast("History cleared")});
+
+function setTheme(theme){
+  document.documentElement.dataset.theme=theme;
+  try{localStorage.setItem("pmusa_theme",theme)}catch(e){}
+  $("themeBtn").textContent=theme==="dark"?"☀":"☾";
+  const meta=document.querySelector('meta[name="theme-color"]');
+  if(meta)meta.content=theme==="dark"?"#0d1422":"#f4f6fa";
+}
+let savedTheme="light";try{savedTheme=localStorage.getItem("pmusa_theme")||"light"}catch(e){}
+setTheme(savedTheme);
+$("themeBtn").addEventListener("click",()=>setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark"));
+
+function openPrivacy(){
+  $("privacyModal").classList.remove("hidden");
+  $("closePrivacy").focus();
+  window.history.pushState({view:"privacy"},"");
+}
+function closePrivacyModal(){
+  if(!$("privacyModal").classList.contains("hidden")){
+    $("privacyModal").classList.add("hidden");
+  }
+}
+function requestClosePrivacy(){
+  if(window.history.state&&window.history.state.view==="privacy"){
+    window.history.back();
+  }else{
+    closePrivacyModal();
+  }
+}
+
+$("privacyBtn").addEventListener("click",openPrivacy);
+$("closePrivacy").addEventListener("click",requestClosePrivacy);
+$("donePrivacy").addEventListener("click",requestClosePrivacy);
+$("privacyModal").addEventListener("click",e=>{if(e.target.id==="privacyModal")requestClosePrivacy();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("privacyModal").classList.contains("hidden"))requestClosePrivacy();});
+
+/* Android hardware back button & browser back gesture */
+window.addEventListener("popstate",()=>{
+  if(!$("privacyModal").classList.contains("hidden")){
+    closePrivacyModal();
+    return;
+  }
+  if(!$("calculatorView").classList.contains("hidden")){
+    showHome();
+  }
+});
+
+renderTools();
+})();
+</script>
+</body>
+</html>
