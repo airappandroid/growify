@@ -1,4 +1,4 @@
-[
+
   {
     "id": "radio1",
     "name": "Radio Mirchi",
@@ -236,6 +236,20 @@
     "category": "Bhakti",
     "trigger": "go:krish2",
     "logo": "https://ik.imagekit.io/sqt8ptw1k/35715013_ico.png"
+  },
+  {
+    "id": "radio33",
+    "name": "Shiva Bhakti",
+    "category": "Bhakti",
+    "trigger": "go:shiva",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32609350_ico.png"
+  },
+{
+    "id": "radio34",
+    "name": "Ganesh Bhakti",
+    "category": "Bhakti",
+    "trigger": "go:ganesh",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32609353_ico.png"
   },
   {
     "id": "radio8",
