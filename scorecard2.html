@@ -6,100 +6,88 @@
 <meta name="theme-color" content="#0b1020">
 <title>Full Scorecard</title>
 <style>
-:root{--bg:#0b1020;--card:#161d33;--card2:#202940;--text:#fff;--muted:#a7b1c9;--accent:#ff7a45;--green:#4cd964;--line:rgba(255,255,255,.09);--yellow:#ffbd59}
+:root{
+  --bg:#080d19;--card:#111a2b;--card2:#18243a;--text:#f5f7ff;
+  --muted:#91a0bb;--accent:#ff8757;--green:#4ade80;--line:rgba(255,255,255,.085);
+  --yellow:#fbbf24;--blue:#7c9cff;
+}
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:14px Arial,Roboto,sans-serif}
-body{-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:14px Inter,Arial,Roboto,sans-serif}
+body{-webkit-tap-highlight-color:transparent;background:radial-gradient(ellipse at 50% -15%,rgba(72,105,180,.18),transparent 48%),var(--bg)}
 button{font:inherit;cursor:pointer}
 button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.topbar{position:sticky;top:0;z-index:10;background:var(--bg);padding:12px 14px;border-bottom:1px solid var(--line)}
-.topline{display:flex;align-items:center;gap:10px}
-.back-btn{width:40px;height:40px;display:grid;place-items:center;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:white;flex-shrink:0}
-.brand{min-width:0;flex:1}
-.name{font-size:17px;font-weight:800}
-.tagline{font-size:11px;color:var(--muted);margin-top:4px}
-.icon-btn{display:grid;place-items:center;width:40px;height:40px;padding:0;background:var(--card2);border:1px solid var(--line);color:white;border-radius:10px;flex-shrink:0}
-.container{width:100%;max-width:650px;margin:0 auto;padding:12px}
-.match-card{background:linear-gradient(135deg,#202a46,#161d33);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
-.status-row{display:flex;align-items:center;gap:7px;color:var(--green);font-weight:800;font-size:11px;letter-spacing:.4px}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.container{width:100%;max-width:680px;margin:0 auto;padding:16px 13px 28px}
+.match-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#1a2944 0%,#111a2b 72%);border:1px solid rgba(155,180,255,.15);border-radius:22px;padding:18px;margin-bottom:16px;box-shadow:0 14px 38px rgba(0,0,0,.22)}
+.match-card:before{content:"";position:absolute;width:190px;height:190px;right:-85px;top:-105px;border-radius:50%;background:rgba(124,156,255,.12);pointer-events:none}
+.status-row{position:relative;display:flex;align-items:center;gap:8px;color:var(--green);font-weight:800;font-size:10px;letter-spacing:1px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px currentColor}
 .status-text{margin-left:auto;color:var(--muted);font-weight:500;letter-spacing:0}
-.match-title{font-size:14px;font-weight:700;margin-top:12px;line-height:1.45}
-.match-note{font-size:12px;color:var(--muted);margin-top:7px;line-height:1.5}
-.teams{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:14px}
-.team{min-width:0;background:rgba(8,13,27,.36);border:1px solid var(--line);border-radius:12px;padding:10px}
-.team-head{display:flex;align-items:center;gap:7px}
-.team-logo{width:27px;height:27px;object-fit:contain;flex-shrink:0}
+.match-title{position:relative;font-size:17px;font-weight:800;margin-top:15px;line-height:1.4;letter-spacing:-.2px}
+.match-note{position:relative;font-size:12px;color:#aebbd2;margin-top:6px;line-height:1.5}
+.teams{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:17px}
+.team{min-width:0;background:rgba(5,11,23,.36);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:13px}
+.team-head{display:flex;align-items:center;gap:8px;min-height:30px}
+.team-logo{width:29px;height:29px;object-fit:contain;flex-shrink:0}
 .team-name{font-size:12px;font-weight:800;overflow-wrap:anywhere}
-.team-score{font-size:clamp(17px,5vw,20px);font-weight:800;margin-top:8px;overflow-wrap:anywhere;line-height:1.35}
+.team-score{font-size:clamp(18px,5vw,22px);font-weight:850;margin-top:10px;overflow-wrap:anywhere;line-height:1.3;letter-spacing:-.4px}
 .team-overs{display:none}
-.tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none;overscroll-behavior-x:contain}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;scrollbar-width:none;overscroll-behavior-x:contain}
 .tabs::-webkit-scrollbar{display:none}
-.tab{white-space:nowrap;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:10px 14px;font-weight:700;font-size:12px}
-.tab.active{background:var(--accent);border-color:var(--accent);color:#101827}
-.innings-card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:14px}
-.innings-head{padding:12px;background:var(--card2);display:flex;justify-content:space-between;align-items:center;gap:8px;min-width:0}
+.tab{white-space:nowrap;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:10px 15px;font-weight:700;font-size:12px}
+.tab.active{background:var(--accent);border-color:var(--accent);color:#171b27}
+.innings-card,.panel{background:var(--card);border:1px solid var(--line);border-radius:17px;overflow:hidden;margin-bottom:15px;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.innings-head{padding:14px;background:linear-gradient(100deg,#1b2942,#172238);display:flex;justify-content:space-between;align-items:center;gap:8px;min-width:0}
 .innings-name{font-weight:800;font-size:14px}
-.innings-total{text-align:right;font-size:16px;font-weight:800;white-space:nowrap}
+.innings-total{text-align:right;font-size:17px;font-weight:850;white-space:nowrap}
 .innings-sub{font-size:11px;color:var(--muted);font-weight:500;margin-top:4px}
 .table-wrap{width:100%;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
-
-/* টেবুল আৰু কলমৰ মূল ষ্টাইল */
 .score-table{width:100%;border-collapse:collapse;min-width:320px;table-layout:fixed;font-size:12px}
-.score-table th{background:rgba(255,255,255,.025);color:var(--muted);font-size:10px;font-weight:700;text-align:right;padding:10px 4px;white-space:nowrap}
-.score-table td{padding:10px 4px;border-top:1px solid var(--line);text-align:right;vertical-align:top;font-variant-numeric:tabular-nums}
-
-/* বেটাৰ আৰু বলাৰৰ নাম বহল কৰিবলৈ প্ৰথম স্তম্ভ */
-.score-table th:first-child,.score-table td:first-child{text-align:left;padding-left:10px;width:38%;min-width:110px;overflow-wrap:break-word;word-break:normal}
-
-/* সংখ্যা থকা মাজৰ ৪টা স্তম্ভ (R, B, 4s, 6s) */
-.score-table th:not(:first-child),.score-table td:not(:first-child){text-align:right;width:10.5%;padding:10px 2px;white-space:nowrap}
-
-/* শেষৰ স্তম্ভ (SR / Econ) দশমিকৰ বাবে বেছি ঠাই আৰু পেডিং */
-.score-table th:last-child,.score-table td:last-child{width:20%;padding-right:10px}
-
-.player{font-weight:700;font-size:12px;overflow-wrap:break-word;word-break:normal;line-height:1.35}
+.score-table th{background:rgba(255,255,255,.025);color:var(--muted);font-size:10px;font-weight:700;text-align:right;padding:11px 4px;white-space:nowrap}
+.score-table td{padding:12px 4px;border-top:1px solid var(--line);text-align:right;vertical-align:top;font-variant-numeric:tabular-nums}
+.score-table th:first-child,.score-table td:first-child{text-align:left;padding-left:12px;width:38%;min-width:110px;overflow-wrap:break-word;word-break:normal}
+.score-table th:not(:first-child),.score-table td:not(:first-child){text-align:right;width:10.5%;padding:11px 2px;white-space:nowrap}
+.score-table th:last-child,.score-table td:last-child{width:20%;padding-right:11px}
+.player{font-weight:750;font-size:12px;overflow-wrap:break-word;word-break:normal;line-height:1.35}
 .dismissal{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.35;font-weight:400}
 .dismissal.not-out{color:var(--green);font-weight:700}
-.total-row td{font-weight:800;background:rgba(255,255,255,.025)}
-.section-label{padding:12px 13px 8px;font-weight:800;font-size:12px}
-.extras-line{display:flex;justify-content:space-between;gap:12px;padding:9px 13px;color:var(--muted);font-size:12px}
+.total-row td{font-weight:800;background:rgba(255,255,255,.035)}
+.section-label{padding:14px 13px 8px;font-weight:800;font-size:12px}
+.extras-line{display:flex;justify-content:space-between;gap:12px;padding:10px 13px;color:var(--muted);font-size:12px}
 .extras-line strong{color:var(--text)}
-.fow{padding:0 13px 13px;color:var(--muted);font-size:11px;line-height:1.7}
+.fow{padding:0 13px 14px;color:var(--muted);font-size:11px;line-height:1.7}
 .fow strong{color:var(--text)}
 .fow-item{padding:3px 0;overflow-wrap:anywhere}
 .fow-item span{white-space:nowrap}
-.empty{padding:22px 14px;text-align:center;color:var(--muted);font-size:12px;line-height:1.6}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden}
+.empty{padding:24px 15px;text-align:center;color:var(--muted);font-size:12px;line-height:1.7}
 .panel-title{font-size:14px;font-weight:800;padding:14px;border-bottom:1px solid var(--line)}
-.footer{text-align:center;color:#8996b2;font-size:11px;padding:12px 5px 24px}
+.footer{text-align:center;color:#71809c;font-size:11px;padding:13px 5px 24px}
 .error{color:#ffb49a}
-
-/* মোবাইল স্ক্ৰীণৰ বাবে ৰেচপন্সিভ বিন্দুবোৰ */
+.pre-match{padding:20px 15px 18px;text-align:center;background:linear-gradient(160deg,rgba(124,156,255,.09),rgba(17,26,43,.15))}
+.pre-kicker{font-size:10px;font-weight:800;letter-spacing:1.6px;color:var(--blue);text-transform:uppercase}
+.pre-heading{font-size:20px;font-weight:850;letter-spacing:-.5px;margin:9px 0 5px}
+.pre-sub{font-size:12px;color:var(--muted);line-height:1.6}
+.countdown{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:20px auto 15px;max-width:390px}
+.count-unit{background:#0b1323;border:1px solid rgba(255,255,255,.08);border-radius:13px;padding:12px 4px 10px}
+.count-num{font-size:clamp(22px,6vw,29px);font-weight:850;font-variant-numeric:tabular-nums;letter-spacing:-1px}
+.count-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.start-time{display:inline-flex;align-items:center;gap:7px;margin-top:3px;padding:9px 13px;border-radius:999px;background:rgba(124,156,255,.1);color:#c6d2ff;font-size:11px;font-weight:700}
+.pre-foot{margin-top:14px;color:#8190aa;font-size:10px;line-height:1.5}
 @media(max-width:390px){
-  .container{padding:10px 8px}
-  .match-card{padding:12px}
-  .status-row{font-size:10px}
-  .match-title{font-size:13px}
-  .team{padding:9px}
-  .team-name{font-size:11px}
-  .team-logo{width:24px;height:24px}
-  .score-table{font-size:11px}
-  .score-table th{font-size:9px;padding:9px 2px}
-  .score-table td{padding:10px 2px}
-  .score-table th:first-child,.score-table td:first-child{padding-left:6px;width:36%;min-width:95px}
-  .score-table th:last-child,.score-table td:last-child{padding-right:6px;width:20%}
-  .player{font-size:11px}
-  .dismissal{font-size:9px}
+ .container{padding:11px 9px 24px}.match-card{padding:15px;border-radius:19px}
+ .match-title{font-size:15px}.team{padding:10px}.team-name{font-size:11px}
+ .team-logo{width:25px;height:25px}.score-table{font-size:11px}
+ .score-table th{font-size:9px;padding:10px 2px}.score-table td{padding:11px 2px}
+ .score-table th:first-child,.score-table td:first-child{padding-left:7px;width:36%;min-width:95px}
+ .score-table th:last-child,.score-table td:last-child{padding-right:7px;width:20%}
+ .player{font-size:11px}.dismissal{font-size:9px}
 }
 @media(max-width:330px){
-  .container{padding:8px 5px}
-  .team-score{font-size:16px}
-  .innings-name{font-size:12px}
-  .innings-total{font-size:14px}
-  .score-table th,.score-table td{padding-left:1px;padding-right:1px}
-  .score-table th:first-child,.score-table td:first-child{padding-left:4px;width:34%;min-width:85px}
-  .score-table th:last-child,.score-table td:last-child{padding-right:4px;width:22%}
+ .container{padding:8px 5px}.team-score{font-size:16px}
+ .innings-name{font-size:12px}.innings-total{font-size:14px}
+ .score-table th,.score-table td{padding-left:1px;padding-right:1px}
+ .score-table th:first-child,.score-table td:first-child{padding-left:4px;width:34%;min-width:85px}
+ .score-table th:last-child,.score-table td:last-child{padding-right:4px;width:22%}
+ .countdown{gap:5px}.count-unit{padding:10px 2px}
 }
 </style>
 </head>
@@ -108,12 +96,13 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <main class="container">
   <section class="match-card">
     <div class="status-row"><span class="dot" id="statusDot"></span><span id="statusLabel">LOADING</span><span class="status-text" id="updatedTop">Updating...</span></div>
-    <div class="match-title" id="matchTitle">Loading match details...</div>
+    <div class="match-title" id="matchTitle">INDIA vs NZ 2nd ODI</div>
     <div class="match-note" id="matchNote">Please wait while the scorecard loads.</div>
     <div class="teams" id="teams"></div>
   </section>
 
   <div class="tabs" id="inningsTabs" aria-label="Innings navigation"></div>
+  <section class="panel" id="preMatchPanel" hidden><div class="pre-match"><div class="pre-kicker">Match day is almost here</div><div class="pre-heading">The match starts soon</div><div class="pre-sub">Get ready for live action. The full scorecard will appear here once the match begins.</div><div class="countdown" id="countdown"><div class="count-unit"><div class="count-num" id="cdDays">00</div><div class="count-label">Days</div></div><div class="count-unit"><div class="count-num" id="cdHours">00</div><div class="count-label">Hours</div></div><div class="count-unit"><div class="count-num" id="cdMinutes">00</div><div class="count-label">Minutes</div></div><div class="count-unit"><div class="count-num" id="cdSeconds">00</div><div class="count-label">Seconds</div></div></div><div class="start-time">◷ &nbsp; 7 November 2026 · 7:30 AM IST</div><div class="pre-foot">Times shown in Indian Standard Time (IST)</div></div></section>
   <div id="scorecards"><div class="panel"><div class="empty">Loading full scorecard...</div></div></div>
   <section class="panel" id="currentPlayersPanel" hidden>
     <div class="panel-title">Current Batters</div><div id="currentBatters"></div>
@@ -125,8 +114,10 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <script>
 (function(){
 'use strict';
-const API='https://cricvoice2.aminurmarch.workers.dev/?matchId=6a552bd15a2a46d5d3505259';
+const API='https://cricvoice2.aminurmarch.workers.dev/?matchId=6a552bd65a2a46d5d350525d';
 const REFRESH_MS=120000;
+const MATCH_START=new Date('2026-11-07T07:30:00+05:30').getTime();
+let countdownTimer=null;
 const $=id=>document.getElementById(id);
 const val=v=>(v===null||v===undefined||v===''?'—':String(v));
 const esc=v=>val(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
@@ -280,6 +271,33 @@ function findCurrentInnings(innings,m){
   if(ongoing>=0)return ongoing;
   return Math.max(0,innings.length-1);
 }
+function updateCountdown(){
+  const remaining=MATCH_START-Date.now();
+  if(remaining<=0){
+    if(countdownTimer){clearInterval(countdownTimer);countdownTimer=null;}
+    $('preMatchPanel').hidden=true;
+    $('scorecards').style.display='';
+    loadData();
+    return;
+  }
+  const days=Math.floor(remaining/86400000);
+  const hours=Math.floor((remaining%86400000)/3600000);
+  const minutes=Math.floor((remaining%3600000)/60000);
+  const seconds=Math.floor((remaining%60000)/1000);
+  $('cdDays').textContent=String(days).padStart(2,'0');
+  $('cdHours').textContent=String(hours).padStart(2,'0');
+  $('cdMinutes').textContent=String(minutes).padStart(2,'0');
+  $('cdSeconds').textContent=String(seconds).padStart(2,'0');
+}
+function showPreMatch(){
+  $('preMatchPanel').hidden=false;
+  $('inningsTabs').style.display='none';
+  $('inningsTabs').innerHTML='';
+  $('scorecards').style.display='none';
+  $('currentPlayersPanel').hidden=true;
+  updateCountdown();
+  if(!countdownTimer)countdownTimer=setInterval(updateCountdown,1000);
+}
 function render(data){
   const m=data && data.responseData && data.responseData.result;
   const state=String(first(m.status_str,m.match_status,m.status,'SCORECARD'));
@@ -289,11 +307,19 @@ function render(data){
   const live=/live|ongoing|in progress/i.test(state)&&!breakNow;
   $('statusLabel').textContent=breakNow?'INNINGS BREAK':(live?'LIVE MATCH':state.toUpperCase());
   $('statusDot').style.background=live?'var(--green)':(breakNow?'var(--yellow)':'#8996b2');
-  $('matchTitle').textContent=first(m.title,m.match_title,m.short_title,m.subtitle,'Full Match Scorecard');
-  $('matchNote').textContent=note||'Full innings scorecard and player figures';
+  $('matchTitle').textContent='INDIA vs NZ 2nd ODI';
+  $('matchNote').textContent=Date.now()<MATCH_START?'2nd One Day International · Starts 7 November 2026 at 7:30 AM IST':(note||'Full innings scorecard and player figures');
   renderTeams(m);
 
   const innings=inningsFrom(m);
+  const isPreStart=Date.now()<MATCH_START && !live && innings.length===0;
+  if(isPreStart){
+    showPreMatch();
+  }else{
+    $('preMatchPanel').hidden=true;
+    $('scorecards').style.display='';
+    if(countdownTimer){clearInterval(countdownTimer);countdownTimer=null;}
+  }
   activeInnings=findCurrentInnings(innings,m);
   const tabs=$('inningsTabs');
   if(innings.length>1){
@@ -305,7 +331,7 @@ function render(data){
       renderScorecards(innings);
     });
   }else{tabs.style.display='none';tabs.innerHTML='';}
-  renderScorecards(innings);
+  if(!isPreStart)renderScorecards(innings);
   $('currentPlayersPanel').hidden=true;
   const time=new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
   $('updatedTop').textContent='Updated '+time;
@@ -337,8 +363,9 @@ async function loadData(){
   }catch(err){
     if(!hasData){
       $('scorecards').innerHTML='<section class="panel"><div class="empty error">Unable to load scorecard. Please check your internet connection and try again.</div></section>';
-      $('matchTitle').textContent='Scorecard unavailable';
+      $('matchTitle').textContent='INDIA vs NZ 2nd ODI';
       $('matchNote').textContent='Unable to connect right now. Please try again later.';
+      if(Date.now()<MATCH_START)showPreMatch();
     }else{
       $('updatedTop').textContent='Connection issue';
       $('updated').textContent='Connection issue — showing last available scorecard';
