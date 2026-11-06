@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1020">
+<title>Daily UK Briefing</title>
+<style>
+:root{
+  --bg:#0b1020;--card:#161d33;--card2:#1b2540;--glass:rgba(255,255,255,.06);
+  --accent:#ff7a45;--green:#4cd964;--text:#fff;--muted:#a8b4cc;
+  --line:rgba(255,255,255,.09);--blue:#9fb2ff;
+}
+*{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+button,select{font:inherit}
+button{cursor:pointer}
+.page{width:min(100%,680px);margin:0 auto;padding:calc(18px + env(safe-area-inset-top)) 16px calc(30px + env(safe-area-inset-bottom))}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.icon-btn{width:42px;height:42px;border:1px solid var(--line);border-radius:14px;background:var(--glass);color:#fff;display:grid;place-items:center}
+.icon-btn svg{width:19px;height:19px}
+.back-btn{display:flex;align-items:center;gap:8px;border:0;background:none;color:#dce4f5;padding:8px 4px;font-size:14px;font-weight:600}
+.back-btn svg{width:19px;height:19px}
+.hero{padding:4px 0 20px}
+.eyebrow{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin-bottom:8px}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px rgba(76,217,100,.55)}
+h1{font-size:clamp(27px,7vw,36px);line-height:1.12;letter-spacing:-.04em;margin:0 0 8px;font-weight:800}
+.date-line{color:var(--muted);font-size:14px}
+.intro{margin-top:14px;color:#c3cde0;font-size:13px}
+.section{margin-top:22px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.section-title{font-size:17px;font-weight:750;letter-spacing:-.02em;margin:0}
+.section-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:19px;padding:16px}
+.weather-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#202d4b,#161d33 65%)}
+.weather-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.city-select{max-width:180px;background:#10182c;color:#fff;border:1px solid rgba(255,255,255,.14);border-radius:11px;padding:10px 30px 10px 11px;outline:none;font-size:13px}
+.weather-main{display:flex;align-items:center;gap:13px;margin:17px 0}
+.weather-emoji{font-size:42px;line-height:1}
+.temperature{font-size:43px;line-height:1;font-weight:800;letter-spacing:-.05em}
+.weather-desc{font-size:13px;color:#d5def0;margin-top:5px}
+.weather-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.meta-item{background:rgba(255,255,255,.055);border-radius:12px;padding:10px 9px}
+.meta-label{font-size:10px;color:var(--muted);margin-bottom:4px}
+.meta-value{font-size:14px;font-weight:700}
+.minmax{font-size:12px;color:#c5d0e4;margin-top:8px}
+.news-list{display:grid;gap:10px}
+.news-item{width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;color:#fff;display:flex;gap:12px;align-items:flex-start}
+.news-number{flex:0 0 30px;height:30px;border-radius:10px;background:rgba(255,122,69,.14);color:#ff9a70;display:grid;place-items:center;font-size:12px;font-weight:800}
+.news-content{min-width:0;flex:1}
+.news-title{display:block;font-size:14px;line-height:1.4;font-weight:700}
+.news-meta{display:block;font-size:11px;color:var(--muted);margin-top:7px}.news-meta-date{display:block;margin-top:3px}
+.news-arrow{color:#8796b4;font-size:19px;align-self:center}
+.empty{padding:20px;text-align:center;color:var(--muted);font-size:13px;background:var(--card);border:1px dashed var(--line);border-radius:15px}
+.status{font-size:11px;color:var(--muted);margin-top:12px;text-align:center}
+.error{color:#ff9b91}
+.skeleton{height:72px;border-radius:15px;background:linear-gradient(90deg,#161d33,#202b47,#161d33);background-size:200% 100%;animation:shine 1.2s infinite}
+@keyframes shine{to{background-position:-200% 0}}
+.reader{position:fixed;inset:0;z-index:20;background:var(--bg);overflow:auto;display:none}
+.reader.open{display:block}
+.reader-inner{width:min(100%,680px);margin:0 auto;padding:calc(18px + env(safe-area-inset-top)) 18px calc(28px + env(safe-area-inset-bottom))}
+.reader-head{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.reader-kicker{font-size:11px;color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.reader h2{font-size:25px;line-height:1.22;letter-spacing:-.03em;margin:0 0 12px}
+.reader-meta{font-size:12px;color:var(--muted);padding-bottom:17px;border-bottom:1px solid var(--line)}
+.reader-description{font-size:15px;line-height:1.8;color:#e0e6f2;white-space:pre-wrap;margin-top:20px;overflow-wrap:anywhere}
+.reader-source{margin-top:24px;padding:13px;border-radius:13px;background:var(--card);font-size:12px;color:var(--muted)}
+.footer{text-align:center;color:#71809d;font-size:10px;margin-top:25px}
+@media(min-width:560px){.page{padding-left:22px;padding-right:22px}.news-list{grid-template-columns:1fr 1fr}.news-item{min-height:104px}}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="topbar">
+    <button class="back-btn" id="backButton" type="button" aria-label="Go back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/><path d="M9 12h12"/></svg>
+      <span>Back</span>
+    </button>
+    <button class="icon-btn" id="refreshButton" type="button" aria-label="Refresh briefing">
+      <svg id="refreshIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7v5h-5"/><path d="M4 17v-5h5"/><path d="M5.6 9a7 7 0 0 1 11.5-2L20 12M4 12l2.9 5a7 7 0 0 0 11.5-2"/></svg>
+    </button>
+  </div>
+
+  <header class="hero">
+    <div class="eyebrow"><span class="live-dot"></span> YOUR DAILY UK UPDATE</div>
+    <h1>Daily UK Briefing</h1>
+    <div class="date-line" id="todayDate">Loading date…</div>
+    <div class="intro">The latest headlines, local weather and events from across the UK.</div>
+  </header>
+
+  <section class="section" aria-labelledby="weatherHeading">
+    <div class="section-head">
+      <div><h2 class="section-title" id="weatherHeading">UK Weather</h2><div class="section-sub">Live conditions for your selected city</div></div>
+    </div>
+    <div class="card weather-card" id="weatherCard">
+      <div class="weather-top">
+        <div><div class="section-sub">CURRENT WEATHER</div><div id="weatherCity" style="font-size:17px;font-weight:750;margin-top:3px">London</div></div>
+        <select class="city-select" id="citySelect" aria-label="Select UK city">
+          <option>London</option><option>Manchester</option><option>Birmingham</option><option>Liverpool</option><option>Leeds</option><option>Bristol</option><option>Glasgow</option><option>Edinburgh</option><option>Cardiff</option><option>Belfast</option><option>Newcastle</option><option>Nottingham</option><option>Sheffield</option><option>Oxford</option><option>Cambridge</option><option>Aberdeen</option><option>Brighton</option><option>Leicester</option>
+        </select>
+      </div>
+      <div id="weatherDetails"><div class="skeleton" style="margin-top:18px"></div></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="newsHeading">
+    <div class="section-head">
+      <div><h2 class="section-title" id="newsHeading">Top UK Headlines</h2><div class="section-sub">Tap a headline to read the full briefing</div></div>
+      <span id="newsCount" class="section-sub">—</span>
+    </div>
+    <div class="news-list" id="newsList"><div class="skeleton"></div><div class="skeleton"></div></div>
+  </section>
+
+  <div class="status" id="updateStatus">Connecting to Daily UK Briefing…</div>
+  <div class="footer">Daily UK Briefing · All UK Radio</div>
+</main>
+
+<div class="reader" id="newsReader" role="dialog" aria-modal="true" aria-labelledby="readerTitle">
+  <div class="reader-inner">
+    <div class="reader-head">
+      <button class="icon-btn" id="closeReader" type="button" aria-label="Back to headlines">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <div><div class="reader-kicker">DAILY UK BRIEFING</div><div class="section-sub">News details</div></div>
+    </div>
+    <h2 id="readerTitle"></h2>
+    <div class="reader-meta" id="readerMeta"></div>
+    <div class="reader-description" id="readerDescription"></div>
+    <div class="reader-source" id="readerSource">Source: UK News Briefing</div>
+  </div>
+</div>
+
+<script>
+const API_BASE = "https://uknews.aminurmarch.workers.dev/api/briefing";
+const DEFAULT_CITY = "London";
+
+const citySelect = document.getElementById("citySelect");
+const weatherDetails = document.getElementById("weatherDetails");
+const newsList = document.getElementById("newsList");
+const updateStatus = document.getElementById("updateStatus");
+const refreshButton = document.getElementById("refreshButton");
+const refreshIcon = document.getElementById("refreshIcon");
+const newsReader = document.getElementById("newsReader");
+
+let currentNews = [];
+
+function ukDate(date = new Date()) {
+  return new Intl.DateTimeFormat("en-GB", {
+    weekday:"long", day:"numeric", month:"long", year:"numeric",
+    timeZone:"Europe/London"
+  }).format(date);
+}
+document.getElementById("todayDate").textContent = ukDate();
+
+function formatDate(value) {
+  if (!value) return "Date not available";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return String(value);
+  return new Intl.DateTimeFormat("en-GB", {
+    day:"numeric", month:"short", year:"numeric",
+    hour:"numeric", minute:"2-digit", timeZone:"Europe/London"
+  }).format(date);
+}
+
+function weatherInfo(code, isDay) {
+  if (code === 0) return {text:"Clear sky", icon:isDay ? "☀️" : "🌙"};
+  if ([1,2].includes(code)) return {text:"Mainly clear", icon:isDay ? "🌤️" : "☁️"};
+  if (code === 3) return {text:"Overcast", icon:"☁️"};
+  if ([45,48].includes(code)) return {text:"Foggy", icon:"🌫️"};
+  if ([51,53,55,56,57].includes(code)) return {text:"Drizzle", icon:"🌦️"};
+  if ([61,63,65,66,67,80,81,82].includes(code)) return {text:"Rain", icon:"🌧️"};
+  if ([71,73,75,77,85,86].includes(code)) return {text:"Snow", icon:"❄️"};
+  if ([95,96,99].includes(code)) return {text:"Thunderstorm", icon:"⛈️"};
+  return {text:"Current conditions", icon:"🌡️"};
+}
+
+function renderWeather(weather) {
+  if (!weather) {
+    weatherDetails.innerHTML = '<div class="empty">Weather is temporarily unavailable. Please try again.</div>';
+    return;
+  }
+  const fallbackInfo = weatherInfo(Number(weather.weatherCode), Number(weather.isDay));
+  const info = { text: weather.description || fallbackInfo.text, icon: fallbackInfo.icon };
+  const temp = weather.temperature == null ? "—" : `${Math.round(weather.temperature)}°`;
+  const feels = weather.feelsLike == null ? "—" : `${Math.round(weather.feelsLike)}°`;
+  const humidity = weather.humidity == null ? "—" : `${weather.humidity}%`;
+  const windValue = weather.windSpeed ?? weather.wind;
+  const wind = windValue == null ? "—" : `${Math.round(windValue)} km/h`;
+  const high = weather.maxTemperature == null ? "—" : `${Math.round(weather.maxTemperature)}°`;
+  const low = weather.minTemperature == null ? "—" : `${Math.round(weather.minTemperature)}°`;
+  weatherDetails.innerHTML = `
+    <div class="weather-main">
+      <div class="weather-emoji">${info.icon}</div>
+      <div><div class="temperature">${temp}</div><div class="weather-desc">${info.text}</div></div>
+    </div>
+    <div class="weather-meta">
+      <div class="meta-item"><div class="meta-label">FEELS LIKE</div><div class="meta-value">${feels}</div></div>
+      <div class="meta-item"><div class="meta-label">HUMIDITY</div><div class="meta-value">${humidity}</div></div>
+      <div class="meta-item"><div class="meta-label">WIND</div><div class="meta-value">${wind}</div></div>
+    </div>
+    <div class="minmax">Today's high ${high} <span style="color:#647391">•</span> low ${low}</div>`;
+}
+
+function renderNews(items) {
+  currentNews = Array.isArray(items) ? items.slice(0,5) : [];
+  document.getElementById("newsCount").textContent = `${currentNews.length} ${currentNews.length === 1 ? "STORY" : "STORIES"}`;
+  if (!currentNews.length) {
+    newsList.innerHTML = '<div class="empty" style="grid-column:1/-1">No news available right now.</div>';
+    return;
+  }
+  newsList.innerHTML = currentNews.map((item,index) => `
+    <button class="news-item" type="button" data-news-index="${index}">
+      <span class="news-number">${String(index+1).padStart(2,"0")}</span>
+      <span class="news-content">
+        <span class="news-title">${escapeHTML(item.title || "Untitled news")}</span>
+        <span class="news-meta">${escapeHTML(item.source || "UK News Briefing")}<span class="news-meta-date">${escapeHTML(formatDate(item.pubDate || item.published))}</span></span>
+      </span>
+      <span class="news-arrow">›</span>
+    </button>`).join("");
+  newsList.querySelectorAll("[data-news-index]").forEach(button => {
+    button.addEventListener("click", () => openNews(Number(button.dataset.newsIndex)));
+  });
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[char]);
+}
+
+function openNews(index) {
+  const item = currentNews[index];
+  if (!item) return;
+  document.getElementById("readerTitle").textContent = item.title || "News";
+  document.getElementById("readerMeta").textContent = formatDate(item.pubDate || item.published);
+  document.getElementById("readerDescription").textContent =
+    item.description || item.summary || "No additional description is available for this story.";
+  document.getElementById("readerSource").textContent = `Source: ${item.source || "UK News Briefing"}`;
+  newsReader.classList.add("open");
+  document.body.style.overflow = "hidden";
+  newsReader.scrollTop = 0;
+}
+
+function closeNews() {
+  newsReader.classList.remove("open");
+  document.body.style.overflow = "";
+}
+document.getElementById("closeReader").addEventListener("click", closeNews);
+
+async function loadBriefing() {
+  const city = citySelect.value || DEFAULT_CITY;
+  document.getElementById("weatherCity").textContent = city;
+  refreshButton.disabled = true;
+  refreshIcon.style.opacity = ".45";
+  refreshIcon.style.transform = "rotate(0deg)";
+  updateStatus.textContent = "Updating briefing…";
+  updateStatus.classList.remove("error");
+
+  try {
+    const url = `${API_BASE}?city=${encodeURIComponent(city)}&_=${Date.now()}`;
+    // Do not add custom request headers here. They trigger a CORS preflight
+    // in some Android WebViews, while the Worker only allows simple GET requests.
+    const response = await fetch(url, {
+      method:"GET",
+      mode:"cors",
+      cache:"no-store"
+    });
+    if (!response.ok) throw new Error(`Request failed (${response.status})`);
+    const data = await response.json();
+    if (!data || data.success !== true) throw new Error(data?.error || "Unable to load briefing");
+
+    renderWeather(data.weather);
+    renderNews(data.news);
+    updateStatus.textContent = `Last updated ${new Intl.DateTimeFormat("en-GB", {
+      hour:"numeric", minute:"2-digit", timeZone:"Europe/London"
+    }).format(new Date())} UK time`;
+  } catch (error) {
+    updateStatus.textContent = "Unable to update briefing. Please try again.";
+    updateStatus.classList.add("error");
+    if (!currentNews.length) newsList.innerHTML = '<div class="empty">News is temporarily unavailable.</div>';
+    if (weatherDetails.querySelector(".skeleton")) renderWeather(null);
+  } finally {
+    refreshButton.disabled = false;
+    refreshIcon.style.opacity = "1";
+  }
+}
+
+citySelect.addEventListener("change", loadBriefing);
+refreshButton.addEventListener("click", loadBriefing);
+
+// AppCreator24 back navigation: use browser history, with a fallback to the previous page.
+document.getElementById("backButton").addEventListener("click", () => {
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.href = "go:home";
+  }
+});
+
+loadBriefing();
+</script>
+</body>
+</html>
