@@ -254,50 +254,63 @@ function getUKDateTime() {
     };
 }
 
-// BBC Radio 5 Sports Extra Schedule (UK Time - Thursday, 5 November 2026)
+// BBC Radio 5 Sports Extra Schedule (UK Time - Friday, 6 November 2026)
 const EVENTS_CONFIG = [
     { 
         sport: "CRICKET", 
         program: "Big Bash League", 
-        title: "Sydney Thunder vs Perth Scorchers", 
-        details: "Women's Big Bash League 2026 • Live commentary of Sydney Thunder vs Perth Scorchers.", 
+        title: "Melbourne Stars v Sydney Sixers", 
+        details: "Women's Big Bash League • Live commentary of Melbourne Stars v Sydney Sixers.", 
         timeDisplay: "8:00 AM", 
-        dateDisplay: "Thu, 5 Nov", 
+        dateDisplay: "Fri, 6 Nov", 
         year: 2026, 
         month: 11, 
-        day: 5, 
+        day: 6, 
         startMin: 480,  // 8:00 AM (8 * 60)
         endMin: 690     // 11:30 AM (~3.5 hours)
     },
     { 
-        sport: "FOOTBALL", 
-        program: "Sportsound", 
-        title: "Europa Conference League: Thun vs Hearts", 
-        details: "Europa Conference League • Live coverage and commentary of Thun vs Hearts.", 
-        timeDisplay: "5:30 PM", 
-        dateDisplay: "Thu, 5 Nov", 
+        sport: "FORMULA 1", 
+        program: "Formula 1", 
+        title: "São Paulo Grand Prix: Practice 1", 
+        details: "São Paulo Grand Prix • Live coverage of Practice 1.", 
+        timeDisplay: "3:25 PM", 
+        dateDisplay: "Fri, 6 Nov", 
         year: 2026, 
         month: 11, 
-        day: 5, 
-        startMin: 1050, // 5:30 PM (17 * 60 + 30)
-        endMin: 1170    // 7:30 PM
+        day: 6, 
+        startMin: 925,  // 3:25 PM (15 * 60 + 25)
+        endMin: 995     // 4:35 PM (~1 hour 10 mins)
     },
     { 
-        sport: "FOOTBALL", 
-        program: "Sportsound", 
-        title: "Europa League: Celtic vs Besiktas", 
-        details: "Europa League • Live commentary of Celtic vs Besiktas.", 
-        timeDisplay: "7:45 PM", 
-        dateDisplay: "Thu, 5 Nov", 
+        sport: "FORMULA 1", 
+        program: "Formula 1", 
+        title: "São Paulo Grand Prix: Practice 2", 
+        details: "São Paulo Grand Prix • Live coverage of Practice 2.", 
+        timeDisplay: "6:55 PM", 
+        dateDisplay: "Fri, 6 Nov", 
         year: 2026, 
         month: 11, 
-        day: 5, 
-        startMin: 1185, // 7:45 PM (19 * 60 + 45)
-        endMin: 1320    // 10:00 PM
+        day: 6, 
+        startMin: 1135, // 6:55 PM (18 * 60 + 55)
+        endMin: 1205    // 8:05 PM (~1 hour 10 mins)
+    },
+    { 
+        sport: "RUGBY", 
+        program: "Rugby Union", 
+        title: "Ireland v Argentina", 
+        details: "Rugby Union • Live coverage and commentary of Ireland v Argentina.", 
+        timeDisplay: "8:05 PM", 
+        dateDisplay: "Fri, 6 Nov", 
+        year: 2026, 
+        month: 11, 
+        day: 6, 
+        startMin: 1205, // 8:05 PM (20 * 60 + 5)
+        endMin: 1335    // 10:15 PM (~2 hours 10 mins)
     }
 ];
 
-const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589bc55a2a46d5d3506fe0";
+const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589ba65a2a46d5d3506fc8";
 
 function formatInningScore(teamObj, prefix) {
     if (!teamObj) return "";
