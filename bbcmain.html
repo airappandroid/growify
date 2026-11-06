@@ -57,6 +57,21 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background
 .duration-tag{padding:3px 7px;border-radius:6px;background:#25354c;color:#cbd9ed;font-size:10px;margin-left:5px;font-weight:700}
 a,button{-webkit-touch-callout:none}
 @media(min-width:480px){.section{padding-left:18px;padding-right:18px}.top-banner{padding-left:18px;padding-right:18px}.app-header{padding-left:20px;padding-right:20px}}
+
+/* Daily UK Briefing shortcut */
+.daily-briefing-link{display:block;margin:12px 11px 0;text-decoration:none;color:inherit}
+.daily-briefing-card{position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:17px;background:linear-gradient(110deg,#172c49,#14243a 72%,#172d46);border:1px solid #315477;box-shadow:0 5px 16px rgba(0,0,0,.14)}
+.daily-briefing-card:after{content:"";position:absolute;width:105px;height:105px;right:-42px;top:-48px;border:17px solid rgba(98,217,232,.07);border-radius:50%;pointer-events:none}
+.daily-briefing-icon{width:44px;height:44px;flex:0 0 44px;border-radius:13px;background:#203d5e;color:var(--cyan);display:flex;align-items:center;justify-content:center}
+.daily-briefing-icon svg{width:22px;height:22px}
+.daily-briefing-copy{min-width:0;flex:1;position:relative;z-index:1}
+.daily-briefing-title{font-size:14px;font-weight:850;letter-spacing:-.2px;color:#fff;line-height:1.25}
+.daily-briefing-sub{font-size:10.5px;color:#b4c6dc;margin-top:4px;line-height:1.35}
+.daily-briefing-cta{font-size:9px;font-weight:850;letter-spacing:.45px;color:var(--cyan);margin-top:7px}
+.daily-briefing-arrow{width:30px;height:30px;flex:0 0 30px;border-radius:10px;background:#25466c;color:#d9f7ff;display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
+.daily-briefing-arrow svg{width:15px;height:15px}
+@media(min-width:480px){.daily-briefing-link{margin-left:18px;margin-right:18px}}
+
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 </style>
 <script src="https://vividh.pages.dev/bbc.js" defer></script>
@@ -101,6 +116,26 @@ a,button{-webkit-touch-callout:none}
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                     <span>Listen now</span>
                 </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Daily UK Briefing shortcut -->
+    <a href="go:DAILYUK" class="daily-briefing-link" aria-label="Open Daily UK Briefing">
+        <div class="daily-briefing-card">
+            <div class="daily-briefing-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/>
+                    <path d="M4 5.5v16M8 7h8M8 11h8M8 15h5"/>
+                </svg>
+            </div>
+            <div class="daily-briefing-copy">
+                <div class="daily-briefing-title">Daily UK Briefing</div>
+                <div class="daily-briefing-sub">Latest UK News · Live Weather</div>
+                <div class="daily-briefing-cta">READ TODAY'S BRIEFING →</div>
+            </div>
+            <div class="daily-briefing-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </div>
         </div>
     </a>
@@ -168,25 +203,7 @@ a,button{-webkit-touch-callout:none}
         </a>
     </div>
 
-    <!-- Latest Updates -->
-    <div class="section">
-        <div class="title">🕒 Latest Updates</div>
-        <div class="station-card" style="border-color: rgba(59,130,246,0.3);">
-            <div class="station-info">
-                <div class="station-name">📰 5 Min News Brief <span class="duration-tag">5 Min</span></div>
-                <div class="playing-row"><span>Updated: 6 NOV, 11:00 AM</span></div>
-            </div>
-            <a href="https://github.com/airappandroid/mp3-files/raw/refs/heads/main/BBC%20World%20Service_BBC%20News__06112026_1100.mp3" class="play-btn" aria-label="Play"></a>
-        </div>
 
-        <div class="station-card" style="border-color: rgba(168,85,247,0.3);">
-            <div class="station-info">
-                <div class="station-name">🎙️ Thought for the Day <span class="duration-tag">3 Min</span></div>
-                <div class="playing-row"><span>Updated: 5 NOV, 5:00 AM</span></div>
-            </div>
-            <a href="https://github.com/airappandroid/mp3-files/raw/refs/heads/main/ThoughtForTheDay-20261105-RhidianBrook.mp3" class="play-btn" aria-label="Play"></a>
-        </div>
-    </div>
 </div>
 
 <!-- Privacy Modal -->
