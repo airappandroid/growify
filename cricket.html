@@ -6,65 +6,82 @@
 <meta name="theme-color" content="#0b1020">
 <title>Cricket Score App</title>
 <style>
-:root{--bg:#0b1020;--card:#161d33;--card2:#202940;--text:#fff;--muted:#a7b1c9;--accent:#ff7a45;--green:#4cd964;--line:rgba(255,255,255,.09);--yellow:#ffbd59}
+
+:root{
+ --bg:#080d18;--surface:#111b2d;--surface2:#17243a;--surface3:#202f49;
+ --text:#f7f9ff;--muted:#9aabc5;--accent:#ff875c;--accent2:#ffb184;
+ --green:#42df9a;--line:rgba(205,220,255,.11);--blue:#8fb5ff;
+}
 *{box-sizing:border-box}
 html{background:var(--bg)}
-body{margin:0;background:var(--bg);color:var(--text);font:14px Arial,Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
+body{margin:0;color:var(--text);font:14px Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(ellipse at 15% -10%,rgba(73,112,190,.24),transparent 38%),radial-gradient(ellipse at 100% 35%,rgba(255,117,77,.09),transparent 34%),var(--bg);min-height:100vh;-webkit-tap-highlight-color:transparent}
 button{font:inherit;cursor:pointer}
 button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.topbar{position:sticky;top:0;z-index:10;background:var(--bg);padding:12px 14px;border-bottom:1px solid var(--line)}
+.topbar{padding:15px 16px 16px;background:rgba(8,13,24,.91);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10;backdrop-filter:blur(16px)}
 .topline{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.brand{display:flex;align-items:center;gap:9px;min-width:0}
-.logo{width:37px;height:37px;display:grid;place-items:center;background:var(--accent);border-radius:10px;font-size:20px;flex-shrink:0}
-.name{font-size:17px;font-weight:800}
-.tagline{font-size:10px;color:var(--muted);margin-top:3px}
-.actions{display:flex;gap:6px}
-.icon-btn{display:grid;place-items:center;width:40px;height:40px;padding:0;background:#202941;border:1px solid var(--line);color:white;border-radius:9px;flex-shrink:0}
-.audio-btn{display:block;width:100%;background:var(--accent);color:#101827;border:0;border-radius:11px;padding:13px 8px;font-size:14px;font-weight:800;margin-top:11px}
-.container{max-width:600px;margin:auto;padding:15px}
-.heading{font-size:17px;font-weight:800;margin:4px 0 13px}
-.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
-.match-head{padding:14px;border-bottom:1px solid var(--line)}
-.live{display:flex;align-items:center;gap:7px;font-size:12px}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
-.live-text{color:var(--green);font-weight:800}
-.status{color:var(--muted);margin-left:auto;text-align:right}
-.note{color:var(--muted);font-size:12px;margin-top:9px;line-height:1.5}
-.team-scores{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 14px 0}
-.team-card{background:var(--card2);border-radius:11px;padding:10px;min-width:0}
-.team-top{display:flex;align-items:center;gap:7px;min-width:0}
-.team-logo{width:28px;height:28px;object-fit:contain;flex-shrink:0}
-.team-title{font-size:12px;font-weight:700;overflow-wrap:anywhere}
-.team-score{font-size:18px;font-weight:800;margin-top:7px}
-.team-overs{font-size:11px;color:var(--muted);margin-top:3px}
-.innings{padding:15px 14px}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.logo{width:46px;height:46px;display:grid;place-items:center;border-radius:16px;background:linear-gradient(145deg,#ffad82,#f56e48);font-size:24px;box-shadow:0 8px 25px rgba(255,125,83,.23)}
+.name{font-size:18px;font-weight:900;letter-spacing:-.55px;white-space:nowrap}
+.tagline{font-size:11px;color:var(--muted);margin-top:3px;letter-spacing:.2px}
+.actions{display:flex;gap:8px}
+.icon-btn{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:#17243a;border:1px solid var(--line);color:#eaf0ff}
+.audio-btn{width:100%;min-height:52px;margin-top:14px;border:0;border-radius:16px;background:linear-gradient(105deg,#ffad82,#ff7954);color:#1b1c25;font-size:14px;font-weight:900;box-shadow:0 10px 26px rgba(255,126,83,.2)}
+.container{width:min(100%,650px);margin:auto;padding:22px 15px 30px}
+.eyebrow{font-size:10px;letter-spacing:1.7px;color:var(--accent2);font-weight:900;text-transform:uppercase;margin:4px 0 8px}
+.page-title{font-size:23px;font-weight:900;letter-spacing:-.8px;margin:0 0 5px}
+.page-subtitle{font-size:12px;color:var(--muted);margin:0 0 18px}
+.card{border:1px solid var(--line);border-radius:24px;overflow:hidden;background:linear-gradient(145deg,rgba(25,39,62,.97),rgba(14,23,39,.98));box-shadow:0 20px 55px rgba(0,0,0,.28)}
+.match-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px 17px;border-bottom:1px solid var(--line);background:linear-gradient(100deg,rgba(255,135,92,.12),rgba(122,157,230,.06))}
+.live{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:900;letter-spacing:1.1px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--accent2);box-shadow:0 0 12px currentColor}
+.live-text{color:var(--accent2)}
+.status{font-size:10px;font-weight:800;letter-spacing:1px;color:#c3d0e5}
+.note{font-size:11px;color:var(--muted);margin-top:7px}
+.upcoming-wrap{padding:20px 17px 18px}
+.fixture-kicker{text-align:center;color:var(--accent2);font-size:10px;font-weight:900;letter-spacing:1.7px}
+.fixture-teams{display:grid;grid-template-columns:1fr 42px 1fr;align-items:center;gap:8px;margin:22px 0 20px}
+.fixture-team{text-align:center;min-width:0}
+.team-emblem{width:68px;height:68px;margin:0 auto 10px;display:grid;place-items:center;border-radius:22px;background:linear-gradient(145deg,#2b405f,#18263d);border:1px solid rgba(255,255,255,.12);font-size:32px;box-shadow:inset 0 1px rgba(255,255,255,.1),0 8px 20px #0003}
+.fixture-team-name{font-size:15px;font-weight:900}
+.fixture-team-code{font-size:10px;color:var(--muted);font-weight:800;letter-spacing:1.5px;margin-top:4px}
+.vs-mark{font-size:12px;color:#8495b2;font-weight:900;letter-spacing:1px;text-align:center}
+.fixture-details{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:17px}
+.fixture-chip{padding:11px 8px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.035);text-align:center;font-size:11px;color:#dce5f5;font-weight:750}
+.countdown-box{padding:15px 12px 13px;border-radius:18px;background:linear-gradient(120deg,rgba(255,135,92,.13),rgba(129,163,230,.06));border:1px solid rgba(255,155,117,.22)}
+.countdown-title{text-align:center;color:var(--accent2);font-size:10px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px}
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.count-unit{padding:10px 2px 9px;text-align:center;background:rgba(5,10,19,.48);border:1px solid rgba(255,255,255,.07);border-radius:12px}
+.count-num{font-size:23px;font-weight:950;font-variant-numeric:tabular-nums;letter-spacing:-.8px}
+.count-label{font-size:9px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:1px}
+.upcoming-caption{text-align:center;color:#9eafc8;font-size:11px;line-height:1.5;margin:14px 8px 0}
+.scorecard-btn{width:calc(100% - 34px);margin:0 17px 17px;padding:14px;border-radius:14px;background:linear-gradient(100deg,rgba(255,135,92,.18),rgba(255,135,92,.07));border:1px solid rgba(255,155,117,.4);color:#ffad8a;font-size:13px;font-weight:900}
+.innings{padding:18px}
 .teamline{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.team{font-weight:800;font-size:16px;overflow-wrap:anywhere}
-.score{font-size:28px;font-weight:800;white-space:nowrap}
-.small{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.45}
-.stats{display:flex;gap:8px;border-top:1px solid var(--line);padding-top:13px;margin-top:16px}
-.stat{flex:1;min-width:0;background:var(--card2);padding:10px 7px;border-radius:9px}
+.team{font-size:17px;font-weight:900}
+.score{font-size:31px;font-weight:950;letter-spacing:-1px}
+.small{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0 13px;padding-top:15px;border-top:1px solid var(--line)}
+.stat{min-width:0;padding:12px 9px;border-radius:13px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.055)}
 .stat-label{font-size:10px;color:var(--muted)}
-.stat-value{font-size:15px;font-weight:800;margin-top:6px;overflow-wrap:anywhere}
-.scorecard-btn{display:block;width:calc(100% - 28px);margin:0 14px 14px;padding:13px;background:transparent;color:var(--accent);border:1px solid var(--accent);border-radius:10px;font-weight:800}
-.panel{margin-top:14px;padding:14px}
-.panel-title{font-size:15px;font-weight:800;margin-bottom:12px}
-.player-row{display:grid;grid-template-columns:minmax(0,1fr) 42px 42px 54px;gap:5px;padding:10px 0;border-bottom:1px solid var(--line);font-size:12px;align-items:center}
+.stat-value{font-size:16px;font-weight:900;margin-top:7px;overflow-wrap:anywhere}
+.panel{margin-top:16px;padding:16px;border:1px solid var(--line);border-radius:20px;background:rgba(17,27,45,.88)}
+.panel-title{font-size:14px;font-weight:900;margin-bottom:12px}
+.player-row{display:grid;grid-template-columns:minmax(0,1fr) 42px 42px 54px;gap:5px;padding:11px 0;border-bottom:1px solid var(--line);font-size:12px;align-items:center}
 .player-row:last-child{border-bottom:0}
-.player-row.header{color:var(--muted);font-size:11px;padding-top:0}
+.player-row.header{color:var(--muted);font-size:10px;font-weight:800}
 .num{text-align:right;font-variant-numeric:tabular-nums}
 .player-name{overflow-wrap:anywhere}
-.center{text-align:center;padding:24px 12px;color:var(--muted)}
-.footer{text-align:center;color:#8996b2;font-size:11px;padding:22px 5px}
-.error{color:#ffb49a}
-.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.center{text-align:center;padding:25px 13px;color:var(--muted);line-height:1.6}
+.footer{text-align:center;color:#7f90aa;font-size:11px;padding:20px 5px}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}
 .modal-backdrop.show{display:flex}
-.modal{width:100%;max-width:350px;max-height:80vh;overflow:auto;background:#1a233a;border:1px solid #364159;border-radius:16px;padding:20px;box-shadow:0 15px 40px #0008}
+.modal{width:100%;max-width:360px;max-height:80vh;overflow:auto;background:#17243a;border:1px solid #3b4d6b;border-radius:20px;padding:20px;box-shadow:0 18px 50px #0009}
 .modal-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .modal h2{font-size:18px;margin:0}
-.close-btn{background:#303a51;border:0;color:white;border-radius:8px;padding:7px 11px;font-size:18px}
-.modal p{color:#d3dbea;font-size:13px;line-height:1.65;margin:15px 0 0}
-@media(max-width:360px){.container{padding:11px}.team-scores{padding-left:10px;padding-right:10px}.score{font-size:24px}.stats{gap:5px}.stat{padding:9px 5px}.stat-value{font-size:13px}.player-row{grid-template-columns:minmax(0,1fr) 34px 34px 46px;font-size:11px}}
+.close-btn{background:#30415d;border:0;color:white;border-radius:10px;padding:7px 12px;font-size:18px}
+.modal p{color:#d3dbea;font-size:13px;line-height:1.7;margin:15px 0 0}
+@media(max-width:360px){.container{padding:17px 11px 24px}.name{font-size:16px}.fixture-team-name{font-size:13px}.team-emblem{width:59px;height:59px}.count-num{font-size:20px}.stats{gap:5px}.stat{padding:10px 6px}}
+
 </style>
 </head>
 <body>
@@ -92,11 +109,11 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 </header>
 
 <main class="container">
-  <div class="heading">🏏 Live Match</div>
+  
   <section class="card">
     <div class="match-head">
       <div class="live"><span class="dot" id="liveDot"></span><span class="live-text" id="liveLabel">MATCH UPDATE</span><span class="status" id="status">Loading...</span></div>
-      <div class="note" id="matchNote">IND vs NZ 2nd T20I, Today · 12:30 PM</div>
+      <div class="note" id="matchNote">INDIA vs NZ · 2nd ODI · 7 November · 7:30 AM IST</div>
     </div>
     <div id="scoreContent" class="center">Loading live score...</div>
     <button class="scorecard-btn" id="scorecardBtn" type="button">Full Scorecard →</button>
@@ -117,8 +134,9 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 (function(){
 'use strict';
 
-const API='https://cricvoice.aminurmarch.workers.dev/?matchId=6a552bd15a2a46d5d3505259';
+const API='https://cricvoice.aminurmarch.workers.dev/?matchId=6a552bd65a2a46d5d350525d';
 const REFRESH_MS=120000;
+const MATCH_START=new Date('2026-11-07T07:30:00+05:30').getTime();
 const $=id=>document.getElementById(id);
 const text=v=>(v===null||v===undefined||v===''?'—':String(v));
 const esc=v=>text(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
@@ -149,6 +167,43 @@ function playerTable(items,isBatting){
     out+='<div class="player-row">'+values.map((v,i)=>'<div class="'+(i?'num':'player-name')+'">'+esc(v)+'</div>').join('')+'</div>';
   });
   return out;
+}
+
+
+function renderUpcoming(){
+  const start=new Date(MATCH_START);
+  const dateLabel=start.toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Kolkata'});
+  const timeLabel=start.toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit',hour12:true,timeZone:'Asia/Kolkata'})+' IST';
+  $('status').textContent='UPCOMING';
+  $('matchNote').textContent='2nd ODI  ·  '+dateLabel+'  ·  '+timeLabel;
+  $('liveLabel').textContent='UPCOMING';
+  $('liveDot').style.background='#ffad82';
+  $('scoreContent').className='';
+  $('scoreContent').innerHTML=
+    '<div class="upcoming-wrap">'+
+      '<div class="fixture-kicker">✦  2ND ONE DAY INTERNATIONAL</div>'+
+      '<div class="fixture-teams">'+
+        '<div class="fixture-team"><div class="team-emblem">🇮🇳</div><div class="fixture-team-name">India</div><div class="fixture-team-code">IND</div></div>'+
+        '<div class="vs-mark">VS</div>'+
+        '<div class="fixture-team"><div class="team-emblem">🇳🇿</div><div class="fixture-team-name">New Zealand</div><div class="fixture-team-code">🇳🇿</div></div>'+
+      '</div>'+
+      '<div class="fixture-details"><span class="fixture-chip">📅 '+dateLabel+'</span><span class="fixture-chip">🕢 '+timeLabel+'</span></div>'+
+      '<div class="countdown-box"><div class="countdown-title">Match begins in</div><div class="countdown" id="matchCountdown">'+
+        '<div class="count-unit"><div class="count-num" id="cdDays">--</div><div class="count-label">Days</div></div>'+
+        '<div class="count-unit"><div class="count-num" id="cdHours">--</div><div class="count-label">Hours</div></div>'+
+        '<div class="count-unit"><div class="count-num" id="cdMins">--</div><div class="count-label">Mins</div></div>'+
+        '<div class="count-unit"><div class="count-num" id="cdSecs">--</div><div class="count-label">Secs</div></div>'+
+      '</div></div>'+
+      '<div class="upcoming-caption">The match scorecard will appear here once the match begins.</div>'+
+    '</div>';
+  $('scorecardBtn').textContent='View Match Centre  →';
+  const diff=Math.max(0,MATCH_START-Date.now());
+  const days=Math.floor(diff/86400000),hours=Math.floor(diff%86400000/3600000),mins=Math.floor(diff%3600000/60000),secs=Math.floor(diff%60000/1000);
+  if($('cdDays')) $('cdDays').textContent=String(days).padStart(2,'0');
+  if($('cdHours')) $('cdHours').textContent=String(hours).padStart(2,'0');
+  if($('cdMins')) $('cdMins').textContent=String(mins).padStart(2,'0');
+  if($('cdSecs')) $('cdSecs').textContent=String(secs).padStart(2,'0');
+  $('updated').textContent='Match scheduled · '+timeLabel;
 }
 
 function render(data){
@@ -264,6 +319,10 @@ function render(data){
 }
 
 async function update(){
+  if(Date.now() < MATCH_START){
+    renderUpcoming();
+    return;
+  }
   if(busy||document.hidden)return;
   busy=true;
   controller=new AbortController();
@@ -281,8 +340,8 @@ async function update(){
       $('updated').textContent='Connection issue — showing last available score';
     }else{
       $('scoreContent').className='center';
-      $('scoreContent').innerHTML='<div class="innings"><div class="teamline"><div><div class="team">India</div><div class="small">Scheduled</div></div><div class="score">—</div></div><div class="small">Match starts 27 OCT at 12:30 PM</div><div class="teamline" style="margin-top:12px"><div class="team">New Zealand</div><div class="score">—</div></div></div>';
-      $('matchNote').textContent='IND vs NZ 5th T20I, Today · 12:30 PM';
+      $('scoreContent').innerHTML='<div class="innings"><div class="teamline"><div><div class="team">India</div><div class="small">Scheduled</div></div><div class="score">—</div></div><div class="small">Match starts 7 November at 7:30 AM IST</div><div class="teamline" style="margin-top:12px"><div class="team">New Zealand</div><div class="score">—</div></div></div>';
+      $('matchNote').textContent='INDIA vs NZ · 2nd ODI · 7 November · 7:30 AM IST';
       $('status').textContent='Scheduled';
       $('liveLabel').textContent='UPCOMING';
       $('liveDot').style.background='#8996b2';
@@ -296,7 +355,13 @@ async function update(){
   }
 }
 
-update();
+let wasUpcoming = Date.now() < MATCH_START;
+if(wasUpcoming) renderUpcoming();
+else update();
+setInterval(()=>{
+  if(Date.now() < MATCH_START) renderUpcoming();
+  else if(wasUpcoming){ wasUpcoming=false; update(); }
+},1000);
 setInterval(update,REFRESH_MS);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)update();});
 })();
