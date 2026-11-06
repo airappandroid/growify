@@ -67,21 +67,22 @@ h1{font-size:clamp(27px,7vw,36px);line-height:1.12;letter-spacing:-.04em;margin:
 .reader-description{font-size:15px;line-height:1.8;color:#e0e6f2;white-space:pre-wrap;margin-top:20px;overflow-wrap:anywhere}
 .reader-source{margin-top:24px;padding:13px;border-radius:13px;background:var(--card);font-size:12px;color:var(--muted)}
 .footer{text-align:center;color:#71809d;font-size:10px;margin-top:25px}
+.podcast-list{display:grid;gap:10px}
+.podcast-item{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;color:#fff;text-decoration:none}
+.podcast-item.news-podcast{border-color:rgba(59,130,246,.3)}
+.podcast-item.thought-podcast{border-color:rgba(168,85,247,.3)}
+.podcast-info{min-width:0;flex:1}
+.podcast-title{font-size:14px;font-weight:750;line-height:1.4}
+.podcast-duration{display:inline-block;margin-left:5px;padding:2px 7px;border-radius:7px;background:rgba(255,255,255,.08);color:var(--muted);font-size:10px;font-weight:700;vertical-align:middle}
+.podcast-updated{font-size:11px;color:var(--muted);margin-top:5px}
+.podcast-play{width:36px;height:36px;flex:0 0 36px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.09);border:1px solid var(--line)}
+.podcast-play svg{width:15px;height:15px;fill:#fff;margin-left:2px}
+
 @media(min-width:560px){.page{padding-left:22px;padding-right:22px}.news-list{grid-template-columns:1fr 1fr}.news-item{min-height:104px}}
 </style>
 </head>
 <body>
 <main class="page">
-  <div class="topbar">
-    <button class="back-btn" id="backButton" type="button" aria-label="Go back">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/><path d="M9 12h12"/></svg>
-      <span>Back</span>
-    </button>
-    <button class="icon-btn" id="refreshButton" type="button" aria-label="Refresh briefing">
-      <svg id="refreshIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7v5h-5"/><path d="M4 17v-5h5"/><path d="M5.6 9a7 7 0 0 1 11.5-2L20 12M4 12l2.9 5a7 7 0 0 0 11.5-2"/></svg>
-    </button>
-  </div>
-
   <header class="hero">
     <div class="eyebrow"><span class="live-dot"></span> YOUR DAILY UK UPDATE</div>
     <h1>Daily UK Briefing</h1>
@@ -112,7 +113,29 @@ h1{font-size:clamp(27px,7vw,36px);line-height:1.12;letter-spacing:-.04em;margin:
     <div class="news-list" id="newsList"><div class="skeleton"></div><div class="skeleton"></div></div>
   </section>
 
-  <div class="status" id="updateStatus">Connecting to Daily UK Briefing…</div>
+
+  <section class="section" aria-labelledby="podcastHeading">
+    <div class="section-head">
+      <div><h2 class="section-title" id="podcastHeading">Latest Audio Podcast</h2><div class="section-sub">Listen to the latest audio updates</div></div>
+    </div>
+    <div class="podcast-list">
+      <a class="podcast-item news-podcast" href="https://github.com/airappandroid/mp3-files/raw/refs/heads/main/BBC%20World%20Service_BBC%20News__06112026_1100.mp3">
+        <div class="podcast-info">
+          <div class="podcast-title">📰 5 Min News Brief <span class="podcast-duration">5 Min</span></div>
+          <div class="podcast-updated">Updated: 6 NOV, 11:00 AM</div>
+        </div>
+        <span class="podcast-play" aria-label="Play audio"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+      </a>
+      <a class="podcast-item thought-podcast" href="https://github.com/airappandroid/mp3-files/raw/refs/heads/main/ThoughtForTheDay-20261105-RhidianBrook.mp3">
+        <div class="podcast-info">
+          <div class="podcast-title">🎙️ Thought for the Day <span class="podcast-duration">3 Min</span></div>
+          <div class="podcast-updated">Updated: 5 NOV, 5:00 AM</div>
+        </div>
+        <span class="podcast-play" aria-label="Play audio"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+      </a>
+    </div>
+  </section>
+
   <div class="footer">Daily UK Briefing · All UK Radio</div>
 </main>
 
@@ -138,9 +161,6 @@ const DEFAULT_CITY = "London";
 const citySelect = document.getElementById("citySelect");
 const weatherDetails = document.getElementById("weatherDetails");
 const newsList = document.getElementById("newsList");
-const updateStatus = document.getElementById("updateStatus");
-const refreshButton = document.getElementById("refreshButton");
-const refreshIcon = document.getElementById("refreshIcon");
 const newsReader = document.getElementById("newsReader");
 
 let currentNews = [];
@@ -251,11 +271,6 @@ document.getElementById("closeReader").addEventListener("click", closeNews);
 async function loadBriefing() {
   const city = citySelect.value || DEFAULT_CITY;
   document.getElementById("weatherCity").textContent = city;
-  refreshButton.disabled = true;
-  refreshIcon.style.opacity = ".45";
-  refreshIcon.style.transform = "rotate(0deg)";
-  updateStatus.textContent = "Updating briefing…";
-  updateStatus.classList.remove("error");
 
   try {
     const url = `${API_BASE}?city=${encodeURIComponent(city)}&_=${Date.now()}`;
@@ -272,31 +287,14 @@ async function loadBriefing() {
 
     renderWeather(data.weather);
     renderNews(data.news);
-    updateStatus.textContent = `Last updated ${new Intl.DateTimeFormat("en-GB", {
-      hour:"numeric", minute:"2-digit", timeZone:"Europe/London"
-    }).format(new Date())} UK time`;
   } catch (error) {
-    updateStatus.textContent = "Unable to update briefing. Please try again.";
-    updateStatus.classList.add("error");
     if (!currentNews.length) newsList.innerHTML = '<div class="empty">News is temporarily unavailable.</div>';
     if (weatherDetails.querySelector(".skeleton")) renderWeather(null);
   } finally {
-    refreshButton.disabled = false;
-    refreshIcon.style.opacity = "1";
   }
 }
 
 citySelect.addEventListener("change", loadBriefing);
-refreshButton.addEventListener("click", loadBriefing);
-
-// AppCreator24 back navigation: use browser history, with a fallback to the previous page.
-document.getElementById("backButton").addEventListener("click", () => {
-  if (window.history.length > 1) {
-    window.history.back();
-  } else {
-    window.location.href = "go:home";
-  }
-});
 
 loadBriefing();
 </script>
