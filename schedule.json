@@ -22,7 +22,7 @@
   {
     "channel": "fm rainbow",
     "time": "12:02 AM",
-    "title": "ZERO HOUR SHOW — Songs Suitable for the Late Night Mood."
+    "title": "ZERO HOUR SHOW — Songs suitable for the Late Night Mood."
   },
   {
     "channel": "indraprastha",
@@ -37,17 +37,17 @@
   {
     "channel": "vividh bharati",
     "time": "12:05 AM",
-    "title": "यादों की महफिल (Repeat of previous day progm)"
+    "title": "यादों की महफिल (REPEAT OF PREVIOUS DAY PROGM)"
   },
   {
     "channel": "indraprastha",
     "time": "12:10 AM",
-    "title": "सुरों का सफ़रनामा - BAPPI LAHIRI"
+    "title": "सुरों का सफ़रनामा - ANJAAN"
   },
   {
     "channel": "fm gold",
     "time": "12:10 AM",
-    "title": "NISHIGANDHA - (SUPERHIT EVERGREENS FILM SONGS SUITABLE FOR THE NIGHT, SOOTHING, MELODIOUS AND SOULFUL NUMBERS)"
+    "title": "पानी पर लिखी कहानी - रक्षक (Story Rendition) Followed by Film Music"
   },
   {
     "channel": "indraprastha",
@@ -57,7 +57,7 @@
   {
     "channel": "fm gold",
     "time": "1:00 AM",
-    "title": "NEWS BULLETIN HINDI"
+    "title": "NEWS IN HINDI"
   },
   {
     "channel": "fm rainbow",
@@ -72,7 +72,7 @@
   {
     "channel": "fm rainbow",
     "time": "1:02 AM",
-    "title": "SUHANI RAAT (Soft Romantic Songs. mix basket of (90s) and new songs-non stop)"
+    "title": "SUHANI RAAT (Soft Romantic Songs. mix basket of 90s and new songs-non stop)"
   },
   {
     "channel": "indraprastha",
@@ -87,7 +87,7 @@
   {
     "channel": "indraprastha",
     "time": "1:10 AM",
-    "title": "गीत सुनहरे - Golden Era (फिल्म संगीत)"
+    "title": "गीत सुनहरे - Golden Era (फिल्म संगीत) OLD HINDI FILM SONGS OF GOLDEN ERA"
   },
   {
     "channel": "fm gold",
@@ -137,7 +137,7 @@
   {
     "channel": "fm gold",
     "time": "2:10 AM",
-    "title": "RAAT SURMAYI (VARIETY OF SONGS THAT EXPRESS DIFFERENT EMOTIONS AND CATER TO VARIOUS OCCASIONS, INCLUDING LOVE, HEARTBREAK, AND MORE)"
+    "title": "RAAT SURMAYI (Songs expressing different emotions - love, heartbreak, and more)"
   },
   {
     "channel": "indraprastha",
@@ -147,7 +147,7 @@
   {
     "channel": "fm gold",
     "time": "3:00 AM",
-    "title": "NEWS BULLETIN HINDI"
+    "title": "NEWS IN HINDI"
   },
   {
     "channel": "fm rainbow",
@@ -157,7 +157,7 @@
   {
     "channel": "vividh bharati",
     "time": "3:00 AM",
-    "title": "हैलो सहेली (phone in prog) — संवादक: आरती श्रीवास्तव, प्रस्तुति: अनुश्री पाठक (WOMEN'S PROGM)"
+    "title": "मनचाहे गीत (Repeat of previous day progm)"
   },
   {
     "channel": "fm rainbow",
@@ -177,17 +177,22 @@
   {
     "channel": "indraprastha",
     "time": "3:10 AM",
-    "title": "ग़ज़ल / गीत"
+    "title": "गीत / ग़ज़ल"
   },
   {
     "channel": "fm gold",
     "time": "3:10 AM",
-    "title": "HUMRAHI HIT FILMI DUETS (OLD CLASSICS)"
+    "title": "HUMRAHI - HIT FILMI DUETS (OLD CLASSICS)"
+  },
+  {
+    "channel": "vividh bharati",
+    "time": "3:30 AM",
+    "title": "नाट्यतरंग — नाटक: वारीस (भाग - 1) (लेखक: रूथ और ऑगस्ट्स गोएज, रूपांतर: ललित सेहगल)"
   },
   {
     "channel": "indraprastha",
     "time": "4:00 AM",
-    "title": "Archana (Devotional Programme in Carnatic Style) DEVOTIONAL MUSIC BY T. M. SOUNDARA RAJAN"
+    "title": "ARCHANA — DEVOTIONAL MUSIC BY K. J. JESUDAS, DEVI, CHORUS, DEEPTI BHALLA"
   },
   {
     "channel": "fm gold",
@@ -217,12 +222,12 @@
   {
     "channel": "fm gold",
     "time": "4:10 AM",
-    "title": "ARUNIMA (FILMI & NON-FILMI SOOTHING SONGS WITH POSITIVE REINFORCEMENT, POSITIVE THOUGHTS)"
+    "title": "ARUNIMA (FILMI & NON-FILMI SOOTHING SONGS WITH POSITIVE REINFORCEMENT)"
   },
   {
     "channel": "indraprastha",
     "time": "4:20 AM",
-    "title": "भक्ति रसधार (फ़िल्मी और गैर फ़िल्मी भक्ति संगीत)"
+    "title": "नाद ब्रह्म Carnatic Music"
   },
   {
     "channel": "indraprastha",
@@ -237,7 +242,7 @@
   {
     "channel": "fm gold",
     "time": "5:00 AM",
-    "title": "NEWS BULLETIN HINDI"
+    "title": "NEWS IN HINDI"
   },
   {
     "channel": "fm rainbow",
@@ -247,12 +252,12 @@
   {
     "channel": "vividh bharati",
     "time": "5:00 AM",
-    "title": "जागो सुबह हो गई"
+    "title": "जागो सुबह हो गई (DEVOTIONAL SONGS PROGM)"
   },
   {
     "channel": "fm rainbow",
     "time": "5:02 AM",
-    "title": "ARADHANA (Devotional songs - non stop) / वन्दे मातरम (05:50 AM)"
+    "title": "ARADHANA (Devotional songs non stop) / 05:50 AM वन्दे मातरम"
   },
   {
     "channel": "indraprastha",
@@ -262,32 +267,32 @@
   {
     "channel": "fm gold",
     "time": "5:05 AM",
-    "title": "NEWS BULLETIN (ENGLISH)"
+    "title": "NEWS IN ENGLISH"
   },
   {
     "channel": "indraprastha",
     "time": "5:10 AM",
-    "title": "आओ योग करें (Yoga for Wellness) — योग: उज्जायी प्राणायाम और वृक्षासन"
+    "title": "आओ योग करें (Yoga for Wellness) — योग: उष्ट्रासन और योग से संतुलित जीवन"
   },
   {
     "channel": "fm gold",
     "time": "5:10 AM",
-    "title": "BHOR SUHANI - (SOOTHING FILM SONGS SUITABLE WITH VERY EARLY MORNING MOOD) / वन्दे मातरम (05:50 AM)"
+    "title": "BHOR SUHANI - (SOOTHING FILM SONGS) / 05:50 AM वन्दे मातरम"
   },
   {
     "channel": "indraprastha",
     "time": "5:20 AM",
-    "title": "देश भक्ति संगीत - हिंदी फिल्मों से (इस मास का गीत: सेवा में तेरी भारत)"
+    "title": "देश भक्ति संगीत- हिंदी फिल्मों से (देश गान: जय जय जनहे)"
   },
   {
     "channel": "indraprastha",
     "time": "5:30 AM",
-    "title": "स्वर रंजनी (HINDUSTANI CLASSICAL MUSIC) — PT. RAJEEV VARMA (SITAR) RAAG-BAIRAGI BHAIRAV"
+    "title": "स्वर रंजनी (HINDUSTANI CLASSICAL MUSIC) — PT. Ritesh Mishra & PT. Rajnish Mishra (Raag Ramkali)"
   },
   {
     "channel": "vividh bharati",
     "time": "5:45 AM",
-    "title": "फिलर / संकेत धुन / वंदे मातरम / मंगलध्वनी"
+    "title": "फिलर / संकेत धुन / वंदे मातरम / प्रारंभिक उद्‌घोषणा / मंगलध्वनी"
   },
   {
     "channel": "indraprastha",
@@ -327,7 +332,7 @@
   {
     "channel": "vividh bharati",
     "time": "6:05 AM",
-    "title": "वंदनवार / चिंतन"
+    "title": "वंदनवार / चिंतन (DEVOTIONAL SONGS PROGM)"
   },
   {
     "channel": "indraprastha",
@@ -337,37 +342,37 @@
   {
     "channel": "fm gold",
     "time": "6:10 AM",
-    "title": "ARPAN - (DEVOTIONAL SONGS WITH POSITIVE INSPIRATIONAL THOUGHTS)"
+    "title": "ARPAN - (DEVOTIONAL SONGS WITH POSITIVE INSPIRATIONAL THOUGHTS & DIWALI WISHES)"
   },
   {
     "channel": "vividh bharati",
     "time": "6:30 AM",
-    "title": "झरोखा (रूपरेखा)"
+    "title": "झरोखा (रूपरेखा) (PROGRAMME SUMMARY)"
   },
   {
     "channel": "vividh bharati",
     "time": "6:35 AM",
-    "title": "श्रीराम चरित मानस (भाग - 365) (DEVOTIONAL)"
+    "title": "श्रीराम चरित मानस (भाग - 366) (DEVOTIONAL)"
   },
   {
     "channel": "indraprastha",
     "time": "6:40 AM",
-    "title": "चिंतन - हाथों से हाथों की पूजा - मिथिलेश कुमार शुक्ल"
+    "title": "चिंतन शुभ दीपावली (दीपावली पर विशेष) — डॉ पूनम सिंह"
   },
   {
     "channel": "fm gold",
     "time": "6:44 AM",
-    "title": "Shri Ram Charit Manas Gaan — अयोध्या कांड (भाग 107)"
+    "title": "Shri Ram Charit Manas Gaan — अयोध्या कांड (भाग 108)"
   },
   {
     "channel": "indraprastha",
     "time": "6:45 AM",
-    "title": "राम चरित मानस — अयोध्या कांड (भाग 102)"
+    "title": "राम चरित मानस — अयोध्या कांड (भाग 103)"
   },
   {
     "channel": "vividh bharati",
     "time": "6:45 AM",
-    "title": "संगीत सरिता — श्रृंखला: संगीत में स्थान, काल और पात्र (कलाकार: पंडित कैलास पात्रा, भाग-7)"
+    "title": "संगीत सरिता — श्रृंखला: संगीत में स्थान, काल और पात्र (कलाकार: पंडित कैलास पात्रा, भाग-8)"
   },
   {
     "channel": "indraprastha",
@@ -402,7 +407,7 @@
   {
     "channel": "fm rainbow",
     "time": "7:02 AM",
-    "title": "GOOD MORNING DELHI / NCR (Morning Informative Programme covering Kali Chaturdasi, National Cancer Awareness Day, C. V. Raman)"
+    "title": "GOOD MORNING DELHI/NCR (Naraka Chaturdashi, Diwali, Lakshmi Pooja, Kali Puja, Diwali Wishes)"
   },
   {
     "channel": "indraprastha",
@@ -417,12 +422,12 @@
   {
     "channel": "indraprastha",
     "time": "7:10 AM",
-    "title": "SANGEETIKA — PARVEEN DUBEY (BHAJAN - Sur Das & Kabeer Das)"
+    "title": "SANGEETIKA — SUKRITI PODDAR (BHAJAN - Surdas, Tulsidas, Bhrammanand)"
   },
   {
     "channel": "fm gold",
     "time": "7:10 AM",
-    "title": "गोल्ड सुप्रभात - (OPENING WITH PROGRAMMES HIGHLIGHTS, MORNING INFORMATION WITH EMPHASIS ON YOG & EXERCISES)"
+    "title": "गोल्ड सुप्रभात (OPENING WITH PROGRAMMES HIGHLIGHTS, MORNING INFO WITH YOG & EXERCISES)"
   },
   {
     "channel": "indraprastha",
@@ -462,7 +467,7 @@
   {
     "channel": "fm rainbow",
     "time": "8:02 AM",
-    "title": "GOOD MORNING DELHI / NCR (City happenings & news / BRICS Sustainable Lifestyle Week Mission LiFE)"
+    "title": "GOOD MORNING DELHI/NCR (Latest city happenings and important news from newspaper)"
   },
   {
     "channel": "indraprastha",
@@ -477,7 +482,7 @@
   {
     "channel": "vividh bharati",
     "time": "8:15 AM",
-    "title": "त्रिवेणी — आलेख एवं स्वर: आरती श्रीवास्तव, प्रस्तुति: अनुश्री पाठक"
+    "title": "त्रिवेणी — आलेख एवं स्वर: मंदाकिनी जोशी, प्रस्तुतकर्ता: अनुश्री पाठक"
   },
   {
     "channel": "indraprastha",
@@ -492,17 +497,17 @@
   {
     "channel": "vividh bharati",
     "time": "8:30 AM",
-    "title": "चित्रलोक (Hit film songs: 2011-Till date)"
+    "title": "चित्रलोक (Hit film songs: 2011- Till date)"
   },
   {
     "channel": "indraprastha",
     "time": "8:45 AM",
-    "title": "स्वास्थ्य पत्रिका 'हमारी सेहत' — भेंटवार्ता: सिर और गर्दन का कैंसर एवं एलर्जिक राइनाइटिस"
+    "title": "साहित्यकी — भेंटवार्ता: मुक्तिबोध : अंधियारे में उजास, कहानी: डॉ. कामना झा, साहित्यिक गतिविधियां"
   },
   {
     "channel": "fm gold",
     "time": "8:45 AM",
-    "title": "MUSICAL DILLAGI - (SPECIAL SHOW ON SWACHCHTA, POLLUTION, HEALTH FOODS, ROAD SAFETY, GOVT SCHEMES)"
+    "title": "MUSICAL DILLAGI - (SPECIAL SHOW ON CAMPAIGNS, SWACHCHTA, GOVT. SCHEMES & DIWALI WISHES)"
   },
   {
     "channel": "fm gold",
@@ -517,7 +522,7 @@
   {
     "channel": "fm rainbow",
     "time": "9:02 AM",
-    "title": "DIL KE TARANE GAANE NAYE PURANE (Nonstop latest bollywood numbers with classics)"
+    "title": "DIL KE TARANE GAANE NAYE PURANE (Nonstop latest bollywood numbers & classics / Diwali Wishes)"
   },
   {
     "channel": "fm gold",
@@ -527,22 +532,27 @@
   {
     "channel": "fm gold",
     "time": "9:10 AM",
-    "title": "MUSICAL DILLAGI — आयुष्मान भारत, National Cancer Awareness Day, Birth Anniversary of C. V. Raman"
+    "title": "MUSICAL DILLAGI (CONTINUED) — प्रधानमंत्री कृषि सिंचाई योजना, Rameshwari Nehru, Diwali, Lakshmi Pooja"
   },
   {
     "channel": "indraprastha",
     "time": "9:15 AM",
-    "title": "धरती आकाश — भेंटवार्ता: भारत में जलवायु अनुकूल वास्तुकलाः तकनीक से डिज़ाइन तक"
+    "title": "हमारे अतिथि — सनातन संस्कृति मर्मज्ञ और वेदाचार्य डॉ. आशुतोष शर्मा से बातचीत"
   },
   {
     "channel": "indraprastha",
     "time": "9:30 AM",
-    "title": "Mitti Di Mehak — Leukemia: Kisma, Karan ate Ilaaj / Sufiana Kalam / National Cancer Awareness Day"
+    "title": "Mitti Di Mehak — Talk: Hanere to Roshni wal Diwali Da mahatav, Alam Lohar songs, Delhi monuments"
+  },
+  {
+    "channel": "fm gold",
+    "time": "9:30 AM",
+    "title": "SPONSORED PROG. — 'WATAN KA RAAG'"
   },
   {
     "channel": "vividh bharati",
     "time": "9:30 AM",
-    "title": "आज के फ़नकार — पार्श्वगायिका: उषा उथुप (आलेख एवं स्वर: अशोक सोनावणे)"
+    "title": "आज के फ़नकार — नृत्यांगना: सितारा देवी (आलेख एवं स्वर: यूनुस खान, प्रस्तुति: तेजश्री कांबले)"
   },
   {
     "channel": "indraprastha",
@@ -562,12 +572,12 @@
   {
     "channel": "vividh bharati",
     "time": "10:00 AM",
-    "title": "पिटारा : गीतों भरी कहानी — 'कैसा ये इश्क है' (लेखिका: डॉ. रंजना जायसवाल)"
+    "title": "पिटारा : बॉम्बे टॉकीज — अभिनेत्री सोनाली कुलकर्णी से बातचीत (भाग -2) (Repeat)"
   },
   {
     "channel": "fm rainbow",
     "time": "10:02 AM",
-    "title": "WESTERN MUSIC: (MATCHLESS MUSIC HOUR)"
+    "title": "WESTERN MUSIC: (MATCHLESS MUSIC HOUR) / Diwali Wishes"
   },
   {
     "channel": "indraprastha",
@@ -582,7 +592,7 @@
   {
     "channel": "indraprastha",
     "time": "10:10 AM",
-    "title": "फिल्म संगीत-आपकी पसंद"
+    "title": "आप की पसंद"
   },
   {
     "channel": "fm gold",
@@ -615,19 +625,14 @@
     "title": "NEWS IN HINDI"
   },
   {
-    "channel": "fm rainbow",
-    "time": "11:00 AM",
-    "title": "हिन्दी मे मुख्य समाचार (News headline to be read live by AOD)"
-  },
-  {
     "channel": "vividh bharati",
     "time": "11:00 AM",
-    "title": "मनचाहे गीत (सोम से शनि) — संवादक: विधि जैन, प्रस्तुतकर्ता: तेजश्री कांबले"
+    "title": "हैलो फर्माईश — संवादक: यूनुस खान, प्रस्तुति: राघवेंद्र नेगी"
   },
   {
     "channel": "fm rainbow",
-    "time": "11:02 AM",
-    "title": "BOLLYWOOD TRAILS (Bollywood updates and songs) / 11:30 AM STUMPED Cricket Show"
+    "time": "11:00 AM",
+    "title": "पोस्ट बॉक्स नंबर 111 — विषय: महर्षि बाल्मीकि (अतिथि: प्रो. मुरलीमनोहर पाठक, प्रो. शशि बाला, डॉ सतेन्द्र शुक्ल)"
   },
   {
     "channel": "indraprastha",
@@ -642,17 +647,17 @@
   {
     "channel": "indraprastha",
     "time": "11:10 AM",
-    "title": "सबरस (Meri Aankon Se Door Na Ja Sajna, Mere Jese Ban Jaoge, To Aaja Swariya)"
+    "title": "स्वरांजलि - स्वांग"
   },
   {
     "channel": "fm gold",
     "time": "11:10 AM",
-    "title": "तस्वीर मनाली (हिमाचल प्रदेश) — Ek Bharat Shreshtha Bharat / Sugamya Bharat"
+    "title": "आज के मेहमान — आईपीएस अधिकारी श्री प्रशांत आनंद जी से इंदु पांडे की बातचीत"
   },
   {
     "channel": "indraprastha",
     "time": "11:30 AM",
-    "title": "सुर मंजरी - हिन्दुस्तानी शास्त्रीय संगीत — OJESH PRATAP SINGH (VOCAL RAAG - BILASKHANI TODI)"
+    "title": "सुर मंजरी-हिन्दुस्तानी शास्त्रीय संगीत — SALIM KUMAR (SITAR RECITAL - RAAG GUJARI TODI)"
   },
   {
     "channel": "indraprastha",
@@ -677,7 +682,7 @@
   {
     "channel": "fm rainbow",
     "time": "12:02 PM",
-    "title": "WESTERN MUSIC: (PLAY IT COOL)"
+    "title": "WESTERN MUSIC: (PLAY IT COOL) / Diwali Wishes"
   },
   {
     "channel": "indraprastha",
@@ -697,12 +702,12 @@
   {
     "channel": "indraprastha",
     "time": "12:10 PM",
-    "title": "महिला कार्यक्रम - घर आंगन (दीपावली, डॉ. सूरी श्रीमाथी, Cancer Awareness / C. V. Raman)"
+    "title": "महिला कार्यक्रम — चर्चा: दीपावली, लक्ष्मी पूजन, प्रदूषण मुक्त त्योहार, प्रधानमंत्री जन औषधि योजना"
   },
   {
     "channel": "fm gold",
     "time": "12:10 PM",
-    "title": "AKASHVANI FM GOLD WOMEN & FAMILY SHOW - GHAR AANGAN (Women Empowerment & Wellbeing)"
+    "title": "WO JO EK FILM THI — फिल्म: अपनापन (1977) & Diwali Wishes"
   },
   {
     "channel": "indraprastha",
@@ -727,7 +732,7 @@
   {
     "channel": "fm rainbow",
     "time": "1:02 PM",
-    "title": "MERAWALA SONG (Song requests by the listeners)"
+    "title": "MERAWALA SONG (Song requests by the listeners) / Diwali Wishes"
   },
   {
     "channel": "indraprastha",
@@ -742,12 +747,17 @@
   {
     "channel": "indraprastha",
     "time": "1:10 PM",
-    "title": "एक ही फिल्म से - DO KALIYAN"
+    "title": "एक ही फिल्म से .- WOH KAUN THI (1964)"
   },
   {
     "channel": "fm gold",
     "time": "1:10 PM",
-    "title": "कलाकार बेमिसाल — अभिनेता: कमल हासन (Film Personality Life & Songs)"
+    "title": "DIL DHOONDHTA HAI - (SUNDAY) (OLD EVERGREEN FILM SONGS)"
+  },
+  {
+    "channel": "fm gold",
+    "time": "1:30 PM",
+    "title": "Sanskrit Saptahiki - (RECORDED) (Sunday) - NSD Programme"
   },
   {
     "channel": "indraprastha",
@@ -782,12 +792,12 @@
   {
     "channel": "vividh bharati",
     "time": "2:00 PM",
-    "title": "त्रिवेणी — आलेख एवं स्वर: आरती श्रीवास्तव, प्रस्तुतकर्ता: अनुश्री पाठक (Repeat)"
+    "title": "त्रिवेणी — आलेख एवं स्वर: मंदाकिनी जोशी, प्रस्तुतकर्ता: अनुश्री पाठक (Repeat)"
   },
   {
     "channel": "fm rainbow",
     "time": "2:02 PM",
-    "title": "AASHIYANA (Entertainment with compering)"
+    "title": "AASHIYANA (Chhote Ustad - Children based programme) / Diwali Wishes"
   },
   {
     "channel": "indraprastha",
@@ -807,7 +817,7 @@
   {
     "channel": "indraprastha",
     "time": "2:30 PM",
-    "title": "एक ही कलाकार - KAMAL HASAN"
+    "title": "एक ही कलाकार. USHA UTHUP"
   },
   {
     "channel": "fm gold",
@@ -817,12 +827,12 @@
   {
     "channel": "vividh bharati",
     "time": "2:30 PM",
-    "title": "सदाबहार नगमे - फिल्मी गीत (Hits From 1960-2000)"
+    "title": "सदाबहार नग्मे - फिल्मी गीत (Hits From 1960-2000)"
   },
   {
     "channel": "indraprastha",
     "time": "3:00 PM",
-    "title": "ब्रज माधुरी — नरक चतुर्दशी, अन्नकूट गोवर्धन पूजा, परिचर्चा: ब्रज साहित्य और लोक में दीपोत्सव"
+    "title": "ब्रज माधुरी — दीपावली पर्व, ब्रज में दीपदान परंपरा, संगीत रूपक: दीपावली, ब्रज लोकगीत और भजन"
   },
   {
     "channel": "fm gold",
@@ -832,12 +842,12 @@
   {
     "channel": "fm rainbow",
     "time": "3:00 PM",
-    "title": "आकाशवाणी रेनबो जिंगल — RADIO DOCTOR (PHONE-IN Special on National Cancer Awareness Day)"
+    "title": "RADIO DOCTOR (PHONE-IN Special on World Radiography Day) — Importance of Diagnostic Tests (Dr. Harsh Mahajan)"
   },
   {
     "channel": "vividh bharati",
     "time": "3:00 PM",
-    "title": "मैटिनी शो (PROGM BASED ON INFOTAINMENT)"
+    "title": "मॅटेनी शो (PROGRAM BASED ON INFOTAINMENT)"
   },
   {
     "channel": "fm gold",
@@ -847,27 +857,32 @@
   {
     "channel": "fm gold",
     "time": "3:10 PM",
-    "title": "PURVOTTAR DIARY (RECORDED PROG. REPEAT BROADCAST)"
+    "title": "'NORTH EAST DIARY' (RECORDED PROG. REPEAT BROADCAST)"
   },
   {
     "channel": "fm gold",
     "time": "3:25 PM",
-    "title": "MANBHAVAN - (REQUEST SHOW)"
+    "title": "FILM MUSIC"
   },
   {
     "channel": "indraprastha",
     "time": "3:30 PM",
-    "title": "नाटक - चिराग दिल का जलाओ (लेखक: राहुल दक्ष, निर्देशन व प्रस्तुति: काजल सूरी)"
+    "title": "रेडियो किड्स — दिवाली: प्रेम और खुशियों का त्योहार, रामायण प्रश्नोत्तरी, गोवर्धन पूजा, भाई दूज"
+  },
+  {
+    "channel": "fm gold",
+    "time": "3:30 PM",
+    "title": "रेडियो किड्स — दिवाली, रामायण प्रश्नोत्तरी, गोवर्धन पूजा, भाई दूज, बाल कविता एवं भजन"
   },
   {
     "channel": "vividh bharati",
     "time": "3:30 PM",
-    "title": "नाट्यतरंग — नाटक: वारीस (भाग - 1) (लेखक: रूथ और ऑगस्ट्स गोएज, रूपांतर: ललित सेहगल)"
+    "title": "नाट्यतरंग — नाटक: वारीस (भाग - 2) (लेखक: रूथ और ऑगस्ट्स गोएज, रूपांतर: ललित सेहगल)"
   },
   {
     "channel": "indraprastha",
     "time": "4:00 PM",
-    "title": "NEWS IN HINDI"
+    "title": "स्वांग - किस्सा राजा मोरध्वज (कलाकार: ऋषिपाल खदाना, पूजा शर्मा और साथी)"
   },
   {
     "channel": "fm gold",
@@ -882,17 +897,12 @@
   {
     "channel": "vividh bharati",
     "time": "4:00 PM",
-    "title": "पिटारा : बॉम्बे टॉकीज — अभिनेत्री सोनाली कुलकर्णी से यूनुस खान की बातचीत (भाग 2)"
+    "title": "पिटारा : उजाले उनकी यादों के — संगीतकार उत्तम सिंह से यूनुस खान की बातचीत (भाग - 8)"
   },
   {
     "channel": "fm rainbow",
     "time": "4:02 PM",
-    "title": "ALPHA GEN (Let's Detox) — Topic: Declutter, Detox and Celebrate / 16:05 PM LAMHE"
-  },
-  {
-    "channel": "indraprastha",
-    "time": "4:05 PM",
-    "title": "NEWS IN ENGLISH"
+    "title": "ALPHA GEN (Rainbow Genius Quiz Program - Live Dial in) / 16:05 PM LAMHE"
   },
   {
     "channel": "fm gold",
@@ -900,34 +910,14 @@
     "title": "NEWS IN ENGLISH"
   },
   {
-    "channel": "indraprastha",
-    "time": "4:10 PM",
-    "title": "SOS (गुमशुदा व्यक्तियों के सम्बन्ध में सूचना) / कार्यक्रम विवरण / प्रोमो"
-  },
-  {
     "channel": "fm gold",
     "time": "4:10 PM",
-    "title": "Film Songs with Promos/Jingles/Traffic Updates/Spots etc."
-  },
-  {
-    "channel": "indraprastha",
-    "time": "4:15 PM",
-    "title": "YUVVANI LIVE (आज की बात, मन से माइक्रोफोन तक, Youth Pulse, एक कविता रोज़)"
-  },
-  {
-    "channel": "indraprastha",
-    "time": "4:20 PM",
-    "title": "EMPLOYMENT NEWS (NSD)"
+    "title": "Film Songs with Promos / Jingles / Traffic Updates/Spots etc."
   },
   {
     "channel": "fm gold",
     "time": "4:20 PM",
     "title": "EMPLOYMENT NEWS (ENGLISH) AND ROZGAR SAMACHAR (HINDI)"
-  },
-  {
-    "channel": "indraprastha",
-    "time": "4:30 PM",
-    "title": "PARIKRAMA (NSD - Bilingual)"
   },
   {
     "channel": "fm gold",
@@ -972,7 +962,7 @@
   {
     "channel": "indraprastha",
     "time": "5:10 PM",
-    "title": "लोक रंजनी — चर्चा: पञ्च पर्व में छोटी दीवाली, राष्ट्रीय ग्रामीण आजीविका मिशन"
+    "title": "लोक संगीत का कार्यक्रम लोक रंजनी"
   },
   {
     "channel": "fm gold",
@@ -982,7 +972,17 @@
   {
     "channel": "indraprastha",
     "time": "5:30 PM",
-    "title": "दैनिक कार्यक्रम 'खेल खिलाड़ी' (Talk) — प्रस्तुतकर्ता: सिमरन और प्रवीण यादव"
+    "title": "दैनिक कार्यक्रम 'खेल खिलाड़ी' — प्रस्तुतकर्ता: नवीन कुमार शर्मा और अरशद अहमद"
+  },
+  {
+    "channel": "fm gold",
+    "time": "5:30 PM",
+    "title": "पूर्वोत्तर डायरी (SUNDAY)"
+  },
+  {
+    "channel": "fm rainbow",
+    "time": "5:30 PM",
+    "title": "Programme Farm 2 City — बालकनी के छोटे गमलों में पालक, मेथी, धनिया और लेट्यूस उगाने का तरीका"
   },
   {
     "channel": "vividh bharati",
@@ -1012,7 +1012,7 @@
   {
     "channel": "fm rainbow",
     "time": "6:02 PM",
-    "title": "MESSAGE MASALA MIX (Audience engagement over a topic & Diwali Wishes)"
+    "title": "MESSAGE MASALA MIX (Audience engagement over WhatsApp / Diwali Wishes)"
   },
   {
     "channel": "indraprastha",
@@ -1027,7 +1027,7 @@
   {
     "channel": "vividh bharati",
     "time": "6:05 PM",
-    "title": "तराने नए पुराने (Cont... Non Stop New & Old Film Songs)"
+    "title": "तराने नए पुराने (Contd... Non Stop New & Old Film Songs)"
   },
   {
     "channel": "indraprastha",
@@ -1052,7 +1052,7 @@
   {
     "channel": "indraprastha",
     "time": "6:30 PM",
-    "title": "कार्यक्रम - ग्राम संसार (राष्ट्रीय कैंसर जागरूकता दिवस, सी वी रमन जयंती, लोकसंगीत)"
+    "title": "कार्यक्रम - ग्राम संसार — चर्चा: दीपावली, वार्ता: पौराणिक महत्व और नैतिक मूल्य, प्रधानमंत्री आवास योजना"
   },
   {
     "channel": "fm gold",
@@ -1092,17 +1092,17 @@
   {
     "channel": "vividh bharati",
     "time": "7:00 PM",
-    "title": "विशेष जयमाला — अभिनेत्री: माला सिन्हा (FILM SONGS FOR SOLDIERS)"
+    "title": "विशेष जयमाला — सैनिकों की शौर्य गाथा (महावीरचक्र - मेजर दलजित सिंग नारंग)"
   },
   {
     "channel": "fm rainbow",
     "time": "7:02 PM",
-    "title": "WESTERN MUSIC (Saturday Sizzlers) / Diwali Wishes"
+    "title": "WESTERN MUSIC (LIVE WIRE) (Diwali Special) / Diwali Wishes"
   },
   {
     "channel": "indraprastha",
     "time": "7:05 PM",
-    "title": "किसान वाणी — इंजीनियरिंग प्रौद्योगिकियों के माध्यम से कृषि अवशेष प्रबंधन, किसान मित्र"
+    "title": "कार्यक्रम - कृषि जगत — चर्चा: धान की पराली के उपयोग, गन्ने के उत्पाद, फसल बीमा योजना"
   },
   {
     "channel": "fm gold",
@@ -1117,12 +1117,12 @@
   {
     "channel": "fm gold",
     "time": "7:25 PM",
-    "title": "SAANJH DHALE - (OLD FORGOTTEN SONGS AND SWEET MEMORIES)"
+    "title": "SAANJH DHALE - (OLD FORGOTTEN SONGS AND THE SWEET MEMORIES)"
   },
   {
     "channel": "indraprastha",
     "time": "7:35 PM",
-    "title": "GHAZAL/QAWWALI"
+    "title": "ग़ज़ल / क़व्वाली"
   },
   {
     "channel": "indraprastha",
@@ -1137,12 +1137,12 @@
   {
     "channel": "vividh bharati",
     "time": "7:45 PM",
-    "title": "इंद्रधनुष : जिज्ञासा (SCIENTIFIC & KNOWLEDGE BASED PROGM)"
+    "title": "इंद्रधनुष : साज और आवाज — शहनाई: एम मंसूर अली जौनपुरी"
   },
   {
     "channel": "indraprastha",
     "time": "8:00 PM",
-    "title": "Mushaira — Poets: Aqib Sabir, Abbas Qamar, Vipul Kumar, Shahbaz Rizvi / Diwali Compere"
+    "title": "कवि गोष्ठी — शब्द ज्योति (दीपावली पर विशेष कवि गोष्ठी)"
   },
   {
     "channel": "fm gold",
@@ -1157,7 +1157,7 @@
   {
     "channel": "vividh bharati",
     "time": "8:00 PM",
-    "title": "हवामहल — सुनो कहानी: 'विदा' (भाग - 2), लेखक: रवीन्द्रनाथ टैगोर, वाचन: यूनुस खान"
+    "title": "हवामहल — रूपक: दीप मालिका (लेखन: शिव शंकर वशिष्ठ, निर्देशक: मुख्तार अहमद)"
   },
   {
     "channel": "fm rainbow",
@@ -1172,7 +1172,12 @@
   {
     "channel": "fm gold",
     "time": "8:10 PM",
-    "title": "MADHURIMA - (FILM SONGS BASED ON RAGAS/SEMI CLASSICAL)"
+    "title": "FILM SONGS"
+  },
+  {
+    "channel": "fm gold",
+    "time": "8:15 PM",
+    "title": "SWAR DHAROHAR — FAMOUS ACTOR & FILM PRODUCER: SOHRAB MODI"
   },
   {
     "channel": "vividh bharati",
@@ -1182,12 +1187,12 @@
   {
     "channel": "indraprastha",
     "time": "8:30 PM",
-    "title": "FILM MUSIC"
+    "title": "FILM SANGEET"
   },
   {
     "channel": "fm gold",
     "time": "8:30 PM",
-    "title": "SPORTS SCAN (All 7 Days)"
+    "title": "SPORTS SCAN - (Live) (All 7 Days)"
   },
   {
     "channel": "indraprastha",
@@ -1242,22 +1247,22 @@
   {
     "channel": "indraprastha",
     "time": "9:30 PM",
-    "title": "अखिल भारतीय पत्रिका कार्यक्रम"
+    "title": "NATIONAL PROGRAMME OF FEATURES (ENGLISH) — TITLE: TAMASO MAA JYOTIRGAMAYA"
   },
   {
     "channel": "fm gold",
     "time": "9:30 PM",
-    "title": "अखिल भारतीय साहित्यिक पत्रिका कार्यक्रम साहित्य भारती"
+    "title": "NATIONAL PROGRAMME OF FEATURES (ENGLISH) — TITLE: TAMASO MAA JYOTIRGAMAYA"
   },
   {
     "channel": "vividh bharati",
     "time": "9:30 PM",
-    "title": "आज के फनकार — पार्श्वगायिका: उषा उथुप (PROGM ON FILM PERSONALITIES)"
+    "title": "आज के फनकार — नृत्यांगना: सितारा देवी (PROGM ON FILM PERSONALITIES)"
   },
   {
     "channel": "indraprastha",
     "time": "10:00 PM",
-    "title": "संगीत का अखिल भारतीय कार्यक्रम (NPM-TABLA SOLO & PAKHAWAJ VADAN)"
+    "title": "अखिल भारतीय रविवासरीय संगीत सभा — FLUTE RECITAL DUET BY VID. HEMANTH K. S. & VID. HERAMBA K. S."
   },
   {
     "channel": "fm gold",
@@ -1272,12 +1277,12 @@
   {
     "channel": "vividh bharati",
     "time": "10:00 PM",
-    "title": "छायागीत — आलेख एवं स्वर: आरती श्रीवास्तव, प्रस्तुतकर्ता: राघवेंद्र सिंह नेगी"
+    "title": "छायागीत — आलेख एवं स्वर: यूनुस खान, प्रस्तुतकर्ता: राघवेंद्र नेगी"
   },
   {
     "channel": "fm rainbow",
     "time": "10:02 PM",
-    "title": "WESTERN MUSIC (In The Groove) / Diwali Wishes"
+    "title": "WESTERN MUSIC (Sunday Requests) / Diwali Wishes"
   },
   {
     "channel": "fm gold",
@@ -1322,7 +1327,7 @@
   {
     "channel": "vividh bharati",
     "time": "11:00 PM",
-    "title": "मनचाहे गीत (Repeat of 11.00 am progm)"
+    "title": "हैलो फर्माईश (Repeat of 11:00 AM Progm)"
   },
   {
     "channel": "fm rainbow",
@@ -1342,7 +1347,7 @@
   {
     "channel": "indraprastha",
     "time": "11:10 PM",
-    "title": "फिल्म संगीत - आपकी फरमाइश"
+    "title": "फिल्म संगीत-आप की फरमाइश"
   },
   {
     "channel": "fm gold",
