@@ -203,7 +203,6 @@ a,button{-webkit-touch-callout:none}
         </a>
     </div>
 
-
 </div>
 
 <!-- Privacy Modal -->
@@ -271,59 +270,85 @@ function getUKDateTime() {
     };
 }
 
-// BBC Radio 5 Sports Extra Schedule (UK Time - Friday, 6 November 2026)
+// BBC Radio 5 Sports Extra Schedule (UK Time - Saturday, 7 November 2026)
 const EVENTS_CONFIG = [
     { 
-        sport: "CRICKET", 
-        program: "Big Bash League", 
-        title: "Melbourne Stars v Sydney Sixers", 
-        details: "Women's Big Bash League • Live commentary of Melbourne Stars v Sydney Sixers.", 
-        timeDisplay: "8:00 AM", 
-        dateDisplay: "Fri, 6 Nov", 
+        sport: "RUGBY LEAGUE", 
+        program: "Rugby League World Cup", 
+        title: "Women's World Cup 2026: New Zealand v Samoa", 
+        details: "Live commentary of New Zealand v Samoa in the Women's World Cup 2026.", 
+        timeDisplay: "6:05 AM", 
+        dateDisplay: "Sat, 7 Nov", 
         year: 2026, 
         month: 11, 
-        day: 6, 
-        startMin: 480,  // 8:00 AM (8 * 60)
-        endMin: 690     // 11:30 AM (~3.5 hours)
+        day: 7, 
+        startMin: 365,  // 6:05 AM (6 * 60 + 5)
+        endMin: 510     // 8:30 AM
+    },
+    { 
+        sport: "RUGBY LEAGUE", 
+        program: "Rugby League World Cup", 
+        title: "Men's World Cup 2026: New Zealand v Tonga", 
+        details: "Live commentary of New Zealand v Tonga in the Men's World Cup 2026.", 
+        timeDisplay: "8:30 AM", 
+        dateDisplay: "Sat, 7 Nov", 
+        year: 2026, 
+        month: 11, 
+        day: 7, 
+        startMin: 510,  // 8:30 AM (8 * 60 + 30)
+        endMin: 660     // 11:00 AM
+    },
+    { 
+        sport: "FOOTBALL", 
+        program: "Women's Super League Football", 
+        title: "Chelsea v Everton", 
+        details: "Live commentary of Chelsea v Everton in the Women's Super League.", 
+        timeDisplay: "12:30 PM", 
+        dateDisplay: "Sat, 7 Nov", 
+        year: 2026, 
+        month: 11, 
+        day: 7, 
+        startMin: 750,  // 12:30 PM (12 * 60 + 30)
+        endMin: 885     // 2:45 PM
+    },
+    { 
+        sport: "FOOTBALL", 
+        program: "Premier League Football", 
+        title: "Fulham v Newcastle United", 
+        details: "Live Premier League coverage of Fulham v Newcastle United.", 
+        timeDisplay: "2:55 PM", 
+        dateDisplay: "Sat, 7 Nov", 
+        year: 2026, 
+        month: 11, 
+        day: 7, 
+        startMin: 895,  // 2:55 PM (14 * 60 + 55)
+        endMin: 1020    // 5:00 PM
     },
     { 
         sport: "FORMULA 1", 
         program: "Formula 1", 
-        title: "São Paulo Grand Prix: Practice 1", 
-        details: "São Paulo Grand Prix • Live coverage of Practice 1.", 
-        timeDisplay: "3:25 PM", 
-        dateDisplay: "Fri, 6 Nov", 
+        title: "São Paulo Grand Prix: Qualifying", 
+        details: "São Paulo Grand Prix • Live coverage of Qualifying.", 
+        timeDisplay: "5:55 PM", 
+        dateDisplay: "Sat, 7 Nov", 
         year: 2026, 
         month: 11, 
-        day: 6, 
-        startMin: 925,  // 3:25 PM (15 * 60 + 25)
-        endMin: 995     // 4:35 PM (~1 hour 10 mins)
+        day: 7, 
+        startMin: 1075, // 5:55 PM (17 * 60 + 55)
+        endMin: 1155    // 7:15 PM
     },
     { 
-        sport: "FORMULA 1", 
-        program: "Formula 1", 
-        title: "São Paulo Grand Prix: Practice 2", 
-        details: "São Paulo Grand Prix • Live coverage of Practice 2.", 
-        timeDisplay: "6:55 PM", 
-        dateDisplay: "Fri, 6 Nov", 
+        sport: "FOOTBALL", 
+        program: "FA Cup Football", 
+        title: "Peterborough United v Reading", 
+        details: "Live FA Cup match commentary of Peterborough United v Reading.", 
+        timeDisplay: "7:15 PM", 
+        dateDisplay: "Sat, 7 Nov", 
         year: 2026, 
         month: 11, 
-        day: 6, 
-        startMin: 1135, // 6:55 PM (18 * 60 + 55)
-        endMin: 1205    // 8:05 PM (~1 hour 10 mins)
-    },
-    { 
-        sport: "RUGBY", 
-        program: "Rugby Union", 
-        title: "Ireland v Argentina", 
-        details: "Rugby Union • Live coverage and commentary of Ireland v Argentina.", 
-        timeDisplay: "8:05 PM", 
-        dateDisplay: "Fri, 6 Nov", 
-        year: 2026, 
-        month: 11, 
-        day: 6, 
-        startMin: 1205, // 8:05 PM (20 * 60 + 5)
-        endMin: 1335    // 10:15 PM (~2 hours 10 mins)
+        day: 7, 
+        startMin: 1155, // 7:15 PM (19 * 60 + 15)
+        endMin: 1305    // 9:45 PM
     }
 ];
 
@@ -435,12 +460,19 @@ function updateBannerUI() {
         DOM.bannerTag.textContent = 'LIVE • ' + currentLive.sport;
         DOM.bannerTagWrapper.classList.add('live');
         DOM.bannerDot.style.display = 'inline-block';
-        if (currentLive.sport !== "CRICKET") {
-            DOM.bannerScore.textContent = currentLive.title;
-        } else {
+
+        if (currentLive.sport === "CRICKET") {
+            DOM.bannerScore.style.display = 'block';
             DOM.bannerScore.innerHTML = lastCricketScoreHtml || `<span class="score-line">Loading live score...</span>`;
+            DOM.bannerAnnouncement.textContent = currentLive.details;
+            DOM.bannerAnnouncement.style.display = 'block';
+        } else {
+            // Cricket nahi hai toh duplicate title hide kar ke khali rakhega
+            DOM.bannerScore.innerHTML = '';
+            DOM.bannerScore.style.display = 'none';
+            DOM.bannerAnnouncement.textContent = '';
+            DOM.bannerAnnouncement.style.display = 'none';
         }
-        DOM.bannerAnnouncement.textContent = currentLive.details;
     } else if (nextUpcoming) {
         DOM.bannerTitle.textContent = nextUpcoming.program + (nextUpcoming.title !== nextUpcoming.program ? ': ' + nextUpcoming.title : '');
         const today = nextUpcoming.year === uk.year && nextUpcoming.month === uk.month && nextUpcoming.day === uk.day;
@@ -448,20 +480,29 @@ function updateBannerUI() {
         DOM.bannerTag.textContent = 'UPCOMING • ' + nextUpcoming.sport;
         DOM.bannerTagWrapper.classList.remove('live');
         DOM.bannerDot.style.display = 'none';
-        if (nextUpcoming.sport !== "CRICKET") {
-            DOM.bannerScore.textContent = nextUpcoming.title;
-        } else {
+
+        if (nextUpcoming.sport === "CRICKET") {
+            DOM.bannerScore.style.display = 'block';
             DOM.bannerScore.textContent = "Score updates when available";
+            DOM.bannerAnnouncement.textContent = nextUpcoming.details;
+            DOM.bannerAnnouncement.style.display = 'block';
+        } else {
+            // Non-cricket upcoming events ke liye text repeat nahi hoga
+            DOM.bannerScore.innerHTML = '';
+            DOM.bannerScore.style.display = 'none';
+            DOM.bannerAnnouncement.textContent = '';
+            DOM.bannerAnnouncement.style.display = 'none';
         }
-        DOM.bannerAnnouncement.textContent = nextUpcoming.details;
     } else {
         DOM.bannerTitle.textContent = 'BBC Radio 5 Sports Extra';
         DOM.bannerTime.textContent = 'Stay Tuned';
         DOM.bannerTag.textContent = 'SPORTS EXTRA';
         DOM.bannerTagWrapper.classList.remove('live');
         DOM.bannerDot.style.display = 'none';
-        DOM.bannerScore.textContent = 'Live Sports Coverage';
+        DOM.bannerScore.innerHTML = '';
+        DOM.bannerScore.style.display = 'none';
         DOM.bannerAnnouncement.textContent = 'Check back soon for upcoming live fixtures.';
+        DOM.bannerAnnouncement.style.display = 'block';
     }
 }
 
