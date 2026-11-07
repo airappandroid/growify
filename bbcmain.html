@@ -5,74 +5,303 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>All UK Radio</title>
 <style>
-:root{color-scheme:dark;--bg:#080d18;--panel:#111a2b;--panel2:#17243a;--line:#26364d;--text:#f5f8ff;--muted:#9aabc2;--blue:#4f8cff;--cyan:#62d9e8;--green:#36d399}
+:root{
+    color-scheme:dark;
+    --bg:#080d18;
+    --panel:#111a2b;
+    --panel2:#17243a;
+    --line:#202f45;
+    --text:#f5f8ff;
+    --muted:#9aabc2;
+    --blue:#4f8cff;
+    --cyan:#62d9e8;
+    --green:#36d399;
+}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
 html{background:var(--bg);scroll-behavior:smooth}
-body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:linear-gradient(180deg,#101a2c 0,#080d18 260px);color:var(--text);min-height:100vh;padding:0 0 28px;font-size:14px}
+body{
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    background:linear-gradient(180deg,#101a2c 0,#080d18 220px);
+    color:var(--text);
+    min-height:100vh;
+    padding:0 0 24px;
+    font-size:14px;
+    text-rendering:optimizeSpeed;
+}
 .container{width:100%;max-width:520px;margin:0 auto}
-.app-header{display:flex;align-items:center;justify-content:space-between;padding:15px 17px;position:sticky;top:0;z-index:50;background:#0b1220;border-bottom:1px solid var(--line)}
-.header-brand{display:flex;align-items:center;gap:9px;font-size:17px;font-weight:850;letter-spacing:-.45px}
-.header-brand:before{content:"";width:4px;height:25px;border-radius:5px;background:var(--cyan)}
-.header-actions{display:flex;gap:9px}
-.header-btn{width:39px;height:39px;border-radius:13px;background:#17243a;border:1px solid #2b3c55;color:#e4edff;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer}
-.header-btn svg{width:18px;height:18px}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:100;display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;visibility:hidden;transition:opacity .16s ease}
+
+/* Sticky App Header */
+.app-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 16px;
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:#0b1220;
+    border-bottom:1px solid var(--line);
+    contain:layout paint;
+}
+.header-brand{display:flex;align-items:center;gap:9px;font-size:17px;font-weight:800;letter-spacing:-.4px}
+.header-brand:before{content:"";width:4px;height:22px;border-radius:4px;background:var(--cyan)}
+.header-actions{display:flex;gap:8px}
+.header-btn{
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    background:var(--panel2);
+    border:1px solid #2b3c55;
+    color:#e4edff;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    cursor:pointer;
+}
+.header-btn svg{width:17px;height:17px}
+
+/* Modal */
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:16px;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .15s ease;
+}
 .modal-overlay.active{opacity:1;visibility:visible}
-.modal-box{background:#111a2b;border:1px solid #2b3c55;border-radius:20px;width:100%;max-width:420px;color:#cbd7e8;overflow:hidden;font-size:13px;line-height:1.65}
-.modal-header{display:flex;justify-content:space-between;align-items:center;padding:15px 18px;background:#17243a;font-weight:800;color:#f4f7ff}
-.modal-close{background:none;border:0;color:#b5c5db;font-size:26px;cursor:pointer;line-height:1}
-.modal-body{padding:18px;max-height:60vh;overflow-y:auto}.modal-body p{margin-bottom:11px}.modal-body p:last-child{margin-bottom:0}
-.section{padding:0 15px;margin-top:23px}
-.title{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800;letter-spacing:-.25px;color:#f5f8ff;margin-bottom:12px}
-.top-banner{padding:10px 11px 0;text-decoration:none;display:block}
-.banner-card{position:relative;overflow:hidden;background:linear-gradient(135deg,#152c4c,#102033 68%,#14233b);border:1px solid #2c5278;border-radius:17px;padding:12px 13px;display:flex;flex-direction:column;gap:7px;min-height:120px}
-.banner-card:after{content:"";position:absolute;right:-35px;top:-55px;width:145px;height:145px;border:22px solid rgba(98,217,232,.07);border-radius:50%;pointer-events:none}
-.banner-top-row,.banner-bottom-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.banner-tag{display:inline-flex;align-items:center;gap:6px;background:#1b3a5d;border:1px solid #315b83;color:#8fc7ff;font-size:9.5px;font-weight:850;padding:4px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.5px}
-.banner-tag.live{background:#48232d;border-color:#84404c;color:#ff9ba8}
-.banner-dot{width:6px;height:6px;background:#ff6578;border-radius:50%;display:none;animation:none !important}
-.banner-time{font-size:10px;color:#b0bfd2;font-weight:750;white-space:nowrap;letter-spacing:.45px}
-.banner-title{font-size:15px;font-weight:850;color:#fff;line-height:1.25;letter-spacing:-.3px;overflow-wrap:anywhere;position:relative;z-index:1}
-.banner-score-box{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
-.banner-score{font-size:11.5px;color:#83e6f2;font-weight:800;line-height:1.35}
-.score-line{display:block;white-space:normal;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.score-line.sub{padding-left:0;color:#b0dce7}
-.banner-announcement{font-size:10.5px;color:#b0bfd2;font-weight:500;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.banner-cta{display:inline-flex;align-items:center;gap:5px;background:var(--cyan);color:#071522;font-size:10.5px;font-weight:850;padding:7px 11px;border-radius:9px;flex-shrink:0;position:relative;z-index:1}
-.banner-cta svg{width:11px;height:11px}
-.station-card{background:var(--panel);border:1px solid #202f45;border-radius:16px;padding:12px;margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;min-height:78px}
-.station-logo{width:47px;height:47px;border-radius:12px;object-fit:cover;margin-right:12px;background:#202d42;flex-shrink:0}
-.station-info{flex:1;min-width:0;padding-right:9px;display:flex;flex-direction:column;justify-content:center}
-.station-name{font-weight:780;font-size:14px;margin-bottom:5px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.playing-row{font-size:11.5px;color:var(--muted);display:flex;align-items:flex-start;line-height:1.4;min-width:0}
-.live-dot{width:7px;height:7px;background:var(--green);border-radius:50%;margin-right:7px;margin-top:4px;flex-shrink:0}
+.modal-box{
+    background:#111a2b;
+    border:1px solid #2b3c55;
+    border-radius:18px;
+    width:100%;
+    max-width:400px;
+    color:#cbd7e8;
+    overflow:hidden;
+    font-size:13px;
+    line-height:1.6;
+}
+.modal-header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--panel2);font-weight:750;color:#f4f7ff}
+.modal-close{background:none;border:0;color:#b5c5db;font-size:24px;cursor:pointer;line-height:1;padding:0 4px}
+.modal-body{padding:16px;max-height:60vh;overflow-y:auto}
+.modal-body p{margin-bottom:10px}
+.modal-body p:last-child{margin-bottom:0}
+
+.section{padding:0 14px;margin-top:20px}
+.title{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;letter-spacing:-.2px;color:#f5f8ff;margin-bottom:11px}
+
+/* Top Banner */
+.top-banner{padding:10px 12px 0;text-decoration:none;display:block}
+.banner-card{
+    background:linear-gradient(145deg,#16263d 0%,#0e1726 100%);
+    border:1px solid rgba(98,217,232,0.22);
+    border-radius:16px;
+    padding:12px 14px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.3);
+    contain:content;
+}
+.banner-card:active{transform:scale(0.988)}
+.banner-top-row,.banner-bottom-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.banner-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    background:rgba(98,217,232,0.12);
+    border:1px solid rgba(98,217,232,0.25);
+    color:#72e5f4;
+    font-size:9.5px;
+    font-weight:800;
+    padding:3px 8px;
+    border-radius:999px;
+    text-transform:uppercase;
+    letter-spacing:.4px;
+}
+.banner-tag.live{
+    background:rgba(255,68,88,0.14);
+    border-color:rgba(255,68,88,0.4);
+    color:#ff6b7e;
+}
+.banner-dot{
+    width:6px;
+    height:6px;
+    background:#ff4458;
+    border-radius:50%;
+    display:none;
+    animation: none !important;
+    box-shadow: none !important;
+    animation:bannerPulse 1.8s infinite ease-in-out;
+    transform:translateZ(0);
+}
+@keyframes bannerPulse{
+    0%,100%{opacity:1;transform:scale(1)}
+    50%{opacity:.3;transform:scale(0.85)}
+}
+.banner-time{font-size:11px;color:#a5b9d3;font-weight:700;white-space:nowrap}
+.banner-title{font-size:15px;font-weight:800;color:#fff;line-height:1.25;letter-spacing:-.2px;overflow-wrap:anywhere}
+.banner-score-box{display:flex;align-items:center;min-width:0;flex:1}
+.banner-score{font-size:11.5px;color:#7ce8f6;font-weight:750;line-height:1.35}
+.score-line{
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+}
+.score-line.sub{color:#b5e3ee}
+.banner-announcement{display:none}
+
+.banner-station-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    color:#8da5c4;
+    font-size:11px;
+    font-weight:650;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.mini-wave{display:flex;align-items:flex-end;gap:2.5px;height:11px}
+.mini-wave span{
+    width:2.5px;
+    background:#62d9e8;
+    border-radius:2px;
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    transform:translateZ(0);
+    animation:waveBounce 1.2s infinite ease-in-out;
+}
+.mini-wave span:nth-child(1){height:50%;animation-delay:0.1s}
+.mini-wave span:nth-child(2){height:100%;animation-delay:0.3s}
+.mini-wave span:nth-child(3){height:60%;animation-delay:0.2s}
+
+@keyframes waveBounce{
+    0%,100%{transform:scaleY(0.4);opacity:0.4}
+    50%{transform:scaleY(1);opacity:1}
+}
+
+.banner-cta{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    background:linear-gradient(135deg,#62d9e8 0%,#38bdf8 100%);
+    color:#041423;
+    font-size:11px;
+    font-weight:800;
+    padding:6px 12px;
+    border-radius:999px;
+    flex-shrink:0;
+}
+.banner-cta svg{width:10px;height:10px;fill:currentColor}
+
+/* Station Card */
+.station-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:15px;
+    padding:11px;
+    margin-bottom:8px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    min-height:72px;
+    contain:content;
+}
+.station-logo{
+    width:47px;
+    height:47px;
+    border-radius:11px;
+    object-fit:cover;
+    margin-right:11px;
+    background:#1c2738;
+    flex-shrink:0;
+}
+.station-info{flex:1;min-width:0;padding-right:8px;display:flex;flex-direction:column;justify-content:center}
+.station-name{font-weight:750;font-size:13.5px;margin-bottom:4px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.playing-row{font-size:11px;color:var(--muted);display:flex;align-items:flex-start;line-height:1.35;min-width:0}
+.live-dot{width:6px;height:6px;background:var(--green);border-radius:50%;margin-right:6px;margin-top:4px;flex-shrink:0}
 .playing-text{display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
-.play-btn{width:46px;height:46px;border-radius:15px;background:var(--blue);display:inline-flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;box-shadow:0 4px 12px rgba(40,105,225,.18)}
-.play-btn:before{content:"";width:0;height:0;border-style:solid;border-width:7px 0 7px 11px;border-color:transparent transparent transparent #fff;margin-left:3px}
-.view-all-card{display:flex;align-items:center;justify-content:space-between;background:#172b48;border:1px solid #2d4c73;border-radius:16px;padding:14px;margin-top:10px;text-decoration:none;color:#fff}
-.view-all-title{font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px}
-.view-all-title svg{width:15px;height:15px;color:var(--cyan)}
-.view-all-sub{font-size:11px;color:#a9bad0;margin-top:4px}
-.view-all-arrow{width:32px;height:32px;border-radius:11px;background:#25466c;display:inline-flex;align-items:center;justify-content:center;color:#d9f7ff}
-.duration-tag{padding:3px 7px;border-radius:6px;background:#25354c;color:#cbd9ed;font-size:10px;margin-left:5px;font-weight:700}
-a,button{-webkit-touch-callout:none}
-@media(min-width:480px){.section{padding-left:18px;padding-right:18px}.top-banner{padding-left:18px;padding-right:18px}.app-header{padding-left:20px;padding-right:20px}}
+.play-btn{
+    width:44px;
+    height:44px;
+    border-radius:13px;
+    background:var(--blue);
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    flex-shrink:0;
+}
+.play-btn:before{content:"";width:0;height:0;border-style:solid;border-width:6.5px 0 6.5px 10.5px;border-color:transparent transparent transparent #fff;margin-left:3px}
+
+/* View All */
+.view-all-card{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:#15243a;
+    border:1px solid #273e5f;
+    border-radius:15px;
+    padding:13px;
+    margin-top:9px;
+    text-decoration:none;
+    color:#fff;
+    contain:content;
+}
+.view-all-title{font-size:13.5px;font-weight:800;display:flex;align-items:center;gap:7px}
+.view-all-title svg{width:14px;height:14px;color:var(--cyan)}
+.view-all-sub{font-size:10.5px;color:#a9bad0;margin-top:3px}
+.view-all-arrow{width:30px;height:30px;border-radius:10px;background:#203857;display:inline-flex;align-items:center;justify-content:center;color:#d9f7ff}
 
 /* Daily UK Briefing shortcut */
-.daily-briefing-link{display:block;margin:12px 11px 0;text-decoration:none;color:inherit}
-.daily-briefing-card{position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:17px;background:linear-gradient(110deg,#172c49,#14243a 72%,#172d46);border:1px solid #315477;box-shadow:0 5px 16px rgba(0,0,0,.14)}
-.daily-briefing-card:after{content:"";position:absolute;width:105px;height:105px;right:-42px;top:-48px;border:17px solid rgba(98,217,232,.07);border-radius:50%;pointer-events:none}
-.daily-briefing-icon{width:44px;height:44px;flex:0 0 44px;border-radius:13px;background:#203d5e;color:var(--cyan);display:flex;align-items:center;justify-content:center}
-.daily-briefing-icon svg{width:22px;height:22px}
-.daily-briefing-copy{min-width:0;flex:1;position:relative;z-index:1}
-.daily-briefing-title{font-size:14px;font-weight:850;letter-spacing:-.2px;color:#fff;line-height:1.25}
-.daily-briefing-sub{font-size:10.5px;color:#b4c6dc;margin-top:4px;line-height:1.35}
-.daily-briefing-cta{font-size:9px;font-weight:850;letter-spacing:.45px;color:var(--cyan);margin-top:7px}
-.daily-briefing-arrow{width:30px;height:30px;flex:0 0 30px;border-radius:10px;background:#25466c;color:#d9f7ff;display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
-.daily-briefing-arrow svg{width:15px;height:15px}
-@media(min-width:480px){.daily-briefing-link{margin-left:18px;margin-right:18px}}
+.daily-briefing-link{display:block;margin:11px 12px 0;text-decoration:none;color:inherit}
+.daily-briefing-card{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:12px 13px;
+    border-radius:15px;
+    background:linear-gradient(110deg,#162a45,#121f31);
+    border:1px solid #284766;
+    contain:content;
+}
+.daily-briefing-icon{
+    width:42px;
+    height:42px;
+    flex:0 0 42px;
+    border-radius:12px;
+    background:#1c3552;
+    color:var(--cyan);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.daily-briefing-icon svg{width:21px;height:21px}
+.daily-briefing-copy{min-width:0;flex:1}
+.daily-briefing-title{font-size:13.5px;font-weight:800;letter-spacing:-.2px;color:#fff;line-height:1.2}
+.daily-briefing-sub{font-size:10.5px;color:#b4c6dc;margin-top:3px}
+.daily-briefing-cta{font-size:9px;font-weight:800;letter-spacing:.4px;color:var(--cyan);margin-top:6px}
+.daily-briefing-arrow{width:28px;height:28px;flex:0 0 28px;border-radius:9px;background:#223c5d;color:#d9f7ff;display:flex;align-items:center;justify-content:center}
+.daily-briefing-arrow svg{width:14px;height:14px}
 
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+@media(min-width:480px){
+    .section{padding-left:16px;padding-right:16px}
+    .top-banner{padding-left:16px;padding-right:16px}
+    .app-header{padding-left:18px;padding-right:18px}
+    .daily-briefing-link{margin-left:16px;margin-right:16px}
+}
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+}
 </style>
 <script src="https://vividh.pages.dev/bbc.js" defer></script>
 </head>
@@ -83,13 +312,13 @@ a,button{-webkit-touch-callout:none}
         <div class="header-brand">📻 All UK Radio</div>
         <div class="header-actions">
             <a href="http://action_share" class="header-btn" aria-label="Share">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
                     <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
                 </svg>
             </a>
             <button type="button" class="header-btn" id="privacyBtn" aria-label="Privacy">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                 </svg>
             </button>
@@ -109,11 +338,14 @@ a,button{-webkit-touch-callout:none}
             <div class="banner-title" id="bannerTitle">5 Sports Extra</div>
             <div class="banner-bottom-row">
                 <div class="banner-score-box">
-                    <div class="banner-score" id="bannerScore">Loading...</div>
-                    <div class="banner-announcement" id="bannerAnnouncement">Live Sports Coverage</div>
+                    <div class="banner-score" id="bannerScore" style="display:none;"></div>
+                    <div class="banner-station-badge" id="bannerStationBadge">
+                        <div class="mini-wave"><span></span><span></span><span></span></div>
+                        <span>BBC 5 Sports Extra</span>
+                    </div>
                 </div>
                 <div class="banner-cta">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    <svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg>
                     <span>Listen now</span>
                 </div>
             </div>
@@ -145,48 +377,48 @@ a,button{-webkit-touch-callout:none}
         <div class="title">📻 Popular Stations</div>
 
         <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(4).jpg" alt="BBC 1" width="42" height="42" loading="lazy">
+            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(4).jpg" alt="BBC 1" width="47" height="47" loading="lazy" decoding="async">
             <div class="station-info">
                 <div class="station-name">BBC Radio 1</div>
                 <div class="playing-row"><span class="live-dot"></span><span id="bbc1" class="playing-text">Loading...</span></div>
             </div>
-            <a href="go:BBC1" class="play-btn" aria-label="Play"></a>
+            <a href="go:BBC1" class="play-btn" aria-label="Play BBC Radio 1"></a>
         </div>
 
         <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(6).jpg" alt="BBC 2" width="42" height="42" loading="lazy">
+            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(6).jpg" alt="BBC 2" width="47" height="47" loading="lazy" decoding="async">
             <div class="station-info">
                 <div class="station-name">BBC Radio 2</div>
                 <div class="playing-row"><span class="live-dot"></span><span id="bbc2" class="playing-text">Loading...</span></div>
             </div>
-            <a href="go:BBC2" class="play-btn" aria-label="Play"></a>
+            <a href="go:BBC2" class="play-btn" aria-label="Play BBC Radio 2"></a>
         </div>
 
         <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(7).jpg" alt="BBC 3" width="42" height="42" loading="lazy">
+            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(7).jpg" alt="BBC 3" width="47" height="47" loading="lazy" decoding="async">
             <div class="station-info">
                 <div class="station-name">BBC Radio 3</div>
                 <div class="playing-row"><span class="live-dot"></span><span id="bbc3" class="playing-text">Loading...</span></div>
             </div>
-            <a href="go:BBC3" class="play-btn" aria-label="Play"></a>
+            <a href="go:BBC3" class="play-btn" aria-label="Play BBC Radio 3"></a>
         </div>
 
         <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(1).png" alt="BBC 4" width="42" height="42" loading="lazy">
+            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(1).png" alt="BBC 4" width="47" height="47" loading="lazy" decoding="async">
             <div class="station-info">
                 <div class="station-name">BBC Radio 4</div>
                 <div class="playing-row"><span class="live-dot"></span><span id="bbc4" class="playing-text">Loading...</span></div>
             </div>
-            <a href="go:BBC4" class="play-btn" aria-label="Play"></a>
+            <a href="go:BBC4" class="play-btn" aria-label="Play BBC Radio 4"></a>
         </div>
 
         <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(2).png" alt="BBC World Service" width="42" height="42" loading="lazy">
+            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(2).png" alt="BBC World Service" width="47" height="47" loading="lazy" decoding="async">
             <div class="station-info">
                 <div class="station-name">BBC World Service</div>
                 <div class="playing-row"><span class="live-dot"></span><span id="bbcws" class="playing-text">Loading...</span></div>
             </div>
-            <a href="go:BBCWS" class="play-btn" aria-label="Play"></a>
+            <a href="go:BBCWS" class="play-btn" aria-label="Play BBC World Service"></a>
         </div>
 
         <a href="go:BBC_ALL" class="view-all-card">
@@ -202,7 +434,6 @@ a,button{-webkit-touch-callout:none}
             </div>
         </a>
     </div>
-
 </div>
 
 <!-- Privacy Modal -->
@@ -232,7 +463,7 @@ const DOM = {
     bannerTagWrapper: document.getElementById('bannerTagWrapper'),
     bannerDot: document.getElementById('bannerDot'),
     bannerScore: document.getElementById('bannerScore'),
-    bannerAnnouncement: document.getElementById('bannerAnnouncement'),
+    badgeEl: document.getElementById('bannerStationBadge'),
     stations: [
         { key: 'radio 1', el: document.getElementById('bbc1') },
         { key: 'radio 2', el: document.getElementById('bbc2') },
@@ -242,113 +473,121 @@ const DOM = {
     ]
 };
 
-// Modal Control
-document.getElementById('privacyBtn')?.addEventListener('click', () => DOM.modal.classList.add('active'));
-document.getElementById('closeModal')?.addEventListener('click', () => DOM.modal.classList.remove('active'));
-DOM.modal?.addEventListener('click', (e) => { if (e.target === DOM.modal) DOM.modal.classList.remove('active'); });
-
-// UK Time & Date Fetcher
-function getUKDateTime() {
-    const parts = new Intl.DateTimeFormat('en-GB', {
-        timeZone: 'Europe/London',
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        hour12: false,
-        hourCycle: 'h23'
-    }).formatToParts(new Date());
-
-    const d = {};
-    parts.forEach(p => d[p.type] = +p.value);
-    return {
-        year: d.year,
-        month: d.month,
-        day: d.day,
-        minutesNow: ((d.hour || 0) * 60) + (d.minute || 0)
-    };
+// Layout-safe text updater (Prevents layout recalculations if text hasn't changed)
+function setText(el, val) {
+    if (el && el.textContent !== val) el.textContent = val;
 }
 
-// BBC Radio 5 Sports Extra Schedule (UK Time - Saturday, 7 November 2026)
+// Modal handlers
+const pBtn = document.getElementById('privacyBtn');
+const cBtn = document.getElementById('closeModal');
+if (pBtn && DOM.modal) pBtn.addEventListener('click', () => DOM.modal.classList.add('active'), { passive: true });
+if (cBtn && DOM.modal) cBtn.addEventListener('click', () => DOM.modal.classList.remove('active'), { passive: true });
+if (DOM.modal) {
+    DOM.modal.addEventListener('click', (e) => {
+        if (e.target === DOM.modal) DOM.modal.classList.remove('active');
+    }, { passive: true });
+}
+
+// Cached UK DateTime Formatter (Single instance saves massive memory & CPU in Android WebView)
+const ukFormatter = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/London',
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: false,
+    hourCycle: 'h23'
+});
+
+function getUKDateTime() {
+    const parts = ukFormatter.formatToParts(Date.now());
+    let year = 0, month = 0, day = 0, hour = 0, minute = 0;
+    for (let i = 0; i < parts.length; i++) {
+        const p = parts[i];
+        if (p.type === 'year') year = +p.value;
+        else if (p.type === 'month') month = +p.value;
+        else if (p.type === 'day') day = +p.value;
+        else if (p.type === 'hour') hour = +p.value;
+        else if (p.type === 'minute') minute = +p.value;
+    }
+    return { year, month, day, minutesNow: (hour * 60) + minute };
+}
+
+// BBC Radio 5 Sports Extra Schedule
 const EVENTS_CONFIG = [
     { 
         sport: "RUGBY LEAGUE", 
         program: "Rugby League World Cup", 
         title: "Women's World Cup 2026: New Zealand v Samoa", 
-        details: "Live commentary of New Zealand v Samoa in the Women's World Cup 2026.", 
         timeDisplay: "6:05 AM", 
         dateDisplay: "Sat, 7 Nov", 
         year: 2026, 
         month: 11, 
         day: 7, 
-        startMin: 365,  // 6:05 AM (6 * 60 + 5)
-        endMin: 510     // 8:30 AM
+        startMin: 365,
+        endMin: 510
     },
     { 
         sport: "RUGBY LEAGUE", 
         program: "Rugby League World Cup", 
         title: "Men's World Cup 2026: New Zealand v Tonga", 
-        details: "Live commentary of New Zealand v Tonga in the Men's World Cup 2026.", 
         timeDisplay: "8:30 AM", 
         dateDisplay: "Sat, 7 Nov", 
         year: 2026, 
         month: 11, 
         day: 7, 
-        startMin: 510,  // 8:30 AM (8 * 60 + 30)
-        endMin: 660     // 11:00 AM
+        startMin: 510,
+        endMin: 660
     },
     { 
         sport: "FOOTBALL", 
         program: "Women's Super League Football", 
         title: "Chelsea v Everton", 
-        details: "Live commentary of Chelsea v Everton in the Women's Super League.", 
         timeDisplay: "12:30 PM", 
         dateDisplay: "Sat, 7 Nov", 
         year: 2026, 
         month: 11, 
         day: 7, 
-        startMin: 750,  // 12:30 PM (12 * 60 + 30)
-        endMin: 885     // 2:45 PM
+        startMin: 750,
+        endMin: 885
     },
     { 
         sport: "FOOTBALL", 
         program: "Premier League Football", 
         title: "Fulham v Newcastle United", 
-        details: "Live Premier League coverage of Fulham v Newcastle United.", 
         timeDisplay: "2:55 PM", 
         dateDisplay: "Sat, 7 Nov", 
         year: 2026, 
         month: 11, 
         day: 7, 
-        startMin: 895,  // 2:55 PM (14 * 60 + 55)
-        endMin: 1020    // 5:00 PM
+        startMin: 895,
+        endMin: 1020
     },
     { 
         sport: "FORMULA 1", 
         program: "Formula 1", 
         title: "São Paulo Grand Prix: Qualifying", 
-        details: "São Paulo Grand Prix • Live coverage of Qualifying.", 
         timeDisplay: "5:55 PM", 
         dateDisplay: "Sat, 7 Nov", 
         year: 2026, 
         month: 11, 
         day: 7, 
-        startMin: 1075, // 5:55 PM (17 * 60 + 55)
-        endMin: 1155    // 7:15 PM
+        startMin: 1075,
+        endMin: 1155
     },
     { 
         sport: "FOOTBALL", 
         program: "FA Cup Football", 
         title: "Peterborough United v Reading", 
-        details: "Live FA Cup match commentary of Peterborough United v Reading.", 
         timeDisplay: "7:15 PM", 
         dateDisplay: "Sat, 7 Nov", 
         year: 2026, 
         month: 11, 
         day: 7, 
-        startMin: 1155, // 7:15 PM (19 * 60 + 15)
-        endMin: 1305    // 9:45 PM
+        startMin: 1155,
+        endMin: 1305
     }
 ];
 
@@ -358,42 +597,37 @@ function formatInningScore(teamObj, prefix) {
     if (!teamObj) return "";
     const s1 = teamObj[`${prefix}_1_score`];
     const s2 = teamObj[`${prefix}_2_score`];
-    
     let str = "";
     if (s1 && typeof s1.runs !== 'undefined') {
-        const overs = s1.overs ? ` (${s1.overs})` : "";
-        str = `${s1.runs}/${s1.wickets !== undefined ? s1.wickets : 0}${overs}`;
+        str = `${s1.runs}/${s1.wickets !== undefined ? s1.wickets : 0}${s1.overs ? ` (${s1.overs})` : ""}`;
     }
     if (s2 && typeof s2.runs !== 'undefined') {
-        const overs2 = s2.overs ? ` (${s2.overs})` : "";
-        str += ` & ${s2.runs}/${s2.wickets !== undefined ? s2.wickets : 0}${overs2}`;
+        str += ` & ${s2.runs}/${s2.wickets !== undefined ? s2.wickets : 0}${s2.overs ? ` (${s2.overs})` : ""}`;
     }
     return str;
 }
 
 let lastCricketScoreHtml = "";
-let lastCricketAnnouncement = "";
 
 async function fetchLiveCricketScore() {
     if (!DOM.bannerScore) return;
     try {
-        const response = await fetch(CRIC_API_ENDPOINT);
-        if (!response.ok) throw new Error("API Network error");
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 6000);
+        const response = await fetch(CRIC_API_ENDPOINT, { signal: controller.signal });
+        clearTimeout(timeoutId);
+
+        if (!response.ok) return;
         const json = await response.json();
         const match = json?.responseData?.result || json?.data || json;
 
         if (match) {
             const teamAData = match.teams?.a || {};
             const teamBData = match.teams?.b || {};
-
             const teamAName = teamAData.shortName || teamAData.name || "Team A";
             const teamBName = teamBData.shortName || teamBData.name || "Team B";
-
             const scoreA = formatInningScore(teamAData, "a");
             const scoreB = formatInningScore(teamBData, "b");
-
-            const status = match.status || "";
-            let announcement = match.announcement1 || "";
 
             let scoreHtml = "";
             if (scoreA && scoreB) {
@@ -406,31 +640,14 @@ async function fetchLiveCricketScore() {
                 scoreHtml = `<span class="score-line">🏏 ${teamAName} vs ${teamBName}</span>`;
             }
 
-            if (!announcement) {
-                if (status === "notstarted") {
-                    announcement = "Match yet to start";
-                } else if (status) {
-                    announcement = status.toUpperCase();
-                }
-            }
-
             lastCricketScoreHtml = scoreHtml;
-            lastCricketAnnouncement = announcement;
-
             const tagText = DOM.bannerTag ? DOM.bannerTag.textContent : "";
-            if (tagText.includes("CRICKET")) {
+            if (tagText.includes("CRICKET") && DOM.bannerScore.innerHTML !== lastCricketScoreHtml) {
                 DOM.bannerScore.innerHTML = lastCricketScoreHtml;
-                if (DOM.bannerAnnouncement && lastCricketAnnouncement) {
-                    DOM.bannerAnnouncement.textContent = lastCricketAnnouncement;
-                    DOM.bannerAnnouncement.style.display = "block";
-                }
             }
         }
-    } catch (err) {
-        const tagText = DOM.bannerTag ? DOM.bannerTag.textContent : "";
-        if (tagText.includes("CRICKET") && DOM.bannerScore && !lastCricketScoreHtml) {
-            DOM.bannerScore.innerHTML = `<span class="score-line">🏏 Cricket score temporarily unavailable</span>`;
-        }
+    } catch (e) {
+        // Silent fail preserves cached state
     }
 }
 
@@ -439,70 +656,61 @@ function updateBannerUI() {
     const uk = getUKDateTime();
     let currentLive = null, nextUpcoming = null;
 
-    for (const ev of EVENTS_CONFIG) {
-        const today = ev.year === uk.year && ev.month === uk.month && ev.day === uk.day;
-        const future = ev.year > uk.year || (ev.year === uk.year && ev.month > uk.month) || (ev.year === uk.year && ev.month === uk.month && ev.day > uk.day);
+    for (let i = 0; i < EVENTS_CONFIG.length; i++) {
+        const ev = EVENTS_CONFIG[i];
+        const isToday = ev.year === uk.year && ev.month === uk.month && ev.day === uk.day;
+        const isFuture = ev.year > uk.year || (ev.year === uk.year && (ev.month > uk.month || (ev.month === uk.month && ev.day > uk.day)));
         
-        if (today && uk.minutesNow >= ev.startMin && uk.minutesNow < ev.endMin) { 
+        if (isToday && uk.minutesNow >= ev.startMin && uk.minutesNow < ev.endMin) { 
             currentLive = ev; 
             break; 
         }
-        if ((today && uk.minutesNow < ev.startMin) || future) { 
+        if ((isToday && uk.minutesNow < ev.startMin) || isFuture) { 
             if (!nextUpcoming) nextUpcoming = ev; 
         }
     }
 
-    DOM.topBanner.style.display = 'block';
-
     if (currentLive) {
-        DOM.bannerTitle.textContent = currentLive.program + (currentLive.title !== currentLive.program ? ': ' + currentLive.title : '');
-        DOM.bannerTime.textContent = '';
-        DOM.bannerTag.textContent = 'LIVE • ' + currentLive.sport;
+        setText(DOM.bannerTitle, currentLive.program + (currentLive.title !== currentLive.program ? ': ' + currentLive.title : ''));
+        setText(DOM.bannerTime, '');
+        setText(DOM.bannerTag, 'LIVE • ' + currentLive.sport);
         DOM.bannerTagWrapper.classList.add('live');
         DOM.bannerDot.style.display = 'inline-block';
 
         if (currentLive.sport === "CRICKET") {
+            if (DOM.badgeEl) DOM.badgeEl.style.display = 'none';
             DOM.bannerScore.style.display = 'block';
-            DOM.bannerScore.innerHTML = lastCricketScoreHtml || `<span class="score-line">Loading live score...</span>`;
-            DOM.bannerAnnouncement.textContent = currentLive.details;
-            DOM.bannerAnnouncement.style.display = 'block';
+            if (DOM.bannerScore.innerHTML !== lastCricketScoreHtml) {
+                DOM.bannerScore.innerHTML = lastCricketScoreHtml || `<span class="score-line">Loading live score...</span>`;
+            }
         } else {
-            // Cricket nahi hai toh duplicate title hide kar ke khali rakhega
-            DOM.bannerScore.innerHTML = '';
             DOM.bannerScore.style.display = 'none';
-            DOM.bannerAnnouncement.textContent = '';
-            DOM.bannerAnnouncement.style.display = 'none';
+            if (DOM.badgeEl) DOM.badgeEl.style.display = 'inline-flex';
         }
     } else if (nextUpcoming) {
-        DOM.bannerTitle.textContent = nextUpcoming.program + (nextUpcoming.title !== nextUpcoming.program ? ': ' + nextUpcoming.title : '');
-        const today = nextUpcoming.year === uk.year && nextUpcoming.month === uk.month && nextUpcoming.day === uk.day;
-        DOM.bannerTime.textContent = (today ? '' : nextUpcoming.dateDisplay + ' • ') + nextUpcoming.timeDisplay;
-        DOM.bannerTag.textContent = 'UPCOMING • ' + nextUpcoming.sport;
+        setText(DOM.bannerTitle, nextUpcoming.program + (nextUpcoming.title !== nextUpcoming.program ? ': ' + nextUpcoming.title : ''));
+        const isToday = nextUpcoming.year === uk.year && nextUpcoming.month === uk.month && nextUpcoming.day === uk.day;
+        setText(DOM.bannerTime, (isToday ? '' : nextUpcoming.dateDisplay + ' • ') + nextUpcoming.timeDisplay);
+        setText(DOM.bannerTag, 'UPCOMING • ' + nextUpcoming.sport);
         DOM.bannerTagWrapper.classList.remove('live');
         DOM.bannerDot.style.display = 'none';
 
         if (nextUpcoming.sport === "CRICKET") {
+            if (DOM.badgeEl) DOM.badgeEl.style.display = 'none';
             DOM.bannerScore.style.display = 'block';
-            DOM.bannerScore.textContent = "Score updates when available";
-            DOM.bannerAnnouncement.textContent = nextUpcoming.details;
-            DOM.bannerAnnouncement.style.display = 'block';
+            setText(DOM.bannerScore, "Score updates when available");
         } else {
-            // Non-cricket upcoming events ke liye text repeat nahi hoga
-            DOM.bannerScore.innerHTML = '';
             DOM.bannerScore.style.display = 'none';
-            DOM.bannerAnnouncement.textContent = '';
-            DOM.bannerAnnouncement.style.display = 'none';
+            if (DOM.badgeEl) DOM.badgeEl.style.display = 'inline-flex';
         }
     } else {
-        DOM.bannerTitle.textContent = 'BBC Radio 5 Sports Extra';
-        DOM.bannerTime.textContent = 'Stay Tuned';
-        DOM.bannerTag.textContent = 'SPORTS EXTRA';
+        setText(DOM.bannerTitle, 'BBC Radio 5 Sports Extra');
+        setText(DOM.bannerTime, 'Stay Tuned');
+        setText(DOM.bannerTag, 'SPORTS EXTRA');
         DOM.bannerTagWrapper.classList.remove('live');
         DOM.bannerDot.style.display = 'none';
-        DOM.bannerScore.innerHTML = '';
         DOM.bannerScore.style.display = 'none';
-        DOM.bannerAnnouncement.textContent = 'Check back soon for upcoming live fixtures.';
-        DOM.bannerAnnouncement.style.display = 'block';
+        if (DOM.badgeEl) DOM.badgeEl.style.display = 'inline-flex';
     }
 }
 
@@ -532,11 +740,9 @@ function timeStringToMinutesUK(str) {
     if (!str) return 0;
     const match = str.trim().match(/^(\d{1,2}):(\d{2})(?:\s*([APap][Mm]))?/);
     if (!match) return 0;
-    
     let h = parseInt(match[1], 10);
     const m = parseInt(match[2], 10);
     const period = match[3] ? match[3].toUpperCase() : null;
-
     if (period === "PM" && h !== 12) h += 12;
     if (period === "AM" && h === 12) h = 0;
     return (h * 60) + m;
@@ -569,7 +775,7 @@ function updateAppUI() {
 
     for (let i = 0; i < DOM.stations.length; i++) {
         const s = DOM.stations[i];
-        if (s.el) s.el.textContent = getCurrentShow(s.key, uk.minutesNow);
+        if (s.el) setText(s.el, getCurrentShow(s.key, uk.minutesNow));
     }
 }
 
@@ -588,12 +794,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 300);
 
+    // Single consolidated timer for background updates
     setInterval(() => {
-        updateAppUI();
-    }, 120000);
-
-    setInterval(() => {
-        fetchLiveCricketScore();
+        if (!document.hidden) {
+            updateAppUI();
+            fetchLiveCricketScore();
+        }
     }, 120000);
     
     document.addEventListener("visibilitychange", () => {
@@ -601,7 +807,7 @@ document.addEventListener("DOMContentLoaded", () => {
             updateAppUI();
             fetchLiveCricketScore();
         }
-    });
+    }, { passive: true });
 });
 </script>
 </body>
