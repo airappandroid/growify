@@ -1,157 +1,178 @@
 window.SCHEDULE_DATA = [
 
   // ==========================================
-  // SATURDAY, 07/11/2026 (TODAY)
+  // SUNDAY, 08/11/2026 (TODAY)
   // ==========================================
 
   // BBC Radio 1
-  { "time": "12:00 AM", "title": "Radio 1's Essential Mix (Armin van Buuren & Benwal at ADE (Gashouder) - A very special mix with Armin van Buuren & Benwal live at Gashouder during ADE 2026.)", "channel": "BBC Radio 1" },
-  { "time": "2:00 AM", "title": "Danny Howard's Club Mix (Danny goes in with another Club Mix, featuring Rizzo, Prunk and more...)", "channel": "BBC Radio 1" },
-  { "time": "3:00 AM", "title": "Radio 1's Dance Anthems with Charlie Hedges (Nonstop classic anthems - Nonstop classic dance anthems with Charlie Hedges.)", "channel": "BBC Radio 1" },
-  { "time": "4:00 AM", "title": "Radio 1 Dance Party Starters (David Guetta, HAVEN and LF System - Charlie Tee hits play on the UK's biggest party anthems on Radio 1 Dance.)", "channel": "BBC Radio 1" },
-  { "time": "5:00 AM", "title": "Radio 1's Happy Anthems (Press play for happy hits - My my Maia Beth has got the HAPPY hits!)", "channel": "BBC Radio 1" },
-  { "time": "6:00 AM", "title": "Radio 1 Weekend Early Breakfast (with Jodie Bryant - Your perfect weekend playlist with Jodie Bryant.)", "channel": "BBC Radio 1" },
-  { "time": "7:00 AM", "title": "Radio 1 Weekend Breakfast (with Emil Franchi - Join Emil Franchi for Radio 1's weekend wake-up.)", "channel": "BBC Radio 1" },
-  { "time": "10:00 AM", "title": "Radio 1 Anthems (with Emil Franchi - Emil Franchi with big anthems and tunes you haven't heard in ages.)", "channel": "BBC Radio 1" },
-  { "time": "10:30 AM", "title": "Radio 1 Newsbeat (The latest news from around the UK and around the world.)", "channel": "BBC Radio 1" },
-  { "time": "10:32 AM", "title": "Radio 1 Anthems (with Vicky and Charley - Vicky and Charley with big anthems and tunes you haven't heard in ages.)", "channel": "BBC Radio 1" },
-  { "time": "11:00 AM", "title": "Radio 1 Group Chat with Vicky and Charley (Clear the Fear - Vicky and Charley get you weekend ready with the best music, gossip and good vibes.)", "channel": "BBC Radio 1" },
-  { "time": "1:00 PM", "title": "Sam and Danni (Sam and Danni soundtrack your afternoon on Radio 1.)", "channel": "BBC Radio 1" },
-  { "time": "4:00 PM", "title": "Radio 1's Dance Anthems with Charlie Hedges (Classic dance anthems - Nothing but the biggest dance classics with Charlie Hedges to kick-start your weekend!)", "channel": "BBC Radio 1" },
-  { "time": "5:00 PM", "title": "Radio 1's Dance Anthems with Charlie Hedges (Classic dance anthems - Claptone provides a mega Track2Track mix and Charlie has even more classics!)", "channel": "BBC Radio 1" },
-  { "time": "6:00 PM", "title": "Radio 1's Dance Anthems with Charlie Hedges (Today's dance anthems - The hottest dance hits of the moment mixed up by Charlie Hedges!)", "channel": "BBC Radio 1" },
-  { "time": "7:00 PM", "title": "Radio 1's Soundsystem Party (with Jeremiah Asiamah - Jerry has the biggest party tracks for your Saturday night!)", "channel": "BBC Radio 1" },
-  { "time": "9:00 PM", "title": "Radio 1's Rap Show (Skepta Classics - Kenny celebrates Skepta's new album by going through some of his greatest hits.)", "channel": "BBC Radio 1" },
-  { "time": "10:30 PM", "title": "Radio 1's Rap Mixtape (UK Rap Chart Bangers - Celebrating the new UK Rap Music Chart, Kenny spins the UK's biggest Rap artists.)", "channel": "BBC Radio 1" },
-  { "time": "11:00 PM", "title": "Annie Nightingale Pioneers (2026: Mia Koden - Meet one of the Annie Nightingale Pioneers of 2026 - Mia Koden.)", "channel": "BBC Radio 1" },
+  { "time": "12:00 AM", "title": "Annie Nightingale Pioneers (2026: Jaz Imsky - Meet one of the Annie Nightingale Pioneers of 2026 - Jaz Imsky.)", "channel": "BBC Radio 1" }, //[cite: 30]
+  { "time": "1:00 AM", "title": "Annie Nightingale Pioneers (2026: Kara - Meet one of the Annie Nightingale Pioneers of 2026 - Kara)", "channel": "BBC Radio 1" }, //[cite: 30]
+  { "time": "2:00 AM", "title": "Radio 1's Classic Essential Mix (Justice 2007 - Relive Justice's wild 2007 Essential Mix debut!)", "channel": "BBC Radio 1" }, //[cite: 30]
+  { "time": "4:00 AM", "title": "Radio 1 Dance Party Starters (Sub Focus, Joel Corry and Kelli Leigh - Charlie Tee hits play on the UK's biggest party anthems on Radio 1 Dance.)", "channel": "BBC Radio 1" }, //[cite: 31]
+  { "time": "5:00 AM", "title": "Radio 1 Pop Anthems (One Direction, Beabadoobee, Bruno Mars and more - Mollie King has huge pop anthems from Radio 1.)", "channel": "BBC Radio 1" }, //[cite: 31]
+  { "time": "6:00 AM", "title": "Radio 1 Weekend Early Breakfast (with Jodie Bryant - Your perfect weekend playlist with Jodie Bryant.)", "channel": "BBC Radio 1" }, //[cite: 31]
+  { "time": "7:00 AM", "title": "Radio 1 Weekend Breakfast (with Emil Franchi - Join Emil Franchi for Radio 1's weekend wake-up.)", "channel": "BBC Radio 1" }, //[cite: 31]
+  { "time": "10:30 AM", "title": "Radio 1 Newsbeat (The latest news from around the UK and around the world.)", "channel": "BBC Radio 1" }, //[cite: 32]
+  { "time": "10:32 AM", "title": "Radio 1 Group Chat with Vicky and Charley (Vicky and Charley are here with the biggest Group Chat of the week!)", "channel": "BBC Radio 1" }, //[cite: 32]
+  { "time": "1:00 PM", "title": "Radio 1 00s (with Sam and Danni - Nothing but noughties tracks with Sam and Danni!)", "channel": "BBC Radio 1" }, //[cite: 32]
+  { "time": "2:00 PM", "title": "Radio 1 10s (with Sam and Danni - Radio 1 heads back to the 2010s with Sam and Danni.)", "channel": "BBC Radio 1" }, //[cite: 32]
+  { "time": "3:00 PM", "title": "Radio 1 20s (with Sam and Danni - The best of the 2020s with Sam and Danni)", "channel": "BBC Radio 1" }, //[cite: 32]
+  { "time": "4:00 PM", "title": "The Official Chart: First Look on Radio 1 with Lauren Layfield (Lauren takes a first look at how the UK's new Official Chart is shaping up.)", "channel": "BBC Radio 1" }, //[cite: 32]
+  { "time": "7:00 PM", "title": "Radio 1's Life Hacks (Am I changing my face to fit in? - How do we handle pressure to look a certain way & make informed choices about our bodies?)", "channel": "BBC Radio 1" }, //[cite: 33]
+  { "time": "9:00 PM", "title": "Radio 1's Chillest Show with Sian Eleri (Rex Orange County Chill Mix - Rex Orange County selects the tracks he chills to.)", "channel": "BBC Radio 1" }, //[cite: 33]
+  { "time": "11:00 PM", "title": "BBC Introducing on Radio 1 with Jess Iszatt (For Fans Of... Raye - Jess has a selection of Introducing artists For Fans Of... Raye.)", "channel": "BBC Radio 1" }, //[cite: 33]
 
   // BBC Radio 2
-  { "time": "12:00 AM", "title": "Romesh Ranganathan: For the Love of Hip-Hop (Nolay: 10-Minute Mixtape - South London rapper Nolay celebrates women in hip-hop with her 10-Minute Mixtape.)", "channel": "BBC Radio 2" },
-  { "time": "1:00 AM", "title": "Tony Blackburn's Sounds of Soul (Harvest for the World - Tony returns with more soul-soaked gems to warm and uplift you heading into winter season.)", "channel": "BBC Radio 2" },
-  { "time": "2:00 AM", "title": "Pick of the Pops (1969 - Mark Goodier counts down the chart from this day in 1969.)", "channel": "BBC Radio 2" },
-  { "time": "3:00 AM", "title": "Pick of the Pops (1976 - Mark Goodier counts down the chart from this day in 1976.)", "channel": "BBC Radio 2" },
-  { "time": "4:00 AM", "title": "Radio 2 Unwinds with Angela Griffin (The Dream Sleep Unwinds Mix featuring Bob Marley & The Wailers, Lissie and George Michael - Angela Griffin has a dreamy playlist with Lissie, Sam Smith and Julee Cruise.)", "channel": "BBC Radio 2" },
-  { "time": "5:00 AM", "title": "Tracks of My Years (Linda Perry (4 Non Blondes) - Songwriter and 4 Non Blondes frontwoman Linda Perry chooses ten songs from her life.)", "channel": "BBC Radio 2" },
-  { "time": "6:00 AM", "title": "Sounds of the 60s with Tony Blackburn (She Loves You - The fabulous sound of the 1960s with Tony Blackburn.)", "channel": "BBC Radio 2" },
-  { "time": "8:00 AM", "title": "Dermot O'Leary (Radiohead's Thom Yorke chats about Hamlet: Hail To The Thief - Radiohead's Thom Yorke chats about Hamlet: Hail To The Thief - on at The Barbican.)", "channel": "BBC Radio 2" },
-  { "time": "10:00 AM", "title": "Romesh Ranganathan (Gaten Matarazzo - Gaten Matarazzo, star of Stranger Things, joins Romesh live in the studio.)", "channel": "BBC Radio 2" },
-  { "time": "1:00 PM", "title": "Emma Willis (Ellie Taylor sits in - Spend Saturday lunchtime with Ellie and enjoy a menu full of your favourite music.)", "channel": "BBC Radio 2" },
-  { "time": "3:00 PM", "title": "Rylan On Saturday (S Club Party - Ain't no party like an S Club Party! Yes, S Club will be joining Rylan in the studio.)", "channel": "BBC Radio 2" },
-  { "time": "6:00 PM", "title": "Sounds of the 80s with Gary Davies (The Joy of Sax - A special sax-filled show in celebration of International Saxophone Day!)", "channel": "BBC Radio 2" },
-  { "time": "8:00 PM", "title": "Festival of Remembrance (Festival of Remembrance 2026 - Paddy O'Connell hosts a reflective live show for Remembrance weekend.)", "channel": "BBC Radio 2" },
-  { "time": "9:00 PM", "title": "Sounds of the 90s with Fearne Cotton (Jeremy Vine is here for a 90s rave - Radio 2's Jeremy Vine joins Fearne in the studio!)", "channel": "BBC Radio 2" },
-  { "time": "11:00 PM", "title": "Dance Sounds of the 90s with Vernon Kay (Don't Stop Moving with Tameko Star - Living legend from Livin' Joy Tameko Star joins Vernon to share her 90s memories!)", "channel": "BBC Radio 2" },
+  { "time": "12:00 AM", "title": "Alternative Sounds of the 90s with Dermot O'Leary (Dermot celebrates 40 Years of Creation Records - We celebrate Creation Records with bands including Oasis, Primal Scream & Teenage Fanclub.)", "channel": "BBC Radio 2" }, //[cite: 25]
+  { "time": "1:00 AM", "title": "Remembering Quincy Jones (Quincy Jones: Forty Thousand Years of Funk - episode 2 - DJ Spoony explores the origins and legacy of music industry heavyweight Quincy Jones.)", "channel": "BBC Radio 2" }, //[cite: 25]
+  { "time": "2:00 AM", "title": "Tony Blackburn's Sounds of Soul (Beautiful People - Tony is back with a stunning selection of soul-soaked tracks from across the decades.)", "channel": "BBC Radio 2" }, //[cite: 25]
+  { "time": "3:00 AM", "title": "Radio 2 Unwinds with Angela Griffin (The Recovery Unwinds Mix with Annie Lennox, Joan Armatrading and Dido - Angela Griffin has a Recovery Unwinds Mix with Annie Lennox, Joan Armatrading and Dido.)", "channel": "BBC Radio 2" }, //[cite: 26]
+  { "time": "4:00 AM", "title": "Jo Whiley's Shiny Happy Playlist (A Spooky Happy Playlist - Jo brings the Halloween vibes, including Olivia Rodrigo, Jamie T and Talking Heads.)", "channel": "BBC Radio 2" }, //[cite: 26]
+  { "time": "4:30 AM", "title": "Jo Whiley's Shiny Happy Playlist (Indie Hits special with Felix White! - The Maccabees guitarist and 6 Music Morning Session co-host joins Jo for the Shiny!)", "channel": "BBC Radio 2" }, //[cite: 26]
+  { "time": "5:00 AM", "title": "Tracks of My Years (Mick Jagger and Ronnie Wood (The Rolling Stones) - Mick Jagger and Ronnie Wood from The Rolling Stones join Vernon for a special episode.)", "channel": "BBC Radio 2" }, //[cite: 26]
+  { "time": "6:00 AM", "title": "Good Morning Sunday (Remembrance Sunday - The Reverend Kate Bottley and Jason Mohammad reflect on Remembrance Sunday.)", "channel": "BBC Radio 2" }, //[cite: 27]
+  { "time": "9:00 AM", "title": "Love Songs with Michael Ball (I'll keep a part of you with me... and everywhere I am, there you'll be - Your true stories and favourite love songs with Michael... easy like Sunday morning.)", "channel": "BBC Radio 2" }, //[cite: 27]
+  { "time": "11:00 AM", "title": "Paddy McGuinness (Good morning plotters - Paddy's live from Salford with The Weekest Link, The Kitchen Tip-Line and a BIG question.)", "channel": "BBC Radio 2" }, //[cite: 27]
+  { "time": "1:00 PM", "title": "Elaine Paige on Sunday (Pick of the Flicks, Break A Legs and Winter Warmer Double Bill! - Pick of the Flicks, your Break A Leg messages and Elaine's Winter Warmer Double Bill!)", "channel": "BBC Radio 2" }, //[cite: 27]
+  { "time": "3:00 PM", "title": "Sounds of the 70s with Shaun Keaveny (Adria Petty - Tom Petty's daughter Adria joins Shaun to talk about her dad's 70s music.)", "channel": "BBC Radio 2" }, //[cite: 27]
+  { "time": "5:00 PM", "title": "Pick of the Pops (1980 - Mark Goodier counts down the chart from this day in 1980.)", "channel": "BBC Radio 2" }, //[cite: 28]
+  { "time": "6:00 PM", "title": "Pick of the Pops (1992 - Mark Goodier counts down the chart from this day in 1992.)", "channel": "BBC Radio 2" }, //[cite: 28]
+  { "time": "7:00 PM", "title": "Tony Blackburn's Golden Hour (Tony Blackburn spins his personal pick of the hits from across the decades.)", "channel": "BBC Radio 2" }, //[cite: 28]
+  { "time": "8:00 PM", "title": "The Paul Gambaccini Collection (The Music Of Wales - Gambo showcases Cymru's finest: Tom, Shirley, Aled, Bryn, Kelly, Bonnie, Kathryn & Shakey)", "channel": "BBC Radio 2" }, //[cite: 28]
+  { "time": "10:00 PM", "title": "Radio 2 Unwinds with Angela Griffin (CIN playlist for Owain - Angela Griffin has songs to inspire and relax Owain Wyn Evans.)", "channel": "BBC Radio 2" }, //[cite: 28]
+  { "time": "11:00 PM", "title": "Radio 2 Unwinds with Angela Griffin (The Four Nations Unwinds Mix featuring Sugababes, Snow Patrol, Shirley Bassey and Wet Wet Wet - Angela Griffin has songs by artists from across the four nations.)", "channel": "BBC Radio 2" }, //[cite: 28]
 
   // BBC Radio 3
-  { "time": "12:30 AM", "title": "Through the Night (Daniel Müller-Schott at the Pau Casals Festival in Spain - Bach's first solo cello suite and Beethoven's 'Ghost' piano trio.)", "channel": "BBC Radio 3" },
-  { "time": "6:30 AM", "title": "Radio 3 Breakfast (Wake up with classical music - Join Hannah French every Saturday for Radio 3's Breakfast show.)", "channel": "BBC Radio 3" },
-  { "time": "9:00 AM", "title": "Saturday Morning (Conductor Marin Alsop on pioneering from the podium - Tom Service with guests, stories and the perfect classical soundtrack for the weekend!)", "channel": "BBC Radio 3" },
-  { "time": "12:00 PM", "title": "Earlier... with Jools Holland (Jools and guests share their musical favourites - Jools is joined by the composer Debbie Wiseman.)", "channel": "BBC Radio 3" },
-  { "time": "1:00 PM", "title": "Key Changes: Radio 3's Essential History of Classical Music (1871: I Too Sing America - 1871, Ohio. The songs of formerly enslaved people find a global audience.)", "channel": "BBC Radio 3" },
-  { "time": "2:00 PM", "title": "Record Review (Schumann's 2nd Symphony in Building a Library with Jessica Duchen and Andrew McGregor - Andrew McGregor with the best of the week's new classical releases.)", "channel": "BBC Radio 3" },
-  { "time": "4:00 PM", "title": "Sound of Cinema (From Wonderland to Wildwood - Your weekly showcase of film scores and soundtrack favourites with Edith Bowman.)", "channel": "BBC Radio 3" },
-  { "time": "5:00 PM", "title": "This Classical Life (Jess Gillam with... Kerry Andrew - Jess Gillam and composer and author Kerry Andrew share their favourite music.)", "channel": "BBC Radio 3" },
-  { "time": "6:00 PM", "title": "Opera on 3 (Debussy's Pelleas et Melisande - Bernard Richter and Sara Blanch star in Pelléas et Mélisande at La Scala, Milan.)", "channel": "BBC Radio 3" },
-  { "time": "9:30 PM", "title": "Music Planet (Justin Adams sits in - Guitarist and producer Justin Adams shares musical inspirations from around the world.)", "channel": "BBC Radio 3" },
-  { "time": "10:30 PM", "title": "New Music Show (Tomorrow's Next Bliss - Cutting-edge and experimental new music in live performance, plus interviews and features.)", "channel": "BBC Radio 3" },
+  { "time": "12:30 AM", "title": "Through the Night (Desire, Brutality, and Supernature - Bartók's The Miraculous Mandarin and Rachmaninov's Rhapsody on a Theme of Paganini.)", "channel": "BBC Radio 3" }, //[cite: 20]
+  { "time": "6:30 AM", "title": "Radio 3 Breakfast (Start your day with classical music - Join Mark Forrest every Sunday for Radio 3's Breakfast show.)", "channel": "BBC Radio 3" }, //[cite: 20]
+  { "time": "9:00 AM", "title": "Sunday Morning (A glorious classical playlist for your morning - Sarah Walker with three hours of classical music to brighten your morning.)", "channel": "BBC Radio 3" }, //[cite: 21]
+  { "time": "12:00 PM", "title": "Private Passions (Michael Gove, politician and journalist - Michael Berkeley's guest is the politician and journalist Michael Gove.)", "channel": "BBC Radio 3" }, //[cite: 21]
+  { "time": "1:30 PM", "title": "Music Map (The Sacred Music of Hildegard of Bingen - Sara Mohr-Pietsch explores Hildegard of Bingen's collection of sacred songs.)", "channel": "BBC Radio 3" }, //[cite: 21]
+  { "time": "3:00 PM", "title": "Music Matters (The President and the Polka: 2: Manifest Destiny - Justin Webb traces the relationship between American classical music and political history)", "channel": "BBC Radio 3" }, //[cite: 21]
+  { "time": "4:00 PM", "title": "Jazz Record Requests (London Jazz Festival - Alyn Shipton looks ahead to some highlights at this year's London Jazz Festival.)", "channel": "BBC Radio 3" }, //[cite: 21]
+  { "time": "5:00 PM", "title": "The Early Music Show (Early Music Today - Hannah French chats to Masato Suzuki, Principal Conductor of Bach Collegium Japan.)", "channel": "BBC Radio 3" }, //[cite: 21]
+  { "time": "6:00 PM", "title": "Choral Evensong (The Collegiate Church of St Mary, Warwick - Live from the Collegiate Church of St Mary, Warwick.)", "channel": "BBC Radio 3" }, //[cite: 22]
+  { "time": "7:00 PM", "title": "Sunday Feature (At One with Sound: The Legacy of Hans Otte - The life, work and legacy of Hans Otte on the 100th anniversary of his birth.)", "channel": "BBC Radio 3" }, //[cite: 22]
+  { "time": "7:45 PM", "title": "Words and Music (Sounds of Silence - Sian Clifford and Ray Fearon with readings and music evoking stillness and contemplation.)", "channel": "BBC Radio 3" }, //[cite: 22]
+  { "time": "9:00 PM", "title": "Brass Banding with Hannah Peel (No Strings Attached - Hannah plays composers' first works for brass band.)", "channel": "BBC Radio 3" }, //[cite: 22]
+  { "time": "10:00 PM", "title": "Night Tracks (Sublime sounds for nightfall - Sara Mohr-Pietsch with an adventurous, immersive soundtrack for late-night listening.)", "channel": "BBC Radio 3" }, //[cite: 22]
+  { "time": "11:30 PM", "title": "Unclassified (Improbable beautiful - Elizabeth Alker with brand new music from artists and composers defying genre conventions.)", "channel": "BBC Radio 3" }, //[cite: 22]
 
   // BBC Radio 4
-  { "time": "12:00 AM", "title": "Midnight News (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" },
-  { "time": "12:30 AM", "title": "Sleuth-Hound by Lindsey Fitzharris (The Case of the Texan Legacy - With Sherlock Holmes killed off, Professor Joe Bell turns to matters of life and death.)", "channel": "BBC Radio 4" },
-  { "time": "12:48 AM", "title": "Shipping Forecast (The latest weather reports and forecasts for UK shipping.)", "channel": "BBC Radio 4" },
-  { "time": "1:00 AM", "title": "Selection of BBC World Service Programmes (BBC Radio 4 joins the BBC World Service.)", "channel": "BBC Radio 4" },
-  { "time": "5:30 AM", "title": "News Summary (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" },
-  { "time": "5:33 AM", "title": "Shipping Forecast (The latest weather reports and forecasts for UK shipping.)", "channel": "BBC Radio 4" },
-  { "time": "5:45 AM", "title": "Life Without (Life Without Tears - No more tears, for sore eyes or sad films. What happens when the tap is turned off?)", "channel": "BBC Radio 4" },
-  { "time": "6:00 AM", "title": "News and Papers (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" },
-  { "time": "6:07 AM", "title": "Ramblings (Columban Way from Newcastle to Dundrum - Clare explores a stretch of the Columban Way in County Down from Newcastle to Dundrum.)", "channel": "BBC Radio 4" },
-  { "time": "6:35 AM", "title": "Farming Today (Farming Today This Week: Bovine TB strategy; UK-EU Trade deal; regional mayors; farm reservoirs; bullrushes. - A new strategy to eradicate TB in cattle in England by 2038.)", "channel": "BBC Radio 4" },
-  { "time": "7:00 AM", "title": "Today (News and current affairs, including Sports Desk, Weather and Thought for the Day.)", "channel": "BBC Radio 4" },
-  { "time": "9:00 AM", "title": "Saturday Live (Gregory Porter, Omid Djalili, Dame Julia Slingo and the Inheritance Tracks of Sam Ryder - Adrian Chiles with extraordinary stories and remarkable people.)", "channel": "BBC Radio 4" },
-  { "time": "10:00 AM", "title": "Curious Cases (Rocket Science - Hannah and Dara talk gunpowder, sparkles, and whether future fireworks might be silent.)", "channel": "BBC Radio 4" },
-  { "time": "10:30 AM", "title": "The Kitchen Cabinet (Inverness - Jay Rayner and the panel begin the new series from Inverness, gateway to the Highlands.)", "channel": "BBC Radio 4" },
-  { "time": "11:00 AM", "title": "The Week in Westminster (Caroline Wheeler of The i Paper analyses the latest developments at Westminster.)", "channel": "BBC Radio 4" },
-  { "time": "11:30 AM", "title": "From Our Own Correspondent (Ukraine: Escaping 'hell' in Oleshky - A ceasefire enabled hundreds of civilians to leave the Russian-occupied town of Oleshky.)", "channel": "BBC Radio 4" },
-  { "time": "12:00 PM", "title": "Money Box (Child Trust Fund News and Premium Bonds 70 - Happy birthday to Premium Bonds, which turn 70 this week.)", "channel": "BBC Radio 4" },
-  { "time": "12:30 PM", "title": "The Naked Week (Up The Injunction - The Naked Week team are back with their mischievous machinations on the week's news.)", "channel": "BBC Radio 4" },
-  { "time": "1:00 PM", "title": "News (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" },
-  { "time": "1:10 PM", "title": "Any Questions? (Hilary Benn MP, Lord Callanan, Christopher Hope, Mona Siddiqui - Alex Forsyth presents political debate from Wrekenton in Gateshead.)", "channel": "BBC Radio 4" },
-  { "time": "2:05 PM", "title": "Any Answers? (Listeners respond to the issues raised in the preceding edition of Any Questions?)", "channel": "BBC Radio 4" },
-  { "time": "2:45 PM", "title": "The Archers (Elizabeth doesn't know what to do for the best.)", "channel": "BBC Radio 4" },
-  { "time": "3:00 PM", "title": "Drama on 4 (The Certificate - Isaac Bashevis Singer's comic romance about a shtetl Adrian Mole hitting jazz age Warsaw.)", "channel": "BBC Radio 4" },
-  { "time": "4:00 PM", "title": "Woman's Hour (Highlights from the Woman's Hour week)", "channel": "BBC Radio 4" },
-  { "time": "5:00 PM", "title": "PM (Full coverage of the day's news)", "channel": "BBC Radio 4" },
-  { "time": "5:30 PM", "title": "Political Thinking with Nick Robinson ('People are scared to talk about Islamist extremism': Shadow Justice Secretary Nick Timothy - Nick Timothy was called the 'most powerful man in Britain' when he was Theresa May's aide.)", "channel": "BBC Radio 4" },
-  { "time": "5:55 PM", "title": "Shipping Forecast (The latest weather reports and forecasts for UK shipping)", "channel": "BBC Radio 4" },
-  { "time": "6:00 PM", "title": "Six O'Clock News (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" },
-  { "time": "6:15 PM", "title": "Loose Ends (Jo Brand, Tim Spector, Siobhán McSweeney, Passenger, Romola Garai, Blossom Caldarone - Clive Anderson and guests with an eclectic mix of conversation, music and comedy.)", "channel": "BBC Radio 4" },
-  { "time": "7:00 PM", "title": "Profile (Diane Morgan - Actress, comedian, writer and master of deadpan.)", "channel": "BBC Radio 4" },
-  { "time": "7:15 PM", "title": "The Infinite Monkey Cage (Leaf it to Nature - Adam Rutherford and Jessica Fostekew explore the evolution and ingenuity of leaves.)", "channel": "BBC Radio 4" },
-  { "time": "8:00 PM", "title": "Archive on 4 (Still Reclaiming The Night - Krupa Padhy traces the history of the Reclaim the Night marches and movement.)", "channel": "BBC Radio 4" },
-  { "time": "9:00 PM", "title": "Human Intelligence Omnibus (Conversationalists - Five thinkers shaped by conversation, from Homer to Voltaire and Desmond Tutu.)", "channel": "BBC Radio 4" },
-  { "time": "10:00 PM", "title": "News (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" },
-  { "time": "10:15 PM", "title": "The Food Programme (Guy Singh-Watson: A Life Through Food - The pioneering founder of Riverford Organic meets Leyla Kazim to share his food story.)", "channel": "BBC Radio 4" },
-  { "time": "11:00 PM", "title": "Stand-Up Specials (Randy Feltface's Human Handbook: 2. The Pleistocene - Randy Feltface in his brand-new series about humans - from the perspective of a non-human.)", "channel": "BBC Radio 4" },
-  { "time": "11:30 PM", "title": "Brain of Britain (Brain of Britain - Semi-final 3, 2026 - General knowledge quiz. Spotlights on the board game Diplomacy and the Aztecs.)", "channel": "BBC Radio 4" },
+  { "time": "12:00 AM", "title": "Midnight News (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" }, //[cite: 11]
+  { "time": "12:15 AM", "title": "Bookclub (Matt Haig - James Naughtie and readers talk to Matt Haig about his 2020 novel The Midnight Library.)", "channel": "BBC Radio 4" }, //[cite: 11]
+  { "time": "12:48 AM", "title": "Shipping Forecast (The latest weather reports and forecasts for UK shipping.)", "channel": "BBC Radio 4" }, //[cite: 11]
+  { "time": "1:00 AM", "title": "Selection of BBC World Service Programmes (BBC Radio 4 joins the BBC World Service.)", "channel": "BBC Radio 4" }, //[cite: 12]
+  { "time": "5:30 AM", "title": "News Summary (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" }, //[cite: 12]
+  { "time": "5:33 AM", "title": "Shipping Forecast (The latest weather reports and forecasts for UK shipping.)", "channel": "BBC Radio 4" }, //[cite: 12]
+  { "time": "5:43 AM", "title": "Bells on Sunday (The parish church of St Mary in Fordingbridge Hampshire. - Bells on Sunday comes from the parish church of St Mary in Fordingbridge Hampshire.)", "channel": "BBC Radio 4" }, //[cite: 12]
+  { "time": "5:45 AM", "title": "In Touch (NHS App; Audio Described Football on TV - Does the NHS app get a clean bill of health on accessibility?)", "channel": "BBC Radio 4" }, //[cite: 12]
+  { "time": "6:00 AM", "title": "News Summary (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" }, //[cite: 13]
+  { "time": "6:07 AM", "title": "Heart and Soul (Kirk Franklin: Gospel music and my faith journey - Swarzy Shire chats to Gospel music legend Kirk Franklin about his faith.)", "channel": "BBC Radio 4" }, //[cite: 13]
+  { "time": "6:37 AM", "title": "On Your Farm (Growing bulrushes on the Somerset Levels - Sarah Swadling meets a pioneering farmer growing bulrushes on the Somerset Levels.)", "channel": "BBC Radio 4" }, //[cite: 13]
+  { "time": "7:00 AM", "title": "News and Papers (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" }, //[cite: 13]
+  { "time": "7:10 AM", "title": "Sunday (Remembrance Sunday; Diwali; Is flying a sin? - Julie Etchingham takes a look at the ethical and religious issues of the week.)", "channel": "BBC Radio 4" }, //[cite: 13]
+  { "time": "7:56 AM", "title": "Radio 4 Appeal (Every Casualty Counts - Fergal Keane makes the Radio 4 Appeal on behalf of Every Casualty Counts.)", "channel": "BBC Radio 4" }, //[cite: 13]
+  { "time": "8:00 AM", "title": "News and Papers (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" }, //[cite: 14]
+  { "time": "8:10 AM", "title": "Sunday Worship (Remembrance Sunday - A Hope for Peace - A Choral Eucharist for Remembrance Sunday from Belfast Cathedral with the Cathedral Choir.)", "channel": "BBC Radio 4" }, //[cite: 14]
+  { "time": "8:48 AM", "title": "Witness History (Auschwitz: An SS officer's photo album - In 2007, an abandoned photo album revealed the chilling normality of life in Auschwitz)", "channel": "BBC Radio 4" }, //[cite: 14]
+  { "time": "8:58 AM", "title": "Tweet of the Day (Tom McKinney on the Red Grouse - Why the red grouse always scares the life out of broadcaster and musician Tom McKinney.)", "channel": "BBC Radio 4" }, //[cite: 14]
+  { "time": "9:00 AM", "title": "News and Papers (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" }, //[cite: 14]
+  { "time": "9:15 AM", "title": "The Archers Omnibus (The nightmare continues for Alan, and Elizabeth doesn't know what to do for the best.)", "channel": "BBC Radio 4" }, //[cite: 14]
+  { "time": "10:30 AM", "title": "Ceremony of Remembrance from the Cenotaph (Paddy O'Connell leads live coverage from Whitehall of the Service of Remembrance.)", "channel": "BBC Radio 4" }, //[cite: 14]
+  { "time": "11:45 AM", "title": "Soul Music (Lovely Day by Bill Withers - The deceptively simple song that is a mantra for people.)", "channel": "BBC Radio 4" }, //[cite: 15]
+  { "time": "12:15 PM", "title": "Profile (Diane Morgan - Actress, comedian, writer and master of deadpan.)", "channel": "BBC Radio 4" }, //[cite: 15]
+  { "time": "12:30 PM", "title": "Room 101 with Paul Merton (Series 4: Andi Osho - Paul asks novelist and actress Andi Osho about her pet peeves and worst nightmares.)", "channel": "BBC Radio 4" }, //[cite: 15]
+  { "time": "1:00 PM", "title": "The World This Weekend (A look at the week's big stories and preview of the week to come.)", "channel": "BBC Radio 4" }, //[cite: 15]
+  { "time": "1:30 PM", "title": "Currently (Belonging in Spain - Why is Spain's government offering legal status to illegal immigrants and what comes next?)", "channel": "BBC Radio 4" }, //[cite: 15]
+  { "time": "2:00 PM", "title": "Gardeners' Question Time (Postbag Edition: Burrow Farm Gardens - Peter Gibbs and the GQT panel visit the award-winning Burrow Farm Gardens in East Devon.)", "channel": "BBC Radio 4" }, //[cite: 15]
+  { "time": "2:45 PM", "title": "Opening Lines (Strong Poison - John Yorke takes a look at Dorothy L Sayers's 1930 crime novel.)", "channel": "BBC Radio 4" }, //[cite: 16]
+  { "time": "3:00 PM", "title": "Drama on 4 (Strong Poison by Dorothy L Sayers: Part One - Crime novelist Harriet Vane is on trial for murder. Can Lord Peter Wimsey save her?)", "channel": "BBC Radio 4" }, //[cite: 16]
+  { "time": "4:00 PM", "title": "Take Four Books (Tessa Hadley - On her new work of non-fiction - Alone with a Book - and its three key influences.)", "channel": "BBC Radio 4" }, //[cite: 16]
+  { "time": "4:30 PM", "title": "Brain of Britain (Brain of Britain - Semi-final 4, 2026 - General knowledge quiz. Spotlights on penguins, Roger Casement and Glasgow's Subway.)", "channel": "BBC Radio 4" }, //[cite: 16]
+  { "time": "5:00 PM", "title": "Witness History (The mission in Peru that shaped a Pope - In 1985, Father Robert Prevost arrived in Chulucanas for his first missionary assignment)", "channel": "BBC Radio 4" }, //[cite: 16]
+  { "time": "5:10 PM", "title": "Understand: The Value Crisis (1. Crisis, What Crisis? - Ros Atkins asks whether technology has triggered a crisis in what we value.)", "channel": "BBC Radio 4" }, //[cite: 16]
+  { "time": "5:55 PM", "title": "Shipping Forecast (The latest weather reports and forecasts for UK shipping)", "channel": "BBC Radio 4" }, //[cite: 16]
+  { "time": "6:00 PM", "title": "Six O'Clock News (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" }, //[cite: 17]
+  { "time": "6:15 PM", "title": "Pick of the Week (Geeta Pendse - Geeta Pendse presents a weekly selection of the best bits of audio across the BBC.)", "channel": "BBC Radio 4" }, //[cite: 17]
+  { "time": "7:00 PM", "title": "The Archers (Elizabeth puts her foot down.)", "channel": "BBC Radio 4" }, //[cite: 17]
+  { "time": "7:15 PM", "title": "Illuminated (Making Them Count - A project to document deaths among people who've experienced homelessness.)", "channel": "BBC Radio 4" }, //[cite: 17]
+  { "time": "7:45 PM", "title": "Shadow World: Thief at the British Museum (9. An Ending, a Beginning - Ittai hands over his gems. But will we ever know what else the Museum has lost?)", "channel": "BBC Radio 4" }, //[cite: 17]
+  { "time": "8:00 PM", "title": "Feedback (Jonathan Wall, director of BBC Sounds, discusses recent radio cuts - Director of BBC Sounds Jonathan Wall discusses the Radio 4 cuts and axing of Radio 4 Extra)", "channel": "BBC Radio 4" }, //[cite: 17]
+  { "time": "8:30 PM", "title": "Last Word (Rev Ron Lancaster: The Master Blaster Pastor - Also, activist Dolores Huerta, campaigner Jean Phillips-Martinsson, musician Dónal Lunny.)", "channel": "BBC Radio 4" }, //[cite: 18]
+  { "time": "9:00 PM", "title": "Money Box (Child Trust Fund News and Premium Bonds 70 - Happy birthday to Premium Bonds, which turn 70 this week.)", "channel": "BBC Radio 4" }, //[cite: 18]
+  { "time": "9:30 PM", "title": "From Our Own Correspondent (Ukraine: Escaping 'hell' in Oleshky - A ceasefire enabled hundreds of civilians to leave the Russian-occupied town of Oleshky.)", "channel": "BBC Radio 4" }, //[cite: 18]
+  { "time": "22:00 PM", "title": "Westminster Hour (Radio 4's Sunday night political discussion programme.)", "channel": "BBC Radio 4" }, //[cite: 18]
+  { "time": "10:56 PM", "title": "Radio 4 Appeal (Every Casualty Counts - Fergal Keane makes the Radio 4 Appeal on behalf of Every Casualty Counts.)", "channel": "BBC Radio 4" }, //[cite: 18]
+  { "time": "11:00 PM", "title": "In Our Time (Jataka Tales: Stories of the Buddha's Many Births - An ancient collection of stories narrating the past lives and forms of the Buddha.)", "channel": "BBC Radio 4" }, //[cite: 18]
+  { "time": "11:45 PM", "title": "Short Works (The Hill by Rhiannon Tise - A solitary winter walk brings a new perspective to a marriage frozen by tragedy.)", "channel": "BBC Radio 4" }, //[cite: 18]
 
   // BBC World Service
-  { "time": "12:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "12:06 AM", "title": "Unexpected Elements (Maxxed out - The Unexpected Elements team are science-maxxing.)", "channel": "BBC World Service" },
-  { "time": "1:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "1:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" },
-  { "time": "1:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "1:32 AM", "title": "The Global Story (Russell Brand and the unfinished MeToo reckoning - The comedian and actor was found guilty of rape and three sexual assaults.)", "channel": "BBC World Service" },
-  { "time": "2:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "2:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" },
-  { "time": "2:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "2:32 AM", "title": "Stumped (Is Rashid Khan the greatest T20 bowler ever? - Afghanistan leg-spinner Rashid Khan is first to 200 T20I wickets)", "channel": "BBC World Service" },
-  { "time": "3:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "3:06 AM", "title": "Outlook (Outlook Mixtape: All Rise! - From Judge Judy's courtroom to Pakistan's Jirgas: women taking on power and prejudice)", "channel": "BBC World Service" },
-  { "time": "3:50 AM", "title": "Witness History (Robert Prevost in Peru: The Pope's 'compadre' - In 1985, a small town welcomed missionaries unaware one of them would one day become Pope)", "channel": "BBC World Service" },
-  { "time": "4:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "4:06 AM", "title": "Unexpected Elements (Maxxed out - The Unexpected Elements team are science-maxxing.)", "channel": "BBC World Service" },
-  { "time": "5:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "5:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" },
-  { "time": "5:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "5:32 AM", "title": "Inheritance (Fiat: 2. Il Duce - A ruthless young politician poses a problem for Fiat's founder)", "channel": "BBC World Service" },
-  { "time": "5:50 AM", "title": "More or Less (Are French school protesters right to say education is underfunded? - We look at pupils' claims that the French education system has a major funding problem.)", "channel": "BBC World Service" },
-  { "time": "6:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "6:06 AM", "title": "Weekend (A review of the week with the latest news.)", "channel": "BBC World Service" },
-  { "time": "7:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "7:06 AM", "title": "Weekend (A review of the week with the latest news.)", "channel": "BBC World Service" },
-  { "time": "8:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "8:06 AM", "title": "Weekend (A review of the week with the latest news.)", "channel": "BBC World Service" },
-  { "time": "9:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "9:06 AM", "title": "BBC Conversations (The US midterms and the cost of living - Three young mothers share their experiences of trying to make ends meet)", "channel": "BBC World Service" },
-  { "time": "9:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "9:32 AM", "title": "Americast (Midterms! The Democrat race for 2028 has already begun - We speak to Jim Messina, Barack Obama's former campaign manager)", "channel": "BBC World Service" },
-  { "time": "10:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "10:06 AM", "title": "Not by the Playbook (Making your mark - Making your mark on the world is hard. If easy, everybody would do it. But it's not)", "channel": "BBC World Service" },
-  { "time": "11:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "11:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" },
-  { "time": "11:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "11:32 AM", "title": "Unspun World with John Simpson (How will Trump react to Republicans' midterms defeat? - John Simpson explores what Donald Trump's final two years in office might look like)", "channel": "BBC World Service" },
-  { "time": "12:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "12:06 PM", "title": "World Book Club (Ocean Vuong: On Earth We're Briefly Gorgeous - William Lee Adams welcomes Ocean Vuong to discuss On Earth We're Briefly Gorgeous.)", "channel": "BBC World Service" },
-  { "time": "1:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "1:06 PM", "title": "Newshour (Interviews, news and analysis of the day's global events.)", "channel": "BBC World Service" },
-  { "time": "2:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "2:06 PM", "title": "Sportsworld (Live Sporting Action - Live sport from around the world - including the English Premier League.)", "channel": "BBC World Service" },
-  { "time": "6:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "6:06 PM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" },
-  { "time": "6:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "6:32 PM", "title": "Inheritance (Fiat: 2. Il Duce - A ruthless young politician poses a problem for Fiat's founder)", "channel": "BBC World Service" },
-  { "time": "6:50 PM", "title": "Sporting Witness (The International Island Games - In 2007 Faroese swimmer Pal Joensen took part in the International Island Games)", "channel": "BBC World Service" },
-  { "time": "7:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "7:06 PM", "title": "Dramas (International Audio Dramas 2026: Aisha's Horizon by Idi Nasiru - In a refugee camp, Aisha decides to embark on a dangerous journey with the man she loves)", "channel": "BBC World Service" },
-  { "time": "8:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "8:06 PM", "title": "The Arts Hour (Indian mega-star and actor Ranbir Kapoor - Ranbir Kapoor on his latest film, Ramayana: Rise of a Legend)", "channel": "BBC World Service" },
-  { "time": "9:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "9:06 PM", "title": "Newshour (Interviews, news and analysis of the day's global events.)", "channel": "BBC World Service" },
-  { "time": "10:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "10:06 PM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" },
-  { "time": "10:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "10:32 PM", "title": "This Is Africa (Saint Realest - Malawi's Saint Realest is back with a new album, Saintrified, and it's top of the charts.)", "channel": "BBC World Service" },
-  { "time": "11:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
-  { "time": "11:06 PM", "title": "Not by the Playbook (Making your mark - Making your mark on the world is hard. If easy, everybody would do it. But it's not)", "channel": "BBC World Service" }
+  { "time": "12:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 1]
+  { "time": "12:06 AM", "title": "BBC Conversations (The US midterms and the cost of living - Three young mothers share their experiences of trying to make ends meet)", "channel": "BBC World Service" }, //[cite: 1]
+  { "time": "12:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 1]
+  { "time": "12:32 AM", "title": "The Documentary (River rebound - How urban rivers can be transformed from neglected rubbish dumps to climate change heroes)", "channel": "BBC World Service" }, //[cite: 1]
+  { "time": "1:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 1]
+  { "time": "1:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 2]
+  { "time": "1:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 2]
+  { "time": "1:32 AM", "title": "Inheritance (Fiat: 2. Il Duce - A ruthless young politician poses a problem for Fiat's founder)", "channel": "BBC World Service" }, //[cite: 2]
+  { "time": "1:50 AM", "title": "Sporting Witness (The International Island Games - In 2007 Faroese swimmer Pal Joensen took part in the International Island Games)", "channel": "BBC World Service" }, //[cite: 2]
+  { "time": "2:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 2]
+  { "time": "2:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 2]
+  { "time": "2:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 2]
+  { "time": "2:32 AM", "title": "Health Check (The challenges of thalidomide-related disabilities and age - Thalidomide caused limb deformities, sight and hearing problems, internal damage and more)", "channel": "BBC World Service" }, //[cite: 2]
+  { "time": "3:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 2]
+  { "time": "3:06 AM", "title": "World Book Club (Ocean Vuong: On Earth We're Briefly Gorgeous - William Lee Adams welcomes Ocean Vuong to discuss On Earth We're Briefly Gorgeous.)", "channel": "BBC World Service" }, //[cite: 3]
+  { "time": "4:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 3]
+  { "time": "4:06 AM", "title": "From Our Own Correspondent (Ukraine: escaping 'hell' in Oleshky - Some families reunite after years of separation - but Russian strikes continue elsewhere)", "channel": "BBC World Service" }, //[cite: 3]
+  { "time": "4:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 3]
+  { "time": "4:32 AM", "title": "Unspun World with John Simpson (How will Trump react to Republicans' midterms defeat? - John Simpson explores what Donald Trump's final two years in office might look like)", "channel": "BBC World Service" }, //[cite: 3]
+  { "time": "5:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 3]
+  { "time": "5:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 3]
+  { "time": "5:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 3]
+  { "time": "5:32 AM", "title": "Asia Specific (Is elective surgery the answer to height dysphoria in Asia? - Would you let doctors to break your bones so you can grow taller?)", "channel": "BBC World Service" }, //[cite: 3]
+  { "time": "5:50 AM", "title": "Sporting Witness (The International Island Games - In 2007 Faroese swimmer Pal Joensen took part in the International Island Games)", "channel": "BBC World Service" }, //[cite: 4]
+  { "time": "6:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 4]
+  { "time": "6:06 AM", "title": "Weekend (A review of the week with the latest news.)", "channel": "BBC World Service" }, //[cite: 4]
+  { "time": "7:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 4]
+  { "time": "7:06 AM", "title": "Weekend (A review of the week with the latest news.)", "channel": "BBC World Service" }, //[cite: 4]
+  { "time": "8:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 4]
+  { "time": "8:06 AM", "title": "Weekend (A review of the week with the latest news.)", "channel": "BBC World Service" }, //[cite: 4]
+  { "time": "9:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 4]
+  { "time": "9:06 AM", "title": "From Our Own Correspondent (Ukraine: escaping 'hell' in Oleshky - Some families reunite after years of separation - but Russian strikes continue elsewhere)", "channel": "BBC World Service" }, //[cite: 5]
+  { "time": "9:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 5]
+  { "time": "9:32 AM", "title": "The Food Chain (Why is food so expensive? - What's driving up the cost of our fruit and vegetables?)", "channel": "BBC World Service" }, //[cite: 5]
+  { "time": "10:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 5]
+  { "time": "10:06 AM", "title": "People Fixing The World (Digging deep to help farmers - A new farming method is having a dramatic effect on crop yields in Malawi)", "channel": "BBC World Service" }, //[cite: 5]
+  { "time": "10:29 AM", "title": "Ceremony of Remembrance from the Cenotaph (National Service of Remembrance at the Cenotaph - Live coverage of the National Service of Remembrance from the Cenotaph in London)", "channel": "BBC World Service" }, //[cite: 5]
+  { "time": "11:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 5]
+  { "time": "11:32 AM", "title": "Inheritance (Fiat: 2. Il Duce - A ruthless young politician poses a problem for Fiat's founder)", "channel": "BBC World Service" }, //[cite: 5]
+  { "time": "11:50 AM", "title": "More or Less (Are French school protesters right to say education is underfunded? - We look at pupils' claims that the French education system has a major funding problem.)", "channel": "BBC World Service" }, //[cite: 5]
+  { "time": "12:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 6]
+  { "time": "12:06 PM", "title": "Dramas (International Audio Dramas 2026: Aisha's Horizon by Idi Nasiru - In a refugee camp, Aisha decides to embark on a dangerous journey with the man she loves)", "channel": "BBC World Service" }, //[cite: 6]
+  { "time": "1:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 6]
+  { "time": "1:06 PM", "title": "Newshour (Interviews, news and analysis of the day's global events.)", "channel": "BBC World Service" }, //[cite: 6]
+  { "time": "2:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 6]
+  { "time": "2:06 PM", "title": "The Climate Question (Why does climate change hit women harder? - Why are women affected more by climate change? And how can we build a better future?)", "channel": "BBC World Service" }, //[cite: 6]
+  { "time": "2:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 6]
+  { "time": "2:32 PM", "title": "Happy News (The Happy Pod: Celebrating the wedding that never happened - When Bridget's relationship fell apart, she turned to the internet with a proposal)", "channel": "BBC World Service" }, //[cite: 7]
+  { "time": "3:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 7]
+  { "time": "3:06 PM", "title": "Sportsworld (Live Sporting Action - Live sport from around the world - including the English Premier League.)", "channel": "BBC World Service" }, //[cite: 7]
+  { "time": "7:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 7]
+  { "time": "7:06 PM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 7]
+  { "time": "7:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 7]
+  { "time": "7:32 PM", "title": "The Global Jigsaw (Afghan refugees: Back to zero - What reality awaits refugees returning to Afghanistan?)", "channel": "BBC World Service" }, //[cite: 7]
+  { "time": "8:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 7]
+  { "time": "8:06 PM", "title": "Unexpected Elements (Maxxed out - The Unexpected Elements team are science-maxxing.)", "channel": "BBC World Service" }, //[cite: 8]
+  { "time": "9:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 8]
+  { "time": "9:06 PM", "title": "Newshour (Interviews, news and analysis of the day's global events.)", "channel": "BBC World Service" }, //[cite: 8]
+  { "time": "10:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 8]
+  { "time": "10:06 PM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 8]
+  { "time": "10:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 8]
+  { "time": "10:32 PM", "title": "More than the Score (Kimi Antonelli makes Formula 1 history with Mercedes - The 20-year-old Italian is the youngest F1 world champion ever)", "channel": "BBC World Service" }, //[cite: 8]
+  { "time": "10:50 PM", "title": "More or Less (Are French school protesters right to say education is underfunded? - We look at pupils' claims that the French education system has a major funding problem.)", "channel": "BBC World Service" }, //[cite: 8]
+  { "time": "11:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 8]
+  { "time": "11:06 PM", "title": "The Climate Question (Why does climate change hit women harder? - Why are women affected more by climate change? And how can we build a better future?)", "channel": "BBC World Service" }, //[cite: 9]
+  { "time": "11:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 9]
+  { "time": "11:32 PM", "title": "Assignment (When your parents choose to die - a son's story: Part 2 - The son of a couple who chose euthanasia reflects on his loss)", "channel": "BBC World Service" } //[cite: 9]
 ];
