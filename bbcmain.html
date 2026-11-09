@@ -136,8 +136,6 @@ body{
     background:#ff4458;
     border-radius:50%;
     display:none;
-    animation: none !important;
-    box-shadow: none !important;
     animation:bannerPulse 1.8s infinite ease-in-out;
     transform:translateZ(0);
 }
@@ -156,7 +154,6 @@ body{
     overflow:hidden;
 }
 .score-line.sub{color:#b5e3ee}
-.banner-announcement{display:none}
 
 .banner-station-badge{
     display:inline-flex;
@@ -174,9 +171,6 @@ body{
     width:2.5px;
     background:#62d9e8;
     border-radius:2px;
-    animation: none !important;
-    transform: none !important;
-    opacity: 1 !important;
     transform:translateZ(0);
     animation:waveBounce 1.2s infinite ease-in-out;
 }
@@ -303,7 +297,7 @@ body{
     *,*::before,*::after{animation:none!important;transition:none!important}
 }
 </style>
-<script src="https://vividh.pages.dev/bbc.js" defer></script>
+<script src="https://vividh.pages.dev/bbc.js?v=1.1" defer onload="if(window.onBbcLoaded) window.onBbcLoaded();"></script>
 </head>
 <body>
 
@@ -489,7 +483,7 @@ if (DOM.modal) {
     }, { passive: true });
 }
 
-// Cached UK DateTime Formatter (Single instance saves massive memory & CPU in Android WebView)
+// Cached UK DateTime Formatter
 const ukFormatter = new Intl.DateTimeFormat('en-GB', {
     timeZone: 'Europe/London',
     year: 'numeric',
@@ -657,11 +651,12 @@ function updateBannerUI() {
 let channelSchedules = null;
 
 function prepareSchedules() {
-    if (channelSchedules || typeof SCHEDULE_DATA === "undefined" || !Array.isArray(SCHEDULE_DATA)) return false;
+    const data = window.SCHEDULE_DATA;
+    if (channelSchedules || typeof data === "undefined" || !Array.isArray(data)) return false;
 
     channelSchedules = {};
-    for (let i = 0; i < SCHEDULE_DATA.length; i++) {
-        const item = SCHEDULE_DATA[i];
+    for (let i = 0; i < data.length; i++) {
+        const item = data[i];
         const ch = (item.channel || "").toLowerCase();
         if (!channelSchedules[ch]) channelSchedules[ch] = [];
         channelSchedules[ch].push({
@@ -719,6 +714,13 @@ function updateAppUI() {
     }
 }
 
+// Immediate trigger callback when bbc.js finishes loading
+window.onBbcLoaded = function() {
+    if (prepareSchedules()) {
+        updateAppUI();
+    }
+};
+
 document.addEventListener("DOMContentLoaded", () => {
     updateAppUI();
     fetchLiveCricketScore();
@@ -729,12 +731,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (prepareSchedules()) {
             updateAppUI();
             clearInterval(initTimer);
-        } else if (attempts >= 10) {
+        } else if (attempts >= 40) {
             clearInterval(initTimer);
         }
     }, 300);
 
-    // Single consolidated timer for background updates
     setInterval(() => {
         if (!document.hidden) {
             updateAppUI();
