@@ -509,23 +509,23 @@ function getUKDateTime() {
     return { year, month, day, minutesNow: (hour * 60) + minute };
 }
 
-// BBC Radio 5 Sports Extra Schedule (9 Nov 2026)
+// BBC Radio 5 Sports Extra Schedule (10 Nov 2026)
 const EVENTS_CONFIG = [
     { 
-        sport: "FOOTBALL", 
-        program: "FA Cup Football", 
-        title: "Plymouth Parkway v Berkhamsted", 
-        timeDisplay: "7:00 PM", 
-        dateDisplay: "Mon, 9 Nov", 
+        sport: "CRICKET", 
+        program: "Women's Big Bash League 2026", 
+        title: "Hobart Hurricanes v Adelaide Strikers", 
+        timeDisplay: "8:00 AM", 
+        dateDisplay: "Tue, 10 Nov", 
         year: 2026, 
         month: 11, 
-        day: 9, 
-        startMin: 1140,
-        endMin: 1290
+        day: 10, 
+        startMin: 480,   // 8:00 AM
+        endMin: 690     // 11:30 AM
     }
 ];
 
-const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589ba65a2a46d5d3506fc8";
+const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589bd05a2a46d5d3506fe9";
 
 function formatInningScore(teamObj, prefix) {
     if (!teamObj) return "";
