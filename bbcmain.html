@@ -509,23 +509,23 @@ function getUKDateTime() {
     return { year, month, day, minutesNow: (hour * 60) + minute };
 }
 
-// BBC Radio 5 Sports Extra Schedule (10 Nov 2026)
+// BBC Radio 5 Sports Extra Schedule (11 Nov 2026)
 const EVENTS_CONFIG = [
     { 
         sport: "CRICKET", 
         program: "Women's Big Bash League 2026", 
-        title: "Hobart Hurricanes v Adelaide Strikers", 
+        title: "Perth Scorchers v Sydney Thunder", 
         timeDisplay: "8:00 AM", 
-        dateDisplay: "Tue, 10 Nov", 
+        dateDisplay: "Wed, 11 Nov", 
         year: 2026, 
         month: 11, 
-        day: 10, 
+        day: 11, 
         startMin: 480,   // 8:00 AM
         endMin: 690     // 11:30 AM
     }
 ];
 
-const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589bd05a2a46d5d3506fe9";
+const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589bd45a2a46d5d3506fec";
 
 function formatInningScore(teamObj, prefix) {
     if (!teamObj) return "";
