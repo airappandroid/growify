@@ -113,7 +113,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   <section class="card">
     <div class="match-head">
       <div class="live"><span class="dot" id="liveDot"></span><span class="live-text" id="liveLabel">MATCH UPDATE</span><span class="status" id="status">Loading...</span></div>
-      <div class="note" id="matchNote">NEW ZEALAND vs INDIA · 3rd ODI · 10 November · 7:30 AM IST</div>
+      <div class="note" id="matchNote">NEW ZEALAND vs INDIA · 4th ODI · 13 November · 7:30 AM IST</div>
     </div>
     <div id="scoreContent" class="center">Loading live score...</div>
     <button class="scorecard-btn" id="scorecardBtn" type="button">Full Scorecard →</button>
@@ -134,9 +134,9 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 (function(){
 'use strict';
 
-const API='https://cricvoice.aminurmarch.workers.dev/?matchId=6a552bd25a2a46d5d350525a';
+const API='https://cricvoice.aminurmarch.workers.dev/?matchId=6a552bd75a2a46d5d350525e';
 const REFRESH_MS=120000;
-const MATCH_START=new Date('2026-11-10T07:30:00+05:30').getTime();
+const MATCH_START=new Date('2026-11-13T07:30:00+05:30').getTime();
 const $=id=>document.getElementById(id);
 const text=v=>(v===null||v===undefined||v===''?'—':String(v));
 const esc=v=>text(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
@@ -175,13 +175,13 @@ function renderUpcoming(){
   const dateLabel=start.toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Kolkata'});
   const timeLabel=start.toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit',hour12:true,timeZone:'Asia/Kolkata'})+' IST';
   $('status').textContent='UPCOMING';
-  $('matchNote').textContent='New Zealand vs India  ·  3rd ODI  ·  '+dateLabel+'  ·  '+timeLabel;
+  $('matchNote').textContent='New Zealand vs India  ·  4th ODI  ·  '+dateLabel+'  ·  '+timeLabel;
   $('liveLabel').textContent='UPCOMING';
   $('liveDot').style.background='#ffad82';
   $('scoreContent').className='';
   $('scoreContent').innerHTML=
     '<div class="upcoming-wrap">'+
-      '<div class="fixture-kicker">✦  3RD ONE DAY INTERNATIONAL</div>'+
+      '<div class="fixture-kicker">✦  4TH ONE DAY INTERNATIONAL</div>'+
       '<div class="fixture-teams">'+
         '<div class="fixture-team"><div class="team-emblem">🇳🇿</div><div class="fixture-team-name">New Zealand</div><div class="fixture-team-code">NZ</div></div>'+
         '<div class="vs-mark">VS</div>'+
@@ -340,8 +340,8 @@ async function update(){
       $('updated').textContent='Connection issue — showing last available score';
     }else{
       $('scoreContent').className='center';
-      $('scoreContent').innerHTML='<div class="innings"><div class="teamline"><div><div class="team">India</div><div class="small">Scheduled</div></div><div class="score">—</div></div><div class="small">Match starts 10 November at 7:30 AM IST</div><div class="teamline" style="margin-top:12px"><div class="team">New Zealand</div><div class="score">—</div></div></div>';
-      $('matchNote').textContent='NEW ZEALAND vs INDIA · 3rd ODI · 10 November · 7:30 AM IST';
+      $('scoreContent').innerHTML='<div class="innings"><div class="teamline"><div><div class="team">India</div><div class="small">Scheduled</div></div><div class="score">—</div></div><div class="small">Match starts 13 November at 7:30 AM IST</div><div class="teamline" style="margin-top:12px"><div class="team">New Zealand</div><div class="score">—</div></div></div>';
+      $('matchNote').textContent='NEW ZEALAND vs INDIA · 4th ODI · 13 November · 7:30 AM IST';
       $('status').textContent='Scheduled';
       $('liveLabel').textContent='UPCOMING';
       $('liveDot').style.background='#8996b2';
