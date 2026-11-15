@@ -509,59 +509,47 @@ function getUKDateTime() {
     return { year, month, day, minutesNow: (hour * 60) + minute };
 }
 
-// BBC Radio 5 Sports Extra Schedule (14 Nov 2026)
+// BBC Radio 5 Sports Extra Schedule (15 Nov 2026)
 const EVENTS_CONFIG = [
     { 
         sport: "CRICKET", 
-        program: "Women's Big Bash League", 
-        title: "Perth Scorchers v Adelaide Strikers", 
-        timeDisplay: "8:00 AM", 
-        dateDisplay: "Sat, 14 Nov", 
+        program: "Australia vs England", 
+        title: "2nd ODI", 
+        timeDisplay: "3:05 AM", 
+        dateDisplay: "Sun, 15 Nov", 
         year: 2026, 
         month: 11, 
-        day: 14, 
-        startMin: 480,   // 8:00 AM UK time
-        endMin: 690      // 11:30 AM UK time
+        day: 15, 
+        startMin: 185,   // 3:05 AM UK time
+        endMin: 665      // 11:05 AM UK time
     },
     { 
         sport: "RUGBY UNION", 
         program: "Rugby Union", 
-        title: "Bath v Gloucester", 
-        timeDisplay: "1:45 PM", 
-        dateDisplay: "Sat, 14 Nov", 
+        title: "Leicester Tigers vs Saracens", 
+        timeDisplay: "12:55 PM", 
+        dateDisplay: "Sun, 15 Nov", 
         year: 2026, 
         month: 11, 
-        day: 14, 
-        startMin: 825,   // 1:45 PM UK time
-        endMin: 945      // 3:45 PM UK time
+        day: 15, 
+        startMin: 775,   // 12:55 PM UK time
+        endMin: 895      // 2:55 PM UK time
     },
     { 
         sport: "FOOTBALL", 
-        program: "International Football", 
-        title: "Norway v Wales", 
-        timeDisplay: "4:30 PM", 
-        dateDisplay: "Sat, 14 Nov", 
+        program: "Women's Super League Football", 
+        title: "Arsenal vs London City Lionesses", 
+        timeDisplay: "4:15 PM", 
+        dateDisplay: "Sun, 15 Nov", 
         year: 2026, 
         month: 11, 
-        day: 14, 
-        startMin: 990,   // 4:30 PM UK time
-        endMin: 1110     // 6:30 PM UK time
-    },
-    { 
-        sport: "FOOTBALL", 
-        program: "International Football", 
-        title: "Northern Ireland v Ukraine", 
-        timeDisplay: "7:30 PM", 
-        dateDisplay: "Sat, 14 Nov", 
-        year: 2026, 
-        month: 11, 
-        day: 14, 
-        startMin: 1170,  // 7:30 PM UK time
-        endMin: 1290     // 9:30 PM UK time
+        day: 15, 
+        startMin: 975,   // 4:15 PM UK time
+        endMin: 1095     // 6:15 PM UK time
     }
 ];
 
-const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589bac5a2a46d5d3506fcd";
+const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a6db66778dcf065703144f9";
 
 function formatInningScore(teamObj, prefix) {
     if (!teamObj) return "";
