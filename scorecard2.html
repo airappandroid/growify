@@ -96,7 +96,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <main class="container">
   <section class="match-card">
     <div class="status-row"><span class="dot" id="statusDot"></span><span id="statusLabel">LOADING</span><span class="status-text" id="updatedTop">Updating...</span></div>
-    <div class="match-title" id="matchTitle">New Zealand vs India, 4th ODI</div>
+    <div class="match-title" id="matchTitle">New Zealand vs India, 5th ODI</div>
     <div class="match-note" id="matchNote">Please wait while the scorecard loads.</div>
     <div class="teams" id="teams"></div>
   </section>
@@ -114,7 +114,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <script>
 (function(){
 'use strict';
-const API='https://cricvoice2.aminurmarch.workers.dev/?matchId=6a552bd75a2a46d5d350525e';
+const API='https://cricvoice2.aminurmarch.workers.dev/?matchId=6a552bdc5a2a46d5d3505262';
 const REFRESH_MS=120000;
 const MATCH_START=new Date('2026-11-13T07:30:00+05:30').getTime();
 let countdownTimer=null;
@@ -307,8 +307,8 @@ function render(data){
   const live=/live|ongoing|in progress/i.test(state)&&!breakNow;
   $('statusLabel').textContent=breakNow?'INNINGS BREAK':(live?'LIVE MATCH':state.toUpperCase());
   $('statusDot').style.background=live?'var(--green)':(breakNow?'var(--yellow)':'#8996b2');
-  $('matchTitle').textContent='New Zealand vs India, 4th ODI';
-  $('matchNote').textContent=Date.now()<MATCH_START?'4th One Day International · Starts 13 November 2026 at 7:30 AM IST':(note||'Full innings scorecard and player figures');
+  $('matchTitle').textContent='New Zealand vs India, 5th ODI';
+  $('matchNote').textContent=Date.now()<MATCH_START?'5th One Day International · Starts 13 November 2026 at 7:30 AM IST':(note||'Full innings scorecard and player figures');
   renderTeams(m);
 
   const innings=inningsFrom(m);
@@ -363,7 +363,7 @@ async function loadData(){
   }catch(err){
     if(!hasData){
       $('scorecards').innerHTML='<section class="panel"><div class="empty error">Unable to load scorecard. Please check your internet connection and try again.</div></section>';
-      $('matchTitle').textContent='New Zealand vs India, 4th ODI';
+      $('matchTitle').textContent='New Zealand vs India, 5th ODI';
       $('matchNote').textContent='Unable to connect right now. Please try again later.';
       if(Date.now()<MATCH_START)showPreMatch();
     }else{
