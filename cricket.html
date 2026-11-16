@@ -25,6 +25,9 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .tagline{font-size:11px;color:var(--muted);margin-top:3px;letter-spacing:.2px}
 .actions{display:flex;gap:8px}
 .icon-btn{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:#17243a;border:1px solid var(--line);color:#eaf0ff}
+.match-switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px auto 0;width:min(100%,650px)}
+.match-switch button{min-height:42px;padding:9px 8px;border:1px solid var(--line);border-radius:13px;background:#17243a;color:#c5d2e8;font-size:11px;font-weight:850;line-height:1.25}
+.match-switch button.active{background:linear-gradient(105deg,#ffad82,#ff7954);border-color:transparent;color:#1b1c25;box-shadow:0 7px 18px rgba(255,126,83,.16)}
 .audio-btn{width:100%;min-height:52px;margin-top:14px;border:0;border-radius:16px;background:linear-gradient(105deg,#ffad82,#ff7954);color:#1b1c25;font-size:14px;font-weight:900;box-shadow:0 10px 26px rgba(255,126,83,.2)}
 .container{width:min(100%,650px);margin:auto;padding:22px 15px 30px}
 .eyebrow{font-size:10px;letter-spacing:1.7px;color:var(--accent2);font-weight:900;text-transform:uppercase;margin:4px 0 8px}
@@ -60,7 +63,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .team{font-size:17px;font-weight:900}
 .score{font-size:31px;font-weight:950;letter-spacing:-1px}
 .small{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0 13px;padding-top:15px;border-top:1px solid var(--line)}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:18px 0 13px;padding-top:15px;border-top:1px solid var(--line)}
 .stat{min-width:0;padding:12px 9px;border-radius:13px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.055)}
 .stat-label{font-size:10px;color:var(--muted)}
 .stat-value{font-size:16px;font-weight:900;margin-top:7px;overflow-wrap:anywhere}
@@ -106,6 +109,10 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
     </div>
   </div>
   <button class="audio-btn" id="audioBtn" type="button">🎙️ Listen to Hindi Audio Commentary</button>
+  <div class="match-switch" role="group" aria-label="Select match">
+    <button type="button" id="matchNZ" aria-pressed="false">🇳🇿 New Zealand vs India</button>
+    <button type="button" class="active" id="matchSA" aria-pressed="true">🇿🇦 South Africa vs Bangladesh</button>
+  </div>
 </header>
 
 <main class="container">
@@ -134,14 +141,37 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 (function(){
 'use strict';
 
-const API='https://cricvoice.aminurmarch.workers.dev/?matchId=6a552bdc5a2a46d5d3505262';
+const API_BASE='https://cricvoice.aminurmarch.workers.dev/?matchId=';
+const MATCHES={
+  nz:{id:'6a552bdc5a2a46d5d3505262',name:'New Zealand vs India',fallback:'NEW ZEALAND vs INDIA · 4th ODI · 13 November · 7:30 AM IST'},
+  sa:{id:'69e3a4f0a54fc8e6ddf57539',name:'South Africa vs Bangladesh',fallback:'SOUTH AFRICA vs BANGLADESH · 1st Test'}
+};
 const REFRESH_MS=120000;
 const MATCH_START=new Date('2026-11-13T07:30:00+05:30').getTime();
+let currentMatch=MATCHES.sa;
 const $=id=>document.getElementById(id);
 const text=v=>(v===null||v===undefined||v===''?'—':String(v));
 const esc=v=>text(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const first=(...values)=>values.find(v=>v!==undefined&&v!==null&&v!=='');
 let busy=false,hasData=false,controller=null;
+function selectMatch(key){
+  const next=MATCHES[key];
+  if(!next||next===currentMatch)return;
+  currentMatch=next;hasData=false;
+  if(controller)controller.abort();
+  controller=null;busy=false;
+  $('matchNZ').classList.toggle('active',key==='nz');
+  $('matchSA').classList.toggle('active',key==='sa');
+  $('matchNZ').setAttribute('aria-pressed',String(key==='nz'));
+  $('matchSA').setAttribute('aria-pressed',String(key==='sa'));
+  $('status').textContent='Loading...';$('liveLabel').textContent='MATCH UPDATE';
+  $('matchNote').textContent=currentMatch.fallback;
+  $('scoreContent').className='center';$('scoreContent').textContent='Loading match score...';
+  $('scorecardBtn').textContent='Full Scorecard →';
+  update();
+}
+$('matchNZ').onclick=()=>selectMatch('nz');
+$('matchSA').onclick=()=>selectMatch('sa');
 
 $('scorecardBtn').onclick=()=>{location.href='go:card1';};
 $('audioBtn').onclick=()=>{location.href='go:commentary';};
@@ -225,7 +255,7 @@ function render(data){
 
   let batting = first(m.team_batting,m.batting_team);
   let bowling = first(m.team_bowling,m.bowling_team);
-  let scoreRuns, scoreWickets, overs, rr, target, rrr;
+  let scoreRuns, scoreWickets, overs, rr, rrr;
   let batsmen = first(m.batsmen,m.batters,[]);
   let bowlers = first(m.bowlers,[]);
 
@@ -257,7 +287,6 @@ function render(data){
     scoreWickets = first(inningScore.wickets,inningScore.wicket);
     overs = first(inningScore.overs,inningScore.over);
     rr = first(inningScore.run_rate,inningScore.runrate,m.now?.run_rate);
-    target = first(inningScore.target,m.target);
     rrr = first(inningScore.required_run_rate,inningScore.required_runrate,m.now?.req_run_rate);
 
     // Some API versions provide a ready-made score string.
@@ -277,7 +306,6 @@ function render(data){
     scoreWickets = first(s.wickets,m.wickets);
     overs = first(s.overs,m.overs);
     rr = first(s.runrate,s.run_rate,s.crr,m.now?.run_rate);
-    target = first(s.target,m.target);
     rrr = first(s.required_runrate,s.rrr,m.now?.req_run_rate);
   }
 
@@ -296,7 +324,6 @@ function render(data){
   const score = (scoreRuns !== undefined && scoreWickets !== undefined)
     ? String(scoreRuns)+'/'+String(scoreWickets)
     : '—';
-  const showTarget = target !== undefined && Number(target)>0;
   const showRRR = rrr !== undefined && rrr!=='' && Number.isFinite(Number(rrr)) && Number(rrr)>0;
 
   $('scoreContent').className = '';
@@ -306,7 +333,6 @@ function render(data){
       (overs!==undefined?'<div class="small">Overs: '+esc(overs)+'</div>':'')+
       '<div class="stats">'+
         '<div class="stat"><div class="stat-label">Run Rate</div><div class="stat-value">'+esc(rr)+'</div></div>'+
-        '<div class="stat"><div class="stat-label">Target</div><div class="stat-value">'+(showTarget?esc(target):'—')+'</div></div>'+
         '<div class="stat"><div class="stat-label">Required RR</div><div class="stat-value">'+(showRRR?esc(rrr):'—')+'</div></div>'+
       '</div>'+
       '<div class="small">Bowling: '+esc(bowling || '—')+'</div>'+
@@ -319,48 +345,50 @@ function render(data){
 }
 
 async function update(){
-  if(Date.now() < MATCH_START){
+  if(currentMatch===MATCHES.nz && Date.now() < MATCH_START){
     renderUpcoming();
     return;
   }
   if(busy||document.hidden)return;
   busy=true;
-  controller=new AbortController();
-  const timeout=setTimeout(()=>controller&&controller.abort(),8000);
+  const requestedMatch=currentMatch;
+  const requestController=new AbortController();
+  controller=requestController;
+  const timeout=setTimeout(()=>requestController.abort(),8000);
   try{
-    const res=await fetch(API,{cache:'no-store',signal:controller.signal});
+    const res=await fetch(API_BASE+encodeURIComponent(requestedMatch.id),{cache:'no-store',signal:requestController.signal});
     if(!res.ok)throw new Error('HTTP '+res.status);
     const data=await res.json();
+    if(currentMatch!==requestedMatch)return;
     const m=data && (data.responseData?.result || data.response?.responseData?.result || data.response || data.data || data.result || data);
     if(!m||typeof m!=='object') throw new Error('Invalid match response');
     render(data);
     hasData=true;
   }catch(e){
+    if(currentMatch!==requestedMatch)return;
     if(hasData){
       $('updated').textContent='Connection issue — showing last available score';
     }else{
       $('scoreContent').className='center';
-      $('scoreContent').innerHTML='<div class="innings"><div class="teamline"><div><div class="team">India</div><div class="small">Scheduled</div></div><div class="score">—</div></div><div class="small">Match starts 13 November at 7:30 AM IST</div><div class="teamline" style="margin-top:12px"><div class="team">New Zealand</div><div class="score">—</div></div></div>';
-      $('matchNote').textContent='NEW ZEALAND vs INDIA · 4th ODI · 13 November · 7:30 AM IST';
-      $('status').textContent='Scheduled';
-      $('liveLabel').textContent='UPCOMING';
+      $('scoreContent').innerHTML='<div class="innings"><div class="teamline"><div><div class="team">'+esc(requestedMatch.name)+'</div><div class="small">Score currently unavailable</div></div><div class="score">—</div></div></div>';
+      $('matchNote').textContent=requestedMatch.fallback;
+      $('status').textContent='Unavailable';
+      $('liveLabel').textContent='MATCH UPDATE';
       $('liveDot').style.background='#8996b2';
 
 
     }
   }finally{
     clearTimeout(timeout);
-    controller=null;
-    busy=false;
+    if(controller===requestController){controller=null;busy=false;}
   }
 }
 
-let wasUpcoming = Date.now() < MATCH_START;
-if(wasUpcoming) renderUpcoming();
+if(Date.now() < MATCH_START) renderUpcoming();
 else update();
 setInterval(()=>{
-  if(Date.now() < MATCH_START) renderUpcoming();
-  else if(wasUpcoming){ wasUpcoming=false; update(); }
+  if(currentMatch===MATCHES.nz && Date.now() < MATCH_START) renderUpcoming();
+  else if(currentMatch===MATCHES.nz && Date.now() >= MATCH_START) update();
 },1000);
 setInterval(update,REFRESH_MS);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)update();});
