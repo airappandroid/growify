@@ -509,47 +509,35 @@ function getUKDateTime() {
     return { year, month, day, minutesNow: (hour * 60) + minute };
 }
 
-// BBC Radio 5 Sports Extra Schedule (15 Nov 2026)
+// BBC Radio 5 Sports Extra Schedule (16 Nov 2026)
 const EVENTS_CONFIG = [
     { 
         sport: "CRICKET", 
-        program: "Australia vs England", 
-        title: "2nd ODI", 
-        timeDisplay: "3:05 AM", 
-        dateDisplay: "Sun, 15 Nov", 
+        program: "Women's Big Bash League 2026", 
+        title: "Sydney Thunder v Melbourne Stars", 
+        timeDisplay: "8:00 AM", 
+        dateDisplay: "Mon, 16 Nov", 
         year: 2026, 
         month: 11, 
-        day: 15, 
-        startMin: 185,   // 3:05 AM UK time
-        endMin: 665      // 11:05 AM UK time
-    },
-    { 
-        sport: "RUGBY UNION", 
-        program: "Rugby Union", 
-        title: "Leicester Tigers vs Saracens", 
-        timeDisplay: "12:55 PM", 
-        dateDisplay: "Sun, 15 Nov", 
-        year: 2026, 
-        month: 11, 
-        day: 15, 
-        startMin: 775,   // 12:55 PM UK time
-        endMin: 895      // 2:55 PM UK time
+        day: 16, 
+        startMin: 480,   // 8:00 AM UK time
+        endMin: 720      // 12:00 PM UK time
     },
     { 
         sport: "FOOTBALL", 
-        program: "Women's Super League Football", 
-        title: "Arsenal vs London City Lionesses", 
-        timeDisplay: "4:15 PM", 
-        dateDisplay: "Sun, 15 Nov", 
+        program: "Nations League", 
+        title: "Switzerland v Scotland", 
+        timeDisplay: "7:40 PM", 
+        dateDisplay: "Mon, 16 Nov", 
         year: 2026, 
         month: 11, 
-        day: 15, 
-        startMin: 975,   // 4:15 PM UK time
-        endMin: 1095     // 6:15 PM UK time
+        day: 16, 
+        startMin: 1180,  // 7:40 PM UK time
+        endMin: 1320     // 10:00 PM UK time
     }
 ];
 
-const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a6db66778dcf065703144f9";
+const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589bb65a2a46d5d3506fd5";
 
 function formatInningScore(teamObj, prefix) {
     if (!teamObj) return "";
@@ -568,7 +556,7 @@ function formatInningScore(teamObj, prefix) {
 let lastCricketScoreHtml = "";
 
 async function fetchLiveCricketScore() {
-    if (!DOM.bannerScore) return;
+    if (!DOM.bannerScore || !CRIC_API_ENDPOINT) return;
     try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 6000);
