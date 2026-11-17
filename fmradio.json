@@ -279,6 +279,34 @@
     "trigger": "go:bhs",
     "logo": "https://ik.imagekit.io/sqt8ptw1k/32583803_ico.png"
   },
+   {
+    "id": "radio39",
+    "name": "Jivan Sandesh",
+    "category": "Bhakti",
+    "trigger": "go:jivan",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32637083_ico.png"
+  },
+  {
+    "id": "radio40",
+    "name": "Hindi Christian",
+    "category": "Bhakti",
+    "trigger": "go:hinch",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32754970_ico.png"
+  },
+   {
+    "id": "radio41",
+    "name": "Hindi Bible",
+    "category": "Bhakti",
+    "trigger": "go:hinbi",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32754974_ico.png"
+  },
+   {
+    "id": "radio42",
+    "name": "Pray To Praise",
+    "category": "Bhakti",
+    "trigger": "go:pray",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/36365302_ico.png"
+  },
   {
     "id": "radio8",
     "name": "Bangla Gaan Radio",
