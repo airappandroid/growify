@@ -1,767 +1,172 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>All UK Radio</title>
-<style>
-:root{
-    color-scheme:dark;
-    --bg:#080d18;
-    --panel:#111a2b;
-    --panel2:#17243a;
-    --line:#202f45;
-    --text:#f5f8ff;
-    --muted:#9aabc2;
-    --blue:#4f8cff;
-    --cyan:#62d9e8;
-    --green:#36d399;
-}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
-html{background:var(--bg);scroll-behavior:smooth}
-body{
-    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-    background:linear-gradient(180deg,#101a2c 0,#080d18 220px);
-    color:var(--text);
-    min-height:100vh;
-    padding:0 0 24px;
-    font-size:14px;
-    text-rendering:optimizeSpeed;
-}
-.container{width:100%;max-width:520px;margin:0 auto}
+window.SCHEDULE_DATA = [
 
-/* Sticky App Header */
-.app-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:14px 16px;
-    position:sticky;
-    top:0;
-    z-index:50;
-    background:#0b1220;
-    border-bottom:1px solid var(--line);
-    contain:layout paint;
-}
-.header-brand{display:flex;align-items:center;gap:9px;font-size:17px;font-weight:800;letter-spacing:-.4px}
-.header-brand:before{content:"";width:4px;height:22px;border-radius:4px;background:var(--cyan)}
-.header-actions{display:flex;gap:8px}
-.header-btn{
-    width:38px;
-    height:38px;
-    border-radius:12px;
-    background:var(--panel2);
-    border:1px solid #2b3c55;
-    color:#e4edff;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    text-decoration:none;
-    cursor:pointer;
-}
-.header-btn svg{width:17px;height:17px}
+  // ==========================================
+  // TUESDAY, 17/11/2026 (TODAY)
+  // ==========================================
 
-/* Modal */
-.modal-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.75);
-    z-index:100;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:16px;
-    opacity:0;
-    visibility:hidden;
-    transition:opacity .15s ease;
-}
-.modal-overlay.active{opacity:1;visibility:visible}
-.modal-box{
-    background:#111a2b;
-    border:1px solid #2b3c55;
-    border-radius:18px;
-    width:100%;
-    max-width:400px;
-    color:#cbd7e8;
-    overflow:hidden;
-    font-size:13px;
-    line-height:1.6;
-}
-.modal-header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--panel2);font-weight:750;color:#f4f7ff}
-.modal-close{background:none;border:0;color:#b5c5db;font-size:24px;cursor:pointer;line-height:1;padding:0 4px}
-.modal-body{padding:16px;max-height:60vh;overflow-y:auto}
-.modal-body p{margin-bottom:10px}
-.modal-body p:last-child{margin-bottom:0}
+  // BBC Radio 1
+  { "time": "1:00 AM", "title": "BBC Introducing Rock on Radio 1 (with Alyx Holcombe: Eternal Rin Track of the Week - Alyx has a brand new Track of the Week from Eternal Rin.)", "channel": "BBC Radio 1" }, //[cite: 155]
+  { "time": "2:00 AM", "title": "Radio 1 Anthems (Lady Gaga, Avicii, Royal Blood and more - Lauren Redfern with big anthems and tunes you haven't heard in ages.)", "channel": "BBC Radio 1" }, //[cite: 155]
+  { "time": "4:00 AM", "title": "Radio 1 Early Breakfast with Mylo and Rosie (Joel Mitchell sits in: The Early Morning Register - Fun, games and great music to start the day with Joel Mitchell sitting in.)", "channel": "BBC Radio 1" }, //[cite: 156]
+  { "time": "6:58 AM", "title": "Radio 1 Newsbeat (The latest news from around the UK and around the world.)", "channel": "BBC Radio 1" }, //[cite: 156]
+  { "time": "7:00 AM", "title": "Radio 1 Breakfast with Greg James (Is it just us? - Listener Thomas does something weird, but is it just him?)", "channel": "BBC Radio 1" }, //[cite: 156]
+  { "time": "10:30 AM", "title": "Radio 1 Newsbeat (The latest news from around the UK and around the world.)", "channel": "BBC Radio 1" }, //[cite: 156]
+  { "time": "10:33 AM", "title": "Charlie and Jerry (Voice Note Roulette - Charlie and Jerry receive a mystery message in Voice Note Roulette but who is it from?)", "channel": "BBC Radio 1" }, //[cite: 156]
+  { "time": "12:45 PM", "title": "Newsbeat (The latest news from around the UK and around the world.)", "channel": "BBC Radio 1" }, //[cite: 156]
+  { "time": "1:00 PM", "title": "Matt and Mollie (Mylo and Rosie sit in - Fun and games with Mylo and Rosie sitting in.)", "channel": "BBC Radio 1" }, //[cite: 157]
+  { "time": "3:30 PM", "title": "Radio 1 Newsbeat (The latest news from around the UK and around the world.)", "channel": "BBC Radio 1" }, //[cite: 157]
+  { "time": "3:33 PM", "title": "Going Home with Vick, Katie and Jamie on Radio 1 (Can you complete the hardest quiz on the radio? - We bring you the hardest quiz on the radio, Complete the Year.)", "channel": "BBC Radio 1" }, //[cite: 157]
+  { "time": "5:45 PM", "title": "Newsbeat (The latest news from around the UK and around the world.)", "channel": "BBC Radio 1" }, //[cite: 157]
+  { "time": "6:00 PM", "title": "Radio 1's New Music Show with Jack Saunders (Mura Masa Hottest Record - Mura Masa is on the show to release brand new music as Radio 1's Hottest Record.)", "channel": "BBC Radio 1" }, //[cite: 157]
+  { "time": "7:30 PM", "title": "Radio 1 Live Lounge (Late: Willow - Amazing performances from Radio 1's Live Lounge.)", "channel": "BBC Radio 1" }, //[cite: 157]
+  { "time": "8:00 PM", "title": "Radio 1's Future Artists with Sian Eleri (Jedsoul and Waylon Wyatt - Jedsoul drops in to chat about his new EP, while Waylon Wyatt joins us ahead of his tour.)", "channel": "BBC Radio 1" }, //[cite: 158]
+  { "time": "10:00 PM", "title": "Radio 1's Power Down Playlist with Sian Eleri (Airplane Mode - Songs for when you need to switch off the world, featuring oklou, Bicep and more...)", "channel": "BBC Radio 1" }, //[cite: 158]
+  { "time": "11:00 PM", "title": "Radio 1's Indie Show (with Alyx Holcombe - Alyx reflects on Download Festival news and we hear from BBC Introducing in Indie In 3.)", "channel": "BBC Radio 1" }, //[cite: 158]
 
-.section{padding:0 14px;margin-top:20px}
-.title{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;letter-spacing:-.2px;color:#f5f8ff;margin-bottom:11px}
+  // BBC Radio 2
+  { "time": "12:00 AM", "title": "OJ Borg (Say what? - After a mishap with his youngest, OJ is asking for your common mispronunciations.)", "channel": "BBC Radio 2" }, //[cite: 151]
+  { "time": "2:30 AM", "title": "One Hit Wonders with OJ Borg (1978 - The penultimate year in OJ's 70s series, as he heads to 1978.)", "channel": "BBC Radio 2" }, //[cite: 151]
+  { "time": "3:00 AM", "title": "Dance Sounds of the 90s with Vernon Kay (Halloween Anthems & Monster Mixes! - A hour of horrifically good 90s dance music for All Hallows Eve!)", "channel": "BBC Radio 2" }, //[cite: 152]
+  { "time": "4:00 AM", "title": "Owain Wyn Evans (Jason Mohammad sits in - Welcome! It's Early Breakfast with Jason Mohammad, featuring the Rewinder.)", "channel": "BBC Radio 2" }, //[cite: 152]
+  { "time": "6:30 AM", "title": "The Sara Cox Breakfast Show (Cunked with Diane Morgan! - Diane Morgan returns as Philomena Cunk, whose latest BBC 'documentary' looks at cinema.)", "channel": "BBC Radio 2" }, //[cite: 152]
+  { "time": "9:30 AM", "title": "Vernon Kay (Who's up for Ten To The Top? - Two listeners take on Vernon's mid-morning music quiz, Ten To The Top.)", "channel": "BBC Radio 2" }, //[cite: 152]
+  { "time": "12:00 PM", "title": "Jeremy Vine (Jeremy and guests discuss the news headlines and talk to the people making them.)", "channel": "BBC Radio 2" }, //[cite: 152]
+  { "time": "2:00 PM", "title": "Trevor Nelson (Mark Goodier sits in - Some of the best music from across the decades to get you through the afternoon.)", "channel": "BBC Radio 2" }, //[cite: 152]
+  { "time": "4:00 PM", "title": "Angela Scanlon (It's the official end of the day! You get the tea on, Angela's got the soundtrack sorted.)", "channel": "BBC Radio 2" }, //[cite: 153]
+  { "time": "7:00 PM", "title": "Jo Whiley's Shiny Happy Playlist (Jo brings her Shiny Happy Playlist, 30 minutes of feelgood music.)", "channel": "BBC Radio 2" }, //[cite: 153]
+  { "time": "7:30 PM", "title": "Jo Whiley (Jo hand-picks her favourite new music from all genres of the musical spectrum.)", "channel": "BBC Radio 2" }, //[cite: 153]
+  { "time": "9:00 PM", "title": "The Jazz Show with Jamie Cullum (Jamie Cullum showcases his love of jazz, featuring live sessions and special guests.)", "channel": "BBC Radio 2" }, //[cite: 153]
+  { "time": "10:00 PM", "title": "The Good Groove with DJ Spoony (Billy Ocean is Spoony's guest! - Soul legend Billy Ocean chats to Spoony. Plus, feelgood favourites and fresh new tunes.)", "channel": "BBC Radio 2" }, //[cite: 153]
 
-/* Top Banner */
-.top-banner{padding:10px 12px 0;text-decoration:none;display:block}
-.banner-card{
-    background:linear-gradient(145deg,#16263d 0%,#0e1726 100%);
-    border:1px solid rgba(98,217,232,0.22);
-    border-radius:16px;
-    padding:12px 14px;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    box-shadow:0 4px 14px rgba(0,0,0,0.3);
-    contain:content;
-}
-.banner-card:active{transform:scale(0.988)}
-.banner-top-row,.banner-bottom-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.banner-tag{
-    display:inline-flex;
-    align-items:center;
-    gap:5px;
-    background:rgba(98,217,232,0.12);
-    border:1px solid rgba(98,217,232,0.25);
-    color:#72e5f4;
-    font-size:9.5px;
-    font-weight:800;
-    padding:3px 8px;
-    border-radius:999px;
-    text-transform:uppercase;
-    letter-spacing:.4px;
-}
-.banner-tag.live{
-    background:rgba(255,68,88,0.14);
-    border-color:rgba(255,68,88,0.4);
-    color:#ff6b7e;
-}
-.banner-dot{
-    width:6px;
-    height:6px;
-    background:#ff4458;
-    border-radius:50%;
-    display:none;
-    animation:bannerPulse 1.8s infinite ease-in-out;
-    transform:translateZ(0);
-}
-@keyframes bannerPulse{
-    0%,100%{opacity:1;transform:scale(1)}
-    50%{opacity:.3;transform:scale(0.85)}
-}
-.banner-time{font-size:11px;color:#a5b9d3;font-weight:700;white-space:nowrap}
-.banner-title{font-size:15px;font-weight:800;color:#fff;line-height:1.25;letter-spacing:-.2px;overflow-wrap:anywhere}
-.banner-score-box{display:flex;align-items:center;min-width:0;flex:1}
-.banner-score{font-size:11.5px;color:#7ce8f6;font-weight:750;line-height:1.35}
-.score-line{
-    display:-webkit-box;
-    -webkit-line-clamp:2;
-    -webkit-box-orient:vertical;
-    overflow:hidden;
-}
-.score-line.sub{color:#b5e3ee}
+  // BBC Radio 3
+  { "time": "12:30 AM", "title": "Through the Night (Schubert's Trout Quintet from Austria - Schubert's Piano Trio No 1 followed by his Trout Quintet.)", "channel": "BBC Radio 3" }, //[cite: 147]
+  { "time": "6:30 AM", "title": "Radio 3 Breakfast (Launch the day with classical music - Join Tom McKinney every Monday to Friday for Radio 3's Breakfast show.)", "channel": "BBC Radio 3" }, //[cite: 147]
+  { "time": "9:30 AM", "title": "Essential Classics (The very best of classical music - Ian Skelly plays the best in classical music for your morning.)", "channel": "BBC Radio 3" }, //[cite: 148]
+  { "time": "1:00 PM", "title": "Classical Live (Copland's Appalachian Spring from Wales - Mark Forrest showcases the best performances from the UK and beyond.)", "channel": "BBC Radio 3" }, //[cite: 148]
+  { "time": "4:00 PM", "title": "Composer of the Week (Stan Tracey (1926-2013): Resident Pianist - Following Stan Tracey into the 1960s and the jazz hothouse of Ronnie Scott's.)", "channel": "BBC Radio 3" }, //[cite: 148]
+  { "time": "5:00 PM", "title": "In Tune (The Takács Quartet perform live, Katie in conversation with Pekka Kuusisto - The Takács Quartet play live. Pekka Kuusisto on Gabriella Smith's new violin concerto.)", "channel": "BBC Radio 3" }, //[cite: 148]
+  { "time": "7:00 PM", "title": "Classical Mixtape (Take 30 minutes out with a relaxing classical mix - Take time out with a 30-minute soundscape of classical favourites.)", "channel": "BBC Radio 3" }, //[cite: 148]
+  { "time": "7:30 PM", "title": "Radio 3 in Concert (Rachmaninov's Piano Concerto No 2 - From the Barbican, Benjamin Grosvenor joins the Sinfonia of London and John Wilson.)", "channel": "BBC Radio 3" }, //[cite: 149]
+  { "time": "9:45 PM", "title": "The Essay (Peggy Seeger - A Life in Music: 2 - The Fight Game - Peggy Seeger on scoring The Fight Game, the radio ballad about boxing.)", "channel": "BBC Radio 3" }, //[cite: 149]
+  { "time": "10:00 PM", "title": "Night Tracks (A meditative moonlight soundtrack - Hannah Peel with an adventurous, immersive soundtrack for late-night listening.)", "channel": "BBC Radio 3" }, //[cite: 149]
+  { "time": "11:30 PM", "title": "'Round Midnight (A big band classic from Ivy Benson & Her Girls Band - Soweto shares a crooning track from the pioneering big bandleader Ivy Benson.)", "channel": "BBC Radio 3" }, //[cite: 149]
 
-.banner-station-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    color:#8da5c4;
-    font-size:11px;
-    font-weight:650;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-.mini-wave{display:flex;align-items:flex-end;gap:2.5px;height:11px}
-.mini-wave span{
-    width:2.5px;
-    background:#62d9e8;
-    border-radius:2px;
-    transform:translateZ(0);
-    animation:waveBounce 1.2s infinite ease-in-out;
-}
-.mini-wave span:nth-child(1){height:50%;animation-delay:0.1s}
-.mini-wave span:nth-child(2){height:100%;animation-delay:0.3s}
-.mini-wave span:nth-child(3){height:60%;animation-delay:0.2s}
+  // BBC Radio 4
+  { "time": "12:00 AM", "title": "Midnight News (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" }, //[cite: 139]
+  { "time": "12:30 AM", "title": "Gigantic Fantastic: The Rise of Steroids by Gavin Francis (Strong, Feared and Admired - How might the myth of Hercules help us understand today's rise in steroid use?)", "channel": "BBC Radio 4" }, //[cite: 139]
+  { "time": "12:48 AM", "title": "Shipping Forecast (The latest weather reports and forecasts for UK shipping.)", "channel": "BBC Radio 4" }, //[cite: 139]
+  { "time": "1:00 AM", "title": "Selection of BBC World Service Programmes (BBC Radio 4 joins the BBC World Service.)", "channel": "BBC Radio 4" }, //[cite: 140]
+  { "time": "5:00 AM", "title": "News Summary (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" }, //[cite: 140]
+  { "time": "5:05 AM", "title": "Yesterday in Parliament (Susan Hulme reports as MPs ask about the approval of asylum accommodation near Piddington.)", "channel": "BBC Radio 4" }, //[cite: 140]
+  { "time": "5:34 AM", "title": "Shipping Forecast (The latest weather reports and forecasts for UK shipping.)", "channel": "BBC Radio 4" }, //[cite: 140]
+  { "time": "5:43 AM", "title": "Prayer for the Day (The power of stories - A spiritual comment and prayer to start the day with Yousra Samir)", "channel": "BBC Radio 4" }, //[cite: 140]
+  { "time": "5:45 AM", "title": "Farming Today (17/11/2026: Regen commitment, Storm recovery, Bird flu - Regen commitment, storm recovery, bird flu.)", "channel": "BBC Radio 4" }, //[cite: 141]
+  { "time": "6:00 AM", "title": "Today (News and current affairs, including Sports Desk, Weather and Thought for the Day.)", "channel": "BBC Radio 4" }, //[cite: 141]
+  { "time": "9:00 AM", "title": "The Long View (Cybercrime and Pirates - Jonathan Freedland explores the past behind the present.)", "channel": "BBC Radio 4" }, //[cite: 141]
+  { "time": "9:30 AM", "title": "Inside Health (Fake make up: a bargain or a health risk? - Black Friday and Christmas shoppers are warned fake cosmetics can contain toxic chemicals.)", "channel": "BBC Radio 4" }, //[cite: 141]
+  { "time": "10:00 AM", "title": "Woman's Hour (Women's voices and women's lives - topical conversations to inform, challenge and inspire.)", "channel": "BBC Radio 4" }, //[cite: 141]
+  { "time": "11:00 AM", "title": "Add to Playlist (Amy Harman and Lloyd Coleman kick off with a caper - Bassoonist Amy Harman and clarinettist and composer Lloyd Coleman add five more tracks.)", "channel": "BBC Radio 4" }, //[cite: 141]
+  { "time": "11:45 AM", "title": "Gigantic Fantastic: The Rise of Steroids by Gavin Francis (Yours in Perfect Manhood - As gym use soars in the UK, Dr Gavin Francis explores the history behind getting 'jacked')", "channel": "BBC Radio 4" }, //[cite: 142]
+  { "time": "12:00 PM", "title": "You and Yours (Call You & Yours: How good is your rail service?)", "channel": "BBC Radio 4" }, //[cite: 142]
+  { "time": "1:00 PM", "title": "World at One (News, analysis and comment from BBC Radio 4)", "channel": "BBC Radio 4" }, //[cite: 142]
+  { "time": "1:45 PM", "title": "The History Podcast (For Pity's Sake: 2. Tragic but Brave - Two people fall in love over a box of wine. The rest, is history.)", "channel": "BBC Radio 4" }, //[cite: 142]
+  { "time": "2:00 PM", "title": "The Archers (Natasha has serious reservations.)", "channel": "BBC Radio 4" }, //[cite: 142]
+  { "time": "2:15 PM", "title": "Drama on 4 (We Should Definitely Have More Dancing - Actor Clara Darcy plays herself in the true story of the fist-sized tumour in her head.)", "channel": "BBC Radio 4" }, //[cite: 142]
+  { "time": "3:00 PM", "title": "History's Heroes (Washington and Emily Roebling: Superstars of Suspension - Can a married couple take on the greatest engineering feat of their day?)", "channel": "BBC Radio 4" }, //[cite: 143]
+  { "time": "3:30 PM", "title": "Heart and Soul (How to Leave This Earth - Personal approaches to spirituality from around the world.)", "channel": "BBC Radio 4" }, //[cite: 143]
+  { "time": "4:00 PM", "title": "Start Making Sense (3. Seeing Sound - Tom Shakespeare explores the role of sound for deaf artists.)", "channel": "BBC Radio 4" }, //[cite: 143]
+  { "time": "4:30 PM", "title": "What's Up Docs? (Should you be optimising your health? - Drs Chris and Xand van Tulleken explore the trend of health optimisation.)", "channel": "BBC Radio 4" }, //[cite: 143]
+  { "time": "5:00 PM", "title": "PM (Full coverage of the day's news)", "channel": "BBC Radio 4" }, //[cite: 143]
+  { "time": "6:00 PM", "title": "Six O'Clock News (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" }, //[cite: 143]
+  { "time": "6:30 PM", "title": "Heresy (Series 13: Episode 6 - Victoria Coren Mitchell is joined by a panel which challenges established ideas.)", "channel": "BBC Radio 4" }, //[cite: 143]
+  { "time": "7:00 PM", "title": "The Archers (There's concern at Brookfield.)", "channel": "BBC Radio 4" }, //[cite: 144]
+  { "time": "7:15 PM", "title": "Front Row (Live magazine programme on the worlds of arts, literature, film, media and music)", "channel": "BBC Radio 4" }, //[cite: 144]
+  { "time": "8:00 PM", "title": "File on 4 Investigates (The Future of Aids - What do deep funding cuts in overseas development budgets mean for the future of Aids?)", "channel": "BBC Radio 4" }, //[cite: 144]
+  { "time": "8:40 PM", "title": "In Touch (News, views and information for people who are blind or partially sighted)", "channel": "BBC Radio 4" }, //[cite: 144]
+  { "time": "9:00 PM", "title": "The Law Show (How employment law changes could affect you - New laws include rules around workplace abuse, access to unions and higher compensation.)", "channel": "BBC Radio 4" }, //[cite: 144]
+  { "time": "9:30 PM", "title": "Intrigue (Chasing Mr Sunshine: 1. Mr Sunshine and Sean from Accounts - A billion-pound scandal fuelled by ambition, secrecy and the mysterious Mr Sunshine.)", "channel": "BBC Radio 4" }, //[cite: 145]
+  { "time": "10:00 PM", "title": "The World Tonight (In-depth reporting, intelligent analysis and breaking news from a global perspective)", "channel": "BBC Radio 4" }, //[cite: 145]
+  { "time": "10:45 PM", "title": "The Rector's Wife by Joanna Trollope (Episode 2 - Joanna Trollope's best-selling 1991 novel about an unhappy marriage in a country parish.)", "channel": "BBC Radio 4" }, //[cite: 145]
+  { "time": "11:00 PM", "title": "Uncanny (Series 6: Case 2: Project Ghost - Builders down tools when inexplicable events cause them to flee a house renovation.)", "channel": "BBC Radio 4" }, //[cite: 145]
+  { "time": "11:30 PM", "title": "Today in Parliament (News, views and features on today's stories in Parliament)", "channel": "BBC Radio 4" }, //[cite: 145]
 
-@keyframes waveBounce{
-    0%,100%{transform:scaleY(0.4);opacity:0.4}
-    50%{transform:scaleY(1);opacity:1}
-}
+  // BBC World Service
+  { "time": "12:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 128]
+  { "time": "12:06 AM", "title": "The History Hour (Malaysia's space agency and the 'guardian angel' of Route 66 - Max Pearson presents a collection of the week's Witness History episodes)", "channel": "BBC World Service" }, //[cite: 128]
+  { "time": "1:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 128]
+  { "time": "1:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 128]
+  { "time": "1:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 128]
+  { "time": "1:32 AM", "title": "The Global Story (Dan Carlin on AI: Lessons from the dawn of the nuclear age - What happens when humans create powerful but dangerous technologies?)", "channel": "BBC World Service" }, //[cite: 129]
+  { "time": "2:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 129]
+  { "time": "2:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 129]
+  { "time": "2:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 129]
+  { "time": "2:32 AM", "title": "Assignment (Libya: From bombs to boom? - Can Libya's once war-torn second city, Benghazi, become a Dubai on the Med?)", "channel": "BBC World Service" }, //[cite: 129]
+  { "time": "3:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 129]
+  { "time": "3:06 AM", "title": "Outlook (How to shoot a movie for $80 - Isaac Nabwana and Harriet Nakasujja make action films in Uganda)", "channel": "BBC World Service" }, //[cite: 129]
+  { "time": "3:50 AM", "title": "Witness History (The Great Smog of Delhi - In November 2016, the Indian government declared an 'emergency situation' due to the smog)", "channel": "BBC World Service" }, //[cite: 129]
+  { "time": "4:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 129]
+  { "time": "4:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 130]
+  { "time": "4:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 130]
+  { "time": "4:32 AM", "title": "In the Studio (The human impact of Partition: Amar Kanwar's Films - Amar Kanwar explores nature's beauty and the trauma of Partition in Indian film)", "channel": "BBC World Service" }, //[cite: 130]
+  { "time": "5:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 130]
+  { "time": "5:06 AM", "title": "Newsday (Live news, business and sport from around the world.)", "channel": "BBC World Service" }, //[cite: 130]
+  { "time": "6:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 130]
+  { "time": "6:06 AM", "title": "Newsday (Live news, business and sport from around the world.)", "channel": "BBC World Service" }, //[cite: 130]
+  { "time": "7:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 130]
+  { "time": "7:06 AM", "title": "Newsday (Live news, business and sport from around the world.)", "channel": "BBC World Service" }, //[cite: 131]
+  { "time": "8:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 131]
+  { "time": "8:06 AM", "title": "People Fixing The World (Ten years of progress - We're 10 years old! So what's got better...?)", "channel": "BBC World Service" }, //[cite: 131]
+  { "time": "8:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 131]
+  { "time": "8:32 AM", "title": "Business Daily (Follow the Money: A chip inside the AI boom - Memory prices are soaring, AI chips are in short supply and the winners are cashing in)", "channel": "BBC World Service" }, //[cite: 131]
+  { "time": "8:50 AM", "title": "Witness History (Czechoslovakia's Velvet Revolution - In 1989, two weeks of peaceful protests brought down Czechoslovakia's communist regime)", "channel": "BBC World Service" }, //[cite: 131]
+  { "time": "9:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 131]
+  { "time": "9:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 131]
+  { "time": "9:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 131]
+  { "time": "9:32 AM", "title": "Assignment (Libya: From bombs to boom? - Can Libya's once war-torn second city, Benghazi, become a Dubai on the Med?)", "channel": "BBC World Service" }, //[cite: 132]
+  { "time": "10:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 132]
+  { "time": "10:06 AM", "title": "The Arts Hour (Asha Puthli - Nikki Bedi speaks to the Indian music icon and Quentin Tarantino discusses his first play)", "channel": "BBC World Service" }, //[cite: 132]
+  { "time": "11:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 132]
+  { "time": "11:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 132]
+  { "time": "11:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 132]
+  { "time": "11:32 AM", "title": "The Global Story", "channel": "BBC World Service" }, //[cite: 132]
+  { "time": "12:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 132]
+  { "time": "12:06 PM", "title": "Outlook ('She wouldn't stop feeding me watermelon' - How a teenager and an octogenarian bonded over the endangered Manchu language, and fruit)", "channel": "BBC World Service" }, //[cite: 133]
+  { "time": "12:50 PM", "title": "Witness History (Czechoslovakia's Velvet Revolution - In 1989, two weeks of peaceful protests brought down Czechoslovakia's communist regime)", "channel": "BBC World Service" }, //[cite: 133]
+  { "time": "1:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 133]
+  { "time": "1:06 PM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 133]
+  { "time": "1:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 133]
+  { "time": "1:32 PM", "title": "In the Studio (The human impact of Partition: Amar Kanwar's Films - Amar Kanwar explores nature's beauty and the trauma of Partition in Indian film)", "channel": "BBC World Service" }, //[cite: 133]
+  { "time": "2:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 133]
+  { "time": "2:06 PM", "title": "Newshour (Interviews, news and analysis of the day's global events.)", "channel": "BBC World Service" }, //[cite: 133]
+  { "time": "3:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 133]
+  { "time": "3:06 PM", "title": "People Fixing The World (Ten years of progress - We're 10 years old! So what's got better...?)", "channel": "BBC World Service" }, //[cite: 134]
+  { "time": "3:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 134]
+  { "time": "3:32 PM", "title": "Business Daily (Follow the Money: A chip inside the AI boom - Memory prices are soaring, AI chips are in short supply and the winners are cashing in)", "channel": "BBC World Service" }, //[cite: 134]
+  { "time": "3:50 PM", "title": "World Business Express (Finance, economy and business news from BBC journalists around the world)", "channel": "BBC World Service" }, //[cite: 134]
+  { "time": "4:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 134]
+  { "time": "4:06 PM", "title": "Outside Source (A vibrant account of the day's events with explanation and reaction from those involved.)", "channel": "BBC World Service" }, //[cite: 134]
+  { "time": "5:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 134]
+  { "time": "5:06 PM", "title": "Outside Source (A vibrant account of the day's events with explanation and reaction from those involved.)", "channel": "BBC World Service" }, //[cite: 134]
+  { "time": "6:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 134]
+  { "time": "6:06 PM", "title": "Outlook ('She wouldn't stop feeding me watermelon' - How a teenager and an octogenarian bonded over the endangered Manchu language, and fruit)", "channel": "BBC World Service" }, //[cite: 135]
+  { "time": "6:50 PM", "title": "Witness History (Czechoslovakia's Velvet Revolution - In 1989, two weeks of peaceful protests brought down Czechoslovakia's communist regime)", "channel": "BBC World Service" }, //[cite: 135]
+  { "time": "7:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 135]
+  { "time": "7:06 PM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 135]
+  { "time": "7:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 135]
+  { "time": "7:32 PM", "title": "Sport Today (BBC sports correspondents tell the story behind today's top sporting news, with interviews and reports from across the world.)", "channel": "BBC World Service" }, //[cite: 135]
+  { "time": "8:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 135]
+  { "time": "8:06 PM", "title": "Assignment (Libya: From bombs to boom? - Can Libya's once war-torn second city, Benghazi, become a Dubai on the Med?)", "channel": "BBC World Service" }, //[cite: 135]
+  { "time": "8:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 136]
+  { "time": "8:32 PM", "title": "Tech Life (How tech is transforming the way the world works, learns and plays)", "channel": "BBC World Service" }, //[cite: 136]
+  { "time": "9:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 136]
+  { "time": "9:06 PM", "title": "Newshour (Interviews, news and analysis of the day's global events.)", "channel": "BBC World Service" }, //[cite: 136]
+  { "time": "10:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 136]
+  { "time": "10:06 PM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 136]
+  { "time": "10:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 136]
+  { "time": "10:32 PM", "title": "World Business Report (The latest business and finance news from around the world, on the BBC.)", "channel": "BBC World Service" }, //[cite: 136]
+  { "time": "11:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 136]
+  { "time": "11:06 PM", "title": "People Fixing The World (Ten years of progress - We're 10 years old! So what's got better...?)", "channel": "BBC World Service" }, //[cite: 137]
+  { "time": "11:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 137]
+  { "time": "11:32 PM", "title": "In the Studio (The human impact of Partition: Amar Kanwar's Films - Amar Kanwar explores nature's beauty and the trauma of Partition in Indian film)", "channel": "BBC World Service" } //[cite: 137]
 
-.banner-cta{
-    display:inline-flex;
-    align-items:center;
-    gap:5px;
-    background:linear-gradient(135deg,#62d9e8 0%,#38bdf8 100%);
-    color:#041423;
-    font-size:11px;
-    font-weight:800;
-    padding:6px 12px;
-    border-radius:999px;
-    flex-shrink:0;
-}
-.banner-cta svg{width:10px;height:10px;fill:currentColor}
-
-/* Station Card */
-.station-card{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:15px;
-    padding:11px;
-    margin-bottom:8px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    min-height:72px;
-    contain:content;
-}
-.station-logo{
-    width:47px;
-    height:47px;
-    border-radius:11px;
-    object-fit:cover;
-    margin-right:11px;
-    background:#1c2738;
-    flex-shrink:0;
-}
-.station-info{flex:1;min-width:0;padding-right:8px;display:flex;flex-direction:column;justify-content:center}
-.station-name{font-weight:750;font-size:13.5px;margin-bottom:4px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.playing-row{font-size:11px;color:var(--muted);display:flex;align-items:flex-start;line-height:1.35;min-width:0}
-.live-dot{width:6px;height:6px;background:var(--green);border-radius:50%;margin-right:6px;margin-top:4px;flex-shrink:0}
-.playing-text{display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
-.play-btn{
-    width:44px;
-    height:44px;
-    border-radius:13px;
-    background:var(--blue);
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    text-decoration:none;
-    flex-shrink:0;
-}
-.play-btn:before{content:"";width:0;height:0;border-style:solid;border-width:6.5px 0 6.5px 10.5px;border-color:transparent transparent transparent #fff;margin-left:3px}
-
-/* View All */
-.view-all-card{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    background:#15243a;
-    border:1px solid #273e5f;
-    border-radius:15px;
-    padding:13px;
-    margin-top:9px;
-    text-decoration:none;
-    color:#fff;
-    contain:content;
-}
-.view-all-title{font-size:13.5px;font-weight:800;display:flex;align-items:center;gap:7px}
-.view-all-title svg{width:14px;height:14px;color:var(--cyan)}
-.view-all-sub{font-size:10.5px;color:#a9bad0;margin-top:3px}
-.view-all-arrow{width:30px;height:30px;border-radius:10px;background:#203857;display:inline-flex;align-items:center;justify-content:center;color:#d9f7ff}
-
-/* Daily UK Briefing shortcut */
-.daily-briefing-link{display:block;margin:11px 12px 0;text-decoration:none;color:inherit}
-.daily-briefing-card{
-    display:flex;
-    align-items:center;
-    gap:11px;
-    padding:12px 13px;
-    border-radius:15px;
-    background:linear-gradient(110deg,#162a45,#121f31);
-    border:1px solid #284766;
-    contain:content;
-}
-.daily-briefing-icon{
-    width:42px;
-    height:42px;
-    flex:0 0 42px;
-    border-radius:12px;
-    background:#1c3552;
-    color:var(--cyan);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-.daily-briefing-icon svg{width:21px;height:21px}
-.daily-briefing-copy{min-width:0;flex:1}
-.daily-briefing-title{font-size:13.5px;font-weight:800;letter-spacing:-.2px;color:#fff;line-height:1.2}
-.daily-briefing-sub{font-size:10.5px;color:#b4c6dc;margin-top:3px}
-.daily-briefing-cta{font-size:9px;font-weight:800;letter-spacing:.4px;color:var(--cyan);margin-top:6px}
-.daily-briefing-arrow{width:28px;height:28px;flex:0 0 28px;border-radius:9px;background:#223c5d;color:#d9f7ff;display:flex;align-items:center;justify-content:center}
-.daily-briefing-arrow svg{width:14px;height:14px}
-
-@media(min-width:480px){
-    .section{padding-left:16px;padding-right:16px}
-    .top-banner{padding-left:16px;padding-right:16px}
-    .app-header{padding-left:18px;padding-right:18px}
-    .daily-briefing-link{margin-left:16px;margin-right:16px}
-}
-@media(prefers-reduced-motion:reduce){
-    *,*::before,*::after{animation:none!important;transition:none!important}
-}
-</style>
-<script src="https://vividh.pages.dev/bbc.js?v=1.1" defer onload="if(window.onBbcLoaded) window.onBbcLoaded();"></script>
-</head>
-<body>
-
-<div class="container">
-    <header class="app-header">
-        <div class="header-brand">📻 All UK Radio</div>
-        <div class="header-actions">
-            <a href="http://action_share" class="header-btn" aria-label="Share">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-                </svg>
-            </a>
-            <button type="button" class="header-btn" id="privacyBtn" aria-label="Privacy">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                </svg>
-            </button>
-        </div>
-    </header>
-
-    <!-- Top Banner (5 Sports Extra Dynamic Schedule) -->
-    <a href="go:BBC5E" class="top-banner" id="bannerLink">
-        <div class="banner-card">
-            <div class="banner-top-row">
-                <div class="banner-tag" id="bannerTagWrapper">
-                    <span class="banner-dot" id="bannerDot"></span>
-                    <span id="bannerTag">SPORTS EXTRA</span>
-                </div>
-                <div class="banner-time" id="bannerTime">Loading...</div>
-            </div>
-            <div class="banner-title" id="bannerTitle">5 Sports Extra</div>
-            <div class="banner-bottom-row">
-                <div class="banner-score-box">
-                    <div class="banner-score" id="bannerScore" style="display:none;"></div>
-                    <div class="banner-station-badge" id="bannerStationBadge">
-                        <div class="mini-wave"><span></span><span></span><span></span></div>
-                        <span>BBC 5 Sports Extra</span>
-                    </div>
-                </div>
-                <div class="banner-cta">
-                    <svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg>
-                    <span>Listen now</span>
-                </div>
-            </div>
-        </div>
-    </a>
-
-    <!-- Daily UK Briefing shortcut -->
-    <a href="go:DAILYUK" class="daily-briefing-link" aria-label="Open Daily UK Briefing">
-        <div class="daily-briefing-card">
-            <div class="daily-briefing-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/>
-                    <path d="M4 5.5v16M8 7h8M8 11h8M8 15h5"/>
-                </svg>
-            </div>
-            <div class="daily-briefing-copy">
-                <div class="daily-briefing-title">Daily UK Briefing</div>
-                <div class="daily-briefing-sub">Latest UK News · Live Weather</div>
-                <div class="daily-briefing-cta">READ TODAY'S BRIEFING →</div>
-            </div>
-            <div class="daily-briefing-arrow" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </div>
-        </div>
-    </a>
-
-    <!-- Popular Stations -->
-    <div class="section">
-        <div class="title">📻 Popular Stations</div>
-
-        <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(4).jpg" alt="BBC 1" width="47" height="47" loading="lazy" decoding="async">
-            <div class="station-info">
-                <div class="station-name">BBC Radio 1</div>
-                <div class="playing-row"><span class="live-dot"></span><span id="bbc1" class="playing-text">Loading...</span></div>
-            </div>
-            <a href="go:BBC1" class="play-btn" aria-label="Play BBC Radio 1"></a>
-        </div>
-
-        <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(6).jpg" alt="BBC 2" width="47" height="47" loading="lazy" decoding="async">
-            <div class="station-info">
-                <div class="station-name">BBC Radio 2</div>
-                <div class="playing-row"><span class="live-dot"></span><span id="bbc2" class="playing-text">Loading...</span></div>
-            </div>
-            <a href="go:BBC2" class="play-btn" aria-label="Play BBC Radio 2"></a>
-        </div>
-
-        <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(7).jpg" alt="BBC 3" width="47" height="47" loading="lazy" decoding="async">
-            <div class="station-info">
-                <div class="station-name">BBC Radio 3</div>
-                <div class="playing-row"><span class="live-dot"></span><span id="bbc3" class="playing-text">Loading...</span></div>
-            </div>
-            <a href="go:BBC3" class="play-btn" aria-label="Play BBC Radio 3"></a>
-        </div>
-
-        <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(1).png" alt="BBC 4" width="47" height="47" loading="lazy" decoding="async">
-            <div class="station-info">
-                <div class="station-name">BBC Radio 4</div>
-                <div class="playing-row"><span class="live-dot"></span><span id="bbc4" class="playing-text">Loading...</span></div>
-            </div>
-            <a href="go:BBC4" class="play-btn" aria-label="Play BBC Radio 4"></a>
-        </div>
-
-        <div class="station-card">
-            <img class="station-logo" src="https://cdn.jsdelivr.net/gh/airappandroid/mp3-files@refs/heads/main/images%20(2).png" alt="BBC World Service" width="47" height="47" loading="lazy" decoding="async">
-            <div class="station-info">
-                <div class="station-name">BBC World Service</div>
-                <div class="playing-row"><span class="live-dot"></span><span id="bbcws" class="playing-text">Loading...</span></div>
-            </div>
-            <a href="go:BBCWS" class="play-btn" aria-label="Play BBC World Service"></a>
-        </div>
-
-        <a href="go:BBC_ALL" class="view-all-card">
-            <div>
-                <div class="view-all-title">
-                    Explore All Stations
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </div>
-                <div class="view-all-sub">100+ UK & BBC Stations</div>
-            </div>
-            <div class="view-all-arrow">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-        </a>
-    </div>
-</div>
-
-<!-- Privacy Modal -->
-<div id="privacyModal" class="modal-overlay">
-    <div class="modal-box">
-        <div class="modal-header">
-            <span>🔒 Privacy Policy</span>
-            <button type="button" class="modal-close" id="closeModal">&times;</button>
-        </div>
-        <div class="modal-body">
-            <p><strong>Welcome to All UK Radio.</strong></p>
-            <p>This app provides access to publicly available radio streams and audio content. The app does not require you to create an account, and it does not directly ask you to provide personal information.</p>
-            <p>Radio streams and other content may be hosted by third parties. If the app displays advertisements or uses third-party services, those providers may collect technical information such as device or advertising identifiers under their own privacy policies.</p>
-            <p>You can contact us with privacy questions or requests. We will review and respond to your message.</p>
-            <p><strong>Contact Us:</strong> <a href="mailto:vividhbharati75@gmail.com" style="color:#62d9e8;">vividhbharati75@gmail.com</a></p>
-        </div>
-    </div>
-</div>
-
-<script>
-const DOM = {
-    topBanner: document.querySelector('.top-banner'),
-    modal: document.getElementById('privacyModal'),
-    bannerTitle: document.getElementById('bannerTitle'),
-    bannerTime: document.getElementById('bannerTime'),
-    bannerTag: document.getElementById('bannerTag'),
-    bannerTagWrapper: document.getElementById('bannerTagWrapper'),
-    bannerDot: document.getElementById('bannerDot'),
-    bannerScore: document.getElementById('bannerScore'),
-    badgeEl: document.getElementById('bannerStationBadge'),
-    stations: [
-        { key: 'radio 1', el: document.getElementById('bbc1') },
-        { key: 'radio 2', el: document.getElementById('bbc2') },
-        { key: 'radio 3', el: document.getElementById('bbc3') },
-        { key: 'radio 4', el: document.getElementById('bbc4') },
-        { key: 'world service', el: document.getElementById('bbcws') }
-    ]
-};
-
-// Layout-safe text updater (Prevents layout recalculations if text hasn't changed)
-function setText(el, val) {
-    if (el && el.textContent !== val) el.textContent = val;
-}
-
-// Modal handlers
-const pBtn = document.getElementById('privacyBtn');
-const cBtn = document.getElementById('closeModal');
-if (pBtn && DOM.modal) pBtn.addEventListener('click', () => DOM.modal.classList.add('active'), { passive: true });
-if (cBtn && DOM.modal) cBtn.addEventListener('click', () => DOM.modal.classList.remove('active'), { passive: true });
-if (DOM.modal) {
-    DOM.modal.addEventListener('click', (e) => {
-        if (e.target === DOM.modal) DOM.modal.classList.remove('active');
-    }, { passive: true });
-}
-
-// Cached UK DateTime Formatter
-const ukFormatter = new Intl.DateTimeFormat('en-GB', {
-    timeZone: 'Europe/London',
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: false,
-    hourCycle: 'h23'
-});
-
-function getUKDateTime() {
-    const parts = ukFormatter.formatToParts(Date.now());
-    let year = 0, month = 0, day = 0, hour = 0, minute = 0;
-    for (let i = 0; i < parts.length; i++) {
-        const p = parts[i];
-        if (p.type === 'year') year = +p.value;
-        else if (p.type === 'month') month = +p.value;
-        else if (p.type === 'day') day = +p.value;
-        else if (p.type === 'hour') hour = +p.value;
-        else if (p.type === 'minute') minute = +p.value;
-    }
-    return { year, month, day, minutesNow: (hour * 60) + minute };
-}
-
-// BBC Radio 5 Sports Extra Schedule (17 Nov 2026)
-const EVENTS_CONFIG = [
-    { 
-        sport: "CRICKET", 
-        program: "Women's Big Bash League", 
-        title: "Adelaide Strikers v Sydney Sixers", 
-        timeDisplay: "8:00 AM", 
-        dateDisplay: "Tue, 17 Nov", 
-        year: 2026, 
-        month: 11, 
-        day: 17, 
-        startMin: 480,   // 8:00 AM UK time
-        endMin: 720      // 12:00 PM UK time
-    },
-    { 
-        sport: "FOOTBALL", 
-        program: "International Football", 
-        title: "Hungary v Northern Ireland", 
-        timeDisplay: "7:30 PM", 
-        dateDisplay: "Tue, 17 Nov", 
-        year: 2026, 
-        month: 11, 
-        day: 17, 
-        startMin: 1170,  // 7:30 PM UK time
-        endMin: 1320     // 10:00 PM UK time
-    }
 ];
-
-const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589bb95a2a46d5d3506fd7";
-
-function formatInningScore(teamObj, prefix) {
-    if (!teamObj) return "";
-    const s1 = teamObj[`${prefix}_1_score`];
-    const s2 = teamObj[`${prefix}_2_score`];
-    let str = "";
-    if (s1 && typeof s1.runs !== 'undefined') {
-        str = `${s1.runs}/${s1.wickets !== undefined ? s1.wickets : 0}${s1.overs ? ` (${s1.overs})` : ""}`;
-    }
-    if (s2 && typeof s2.runs !== 'undefined') {
-        str += ` & ${s2.runs}/${s2.wickets !== undefined ? s2.wickets : 0}${s2.overs ? ` (${s2.overs})` : ""}`;
-    }
-    return str;
-}
-
-let lastCricketScoreHtml = "";
-
-async function fetchLiveCricketScore() {
-    if (!DOM.bannerScore || !CRIC_API_ENDPOINT) return;
-    try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 6000);
-        const response = await fetch(CRIC_API_ENDPOINT, { signal: controller.signal });
-        clearTimeout(timeoutId);
-
-        if (!response.ok) return;
-        const json = await response.json();
-        const match = json?.responseData?.result || json?.data || json;
-
-        if (match) {
-            const teamAData = match.teams?.a || {};
-            const teamBData = match.teams?.b || {};
-            const teamAName = teamAData.shortName || teamAData.name || "Team A";
-            const teamBName = teamBData.shortName || teamBData.name || "Team B";
-            const scoreA = formatInningScore(teamAData, "a");
-            const scoreB = formatInningScore(teamBData, "b");
-
-            let scoreHtml = "";
-            if (scoreA && scoreB) {
-                scoreHtml = `<span class="score-line">🏏 ${teamAName} ${scoreA}</span><span class="score-line sub">${teamBName} ${scoreB}</span>`;
-            } else if (scoreA) {
-                scoreHtml = `<span class="score-line">🏏 ${teamAName} ${scoreA}</span><span class="score-line sub">${teamBName} (Yet to bat)</span>`;
-            } else if (scoreB) {
-                scoreHtml = `<span class="score-line">🏏 ${teamBName} ${scoreB}</span><span class="score-line sub">${teamAName} (Yet to bat)</span>`;
-            } else {
-                scoreHtml = `<span class="score-line">🏏 ${teamAName} vs ${teamBName}</span>`;
-            }
-
-            lastCricketScoreHtml = scoreHtml;
-            const tagText = DOM.bannerTag ? DOM.bannerTag.textContent : "";
-            if (tagText.includes("CRICKET") && DOM.bannerScore.innerHTML !== lastCricketScoreHtml) {
-                DOM.bannerScore.innerHTML = lastCricketScoreHtml;
-            }
-        }
-    } catch (e) {
-        // Silent fail preserves cached state
-    }
-}
-
-function updateBannerUI() {
-    if (!DOM.topBanner) return;
-    const uk = getUKDateTime();
-    let currentLive = null, nextUpcoming = null;
-
-    for (let i = 0; i < EVENTS_CONFIG.length; i++) {
-        const ev = EVENTS_CONFIG[i];
-        const isToday = ev.year === uk.year && ev.month === uk.month && ev.day === uk.day;
-        const isFuture = ev.year > uk.year || (ev.year === uk.year && (ev.month > uk.month || (ev.month === uk.month && ev.day > uk.day)));
-        
-        if (isToday && uk.minutesNow >= ev.startMin && uk.minutesNow < ev.endMin) { 
-            currentLive = ev; 
-            break; 
-        }
-        if ((isToday && uk.minutesNow < ev.startMin) || isFuture) { 
-            if (!nextUpcoming) nextUpcoming = ev; 
-        }
-    }
-
-    if (currentLive) {
-        setText(DOM.bannerTitle, currentLive.program + (currentLive.title !== currentLive.program ? ': ' + currentLive.title : ''));
-        setText(DOM.bannerTime, '');
-        setText(DOM.bannerTag, 'LIVE • ' + currentLive.sport);
-        DOM.bannerTagWrapper.classList.add('live');
-        DOM.bannerDot.style.display = 'inline-block';
-
-        if (currentLive.sport === "CRICKET") {
-            if (DOM.badgeEl) DOM.badgeEl.style.display = 'none';
-            DOM.bannerScore.style.display = 'block';
-            if (DOM.bannerScore.innerHTML !== lastCricketScoreHtml) {
-                DOM.bannerScore.innerHTML = lastCricketScoreHtml || `<span class="score-line">Loading live score...</span>`;
-            }
-        } else {
-            DOM.bannerScore.style.display = 'none';
-            if (DOM.badgeEl) DOM.badgeEl.style.display = 'inline-flex';
-        }
-    } else if (nextUpcoming) {
-        setText(DOM.bannerTitle, nextUpcoming.program + (nextUpcoming.title !== nextUpcoming.program ? ': ' + nextUpcoming.title : ''));
-        const isToday = nextUpcoming.year === uk.year && nextUpcoming.month === uk.month && nextUpcoming.day === uk.day;
-        setText(DOM.bannerTime, (isToday ? '' : nextUpcoming.dateDisplay + ' • ') + nextUpcoming.timeDisplay);
-        setText(DOM.bannerTag, 'UPCOMING • ' + nextUpcoming.sport);
-        DOM.bannerTagWrapper.classList.remove('live');
-        DOM.bannerDot.style.display = 'none';
-
-        if (nextUpcoming.sport === "CRICKET") {
-            if (DOM.badgeEl) DOM.badgeEl.style.display = 'none';
-            DOM.bannerScore.style.display = 'block';
-            setText(DOM.bannerScore, "Score updates when available");
-        } else {
-            DOM.bannerScore.style.display = 'none';
-            if (DOM.badgeEl) DOM.badgeEl.style.display = 'inline-flex';
-        }
-    } else {
-        setText(DOM.bannerTitle, 'BBC Radio 5 Sports Extra');
-        setText(DOM.bannerTime, 'Stay Tuned');
-        setText(DOM.bannerTag, 'SPORTS EXTRA');
-        DOM.bannerTagWrapper.classList.remove('live');
-        DOM.bannerDot.style.display = 'none';
-        DOM.bannerScore.style.display = 'none';
-        if (DOM.badgeEl) DOM.badgeEl.style.display = 'inline-flex';
-    }
-}
-
-let channelSchedules = null;
-
-function prepareSchedules() {
-    const data = window.SCHEDULE_DATA;
-    if (channelSchedules || typeof data === "undefined" || !Array.isArray(data)) return false;
-
-    channelSchedules = {};
-    for (let i = 0; i < data.length; i++) {
-        const item = data[i];
-        const ch = (item.channel || "").toLowerCase();
-        if (!channelSchedules[ch]) channelSchedules[ch] = [];
-        channelSchedules[ch].push({
-            title: item.title || "Live",
-            startMin: timeStringToMinutesUK(item.time)
-        });
-    }
-
-    for (const ch in channelSchedules) {
-        channelSchedules[ch].sort((a, b) => a.startMin - b.startMin);
-    }
-    return true;
-}
-
-function timeStringToMinutesUK(str) {
-    if (!str) return 0;
-    const match = str.trim().match(/^(\d{1,2}):(\d{2})(?:\s*([APap][Mm]))?/);
-    if (!match) return 0;
-    let h = parseInt(match[1], 10);
-    const m = parseInt(match[2], 10);
-    const period = match[3] ? match[3].toUpperCase() : null;
-    if (period === "PM" && h !== 12) h += 12;
-    if (period === "AM" && h === 12) h = 0;
-    return (h * 60) + m;
-}
-
-function getCurrentShow(channelKey, now) {
-    if (!channelSchedules) return "Live";
-    let list = null;
-    for (const ch in channelSchedules) {
-        if (ch.includes(channelKey)) {
-            list = channelSchedules[ch];
-            break;
-        }
-    }
-    if (!list || !list.length) return "Live";
-    if (now < list[0].startMin) return list[list.length - 1].title;
-
-    for (let i = 0; i < list.length - 1; i++) {
-        if (now >= list[i].startMin && now < list[i + 1].startMin) return list[i].title;
-    }
-    return list[list.length - 1].title;
-}
-
-function updateAppUI() {
-    if (document.hidden) return;
-    prepareSchedules();
-
-    const uk = getUKDateTime();
-    updateBannerUI();
-
-    for (let i = 0; i < DOM.stations.length; i++) {
-        const s = DOM.stations[i];
-        if (s.el) setText(s.el, getCurrentShow(s.key, uk.minutesNow));
-    }
-}
-
-// Immediate trigger callback when bbc.js finishes loading
-window.onBbcLoaded = function() {
-    if (prepareSchedules()) {
-        updateAppUI();
-    }
-};
-
-document.addEventListener("DOMContentLoaded", () => {
-    updateAppUI();
-    fetchLiveCricketScore();
-
-    let attempts = 0;
-    const initTimer = setInterval(() => {
-        attempts++;
-        if (prepareSchedules()) {
-            updateAppUI();
-            clearInterval(initTimer);
-        } else if (attempts >= 40) {
-            clearInterval(initTimer);
-        }
-    }, 300);
-
-    setInterval(() => {
-        if (!document.hidden) {
-            updateAppUI();
-            fetchLiveCricketScore();
-        }
-    }, 120000);
-    
-    document.addEventListener("visibilitychange", () => {
-        if (!document.hidden) {
-            updateAppUI();
-            fetchLiveCricketScore();
-        }
-    }, { passive: true });
-});
-</script>
-</body>
-</html>
