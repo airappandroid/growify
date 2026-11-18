@@ -110,8 +110,8 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   </div>
   <button class="audio-btn" id="audioBtn" type="button">🎙️ Listen to Hindi Audio Commentary</button>
   <div class="match-switch" role="group" aria-label="Select match">
-    <button type="button" id="matchNZ" aria-pressed="false">🇳🇿 New Zealand vs India</button>
-    <button type="button" class="active" id="matchSA" aria-pressed="true">🇿🇦 South Africa vs Bangladesh</button>
+    <button type="button" id="matchNZ" class="active" aria-pressed="true">🇳🇿 New Zealand vs India</button>
+    <button type="button" id="matchSA" aria-pressed="false">🇿🇦 South Africa vs Bangladesh</button>
   </div>
 </header>
 
@@ -120,7 +120,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   <section class="card">
     <div class="match-head">
       <div class="live"><span class="dot" id="liveDot"></span><span class="live-text" id="liveLabel">MATCH UPDATE</span><span class="status" id="status">Loading...</span></div>
-      <div class="note" id="matchNote">NEW ZEALAND vs INDIA · 4th ODI · 13 November · 7:30 AM IST</div>
+      <div class="note" id="matchNote">NEW ZEALAND vs INDIA · 1st Test · 13 November · 7:30 AM IST</div>
     </div>
     <div id="scoreContent" class="center">Loading live score...</div>
     <button class="scorecard-btn" id="scorecardBtn" type="button">Full Scorecard →</button>
@@ -143,12 +143,12 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 
 const API_BASE='https://cricvoice.aminurmarch.workers.dev/?matchId=';
 const MATCHES={
-  nz:{id:'6a552bdc5a2a46d5d3505262',name:'New Zealand vs India',fallback:'NEW ZEALAND vs INDIA · 4th ODI · 13 November · 7:30 AM IST'},
+  nz:{id:'6a552bde5a2a46d5d3505263',name:'New Zealand vs India',fallback:'NEW ZEALAND vs INDIA · 1st Test · 19 November · 3:30 AM IST'},
   sa:{id:'69e3a4f0a54fc8e6ddf57539',name:'South Africa vs Bangladesh',fallback:'SOUTH AFRICA vs BANGLADESH · 1st Test'}
 };
 const REFRESH_MS=120000;
-const MATCH_START=new Date('2026-11-13T07:30:00+05:30').getTime();
-let currentMatch=MATCHES.sa;
+const MATCH_START=new Date('2026-11-19T03:30:00+05:30').getTime();
+let currentMatch=MATCHES.nz;
 const $=id=>document.getElementById(id);
 const text=v=>(v===null||v===undefined||v===''?'—':String(v));
 const esc=v=>text(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
@@ -205,13 +205,13 @@ function renderUpcoming(){
   const dateLabel=start.toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Kolkata'});
   const timeLabel=start.toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit',hour12:true,timeZone:'Asia/Kolkata'})+' IST';
   $('status').textContent='UPCOMING';
-  $('matchNote').textContent='New Zealand vs India  ·  4th ODI  ·  '+dateLabel+'  ·  '+timeLabel;
+  $('matchNote').textContent='New Zealand vs India  ·  1st Test  ·  '+dateLabel+'  ·  '+timeLabel;
   $('liveLabel').textContent='UPCOMING';
   $('liveDot').style.background='#ffad82';
   $('scoreContent').className='';
   $('scoreContent').innerHTML=
     '<div class="upcoming-wrap">'+
-      '<div class="fixture-kicker">✦  4TH ONE DAY INTERNATIONAL</div>'+
+      '<div class="fixture-kicker">✦  1ST TEST MATCH</div>'+
       '<div class="fixture-teams">'+
         '<div class="fixture-team"><div class="team-emblem">🇳🇿</div><div class="fixture-team-name">New Zealand</div><div class="fixture-team-code">NZ</div></div>'+
         '<div class="vs-mark">VS</div>'+
@@ -395,4 +395,4 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden)update();}
 })();
 </script>
 </body>
-</html>
+</html> 
