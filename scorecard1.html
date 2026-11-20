@@ -59,6 +59,12 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .fow-item{padding:3px 0;overflow-wrap:anywhere}
 .fow-item span{white-space:nowrap}
 .empty{padding:24px 15px;text-align:center;color:var(--muted);font-size:12px;line-height:1.7}
+.countdown-box{margin:16px;padding:16px 14px;border-radius:16px;background:linear-gradient(120deg,rgba(255,135,87,.14),rgba(124,156,255,.08));border:1px solid rgba(255,135,87,.25)}
+.countdown-title{text-align:center;color:var(--accent);font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:12px}
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.count-unit{padding:11px 4px;text-align:center;background:rgba(5,11,23,.52);border:1px solid rgba(255,255,255,.08);border-radius:12px}
+.count-num{font-size:22px;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.6px}
+.count-label{font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.9px}
 .panel-title{font-size:14px;font-weight:800;padding:14px;border-bottom:1px solid var(--line)}
 .footer{text-align:center;color:#71809c;font-size:11px;padding:13px 5px 24px}
 .error{color:#ffb49a}
@@ -86,8 +92,8 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <main class="container">
   <section class="match-card">
     <div class="status-row"><span class="dot" id="statusDot"></span><span id="statusLabel">LOADING</span><span class="status-text" id="updatedTop">Updating...</span></div>
-    <div class="match-title" id="matchTitle">South Africa vs Bangladesh, 1st Test</div>
-    <div class="match-note" id="matchNote">Please wait while the scorecard loads.</div>
+    <div class="match-title" id="matchTitle">Australia vs England, 1st T20I</div>
+    <div class="match-note" id="matchNote">21 November 2026 · 1:45 PM IST · MCG</div>
     <div class="teams" id="teams"></div>
   </section>
 
@@ -103,8 +109,11 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <script>
 (function(){
 'use strict';
-const MATCH_TITLE='South Africa vs Bangladesh, 1st Test';
-const API='https://cricvoice2.aminurmarch.workers.dev/?matchId=69e3a4f0a54fc8e6ddf57539';
+const MATCH_TITLE='Australia vs England, 1st T20I';
+const MATCH_ID='6a6db66678dcf065703144f8';
+const MATCH_START=new Date('2026-11-21T13:45:00+05:30').getTime();
+const MATCH_SCHEDULE_NOTE='21 November 2026 · 1:45 PM IST · Full scorecard will appear once play starts.';
+const API='https://cricvoice2.aminurmarch.workers.dev/?matchId='+encodeURIComponent(MATCH_ID);
 const REFRESH_MS=120000;
 
 const $=id=>document.getElementById(id);
@@ -112,6 +121,49 @@ const val=v=>(v===null||v===undefined||v===''?'—':String(v));
 const esc=v=>val(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const first=(...a)=>a.find(v=>v!==undefined&&v!==null&&v!=='');
 let busy=false,hasData=false,lastData=null,activeInnings=0;
+
+function isBeforeMatchStart(){
+  return Date.now() < MATCH_START;
+}
+function updateCountdownValues(){
+  const diff=Math.max(0,MATCH_START-Date.now());
+  const days=Math.floor(diff/86400000);
+  const hours=Math.floor((diff%86400000)/3600000);
+  const mins=Math.floor((diff%3600000)/60000);
+  const secs=Math.floor((diff%60000)/1000);
+  if($('cdDays'))$('cdDays').textContent=String(days).padStart(2,'0');
+  if($('cdHours'))$('cdHours').textContent=String(hours).padStart(2,'0');
+  if($('cdMins'))$('cdMins').textContent=String(mins).padStart(2,'0');
+  if($('cdSecs'))$('cdSecs').textContent=String(secs).padStart(2,'0');
+}
+function renderUpcomingCard(){
+  $('statusLabel').textContent='UPCOMING';
+  $('statusDot').style.background='var(--yellow)';
+  $('matchTitle').textContent=MATCH_TITLE;
+  $('matchNote').textContent=MATCH_SCHEDULE_NOTE;
+  $('teams').innerHTML=
+    '<div class="team"><div class="team-head"><div class="team-name">🇦🇺 Australia</div></div><div class="team-score">TBD</div></div>'+
+    '<div class="team"><div class="team-head"><div class="team-name">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</div></div><div class="team-score">TBD</div></div>';
+  $('inningsTabs').style.display='none';
+  $('inningsTabs').innerHTML='';
+  $('currentPlayersPanel').hidden=true;
+  $('scorecards').innerHTML=
+    '<section class="panel">'+
+      '<div class="countdown-box">'+
+        '<div class="countdown-title">1st T20I begins in</div>'+
+        '<div class="countdown" id="matchCountdown">'+
+          '<div class="count-unit"><div class="count-num" id="cdDays">--</div><div class="count-label">Days</div></div>'+
+          '<div class="count-unit"><div class="count-num" id="cdHours">--</div><div class="count-label">Hours</div></div>'+
+          '<div class="count-unit"><div class="count-num" id="cdMins">--</div><div class="count-label">Mins</div></div>'+
+          '<div class="count-unit"><div class="count-num" id="cdSecs">--</div><div class="count-label">Secs</div></div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="empty">Match starts on 21 November 2026 at 1:45 PM IST.</div>'+
+    '</section>';
+  updateCountdownValues();
+  $('updatedTop').textContent='Scheduled';
+  $('updated').textContent='Match starts 21 Nov 2026 · 1:45 PM IST';
+}
 
 function getTeams(m){
   if(Array.isArray(m.teams)&&m.teams.length)return m.teams;
@@ -141,10 +193,10 @@ function renderTeams(m){
   const scoreBySide={};
   inningsFrom(m).forEach(inn=>{
     const key=String(first(inn.key,''));
-    const side=key.startsWith('a_')?'South Africa':(key.startsWith('b_')?'Bangladesh':'');
+    const side=key.startsWith('a_')?'Australia':(key.startsWith('b_')?'England':'');
     if(side)scoreBySide[side]=String(first(inn.runs,'—'))+'/'+String(first(inn.wickets,'—'));
   });
-  $('teams').innerHTML=['South Africa','Bangladesh'].map(name=>
+  $('teams').innerHTML=['Australia','England'].map(name=>
     '<div class="team"><div class="team-head"><div class="team-name">'+esc(name)+'</div></div><div class="team-score">'+esc(first(scoreBySide[name],'—'))+'</div></div>'
   ).join('');
 }
@@ -169,7 +221,7 @@ function scoreTotals(i){
 }
 function inningsLabel(i,index){
   const key=String(first(i.key,''));
-  const side=key.startsWith('a_')?'South Africa':(key.startsWith('b_')?'Bangladesh':'');
+  const side=key.startsWith('a_')?'Australia':(key.startsWith('b_')?'England':'');
   return first(i.name,i.innings_name,i.batting_team,side?side+' · Innings '+(index+1):'Innings '+(index+1));
 }
 function batterRow(p){
@@ -212,7 +264,6 @@ function renderFow(i){
   const list=asArray(first(i.fows,i.fall_of_wickets,i.fall_of_wicket,[]));
   if(list.length){
     return '<div class="section-label">Fall of Wickets</div><div class="fow">'+list.map(w=>{
-      // Cricradio sends FOW as text, e.g. 22/1 (W Young, 4.3 ov).
       if(typeof w==='string') return '<div class="fow-item">'+esc(w)+'</div>';
       const score=first(w.score_at_dismissal,w.score,w.runs,w.total,'—');
       const wicket=first(w.number,w.wicket,w.wkt,'—');
@@ -258,14 +309,11 @@ function renderCurrentPlayers(m){
 }
 function findCurrentInnings(innings,m){
   if(!innings.length)return 0;
-  // Prefer an innings explicitly marked as in progress by the API.
   const ongoing=innings.findIndex(i=>
     Number(i.status)===3 ||
     /live|ongoing|in progress/i.test(String(first(i.status_str,i.innings_status,'')))
   );
   if(ongoing>=0)return ongoing;
-  // Test matches may contain multiple innings; the latest API innings is the current one
-  // when no explicit in-progress marker is supplied.
   return innings.length-1;
 }
 function render(data){
@@ -278,7 +326,7 @@ function render(data){
   $('statusLabel').textContent=breakNow?'INNINGS BREAK':(live?'LIVE MATCH':state.toUpperCase());
   $('statusDot').style.background=live?'var(--green)':(breakNow?'var(--yellow)':'#8996b2');
   $('matchTitle').textContent=MATCH_TITLE;
-  $('matchNote').textContent=note||'Test match · Full innings scorecard and player figures';
+  $('matchNote').textContent=note||'T20I match · Full innings scorecard and player figures';
   renderTeams(m);
 
   const innings=inningsFrom(m);
@@ -301,6 +349,10 @@ function renderScorecards(innings){
   $('scorecards').innerHTML=order.map(item=>renderInnings(item.inn,item.index)).join('');
 }
 async function loadData(){
+  if(isBeforeMatchStart()){
+    renderUpcomingCard();
+    return;
+  }
   if(busy||document.hidden)return;
   busy=true;
   const ctrl=new AbortController();
@@ -317,14 +369,24 @@ async function loadData(){
       $('scorecards').innerHTML='<section class="panel"><div class="empty error">Unable to load scorecard. Please check your internet connection and try again.</div></section>';
       $('matchTitle').textContent=MATCH_TITLE;
       $('matchNote').textContent='Unable to connect right now. Please try again later.';
-
     }else{
       $('updatedTop').textContent='Connection issue';
       $('updated').textContent='Connection issue — showing last available scorecard';
     }
   }finally{clearTimeout(timeout);busy=false;}
 }
-loadData();
+
+if(isBeforeMatchStart()) renderUpcomingCard();
+else loadData();
+
+setInterval(()=>{
+  if(isBeforeMatchStart()){
+    if($('matchCountdown')) updateCountdownValues();
+    else renderUpcomingCard();
+  }else if(!hasData && !busy){
+    loadData();
+  }
+},1000);
 setInterval(loadData,REFRESH_MS);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadData();});
 })();
