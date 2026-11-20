@@ -111,7 +111,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   <button class="audio-btn" id="audioBtn" type="button">🎙️ Listen to Hindi Audio Commentary</button>
   <div class="match-switch" role="group" aria-label="Select match">
     <button type="button" id="matchNZ" class="active" aria-pressed="true">🇳🇿 New Zealand vs India</button>
-    <button type="button" id="matchSA" aria-pressed="false">🇿🇦 South Africa vs Bangladesh</button>
+    <button type="button" id="matchAUS" aria-pressed="false">🇦🇺 Australia vs England</button>
   </div>
 </header>
 
@@ -120,7 +120,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   <section class="card">
     <div class="match-head">
       <div class="live"><span class="dot" id="liveDot"></span><span class="live-text" id="liveLabel">MATCH UPDATE</span><span class="status" id="status">Loading...</span></div>
-      <div class="note" id="matchNote">NEW ZEALAND vs INDIA · 1st Test · 13 November · 7:30 AM IST</div>
+      <div class="note" id="matchNote">NEW ZEALAND vs INDIA · 1st Test · 19 November · 3:30 AM IST</div>
     </div>
     <div id="scoreContent" class="center">Loading live score...</div>
     <button class="scorecard-btn" id="scorecardBtn" type="button">Full Scorecard →</button>
@@ -143,17 +143,37 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 
 const API_BASE='https://cricvoice.aminurmarch.workers.dev/?matchId=';
 const MATCHES={
-  nz:{id:'6a552bde5a2a46d5d3505263',name:'New Zealand vs India',fallback:'NEW ZEALAND vs INDIA · 1st Test · 19 November · 3:30 AM IST'},
-  sa:{id:'69e3a4f0a54fc8e6ddf57539',name:'South Africa vs Bangladesh',fallback:'SOUTH AFRICA vs BANGLADESH · 1st Test'}
+  nz:{
+    id:'6a552bde5a2a46d5d3505263',
+    name:'New Zealand vs India',
+    kicker:'✦  1ST TEST MATCH',
+    team1:{flag:'🇳🇿',name:'New Zealand',code:'NZ'},
+    team2:{flag:'🇮🇳',name:'India',code:'IND'},
+    startTime:new Date('2026-11-19T03:30:00+05:30').getTime(),
+    fallback:'NEW ZEALAND vs INDIA · 1st Test · 19 November · 3:30 AM IST'
+  },
+  aus:{
+    id:'6a6db66678dcf065703144f8',
+    name:'Australia vs England',
+    kicker:'✦  1ST T20I MATCH',
+    team1:{flag:'🇦🇺',name:'Australia',code:'AUS'},
+    team2:{flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',name:'England',code:'ENG'},
+    startTime:new Date('2026-11-21T13:45:00+05:30').getTime(),
+    fallback:'AUSTRALIA vs ENGLAND · 1st T20I · 21 November · 1:45 PM IST'
+  }
 };
 const REFRESH_MS=120000;
-const MATCH_START=new Date('2026-11-19T03:30:00+05:30').getTime();
 let currentMatch=MATCHES.nz;
 const $=id=>document.getElementById(id);
 const text=v=>(v===null||v===undefined||v===''?'—':String(v));
 const esc=v=>text(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const first=(...values)=>values.find(v=>v!==undefined&&v!==null&&v!=='');
 let busy=false,hasData=false,controller=null;
+
+function isUpcoming(match){
+  return Boolean(match && match.startTime && Date.now() < match.startTime);
+}
+
 function selectMatch(key){
   const next=MATCHES[key];
   if(!next||next===currentMatch)return;
@@ -161,19 +181,23 @@ function selectMatch(key){
   if(controller)controller.abort();
   controller=null;busy=false;
   $('matchNZ').classList.toggle('active',key==='nz');
-  $('matchSA').classList.toggle('active',key==='sa');
+  $('matchAUS').classList.toggle('active',key==='aus');
   $('matchNZ').setAttribute('aria-pressed',String(key==='nz'));
-  $('matchSA').setAttribute('aria-pressed',String(key==='sa'));
-  $('status').textContent='Loading...';$('liveLabel').textContent='MATCH UPDATE';
-  $('matchNote').textContent=currentMatch.fallback;
-  $('scoreContent').className='center';$('scoreContent').textContent='Loading match score...';
-  $('scorecardBtn').textContent='Full Scorecard →';
+  $('matchAUS').setAttribute('aria-pressed',String(key==='aus'));
+  if(isUpcoming(currentMatch)){
+    renderUpcoming(currentMatch);
+  }else{
+    $('status').textContent='Loading...';$('liveLabel').textContent='MATCH UPDATE';
+    $('matchNote').textContent=currentMatch.fallback;
+    $('scoreContent').className='center';$('scoreContent').textContent='Loading match score...';
+    $('scorecardBtn').textContent='Full Scorecard →';
+  }
   update();
 }
 $('matchNZ').onclick=()=>selectMatch('nz');
-$('matchSA').onclick=()=>selectMatch('sa');
+$('matchAUS').onclick=()=>selectMatch('aus');
 
-$('scorecardBtn').onclick=()=>{location.href=currentMatch===MATCHES.sa?'go:card':'go:card1';};
+$('scorecardBtn').onclick=()=>{location.href=currentMatch===MATCHES.aus?'go:card':'go:card1';};
 $('audioBtn').onclick=()=>{location.href='go:commentary';};
 $('shareBtn').onclick=()=>{location.href='http://action_share';};
 
@@ -199,25 +223,33 @@ function playerTable(items,isBatting){
   return out;
 }
 
+function updateCountdownValues(startTime){
+  const diff=Math.max(0,startTime-Date.now());
+  const days=Math.floor(diff/86400000),hours=Math.floor(diff%86400000/3600000),mins=Math.floor(diff%3600000/60000),secs=Math.floor(diff%60000/1000);
+  if($('cdDays')) $('cdDays').textContent=String(days).padStart(2,'0');
+  if($('cdHours')) $('cdHours').textContent=String(hours).padStart(2,'0');
+  if($('cdMins')) $('cdMins').textContent=String(mins).padStart(2,'0');
+  if($('cdSecs')) $('cdSecs').textContent=String(secs).padStart(2,'0');
+}
 
-function renderUpcoming(){
-  const start=new Date(MATCH_START);
+function renderUpcoming(match=currentMatch){
+  const start=new Date(match.startTime);
   const dateLabel=start.toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Kolkata'});
   const timeLabel=start.toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit',hour12:true,timeZone:'Asia/Kolkata'})+' IST';
   $('status').textContent='UPCOMING';
-  $('matchNote').textContent='New Zealand vs India  ·  1st Test  ·  '+dateLabel+'  ·  '+timeLabel;
+  $('matchNote').textContent=match.fallback;
   $('liveLabel').textContent='UPCOMING';
   $('liveDot').style.background='#ffad82';
   $('scoreContent').className='';
   $('scoreContent').innerHTML=
     '<div class="upcoming-wrap">'+
-      '<div class="fixture-kicker">✦  1ST TEST MATCH</div>'+
+      '<div class="fixture-kicker">'+esc(match.kicker)+'</div>'+
       '<div class="fixture-teams">'+
-        '<div class="fixture-team"><div class="team-emblem">🇳🇿</div><div class="fixture-team-name">New Zealand</div><div class="fixture-team-code">NZ</div></div>'+
+        '<div class="fixture-team"><div class="team-emblem">'+esc(match.team1.flag)+'</div><div class="fixture-team-name">'+esc(match.team1.name)+'</div><div class="fixture-team-code">'+esc(match.team1.code)+'</div></div>'+
         '<div class="vs-mark">VS</div>'+
-        '<div class="fixture-team"><div class="team-emblem">🇮🇳</div><div class="fixture-team-name">India</div><div class="fixture-team-code">IND</div></div>'+
+        '<div class="fixture-team"><div class="team-emblem">'+esc(match.team2.flag)+'</div><div class="fixture-team-name">'+esc(match.team2.name)+'</div><div class="fixture-team-code">'+esc(match.team2.code)+'</div></div>'+
       '</div>'+
-      '<div class="fixture-details"><span class="fixture-chip">📅 '+dateLabel+'</span><span class="fixture-chip">🕢 '+timeLabel+'</span></div>'+
+      '<div class="fixture-details"><span class="fixture-chip">📅 '+esc(dateLabel)+'</span><span class="fixture-chip">🕢 '+esc(timeLabel)+'</span></div>'+
       '<div class="countdown-box"><div class="countdown-title">Match begins in</div><div class="countdown" id="matchCountdown">'+
         '<div class="count-unit"><div class="count-num" id="cdDays">--</div><div class="count-label">Days</div></div>'+
         '<div class="count-unit"><div class="count-num" id="cdHours">--</div><div class="count-label">Hours</div></div>'+
@@ -227,12 +259,7 @@ function renderUpcoming(){
       '<div class="upcoming-caption">The match scorecard will appear here once the match begins.</div>'+
     '</div>';
   $('scorecardBtn').textContent='View Match Centre  →';
-  const diff=Math.max(0,MATCH_START-Date.now());
-  const days=Math.floor(diff/86400000),hours=Math.floor(diff%86400000/3600000),mins=Math.floor(diff%3600000/60000),secs=Math.floor(diff%60000/1000);
-  if($('cdDays')) $('cdDays').textContent=String(days).padStart(2,'0');
-  if($('cdHours')) $('cdHours').textContent=String(hours).padStart(2,'0');
-  if($('cdMins')) $('cdMins').textContent=String(mins).padStart(2,'0');
-  if($('cdSecs')) $('cdSecs').textContent=String(secs).padStart(2,'0');
+  updateCountdownValues(match.startTime);
   $('updated').textContent='Match scheduled · '+timeLabel;
 }
 
@@ -306,7 +333,7 @@ function render(data){
     scoreWickets = first(s.wickets,m.wickets);
     overs = first(s.overs,m.overs);
     rr = first(s.runrate,s.run_rate,s.crr,m.now?.run_rate);
-    rrr = first(s.required_runrate,s.rrr,m.now?.req_run_rate);
+    rrr = first(s.required_run_rate,s.rrr,m.now?.req_run_rate);
   }
 
   const state = first(m.status_str,m.match_status,m.status,'Scheduled');
@@ -316,12 +343,19 @@ function render(data){
   const statusText = String(state).toLowerCase()+' '+gameState.toLowerCase();
   const live = /live|ongoing|in progress|started/i.test(statusText) && !inningBreak;
 
+  const hasScore = scoreRuns !== undefined && scoreWickets !== undefined;
+  const isScheduledState = /scheduled|upcoming|not\s*started|yet\s*to\s*begin/i.test(statusText) && !hasScore;
+  if(isScheduledState && currentMatch.startTime){
+    renderUpcoming(currentMatch);
+    return;
+  }
+
   $('status').textContent = inningBreak ? 'Innings Break' : text(state).toUpperCase();
   $('matchNote').textContent = text(note);
   $('liveLabel').textContent = inningBreak ? 'INNINGS BREAK' : (live ? 'LIVE' : 'MATCH UPDATE');
   $('liveDot').style.background = live ? 'var(--green)' : (inningBreak ? 'var(--yellow)' : '#8996b2');
 
-  const score = (scoreRuns !== undefined && scoreWickets !== undefined)
+  const score = hasScore
     ? String(scoreRuns)+'/'+String(scoreWickets)
     : '—';
   const showRRR = rrr !== undefined && rrr!=='' && Number.isFinite(Number(rrr)) && Number(rrr)>0;
@@ -338,15 +372,13 @@ function render(data){
       '<div class="small">Bowling: '+esc(bowling || '—')+'</div>'+
     '</div>';
 
-
-
-
+  $('scorecardBtn').textContent='Full Scorecard →';
   $('updated').textContent = 'Last updated: '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
 }
 
 async function update(){
-  if(currentMatch===MATCHES.nz && Date.now() < MATCH_START){
-    renderUpcoming();
+  if(isUpcoming(currentMatch)){
+    renderUpcoming(currentMatch);
     return;
   }
   if(busy||document.hidden)return;
@@ -368,6 +400,8 @@ async function update(){
     if(currentMatch!==requestedMatch)return;
     if(hasData){
       $('updated').textContent='Connection issue — showing last available score';
+    }else if(isUpcoming(requestedMatch)){
+      renderUpcoming(requestedMatch);
     }else{
       $('scoreContent').className='center';
       $('scoreContent').innerHTML='<div class="innings"><div class="teamline"><div><div class="team">'+esc(requestedMatch.name)+'</div><div class="small">Score currently unavailable</div></div><div class="score">—</div></div></div>';
@@ -375,8 +409,6 @@ async function update(){
       $('status').textContent='Unavailable';
       $('liveLabel').textContent='MATCH UPDATE';
       $('liveDot').style.background='#8996b2';
-
-
     }
   }finally{
     clearTimeout(timeout);
@@ -384,15 +416,19 @@ async function update(){
   }
 }
 
-if(Date.now() < MATCH_START) renderUpcoming();
+if(isUpcoming(currentMatch)) renderUpcoming(currentMatch);
 else update();
 setInterval(()=>{
-  if(currentMatch===MATCHES.nz && Date.now() < MATCH_START) renderUpcoming();
-  else if(currentMatch===MATCHES.nz && Date.now() >= MATCH_START) update();
+  if(isUpcoming(currentMatch)){
+    if($('matchCountdown')) updateCountdownValues(currentMatch.startTime);
+    else renderUpcoming(currentMatch);
+  }else if(currentMatch.startTime && Date.now() >= currentMatch.startTime){
+    update();
+  }
 },1000);
 setInterval(update,REFRESH_MS);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)update();});
 })();
 </script>
 </body>
-</html> 
+</html>
