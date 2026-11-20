@@ -509,23 +509,35 @@ function getUKDateTime() {
     return { year, month, day, minutesNow: (hour * 60) + minute };
 }
 
-// BBC Radio 5 Sports Extra Schedule (19 Nov 2026)
+// BBC Radio 5 Sports Extra Schedule (20 Nov 2026)
 const EVENTS_CONFIG = [
-    { 
-        sport: "CRICKET", 
-        program: "Brisbane Heat v Sydney Thunder", 
-        title: "Women's Big Bash League 2026", 
-        timeDisplay: "8:00 AM", 
-        dateDisplay: "Thu, 19 Nov", 
-        year: 2026, 
-        month: 11, 
-        day: 19, 
+    {
+        sport: "CRICKET",
+        program: "Women's Big Bash League 2026",
+        title: "Adelaide Strikers vs Melbourne Renegades",
+        timeDisplay: "8:00 AM",
+        dateDisplay: "Fri, 20 Nov",
+        year: 2026,
+        month: 11,
+        day: 20,
         startMin: 480,   // 8:00 AM UK time
         endMin: 720      // 12:00 PM UK time
+    },
+    {
+        sport: "RUGBY UNION",
+        program: "Bristol Bears vs Bath",
+        title: "PREM Rugby Cup",
+        timeDisplay: "7:00 PM",
+        dateDisplay: "Fri, 20 Nov",
+        year: 2026,
+        month: 11,
+        day: 20,
+        startMin: 1140,  // 7:00 PM UK time
+        endMin: 1320     // 10:00 PM UK time
     }
 ];
 
-const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589bb45a2a46d5d3506fd3";
+const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589bc15a2a46d5d3506fdd";
 
 function formatInningScore(teamObj, prefix) {
     if (!teamObj) return "";
@@ -594,13 +606,13 @@ function updateBannerUI() {
         const ev = EVENTS_CONFIG[i];
         const isToday = ev.year === uk.year && ev.month === uk.month && ev.day === uk.day;
         const isFuture = ev.year > uk.year || (ev.year === uk.year && (ev.month > uk.month || (ev.month === uk.month && ev.day > uk.day)));
-        
-        if (isToday && uk.minutesNow >= ev.startMin && uk.minutesNow < ev.endMin) { 
-            currentLive = ev; 
-            break; 
+
+        if (isToday && uk.minutesNow >= ev.startMin && uk.minutesNow < ev.endMin) {
+            currentLive = ev;
+            break;
         }
-        if ((isToday && uk.minutesNow < ev.startMin) || isFuture) { 
-            if (!nextUpcoming) nextUpcoming = ev; 
+        if ((isToday && uk.minutesNow < ev.startMin) || isFuture) {
+            if (!nextUpcoming) nextUpcoming = ev;
         }
     }
 
@@ -742,7 +754,7 @@ document.addEventListener("DOMContentLoaded", () => {
             fetchLiveCricketScore();
         }
     }, 120000);
-    
+
     document.addEventListener("visibilitychange", () => {
         if (!document.hidden) {
             updateAppUI();
