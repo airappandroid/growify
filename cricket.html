@@ -162,7 +162,7 @@ const MATCHES={
     fallback:'AUSTRALIA vs ENGLAND · 1st T20I · 21 November · 1:45 PM IST'
   }
 };
-const REFRESH_MS=120000;
+const REFRESH_MS=2 * 60 * 1000; // Auto-refresh score every 2 minutes
 let currentMatch=MATCHES.nz;
 const $=id=>document.getElementById(id);
 const text=v=>(v===null||v===undefined||v===''?'—':String(v));
