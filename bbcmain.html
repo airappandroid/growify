@@ -509,35 +509,83 @@ function getUKDateTime() {
     return { year, month, day, minutesNow: (hour * 60) + minute };
 }
 
-// BBC Radio 5 Sports Extra Schedule (20 Nov 2026)
+// BBC Radio 5 Sports Extra Schedule (Sat, 21 Nov 2026 | UK Time)
 const EVENTS_CONFIG = [
     {
-        sport: "CRICKET",
-        program: "Women's Big Bash League 2026",
-        title: "Adelaide Strikers vs Melbourne Renegades",
-        timeDisplay: "8:00 AM",
-        dateDisplay: "Fri, 20 Nov",
+        sport: "FORMULA 1",
+        program: "Formula 1: Las Vegas",
+        title: "Practice 3",
+        timeDisplay: "12:25 AM",
+        dateDisplay: "Sat, 21 Nov",
         year: 2026,
         month: 11,
-        day: 20,
-        startMin: 480,   // 8:00 AM UK time
+        day: 21,
+        startMin: 25,    // 12:25 AM UK time
+        endMin: 150      // 2:30 AM UK time
+    },
+    {
+        sport: "FORMULA 1",
+        program: "Formula 1: Las Vegas",
+        title: "Qualifying",
+        timeDisplay: "3:55 AM",
+        dateDisplay: "Sat, 21 Nov",
+        year: 2026,
+        month: 11,
+        day: 21,
+        startMin: 235,   // 3:55 AM UK time
+        endMin: 360      // 6:00 AM UK time
+    },
+    {
+        sport: "CRICKET",
+        program: "Test Match Special",
+        title: "Australia v England – 1st T20",
+        timeDisplay: "7:30 AM",
+        dateDisplay: "Sat, 21 Nov",
+        year: 2026,
+        month: 11,
+        day: 21,
+        startMin: 450,   // 7:30 AM UK time
         endMin: 720      // 12:00 PM UK time
     },
     {
         sport: "RUGBY UNION",
-        program: "Bristol Bears vs Bath",
-        title: "PREM Rugby Cup",
-        timeDisplay: "7:00 PM",
-        dateDisplay: "Fri, 20 Nov",
+        program: "Rugby Union",
+        title: "England v New Zealand",
+        timeDisplay: "1:45 PM",
+        dateDisplay: "Sat, 21 Nov",
         year: 2026,
         month: 11,
-        day: 20,
-        startMin: 1140,  // 7:00 PM UK time
-        endMin: 1320     // 10:00 PM UK time
+        day: 21,
+        startMin: 825,   // 1:45 PM UK time
+        endMin: 990      // 4:30 PM UK time
+    },
+    {
+        sport: "RUGBY UNION",
+        program: "Rugby Union",
+        title: "Ireland v South Africa",
+        timeDisplay: "4:30 PM",
+        dateDisplay: "Sat, 21 Nov",
+        year: 2026,
+        month: 11,
+        day: 21,
+        startMin: 990,   // 4:30 PM UK time
+        endMin: 1160     // 7:20 PM UK time
+    },
+    {
+        sport: "RUGBY UNION",
+        program: "Rugby Union",
+        title: "Wales v Australia",
+        timeDisplay: "7:20 PM",
+        dateDisplay: "Sat, 21 Nov",
+        year: 2026,
+        month: 11,
+        day: 21,
+        startMin: 1160,  // 7:20 PM UK time
+        endMin: 1350     // 10:30 PM UK time
     }
 ];
 
-const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589bc15a2a46d5d3506fdd";
+const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a6db66678dcf065703144f8";
 
 function formatInningScore(teamObj, prefix) {
     if (!teamObj) return "";
