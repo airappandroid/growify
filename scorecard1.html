@@ -17,7 +17,7 @@ body{-webkit-tap-highlight-color:transparent;background:radial-gradient(ellipse 
 button{font:inherit;cursor:pointer}
 button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .container{width:100%;max-width:680px;margin:0 auto;padding:16px 13px 28px}
-.match-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#1a2944 0%,#111a2b 72%);border:1px solid rgba(155,180,255,.15);border-radius:22px;padding:18px;margin-bottom:16px;box-shadow:0 14px 38px rgba(0,0,0,.22)}
+.match-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#1a2944 0%,#111a2b 72%);border:1px solid rgba(155,180,255,.15);border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:0 14px 38px rgba(0,0,0,.22)}
 .match-card:before{content:"";position:absolute;width:190px;height:190px;right:-85px;top:-105px;border-radius:50%;background:rgba(124,156,255,.12);pointer-events:none}
 .status-row{position:relative;display:flex;align-items:center;gap:8px;color:var(--green);font-weight:800;font-size:10px;letter-spacing:1px}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px currentColor}
@@ -33,7 +33,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .team-overs{display:none}
 .tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;scrollbar-width:none;overscroll-behavior-x:contain}
 .tabs::-webkit-scrollbar{display:none}
-.tab{white-space:nowrap;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:10px 15px;font-weight:700;font-size:12px}
+.tab{white-space:nowrap;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:10px 15px;font-weight:700;font-size:12px;transition:background .15s ease,color .15s ease,border-color .15s ease}
 .tab.active{background:var(--accent);border-color:var(--accent);color:#171b27}
 .innings-card,.panel{background:var(--card);border:1px solid var(--line);border-radius:17px;overflow:hidden;margin-bottom:15px;box-shadow:0 8px 24px rgba(0,0,0,.12)}
 .innings-head{padding:14px;background:linear-gradient(100deg,#1b2942,#172238);display:flex;justify-content:space-between;align-items:center;gap:8px;min-width:0}
@@ -98,7 +98,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   </section>
 
   <div class="tabs" id="inningsTabs" aria-label="Innings navigation"></div>
-<div id="scorecards"><div class="panel"><div class="empty">Loading full scorecard...</div></div></div>
+  <div id="scorecards"><div class="panel"><div class="empty">Loading full scorecard...</div></div></div>
   <section class="panel" id="currentPlayersPanel" hidden>
     <div class="panel-title">Current Batters</div><div id="currentBatters"></div>
     <div class="panel-title">Current Bowlers</div><div id="currentBowlers"></div>
@@ -120,7 +120,7 @@ const $=id=>document.getElementById(id);
 const val=v=>(v===null||v===undefined||v===''?'—':String(v));
 const esc=v=>val(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const first=(...a)=>a.find(v=>v!==undefined&&v!==null&&v!=='');
-let busy=false,hasData=false,lastData=null,activeInnings=0;
+let busy=false,hasData=false,lastData=null,activeInnings=0,selectedUpcomingTeam='Australia';
 
 function isBeforeMatchStart(){
   return Date.now() < MATCH_START;
@@ -144,13 +144,28 @@ function renderUpcomingCard(){
   $('teams').innerHTML=
     '<div class="team"><div class="team-head"><div class="team-name">🇦🇺 Australia</div></div><div class="team-score">TBD</div></div>'+
     '<div class="team"><div class="team-head"><div class="team-name">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</div></div><div class="team-score">TBD</div></div>';
-  $('inningsTabs').style.display='none';
-  $('inningsTabs').innerHTML='';
+
+  const tabs=$('inningsTabs');
+  tabs.style.display='flex';
+  const upcomingTeams=[
+    {key:'Australia',label:'🇦🇺 Australia'},
+    {key:'England',label:'🏴󠁧󠁢󠁥󠁮󠁧󠁿 England'}
+  ];
+  tabs.innerHTML=upcomingTeams.map(t=>
+    '<button type="button" class="tab'+(selectedUpcomingTeam===t.key?' active':'')+'" data-team="'+esc(t.key)+'">'+esc(t.label)+'</button>'
+  ).join('');
+  tabs.querySelectorAll('.tab').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      selectedUpcomingTeam=btn.dataset.team;
+      renderUpcomingCard();
+    });
+  });
+
   $('currentPlayersPanel').hidden=true;
   $('scorecards').innerHTML=
     '<section class="panel">'+
       '<div class="countdown-box">'+
-        '<div class="countdown-title">1st T20I begins in</div>'+
+        '<div class="countdown-title">1st T20I begins in · '+esc(selectedUpcomingTeam)+'</div>'+
         '<div class="countdown" id="matchCountdown">'+
           '<div class="count-unit"><div class="count-num" id="cdDays">--</div><div class="count-label">Days</div></div>'+
           '<div class="count-unit"><div class="count-num" id="cdHours">--</div><div class="count-label">Hours</div></div>'+
@@ -158,7 +173,7 @@ function renderUpcomingCard(){
           '<div class="count-unit"><div class="count-num" id="cdSecs">--</div><div class="count-label">Secs</div></div>'+
         '</div>'+
       '</div>'+
-      '<div class="empty">Match starts on 21 November 2026 at 1:45 PM IST.</div>'+
+      '<div class="empty">'+esc(selectedUpcomingTeam)+' scorecard will go live once play begins on 21 November 2026 at 1:45 PM IST.</div>'+
     '</section>';
   updateCountdownValues();
   $('updatedTop').textContent='Scheduled';
@@ -299,13 +314,27 @@ function renderInnings(i,index){
   out+=renderFow(i)+'</section>';
   return out;
 }
-function renderCurrentPlayers(m){
-  const bat=asArray(first(m.batsmen,m.batters,[]));
-  const bowl=asArray(first(m.bowlers,[]));
-  if(!bat.length&&!bowl.length){$('currentPlayersPanel').hidden=true;return;}
-  $('currentPlayersPanel').hidden=false;
-  $('currentBatters').innerHTML=bat.length?'<div class="table-wrap"><table class="score-table"><thead><tr><th>Batter</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th></tr></thead><tbody>'+bat.map(batterRow).join('')+'</tbody></table></div>':'<div class="empty">No batting details available.</div>';
-  $('currentBowlers').innerHTML=bowl.length?'<div class="table-wrap"><table class="score-table"><thead><tr><th>Bowler</th><th>O</th><th>M</th><th>R</th><th>W</th><th>Econ</th></tr></thead><tbody>'+bowl.map(bowlerRow).join('')+'</tbody></table></div>':'<div class="empty">No bowling details available.</div>';
+function renderInningsTabs(innings){
+  const tabs=$('inningsTabs');
+  if(!innings.length){
+    tabs.style.display='none';
+    tabs.innerHTML='';
+    return;
+  }
+  tabs.style.display='flex';
+  tabs.innerHTML=innings.map((inn,index)=>{
+    const label=inningsLabel(inn,index);
+    const isActive=index===activeInnings;
+    return '<button type="button" class="tab'+(isActive?' active':'')+'" data-index="'+index+'" aria-pressed="'+isActive+'">'+esc(label)+'</button>';
+  }).join('');
+  tabs.querySelectorAll('.tab').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      activeInnings=Number(btn.dataset.index);
+      renderInningsTabs(innings);
+      renderScorecards(innings);
+      window.scrollTo({top:Math.max(0,$('inningsTabs').offsetTop-10),behavior:'smooth'});
+    });
+  });
 }
 function findCurrentInnings(innings,m){
   if(!innings.length)return 0;
@@ -330,9 +359,10 @@ function render(data){
   renderTeams(m);
 
   const innings=inningsFrom(m);
-  activeInnings=findCurrentInnings(innings,m);
-  $('inningsTabs').style.display='none';
-  $('inningsTabs').innerHTML='';
+  if(!hasData || activeInnings < 0 || activeInnings >= innings.length){
+    activeInnings=findCurrentInnings(innings,m);
+  }
+  renderInningsTabs(innings);
   renderScorecards(innings);
   $('currentPlayersPanel').hidden=true;
   const time=new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
@@ -345,7 +375,7 @@ function renderScorecards(innings){
     return;
   }
   const order=innings.map((inn,index)=>({inn,index}))
-    .sort((a,b)=>a.index===activeInnings?-1:(b.index===activeInnings?1:b.index-a.index));
+    .sort((a,b)=>a.index===activeInnings?-1:(b.index===activeInnings?1:a.index-b.index));
   $('scorecards').innerHTML=order.map(item=>renderInnings(item.inn,item.index)).join('');
 }
 async function loadData(){
