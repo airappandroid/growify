@@ -33,8 +33,9 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .team-overs{display:none}
 .tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;scrollbar-width:none;overscroll-behavior-x:contain}
 .tabs::-webkit-scrollbar{display:none}
-.tab{white-space:nowrap;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:10px 15px;font-weight:700;font-size:12px}
+.tab{white-space:nowrap;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:10px 15px;font-weight:700;font-size:12px;display:inline-flex;align-items:center;gap:6px}
 .tab.active{background:var(--accent);border-color:var(--accent);color:#171b27}
+.tab-badge{font-size:9px;font-weight:800;padding:2px 6px;border-radius:999px;background:rgba(0,0,0,.22);letter-spacing:.4px}
 .innings-card,.panel{background:var(--card);border:1px solid var(--line);border-radius:17px;overflow:hidden;margin-bottom:15px;box-shadow:0 8px 24px rgba(0,0,0,.12)}
 .innings-head{padding:14px;background:linear-gradient(100deg,#1b2942,#172238);display:flex;justify-content:space-between;align-items:center;gap:8px;min-width:0}
 .innings-name{font-weight:800;font-size:14px}
@@ -58,7 +59,11 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .fow strong{color:var(--text)}
 .fow-item{padding:3px 0;overflow-wrap:anywhere}
 .fow-item span{white-space:nowrap}
-.empty{padding:24px 15px;text-align:center;color:var(--muted);font-size:12px;line-height:1.7}
+.empty{padding:20px 15px;text-align:center;color:var(--muted);font-size:12px;line-height:1.7}
+.fallback-summary{padding:14px;display:grid;gap:10px}
+.fallback-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 13px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid var(--line)}
+.fallback-team{font-weight:750;font-size:13px}
+.fallback-score{font-weight:850;font-size:14px;text-align:right}
 .panel-title{font-size:14px;font-weight:800;padding:14px;border-bottom:1px solid var(--line)}
 .footer{text-align:center;color:#71809c;font-size:11px;padding:13px 5px 24px}
 .error{color:#ffb49a}
@@ -151,11 +156,11 @@ function renderTeams(m){
 }
 function asArray(v){return Array.isArray(v)?v:[];}
 function inningsFrom(m){
-  const list = m && m.innings_batting_order;
+  const list = m && (m.innings_batting_order || m.innings);
   return Array.isArray(list) ? list : [];
 }
 function getBatters(i){
-  return asArray(first(i.player_batting_order, i.batsmen, []));
+  return asArray(first(i.player_batting_order, i.batsmen, i.batters, []));
 }
 function getBowlers(i){
   return asArray(first(i.player_bowling_order, i.bowlers, []));
@@ -232,7 +237,7 @@ function renderFow(i){
   if(Number(totals.wickets)===0)return '<div class="section-label">Fall of Wickets</div><div class="fow">No wickets fallen</div>';
   return '';
 }
-function renderInnings(i,index){
+function renderInnings(i,index,m){
   const total=scoreTotals(i);
   const batters=getBatters(i),bowlers=getBowlers(i);
   const ex=i;
@@ -244,14 +249,33 @@ function renderInnings(i,index){
   if(batters.length){
     out+='<div class="table-wrap"><table class="score-table"><thead><tr><th>Batter</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th></tr></thead><tbody>'+batters.map(batterRow).join('')+
       '<tr class="total-row"><td>Innings Total</td><td colspan="5">'+esc(totalText)+'</td></tr></tbody></table></div>';
-  }else out+='<div class="empty">Batting scorecard is not available in this API response.</div>';
+  }else{
+    const fallbackBat=asArray(first(m&&m.batsmen,m&&m.batters,[]));
+    if(fallbackBat.length && index===activeInnings){
+      out+='<div class="table-wrap"><table class="score-table"><thead><tr><th>Batter</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th></tr></thead><tbody>'+fallbackBat.map(batterRow).join('')+'</tbody></table></div>';
+    }else{
+      out+='<div class="empty">Detailed batter figures for this innings are syncing. Current score: <strong>'+esc(totalText)+'</strong>'+(oversText!==''?' ('+esc(oversText)+' ov)':'')+'.</div>';
+    }
+  }
   out+=extrasText(ex);
   if(bowlers.length){
     out+='<div class="section-label">Bowling</div><div class="table-wrap"><table class="score-table"><thead><tr><th>Bowler</th><th>O</th><th>M</th><th>R</th><th>W</th><th>Econ</th></tr></thead><tbody>'+bowlers.map(bowlerRow).join('')+'</tbody></table></div>';
-  }else out+='<div class="section-label">Bowling</div><div class="empty">Bowling figures are not available in this API response.</div>';
+  }else{
+    const fallbackBowl=asArray(first(m&&m.bowlers,[]));
+    if(fallbackBowl.length && index===activeInnings){
+      out+='<div class="section-label">Bowling</div><div class="table-wrap"><table class="score-table"><thead><tr><th>Bowler</th><th>O</th><th>M</th><th>R</th><th>W</th><th>Econ</th></tr></thead><tbody>'+fallbackBowl.map(bowlerRow).join('')+'</tbody></table></div>';
+    }else{
+      out+='<div class="section-label">Bowling</div><div class="empty">Bowling figures for this innings are syncing.</div>';
+    }
+  }
   if(didNotBat.length)out+='<div class="section-label">Did Not Bat</div><div class="fow">'+didNotBat.map(p=>esc(typeof p==='string'?p:first(p.name,p.title,p.player_name,'Player'))).join(', ')+'</div>';
   out+=renderFow(i)+'</section>';
   return out;
+}
+function renderFallbackSummary(m){
+  const teams=getTeams(m);
+  const rows=teams.map(t=>'<div class="fallback-row"><div class="fallback-team">'+esc(teamName(t))+'</div><div class="fallback-score">'+esc(teamScore(t))+'</div></div>').join('');
+  return '<section class="panel"><div class="panel-title">Match Score Summary</div>'+(rows?'<div class="fallback-summary">'+rows+'</div>':'<div class="empty">Live match totals are syncing from the feed.</div>')+'</section>';
 }
 function renderCurrentPlayers(m){
   const bat=asArray(first(m.batsmen,m.batters,[]));
@@ -261,17 +285,31 @@ function renderCurrentPlayers(m){
   $('currentBatters').innerHTML=bat.length?'<div class="table-wrap"><table class="score-table"><thead><tr><th>Batter</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th></tr></thead><tbody>'+bat.map(batterRow).join('')+'</tbody></table></div>':'<div class="empty">No batting details available.</div>';
   $('currentBowlers').innerHTML=bowl.length?'<div class="table-wrap"><table class="score-table"><thead><tr><th>Bowler</th><th>O</th><th>M</th><th>R</th><th>W</th><th>Econ</th></tr></thead><tbody>'+bowl.map(bowlerRow).join('')+'</tbody></table></div>':'<div class="empty">No bowling details available.</div>';
 }
+function hasInningsStarted(i){
+  const t=scoreTotals(i);
+  const oversNum=parseFloat(t.overs);
+  const runsNum=Number(t.runs);
+  const wktsNum=Number(t.wickets);
+  return (!Number.isNaN(oversNum)&&oversNum>0)||(!Number.isNaN(runsNum)&&runsNum>0)||(!Number.isNaN(wktsNum)&&wktsNum>0)||getBatters(i).length>0;
+}
 function findCurrentInnings(innings,m){
   if(!innings.length)return 0;
+  for(let idx=innings.length-1;idx>=0;idx--){
+    const inn=innings[idx];
+    if(!inn.declare && Number(scoreTotals(inn).wickets)<10 && Number(inn.status)!==2 && hasInningsStarted(inn))return idx;
+  }
   const teams=getTeams(m);
   const liveTeam=teams.find(t=>/\*/.test(String(first(t.scores_full,t.score_full,''))));
   const liveId=liveTeam&&first(liveTeam.team_id,liveTeam.id);
   if(liveId!==undefined&&liveId!==null){
-    const found=innings.findIndex(i=>String(first(i.batting_team_id,i.team_id,i.team&&i.team.id,''))===String(liveId));
-    if(found>=0)return found;
+    for(let idx=innings.length-1;idx>=0;idx--){
+      const i=innings[idx];
+      if(String(first(i.batting_team_id,i.team_id,i.team&&i.team.id,''))===String(liveId) && !i.declare && Number(scoreTotals(i).wickets)<10)return idx;
+    }
   }
-  const activeInn=innings.findIndex(i=>!i.declare && Number(scoreTotals(i).wickets)<10 && Number(i.status)!==2);
-  if(activeInn>=0)return activeInn;
+  for(let idx=innings.length-1;idx>=0;idx--){
+    if(hasInningsStarted(innings[idx]))return idx;
+  }
   return Math.max(0,innings.length-1);
 }
 function updateCountdown(){
@@ -332,36 +370,42 @@ function render(data){
   const tabs=$('inningsTabs');
   if(innings.length>1){
     tabs.style.display='flex';
-    tabs.innerHTML=innings.map((inn,index)=>'<button type="button" class="tab '+(index===activeInnings?'active':'')+'" data-innings="'+index+'">'+esc(inningsLabel(inn,index))+'</button>').join('');
+    tabs.innerHTML=innings.map((inn,index)=>'<button type="button" class="tab '+(index===activeInnings?'active':'')+'" data-innings="'+index+'">'+esc(inningsLabel(inn,index))+(index===autoIndex?'<span class="tab-badge">CURRENT</span>':'')+'</button>').join('');
     tabs.querySelectorAll('[data-innings]').forEach(btn=>{
       btn.addEventListener('click',()=>{
         userPickedInnings=true;
         activeInnings=Number(btn.getAttribute('data-innings'));
         tabs.querySelectorAll('[data-innings]').forEach(tab=>tab.classList.toggle('active',Number(tab.getAttribute('data-innings'))===activeInnings));
-        renderScorecards(innings);
+        renderScorecards(innings,m);
       });
     });
+    const activeTabEl=tabs.querySelector('.tab.active');
+    if(activeTabEl)activeTabEl.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
   }else{
     userPickedInnings=false;
     activeInnings=0;
     tabs.style.display='none';
     tabs.innerHTML='';
   }
-  if(!isPreStart)renderScorecards(innings);
-  $('currentPlayersPanel').hidden=true;
+  if(!isPreStart)renderScorecards(innings,m);
+  if(!innings.length){
+    renderCurrentPlayers(m);
+  }else{
+    $('currentPlayersPanel').hidden=true;
+  }
   const time=new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
   $('updatedTop').textContent='Updated '+time;
   $('updated').textContent='Last updated: '+time+' · Auto refresh every 2 minutes';
 }
-function renderScorecards(innings){
+function renderScorecards(innings,m){
   if(!innings.length){
-    $('scorecards').innerHTML='<section class="panel"><div class="empty">Full scorecard is not available yet. Live match details may be shown here instead.</div></section>';
+    $('scorecards').innerHTML=renderFallbackSummary(m||{});
     return;
   }
   if(innings.length>1){
-    $('scorecards').innerHTML=innings.map((inn,index)=>'<div style="'+(index===activeInnings?'':'display:none')+'">'+renderInnings(inn,index)+'</div>').join('');
+    $('scorecards').innerHTML=innings.map((inn,index)=>'<div style="'+(index===activeInnings?'':'display:none')+'">'+renderInnings(inn,index,m)+'</div>').join('');
   }else{
-    $('scorecards').innerHTML=renderInnings(innings[0],0);
+    $('scorecards').innerHTML=renderInnings(innings[0],0,m);
   }
 }
 async function loadData(){
