@@ -92,8 +92,8 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <main class="container">
   <section class="match-card">
     <div class="status-row"><span class="dot" id="statusDot"></span><span id="statusLabel">LOADING</span><span class="status-text" id="updatedTop">Updating...</span></div>
-    <div class="match-title" id="matchTitle">Australia vs England, 1st T20I</div>
-    <div class="match-note" id="matchNote">21 November 2026 · 1:45 PM IST · MCG</div>
+    <div class="match-title" id="matchTitle">India A vs Pakistan A</div>
+    <div class="match-note" id="matchNote">22 November 2026 · 3:30 PM IST · Today</div>
     <div class="teams" id="teams"></div>
   </section>
 
@@ -109,10 +109,10 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <script>
 (function(){
 'use strict';
-const MATCH_TITLE='Australia vs England, 1st T20I';
-const MATCH_ID='6a6db66678dcf065703144f8';
-const MATCH_START=new Date('2026-11-21T13:45:00+05:30').getTime();
-const MATCH_SCHEDULE_NOTE='21 November 2026 · 1:45 PM IST · Full scorecard will appear once play starts.';
+const MATCH_TITLE='India A vs Pakistan A';
+const MATCH_ID='6af5f79dbcd0ba5b127421ba';
+const MATCH_START=new Date('2026-11-22T15:30:00+05:30').getTime();
+const MATCH_SCHEDULE_NOTE='22 November 2026 · 3:30 PM IST · Full scorecard will appear once play starts.';
 const API='https://cricvoice2.aminurmarch.workers.dev/?matchId='+encodeURIComponent(MATCH_ID);
 const REFRESH_MS=120000;
 
@@ -120,7 +120,7 @@ const $=id=>document.getElementById(id);
 const val=v=>(v===null||v===undefined||v===''?'—':String(v));
 const esc=v=>val(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const first=(...a)=>a.find(v=>v!==undefined&&v!==null&&v!=='');
-let busy=false,hasData=false,lastData=null,activeInnings=0,selectedUpcomingTeam='Australia';
+let busy=false,hasData=false,lastData=null,activeInnings=0,selectedUpcomingTeam='India A';
 
 function isBeforeMatchStart(){
   return Date.now() < MATCH_START;
@@ -142,14 +142,14 @@ function renderUpcomingCard(){
   $('matchTitle').textContent=MATCH_TITLE;
   $('matchNote').textContent=MATCH_SCHEDULE_NOTE;
   $('teams').innerHTML=
-    '<div class="team"><div class="team-head"><div class="team-name">🇦🇺 Australia</div></div><div class="team-score">TBD</div></div>'+
-    '<div class="team"><div class="team-head"><div class="team-name">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</div></div><div class="team-score">TBD</div></div>';
+    '<div class="team"><div class="team-head"><div class="team-name">🇮🇳 India A</div></div><div class="team-score">TBD</div></div>'+
+    '<div class="team"><div class="team-head"><div class="team-name">🇵🇰 Pakistan A</div></div><div class="team-score">TBD</div></div>';
 
   const tabs=$('inningsTabs');
   tabs.style.display='flex';
   const upcomingTeams=[
-    {key:'Australia',label:'🇦🇺 Australia'},
-    {key:'England',label:'🏴󠁧󠁢󠁥󠁮󠁧󠁿 England'}
+    {key:'India A',label:'🇮🇳 India A'},
+    {key:'Pakistan A',label:'🇵🇰 Pakistan A'}
   ];
   tabs.innerHTML=upcomingTeams.map(t=>
     '<button type="button" class="tab'+(selectedUpcomingTeam===t.key?' active':'')+'" data-team="'+esc(t.key)+'">'+esc(t.label)+'</button>'
@@ -165,7 +165,7 @@ function renderUpcomingCard(){
   $('scorecards').innerHTML=
     '<section class="panel">'+
       '<div class="countdown-box">'+
-        '<div class="countdown-title">1st T20I begins in · '+esc(selectedUpcomingTeam)+'</div>'+
+        '<div class="countdown-title">India A vs Pakistan A begins in · '+esc(selectedUpcomingTeam)+'</div>'+
         '<div class="countdown" id="matchCountdown">'+
           '<div class="count-unit"><div class="count-num" id="cdDays">--</div><div class="count-label">Days</div></div>'+
           '<div class="count-unit"><div class="count-num" id="cdHours">--</div><div class="count-label">Hours</div></div>'+
@@ -173,11 +173,11 @@ function renderUpcomingCard(){
           '<div class="count-unit"><div class="count-num" id="cdSecs">--</div><div class="count-label">Secs</div></div>'+
         '</div>'+
       '</div>'+
-      '<div class="empty">'+esc(selectedUpcomingTeam)+' scorecard will go live once play begins on 21 November 2026 at 1:45 PM IST.</div>'+
+      '<div class="empty">'+esc(selectedUpcomingTeam)+' scorecard will go live once play begins on 22 November 2026 at 3:30 PM IST.</div>'+
     '</section>';
   updateCountdownValues();
   $('updatedTop').textContent='Scheduled';
-  $('updated').textContent='Match starts 21 Nov 2026 · 1:45 PM IST';
+  $('updated').textContent='Match starts today, 22 Nov 2026 · 3:30 PM IST';
 }
 
 function getTeams(m){
@@ -208,10 +208,10 @@ function renderTeams(m){
   const scoreBySide={};
   inningsFrom(m).forEach(inn=>{
     const key=String(first(inn.key,''));
-    const side=key.startsWith('a_')?'Australia':(key.startsWith('b_')?'England':'');
+    const side=key.startsWith('a_')?'India A':(key.startsWith('b_')?'Pakistan A':'');
     if(side)scoreBySide[side]=String(first(inn.runs,'—'))+'/'+String(first(inn.wickets,'—'));
   });
-  $('teams').innerHTML=['Australia','England'].map(name=>
+  $('teams').innerHTML=['India A','Pakistan A'].map(name=>
     '<div class="team"><div class="team-head"><div class="team-name">'+esc(name)+'</div></div><div class="team-score">'+esc(first(scoreBySide[name],'—'))+'</div></div>'
   ).join('');
 }
@@ -236,7 +236,7 @@ function scoreTotals(i){
 }
 function inningsLabel(i,index){
   const key=String(first(i.key,''));
-  const side=key.startsWith('a_')?'Australia':(key.startsWith('b_')?'England':'');
+  const side=key.startsWith('a_')?'India A':(key.startsWith('b_')?'Pakistan A':'');
   return first(i.name,i.innings_name,i.batting_team,side?side+' · Innings '+(index+1):'Innings '+(index+1));
 }
 function batterRow(p){
@@ -355,7 +355,7 @@ function render(data){
   $('statusLabel').textContent=breakNow?'INNINGS BREAK':(live?'LIVE MATCH':state.toUpperCase());
   $('statusDot').style.background=live?'var(--green)':(breakNow?'var(--yellow)':'#8996b2');
   $('matchTitle').textContent=MATCH_TITLE;
-  $('matchNote').textContent=note||'T20I match · Full innings scorecard and player figures';
+  $('matchNote').textContent=note||'Full innings scorecard and player figures';
   renderTeams(m);
 
   const innings=inningsFrom(m);
