@@ -237,7 +237,7 @@ function renderFow(i){
   if(Number(totals.wickets)===0)return '<div class="section-label">Fall of Wickets</div><div class="fow">No wickets fallen</div>';
   return '';
 }
-function renderInnings(i,index,m){
+function renderInnings(i,index,m,activeIdx){
   const total=scoreTotals(i);
   const batters=getBatters(i),bowlers=getBowlers(i);
   const ex=i;
@@ -251,7 +251,7 @@ function renderInnings(i,index,m){
       '<tr class="total-row"><td>Innings Total</td><td colspan="5">'+esc(totalText)+'</td></tr></tbody></table></div>';
   }else{
     const fallbackBat=asArray(first(m&&m.batsmen,m&&m.batters,[]));
-    if(fallbackBat.length && index===activeInnings){
+    if(fallbackBat.length && index===activeIdx){
       out+='<div class="table-wrap"><table class="score-table"><thead><tr><th>Batter</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th></tr></thead><tbody>'+fallbackBat.map(batterRow).join('')+'</tbody></table></div>';
     }else{
       out+='<div class="empty">Detailed batter figures for this innings are syncing. Current score: <strong>'+esc(totalText)+'</strong>'+(oversText!==''?' ('+esc(oversText)+' ov)':'')+'.</div>';
@@ -262,7 +262,7 @@ function renderInnings(i,index,m){
     out+='<div class="section-label">Bowling</div><div class="table-wrap"><table class="score-table"><thead><tr><th>Bowler</th><th>O</th><th>M</th><th>R</th><th>W</th><th>Econ</th></tr></thead><tbody>'+bowlers.map(bowlerRow).join('')+'</tbody></table></div>';
   }else{
     const fallbackBowl=asArray(first(m&&m.bowlers,[]));
-    if(fallbackBowl.length && index===activeInnings){
+    if(fallbackBowl.length && index===activeIdx){
       out+='<div class="section-label">Bowling</div><div class="table-wrap"><table class="score-table"><thead><tr><th>Bowler</th><th>O</th><th>M</th><th>R</th><th>W</th><th>Econ</th></tr></thead><tbody>'+fallbackBowl.map(bowlerRow).join('')+'</tbody></table></div>';
     }else{
       out+='<div class="section-label">Bowling</div><div class="empty">Bowling figures for this innings are syncing.</div>';
@@ -312,6 +312,40 @@ function findCurrentInnings(innings,m){
   }
   return Math.max(0,innings.length-1);
 }
+function computeTestLeadTrail(innings,m,currentIdx){
+  if(!Array.isArray(innings)||innings.length<2)return '';
+  const teams=getTeams(m||{});
+  const teamAName=teamName(teams[0]||{name:'New Zealand'});
+  const teamBName=teamName(teams[1]||{name:'India'});
+  let totalA=0,totalB=0,countA=0,countB=0;
+  innings.forEach((inn,idx)=>{
+    const runs=Number(scoreTotals(inn).runs);
+    if(Number.isNaN(runs))return;
+    const key=String(first(inn.key,'')).toLowerCase();
+    if(key.startsWith('a_')||(key===''&&idx%2===0)){
+      totalA+=runs;
+      countA+=1;
+    }else if(key.startsWith('b_')||(key===''&&idx%2===1)){
+      totalB+=runs;
+      countB+=1;
+    }
+  });
+  if(countA===0||countB===0)return '';
+  const curInn=innings[currentIdx]||innings[innings.length-1];
+  const curKey=String(first(curInn&&curInn.key,'')).toLowerCase();
+  const battingSide=curKey.startsWith('a_')?teamAName:(curKey.startsWith('b_')?teamBName:(currentIdx%2===0?teamAName:teamBName));
+  const diff=totalA-totalB;
+  if(diff===0)return 'Scores level';
+  if(diff>0){
+    return battingSide===teamAName
+      ? (teamAName+' lead by '+diff+' runs')
+      : (teamBName+' trail by '+diff+' runs');
+  }
+  const absDiff=Math.abs(diff);
+  return battingSide===teamBName
+    ? (teamBName+' lead by '+absDiff+' runs')
+    : (teamAName+' trail by '+absDiff+' runs');
+}
 function updateCountdown(){
   const remaining=MATCH_START-Date.now();
   if(remaining<=0){
@@ -343,13 +377,12 @@ function render(data){
   const m=data && data.responseData && data.responseData.result;
   const state=String(first(m.status_str,m.match_status,m.status,'SCORECARD'));
   const game=String(first(m.game_state_str,''));
-  const note=first(m.status_note,m.note,m.match_note,'Innings scorecard');
-  const breakNow=/innings?\s*break/i.test(game+' '+String(note));
+  const rawNote=first(m.status_note,m.note,m.match_note,'');
+  const breakNow=/innings?\s*break/i.test(game+' '+String(rawNote));
   const live=/live|ongoing|in progress/i.test(state)&&!breakNow;
   $('statusLabel').textContent=breakNow?'INNINGS BREAK':(live?'LIVE MATCH':state.toUpperCase());
   $('statusDot').style.background=live?'var(--green)':(breakNow?'var(--yellow)':'#8996b2');
   $('matchTitle').textContent='New Zealand vs India, 1st Test';
-  $('matchNote').textContent=Date.now()<MATCH_START?'1st Test · Starts 19 November 2026 at 3:30 AM IST':(note||'Full innings scorecard and player figures');
   renderTeams(m);
 
   const innings=inningsFrom(m);
@@ -367,6 +400,10 @@ function render(data){
     activeInnings=autoIndex;
   }
 
+  const leadTrail=computeTestLeadTrail(innings,m,autoIndex);
+  const baseNote=Date.now()<MATCH_START?'1st Test · Starts 19 November 2026 at 3:30 AM IST':rawNote;
+  $('matchNote').textContent=leadTrail?(baseNote?baseNote+' · '+leadTrail:leadTrail):baseNote;
+
   const tabs=$('inningsTabs');
   if(innings.length>1){
     tabs.style.display='flex';
@@ -376,7 +413,7 @@ function render(data){
         userPickedInnings=true;
         activeInnings=Number(btn.getAttribute('data-innings'));
         tabs.querySelectorAll('[data-innings]').forEach(tab=>tab.classList.toggle('active',Number(tab.getAttribute('data-innings'))===activeInnings));
-        renderScorecards(innings,m);
+        renderScorecards(innings,m,activeInnings);
       });
     });
     const activeTabEl=tabs.querySelector('.tab.active');
@@ -387,7 +424,7 @@ function render(data){
     tabs.style.display='none';
     tabs.innerHTML='';
   }
-  if(!isPreStart)renderScorecards(innings,m);
+  if(!isPreStart)renderScorecards(innings,m,activeInnings);
   if(!innings.length){
     renderCurrentPlayers(m);
   }else{
@@ -397,15 +434,15 @@ function render(data){
   $('updatedTop').textContent='Updated '+time;
   $('updated').textContent='Last updated: '+time+' · Auto refresh every 2 minutes';
 }
-function renderScorecards(innings,m){
+function renderScorecards(innings,m,activeIdx){
   if(!innings.length){
     $('scorecards').innerHTML=renderFallbackSummary(m||{});
     return;
   }
   if(innings.length>1){
-    $('scorecards').innerHTML=innings.map((inn,index)=>'<div style="'+(index===activeInnings?'':'display:none')+'">'+renderInnings(inn,index,m)+'</div>').join('');
+    $('scorecards').innerHTML=innings.map((inn,index)=>'<div style="'+(index===activeIdx?'':'display:none')+'">'+renderInnings(inn,index,m,activeIdx)+'</div>').join('');
   }else{
-    $('scorecards').innerHTML=renderInnings(innings[0],0,m);
+    $('scorecards').innerHTML=renderInnings(innings[0],0,m,0);
   }
 }
 async function loadData(){
