@@ -10,7 +10,7 @@
 :root{
  --bg:#080d18;--surface:#111b2d;--surface2:#17243a;--surface3:#202f49;
  --text:#f7f9ff;--muted:#9aabc5;--accent:#ff875c;--accent2:#ffb184;
- --green:#42df9a;--yellow:#f5c451;--line:rgba(205,220,255,.11);--blue:#8fb5ff;
+ --green:#42df9a;--line:rgba(205,220,255,.11);--blue:#8fb5ff;
 }
 *{box-sizing:border-box}
 html{background:var(--bg)}
@@ -67,6 +67,13 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .stat{min-width:0;padding:12px 9px;border-radius:13px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.055)}
 .stat-label{font-size:10px;color:var(--muted)}
 .stat-value{font-size:16px;font-weight:900;margin-top:7px;overflow-wrap:anywhere}
+.panel{margin-top:16px;padding:16px;border:1px solid var(--line);border-radius:20px;background:rgba(17,27,45,.88)}
+.panel-title{font-size:14px;font-weight:900;margin-bottom:12px}
+.player-row{display:grid;grid-template-columns:minmax(0,1fr) 42px 42px 54px;gap:5px;padding:11px 0;border-bottom:1px solid var(--line);font-size:12px;align-items:center}
+.player-row:last-child{border-bottom:0}
+.player-row.header{color:var(--muted);font-size:10px;font-weight:800}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.player-name{overflow-wrap:anywhere}
 .center{text-align:center;padding:25px 13px;color:var(--muted);line-height:1.6}
 .footer{text-align:center;color:#7f90aa;font-size:11px;padding:20px 5px}
 .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}
@@ -103,8 +110,8 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   </div>
   <button class="audio-btn" id="audioBtn" type="button">🎙️ Listen to Hindi Audio Commentary</button>
   <div class="match-switch" role="group" aria-label="Select match">
-    <button type="button" id="matchINDPAK" aria-pressed="false">🇮🇳 India A vs Pakistan A</button>
-    <button type="button" id="matchNZ" class="active" aria-pressed="true">🇳🇿 New Zealand vs India</button>
+    <button type="button" id="matchSA" class="active" aria-pressed="true">🇿🇦 South Africa vs Bangladesh</button>
+    <button type="button" id="matchNZ" aria-pressed="false">🇳🇿 New Zealand vs India</button>
   </div>
 </header>
 
@@ -113,7 +120,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   <section class="card">
     <div class="match-head">
       <div class="live"><span class="dot" id="liveDot"></span><span class="live-text" id="liveLabel">MATCH UPDATE</span><span class="status" id="status">Loading...</span></div>
-      <div class="note" id="matchNote">NEW ZEALAND vs INDIA · 1st Test · 19 November · 3:30 AM IST</div>
+      <div class="note" id="matchNote">SOUTH AFRICA vs BANGLADESH · 2nd Test · 23 November · 1:30 PM IST</div>
     </div>
     <div id="scoreContent" class="center">Loading live score...</div>
     <button class="scorecard-btn" id="scorecardBtn" type="button">Full Scorecard →</button>
@@ -134,19 +141,9 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 (function(){
 'use strict';
 
+const API_BASE='https://cricvoice.aminurmarch.workers.dev/?matchId=';
 const MATCHES={
-  indpak:{
-    url:'https://bdcr.aminurmarch.workers.dev/?id=100460',
-    id:'100460',
-    name:'India A vs Pakistan A',
-    kicker:'✦  INDIA A VS PAKISTAN A',
-    team1:{flag:'🇮🇳',name:'India A',code:'IND-A'},
-    team2:{flag:'🇵🇰',name:'Pakistan A',code:'PAK-A'},
-    startTime:new Date('2026-11-22T15:30:00+05:30').getTime(),
-    fallback:'INDIA A vs PAKISTAN A · Today · 22 November · 3:30 PM IST'
-  },
   nz:{
-    url:'https://cricvoice.aminurmarch.workers.dev/?matchId=6a552bde5a2a46d5d3505263',
     id:'6a552bde5a2a46d5d3505263',
     name:'New Zealand vs India',
     kicker:'✦  1ST TEST MATCH',
@@ -154,10 +151,19 @@ const MATCHES={
     team2:{flag:'🇮🇳',name:'India',code:'IND'},
     startTime:new Date('2026-11-19T03:30:00+05:30').getTime(),
     fallback:'NEW ZEALAND vs INDIA · 1st Test · 19 November · 3:30 AM IST'
+  },
+  sa:{
+    id:'69e3a50ea54fc8e6ddf57543',
+    name:'South Africa vs Bangladesh',
+    kicker:'✦  2ND TEST MATCH',
+    team1:{flag:'🇿🇦',name:'South Africa',code:'SA'},
+    team2:{flag:'🇧🇩',name:'Bangladesh',code:'BAN'},
+    startTime:new Date('2026-11-23T13:30:00+05:30').getTime(),
+    fallback:'SOUTH AFRICA vs BANGLADESH · 2nd Test · 23 November · 1:30 PM IST'
   }
 };
 const REFRESH_MS=2 * 60 * 1000; // Auto-refresh score every 2 minutes
-let currentMatch=MATCHES.nz;
+let currentMatch=MATCHES.sa;
 const $=id=>document.getElementById(id);
 const text=v=>(v===null||v===undefined||v===''?'—':String(v));
 const esc=v=>text(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
@@ -174,10 +180,10 @@ function selectMatch(key){
   currentMatch=next;hasData=false;
   if(controller)controller.abort();
   controller=null;busy=false;
-  $('matchINDPAK').classList.toggle('active',key==='indpak');
   $('matchNZ').classList.toggle('active',key==='nz');
-  $('matchINDPAK').setAttribute('aria-pressed',String(key==='indpak'));
+  $('matchSA').classList.toggle('active',key==='sa');
   $('matchNZ').setAttribute('aria-pressed',String(key==='nz'));
+  $('matchSA').setAttribute('aria-pressed',String(key==='sa'));
   if(isUpcoming(currentMatch)){
     renderUpcoming(currentMatch);
   }else{
@@ -188,10 +194,10 @@ function selectMatch(key){
   }
   update();
 }
-$('matchINDPAK').onclick=()=>selectMatch('indpak');
 $('matchNZ').onclick=()=>selectMatch('nz');
+$('matchSA').onclick=()=>selectMatch('sa');
 
-$('scorecardBtn').onclick=()=>{location.href=currentMatch===MATCHES.indpak?'go:card':'go:card1';};
+$('scorecardBtn').onclick=()=>{location.href=currentMatch===MATCHES.sa?'go:card':'go:card1';};
 $('audioBtn').onclick=()=>{location.href='go:commentary';};
 $('shareBtn').onclick=()=>{location.href='http://action_share';};
 
@@ -203,6 +209,19 @@ $('privacyBtn').onclick=()=>showPrivacy(true);
 $('closePrivacy').onclick=()=>showPrivacy(false);
 $('privacyModal').onclick=e=>{if(e.target===$('privacyModal'))showPrivacy(false);};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')showPrivacy(false);});
+
+function playerTable(items,isBatting){
+  if(!Array.isArray(items)||!items.length) return '<div class="center">Details not available</div>';
+  const cols=isBatting?['Batter','R','B','SR']:['Bowler','O','R','W'];
+  let out='<div class="player-row header">'+cols.map((c,i)=>'<div class="'+(i?'num':'')+'">'+c+'</div>').join('')+'</div>';
+  items.forEach(p=>{
+    const values=isBatting
+      ?[first(p.name,p.batsman,p.batter),first(p.runs,p.r),first(p.balls_faced,p.balls,p.b),first(p.strike_rate,p.sr)]
+      :[first(p.name,p.bowler),first(p.overs,p.o),first(p.runs_conceded,p.runs,p.r),first(p.wickets,p.w)];
+    out+='<div class="player-row">'+values.map((v,i)=>'<div class="'+(i?'num':'player-name')+'">'+esc(v)+'</div>').join('')+'</div>';
+  });
+  return out;
+}
 
 function updateCountdownValues(startTime){
   const diff=Math.max(0,startTime-Date.now());
@@ -245,6 +264,7 @@ function renderUpcoming(match=currentMatch){
 }
 
 function render(data){
+  // Supports both the older score API and the responseData.result format.
   const m = data?.responseData?.result ||
             data?.response?.responseData?.result ||
             data?.response ||
@@ -254,20 +274,21 @@ function render(data){
 
   if(!m || typeof m !== 'object') throw new Error('Invalid match response');
 
-  const teamsObj = m.teams && !Array.isArray(m.teams) ? m.teams : null;
-  const teamsArr = Array.isArray(m.teams) ? m.teams : null;
+  const teams = m.teams && !Array.isArray(m.teams) ? m.teams : null;
   const settings = m.settingObj || {};
   const currentTeamKey = String(settings.currentTeam || '').toLowerCase() ||
     (Number(m.currentBattingOrder) === 2 ? 'b' : 'a');
-  const currentInning = Number(settings.currentInning || m.live_inning_number || 1);
+  const currentInning = Number(settings.currentInning || 1);
 
   let batting = first(m.team_batting,m.batting_team);
   let bowling = first(m.team_bowling,m.bowling_team);
   let scoreRuns, scoreWickets, overs, rr, rrr;
+  let batsmen = first(m.batsmen,m.batters,[]);
+  let bowlers = first(m.bowlers,[]);
 
-  if(teamsObj){
-    const teamA = teamsObj.a || {};
-    const teamB = teamsObj.b || {};
+  if(teams){
+    const teamA = teams.a || {};
+    const teamB = teams.b || {};
     const activeTeam = currentTeamKey === 'b' ? teamB : teamA;
     const otherTeam = currentTeamKey === 'b' ? teamA : teamB;
 
@@ -293,8 +314,9 @@ function render(data){
     scoreWickets = first(inningScore.wickets,inningScore.wicket);
     overs = first(inningScore.overs,inningScore.over);
     rr = first(inningScore.run_rate,inningScore.runrate,m.now?.run_rate);
-    rrr = first(inningScore.required_run_rate,inningScore.required_run_rate,m.now?.req_run_rate);
+    rrr = first(inningScore.required_run_rate,inningScore.required_runrate,m.now?.req_run_rate);
 
+    // Some API versions provide a ready-made score string.
     const readyScore = first(inningScore.run_str,inningScore.score_str);
     if(readyScore){
       const parsed = String(readyScore).match(/(\d+)\s*\/\s*(\d+)/);
@@ -306,33 +328,22 @@ function render(data){
       if(overMatch) overs = overMatch[1];
     }
   }else{
-    const s = m.live_score || m.live_inning?.equations || m.score || {};
+    const s = m.live_score || m.score || {};
     scoreRuns = first(s.runs,m.runs);
     scoreWickets = first(s.wickets,m.wickets);
     overs = first(s.overs,m.overs);
-    rr = first(s.runrate,s.run_rate,s.crr,m.live_inning?.equations?.runrate,m.now?.run_rate);
+    rr = first(s.runrate,s.run_rate,s.crr,m.now?.run_rate);
     rrr = first(s.required_run_rate,s.rrr,m.now?.req_run_rate);
-
-    if(teamsArr && teamsArr.length >= 2){
-      const batTid = m.live_inning?.batting_team_id;
-      const bowlTid = m.live_inning?.fielding_team_id;
-      const batTeam = teamsArr.find(t => String(t.tid) === String(batTid)) ||
-                      teamsArr.find(t => t.title === batting || t.abbr === batting);
-      const bowlTeam = teamsArr.find(t => String(t.tid) === String(bowlTid)) ||
-                       teamsArr.find(t => t.title === bowling || t.abbr === bowling);
-      if(!batting && batTeam) batting = first(batTeam.title,batTeam.abbr);
-      if(!bowling && bowlTeam) bowling = first(bowlTeam.title,bowlTeam.abbr);
-    }
   }
 
   const state = first(m.status_str,m.match_status,m.status,'Scheduled');
   const gameState = String(first(m.game_state_str,''));
-  const note = first(m.status_note,m.announcement1,m.note,m.match_title,m.title,'Match update');
+  const note = first(m.announcement1,m.status_note,m.note,m.match_title,m.title,'Match update');
   const inningBreak = /inning\s*break|innings\s*break/i.test(gameState+' '+String(note));
   const statusText = String(state).toLowerCase()+' '+gameState.toLowerCase();
   const live = /live|ongoing|in progress|started/i.test(statusText) && !inningBreak;
 
-  const hasScore = scoreRuns !== undefined && scoreWickets !== undefined && scoreRuns !== '' && scoreWickets !== '';
+  const hasScore = scoreRuns !== undefined && scoreWickets !== undefined;
   const isScheduledState = /scheduled|upcoming|not\s*started|yet\s*to\s*begin/i.test(statusText) && !hasScore;
   if(isScheduledState && currentMatch.startTime){
     renderUpcoming(currentMatch);
@@ -348,23 +359,21 @@ function render(data){
     ? String(scoreRuns)+'/'+String(scoreWickets)
     : '—';
   const showRRR = rrr !== undefined && rrr!=='' && Number.isFinite(Number(rrr)) && Number(rrr)>0;
-  const rrDisplay = (rr !== undefined && rr !== '') ? rr : '—';
 
   $('scoreContent').className = '';
   $('scoreContent').innerHTML =
     '<div class="innings">'+
       '<div class="teamline"><div><div class="team">'+esc(batting || 'Batting team')+'</div><div class="small">Batting</div></div><div class="score">'+esc(score)+'</div></div>'+
-      (overs!==undefined && overs!==''?'<div class="small">Overs: '+esc(overs)+'</div>':'')+
+      (overs!==undefined?'<div class="small">Overs: '+esc(overs)+'</div>':'')+
       '<div class="stats">'+
-        '<div class="stat"><div class="stat-label">Run Rate</div><div class="stat-value">'+esc(rrDisplay)+'</div></div>'+
+        '<div class="stat"><div class="stat-label">Run Rate</div><div class="stat-value">'+esc(rr)+'</div></div>'+
         '<div class="stat"><div class="stat-label">Required RR</div><div class="stat-value">'+(showRRR?esc(rrr):'—')+'</div></div>'+
       '</div>'+
       '<div class="small">Bowling: '+esc(bowling || '—')+'</div>'+
     '</div>';
 
   $('scorecardBtn').textContent='Full Scorecard →';
-  const apiTime = data?.datetime || data?.modified;
-  $('updated').textContent = 'Last updated: '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true})+(apiTime?' · Feed: '+esc(apiTime):'');
+  $('updated').textContent = 'Last updated: '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
 }
 
 async function update(){
@@ -379,7 +388,7 @@ async function update(){
   controller=requestController;
   const timeout=setTimeout(()=>requestController.abort(),8000);
   try{
-    const res=await fetch(requestedMatch.url,{cache:'no-store',signal:requestController.signal});
+    const res=await fetch(API_BASE+encodeURIComponent(requestedMatch.id),{cache:'no-store',signal:requestController.signal});
     if(!res.ok)throw new Error('HTTP '+res.status);
     const data=await res.json();
     if(currentMatch!==requestedMatch)return;
