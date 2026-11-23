@@ -103,8 +103,8 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   </div>
   <button class="audio-btn" id="audioBtn" type="button">🎙️ Listen to Hindi Audio Commentary</button>
   <div class="match-switch" role="group" aria-label="Select match">
-    <button type="button" id="matchINDPAK" class="active" aria-pressed="true">🇮🇳 India A vs Pakistan A</button>
-    <button type="button" id="matchNZ" aria-pressed="false">🇳🇿 New Zealand vs India</button>
+    <button type="button" id="matchINDPAK" aria-pressed="false">🇮🇳 India A vs Pakistan A</button>
+    <button type="button" id="matchNZ" class="active" aria-pressed="true">🇳🇿 New Zealand vs India</button>
   </div>
 </header>
 
@@ -113,7 +113,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   <section class="card">
     <div class="match-head">
       <div class="live"><span class="dot" id="liveDot"></span><span class="live-text" id="liveLabel">MATCH UPDATE</span><span class="status" id="status">Loading...</span></div>
-      <div class="note" id="matchNote">INDIA A vs PAKISTAN A · Today · 22 November · 3:30 PM IST</div>
+      <div class="note" id="matchNote">NEW ZEALAND vs INDIA · 1st Test · 19 November · 3:30 AM IST</div>
     </div>
     <div id="scoreContent" class="center">Loading live score...</div>
     <button class="scorecard-btn" id="scorecardBtn" type="button">Full Scorecard →</button>
@@ -157,7 +157,7 @@ const MATCHES={
   }
 };
 const REFRESH_MS=2 * 60 * 1000; // Auto-refresh score every 2 minutes
-let currentMatch=MATCHES.indpak;
+let currentMatch=MATCHES.nz;
 const $=id=>document.getElementById(id);
 const text=v=>(v===null||v===undefined||v===''?'—':String(v));
 const esc=v=>text(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
