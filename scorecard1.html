@@ -92,8 +92,8 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <main class="container">
   <section class="match-card">
     <div class="status-row"><span class="dot" id="statusDot"></span><span id="statusLabel">LOADING</span><span class="status-text" id="updatedTop">Updating...</span></div>
-    <div class="match-title" id="matchTitle">India A vs Pakistan A</div>
-    <div class="match-note" id="matchNote">22 November 2026 · 3:30 PM IST</div>
+    <div class="match-title" id="matchTitle">South Africa vs Bangladesh, 2nd Test</div>
+    <div class="match-note" id="matchNote">23 November 2026 · 1:30 PM IST</div>
     <div class="teams" id="teams"></div>
   </section>
 
@@ -109,18 +109,18 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <script>
 (function(){
 'use strict';
-const MATCH_TITLE='India A vs Pakistan A';
-const MATCH_ID='100460';
-const MATCH_START=new Date('2026-11-22T15:30:00+05:30').getTime();
-const MATCH_SCHEDULE_NOTE='22 November 2026 · 3:30 PM IST · Full scorecard will appear once play starts.';
-const API='https://bdcr2.aminurmarch.workers.dev/?id='+encodeURIComponent(MATCH_ID);
+const MATCH_TITLE='South Africa vs Bangladesh, 2nd Test';
+const MATCH_ID='69e3a50ea54fc8e6ddf57543';
+const MATCH_START=new Date('2026-11-23T13:30:00+05:30').getTime();
+const MATCH_SCHEDULE_NOTE='23 November 2026 · 1:30 PM IST · Full scorecard will appear once play starts.';
+const API='https://cricvoice2.aminurmarch.workers.dev/?matchId='+encodeURIComponent(MATCH_ID);
 const REFRESH_MS=120000;
 
 const $=id=>document.getElementById(id);
 const val=v=>(v===null||v===undefined||v===''?'—':String(v));
 const esc=v=>val(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const first=(...a)=>a.find(v=>v!==undefined&&v!==null&&v!=='');
-let busy=false,hasData=false,lastData=null,activeInnings=0,selectedUpcomingTeam='India A';
+let busy=false,hasData=false,lastData=null,activeInnings=0,selectedUpcomingTeam='South Africa';
 
 function isBeforeMatchStart(){
   return Date.now() < MATCH_START;
@@ -142,14 +142,14 @@ function renderUpcomingCard(){
   $('matchTitle').textContent=MATCH_TITLE;
   $('matchNote').textContent=MATCH_SCHEDULE_NOTE;
   $('teams').innerHTML=
-    '<div class="team"><div class="team-head"><div class="team-name">🇮🇳 India A</div></div><div class="team-score">TBD</div></div>'+
-    '<div class="team"><div class="team-head"><div class="team-name">🇵🇰 Pakistan A</div></div><div class="team-score">TBD</div></div>';
+    '<div class="team"><div class="team-head"><div class="team-name">🇿🇦 South Africa</div></div><div class="team-score">TBD</div></div>'+
+    '<div class="team"><div class="team-head"><div class="team-name">🇧🇩 Bangladesh</div></div><div class="team-score">TBD</div></div>';
 
   const tabs=$('inningsTabs');
   tabs.style.display='flex';
   const upcomingTeams=[
-    {key:'India A',label:'🇮🇳 India A'},
-    {key:'Pakistan A',label:'🇵🇰 Pakistan A'}
+    {key:'South Africa',label:'🇿🇦 South Africa'},
+    {key:'Bangladesh',label:'🇧🇩 Bangladesh'}
   ];
   tabs.innerHTML=upcomingTeams.map(t=>
     '<button type="button" class="tab'+(selectedUpcomingTeam===t.key?' active':'')+'" data-team="'+esc(t.key)+'">'+esc(t.label)+'</button>'
@@ -165,7 +165,7 @@ function renderUpcomingCard(){
   $('scorecards').innerHTML=
     '<section class="panel">'+
       '<div class="countdown-box">'+
-        '<div class="countdown-title">India A vs Pakistan A begins in · '+esc(selectedUpcomingTeam)+'</div>'+
+        '<div class="countdown-title">2nd Test begins in · '+esc(selectedUpcomingTeam)+'</div>'+
         '<div class="countdown" id="matchCountdown">'+
           '<div class="count-unit"><div class="count-num" id="cdDays">--</div><div class="count-label">Days</div></div>'+
           '<div class="count-unit"><div class="count-num" id="cdHours">--</div><div class="count-label">Hours</div></div>'+
@@ -173,11 +173,11 @@ function renderUpcomingCard(){
           '<div class="count-unit"><div class="count-num" id="cdSecs">--</div><div class="count-label">Secs</div></div>'+
         '</div>'+
       '</div>'+
-      '<div class="empty">'+esc(selectedUpcomingTeam)+' scorecard will go live once play begins on 22 November 2026 at 3:30 PM IST.</div>'+
+      '<div class="empty">'+esc(selectedUpcomingTeam)+' scorecard will go live once play begins on 23 November 2026 at 1:30 PM IST.</div>'+
     '</section>';
   updateCountdownValues();
   $('updatedTop').textContent='Scheduled';
-  $('updated').textContent='Match starts today, 22 Nov 2026 · 3:30 PM IST';
+  $('updated').textContent='Match starts 23 Nov 2026 · 1:30 PM IST';
 }
 
 function getTeams(m){
@@ -188,7 +188,7 @@ function getTeams(m){
 function cleanTeamScore(t){
   const full=first(t.scores_full,t.score_full);
   if(full!==undefined){
-    const cleaned=String(full).replace(/\s*\([^)]*\)/i,'').trim();
+    const cleaned=String(full).replace(/\s*\(\s*ov\s*\)/i,'').trim();
     if(cleaned)return cleaned;
   }
   return first(t.scores,t.score,'—');
@@ -208,16 +208,16 @@ function renderTeams(m){
   const scoreBySide={};
   inningsFrom(m).forEach(inn=>{
     const key=String(first(inn.key,''));
-    const side=key.startsWith('a_')?'India A':(key.startsWith('b_')?'Pakistan A':'');
+    const side=key.startsWith('a_')?'South Africa':(key.startsWith('b_')?'Bangladesh':'');
     if(side)scoreBySide[side]=String(first(inn.runs,'—'))+'/'+String(first(inn.wickets,'—'));
   });
-  $('teams').innerHTML=['India A','Pakistan A'].map(name=>
+  $('teams').innerHTML=['South Africa','Bangladesh'].map(name=>
     '<div class="team"><div class="team-head"><div class="team-name">'+esc(name)+'</div></div><div class="team-score">'+esc(first(scoreBySide[name],'—'))+'</div></div>'
   ).join('');
 }
 function asArray(v){return Array.isArray(v)?v:[];}
 function inningsFrom(m){
-  const list = m && (m.innings || m.innings_batting_order);
+  const list = m && m.innings_batting_order;
   return Array.isArray(list) ? list : [];
 }
 function getBatters(i){
@@ -227,23 +227,22 @@ function getBowlers(i){
   return asArray(first(i.player_bowling_order, i.bowlers, []));
 }
 function scoreTotals(i){
-  const eq=i.equations||{};
-  const raw=String(first(i.scores_full,i.scores,''));
-  const parsed=raw.match(/(\d+)\/(\d+)\s*\(([^)]+)\s*ov\)/i);
   return {
-    runs: first(eq.runs,i.runs,i.score_runs,parsed&&parsed[1]),
-    wickets: first(eq.wickets,i.wickets,parsed&&parsed[2]),
-    overs: first(eq.overs,i.overs,parsed&&parsed[3]),
-    rr: first(eq.runrate,i.run_rate,i.runrate)
+    runs: first(i.runs, i.score_runs),
+    wickets: first(i.wickets),
+    overs: first(i.overs),
+    rr: first(i.run_rate, i.runrate)
   };
 }
 function inningsLabel(i,index){
-  return first(i.name,i.short_name,i.innings_name,i.batting_team,'Innings '+(index+1));
+  const key=String(first(i.key,''));
+  const side=key.startsWith('a_')?'South Africa':(key.startsWith('b_')?'Bangladesh':'');
+  return first(i.name,i.innings_name,i.batting_team,side?side+' · Innings '+(index+1):'Innings '+(index+1));
 }
 function batterRow(p){
   const b = p.batting || {};
   const name = first(p.fullname, p.name, p.mobileName, p.player_name, 'Batter');
-  const how = first(b.out_str, p.out_str, p.dismissal, p.how_out, '');
+  const how = first(b.out_str, p.out_str, p.dismissal, '');
   const isNotOut = b.dismissed === false || p.dismissed === false || /not\s*out/i.test(String(how));
   return '<tr><td><div class="player">'+esc(name)+'</div>'+
     (how ? '<div class="dismissal'+(isNotOut?' not-out':'')+'">'+esc(how)+'</div>' :
@@ -265,14 +264,13 @@ function bowlerRow(p){
     '<td>'+esc(first(b.economy,p.econ,p.economy_rate,'—'))+'</td></tr>';
 }
 function extrasText(i){
-  const x=i.extra_runs||{};
-  const total = Number(first(x.total,i.extras, 0)) || 0;
+  const total = Number(first(i.extras, 0)) || 0;
   const bits = [
-    ['b', Number(first(x.byes,i.bye,0)) || 0],
-    ['lb', Number(first(x.legbyes,i.legbye,0)) || 0],
-    ['w', Number(first(x.wides,i.wide,0)) || 0],
-    ['nb', Number(first(x.noballs,i.noball,0)) || 0],
-    ['p', Number(first(x.penalty,i.penalty,0)) || 0]
+    ['b', Number(first(i.bye,0)) || 0],
+    ['lb', Number(first(i.legbye,0)) || 0],
+    ['w', Number(first(i.wide,0)) || 0],
+    ['nb', Number(first(i.noball,0)) || 0],
+    ['p', Number(first(i.penalty,0)) || 0]
   ];
   const detail = bits.filter(x=>x[1] > 0).map(x=>x[0]+' '+x[1]).join(', ');
   return '<div class="extras-line"><span>Extras'+(detail?' ('+esc(detail)+')':'')+'</span><strong>'+esc(total)+'</strong></div>';
@@ -348,16 +346,16 @@ function findCurrentInnings(innings,m){
   return innings.length-1;
 }
 function render(data){
-  const m=data && (data.response || (data.responseData && data.responseData.result) || data.result || data);
+  const m=data && data.responseData && data.responseData.result;
   const state=String(first(m.status_str,m.match_status,m.status,'SCORECARD'));
   const game=String(first(m.game_state_str,''));
   const note=first(m.status_note,m.note,m.match_note,'Innings scorecard');
   const breakNow=/innings?\s*break/i.test(game+' '+String(note));
-  const live=(Number(m.status)===3 || /live|ongoing|in progress/i.test(state+' '+game))&&!breakNow;
+  const live=/live|ongoing|in progress/i.test(state)&&!breakNow;
   $('statusLabel').textContent=breakNow?'INNINGS BREAK':(live?'LIVE MATCH':state.toUpperCase());
   $('statusDot').style.background=live?'var(--green)':(breakNow?'var(--yellow)':'#8996b2');
-  $('matchTitle').textContent=first(m.title,MATCH_TITLE);
-  $('matchNote').textContent=[note,m.venue&&m.venue.name,m.venue&&m.venue.location].filter(Boolean).join(' · ')||'Full innings scorecard and player figures';
+  $('matchTitle').textContent=MATCH_TITLE;
+  $('matchNote').textContent=note||'Test match · Full innings scorecard and player figures';
   renderTeams(m);
 
   const innings=inningsFrom(m);
@@ -393,8 +391,8 @@ async function loadData(){
     const res=await fetch(API,{cache:'no-store',signal:ctrl.signal});
     if(!res.ok)throw new Error('HTTP '+res.status);
     const data=await res.json();
-    const m=data && (data.response || (data.responseData && data.responseData.result) || data.result || data);
-    if(!m||typeof m!=='object'||!Array.isArray(m.innings))throw new Error('Invalid API response structure: expected response.innings');
+    const m=data && data.responseData && data.responseData.result;
+    if(!m||typeof m!=='object')throw new Error('Invalid API response structure: expected responseData.result');
     lastData=data;render(data);hasData=true;
   }catch(err){
     if(!hasData){
