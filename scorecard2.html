@@ -101,13 +101,13 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <main class="container">
   <section class="match-card">
     <div class="status-row"><span class="dot" id="statusDot"></span><span id="statusLabel">LOADING</span><span class="status-text" id="updatedTop">Updating...</span></div>
-    <div class="match-title" id="matchTitle">New Zealand vs India, 1st Test</div>
+    <div class="match-title" id="matchTitle">Australia vs England, 2nd T20I</div>
     <div class="match-note" id="matchNote">Please wait while the scorecard loads.</div>
     <div class="teams" id="teams"></div>
   </section>
 
   <div class="tabs" id="inningsTabs" aria-label="Innings navigation"></div>
-  <section class="panel" id="preMatchPanel" hidden><div class="pre-match"><div class="pre-kicker">Match day is almost here</div><div class="pre-heading">The match starts soon</div><div class="pre-sub">Get ready for live action. The full scorecard will appear here once the match begins.</div><div class="countdown" id="countdown"><div class="count-unit"><div class="count-num" id="cdDays">00</div><div class="count-label">Days</div></div><div class="count-unit"><div class="count-num" id="cdHours">00</div><div class="count-label">Hours</div></div><div class="count-unit"><div class="count-num" id="cdMinutes">00</div><div class="count-label">Minutes</div></div><div class="count-unit"><div class="count-num" id="cdSeconds">00</div><div class="count-label">Seconds</div></div></div><div class="start-time">◷ &nbsp; 19 November 2026 · 3:30 AM IST</div><div class="pre-foot">Times shown in Indian Standard Time (IST)</div></div></section>
+  <section class="panel" id="preMatchPanel" hidden><div class="pre-match"><div class="pre-kicker">Match day is almost here</div><div class="pre-heading">The match starts soon</div><div class="pre-sub">Get ready for live action. The full scorecard will appear here once the match begins.</div><div class="countdown" id="countdown"><div class="count-unit"><div class="count-num" id="cdDays">00</div><div class="count-label">Days</div></div><div class="count-unit"><div class="count-num" id="cdHours">00</div><div class="count-label">Hours</div></div><div class="count-unit"><div class="count-num" id="cdMinutes">00</div><div class="count-label">Minutes</div></div><div class="count-unit"><div class="count-num" id="cdSeconds">00</div><div class="count-label">Seconds</div></div></div><div class="start-time">◷ &nbsp; 24 November 2026 · 1:45 PM IST</div><div class="pre-foot">Times shown in Indian Standard Time (IST)</div></div></section>
   <div id="scorecards"><div class="panel"><div class="empty">Loading full scorecard...</div></div></div>
   <section class="panel" id="currentPlayersPanel" hidden>
     <div class="panel-title">Current Batters</div><div id="currentBatters"></div>
@@ -119,9 +119,9 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <script>
 (function(){
 'use strict';
-const API='https://cricvoice2.aminurmarch.workers.dev/?matchId=6a552bde5a2a46d5d3505263';
+const API='https://cricvoice.aminurmarch.workers.dev/?matchId=6a6db65f78dcf065703144f3';
 const REFRESH_MS=120000;
-const MATCH_START=new Date('2026-11-19T03:30:00+05:30').getTime();
+const MATCH_START=new Date('2026-11-24T13:45:00+05:30').getTime();
 let countdownTimer=null;
 const $=id=>document.getElementById(id);
 const val=v=>(v===null||v===undefined||v===''?'—':String(v));
@@ -175,7 +175,7 @@ function scoreTotals(i){
 }
 function inningsLabel(i,index){
   const key = String(first(i.key, '')).toLowerCase();
-  const side = key.startsWith('a_') ? 'New Zealand' : (key.startsWith('b_') ? 'India' : '');
+  const side = key.startsWith('a_') ? 'Australia' : (key.startsWith('b_') ? 'England' : '');
   const innNumMatch = key.match(/_(\d+)$/);
   const innNum = innNumMatch ? Number(innNumMatch[1]) : (index + 1);
   if(i.name || i.innings_name || i.batting_team){
@@ -315,8 +315,8 @@ function findCurrentInnings(innings,m){
 function computeTestLeadTrail(innings,m,currentIdx){
   if(!Array.isArray(innings)||innings.length<2)return '';
   const teams=getTeams(m||{});
-  const teamAName=teamName(teams[0]||{name:'New Zealand'});
-  const teamBName=teamName(teams[1]||{name:'India'});
+  const teamAName=teamName(teams[0]||{name:'Australia'});
+  const teamBName=teamName(teams[1]||{name:'England'});
   let totalA=0,totalB=0,countA=0,countB=0;
   innings.forEach((inn,idx)=>{
     const runs=Number(scoreTotals(inn).runs);
@@ -382,7 +382,7 @@ function render(data){
   const live=/live|ongoing|in progress/i.test(state)&&!breakNow;
   $('statusLabel').textContent=breakNow?'INNINGS BREAK':(live?'LIVE MATCH':state.toUpperCase());
   $('statusDot').style.background=live?'var(--green)':(breakNow?'var(--yellow)':'#8996b2');
-  $('matchTitle').textContent='New Zealand vs India, 1st Test';
+  $('matchTitle').textContent='Australia vs England, 2nd T20I';
   renderTeams(m);
 
   const innings=inningsFrom(m);
@@ -401,7 +401,7 @@ function render(data){
   }
 
   const leadTrail=computeTestLeadTrail(innings,m,autoIndex);
-  const baseNote=Date.now()<MATCH_START?'1st Test · Starts 19 November 2026 at 3:30 AM IST':rawNote;
+  const baseNote=Date.now()<MATCH_START?'2nd T20I · Starts 24 November 2026 at 1:45 PM IST':rawNote;
   $('matchNote').textContent=leadTrail?(baseNote?baseNote+' · '+leadTrail:leadTrail):baseNote;
 
   const tabs=$('inningsTabs');
@@ -460,7 +460,7 @@ async function loadData(){
   }catch(err){
     if(!hasData){
       $('scorecards').innerHTML='<section class="panel"><div class="empty error">Unable to load scorecard. Please check your internet connection and try again.</div></section>';
-      $('matchTitle').textContent='New Zealand vs India, 1st Test';
+      $('matchTitle').textContent='Australia vs England, 2nd T20I';
       $('matchNote').textContent='Unable to connect right now. Please try again later.';
       if(Date.now()<MATCH_START)showPreMatch();
     }else{
