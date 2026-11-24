@@ -28,17 +28,19 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .match-switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px auto 0;width:min(100%,650px)}
 .match-switch button{min-height:42px;padding:9px 8px;border:1px solid var(--line);border-radius:13px;background:#17243a;color:#c5d2e8;font-size:11px;font-weight:850;line-height:1.25}
 .match-switch button.active{background:linear-gradient(105deg,#ffad82,#ff7954);border-color:transparent;color:#1b1c25;box-shadow:0 7px 18px rgba(255,126,83,.16)}
-.audio-btn{width:100%;min-height:52px;margin-top:14px;border:0;border-radius:16px;background:linear-gradient(105deg,#ffad82,#ff7954);color:#1b1c25;font-size:14px;font-weight:900;box-shadow:0 10px 26px rgba(255,126,83,.2)}
 .container{width:min(100%,650px);margin:auto;padding:22px 15px 30px}
 .eyebrow{font-size:10px;letter-spacing:1.7px;color:var(--accent2);font-weight:900;text-transform:uppercase;margin:4px 0 8px}
 .page-title{font-size:23px;font-weight:900;letter-spacing:-.8px;margin:0 0 5px}
 .page-subtitle{font-size:12px;color:var(--muted);margin:0 0 18px}
 .card{border:1px solid var(--line);border-radius:24px;overflow:hidden;background:linear-gradient(145deg,rgba(25,39,62,.97),rgba(14,23,39,.98));box-shadow:0 20px 55px rgba(0,0,0,.28)}
-.match-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px 17px;border-bottom:1px solid var(--line);background:linear-gradient(100deg,rgba(255,135,92,.12),rgba(122,157,230,.06))}
-.live{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:900;letter-spacing:1.1px}
+.match-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:15px 17px;border-bottom:1px solid var(--line);background:linear-gradient(100deg,rgba(255,135,92,.12),rgba(122,157,230,.06))}
+.match-head-left{display:flex;flex-direction:column;min-width:0}
+.live{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:11px;font-weight:900;letter-spacing:1.1px}
 .dot{width:9px;height:9px;border-radius:50%;background:var(--accent2);box-shadow:0 0 12px currentColor}
 .live-text{color:var(--accent2)}
 .status{font-size:10px;font-weight:800;letter-spacing:1px;color:#c3d0e5}
+.inline-audio-btn{flex-shrink:0;display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:11px;background:linear-gradient(105deg,#ffad82,#ff7954);border:0;color:#1b1c25;font-size:11px;font-weight:900;line-height:1;box-shadow:0 4px 14px rgba(255,126,83,.2)}
+.inline-audio-btn[hidden]{display:none}
 .note{font-size:11px;color:var(--muted);margin-top:7px}
 .scorecard-btn{width:calc(100% - 34px);margin:0 17px 17px;padding:14px;border-radius:14px;background:linear-gradient(100deg,rgba(255,135,92,.18),rgba(255,135,92,.07));border:1px solid rgba(255,155,117,.4);color:#ffad8a;font-size:13px;font-weight:900}
 .innings{padding:18px}
@@ -84,7 +86,6 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
       </button>
     </div>
   </div>
-  <button class="audio-btn" id="audioBtn" type="button">🎙️ Listen to Hindi Audio Commentary</button>
   <div class="match-switch" role="group" aria-label="Select match">
     <button type="button" id="matchINDUAE" class="active" aria-pressed="true">🇮🇳 India A vs United Arab Emirates</button>
     <button type="button" id="matchNZ" aria-pressed="false">🇳🇿 New Zealand vs India</button>
@@ -95,8 +96,11 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   
   <section class="card">
     <div class="match-head">
-      <div class="live"><span class="dot" id="liveDot"></span><span class="live-text" id="liveLabel">MATCH UPDATE</span><span class="status" id="status">Loading...</span></div>
-      <div class="note" id="matchNote">INDIA A vs UNITED ARAB EMIRATES · Match ID 100463</div>
+      <div class="match-head-left">
+        <div class="live"><span class="dot" id="liveDot"></span><span class="live-text" id="liveLabel">MATCH UPDATE</span><span class="status" id="status">Loading...</span></div>
+        <div class="note" id="matchNote">INDIA A vs UNITED ARAB EMIRATES · Match ID 100463</div>
+      </div>
+      <button class="inline-audio-btn" id="indUaeAudioBtn" type="button" aria-label="India A vs United Arab Emirates Audio Commentary">🎙️ Audio</button>
     </div>
     <div id="scoreContent" class="center">Loading live score...</div>
     <button class="scorecard-btn" id="scorecardBtn" type="button">Full Scorecard →</button>
@@ -143,6 +147,10 @@ const esc=v=>text(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&g
 const first=(...values)=>values.find(v=>v!==undefined&&v!==null&&v!=='');
 let busy=false,hasData=false,controller=null;
 
+function syncMatchAudioButton(){
+  $('indUaeAudioBtn').hidden = currentMatch !== MATCHES.induae;
+}
+
 function selectMatch(key){
   const next=MATCHES[key];
   if(!next||next===currentMatch)return;
@@ -153,6 +161,7 @@ function selectMatch(key){
   $('matchNZ').classList.toggle('active',key==='nz');
   $('matchINDUAE').setAttribute('aria-pressed',String(key==='induae'));
   $('matchNZ').setAttribute('aria-pressed',String(key==='nz'));
+  syncMatchAudioButton();
   $('status').textContent='Loading...';$('liveLabel').textContent='MATCH UPDATE';
   $('matchNote').textContent=currentMatch.fallback;
   $('scoreContent').className='center';$('scoreContent').textContent='Loading match score...';
@@ -163,7 +172,7 @@ $('matchINDUAE').onclick=()=>selectMatch('induae');
 $('matchNZ').onclick=()=>selectMatch('nz');
 
 $('scorecardBtn').onclick=()=>{location.href=currentMatch===MATCHES.induae?'go:card':'go:card1';};
-$('audioBtn').onclick=()=>{location.href='go:commentary';};
+$('indUaeAudioBtn').onclick=()=>{location.href='go:commentary';};
 $('shareBtn').onclick=()=>{location.href='http://action_share';};
 
 function showPrivacy(show){
@@ -327,6 +336,7 @@ async function update(){
   }
 }
 
+syncMatchAudioButton();
 update();
 setInterval(update,REFRESH_MS);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)update();});
