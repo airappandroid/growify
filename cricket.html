@@ -111,7 +111,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   <button class="audio-btn" id="audioBtn" type="button">🎙️ Listen to Hindi Audio Commentary</button>
   <div class="match-switch" role="group" aria-label="Select match">
     <button type="button" id="matchSA" class="active" aria-pressed="true">🇿🇦 South Africa vs Bangladesh</button>
-    <button type="button" id="matchNZ" aria-pressed="false">🇳🇿 New Zealand vs India</button>
+    <button type="button" id="matchAUS" aria-pressed="false">🇦🇺 Australia vs England</button>
   </div>
 </header>
 
@@ -143,14 +143,14 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 
 const API_BASE='https://cricvoice.aminurmarch.workers.dev/?matchId=';
 const MATCHES={
-  nz:{
-    id:'6a552bde5a2a46d5d3505263',
-    name:'New Zealand vs India',
-    kicker:'✦  1ST TEST MATCH',
-    team1:{flag:'🇳🇿',name:'New Zealand',code:'NZ'},
-    team2:{flag:'🇮🇳',name:'India',code:'IND'},
-    startTime:new Date('2026-11-19T03:30:00+05:30').getTime(),
-    fallback:'NEW ZEALAND vs INDIA · 1st Test · 19 November · 3:30 AM IST'
+  aus:{
+    id:'6a6db65f78dcf065703144f3',
+    name:'Australia vs England',
+    kicker:'✦  2ND T20I MATCH',
+    team1:{flag:'🇦🇺',name:'Australia',code:'AUS'},
+    team2:{flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',name:'England',code:'ENG'},
+    startTime:new Date('2026-11-24T13:45:00+05:30').getTime(),
+    fallback:'AUSTRALIA vs ENGLAND · 2nd T20I · 24 November · 1:45 PM IST'
   },
   sa:{
     id:'69e3a50ea54fc8e6ddf57543',
@@ -180,9 +180,9 @@ function selectMatch(key){
   currentMatch=next;hasData=false;
   if(controller)controller.abort();
   controller=null;busy=false;
-  $('matchNZ').classList.toggle('active',key==='nz');
+  $('matchAUS').classList.toggle('active',key==='aus');
   $('matchSA').classList.toggle('active',key==='sa');
-  $('matchNZ').setAttribute('aria-pressed',String(key==='nz'));
+  $('matchAUS').setAttribute('aria-pressed',String(key==='aus'));
   $('matchSA').setAttribute('aria-pressed',String(key==='sa'));
   if(isUpcoming(currentMatch)){
     renderUpcoming(currentMatch);
@@ -194,7 +194,7 @@ function selectMatch(key){
   }
   update();
 }
-$('matchNZ').onclick=()=>selectMatch('nz');
+$('matchAUS').onclick=()=>selectMatch('aus');
 $('matchSA').onclick=()=>selectMatch('sa');
 
 $('scorecardBtn').onclick=()=>{location.href=currentMatch===MATCHES.sa?'go:card':'go:card1';};
@@ -314,7 +314,7 @@ function render(data){
     scoreWickets = first(inningScore.wickets,inningScore.wicket);
     overs = first(inningScore.overs,inningScore.over);
     rr = first(inningScore.run_rate,inningScore.runrate,m.now?.run_rate);
-    rrr = first(inningScore.required_run_rate,inningScore.required_runrate,m.now?.req_run_rate);
+    rrr = first(inningScore.required_run_rate,inningScore.required_run_rate,m.now?.req_run_rate);
 
     // Some API versions provide a ready-made score string.
     const readyScore = first(inningScore.run_str,inningScore.score_str);
