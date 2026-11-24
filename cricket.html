@@ -39,6 +39,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .dot{width:9px;height:9px;border-radius:50%;background:var(--accent2);box-shadow:0 0 12px currentColor}
 .live-text{color:var(--accent2)}
 .status{font-size:10px;font-weight:800;letter-spacing:1px;color:#c3d0e5}
+.status[hidden]{display:none}
 .inline-audio-btn{flex-shrink:0;display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:12px;background:linear-gradient(105deg,#ffad82,#ff7954);border:0;color:#1b1c25;font-size:12px;font-weight:900;line-height:1;box-shadow:0 5px 16px rgba(255,126,83,.24)}
 .inline-audio-btn[hidden]{display:none}
 .note{font-size:11px;color:var(--muted);margin-top:7px}
@@ -151,6 +152,19 @@ function syncMatchAudioButton(){
   $('indUaeAudioBtn').hidden = currentMatch !== MATCHES.induae;
 }
 
+function setStatusBadge(liveLabelText, statusText, dotColor){
+  $('liveLabel').textContent = liveLabelText;
+  $('liveDot').style.background = dotColor;
+  const cleanStatus = String(statusText || '').trim();
+  if(!cleanStatus || cleanStatus.toUpperCase() === liveLabelText.toUpperCase()){
+    $('status').textContent = '';
+    $('status').hidden = true;
+  }else{
+    $('status').textContent = cleanStatus;
+    $('status').hidden = false;
+  }
+}
+
 function selectMatch(key){
   const next=MATCHES[key];
   if(!next||next===currentMatch)return;
@@ -162,7 +176,7 @@ function selectMatch(key){
   $('matchINDUAE').setAttribute('aria-pressed',String(key==='induae'));
   $('matchNZ').setAttribute('aria-pressed',String(key==='nz'));
   syncMatchAudioButton();
-  $('status').textContent='Loading...';$('liveLabel').textContent='MATCH UPDATE';
+  setStatusBadge('MATCH UPDATE', 'Loading...', 'var(--accent2)');
   $('matchNote').textContent=currentMatch.fallback;
   $('scoreContent').className='center';$('scoreContent').textContent='Loading match score...';
   $('scorecardBtn').textContent='Full Scorecard →';
@@ -274,10 +288,12 @@ function render(data){
 
   const hasScore = scoreRuns !== undefined && scoreWickets !== undefined && scoreRuns !== '' && scoreWickets !== '';
 
-  $('status').textContent = inningBreak ? 'Innings Break' : text(state).toUpperCase();
+  const nextLiveLabel = inningBreak ? 'INNINGS BREAK' : (live ? 'LIVE' : 'MATCH UPDATE');
+  const nextStatus = inningBreak ? 'Innings Break' : text(state).toUpperCase();
+  const nextDot = live ? 'var(--green)' : (inningBreak ? 'var(--yellow)' : '#8996b2');
+
+  setStatusBadge(nextLiveLabel, nextStatus, nextDot);
   $('matchNote').textContent = text(note);
-  $('liveLabel').textContent = inningBreak ? 'INNINGS BREAK' : (live ? 'LIVE' : 'MATCH UPDATE');
-  $('liveDot').style.background = live ? 'var(--green)' : (inningBreak ? 'var(--yellow)' : '#8996b2');
 
   const score = hasScore
     ? String(scoreRuns)+'/'+String(scoreWickets)
@@ -326,9 +342,7 @@ async function update(){
       $('scoreContent').className='center';
       $('scoreContent').innerHTML='<div class="innings"><div class="teamline"><div><div class="team">'+esc(requestedMatch.name)+'</div><div class="small">Score currently unavailable</div></div><div class="score">—</div></div></div>';
       $('matchNote').textContent=requestedMatch.fallback;
-      $('status').textContent='Unavailable';
-      $('liveLabel').textContent='MATCH UPDATE';
-      $('liveDot').style.background='#8996b2';
+      setStatusBadge('MATCH UPDATE', 'Unavailable', '#8996b2');
     }
   }finally{
     clearTimeout(timeout);
