@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#080d19">
-<title>India A vs United Arab Emirates — Live Scorecard</title>
+<title>Australia vs England — 2nd T20I</title>
 <style>
 :root{
   --bg:#080d19;--card:#111a2b;--card2:#18243a;--text:#f5f7ff;
@@ -20,15 +20,16 @@ body{background:radial-gradient(ellipse at 50% -15%,rgba(72,105,180,.2),transpar
 .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px currentColor;flex-shrink:0}
 .status-sub{color:#c8d4ea;font-weight:700;letter-spacing:.4px}
 .updated-top{margin-left:auto;color:var(--muted);font-weight:500;letter-spacing:0;white-space:nowrap}
-.match-title{font-size:18px;font-weight:850;margin-top:14px;line-height:1.35;letter-spacing:-.3px}
+.match-title{font-size:19px;font-weight:850;margin-top:14px;line-height:1.3;letter-spacing:-.3px}
 .match-note{font-size:12px;color:#aebbd2;margin-top:5px;line-height:1.5}
+.banner-note{margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(255,177,132,.1);border:1px solid rgba(255,177,132,.25);color:var(--accent2);font-size:12px;font-weight:700}
 .teams{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
-.team-box{min-width:0;background:rgba(5,11,23,.4);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:12px}
+.team-box{min-width:0;background:rgba(5,11,23,.42);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:12px}
 .team-head{display:flex;align-items:center;gap:8px}
-.team-logo{width:28px;height:28px;object-fit:contain;flex-shrink:0;border-radius:6px}
-.team-name{font-size:12px;font-weight:800;overflow-wrap:anywhere}
+.team-logo{width:30px;height:30px;object-fit:contain;flex-shrink:0;border-radius:8px;background:rgba(255,255,255,.05);padding:2px}
+.team-name{font-size:13px;font-weight:800;overflow-wrap:anywhere}
 .team-role{font-size:10px;color:var(--accent2);font-weight:700;margin-top:2px}
-.team-score{font-size:20px;font-weight:900;margin-top:9px;font-variant-numeric:tabular-nums}
+.team-score{font-size:18px;font-weight:900;margin-top:9px;font-variant-numeric:tabular-nums;color:var(--text)}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:17px;overflow:hidden;margin-bottom:14px;box-shadow:0 8px 24px rgba(0,0,0,.14)}
 .panel-head{padding:13px 14px;background:linear-gradient(100deg,#1b2942,#172238);display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid var(--line)}
 .panel-title{font-weight:800;font-size:14px}
@@ -36,28 +37,20 @@ body{background:radial-gradient(ellipse at 50% -15%,rgba(72,105,180,.2),transpar
 .metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:12px 14px}
 .metric{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:10px 11px}
 .metric-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
-.metric-val{font-size:14px;font-weight:800;margin-top:4px;overflow-wrap:anywhere}
-.table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
-table.score-table{width:100%;border-collapse:collapse;min-width:340px;font-size:12px}
-.score-table th{background:rgba(255,255,255,.025);color:var(--muted);font-size:10px;font-weight:700;text-align:right;padding:10px 6px;white-space:nowrap}
-.score-table td{padding:11px 6px;border-top:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
-.score-table th:first-child,.score-table td:first-child{text-align:left;padding-left:14px}
-.score-table th:last-child,.score-table td:last-child{padding-right:14px}
-.player-name{font-weight:750;color:var(--text)}
-.player-sub{font-size:10px;color:var(--green);margin-top:2px;font-weight:700}
-.info-strip{padding:10px 14px;border-top:1px solid var(--line);font-size:12px;color:#c3d0e6;line-height:1.55}
+.metric-val{font-size:13px;font-weight:800;margin-top:4px;overflow-wrap:anywhere;line-height:1.35}
+.info-strip{padding:11px 14px;border-top:1px solid var(--line);font-size:12px;color:#c3d0e6;line-height:1.55}
 .info-strip strong{color:var(--text)}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-.chip{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:999px;padding:4px 9px;font-size:11px;color:#dce5f5}
-.comm-list{padding:6px 14px 12px}
-.comm-item{padding:10px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:54px 1fr;gap:10px;align-items:start}
-.comm-item:first-child{border-top:0}
-.comm-badge{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:5px 4px;text-align:center;font-size:11px;font-weight:800;color:var(--accent2);font-variant-numeric:tabular-nums}
-.comm-badge.four{background:rgba(74,222,128,.14);border-color:rgba(74,222,128,.35);color:var(--green)}
-.comm-badge.over{background:rgba(255,135,87,.16);border-color:rgba(255,135,87,.35);color:var(--accent2)}
-.comm-text{font-size:12px;line-height:1.5;color:#dbe4f4;overflow-wrap:anywhere}
-.comm-head{font-weight:750;color:var(--text);margin-bottom:2px}
+.filters{display:flex;flex-wrap:wrap;gap:6px;padding:10px 14px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.015)}
+.filter-btn{border:1px solid var(--line);background:var(--card2);color:#c5d2e8;border-radius:999px;padding:5px 11px;font-size:11px;font-weight:750;cursor:pointer}
+.filter-btn.active{background:linear-gradient(105deg,#ffad82,#ff7954);border-color:transparent;color:#1b1c25}
+.squad-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:12px 14px}
+.player-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:10px 11px;min-width:0}
+.player-name{font-weight:800;font-size:12px;color:var(--text)}
+.player-sub{font-size:11px;color:var(--accent2);margin-top:2px;font-weight:700}
+.player-meta{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.4;overflow-wrap:anywhere}
+.empty-box{padding:18px 14px;text-align:center;color:var(--muted);font-size:12px}
 .footer{text-align:center;color:#7686a3;font-size:11px;padding:12px 6px 20px}
+@media(max-width:480px){.squad-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -66,59 +59,35 @@ table.score-table{width:100%;border-collapse:collapse;min-width:340px;font-size:
     <div class="status-row">
       <span class="dot" id="statusDot"></span>
       <span id="statusStr">LIVE</span>
-      <span class="status-sub" id="gameState">Play Ongoing</span>
+      <span class="status-sub" id="gameState">· Toss</span>
       <span class="updated-top" id="updatedTop">Syncing...</span>
     </div>
-    <div class="match-title" id="matchTitle">India A vs United Arab Emirates</div>
-    <div class="match-note" id="matchNote">UAE elected to bat</div>
+    <div class="match-title" id="matchTitle">Australia vs England · 2nd T20I</div>
+    <div class="match-note" id="matchNote">England tour of Australia · Match #6 · T20I</div>
+    <div class="banner-note" id="tossBanner">Australia elected to bat · 24 Nov · 1:45 PM IST</div>
     <div class="teams" id="teamsGrid"></div>
   </section>
 
   <section class="panel">
     <div class="panel-head">
-      <div class="panel-title" id="inningTitle">United Arab Emirates Inning</div>
-      <div class="panel-meta" id="inningScore">45/2 (10 ov)</div>
+      <div class="panel-title" id="matchInfoTitle">Match &amp; Conditions</div>
+      <div class="panel-meta" id="startIstLabel">24 Nov · 1:45 PM IST</div>
     </div>
-    <div class="metrics" id="metricsGrid"></div>
-    <div class="info-strip" id="extraInfo"></div>
+    <div class="metrics" id="conditionsGrid"></div>
+    <div class="info-strip" id="inningsBox"></div>
   </section>
 
   <section class="panel">
     <div class="panel-head">
-      <div class="panel-title">Batting</div>
-      <div class="panel-meta">Current Crease</div>
+      <div class="panel-title">Squad</div>
+      <div class="panel-meta" id="squadCount">0 players</div>
     </div>
-    <div class="table-wrap">
-      <table class="score-table">
-        <thead>
-          <tr><th>Batter</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th></tr>
-        </thead>
-        <tbody id="batBody"></tbody>
-      </table>
+    <div class="filters" id="squadFilters">
+      <button type="button" class="filter-btn active" data-team="all">All</button>
+      <button type="button" class="filter-btn" data-team="au">Australia (AUS)</button>
+      <button type="button" class="filter-btn" data-team="en">England (ENG)</button>
     </div>
-  </section>
-
-  <section class="panel">
-    <div class="panel-head">
-      <div class="panel-title">Bowling</div>
-      <div class="panel-meta">Current Spell</div>
-    </div>
-    <div class="table-wrap">
-      <table class="score-table">
-        <thead>
-          <tr><th>Bowler</th><th>O</th><th>M</th><th>R</th><th>W</th><th>Econ</th></tr>
-        </thead>
-        <tbody id="bowlBody"></tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="panel">
-    <div class="panel-head">
-      <div class="panel-title">Recent Commentary</div>
-      <div class="panel-meta" id="commCount">Latest balls &amp; overs</div>
-    </div>
-    <div class="comm-list" id="commList"></div>
+    <div class="squad-grid" id="squadGrid"></div>
   </section>
 
   <div class="footer" id="footerText">Auto refresh every 2 minutes</div>
@@ -128,10 +97,17 @@ table.score-table{width:100%;border-collapse:collapse;min-width:340px;font-size:
 (function(){
 'use strict';
 
-const API_URL = 'https://bdcr.aminurmarch.workers.dev/?id=100463';
-const REFRESH_MS = 2 * 60 * 1000; // Auto update every 2 minutes
+const API_URL = 'https://bdcr2.aminurmarch.workers.dev/?id=96700';
+const REFRESH_MS = 2 * 60 * 1000; // Auto refresh every 2 minutes
 
-const FALLBACK_DATA = {"status":"ok","response":{"mid":100463,"status":3,"status_str":"Live","game_state":3,"game_state_str":"Play Ongoing","status_note":"UAE elected to bat","team_batting":"United Arab Emirates","team_bowling":"India A","live_inning_number":1,"live_score":{"runs":45,"overs":10,"wickets":2,"target":0,"runrate":4.5,"required_runrate":""},"batsmen":[{"name":"Muhammad Shahdad","batsman_id":121711,"runs":9,"balls_faced":10,"fours":1,"sixes":0,"strike_rate":"90.00"},{"name":"Harpreet Singh Bhatia","batsman_id":53789,"runs":24,"balls_faced":31,"fours":5,"sixes":0,"strike_rate":"77.42"}],"bowlers":[{"name":"Arshad Khan","bowler_id":105049,"overs":5,"runs_conceded":23,"wickets":1,"maidens":0,"econ":"4.60"},{"name":"Harshit Rana","bowler_id":115284,"overs":5,"runs_conceded":22,"wickets":1,"maidens":0,"econ":"4.40"}],"commentaries":[{"event":"overend","over":10,"runs":7,"score":"45/2","commentary":"End of over 10 (7 runs), United Arab Emirates 45/2"},{"event_id":"15538891","event":"ball","over":"9","ball":"6","score":0,"commentary":"Arshad Khan to Harpreet Singh Bhatia, no run,","four":false},{"event_id":"15538885","event":"ball","over":"9","ball":"5","score":4,"commentary":"Arshad Khan to Harpreet Singh Bhatia, Four, Back of a length outside off from Arshad Khan. Harpreet Singh Bhatia hangs in the crease and pulls it away to square leg for four.","four":true},{"event_id":"15538878","event":"ball","over":"9","ball":"4","score":1,"commentary":"Arshad Khan to Muhammad Shahdad, 1 run, Good length on the stumps, and he hangs back in the crease to push it toward slip for one.","four":false}],"live_inning":{"name":"United Arab Emirates Inning","scores_full":"45/2 (10 ov)","equations":{"runs":45,"wickets":2,"overs":"10","runrate":"4.50"},"current_partnership":{"runs":25,"balls":29,"overs":4.5},"last_wicket":{"name":"Ansh Tandon","runs":"8","balls":"15","how_out":"c A Sharma b A Khan","score_at_dismissal":20,"overs_at_dismissal":"5.1"},"did_not_bat":[{"name":"Aftab Alam Shah"},{"name":"Basil Hameed"},{"name":"Ethan Dsouza"},{"name":"Uddish Suri"},{"name":"Ibrar Ahmad"},{"name":"Simranjeet Singh"},{"name":"Zahid Ali"}],"recent_scores":"0,4,1,0,1,1,0,4,0,0,0,0,4,0,0,0,1,0","last_five_overs":"25/1 4.69","last_ten_overs":"45/2 4.35"},"teams":[{"tid":15,"title":"United Arab Emirates","abbr":"UAE","logo_url":"https://gcdnimages.entitysport.com/assets/uploads/2023/05/United_Arab_Emirates.png","scores_full":"*45/2 (10 ov)"},{"tid":11383,"title":"India A","abbr":"IND-A","logo_url":"https://gcdnimages.entitysport.com/assets/uploads//2023/01/india-4.png","scores_full":""}]}};
+const FALLBACK_DATA = {"status":"ok","response":{"match_id":96700,"title":"Australia vs England","short_title":"AUS vs ENG","subtitle":"2nd T20I","match_number":"6","format":3,"format_str":"T20I","status":3,"status_str":"Live","status_note":"","verified":"false","pre_squad":"true","odds_available":"false","game_state":2,"game_state_str":"Toss","competition":{"cid":130004,"title":"England tour of Australia","abbr":"AUS vs ENG","type":"tour","category":"international","match_format":"mixed","season":"2026","status":"live","datestart":"2026-11-12","dateend":"2026-12-02","country":"int","total_matches":"9","total_rounds":"2","total_teams":"3"},"teama":{"team_id":5,"name":"Australia","short_name":"AUS","logo_url":"https://gcdnimages.entitysport.com/assets/uploads/2025/09/AUS.webp","thumb_url":"https://gcdnimages.entitysport.com/assets/uploads/2025/09/AUS.webp","scores_full":""},"teamb":{"team_id":490,"name":"England","short_name":"ENG","logo_url":"https://gcdnimages.entitysport.com/assets/uploads/2025/09/ENG.webp","thumb_url":"https://gcdnimages.entitysport.com/assets/uploads/2025/09/ENG.webp","scores_full":""},"date_start":"2026-11-24 08:15:00","date_end":"2026-11-24 18:15:00","timestamp_start":1795508100,"timestamp_end":1795544100,"date_start_ist":"2026-11-24 13:45:00","date_end_ist":"2026-11-24 23:45:00","venue":{"venue_id":"292","name":"Carrara Oval","location":"Queensland","country":"Australia","timezone":""},"umpires":"","referee":"","equation":"","live":"Starts Soon","result":"","result_type":"","win_margin":"","winning_team_id":0,"commentary":1,"wagon":1,"latest_inning_number":null,"presquad_time":"2026-11-21 18:37:51","verify_time":"","match_dls_affected":"false","live_inning_number":"","day":"0","session":"0","broadcast":"","weather":{"weather":"Clouds","weather_desc":"overcast clouds","temp":24.03,"humidity":78,"visibility":3491,"wind_speed":"4.45","clouds":100},"pitch":{"pitch_condition":"Fast & Bounce","batting_condition":"Average","pace_bowling_condition":"Swing Favourable","spine_bowling_condition":"Sharp Turn"},"toss":{"text":"Australia elected to bat","winner":5,"decision":1},"current_over":"","previous_over":"","man_of_the_match":"","man_of_the_series":"","is_followon":0,"team_batting_first":"","team_batting_second":"","last_five_overs":"","innings":[],"players":[{"pid":83,"title":"Mitchell Marsh","short_name":"M Marsh","country":"au","playing_role":"bat","batting_style":"Right Hand Bat","bowling_style":"Right Arm Medium","nationality":"Australia"},{"pid":1047,"title":"Sam Curran","short_name":"S Curran","country":"en","playing_role":"all","batting_style":"Left hand Bat","bowling_style":"Left Arm Medium Fast","nationality":"England"},{"pid":1259,"title":"Aneurin Donald","short_name":"A Donald","country":"en","playing_role":"wk","batting_style":"Right Hand Bat","bowling_style":"Right Arm Off Break","nationality":"England"},{"pid":1933,"title":"Adil Rashid","short_name":"A Rashid","country":"en","playing_role":"bowl","batting_style":"Right Hand Bat","bowling_style":"Right Arm Leg Spin","nationality":"England"},{"pid":1945,"title":"Liam Dawson","short_name":"L Dawson","country":"en","playing_role":"all","batting_style":"Left hand Bat","bowling_style":"Left Arm Orthodox","nationality":"England"},{"pid":1965,"title":"Adam Zampa","short_name":"A Zampa","country":"au","playing_role":"bowl","batting_style":"Right Hand Bat","bowling_style":"Right Arm Leg Spin","nationality":"Australia"},{"pid":43383,"title":"Jamie Overton","short_name":"J Overton","country":"en","playing_role":"all","batting_role":"Right Hand Bat","bowling_style":"Right Arm Fast","nationality":"England"},{"pid":43592,"title":"Billy Stanlake","short_name":"BJ Stanlake","country":"au","playing_role":"bowl","batting_style":"Left hand Bat","bowling_style":"Right Arm Fast","nationality":"Australia"},{"pid":43605,"title":"Ben Dwarshuis","short_name":"BJ Dwarshuis","country":"au","playing_role":"bowl","batting_style":"Left hand Bat","bowling_style":"Left Arm Fast Medium","nationality":"Australia"},{"pid":48502,"title":"Sam Harper","short_name":"SB Harper","country":"au","playing_role":"wk","batting_style":"Right Hand Bat","bowling_style":"","nationality":"Australia"},{"pid":49818,"title":"Phil Salt","short_name":"P Salt","country":"en","playing_role":"wk","batting_style":"Right Hand Bat","bowling_style":"Right Arm Off Break","nationality":"England"},{"pid":50411,"title":"Luke Wood","short_name":"L Wood","country":"en","playing_role":"bowl","batting_style":"Left hand Bat","bowling_style":"Left Arm Fast Medium","nationality":"England"},{"pid":51266,"title":"Tom Banton","short_name":"T Banton","country":"en","playing_role":"bat","batting_style":"Right Hand Bat","bowling_style":"Right Arm Medium","nationality":"England"},{"pid":51319,"title":"Will Jacks","short_name":"WG Jacks","country":"en","playing_role":"all","batting_style":"Right Hand Bat","bowling_style":"Right Arm Off Break","nationality":"England"},{"pid":52879,"title":"Henry Thornton","short_name":"HTRJY Thornton","country":"au","playing_role":"bowl","batting_style":"Right Hand Bat","bowling_style":"Right Arm Fast","nationality":"Australia"},{"pid":76636,"title":"Jake Fraser-McGurk","short_name":"J Fraser-McGurk","country":"au","playing_role":"bat","batting_style":"Right Hand Bat","bowling_style":"Right Arm Leg Spin","nationality":"Australia"},{"pid":90640,"title":"Xavier Bartlett","short_name":"XC Bartlett","country":"au","playing_role":"bowl","batting_style":"Right Hand Bat","bowling_style":"Right Arm Fast Medium","nationality":"Australia"},{"pid":90679,"title":"Nikhil Chaudhary","short_name":"N Chaudhary","country":"au","playing_role":"all","batting_style":"Right Hand Bat","bowling_style":"Right Arm Off Break","nationality":"Australia"},{"pid":90887,"title":"Harry Brook","short_name":"H Brook","country":"en","playing_role":"bat","batting_style":"Right Hand Bat","bowling_style":"Right Arm Medium","nationality":"England"},{"pid":93329,"title":"Riley Meredith","short_name":"RP Meredith","country":"au","playing_role":"bowl","batting_style":"Right Hand Bat","bowling_style":"Right Arm Fast","nationality":"Australia"},{"pid":93357,"title":"Spencer Johnson","short_name":"SH Johnson","country":"au","playing_role":"bowl","batting_style":"Left hand Bat","bowling_style":"Left Arm Medium Fast","nationality":"Australia"},{"pid":93389,"title":"Tim David","short_name":"TH David","country":"au","playing_role":"bat","batting_style":"Right Hand Bat","bowling_style":"Right Arm Off Break","nationality":"Australia"},{"pid":93453,"title":"Jack Edwards","short_name":"J Edwards","country":"au","playing_role":"all","batting_style":"Right Hand Bat","bowling_style":"Right Arm Medium","nationality":"Australia"},{"pid":94961,"title":"Jordan Cox","short_name":"J Cox","country":"en","playing_role":"wk","batting_style":"Right Hand Bat","bowling_style":"Right Arm Off Break","nationality":"England"},{"pid":101482,"title":"Henry Thomas Crocombe","short_name":"H T Crocombe","country":"en","playing_role":"bowl","batting_style":"Right Hand Bat","bowling_style":"Right Arm Medium Fast","nationality":"England"},{"pid":102957,"title":"James Coles","short_name":"J Coles","country":"en","playing_role":"all","batting_style":"Right Hand Bat","bowling_style":"Left Arm Orthodox","nationality":"England"},{"pid":104656,"title":"Mitchell Owen","short_name":"MJ Owen","country":"au","playing_role":"all","batting_style":"Right Hand Bat","bowling_style":"Right Arm Medium","nationality":"Australia"},{"pid":113220,"title":"Lachlan Shaw","short_name":"L Shaw","country":"au","playing_role":"bat","batting_style":"Right Hand Bat","bowling_style":"Right Arm Medium","nationality":"Australia"},{"pid":118936,"title":"Eddie Jack","short_name":"EV Jack","country":"en","playing_role":"bowl","batting_style":"Left hand Bat","bowling_style":"Right Arm Fast Medium","nationality":"England"},{"pid":123605,"title":"Mahli Beardman","short_name":"M Beardman","country":"au","playing_role":"bowl","batting_style":"Right Hand Bat","bowling_style":"Right Arm Medium Fast","nationality":"Australia"},{"pid":126179,"title":"Joel Davies","short_name":"J Davies","country":"au","playing_role":"all","batting_style":"Left hand Bat","bowling_style":"Left Arm Orthodox","nationality":"Australia"},{"pid":140793,"title":"Thomas Rew","short_name":"T Rew","country":"en","playing_role":"wk","batting_style":"Right Hand Bat","bowling_style":"","nationality":"England"}],"etag":"b18a4bf6076b729ca8fd3bd7a687b682","modified":"2026-11-24 13:50:06","datetime":"2026-11-24 13:58:40","api_version":"3.0"}};
+
+const ROLE_LABELS = {
+  bat: 'Batter',
+  bowl: 'Bowler',
+  all: 'All-rounder',
+  wk: 'Wicketkeeper'
+};
 
 const $ = id => document.getElementById(id);
 const esc = v => String(v === null || v === undefined || v === '' ? '—' : v)
@@ -139,120 +115,113 @@ const esc = v => String(v === null || v === undefined || v === '' ? '—' : v)
 
 let busy = false;
 let hasLiveData = false;
+let currentPlayers = [];
+let activeTeamFilter = 'all';
 
-function renderMatch(payload, feedStamp){
+function renderSquad(){
+  const filtered = activeTeamFilter === 'all'
+    ? currentPlayers
+    : currentPlayers.filter(p => String(p.country || '').toLowerCase() === activeTeamFilter);
+
+  $('squadCount').textContent = `${filtered.length} players`;
+  if(!filtered.length){
+    $('squadGrid').innerHTML = '<div class="empty-box" style="grid-column:1/-1">No players in this filter</div>';
+    return;
+  }
+
+  $('squadGrid').innerHTML = filtered.map(p => {
+    const roleText = ROLE_LABELS[String(p.playing_role || '').toLowerCase()] || p.playing_role || 'Squad';
+    const teamText = p.nationality || (String(p.country || '').toUpperCase());
+    const styles = [p.batting_style, p.bowling_style].filter(Boolean).join(' · ');
+    return `
+      <div class="player-card">
+        <div class="player-name">${esc(p.title || p.short_name)}</div>
+        <div class="player-sub">${esc(roleText)}${teamText ? ` · ${esc(teamText)}` : ''}</div>
+        <div class="player-meta">${esc(styles || 'Squad member')}</div>
+      </div>`;
+  }).join('');
+}
+
+function renderData(payload, feedStamp){
   const r = payload && payload.response ? payload.response : payload;
   if(!r || typeof r !== 'object') return;
 
-  const liveScore = r.live_score || {};
-  const inn = r.live_inning || {};
-  const eq = inn.equations || {};
-  const teams = Array.isArray(r.teams) ? r.teams : [];
-  const battingTeam = r.team_batting || (teams[0] && teams[0].title) || 'United Arab Emirates';
-  const bowlingTeam = r.team_bowling || (teams[1] && teams[1].title) || 'India A';
-
-  const runs = liveScore.runs ?? eq.runs ?? '—';
-  const wkts = liveScore.wickets ?? eq.wickets ?? '—';
-  const overs = liveScore.overs ?? eq.overs ?? '—';
-  const rr = liveScore.runrate ?? eq.runrate ?? '—';
+  const ta = r.teama || {};
+  const tb = r.teamb || {};
+  const comp = r.competition || {};
+  const venue = r.venue || {};
+  const weather = r.weather || {};
+  const pitch = r.pitch || {};
+  const toss = r.toss || {};
+  const innings = Array.isArray(r.innings) ? r.innings : [];
 
   const statusStr = String(r.status_str || 'Live');
-  const isLive = /live|ongoing|in progress/i.test(statusStr + ' ' + String(r.game_state_str || ''));
+  const gameStateStr = String(r.game_state_str || '');
+  const isLive = /live|ongoing|in progress/i.test(statusStr) && !/toss/i.test(gameStateStr);
   $('statusStr').textContent = statusStr.toUpperCase();
-  $('gameState').textContent = r.game_state_str ? '· ' + r.game_state_str : '';
+  $('gameState').textContent = gameStateStr ? `· ${gameStateStr}` : '';
   $('statusDot').style.background = isLive ? 'var(--green)' : 'var(--yellow)';
 
-  $('matchTitle').textContent = teams.length >= 2
-    ? `${teams[0].title || battingTeam} vs ${teams[1].title || bowlingTeam}`
-    : `${battingTeam} vs ${bowlingTeam}`;
-  $('matchNote').textContent = r.status_note || `Match #${r.mid || '100463'}`;
+  const baseTitle = r.title || `${ta.name || 'Australia'} vs ${tb.name || 'England'}`;
+  $('matchTitle').textContent = r.subtitle ? `${baseTitle} · ${r.subtitle}` : baseTitle;
+  $('matchNote').textContent = [
+    comp.title,
+    r.match_number ? `Match #${r.match_number}` : '',
+    r.format_str
+  ].filter(Boolean).join(' · ') || 'AUS vs ENG · T20I';
 
-  $('teamsGrid').innerHTML = teams.slice(0,2).map(t => {
-    const tName = t.title || 'Team';
-    const isBat = tName === battingTeam;
-    const scoreText = (t.scores_full || '').replace(/\s*\(\s*ov\s*\)/i, '').trim() || (isBat ? `${runs}/${wkts} (${overs} ov)` : 'Yet to bat');
+  const noteParts = [
+    toss.text,
+    r.status_note,
+    r.live,
+    r.date_start_ist ? `IST: ${r.date_start_ist}` : ''
+  ].filter(Boolean);
+  $('tossBanner').textContent = noteParts.join(' · ') || 'Match details available';
+
+  const tossWinnerId = toss.winner;
+  $('teamsGrid').innerHTML = [ta, tb].map(t => {
+    const isTossWinner = tossWinnerId && Number(t.team_id) === Number(tossWinnerId);
+    const roleTag = isTossWinner
+      ? (toss.decision === 1 ? 'TOSS WON · BATTING FIRST' : 'TOSS WON')
+      : (t.short_name || 'TEAM');
+    const scoreDisplay = t.scores_full || r.live || 'Yet to bat';
     return `
       <div class="team-box">
         <div class="team-head">
-          ${t.logo_url ? `<img class="team-logo" src="${esc(t.logo_url)}" alt="" onerror="this.style.display='none'">` : ''}
+          ${t.logo_url ? `<img class="team-logo" src="${esc(t.logo_url)}" alt="${esc(t.short_name || t.name)}" onerror="this.style.display='none'">` : ''}
           <div>
-            <div class="team-name">${esc(tName)}</div>
-            <div class="team-role">${isBat ? 'BATTING' : 'BOWLING'}</div>
+            <div class="team-name">${esc(t.name || t.short_name)}</div>
+            <div class="team-role">${esc(roleTag)}</div>
           </div>
         </div>
-        <div class="team-score">${esc(scoreText)}</div>
+        <div class="team-score">${esc(scoreDisplay)}</div>
       </div>`;
   }).join('');
 
-  $('inningTitle').textContent = inn.name || `${battingTeam} · Inning ${r.live_inning_number || 1}`;
-  $('inningScore').textContent = inn.scores_full || `${runs}/${wkts} (${overs} ov)`;
+  $('startIstLabel').textContent = r.date_start_ist || r.date_start || 'T20I';
 
-  const pship = inn.current_partnership;
-  const pshipText = pship ? `${pship.runs} (${pship.balls} balls · ${pship.overs} ov)` : '—';
-  const lw = inn.last_wicket;
-  const lwText = lw ? `${lw.name} ${lw.runs} (${lw.balls}b, ${lw.how_out}) at ${lw.score_at_dismissal}/${lw.number} (${lw.overs_at_dismissal} ov)` : '—';
+  const venueStr = [venue.name, venue.location, venue.country].filter(Boolean).join(', ') || '—';
+  const weatherStr = weather.weather_desc
+    ? `${weather.weather_desc}${weather.temp !== undefined ? ` (${weather.temp}°C)` : ''}`
+    : '—';
+  const pitchStr = [pitch.pitch_condition, pitch.batting_condition].filter(Boolean).join(' · ') || '—';
+  const bowlCondStr = [pitch.pace_bowling_condition, pitch.spine_bowling_condition].filter(Boolean).join(' · ') || '—';
 
-  $('metricsGrid').innerHTML = `
-    <div class="metric"><div class="metric-label">Current Score</div><div class="metric-val">${esc(`${runs}/${wkts}`)} <span style="font-size:12px;color:var(--muted);font-weight:600">(${esc(overs)} ov)</span></div></div>
-    <div class="metric"><div class="metric-label">Run Rate</div><div class="metric-val">${esc(rr)}</div></div>
-    <div class="metric"><div class="metric-label">Partnership</div><div class="metric-val">${esc(pshipText)}</div></div>
-    <div class="metric"><div class="metric-label">Last 5 / 10 Ov</div><div class="metric-val">${esc(inn.last_five_overs || '—')} · ${esc(inn.last_ten_overs || '—')}</div></div>
+  $('conditionsGrid').innerHTML = `
+    <div class="metric"><div class="metric-label">Venue</div><div class="metric-val">${esc(venueStr)}</div></div>
+    <div class="metric"><div class="metric-label">Weather</div><div class="metric-val">${esc(weatherStr)}</div></div>
+    <div class="metric"><div class="metric-label">Pitch</div><div class="metric-val">${esc(pitchStr)}</div></div>
+    <div class="metric"><div class="metric-label">Bowling Surface</div><div class="metric-val">${esc(bowlCondStr)}</div></div>
   `;
 
-  const dnb = Array.isArray(inn.did_not_bat) ? inn.did_not_bat.map(x => x.name || x).filter(Boolean) : [];
-  const recentBalls = inn.recent_scores ? String(inn.recent_scores).split(',').map(s => s.trim()).filter(Boolean) : [];
-  $('extraInfo').innerHTML = `
-    <div><strong>Last Wicket:</strong> ${esc(lwText)}</div>
-    ${recentBalls.length ? `<div style="margin-top:8px"><strong>Recent Balls:</strong> <span class="chips">${recentBalls.map(b => `<span class="chip">${esc(b)}</span>`).join('')}</span></div>` : ''}
-    ${dnb.length ? `<div style="margin-top:8px"><strong>Yet to Bat:</strong> ${esc(dnb.join(', '))}</div>` : ''}
-  `;
+  if(innings.length){
+    $('inningsBox').innerHTML = `<strong>Innings:</strong> ${innings.map(i => esc(i.title || i.short_name || 'Inning')).join(' · ')}`;
+  }else{
+    $('inningsBox').innerHTML = `<strong>Innings Status:</strong> ${esc(r.live || 'No innings started yet')} · <strong>Humidity:</strong> ${esc(weather.humidity !== undefined ? weather.humidity + '%' : '—')} · <strong>Wind:</strong> ${esc(weather.wind_speed !== undefined ? weather.wind_speed + ' m/s' : '—')}`;
+  }
 
-  const batsmen = Array.isArray(r.batsmen) ? r.batsmen : [];
-  $('batBody').innerHTML = batsmen.length ? batsmen.map(b => `
-    <tr>
-      <td><div class="player-name">${esc(b.name)}</div><div class="player-sub">batting*</div></td>
-      <td><strong>${esc(b.runs)}</strong></td>
-      <td>${esc(b.balls_faced)}</td>
-      <td>${esc(b.fours)}</td>
-      <td>${esc(b.sixes)}</td>
-      <td>${esc(b.strike_rate)}</td>
-    </tr>
-  `).join('') : '<tr><td colspan="6" style="text-align:center;color:var(--muted)">No active batters</td></tr>';
-
-  const bowlers = Array.isArray(r.bowlers) ? r.bowlers : [];
-  $('bowlBody').innerHTML = bowlers.length ? bowlers.map(bw => `
-    <tr>
-      <td><div class="player-name">${esc(bw.name)}</div></td>
-      <td>${esc(bw.overs)}</td>
-      <td>${esc(bw.maidens)}</td>
-      <td>${esc(bw.runs_conceded)}</td>
-      <td><strong>${esc(bw.wickets)}</strong></td>
-      <td>${esc(bw.econ)}</td>
-    </tr>
-  `).join('') : '<tr><td colspan="6" style="text-align:center;color:var(--muted)">No active bowlers</td></tr>';
-
-  const comms = Array.isArray(r.commentaries) ? r.commentaries.slice().reverse().slice(0, 12) : [];
-  $('commCount').textContent = `${comms.length} latest items`;
-  $('commList').innerHTML = comms.length ? comms.map(c => {
-    if(c.event === 'overend'){
-      return `
-        <div class="comm-item">
-          <div class="comm-badge over">OV ${esc(c.over)}</div>
-          <div class="comm-text"><div class="comm-head">${esc(c.commentary || `End of over ${c.over}`)}</div></div>
-        </div>`;
-    }
-    const sc = c.score;
-    const isFour = Boolean(c.four) || String(sc) === '4';
-    const badgeText = `${esc(c.over)}.${esc(c.ball)} · ${esc(sc === 0 ? '•' : sc)}`;
-    const parts = String(c.commentary || '').split(',');
-    const head = parts.shift() || '';
-    const desc = parts.join(',').trim() || c.text || '';
-    return `
-      <div class="comm-item">
-        <div class="comm-badge${isFour ? ' four' : ''}">${badgeText}</div>
-        <div class="comm-text">${head ? `<div class="comm-head">${esc(head)}</div>` : ''}${esc(desc)}</div>
-      </div>`;
-  }).join('') : '<div style="padding:14px;text-align:center;color:var(--muted)">No commentary available</div>';
+  currentPlayers = Array.isArray(r.players) ? r.players : [];
+  renderSquad();
 
   const nowStr = new Date().toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
   const stamp = feedStamp || payload.datetime || payload.modified || '';
@@ -260,7 +229,16 @@ function renderMatch(payload, feedStamp){
   $('footerText').textContent = `Last updated: ${nowStr}${stamp ? ` · Feed: ${stamp}` : ''} · Auto refresh every 2 minutes`;
 }
 
-async function fetchScore(){
+document.querySelectorAll('#squadFilters .filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#squadFilters .filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeTeamFilter = btn.dataset.team || 'all';
+    renderSquad();
+  });
+});
+
+async function fetchMatch(){
   if(busy || document.hidden) return;
   busy = true;
   const ctrl = new AbortController();
@@ -271,12 +249,12 @@ async function fetchScore(){
     const json = await res.json();
     if(!json || !json.response) throw new Error('Invalid JSON');
     hasLiveData = true;
-    renderMatch(json, json.datetime || json.modified);
+    renderData(json, json.datetime || json.modified);
   }catch(_){
     if(!hasLiveData){
-      renderMatch(FALLBACK_DATA, 'Snapshot');
+      renderData(FALLBACK_DATA, FALLBACK_DATA.datetime || 'Snapshot');
       $('updatedTop').textContent = 'Offline sample';
-      $('footerText').textContent = 'Showing sample data — will retry every 2 minutes';
+      $('footerText').textContent = 'Showing dvb.txt sample data · Auto refresh every 2 minutes';
     }else{
       $('updatedTop').textContent = 'Retry in 2m';
     }
@@ -286,10 +264,10 @@ async function fetchScore(){
   }
 }
 
-renderMatch(FALLBACK_DATA, FALLBACK_DATA.datetime || 'Snapshot');
-fetchScore();
-setInterval(fetchScore, REFRESH_MS);
-document.addEventListener('visibilitychange', () => { if(!document.hidden) fetchScore(); });
+renderData(FALLBACK_DATA, FALLBACK_DATA.datetime || 'Snapshot');
+fetchMatch();
+setInterval(fetchMatch, REFRESH_MS);
+document.addEventListener('visibilitychange', () => { if(!document.hidden) fetchMatch(); });
 })();
 </script>
 </body>
