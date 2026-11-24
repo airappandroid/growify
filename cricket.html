@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b1020">
-<title>Cricket Score App</title>
+<title>Cricket Voice Commentary</title>
 <style>
 
 :root{
@@ -19,10 +19,9 @@ button{font:inherit;cursor:pointer}
 button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .topbar{padding:15px 16px 16px;background:rgba(8,13,24,.91);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10;backdrop-filter:blur(16px)}
 .topline{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.brand{display:flex;align-items:center;gap:0;min-width:0;flex:1}
 .logo{width:46px;height:46px;display:grid;place-items:center;border-radius:16px;background:linear-gradient(145deg,#ffad82,#f56e48);font-size:24px;box-shadow:0 8px 25px rgba(255,125,83,.23)}
-.name{font-size:18px;font-weight:900;letter-spacing:-.55px;white-space:nowrap}
-.tagline{font-size:11px;color:var(--muted);margin-top:3px;letter-spacing:.2px}
+.name{font-size:16px;font-weight:900;letter-spacing:-.6px;white-space:nowrap}
 .actions{display:flex;gap:8px}
 .icon-btn{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:#17243a;border:1px solid var(--line);color:#eaf0ff}
 .match-switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px auto 0;width:min(100%,650px)}
@@ -65,14 +64,14 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .modal h2{font-size:18px;margin:0}
 .close-btn{background:#30415d;border:0;color:white;border-radius:10px;padding:7px 12px;font-size:18px}
 .modal p{color:#d3dbea;font-size:13px;line-height:1.7;margin:15px 0 0}
-@media(max-width:360px){.container{padding:17px 11px 24px}.name{font-size:16px}.stats{gap:5px}.stat{padding:10px 6px}}
+@media(max-width:360px){.container{padding:17px 11px 24px}.name{font-size:14px;letter-spacing:-.5px}.topbar{padding-left:12px;padding-right:12px}.actions{gap:6px}.icon-btn{width:38px;height:38px}.stats{gap:5px}.stat{padding:10px 6px}}
 
 </style>
 </head>
 <body>
 <header class="topbar">
   <div class="topline">
-    <div class="brand"><div class="logo">🏏</div><div><div class="name">Cricket Score App</div><div class="tagline">Live Cricket Scores</div></div></div>
+    <div class="brand"><div class="name">Cricket Voice Commentary</div></div>
     <div class="actions">
       <button class="icon-btn" id="privacyBtn" type="button" aria-label="Privacy Policy" title="Privacy Policy">
         <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -114,7 +113,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   </section>
   
   
-  <div class="footer" id="updated">Cricket Score App</div>
+  <div class="footer" id="updated">Cricket Voice Commentary</div>
 </main>
 
 <div class="modal-backdrop" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle" aria-hidden="true">
