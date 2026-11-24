@@ -3,8 +3,8 @@
     "id": "hindi",
     "tabTitle": "Hindi",
     "name": "AIR Hindi Samachar",
-    "time": "24 NOV • 2:00 PM",
-    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/11/midday-hindi-5.mp3"
+    "time": "24 NOV • 9:00 PM",
+    "streamUrl": "https://newsonair.gov.in/wp-content/uploads/2026/11/Samachar-Sandhya-20045-2100.mp3"
   },
   {
     "id": "english",
@@ -17,7 +17,7 @@
     "id": "bbc",
     "tabTitle": "BBC",
     "name": "BBC Hindi Dinbhar",
-    "time": "23 NOV • 9:00 PM",
-    "streamUrl": "https://aod-dash-ww.live.cf.md.bbci.co.uk/usp/auth/vod/piff_abr_full_audio/7bf66f-p0ppgngl/vf_p0ppgngl_f3ffa7f2-5a52-4d2b-ada3-092d9aa3896c.ism/dash/vf_p0ppgngl_f3ffa7f2-5a52-4d2b-ada3-092d9aa3896c-audio_eng_1=96000-8.m3u8"
+    "time": "24 NOV • 9:00 PM",
+    "streamUrl": "https://aod-dash-ww-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/e926a8-p0ppn9gy/vf_p0ppn9gy_fa1a54e3-92e1-4916-8621-351e4b7f80db.ism/dash/vf_p0ppn9gy_fa1a54e3-92e1-4916-8621-351e4b7f80db-audio_eng_1=96000-8.m3u8"
   }
 ]
