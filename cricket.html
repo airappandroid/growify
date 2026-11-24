@@ -43,6 +43,9 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .inline-audio-btn{flex-shrink:0;display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:12px;background:linear-gradient(105deg,#ffad82,#ff7954);border:0;color:#1b1c25;font-size:12px;font-weight:900;line-height:1;box-shadow:0 5px 16px rgba(255,126,83,.24)}
 .inline-audio-btn[hidden]{display:none}
 .note{font-size:11px;color:var(--muted);margin-top:7px}
+.timer-bar{display:flex;align-items:center;justify-content:center;padding:10px 17px;background:rgba(255,255,255,.025);border-bottom:1px solid var(--line);font-size:12px}
+.timer-bar[hidden]{display:none}
+.timer-pill{font-weight:900;color:var(--accent2);font-variant-numeric:tabular-nums;letter-spacing:.4px}
 .scorecard-btn{width:calc(100% - 34px);margin:0 17px 17px;padding:14px;border-radius:14px;background:linear-gradient(100deg,rgba(255,135,92,.18),rgba(255,135,92,.07));border:1px solid rgba(255,155,117,.4);color:#ffad8a;font-size:13px;font-weight:900}
 .innings{padding:18px}
 .teamline{display:flex;align-items:center;justify-content:space-between;gap:12px}
@@ -89,7 +92,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   </div>
   <div class="match-switch" role="group" aria-label="Select match">
     <button type="button" id="matchINDUAE" class="active" aria-pressed="true">🇮🇳 India A vs United Arab Emirates</button>
-    <button type="button" id="matchNZ" aria-pressed="false">🇳🇿 New Zealand vs India</button>
+    <button type="button" id="matchAUSENG" aria-pressed="false">🇦🇺 Australia vs England</button>
   </div>
 </header>
 
@@ -99,9 +102,12 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
     <div class="match-head">
       <div class="match-head-left">
         <div class="live"><span class="dot" id="liveDot"></span><span class="live-text" id="liveLabel">MATCH UPDATE</span><span class="status" id="status">Loading...</span></div>
-        <div class="note" id="matchNote">INDIA A vs UNITED ARAB EMIRATES · Match ID 100463</div>
+        <div class="note" id="matchNote">INDIA A vs UNITED ARAB EMIRATES</div>
       </div>
       <button class="inline-audio-btn" id="indUaeAudioBtn" type="button" aria-label="India A vs United Arab Emirates Audio Commentary">🎙️ Audio</button>
+    </div>
+    <div class="timer-bar" id="timerBar" hidden>
+      <span class="timer-pill" id="ausEngTimer">00:00</span>
     </div>
     <div id="scoreContent" class="center">Loading live score...</div>
     <button class="scorecard-btn" id="scorecardBtn" type="button">Full Scorecard →</button>
@@ -129,24 +135,79 @@ const MATCHES={
     name:'India A vs United Arab Emirates',
     team1:{flag:'🇮🇳',name:'India A',code:'IND-A'},
     team2:{flag:'🇦🇪',name:'United Arab Emirates',code:'UAE'},
-    fallback:'INDIA A vs UNITED ARAB EMIRATES · Match ID 100463'
+    fallback:'INDIA A vs UNITED ARAB EMIRATES',
+    startIso:null
   },
-  nz:{
-    url:'https://cricvoice.aminurmarch.workers.dev/?matchId=6a552bde5a2a46d5d3505263',
-    id:'6a552bde5a2a46d5d3505263',
-    name:'New Zealand vs India',
-    team1:{flag:'🇳🇿',name:'New Zealand',code:'NZ'},
-    team2:{flag:'🇮🇳',name:'India',code:'IND'},
-    fallback:'NEW ZEALAND vs INDIA · 1st Test · 19 November · 3:30 AM IST'
+  auseng:{
+    url:'https://bdcr.aminurmarch.workers.dev/?id=96700',
+    id:'96700',
+    name:'Australia vs England',
+    team1:{flag:'🇦🇺',name:'Australia',code:'AUS'},
+    team2:{flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',name:'England',code:'ENG'},
+    fallback:'AUSTRALIA vs ENGLAND · 2nd T20I · 24 Nov · 1:45 PM IST',
+    startIso:'2026-11-24T13:45:00+05:30'
   }
 };
 const REFRESH_MS=2 * 60 * 1000; // Auto-refresh score every 2 minutes
 let currentMatch=MATCHES.induae;
+let latestData=null;
+let countdownReachedZero=false;
 const $=id=>document.getElementById(id);
 const text=v=>(v===null||v===undefined||v===''?'—':String(v));
 const esc=v=>text(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const first=(...values)=>values.find(v=>v!==undefined&&v!==null&&v!=='');
 let busy=false,hasData=false,controller=null;
+
+function formatCountdown(ms){
+  const totalSec=Math.max(0,Math.floor(ms/1000));
+  const h=Math.floor(totalSec/3600);
+  const m=Math.floor((totalSec%3600)/60);
+  const s=totalSec%60;
+  if(h>0){
+    return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  }
+  return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+
+function isAusEngBeforeStart(){
+  if(currentMatch!==MATCHES.auseng || !currentMatch.startIso)return false;
+  const diff=new Date(currentMatch.startIso).getTime()-Date.now();
+  return diff>0;
+}
+
+function renderCountdownView(){
+  const diff=new Date(currentMatch.startIso).getTime()-Date.now();
+  $('timerBar').hidden=false;
+  $('ausEngTimer').textContent=formatCountdown(diff);
+  setStatusBadge('MATCH UPDATE', '1:45 PM IST', 'var(--yellow)');
+  $('matchNote').textContent=currentMatch.fallback;
+  $('scoreContent').className='center';
+  $('scoreContent').innerHTML=
+    '<div class="innings">'+
+      '<div class="teamline"><div><div class="team">'+esc(currentMatch.name)+'</div><div class="small">Starts at 1:45 PM IST</div></div><div class="score">'+esc(formatCountdown(diff))+'</div></div>'+
+    '</div>';
+}
+
+function syncAusEngTimer(){
+  if(currentMatch!==MATCHES.auseng || !currentMatch.startIso){
+    $('timerBar').hidden=true;
+    return;
+  }
+  const diff=new Date(currentMatch.startIso).getTime()-Date.now();
+  if(diff>0){
+    countdownReachedZero=false;
+    renderCountdownView();
+  }else{
+    $('timerBar').hidden=true;
+    if(!countdownReachedZero){
+      countdownReachedZero=true;
+      if(latestData){
+        render(latestData);
+      }
+      update();
+    }
+  }
+}
 
 function syncMatchAudioButton(){
   $('indUaeAudioBtn').hidden = currentMatch !== MATCHES.induae;
@@ -168,22 +229,27 @@ function setStatusBadge(liveLabelText, statusText, dotColor){
 function selectMatch(key){
   const next=MATCHES[key];
   if(!next||next===currentMatch)return;
-  currentMatch=next;hasData=false;
+  currentMatch=next;hasData=false;latestData=null;countdownReachedZero=false;
   if(controller)controller.abort();
   controller=null;busy=false;
   $('matchINDUAE').classList.toggle('active',key==='induae');
-  $('matchNZ').classList.toggle('active',key==='nz');
+  $('matchAUSENG').classList.toggle('active',key==='auseng');
   $('matchINDUAE').setAttribute('aria-pressed',String(key==='induae'));
-  $('matchNZ').setAttribute('aria-pressed',String(key==='nz'));
+  $('matchAUSENG').setAttribute('aria-pressed',String(key==='auseng'));
   syncMatchAudioButton();
-  setStatusBadge('MATCH UPDATE', 'Loading...', 'var(--accent2)');
-  $('matchNote').textContent=currentMatch.fallback;
-  $('scoreContent').className='center';$('scoreContent').textContent='Loading match score...';
+  if(isAusEngBeforeStart()){
+    renderCountdownView();
+  }else{
+    $('timerBar').hidden=true;
+    setStatusBadge('MATCH UPDATE', 'Loading...', 'var(--accent2)');
+    $('matchNote').textContent=currentMatch.fallback;
+    $('scoreContent').className='center';$('scoreContent').textContent='Loading match score...';
+  }
   $('scorecardBtn').textContent='Full Scorecard →';
   update();
 }
 $('matchINDUAE').onclick=()=>selectMatch('induae');
-$('matchNZ').onclick=()=>selectMatch('nz');
+$('matchAUSENG').onclick=()=>selectMatch('auseng');
 
 $('scorecardBtn').onclick=()=>{location.href=currentMatch===MATCHES.induae?'go:card':'go:card1';};
 $('indUaeAudioBtn').onclick=()=>{location.href='go:commentary';};
@@ -207,6 +273,16 @@ function render(data){
             data;
 
   if(!m || typeof m !== 'object') throw new Error('Invalid match response');
+
+  const apiTime = data?.datetime || data?.modified;
+  $('updated').textContent = 'Last updated: '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true})+(apiTime?' · Feed: '+esc(apiTime):'');
+
+  if(isAusEngBeforeStart()){
+    renderCountdownView();
+    return;
+  }
+
+  $('timerBar').hidden=true;
 
   const teamsObj = m.teams && !Array.isArray(m.teams) ? m.teams : null;
   const teamsArr = Array.isArray(m.teams) ? m.teams : null;
@@ -314,8 +390,6 @@ function render(data){
     '</div>';
 
   $('scorecardBtn').textContent='Full Scorecard →';
-  const apiTime = data?.datetime || data?.modified;
-  $('updated').textContent = 'Last updated: '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true})+(apiTime?' · Feed: '+esc(apiTime):'');
 }
 
 async function update(){
@@ -332,10 +406,15 @@ async function update(){
     if(currentMatch!==requestedMatch)return;
     const m=data && (data.responseData?.result || data.response?.responseData?.result || data.response || data.data || data.result || data);
     if(!m||typeof m!=='object') throw new Error('Invalid match response');
+    latestData=data;
     render(data);
     hasData=true;
   }catch(e){
     if(currentMatch!==requestedMatch)return;
+    if(isAusEngBeforeStart()){
+      renderCountdownView();
+      return;
+    }
     if(hasData){
       $('updated').textContent='Connection issue — showing last available score';
     }else{
@@ -351,9 +430,14 @@ async function update(){
 }
 
 syncMatchAudioButton();
+syncAusEngTimer();
 update();
+setInterval(syncAusEngTimer,1000);
 setInterval(update,REFRESH_MS);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)update();});
+document.addEventListener('visibilitychange',()=>{
+  syncAusEngTimer();
+  if(!document.hidden)update();
+});
 })();
 </script>
 </body>
