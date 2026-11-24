@@ -17,14 +17,15 @@ html{background:var(--bg)}
 body{margin:0;color:var(--text);font:14px Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(ellipse at 15% -10%,rgba(73,112,190,.24),transparent 38%),radial-gradient(ellipse at 100% 35%,rgba(255,117,77,.09),transparent 34%),var(--bg);min-height:100vh;-webkit-tap-highlight-color:transparent}
 button{font:inherit;cursor:pointer}
 button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.topbar{padding:15px 16px 16px;background:rgba(8,13,24,.91);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10;backdrop-filter:blur(16px)}
-.topline{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.brand{display:flex;align-items:center;gap:0;min-width:0;flex:1}
+.topbar{padding:13px 12px 14px;background:rgba(8,13,24,.91);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10;backdrop-filter:blur(16px)}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:8px;width:min(100%,650px);margin:auto}
+.brand{display:flex;align-items:center;gap:9px;min-width:0;flex:1}
+.brand-icon{width:34px;height:34px;flex-shrink:0;display:grid;place-items:center;border-radius:11px;background:linear-gradient(145deg,#ffad82,#f56e48);box-shadow:0 6px 18px rgba(255,125,83,.26)}
 .logo{width:46px;height:46px;display:grid;place-items:center;border-radius:16px;background:linear-gradient(145deg,#ffad82,#f56e48);font-size:24px;box-shadow:0 8px 25px rgba(255,125,83,.23)}
-.name{font-size:16px;font-weight:900;letter-spacing:-.6px;white-space:nowrap}
-.actions{display:flex;gap:8px}
-.icon-btn{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:#17243a;border:1px solid var(--line);color:#eaf0ff}
-.match-switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px auto 0;width:min(100%,650px)}
+.name{font-size:clamp(16px,4.5vw,20px);font-weight:900;letter-spacing:-.5px;line-height:1.18;white-space:normal;word-break:break-word}
+.actions{display:flex;gap:6px;flex-shrink:0}
+.icon-btn{width:35px;height:35px;display:grid;place-items:center;border-radius:11px;background:#17243a;border:1px solid var(--line);color:#eaf0ff}
+.match-switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:13px auto 0;width:min(100%,650px)}
 .match-switch button{min-height:42px;padding:9px 8px;border:1px solid var(--line);border-radius:13px;background:#17243a;color:#c5d2e8;font-size:11px;font-weight:850;line-height:1.25}
 .match-switch button.active{background:linear-gradient(105deg,#ffad82,#ff7954);border-color:transparent;color:#1b1c25;box-shadow:0 7px 18px rgba(255,126,83,.16)}
 .container{width:min(100%,650px);margin:auto;padding:22px 15px 30px}
@@ -64,23 +65,34 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .modal h2{font-size:18px;margin:0}
 .close-btn{background:#30415d;border:0;color:white;border-radius:10px;padding:7px 12px;font-size:18px}
 .modal p{color:#d3dbea;font-size:13px;line-height:1.7;margin:15px 0 0}
-@media(max-width:360px){.container{padding:17px 11px 24px}.name{font-size:14px;letter-spacing:-.5px}.topbar{padding-left:12px;padding-right:12px}.actions{gap:6px}.icon-btn{width:38px;height:38px}.stats{gap:5px}.stat{padding:10px 6px}}
+@media(max-width:360px){.container{padding:17px 11px 24px}.topbar{padding-left:10px;padding-right:10px}.brand{gap:7px}.brand-icon{width:30px;height:30px;border-radius:9px}.brand-icon svg{width:18px;height:18px}.name{font-size:15.5px;letter-spacing:-.4px}.actions{gap:5px}.icon-btn{width:33px;height:33px}.stats{gap:5px}.stat{padding:10px 6px}}
 
 </style>
 </head>
 <body>
 <header class="topbar">
   <div class="topline">
-    <div class="brand"><div class="name">Cricket Voice Commentary</div></div>
+    <div class="brand">
+      <div class="brand-icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <circle cx="9.5" cy="12" r="7" stroke="#181b26" stroke-width="2"/>
+          <path d="M6.8 5.7c2.1 2.5 2.1 10.1 0 12.6" stroke="#181b26" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M12.2 5.7c-2.1 2.5-2.1 10.1 0 12.6" stroke="#181b26" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="1.6 1.8"/>
+          <path d="M18.6 8.8a4.5 4.5 0 0 1 0 6.4" stroke="#181b26" stroke-width="2" stroke-linecap="round"/>
+          <path d="M21.2 6.2a8.2 8.2 0 0 1 0 11.6" stroke="#181b26" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="name">Cricket Voice Commentary</div>
+    </div>
     <div class="actions">
       <button class="icon-btn" id="privacyBtn" type="button" aria-label="Privacy Policy" title="Privacy Policy">
-        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/>
           <path d="m9 12 2 2 4-4"/>
         </svg>
       </button>
       <button class="icon-btn" id="shareBtn" type="button" aria-label="Share App" title="Share App">
-        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="18" cy="5" r="3"/>
           <circle cx="6" cy="12" r="3"/>
           <circle cx="18" cy="19" r="3"/>
