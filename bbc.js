@@ -1,171 +1,172 @@
 window.SCHEDULE_DATA = [
 
   // ==========================================
-  // TUESDAY, 24/11/2026 (TODAY)
+  // WEDNESDAY, 25/11/2026 (TODAY)
   // ==========================================
 
   // BBC Radio 1
-  { "time": "1:00 AM", "title": "BBC Introducing Rock on Radio 1 (with Alyx Holcombe: Track of the Week from Alchemize, & the best of Intro Rock in November - Alyx has a Track of the Week from Alchemize, and the best of Intro Rock in November.)", "channel": "BBC Radio 1" }, //[cite: 424]
-  { "time": "2:00 AM", "title": "Radio 1 Anthems (Haim, Oasis, Billie Eilish and more - Chelsea Little with big anthems and tunes you haven't heard in ages.)", "channel": "BBC Radio 1" }, //[cite: 424]
-  { "time": "4:00 AM", "title": "Radio 1 Early Breakfast with Mylo and Rosie (The Early Morning Register - Fun, games and great music to start the day on Early Breakfast.)", "channel": "BBC Radio 1" }, //[cite: 425]
-  { "time": "6:58 AM", "title": "Radio 1 Newsbeat (The latest news from around the UK and around the world.)", "channel": "BBC Radio 1" }, //[cite: 425]
-  { "time": "7:00 AM", "title": "Radio 1 Breakfast with Greg James (Rent A Presenter heads to the farm! - Mylo & Rosie are heading to the farm to milk 120 cows for Rent A Presenter!)", "channel": "BBC Radio 1" }, //[cite: 425]
-  { "time": "10:30 AM", "title": "Radio 1 Newsbeat (The latest news from around the UK and around the world.)", "channel": "BBC Radio 1" }, //[cite: 425]
-  { "time": "10:33 AM", "title": "Charlie and Jerry (Voice Note Roulette - Charlie and Jerry receive a mystery message in Voice Note Roulette - but who is it from?)", "channel": "BBC Radio 1" }, //[cite: 425]
-  { "time": "12:45 PM", "title": "Newsbeat (The latest news from around the UK and around the world.)", "channel": "BBC Radio 1" }, //[cite: 425]
-  { "time": "1:00 PM", "title": "Matt and Mollie (Matt v Mollie - Things are about to get heated in another round of Matt v Mollie!)", "channel": "BBC Radio 1" }, //[cite: 426]
-  { "time": "3:30 PM", "title": "Radio 1 Newsbeat (The latest news from around the UK and around the world.)", "channel": "BBC Radio 1" }, //[cite: 426]
-  { "time": "3:33 PM", "title": "Going Home with Vick, Katie and Jamie on Radio 1 (Can you complete the hardest quiz on the radio? - We bring you the hardest quiz on the radio, Complete the Year.)", "channel": "BBC Radio 1" }, //[cite: 426]
-  { "time": "5:45 PM", "title": "Newsbeat (The latest news from around the UK and around the world.)", "channel": "BBC Radio 1" }, //[cite: 426]
-  { "time": "6:00 PM", "title": "Radio 1's New Music Show with Jack Saunders (The best in brand new! - Jack brings you the best new music on the planet.)", "channel": "BBC Radio 1" }, //[cite: 426]
-  { "time": "7:30 PM", "title": "Radio 1 Live Lounge (Late: Vince Staples - Amazing performances from Radio 1's Live Lounge.)", "channel": "BBC Radio 1" }, //[cite: 426]
-  { "time": "8:00 PM", "title": "Radio 1's Future Artists with Sian Eleri (Future Flex from Disfreq - Disfreq takes over the Future Flex Mini Mix for five minutes of bangers.)", "channel": "BBC Radio 1" }, //[cite: 427]
-  { "time": "10:00 PM", "title": "Radio 1's Power Down Playlist with Sian Eleri (Airplane Mode - Sian spins Doechii, Billie Eilish, Bicep and more, to help you unplug from the world.)", "channel": "BBC Radio 1" }, //[cite: 427]
-  { "time": "11:00 PM", "title": "Radio 1's Indie Show (with Alyx Holcombe - Alyx Holcombe with all things indie and alternative.)", "channel": "BBC Radio 1" }, //[cite: 427]
+  { "time": "1:00 AM", "title": "Radio 1 Dance Drum & Bass Mix (DNB60: Koven - Koven take us on a journey with their emotive and high-energy DNB60.)", "channel": "BBC Radio 1" },
+  { "time": "2:00 AM", "title": "Radio 1 Anthems (Coldplay, Nick Jonas, Charli xcx and more - Chelsea Little with big anthems and tunes you haven't heard in ages.)", "channel": "BBC Radio 1" },
+  { "time": "4:00 AM", "title": "Radio 1 Early Breakfast with Mylo and Rosie (Tales from the farm... - Mylo and Rosie have been milking cows in Leicester and they're ready to debrief.)", "channel": "BBC Radio 1" },
+  { "time": "6:58 AM", "title": "Radio 1 Newsbeat (The latest news from around the UK and around the world.)", "channel": "BBC Radio 1" },
+  { "time": "7:00 AM", "title": "Radio 1 Breakfast with Greg James (Greg the tackle bag! - Greg's being a tackle bag for the Bath Rugby Ladies team for Rent A Presenter.)", "channel": "BBC Radio 1" },
+  { "time": "10:30 AM", "title": "Radio 1 Newsbeat (The latest news from around the UK and around the world.)", "channel": "BBC Radio 1" },
+  { "time": "10:33 AM", "title": "Charlie and Jerry (Wednesday Wins - Charlie and Jerry get you over hump day by celebrating your Wednesday Wins!)", "channel": "BBC Radio 1" },
+  { "time": "12:45 PM", "title": "Newsbeat (The latest news from around the UK and around the world.)", "channel": "BBC Radio 1" },
+  { "time": "1:00 PM", "title": "Matt and Mollie (Mol's Teaser - Mollie is back with another game, but can you answer quick enough for a podium finish?)", "channel": "BBC Radio 1" },
+  { "time": "3:30 PM", "title": "Radio 1 Newsbeat (The latest news from around the UK and around the world.)", "channel": "BBC Radio 1" },
+  { "time": "3:33 PM", "title": "Going Home with Vick, Katie and Jamie on Radio 1 (Freya Skye on the show! - Popstar Freya Skye hands over her phone and answers your questions in Access All Apps!)", "channel": "BBC Radio 1" },
+  { "time": "5:45 PM", "title": "Newsbeat (The latest news from around the UK and around the world.)", "channel": "BBC Radio 1" },
+  { "time": "6:00 PM", "title": "Radio 1's New Music Show with Jack Saunders (New Music HQ! - Jack keeps you across all the latest in new music!)", "channel": "BBC Radio 1" },
+  { "time": "8:00 PM", "title": "Radio 1's Future Pop with Mollie King (December 10 in the studio! - Mollie King showcases everything POP! And December 10 are in the studio!)", "channel": "BBC Radio 1" },
+  { "time": "10:00 PM", "title": "Radio 1's Power Down Playlist with Sian Eleri (Carefree Sounds - Laid back positivity for a calmer state of mind featuring Kehlani, Caribou and more...)", "channel": "BBC Radio 1" },
+  { "time": "11:00 PM", "title": "Benji B (Benji explores future beats from around the world.)", "channel": "BBC Radio 1" },
 
   // BBC Radio 2
-  { "time": "12:00 AM", "title": "OJ Borg (Ice-Ice-Update - OJ is live through the night from a chilly Salford Riviera with your cold weater updates.)", "channel": "BBC Radio 2" }, //[cite: 420]
-  { "time": "2:30 AM", "title": "One Hit Wonders with OJ Borg (37 years of Got To Get - OJ's celebrating 37 years since Rob 'N' Raz released Got To Get.)", "channel": "BBC Radio 2" }, //[cite: 420]
-  { "time": "3:00 AM", "title": "Dance Sounds of the 90s with Vernon Kay (Don't Stop Moving with Tameko Star - Living legend from Livin' Joy Tameko Star joins Vernon to share her 90s memories!)", "channel": "BBC Radio 2" }, //[cite: 421]
-  { "time": "4:00 AM", "title": "Owain Wyn Evans (Jason Mohammad sits in - Welcome! It's Early Breakfast with Jason Mohammad sitting in, featuring the Rewinder.)", "channel": "BBC Radio 2" }, //[cite: 421]
-  { "time": "6:30 AM", "title": "The Sara Cox Breakfast Show (Mark Goodier sits in - Mark Goodier's in for Sara to start your Tuesday!)", "channel": "BBC Radio 2" }, //[cite: 421]
-  { "time": "9:30 AM", "title": "Vernon Kay (Who's up for Ten To The Top? - Two listeners take on Vernon's mid-morning music quiz, Ten To The Top.)", "channel": "BBC Radio 2" }, //[cite: 421]
-  { "time": "12:00 PM", "title": "Jeremy Vine (Jeremy and guests discuss the news headlines and talk to the people making them.)", "channel": "BBC Radio 2" }, //[cite: 422]
-  { "time": "2:00 PM", "title": "Trevor Nelson (Clara Amfo sits in - Clara Amfo plays great music from across the decades to get you through the afternoon.)", "channel": "BBC Radio 2" }, //[cite: 422]
-  { "time": "4:00 PM", "title": "Angela Scanlon (Spotting the Beaver Moon! - Angela's on the look out for the Beaver Moon... it's on the rise across the UK!)", "channel": "BBC Radio 2" }, //[cite: 422]
-  { "time": "7:00 PM", "title": "Jo Whiley's Shiny Happy Playlist (Jo brings her Shiny Happy Playlist, 30 minutes of feelgood music.)", "channel": "BBC Radio 2" }, //[cite: 422]
-  { "time": "7:30 PM", "title": "Jo Whiley (Radio 2 Culture Club: TV with Emma Bullimore! - Jo chats to Emma Bullimore about all the telly you should be watching right now!)", "channel": "BBC Radio 2" }, //[cite: 422]
-  { "time": "9:00 PM", "title": "The Jazz Show with Jamie Cullum (Moses Boyd - Drummer Moses Boyd on his new record Songs For Sinners.)", "channel": "BBC Radio 2" }, //[cite: 422]
-  { "time": "10:00 PM", "title": "The Good Groove with DJ Spoony (The Isley Brothers chat to Spoony about their phenomenal career! - Spoony welcomes soul legends Ronald and Ernie Isley to The Good Groove!)", "channel": "BBC Radio 2" }, //[cite: 423]
+  { "time": "12:00 AM", "title": "OJ Borg (Punderland XI: Cake - OJ's live from Salford and he needs your celebrity cake puns for his Punderland XI team.)", "channel": "BBC Radio 2" },
+  { "time": "3:00 AM", "title": "Sounds of the 90s with Fearne Cotton (90s Karaoke Mixtape Vol. 2 - With karaoke classics from Celine Dion, Oasis and Robbie Williams!)", "channel": "BBC Radio 2" },
+  { "time": "4:00 AM", "title": "Owain Wyn Evans (Jason Mohammad sits in - Welcome! It's Early Breakfast with Jason Mohammad sitting in, featuring the Rewinder.)", "channel": "BBC Radio 2" },
+  { "time": "6:30 AM", "title": "The Sara Cox Breakfast Show (It's Rashida Jones and Hailee Steinfeld! - More Hollywood stars are in the studio - it's Hailee Steinfeld and Rashida Jones!)", "channel": "BBC Radio 2" },
+  { "time": "9:30 AM", "title": "Vernon Kay (Good News Wednesday - Vernon hears about what's making you smile on Good News Wednesday.)", "channel": "BBC Radio 2" },
+  { "time": "12:00 PM", "title": "Jeremy Vine (Jeremy and guests discuss the news headlines and talk to the people making them.)", "channel": "BBC Radio 2" },
+  { "time": "2:00 PM", "title": "Trevor Nelson (Midweek music to boost your mood! - Trevor brings you great music from across the decades to get you through the afternoon.)", "channel": "BBC Radio 2" },
+  { "time": "4:00 PM", "title": "Angela Scanlon (It's the official end of the day! You get the tea on, Angela's got the soundtrack sorted.)", "channel": "BBC Radio 2" },
+  { "time": "7:00 PM", "title": "Jo Whiley's Shiny Happy Playlist (Jo brings her Shiny Happy Playlist, 30 minutes of feelgood music.)", "channel": "BBC Radio 2" },
+  { "time": "7:30 PM", "title": "Jo Whiley (Sofa Session: Keo - Keo perform a live Sofa Session for Jo!)", "channel": "BBC Radio 2" },
+  { "time": "9:00 PM", "title": "The Folk Show with Mark Radcliffe (Turning private stories into songs, with Thea Gilmore - The best folk and acoustic music. Thea Gilmore explains The Echo Line.)", "channel": "BBC Radio 2" },
+  { "time": "10:00 PM", "title": "The Good Groove with DJ Spoony (Play along with guessing game Music Is the Answer! - Feelgood favourites, hidden gems and fresh new tunes to groove and soothe your soul.)", "channel": "BBC Radio 2" },
 
   // BBC Radio 3
-  { "time": "12:30 AM", "title": "Through the Night (Mozart and Tchaikovsky from Switzerland - Mozart's Piano Concerto No 23 and Tchaikovsky's rarely-performed Third Symphony.)", "channel": "BBC Radio 3" }, //[cite: 416]
-  { "time": "6:30 AM", "title": "Radio 3 Breakfast (Ease into the day with classical music - Join Tom McKinney every Monday to Friday for Radio 3's Breakfast show.)", "channel": "BBC Radio 3" }, //[cite: 416]
-  { "time": "9:30 AM", "title": "Essential Classics (Great classical music for your morning - Georgia Mann plays the best in classical music for your morning.)", "channel": "BBC Radio 3" }, //[cite: 417]
-  { "time": "1:00 PM", "title": "Classical Live (Vaughan Williams's The Lark Ascending - Elizabeth Alker showcases live performances and exclusive concerts from home and abroad.)", "channel": "BBC Radio 3" }, //[cite: 417]
-  { "time": "4:00 PM", "title": "Composer of the Week (Manuel de Falla (1876-1946): Madrid - Kate Molleson follows Falla to Madrid, where he meets a new mentor.)", "channel": "BBC Radio 3" }, //[cite: 417]
-  { "time": "5:00 PM", "title": "In Tune (The biggest names in classical music - Live music and interviews from the world's finest classical musicians.)", "channel": "BBC Radio 3" }, //[cite: 417]
-  { "time": "7:00 PM", "title": "Classical Mixtape (The eclectic classical mix - Take time out with a 30-minute soundscape of classical favourites.)", "channel": "BBC Radio 3" }, //[cite: 417]
-  { "time": "7:30 PM", "title": "Radio 3 in Concert (Prokofiev's Romeo and Juliet - BBC National Orchestra of Wales and Martyn Brabbins perform Debussy and Prokofiev.)", "channel": "BBC Radio 3" }, //[cite: 418]
-  { "time": "9:45 PM", "title": "The Essay (Listening to the Planet: Whale Song with Kate Stafford - Chris Watson hears about the Arctic's underwater sounds, featuring ice and whales.)", "channel": "BBC Radio 3" }, //[cite: 418]
-  { "time": "10:00 PM", "title": "Night Tracks (Meditative music for night owls - Sara Mohr-Pietsch with an adventurous, immersive soundtrack for late-night listening.)", "channel": "BBC Radio 3" }, //[cite: 418]
-  { "time": "11:30 PM", "title": "'Round Midnight (Fresh from Joshua Redman - Soweto shares music from seminal American saxophonist Joshua Redman's new album.)", "channel": "BBC Radio 3" }, //[cite: 418]
+  { "time": "12:30 AM", "title": "Through the Night (Schubert and Schumann from Schubertiade Hohenems - The Minetti Quartet and Kit Armstrong perform music by Schubert, Schumann and Mozart.)", "channel": "BBC Radio 3" },
+  { "time": "6:30 AM", "title": "Radio 3 Breakfast (Wake up with classical music - Join Tom McKinney every Monday to Friday for Radio 3's Breakfast show.)", "channel": "BBC Radio 3" },
+  { "time": "9:30 AM", "title": "Essential Classics (The best classical morning music - Georgia Mann plays the best in classical music for your morning.)", "channel": "BBC Radio 3" },
+  { "time": "1:00 PM", "title": "Classical Live (Richard Strauss's Also sprach Zarathustra in the Sydney Opera House - Elizabeth Alker showcases live performances and exclusive concerts from home and abroad.)", "channel": "BBC Radio 3" },
+  { "time": "3:00 PM", "title": "Choral Evensong (Pembroke College, Cambridge - Live from the Chapel of Pembroke College, Cambridge.)", "channel": "BBC Radio 3" },
+  { "time": "4:00 PM", "title": "Composer of the Week (Manuel de Falla (1876-1946): Paris - Kate Molleson follows Falla to Paris, where he befriends Paul Dukas and Claude Debussy.)", "channel": "BBC Radio 3" },
+  { "time": "5:00 PM", "title": "In Tune (Classical music live in the studio - Live music and interviews from the world's finest classical musicians.)", "channel": "BBC Radio 3" },
+  { "time": "7:00 PM", "title": "Classical Mixtape (Half an hour of calming classical music - Take time out with a 30-minute soundscape of classical music.)", "channel": "BBC Radio 3" },
+  { "time": "7:30 PM", "title": "Radio 3 in Concert (Cécile McLorin Salvant at the EFG London Jazz Festival - The Grammy Award-winning singer joins the BBC Concert Orchestra and Edwin Outwater.)", "channel": "BBC Radio 3" },
+  { "time": "9:45 PM", "title": "The Essay (Listening to the Planet: Planet Symphonies with Alice Eldridge - Chris Watson explores Indigenous sound mapping in South America's ecosystems.)", "channel": "BBC Radio 3" },
+  { "time": "10:00 PM", "title": "Night Tracks (Blissful sounds for after-hours - Sara Mohr-Pietsch with an adventurous, immersive soundtrack for late-night listening.)", "channel": "BBC Radio 3" },
+  { "time": "11:30 PM", "title": "'Round Midnight (Brand new from Miles Pillinger - Soweto shares a new release from Manchester-born drummer and composer Miles Pillinger.)", "channel": "BBC Radio 3" },
 
   // BBC Radio 4
-  { "time": "12:00 AM", "title": "Midnight News (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" }, //[cite: 409]
-  { "time": "12:30 AM", "title": "The Traveller by Andrea Wulf (The Keen-Eyed Assistant - Andrea Wulf's biography of George Forster, traveller, botanist and radical thinker.)", "channel": "BBC Radio 4" }, //[cite: 409]
-  { "time": "12:48 AM", "title": "Shipping Forecast (The latest weather reports and forecasts for UK shipping.)", "channel": "BBC Radio 4" }, //[cite: 409]
-  { "time": "1:00 AM", "title": "Selection of BBC World Service Programmes (BBC Radio 4 joins the BBC World Service.)", "channel": "BBC Radio 4" }, //[cite: 410]
-  { "time": "5:00 AM", "title": "News Summary (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" }, //[cite: 410]
-  { "time": "5:05 AM", "title": "Yesterday in Parliament (Alicia McCarthy reports as MPs question the Prime Minister about his EU deal.)", "channel": "BBC Radio 4" }, //[cite: 410]
-  { "time": "5:34 AM", "title": "Shipping Forecast (The latest weather reports and forecasts for UK shipping.)", "channel": "BBC Radio 4" }, //[cite: 410]
-  { "time": "5:43 AM", "title": "Prayer for the Day (Thinking of the children - A spiritual comment and prayer to start the day with Rachel Barnett-Jones.)", "channel": "BBC Radio 4" }, //[cite: 410]
-  { "time": "5:45 AM", "title": "Farming Today (Fishing industry's unwanted bycatch; warmer waters; the aftermath of COP31 - Calls on fishing industry to reduce the amount of bycatch being thrown back into the sea.)", "channel": "BBC Radio 4" }, //[cite: 411]
-  { "time": "6:00 AM", "title": "Today (News and current affairs, including Sports Desk, Weather and Thought for the Day.)", "channel": "BBC Radio 4" }, //[cite: 411]
-  { "time": "9:00 AM", "title": "The Reith Lectures (Robert Macfarlane - The Human Superiority Complex: EARTH: The Ladder and the Web - Best-selling writer Robert Macfarlane delivers the first of his BBC Reith Lectures.)", "channel": "BBC Radio 4" }, //[cite: 411]
-  { "time": "10:00 AM", "title": "Woman's Hour (Pregnancy and weight-loss drugs, Women's World Cup 2035, Iraqi student protests - What should women do if they become pregnant while taking GLP-1 weight loss drugs?)", "channel": "BBC Radio 4" }, //[cite: 411]
-  { "time": "11:00 AM", "title": "Add to Playlist (Britney Spears and The Can-Can with a spot of twerking - Matilda Lloyd and Keelan Carew join Anna and Jeffrey.)", "channel": "BBC Radio 4" }, //[cite: 411]
-  { "time": "11:45 AM", "title": "The Traveller by Andrea Wulf (On the Resolution - Andrea Wulf's biography of George Forster, traveller, botanist and radical thinker.)", "channel": "BBC Radio 4" }, //[cite: 411]
-  { "time": "12:00 PM", "title": "You and Yours (Call You & Yours: How have you been scammed, and how did it change what you do?)", "channel": "BBC Radio 4" }, //[cite: 412]
-  { "time": "1:00 PM", "title": "World at One (News, analysis and comment from BBC Radio 4)", "channel": "BBC Radio 4" }, //[cite: 412]
-  { "time": "1:45 PM", "title": "The History Podcast (For Pity's Sake: 7. The Scotts - A family drama at the heart of parliament.)", "channel": "BBC Radio 4" }, //[cite: 412]
-  { "time": "2:00 PM", "title": "The Archers (Freddie faces a professional disappointment.)", "channel": "BBC Radio 4" }, //[cite: 412]
-  { "time": "2:15 PM", "title": "Trust (Series 7 - 1. Pre People - Julie Hesmondhalgh stars in Jonathan Hall's comedy drama set in a Salford Academy School.)", "channel": "BBC Radio 4" }, //[cite: 412]
-  { "time": "3:00 PM", "title": "History's Heroes (Rose Heilbron QC and the Cameo Murder - Can the first woman to lead a murder case in England prove herself in court?)", "channel": "BBC Radio 4" }, //[cite: 412]
-  { "time": "3:30 PM", "title": "Heart and Soul (A singer's search for peace - A Lithuanian singer's journey from New Age spirituality and ayahuasca to faith.)", "channel": "BBC Radio 4" }, //[cite: 412]
-  { "time": "4:00 PM", "title": "Artworks (Beyond Reason - The extraordinary story of the Prinzhorn Collection that would change the history of art.)", "channel": "BBC Radio 4" }, //[cite: 413]
-  { "time": "4:30 PM", "title": "What's Up Docs? (How does chewing affect your health? - Drs Chris and Xand van Tulleken explore what chewing does to our health.)", "channel": "BBC Radio 4" }, //[cite: 413]
-  { "time": "5:00 PM", "title": "PM (Full coverage of the day's news)", "channel": "BBC Radio 4" }, //[cite: 413]
-  { "time": "6:00 PM", "title": "Six O'Clock News (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" }, //[cite: 413]
-  { "time": "6:30 PM", "title": "One Person Found This Helpful (Series 5: 1. Absolutely No Hedgehogs - How to beat those box-junction blues with just an extra-long turkey feather and a plum.)", "channel": "BBC Radio 4" }, //[cite: 413]
-  { "time": "7:00 PM", "title": "The Archers (Fallon attempts a ceasefire.)", "channel": "BBC Radio 4" }, //[cite: 413]
-  { "time": "7:15 PM", "title": "Front Row (Live magazine programme on the worlds of arts, literature, film, media and music)", "channel": "BBC Radio 4" }, //[cite: 414]
-  { "time": "8:00 PM", "title": "File on 4 Investigates (Why was he released? - Three men killed. Nearly eight years on, one family is still fighting for answers.)", "channel": "BBC Radio 4" }, //[cite: 414]
-  { "time": "8:40 PM", "title": "In Touch (News, views and information for people who are blind or partially sighted)", "channel": "BBC Radio 4" }, //[cite: 414]
-  { "time": "9:00 PM", "title": "The Law Show (Defending the guilty - How do lawyers defend a client they know is guilty?)", "channel": "BBC Radio 4" }, //[cite: 414]
-  { "time": "9:30 PM", "title": "Intrigue (Chasing Mr Sunshine: 2. Opportunity Meets Ambition - A local council does deals in a fancy London bar, but who's keeping watch?)", "channel": "BBC Radio 4" }, //[cite: 414]
-  { "time": "10:00 PM", "title": "The World Tonight (In depth reporting, intelligent analysis and breaking news from a global perspective)", "channel": "BBC Radio 4" }, //[cite: 414]
-  { "time": "10:45 PM", "title": "The Rector's Wife by Joanna Trollope (Episode 7 - Joanna Trollope's best-selling 1991 novel about an unhappy marriage in a country parish.)", "channel": "BBC Radio 4" }, //[cite: 414]
-  { "time": "11:00 PM", "title": "Uncanny (Series 6: Case 3: The Sunbury Avenue Poltergeist - Kerrie moves into a student house share... but what else is she sharing the house with?)", "channel": "BBC Radio 4" }, //[cite: 415]
-  { "time": "11:30 PM", "title": "Today in Parliament (News, views and features on today's stories in Parliament)", "channel": "BBC Radio 4" }, //[cite: 415]
+  { "time": "12:00 AM", "title": "Midnight News (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" },
+  { "time": "12:30 AM", "title": "The Traveller by Andrea Wulf (On the Resolution - Andrea Wulf's biography of George Forster, traveller, botanist and radical thinker.)", "channel": "BBC Radio 4" },
+  { "time": "12:48 AM", "title": "Shipping Forecast (The latest weather reports and forecasts for UK shipping.)", "channel": "BBC Radio 4" },
+  { "time": "1:00 AM", "title": "Selection of BBC World Service Programmes (BBC Radio 4 joins the BBC World Service.)", "channel": "BBC Radio 4" },
+  { "time": "5:00 AM", "title": "News Summary (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" },
+  { "time": "5:05 AM", "title": "Yesterday in Parliament (Susan Hulme reports on reaction to the long-awaited review of the disability benefit PiP.)", "channel": "BBC Radio 4" },
+  { "time": "5:34 AM", "title": "Shipping Forecast (The latest weather reports and forecasts for UK shipping.)", "channel": "BBC Radio 4" },
+  { "time": "5:43 AM", "title": "Prayer for the Day (Keeping the show on the road - A spiritual comment and prayer to start the day with Father Niall Weir.)", "channel": "BBC Radio 4" },
+  { "time": "5:45 AM", "title": "Farming Today (25/11/26 Wales new bovine TB strategy; south coast fishermen; antibiotic use. - A new bovine TB strategy for Wales rules out a mass badger cull.)", "channel": "BBC Radio 4" },
+  { "time": "6:00 AM", "title": "Today (News and current affairs, including Sports Desk, Weather and Thought for the Day.)", "channel": "BBC Radio 4" },
+  { "time": "9:00 AM", "title": "Life Changing (The choice that unearthed school trauma - An exciting opportunity unearths a buried boarding school trauma.)", "channel": "BBC Radio 4" },
+  { "time": "9:30 AM", "title": "Shadow World (Sarah Payne: Unforgotten: 3. Sarah's Law - After her daughter's murder, Sara Payne turns grief into the fight for Sarah's Law.)", "channel": "BBC Radio 4" },
+  { "time": "10:00 AM", "title": "Woman's Hour ('Obstetric violence', Choreographer Aditi Mangaldas, Butterfly skin - How could the term 'obstetric violence' help women's experience of maternity care?)", "channel": "BBC Radio 4" },
+  { "time": "11:00 AM", "title": "File on 4 Investigates (Why was he released? - Three men killed. Nearly eight years on, one family is still fighting for answers.)", "channel": "BBC Radio 4" },
+  { "time": "11:40 AM", "title": "This Week in History (November 23rd - November 29th - Surprising and eye-opening stories from the past, brought to life.)", "channel": "BBC Radio 4" },
+  { "time": "11:45 AM", "title": "The Traveller by Andrea Wulf (Great Expectations - Andrea Wulf's biography of George Forster, traveller, botanist and radical thinker.)", "channel": "BBC Radio 4" },
+  { "time": "12:00 PM", "title": "You and Yours (News and discussion of consumer affairs)", "channel": "BBC Radio 4" },
+  { "time": "1:00 PM", "title": "World at One (News, analysis and comment from BBC Radio 4)", "channel": "BBC Radio 4" },
+  { "time": "1:45 PM", "title": "The History Podcast (For Pity's Sake: 8. Let's Get to Work - Take that, special school.)", "channel": "BBC Radio 4" },
+  { "time": "2:00 PM", "title": "The Archers (Fallon attempts a ceasefire.)", "channel": "BBC Radio 4" },
+  { "time": "2:15 PM", "title": "Trust (Series 7 - 2. Sticks and Stones - Jonathan Hall's comedy drama about a Salford secondary school starring Julie Hesmondhalgh.)", "channel": "BBC Radio 4" },
+  { "time": "3:00 PM", "title": "The Law Show (Someone has deepfaked me, what can I do? - AI deepfakes and the law. What is illegal, and what is allowed?)", "channel": "BBC Radio 4" },
+  { "time": "3:30 PM", "title": "The Pill for Him (Dr Alex Lathbridge explores the protracted development of a contraceptive pill for men.)", "channel": "BBC Radio 4" },
+  { "time": "4:00 PM", "title": "When It Hits the Fan (Who's in the news for all the wrong reasons? With David Yelland and Farzana Baduel.)", "channel": "BBC Radio 4" },
+  { "time": "4:15 PM", "title": "The Media Show (This is the programme about a revolution in media.)", "channel": "BBC Radio 4" },
+  { "time": "5:00 PM", "title": "PM (Full coverage of the day's news)", "channel": "BBC Radio 4" },
+  { "time": "6:00 PM", "title": "Six O'Clock News (National and international news from BBC Radio 4)", "channel": "BBC Radio 4" },
+  { "time": "6:30 PM", "title": "Stand-Up Specials (Live from the UK: Gloria Hunniford on a Comedown - Tamsyn Kelly, Hasan Al-Habib, Bella Humphries and Ian Smith join Angela Barnes.)", "channel": "BBC Radio 4" },
+  { "time": "7:00 PM", "title": "The Archers (Usha pushes for answers.)", "channel": "BBC Radio 4" },
+  { "time": "7:15 PM", "title": "Front Row (Michael Sheen on Owain & Henry - Michael Sheen, Roman Scotland, Composer Jennifer Walshe)", "channel": "BBC Radio 4" },
+  { "time": "8:00 PM", "title": "Moral Maze (Live debate examining the moral issues behind one of the week's news stories.)", "channel": "BBC Radio 4" },
+  { "time": "9:00 PM", "title": "The Scientists Who Love Ash Trees (Can science provide a solution in the great race to save our native ash trees?)", "channel": "BBC Radio 4" },
+  { "time": "9:30 PM", "title": "Intrigue (Chasing Mr Sunshine: 3. This Doesn't Add Up - Red flags are raised - but ignored - as the council puts more cash into solar farms.)", "channel": "BBC Radio 4" },
+  { "time": "10:00 PM", "title": "The World Tonight (In depth reporting, intelligent analysis and breaking news from a global perspective)", "channel": "BBC Radio 4" },
+  { "time": "10:45 PM", "title": "The Rector's Wife by Joanna Trollope (Episode 8 - Joanna Trollope's best-selling 1991 novel about an unhappy marriage in a country parish.)", "channel": "BBC Radio 4" },
+  { "time": "11:00 PM", "title": "Not My Problem (2. Babies and Beauty Serums - Why are children putting acid on their face?)", "channel": "BBC Radio 4" },
+  { "time": "11:15 PM", "title": "We Forced a Bot to Write This Show (2: Pizza, Power Ballad, and Panto. - AI digests human media, then writes its own versions. The result is absurdly hilarious.)", "channel": "BBC Radio 4" },
+  { "time": "11:30 PM", "title": "Today in Parliament (News, views and features on today's stories in Parliament)", "channel": "BBC Radio 4" },
 
   // BBC World Service
-  { "time": "12:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 399]
-  { "time": "12:06 AM", "title": "The History Hour (Delhi's great smog and the birth of K-Pop - An hour of historical reporting told by the people who were there)", "channel": "BBC World Service" }, //[cite: 399]
-  { "time": "1:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 399]
-  { "time": "1:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 399]
-  { "time": "1:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 399]
-  { "time": "1:32 AM", "title": "The Global Story (How to prove a genocide - We speak to the lawyer Philippe Sands on winning the landmark ICJ case against Myanmar)", "channel": "BBC World Service" }, //[cite: 400]
-  { "time": "2:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 400]
-  { "time": "2:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 400]
-  { "time": "2:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 400]
-  { "time": "2:32 AM", "title": "Assignment (America's last prison rodeo - The Angola prison rodeo pits inmates against bulls in front of members of the public)", "channel": "BBC World Service" }, //[cite: 400]
-  { "time": "3:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 400]
-  { "time": "3:06 AM", "title": "Outlook (Why my face tattoo tells a story of hope over adversity - Mark Kopua is reviving Ta Moko, the ornate tattoos of New Zealand's Māori culture)", "channel": "BBC World Service" }, //[cite: 400]
-  { "time": "3:50 AM", "title": "Witness History (The start of the World Trade Organization - In 1994, the agreement that created the World Trade Organization was signed in Morrocco)", "channel": "BBC World Service" }, //[cite: 400]
-  { "time": "4:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 400]
-  { "time": "4:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 401]
-  { "time": "4:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 401]
-  { "time": "4:32 AM", "title": "In the Studio (Tiago Rodrigues - Battle for democracy on stage)", "channel": "BBC World Service" }, //[cite: 401]
-  { "time": "5:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 401]
-  { "time": "5:06 AM", "title": "Newsday (Live news, business and sport from around the world.)", "channel": "BBC World Service" }, //[cite: 401]
-  { "time": "6:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 401]
-  { "time": "6:06 AM", "title": "Newsday (Live news, business and sport from around the world.)", "channel": "BBC World Service" }, //[cite: 401]
-  { "time": "7:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 401]
-  { "time": "7:06 AM", "title": "Newsday (Live news, business and sport from around the world.)", "channel": "BBC World Service" }, //[cite: 402]
-  { "time": "8:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 402]
-  { "time": "8:06 AM", "title": "People Fixing The World (Toilet troubleshooters - Improving sanitation and access to safe clean toilets in Kenya and Bangladesh)", "channel": "BBC World Service" }, //[cite: 402]
-  { "time": "8:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 402]
-  { "time": "8:32 AM", "title": "Business Daily (Follow the Money: Where did Trump's tariff refunds go? - $128 billion was refunded after Trump's tariffs were struck down. Shoppers got nothing.)", "channel": "BBC World Service" }, //[cite: 402]
-  { "time": "8:50 AM", "title": "Witness History (The campaign to cancel Liberia's debt - In 2010. Liberia's creditors wrote off billions of dollars of debt)", "channel": "BBC World Service" }, //[cite: 402]
-  { "time": "9:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 402]
-  { "time": "9:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 402]
-  { "time": "9:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 402]
-  { "time": "9:32 AM", "title": "Assignment (America's last prison rodeo - The Angola prison rodeo pits inmates against bulls in front of members of the public)", "channel": "BBC World Service" }, //[cite: 403]
-  { "time": "10:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 403]
-  { "time": "10:06 AM", "title": "The Arts Hour (Hollywood star Laura Linney - Laura Linney on playing a character with Parkinson's Disease)", "channel": "BBC World Service" }, //[cite: 403]
-  { "time": "11:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 403]
-  { "time": "11:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 403]
-  { "time": "11:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 403]
-  { "time": "11:32 AM", "title": "The Global Story", "channel": "BBC World Service" }, //[cite: 403]
-  { "time": "12:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 403]
-  { "time": "12:06 PM", "title": "Outlook (Meet Gongo, the snake catcher of Puerto Rico - José Luis Morales Berríos a.k.a. Gongo wrestles boas and pythons for a living)", "channel": "BBC World Service" }, //[cite: 404]
-  { "time": "12:50 PM", "title": "Witness History (The campaign to cancel Liberia's debt - In 2010, Liberia's creditors wrote off billions of dollars of debt)", "channel": "BBC World Service" }, //[cite: 404]
-  { "time": "1:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 404]
-  { "time": "1:06 PM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 404]
-  { "time": "1:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 404]
-  { "time": "1:32 PM", "title": "In the Studio (Tiago Rodrigues - Battle for democracy on stage)", "channel": "BBC World Service" }, //[cite: 404]
-  { "time": "2:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 404]
-  { "time": "2:06 PM", "title": "Newshour (Interviews, news and analysis of the day's global events.)", "channel": "BBC World Service" }, //[cite: 404]
-  { "time": "3:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 404]
-  { "time": "3:06 PM", "title": "People Fixing The World (Toilet troubleshooters - Improving sanitation and access to safe clean toilets in Kenya and Bangladesh)", "channel": "BBC World Service" }, //[cite: 405]
-  { "time": "3:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 405]
-  { "time": "3:32 PM", "title": "Business Daily (Follow the Money: Where did Trump's tariff refunds go? - $128 billion was refunded after Trump's tariffs were struck down. Shoppers got nothing.)", "channel": "BBC World Service" }, //[cite: 405]
-  { "time": "3:50 PM", "title": "World Business Express (Finance, economy and business news from BBC journalists around the world)", "channel": "BBC World Service" }, //[cite: 405]
-  { "time": "4:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 405]
-  { "time": "4:06 PM", "title": "Outside Source (A vibrant account of the day's events with explanation and reaction from those involved.)", "channel": "BBC World Service" }, //[cite: 405]
-  { "time": "5:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 405]
-  { "time": "5:06 PM", "title": "Outside Source (A vibrant account of the day's events with explanation and reaction from those involved.)", "channel": "BBC World Service" }, //[cite: 406]
-  { "time": "6:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 406]
-  { "time": "6:06 PM", "title": "Outlook (Meet Gongo, the snake catcher of Puerto Rico - José Luis Morales Berríos a.k.a. Gongo wrestles boas and pythons for a living)", "channel": "BBC World Service" }, //[cite: 406]
-  { "time": "6:50 PM", "title": "Witness History (The campaign to cancel Liberia's debt - In 2010, Liberia's creditors wrote off billions of dollars of debt)", "channel": "BBC World Service" }, //[cite: 406]
-  { "time": "7:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 406]
-  { "time": "7:06 PM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 406]
-  { "time": "7:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 406]
-  { "time": "7:32 PM", "title": "Sport Today (BBC sports correspondents tell the story behind today's top sporting news, with interviews and reports from across the world.)", "channel": "BBC World Service" }, //[cite: 406]
-  { "time": "8:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 406]
-  { "time": "8:06 PM", "title": "Assignment (America's last prison rodeo - The Angola prison rodeo pits inmates against bulls in front of members of the public)", "channel": "BBC World Service" }, //[cite: 406]
-  { "time": "8:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 407]
-  { "time": "8:32 PM", "title": "Tech Life (How tech is transforming the way the world works, learns and plays)", "channel": "BBC World Service" }, //[cite: 407]
-  { "time": "9:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 407]
-  { "time": "9:06 PM", "title": "Newshour (Interviews, news and analysis of the day's global events.)", "channel": "BBC World Service" }, //[cite: 407]
-  { "time": "10:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 407]
-  { "time": "10:06 PM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" }, //[cite: 407]
-  { "time": "10:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 407]
-  { "time": "10:32 PM", "title": "World Business Report (The latest business and finance news from around the world, on the BBC.)", "channel": "BBC World Service" }, //[cite: 407]
-  { "time": "11:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 407]
-  { "time": "11:06 PM", "title": "People Fixing The World (Toilet troubleshooters - Improving sanitation and access to safe clean toilets in Kenya and Bangladesh)", "channel": "BBC World Service" }, //[cite: 408]
-  { "time": "11:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" }, //[cite: 408]
-  { "time": "11:32 PM", "title": "In the Studio (Tiago Rodrigues - Battle for democracy on stage)", "channel": "BBC World Service" } //[cite: 408]
+  { "time": "12:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "12:06 AM", "title": "The Arts Hour (Hollywood star Laura Linney - Laura Linney on playing a character with Parkinson's Disease)", "channel": "BBC World Service" },
+  { "time": "1:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "1:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" },
+  { "time": "1:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "1:32 AM", "title": "The Global Story (Was Jensen Huang too big to fail? - How did the entire global economy become dependent on one man?)", "channel": "BBC World Service" },
+  { "time": "2:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "2:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" },
+  { "time": "2:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "2:32 AM", "title": "The Climate Question (COP collapses: What is the future for climate action? - The big climate summit fails because of a row about even mentioning fossil fuel emissions)", "channel": "BBC World Service" },
+  { "time": "3:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "3:06 AM", "title": "Outlook (Meet Gongo, the snake catcher of Puerto Rico - José Luis Morales Berríos a.k.a. Gongo wrestles boas and pythons for a living)", "channel": "BBC World Service" },
+  { "time": "3:50 AM", "title": "Witness History (The campaign to cancel Liberia's debt - In 2010. Liberia's creditors wrote off billions of dollars of debt)", "channel": "BBC World Service" },
+  { "time": "4:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "4:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" },
+  { "time": "4:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "4:32 AM", "title": "World of Secrets (Dr Skin: 2. Acres of skin - Uncovering Albert Kligman's obsession with skin and the origins of Retin-A)", "channel": "BBC World Service" },
+  { "time": "5:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "5:06 AM", "title": "Newsday (Live news, business and sport from around the world.)", "channel": "BBC World Service" },
+  { "time": "6:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "6:06 AM", "title": "Newsday (Live news, business and sport from around the world.)", "channel": "BBC World Service" },
+  { "time": "7:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "7:06 AM", "title": "Newsday (Live news, business and sport from around the world.)", "channel": "BBC World Service" },
+  { "time": "8:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "8:06 AM", "title": "The Interview (Anita Anand, Canada's foreign minister: Shaping a new world order - Canada's Foreign Minister Anita Anand on her country's bid to shape a new world order)", "channel": "BBC World Service" },
+  { "time": "8:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "8:32 AM", "title": "Business Daily (Founders: How Whatnot built a live shopping giant - Grant LaFontaine explains how selling Pokémon cards inspired a billion-dollar business)", "channel": "BBC World Service" },
+  { "time": "8:50 AM", "title": "Witness History (When a Spanish town swapped back to the peseta - In 2011, a Galician town turned back to the peseta during an economic crises)", "channel": "BBC World Service" },
+  { "time": "9:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "9:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" },
+  { "time": "9:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "9:32 AM", "title": "The Climate Question (COP collapses: What is the future for climate action? - The big climate summit fails because of a row about even mentioning fossil fuel emissions)", "channel": "BBC World Service" },
+  { "time": "10:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "10:06 AM", "title": "In Our Time (In our Time: The Evolution of Trees - The ideas, people and events that have shaped our world.)", "channel": "BBC World Service" },
+  { "time": "11:00 AM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "11:06 AM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" },
+  { "time": "11:30 AM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "11:32 AM", "title": "The Global Story", "channel": "BBC World Service" },
+  { "time": "12:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "12:06 PM", "title": "Outlook (True stories of ordinary people and the extraordinary events that have shaped their lives.)", "channel": "BBC World Service" },
+  { "time": "12:50 PM", "title": "Witness History (When a Spanish town swapped back to the peseta - In 2011, a Galician town turned back to the peseta during an economic crises)", "channel": "BBC World Service" },
+  { "time": "1:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "1:06 PM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" },
+  { "time": "1:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "1:32 PM", "title": "World of Secrets (Dr Skin: 2. Acres of skin - Uncovering Albert Kligman's obsession with skin and the origins of Retin-A)", "channel": "BBC World Service" },
+  { "time": "2:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "2:06 PM", "title": "Newshour (Interviews, news and analysis of the day's global events.)", "channel": "BBC World Service" },
+  { "time": "3:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "3:06 PM", "title": "The Interview (Anita Anand, Canada's foreign minister: Shaping a new world order - Canada's Foreign Minister Anita Anand on her country's bid to shape a new world order)", "channel": "BBC World Service" },
+  { "time": "3:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "3:32 PM", "title": "Business Daily (Founders: How Whatnot built a live shopping giant - Grant LaFontaine explains how selling Pokémon cards inspired a billion-dollar business)", "channel": "BBC World Service" },
+  { "time": "3:50 PM", "title": "World Business Express (Finance, economy and business news from BBC journalists around the world)", "channel": "BBC World Service" },
+  { "time": "4:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "4:06 PM", "title": "Outside Source (A vibrant account of the day's events with explanation and reaction from those involved.)", "channel": "BBC World Service" },
+  { "time": "5:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "5:06 PM", "title": "Outside Source (A vibrant account of the day's events with explanation and reaction from those involved.)", "channel": "BBC World Service" },
+  { "time": "6:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "6:06 PM", "title": "Outlook (True stories of ordinary people and the extraordinary events that have shaped their lives.)", "channel": "BBC World Service" },
+  { "time": "6:50 PM", "title": "Witness History (When a Spanish town swapped back to the peseta - In 2011, a Galician town turned back to the peseta during an economic crises)", "channel": "BBC World Service" },
+  { "time": "7:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "7:06 PM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" },
+  { "time": "7:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "7:32 PM", "title": "Sport Today (BBC sports correspondents tell the story behind today's top sporting news, with interviews and reports from across the world.)", "channel": "BBC World Service" },
+  { "time": "8:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "8:06 PM", "title": "The Climate Question (COP collapses: What is the future for climate action? - The big climate summit fails because of a row about even mentioning fossil fuel emissions)", "channel": "BBC World Service" },
+  { "time": "8:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "8:32 PM", "title": "Health Check (Health issues and medical breakthroughs from around the world.)", "channel": "BBC World Service" },
+  { "time": "9:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "9:06 PM", "title": "Newshour (Interviews, news and analysis of the day's global events.)", "channel": "BBC World Service" },
+  { "time": "10:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "10:06 PM", "title": "The Newsroom (The world's Newsroom brings you global events as they happen)", "channel": "BBC World Service" },
+  { "time": "10:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "10:32 PM", "title": "World Business Report (The latest business and finance news from around the world, on the BBC.)", "channel": "BBC World Service" },
+  { "time": "11:00 PM", "title": "BBC News (The latest five minute news bulletin from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "11:06 PM", "title": "The Interview (Anita Anand, Canada's foreign minister: Shaping a new world order - Canada's Foreign Minister Anita Anand on her country's bid to shape a new world order)", "channel": "BBC World Service" },
+  { "time": "11:30 PM", "title": "BBC News Summary (The latest two minute news summary from BBC World Service.)", "channel": "BBC World Service" },
+  { "time": "11:32 PM", "title": "World of Secrets (Dr Skin: 2. Acres of skin - Uncovering Albert Kligman's obsession with skin and the origins of Retin-A)", "channel": "BBC World Service" }
 
 ];
