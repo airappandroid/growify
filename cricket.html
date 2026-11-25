@@ -50,7 +50,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .innings{padding:18px}
 .teamline{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .team{font-size:17px;font-weight:900}
-.score{font-size:31px;font-weight:950;letter-spacing:-1px}
+.score{font-size:31px;font-weight:950;letter-spacing:-1px;font-variant-numeric:tabular-nums}
 .small{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}
 .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:18px 0 13px;padding-top:15px;border-top:1px solid var(--line)}
 .stat{min-width:0;padding:12px 9px;border-radius:13px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.055)}
@@ -102,7 +102,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
     </div>
   </div>
   <div class="match-switch" role="group" aria-label="Select match">
-    <button type="button" id="matchINDUAE" class="active" aria-pressed="true">🇮🇳 India A vs United Arab Emirates</button>
+    <button type="button" id="matchSLAIND" class="active" aria-pressed="true">🇱🇰 Sri Lanka A vs India A</button>
     <button type="button" id="matchAUSENG" aria-pressed="false">🇦🇺 Australia vs England</button>
   </div>
 </header>
@@ -113,12 +113,12 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
     <div class="match-head">
       <div class="match-head-left">
         <div class="live"><span class="dot" id="liveDot"></span><span class="live-text" id="liveLabel">MATCH UPDATE</span><span class="status" id="status">Loading...</span></div>
-        <div class="note" id="matchNote">INDIA A vs UNITED ARAB EMIRATES</div>
+        <div class="note" id="matchNote">SRI LANKA A vs INDIA A · 1st Semi-Final · 26 Nov · 3:30 PM IST</div>
       </div>
-      <button class="inline-audio-btn" id="indUaeAudioBtn" type="button" aria-label="India A vs United Arab Emirates Audio Commentary">🎙️ Audio</button>
+      <button class="inline-audio-btn" id="slaIndAudioBtn" type="button" aria-label="Sri Lanka A vs India A Audio Commentary">🎙️ Audio</button>
     </div>
     <div class="timer-bar" id="timerBar" hidden>
-      <span class="timer-pill" id="ausEngTimer">00:00</span>
+      <span class="timer-pill" id="matchTimer">00:00</span>
     </div>
     <div id="scoreContent" class="center">Loading live score...</div>
     <button class="scorecard-btn" id="scorecardBtn" type="button">Full Scorecard →</button>
@@ -142,14 +142,15 @@ For privacy questions, contact the app developer: aminurmarch4@gmail.com</p>
 'use strict';
 
 const MATCHES={
-  induae:{
-    url:'https://bdcr.aminurmarch.workers.dev/?id=100463',
-    id:'100463',
-    name:'India A vs United Arab Emirates',
-    team1:{flag:'🇮🇳',name:'India A',code:'IND-A'},
-    team2:{flag:'🇦🇪',name:'United Arab Emirates',code:'UAE'},
-    fallback:'INDIA A vs UNITED ARAB EMIRATES',
-    startIso:null
+  slaind:{
+    url:'https://bdcr.aminurmarch.workers.dev/?id=100465',
+    id:'100465',
+    name:'Sri Lanka A vs India A',
+    team1:{flag:'🇱🇰',name:'Sri Lanka A',code:'SL-A'},
+    team2:{flag:'🇮🇳',name:'India A',code:'IND-A'},
+    fallback:'SRI LANKA A vs INDIA A · 1st Semi-Final · 26 Nov · 3:30 PM IST',
+    startLabel:'3:30 PM IST',
+    startIso:'2026-11-26T15:30:00+05:30'
   },
   auseng:{
     url:'https://bdcr.aminurmarch.workers.dev/?id=96700',
@@ -158,11 +159,12 @@ const MATCHES={
     team1:{flag:'🇦🇺',name:'Australia',code:'AUS'},
     team2:{flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',name:'England',code:'ENG'},
     fallback:'AUSTRALIA vs ENGLAND · 2nd T20I · 24 Nov · 1:45 PM IST',
+    startLabel:'1:45 PM IST',
     startIso:'2026-11-24T13:45:00+05:30'
   }
 };
 const REFRESH_MS=2 * 60 * 1000; // Auto-refresh score every 2 minutes
-let currentMatch=MATCHES.induae;
+let currentMatch=MATCHES.slaind;
 let latestData=null;
 let countdownReachedZero=false;
 const $=id=>document.getElementById(id);
@@ -182,27 +184,28 @@ function formatCountdown(ms){
   return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
 }
 
-function isAusEngBeforeStart(){
-  if(currentMatch!==MATCHES.auseng || !currentMatch.startIso)return false;
-  const diff=new Date(currentMatch.startIso).getTime()-Date.now();
+function isMatchBeforeStart(match=currentMatch){
+  if(!match || !match.startIso)return false;
+  const diff=new Date(match.startIso).getTime()-Date.now();
   return diff>0;
 }
 
 function renderCountdownView(){
   const diff=new Date(currentMatch.startIso).getTime()-Date.now();
+  const label=currentMatch.startLabel || 'Match Time';
   $('timerBar').hidden=false;
-  $('ausEngTimer').textContent=formatCountdown(diff);
-  setStatusBadge('MATCH UPDATE', '1:45 PM IST', 'var(--yellow)');
+  $('matchTimer').textContent=formatCountdown(diff);
+  setStatusBadge('MATCH UPDATE', label, 'var(--yellow)');
   $('matchNote').textContent=currentMatch.fallback;
   $('scoreContent').className='center';
   $('scoreContent').innerHTML=
     '<div class="innings">'+
-      '<div class="teamline"><div><div class="team">'+esc(currentMatch.name)+'</div><div class="small">Starts at 1:45 PM IST</div></div><div class="score">'+esc(formatCountdown(diff))+'</div></div>'+
+      '<div class="teamline"><div><div class="team">'+esc(currentMatch.name)+'</div><div class="small">Starts at '+esc(label)+'</div></div><div class="score">'+esc(formatCountdown(diff))+'</div></div>'+
     '</div>';
 }
 
-function syncAusEngTimer(){
-  if(currentMatch!==MATCHES.auseng || !currentMatch.startIso){
+function syncMatchTimer(){
+  if(!currentMatch || !currentMatch.startIso){
     $('timerBar').hidden=true;
     return;
   }
@@ -223,7 +226,7 @@ function syncAusEngTimer(){
 }
 
 function syncMatchAudioButton(){
-  $('indUaeAudioBtn').hidden = currentMatch !== MATCHES.induae;
+  $('slaIndAudioBtn').hidden = currentMatch !== MATCHES.slaind;
 }
 
 function setStatusBadge(liveLabelText, statusText, dotColor){
@@ -245,12 +248,12 @@ function selectMatch(key){
   currentMatch=next;hasData=false;latestData=null;countdownReachedZero=false;
   if(controller)controller.abort();
   controller=null;busy=false;
-  $('matchINDUAE').classList.toggle('active',key==='induae');
+  $('matchSLAIND').classList.toggle('active',key==='slaind');
   $('matchAUSENG').classList.toggle('active',key==='auseng');
-  $('matchINDUAE').setAttribute('aria-pressed',String(key==='induae'));
+  $('matchSLAIND').setAttribute('aria-pressed',String(key==='slaind'));
   $('matchAUSENG').setAttribute('aria-pressed',String(key==='auseng'));
   syncMatchAudioButton();
-  if(isAusEngBeforeStart()){
+  if(isMatchBeforeStart(currentMatch)){
     renderCountdownView();
   }else{
     $('timerBar').hidden=true;
@@ -261,11 +264,11 @@ function selectMatch(key){
   $('scorecardBtn').textContent='Full Scorecard →';
   update();
 }
-$('matchINDUAE').onclick=()=>selectMatch('induae');
+$('matchSLAIND').onclick=()=>selectMatch('slaind');
 $('matchAUSENG').onclick=()=>selectMatch('auseng');
 
-$('scorecardBtn').onclick=()=>{location.href=currentMatch===MATCHES.induae?'go:card1':'go:card';};
-$('indUaeAudioBtn').onclick=()=>{location.href='go:commentary';};
+$('scorecardBtn').onclick=()=>{location.href=currentMatch===MATCHES.slaind?'go:card1':'go:card';};
+$('slaIndAudioBtn').onclick=()=>{location.href='go:commentary';};
 $('shareBtn').onclick=()=>{location.href='http://action_share';};
 
 function showPrivacy(show){
@@ -290,7 +293,7 @@ function render(data){
   const apiTime = data?.datetime || data?.modified;
   $('updated').textContent = 'Last updated: '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true})+(apiTime?' · Feed: '+esc(apiTime):'');
 
-  if(isAusEngBeforeStart()){
+  if(isMatchBeforeStart(currentMatch)){
     renderCountdownView();
     return;
   }
@@ -406,7 +409,7 @@ function render(data){
 }
 
 async function update(){
-  if(busy||document.hidden)return;
+  if(busy||document.hidden||isMatchBeforeStart(currentMatch))return;
   busy=true;
   const requestedMatch=currentMatch;
   const requestController=new AbortController();
@@ -424,7 +427,7 @@ async function update(){
     hasData=true;
   }catch(e){
     if(currentMatch!==requestedMatch)return;
-    if(isAusEngBeforeStart()){
+    if(isMatchBeforeStart(currentMatch)){
       renderCountdownView();
       return;
     }
@@ -443,13 +446,13 @@ async function update(){
 }
 
 syncMatchAudioButton();
-syncAusEngTimer();
+syncMatchTimer();
 update();
-setInterval(syncAusEngTimer,1000);
+setInterval(syncMatchTimer,1000);
 setInterval(update,REFRESH_MS);
 document.addEventListener('visibilitychange',()=>{
-  syncAusEngTimer();
-  if(!document.hidden)update();
+  syncMatchTimer();
+  if(!document.hidden && !isMatchBeforeStart(currentMatch))update();
 });
 })();
 </script>
