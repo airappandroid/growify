@@ -509,23 +509,47 @@ function getUKDateTime() {
     return { year, month, day, minutesNow: (hour * 60) + minute };
 }
 
-// BBC Radio 5 Sports Extra Schedule (Wed, 25 Nov 2026 | UK Time)
+// BBC Radio 5 Sports Extra Schedule (Thu, 26 Nov 2026 | UK Time)
 const EVENTS_CONFIG = [
     {
         sport: "CRICKET",
-        program: "Melbourne Renegades v Brisbane Heat",
-        title: "Big Bash League • Women's Big Bash League 2026",
+        program: "Sydney Sixers v Melbourne Stars",
+        title: "Women's Big Bash League",
         timeDisplay: "8:00 AM",
-        dateDisplay: "Wed, 25 Nov",
+        dateDisplay: "Thu, 26 Nov",
         year: 2026,
         month: 11,
-        day: 25,
+        day: 26,
         startMin: 480,   // 8:00 AM UK time
         endMin: 720      // 12:00 PM UK time
+    },
+    {
+        sport: "FOOTBALL",
+        program: "Sportsound: UEFA Conference League – Hearts v Monaco",
+        title: "Sportsound",
+        timeDisplay: "5:30 PM",
+        dateDisplay: "Thu, 26 Nov",
+        year: 2026,
+        month: 11,
+        day: 26,
+        startMin: 1050,  // 5:30 PM UK time
+        endMin: 1185     // 7:45 PM UK time
+    },
+    {
+        sport: "FOOTBALL",
+        program: "Sportsound: UEFA Europa League – Torreense v Celtic",
+        title: "Sportsound",
+        timeDisplay: "7:45 PM",
+        dateDisplay: "Thu, 26 Nov",
+        year: 2026,
+        month: 11,
+        day: 26,
+        startMin: 1185,  // 7:45 PM UK time
+        endMin: 1320     // 10:00 PM UK time
     }
 ];
 
-const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589bba5a2a46d5d3506fd8";
+const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589baa5a2a46d5d3506fcb";
 
 function formatInningScore(teamObj, prefix) {
     if (!teamObj) return "";
