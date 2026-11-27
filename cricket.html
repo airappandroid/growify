@@ -115,7 +115,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
         <div class="live"><span class="dot" id="liveDot"></span><span class="live-text" id="liveLabel">MATCH UPDATE</span><span class="status" id="status">Loading...</span></div>
         <div class="note" id="matchNote">NEW ZEALAND vs INDIA · 2nd Test</div>
       </div>
-      <button class="inline-audio-btn" id="nzIndAudioBtn" type="button" aria-label="New Zealand vs India Audio Commentary">🎙️ Audio</button>
+      <button class="inline-audio-btn" id="audioBtn" type="button" aria-label="Audio Commentary">🎙️ Audio</button>
     </div>
     <div class="timer-bar" id="timerBar" hidden>
       <span class="timer-pill" id="matchTimer">00:00</span>
@@ -226,7 +226,9 @@ function syncMatchTimer(){
 }
 
 function syncMatchAudioButton(){
-  $('nzIndAudioBtn').hidden = currentMatch !== MATCHES.nzind;
+  const btn=$('audioBtn');
+  btn.hidden=false;
+  btn.setAttribute('aria-label',currentMatch.name+' Audio Commentary');
 }
 
 function setStatusBadge(liveLabelText, statusText, dotColor){
@@ -268,7 +270,7 @@ $('matchAUSENG').onclick=()=>selectMatch('auseng');
 $('matchNZIND').onclick=()=>selectMatch('nzind');
 
 $('scorecardBtn').onclick=()=>{location.href=currentMatch===MATCHES.auseng?'go:card1':'go:card';};
-$('nzIndAudioBtn').onclick=()=>{location.href='go:commentary';};
+$('audioBtn').onclick=()=>{location.href='go:commentary';};
 $('shareBtn').onclick=()=>{location.href='http://action_share';};
 
 function showPrivacy(show){
