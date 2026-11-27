@@ -375,14 +375,15 @@ function render(data){
   const gameState = String(first(m.game_state_str,''));
   const note = first(m.status_note,m.announcement1,m.note,m.match_title,m.title,'Match update');
   const inningBreak = /inning\s*break|innings\s*break/i.test(gameState+' '+String(note));
+  const isStumps = /\bstumps\b|\bday\s*end\b|\bend\s*of\s*day\b/i.test(String(state)+' '+gameState+' '+String(note));
   const statusText = String(state).toLowerCase()+' '+gameState.toLowerCase();
-  const live = /live|ongoing|in progress|started/i.test(statusText) && !inningBreak;
+  const live = !isStumps && !inningBreak && /live|ongoing|in progress|started/i.test(statusText);
 
   const hasScore = scoreRuns !== undefined && scoreWickets !== undefined && scoreRuns !== '' && scoreWickets !== '';
 
-  const nextLiveLabel = inningBreak ? 'INNINGS BREAK' : (live ? 'LIVE' : 'MATCH UPDATE');
-  const nextStatus = inningBreak ? 'Innings Break' : text(state).toUpperCase();
-  const nextDot = live ? 'var(--green)' : (inningBreak ? 'var(--yellow)' : '#8996b2');
+  const nextLiveLabel = inningBreak ? 'INNINGS BREAK' : (isStumps ? 'STUMPS' : (live ? 'LIVE' : 'MATCH UPDATE'));
+  const nextStatus = inningBreak ? 'Innings Break' : (isStumps ? '' : text(state).toUpperCase());
+  const nextDot = live ? 'var(--green)' : ((inningBreak || isStumps) ? 'var(--yellow)' : '#8996b2');
 
   setStatusBadge(nextLiveLabel, nextStatus, nextDot);
   $('matchNote').textContent = text(note);
