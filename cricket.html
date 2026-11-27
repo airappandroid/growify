@@ -102,8 +102,8 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
     </div>
   </div>
   <div class="match-switch" role="group" aria-label="Select match">
-    <button type="button" id="matchSLAIND" class="active" aria-pressed="true">🇱🇰 Sri Lanka A vs India A</button>
-    <button type="button" id="matchAUSENG" aria-pressed="false">🇦🇺 Australia vs England</button>
+    <button type="button" id="matchSLAIND" aria-pressed="false">🇱🇰 Sri Lanka A vs India A</button>
+    <button type="button" id="matchNZIND" class="active" aria-pressed="true">🇳🇿 New Zealand vs India</button>
   </div>
 </header>
 
@@ -113,9 +113,9 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
     <div class="match-head">
       <div class="match-head-left">
         <div class="live"><span class="dot" id="liveDot"></span><span class="live-text" id="liveLabel">MATCH UPDATE</span><span class="status" id="status">Loading...</span></div>
-        <div class="note" id="matchNote">SRI LANKA A vs INDIA A · 1st Semi-Final · 26 Nov · 3:30 PM IST</div>
+        <div class="note" id="matchNote">NEW ZEALAND vs INDIA · 2nd Test</div>
       </div>
-      <button class="inline-audio-btn" id="slaIndAudioBtn" type="button" aria-label="Sri Lanka A vs India A Audio Commentary">🎙️ Audio</button>
+      <button class="inline-audio-btn" id="nzIndAudioBtn" type="button" aria-label="New Zealand vs India Audio Commentary">🎙️ Audio</button>
     </div>
     <div class="timer-bar" id="timerBar" hidden>
       <span class="timer-pill" id="matchTimer">00:00</span>
@@ -152,19 +152,19 @@ const MATCHES={
     startLabel:'3:30 PM IST',
     startIso:'2026-11-26T15:30:00+05:30'
   },
-  auseng:{
-    url:'https://bdcr.aminurmarch.workers.dev/?id=96700',
-    id:'96700',
-    name:'Australia vs England',
-    team1:{flag:'🇦🇺',name:'Australia',code:'AUS'},
-    team2:{flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',name:'England',code:'ENG'},
-    fallback:'AUSTRALIA vs ENGLAND · 2nd T20I · 24 Nov · 1:45 PM IST',
-    startLabel:'1:45 PM IST',
-    startIso:'2026-11-24T13:45:00+05:30'
+  nzind:{
+    url:'https://bdcr.aminurmarch.workers.dev/?id=98450',
+    id:'98450',
+    name:'New Zealand vs India, 2nd Test',
+    team1:{flag:'🇳🇿',name:'New Zealand',code:'NZ'},
+    team2:{flag:'🇮🇳',name:'India',code:'IND'},
+    fallback:'NEW ZEALAND vs INDIA · 2nd Test',
+    startLabel:'',
+    startIso:''
   }
 };
 const REFRESH_MS=2 * 60 * 1000; // Auto-refresh score every 2 minutes
-let currentMatch=MATCHES.slaind;
+let currentMatch=MATCHES.nzind;
 let latestData=null;
 let countdownReachedZero=false;
 const $=id=>document.getElementById(id);
@@ -226,7 +226,7 @@ function syncMatchTimer(){
 }
 
 function syncMatchAudioButton(){
-  $('slaIndAudioBtn').hidden = currentMatch !== MATCHES.slaind;
+  $('nzIndAudioBtn').hidden = currentMatch !== MATCHES.nzind;
 }
 
 function setStatusBadge(liveLabelText, statusText, dotColor){
@@ -249,9 +249,9 @@ function selectMatch(key){
   if(controller)controller.abort();
   controller=null;busy=false;
   $('matchSLAIND').classList.toggle('active',key==='slaind');
-  $('matchAUSENG').classList.toggle('active',key==='auseng');
+  $('matchNZIND').classList.toggle('active',key==='nzind');
   $('matchSLAIND').setAttribute('aria-pressed',String(key==='slaind'));
-  $('matchAUSENG').setAttribute('aria-pressed',String(key==='auseng'));
+  $('matchNZIND').setAttribute('aria-pressed',String(key==='nzind'));
   syncMatchAudioButton();
   if(isMatchBeforeStart(currentMatch)){
     renderCountdownView();
@@ -265,10 +265,10 @@ function selectMatch(key){
   update();
 }
 $('matchSLAIND').onclick=()=>selectMatch('slaind');
-$('matchAUSENG').onclick=()=>selectMatch('auseng');
+$('matchNZIND').onclick=()=>selectMatch('nzind');
 
 $('scorecardBtn').onclick=()=>{location.href=currentMatch===MATCHES.slaind?'go:card1':'go:card';};
-$('slaIndAudioBtn').onclick=()=>{location.href='go:commentary';};
+$('nzIndAudioBtn').onclick=()=>{location.href='go:commentary';};
 $('shareBtn').onclick=()=>{location.href='http://action_share';};
 
 function showPrivacy(show){
