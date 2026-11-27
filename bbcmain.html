@@ -509,47 +509,59 @@ function getUKDateTime() {
     return { year, month, day, minutesNow: (hour * 60) + minute };
 }
 
-// BBC Radio 5 Sports Extra Schedule (Thu, 26 Nov 2026 | UK Time)
+// BBC Radio 5 Sports Extra Schedule (Fri, 27 Nov 2026 | UK Time)
 const EVENTS_CONFIG = [
     {
         sport: "CRICKET",
-        program: "Sydney Sixers v Melbourne Stars",
-        title: "Women's Big Bash League",
-        timeDisplay: "8:00 AM",
-        dateDisplay: "Thu, 26 Nov",
+        program: "Cricket Commentary: Australia v England – 3rd T20",
+        title: "Cricket Commentary: Australia v England – 3rd T20",
+        timeDisplay: "7:30 AM",
+        dateDisplay: "Fri, 27 Nov",
         year: 2026,
         month: 11,
-        day: 26,
-        startMin: 480,   // 8:00 AM UK time
+        day: 27,
+        startMin: 450,   // 7:30 AM UK time
         endMin: 720      // 12:00 PM UK time
     },
     {
-        sport: "FOOTBALL",
-        program: "Sportsound: UEFA Conference League – Hearts v Monaco",
-        title: "Sportsound",
-        timeDisplay: "5:30 PM",
-        dateDisplay: "Thu, 26 Nov",
+        sport: "FORMULA 1",
+        program: "Formula 1: Qatar – Practice 1",
+        title: "Formula 1: Qatar – Practice 1",
+        timeDisplay: "1:25 PM",
+        dateDisplay: "Fri, 27 Nov",
         year: 2026,
         month: 11,
-        day: 26,
-        startMin: 1050,  // 5:30 PM UK time
-        endMin: 1185     // 7:45 PM UK time
+        day: 27,
+        startMin: 805,   // 1:25 PM UK time
+        endMin: 915      // 3:15 PM UK time
     },
     {
-        sport: "FOOTBALL",
-        program: "Sportsound: UEFA Europa League – Torreense v Celtic",
-        title: "Sportsound",
-        timeDisplay: "7:45 PM",
-        dateDisplay: "Thu, 26 Nov",
+        sport: "FORMULA 1",
+        program: "Formula 1: Qatar – Practice 2",
+        title: "Formula 1: Qatar – Practice 2",
+        timeDisplay: "4:55 PM",
+        dateDisplay: "Fri, 27 Nov",
         year: 2026,
         month: 11,
-        day: 26,
-        startMin: 1185,  // 7:45 PM UK time
-        endMin: 1320     // 10:00 PM UK time
+        day: 27,
+        startMin: 1015,  // 4:55 PM UK time
+        endMin: 1125     // 6:45 PM UK time
+    },
+    {
+        sport: "RUGBY UNION",
+        program: "Rugby Union: Ireland v Australia",
+        title: "Rugby Union: Ireland v Australia",
+        timeDisplay: "7:55 PM",
+        dateDisplay: "Fri, 27 Nov",
+        year: 2026,
+        month: 11,
+        day: 27,
+        startMin: 1195,  // 7:55 PM UK time
+        endMin: 1350     // 10:30 PM UK time
     }
 ];
 
-const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589baa5a2a46d5d3506fcb";
+const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a6db66278dcf065703144f5";
 
 function formatInningScore(teamObj, prefix) {
     if (!teamObj) return "";
