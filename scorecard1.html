@@ -276,10 +276,17 @@ function renderData(payload, feedStamp){
 
   const statusStr = String(r.status_str || 'Live');
   const gameStateStr = String(r.game_state_str || '');
-  const isLive = /live|ongoing|in progress/i.test(statusStr + ' ' + gameStateStr);
-  $('statusStr').textContent = statusStr.toUpperCase();
-  $('gameState').textContent = gameStateStr ? `· ${gameStateStr}` : '';
-  $('statusDot').style.background = isLive ? 'var(--green)' : 'var(--yellow)';
+  const statusNoteStr = String(r.status_note || '');
+  const isStumps = /\bstumps\b|\bday\s*end\b|\bend\s*of\s*day\b/i.test(statusStr + ' ' + gameStateStr + ' ' + statusNoteStr);
+  const isLive = !isStumps && /live|ongoing|in progress/i.test(statusStr + ' ' + gameStateStr);
+  const badgeColor = isLive ? 'var(--green)' : 'var(--yellow)';
+
+  $('statusStr').textContent = isStumps ? 'STUMPS' : statusStr.toUpperCase();
+  $('statusStr').style.color = badgeColor;
+  $('gameState').textContent = (isStumps && !/stumps/i.test(gameStateStr) && gameStateStr)
+    ? `· ${gameStateStr}`
+    : (gameStateStr && !isStumps ? `· ${gameStateStr}` : '');
+  $('statusDot').style.background = badgeColor;
 
   const baseTitle = r.title || `${ta.name || 'New Zealand'} vs ${tb.name || 'India'}`;
   $('matchTitle').textContent = r.subtitle ? `${baseTitle} · ${r.subtitle}` : baseTitle;
