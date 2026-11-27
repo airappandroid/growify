@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#080d19">
-<title>Australia vs England — 2nd T20I Live Scorecard</title>
+<title>New Zealand vs India — 2nd Test Live Scorecard</title>
 <style>
 :root{
   --bg:#080d19;--card:#111a2b;--card2:#18243a;--text:#f5f7ff;
@@ -72,9 +72,9 @@ table.score-table{width:100%;border-collapse:collapse;min-width:340px;font-size:
       <span class="status-sub" id="gameState">· Play Ongoing</span>
       <span class="updated-top" id="updatedTop">Syncing...</span>
     </div>
-    <div class="match-title" id="matchTitle">Australia vs England · 2nd T20I</div>
-    <div class="match-note" id="matchNote">England tour of Australia · Match #6 · T20I</div>
-    <div class="banner-note" id="tossBanner">AUS elected to bat</div>
+    <div class="match-title" id="matchTitle">New Zealand vs India · 2nd Test</div>
+    <div class="match-note" id="matchNote">2nd Test · Test</div>
+    <div class="banner-note" id="tossBanner">New Zealand vs India · 2nd Test</div>
     <div class="teams" id="teamsGrid"></div>
   </section>
 
@@ -110,8 +110,8 @@ table.score-table{width:100%;border-collapse:collapse;min-width:340px;font-size:
 
   <section class="panel">
     <div class="panel-head">
-      <div class="panel-title" id="inningTitle">Australia Inning</div>
-      <div class="panel-meta" id="inningScore">3/0 (0.3 ov)</div>
+      <div class="panel-title" id="inningTitle">New Zealand Inning</div>
+      <div class="panel-meta" id="inningScore">—</div>
     </div>
     <div class="metrics" id="metricsGrid"></div>
     <div class="info-strip" id="extraInfo"></div>
@@ -120,7 +120,7 @@ table.score-table{width:100%;border-collapse:collapse;min-width:340px;font-size:
   <section class="panel">
     <div class="panel-head">
       <div class="panel-title">Venue &amp; Conditions</div>
-      <div class="panel-meta" id="startIstLabel">24 Nov · 1:45 PM IST</div>
+      <div class="panel-meta" id="startIstLabel">2nd Test</div>
     </div>
     <div class="metrics" id="conditionsGrid"></div>
   </section>
@@ -132,8 +132,8 @@ table.score-table{width:100%;border-collapse:collapse;min-width:340px;font-size:
     </div>
     <div class="filters" id="squadFilters">
       <button type="button" class="filter-btn active" data-team="all">All</button>
-      <button type="button" class="filter-btn" data-team="au">Australia (AUS)</button>
-      <button type="button" class="filter-btn" data-team="en">England (ENG)</button>
+      <button type="button" class="filter-btn" data-team="nz">New Zealand (NZ)</button>
+      <button type="button" class="filter-btn" data-team="in">India (IND)</button>
     </div>
     <div class="squad-grid" id="squadGrid"></div>
   </section>
@@ -145,10 +145,37 @@ table.score-table{width:100%;border-collapse:collapse;min-width:340px;font-size:
 (function(){
 'use strict';
 
-const API_URL = 'https://bdcr2.aminurmarch.workers.dev/?id=96700';
+const API_URL = 'https://bdcr2.aminurmarch.workers.dev/?id=98450';
 const REFRESH_MS = 2 * 60 * 1000; // Auto refresh every 2 minutes
 
-const FALLBACK_DATA = {"status":"ok","response":{"match_id":96700,"title":"Australia vs England","short_title":"AUS vs ENG","subtitle":"2nd T20I","match_number":"6","format":3,"format_str":"T20I","status":3,"status_str":"Live","status_note":"AUS elected to bat","verified":"false","pre_squad":"true","odds_available":"false","game_state":3,"game_state_str":"Play Ongoing","competition":{"cid":130004,"title":"England tour of Australia","abbr":"AUS vs ENG","type":"tour","category":"international","match_format":"mixed","season":"2026","status":"live","datestart":"2026-11-12","dateend":"2026-12-02","country":"int","total_matches":"9","total_rounds":"2","total_teams":"3"},"teama":{"team_id":5,"name":"Australia","short_name":"AUS","logo_url":"https://gcdnimages.entitysport.com/assets/uploads/2025/09/AUS.webp","thumb_url":"https://gcdnimages.entitysport.com/assets/uploads/2025/09/AUS.webp","scores_full":"*3/0 (0.3 ov)","scores":"3/0","overs":"0.3"},"teamb":{"team_id":490,"name":"England","short_name":"ENG","logo_url":"https://gcdnimages.entitysport.com/assets/uploads/2025/09/ENG.webp","thumb_url":"https://gcdnimages.entitysport.com/assets/uploads/2025/09/ENG.webp","scores_full":""},"date_start":"2026-11-24 08:15:00","date_end":"2026-11-24 18:15:00","timestamp_start":1795508100,"timestamp_end":1795544100,"date_start_ist":"2026-11-24 13:45:00","date_end_ist":"2026-11-24 23:45:00","venue":{"venue_id":"292","name":"Carrara Oval","location":"Queensland","country":"Australia","timezone":""},"umpires":"","referee":"","equation":"","live":"AUS elected to bat","result":"","result_type":"","win_margin":"","winning_team_id":0,"commentary":1,"wagon":1,"latest_inning_number":1,"presquad_time":"2026-11-21 18:37:51","verify_time":"","match_dls_affected":"false","live_inning_number":"","day":"0","session":"0","broadcast":"","weather":{"weather":"Rain","weather_desc":"light rain","temp":24.03,"humidity":81,"visibility":10000,"wind_speed":"4.88","clouds":100},"pitch":{"pitch_condition":"Fast & Bounce","batting_condition":"Average","pace_bowling_condition":"Swing Favourable","spine_bowling_condition":"Sharp Turn"},"toss":{"text":"Australia elected to bat","winner":5,"decision":1},"current_over":"","previous_over":"","man_of_the_match":"","man_of_the_series":"","is_followon":0,"team_batting_first":"","team_batting_second":"","last_five_overs":"","innings":[{"iid":217658,"number":1,"name":"Australia Inning","short_name":"AUS Inning","status":3,"issuperover":"false","result":0,"batting_team_id":5,"fielding_team_id":490,"scores":"3/0","scores_full":"3/0 (0.3 ov)","batsmen":[{"name":"Mitchell Marsh","batsman_id":"83","batting":"true","position":"striker","role":"bat","role_str":"(C)","runs":"2","balls_faced":"2","fours":"0","sixes":"0","how_out":"Not out","strike_rate":"100.00"},{"name":"Jake Fraser-McGurk","batsman_id":"76636","batting":"true","position":"non striker","role":"bat","role_str":"","runs":"1","balls_faced":"1","fours":"0","sixes":"0","how_out":"Not out","strike_rate":"100.00"}],"bowlers":[{"name":"James Coles","bowler_id":"102957","bowling":"true","position":"active bowler","overs":"0.3","maidens":"0","runs_conceded":"3","wickets":"0","econ":"6.00"}],"powerplay":{"p1":{"startover":"0.1","endover":"6"}},"fows":[],"last_wicket":[],"extra_runs":{"byes":0,"legbyes":0,"wides":0,"noballs":0,"penalty":"0","total":0},"equations":{"runs":3,"wickets":0,"overs":"0.3","bowlers_used":1,"runrate":"6.00"},"current_partnership":{"runs":3,"balls":3,"overs":0.3,"batsmen":[{"name":"Mitchell Marsh","batsman_id":83,"runs":2,"balls":2},{"name":"Jake Fraser-McGurk","batsman_id":76636,"runs":1,"balls":1}]},"did_not_bat":[{"player_id":"48502","name":"Sam Harper"},{"player_id":"90679","name":"Nikhil Chaudhary"},{"player_id":"93389","name":"Tim David"},{"player_id":"93453","name":"Jack Edwards"},{"player_id":"113220","name":"Lachlan Shaw"},{"player_id":"126179","name":"Joel Davies"},{"player_id":"1965","name":"Adam Zampa"},{"player_id":"93329","name":"Riley Meredith"},{"player_id":"43605","name":"Ben Dwarshuis"}],"max_over":"20","target":"0"}],"players":[{"pid":83,"title":"Mitchell Marsh","short_name":"M Marsh","country":"au","playing_role":"bat","batting_style":"Right Hand Bat","bowling_style":"Right Arm Medium","nationality":"Australia","role_str":"(C)"},{"pid":1047,"title":"Sam Curran","short_name":"S Curran","country":"en","playing_role":"all","batting_style":"Left hand Bat","bowling_style":"Left Arm Medium Fast","nationality":"England","role_str":""},{"pid":1259,"title":"Aneurin Donald","short_name":"A Donald","country":"en","playing_role":"wk","batting_style":"Right Hand Bat","bowling_style":"Right Arm Off Break","nationality":"England","role_str":""},{"pid":1933,"title":"Adil Rashid","short_name":"A Rashid","country":"en","playing_role":"bowl","batting_style":"Right Hand Bat","bowling_style":"Right Arm Leg Spin","nationality":"England","role_str":""},{"pid":1945,"title":"Liam Dawson","short_name":"L Dawson","country":"en","playing_role":"all","batting_style":"Left hand Bat","bowling_style":"Left Arm Orthodox","nationality":"England","role_str":""},{"pid":1965,"title":"Adam Zampa","short_name":"A Zampa","country":"au","playing_role":"bowl","batting_style":"Right Hand Bat","bowling_style":"Right Arm Leg Spin","nationality":"Australia","role_str":""},{"pid":43383,"title":"Jamie Overton","short_name":"J Overton","country":"en","playing_role":"all","batting_style":"Right Hand Bat","bowling_style":"Right Arm Fast","nationality":"England","role_str":""},{"pid":43592,"title":"Billy Stanlake","short_name":"BJ Stanlake","country":"au","playing_role":"bowl","batting_style":"Left hand Bat","bowling_style":"Right Arm Fast","nationality":"Australia","role_str":""},{"pid":43605,"title":"Ben Dwarshuis","short_name":"BJ Dwarshuis","country":"au","playing_role":"bowl","batting_style":"Left hand Bat","bowling_style":"Left Arm Fast Medium","nationality":"Australia","role_str":""},{"pid":48502,"title":"Sam Harper","short_name":"SB Harper","country":"au","playing_role":"wk","batting_style":"Right Hand Bat","bowling_style":"","nationality":"Australia","role_str":"(WK)"},{"pid":49818,"title":"Phil Salt","short_name":"P Salt","country":"en","playing_role":"wk","batting_style":"Right Hand Bat","bowling_style":"Right Arm Off Break","nationality":"England","role_str":""},{"pid":50411,"title":"Luke Wood","short_name":"L Wood","country":"en","playing_role":"bowl","batting_style":"Left hand Bat","bowling_style":"Left Arm Fast Medium","nationality":"England","role_str":""},{"pid":51266,"title":"Tom Banton","short_name":"T Banton","country":"en","playing_role":"bat","batting_style":"Right Hand Bat","bowling_style":"Right Arm Medium","nationality":"England","role_str":""},{"pid":51319,"title":"Will Jacks","short_name":"WG Jacks","country":"en","playing_role":"all","batting_style":"Right Hand Bat","bowling_style":"Right Arm Off Break","nationality":"England","role_str":""},{"pid":52879,"title":"Henry Thornton","short_name":"HTRJY Thornton","country":"au","playing_role":"bowl","batting_style":"Right Hand Bat","bowling_style":"Right Arm Fast","nationality":"Australia","role_str":""},{"pid":76636,"title":"Jake Fraser-McGurk","short_name":"J Fraser-McGurk","country":"au","playing_role":"bat","batting_style":"Right Hand Bat","bowling_style":"Right Arm Leg Spin","nationality":"Australia","role_str":""},{"pid":90640,"title":"Xavier Bartlett","short_name":"XC Bartlett","country":"au","playing_role":"bowl","batting_style":"Right Hand Bat","bowling_style":"Right Arm Fast Medium","nationality":"Australia","role_str":""},{"pid":90679,"title":"Nikhil Chaudhary","short_name":"N Chaudhary","country":"au","playing_role":"all","batting_style":"Right Hand Bat","bowling_style":"Right Arm Off Break","nationality":"Australia","role_str":""},{"pid":90887,"title":"Harry Brook","short_name":"H Brook","country":"en","playing_role":"bat","batting_style":"Right Hand Bat","bowling_style":"Right Arm Medium","nationality":"England","role_str":"(C)"},{"pid":93329,"title":"Riley Meredith","short_name":"RP Meredith","country":"au","playing_role":"bowl","batting_style":"Right Hand Bat","bowling_style":"Right Arm Fast","nationality":"Australia","role_str":""},{"pid":93357,"title":"Spencer Johnson","short_name":"SH Johnson","country":"au","playing_role":"bowl","batting_style":"Left hand Bat","bowling_style":"Left Arm Medium Fast","nationality":"Australia","role_str":""},{"pid":93389,"title":"Tim David","short_name":"TH David","country":"au","playing_role":"bat","batting_style":"Right Hand Bat","bowling_style":"Right Arm Off Break","nationality":"Australia","role_str":""},{"pid":93453,"title":"Jack Edwards","short_name":"J Edwards","country":"au","playing_role":"all","batting_style":"Right Hand Bat","bowling_style":"Right Arm Medium","nationality":"Australia","role_str":""},{"pid":94961,"title":"Jordan Cox","short_name":"J Cox","country":"en","playing_role":"wk","batting_style":"Right Hand Bat","bowling_style":"Right Arm Off Break","nationality":"England","role_str":"(WK)"},{"pid":101482,"title":"Henry Thomas Crocombe","short_name":"H T Crocombe","country":"en","playing_role":"bowl","batting_style":"Right Hand Bat","bowling_style":"Right Arm Medium Fast","nationality":"England","role_str":""},{"pid":102957,"title":"James Coles","short_name":"J Coles","country":"en","playing_role":"all","batting_style":"Right Hand Bat","bowling_style":"Left Arm Orthodox","nationality":"England","role_str":""},{"pid":104656,"title":"Mitchell Owen","short_name":"MJ Owen","country":"au","playing_role":"all","batting_style":"Right Hand Bat","bowling_style":"Right Arm Medium","nationality":"Australia","role_str":""},{"pid":113220,"title":"Lachlan Shaw","short_name":"L Shaw","country":"au","playing_role":"bat","batting_style":"Right Hand Bat","bowling_style":"Right Arm Medium","nationality":"Australia","role_str":""},{"pid":118936,"title":"Eddie Jack","short_name":"EV Jack","country":"en","playing_role":"bowl","batting_style":"Left hand Bat","bowling_style":"Right Arm Fast Medium","nationality":"England","role_str":""},{"pid":123605,"title":"Mahli Beardman","short_name":"M Beardman","country":"au","playing_role":"bowl","batting_style":"Right Hand Bat","bowling_style":"Right Arm Medium Fast","nationality":"Australia","role_str":""},{"pid":126179,"title":"Joel Davies","short_name":"J Davies","country":"au","playing_role":"all","batting_style":"Left hand Bat","bowling_style":"Left Arm Orthodox","nationality":"Australia","role_str":""},{"pid":140793,"title":"Thomas Rew","short_name":"T Rew","country":"en","playing_role":"wk","batting_style":"Right Hand Bat","bowling_style":"","nationality":"England","role_str":""}],"pre_match_odds":[],"day_remaining_over":"","match_notes":[["1st inn:- Australia Inning","Powerplay-1:- 3/0 (0.1 - 6)"]]},"etag":"ed80ffcf32b75e0ea82a366356fa2401","modified":"2026-11-24 14:17:36","datetime":"2026-11-24 14:17:55","api_version":"3.0"};
+const FALLBACK_DATA = {
+  status: 'ok',
+  response: {
+    match_id: 98450,
+    title: 'New Zealand vs India',
+    short_title: 'NZ vs IND',
+    subtitle: '2nd Test',
+    match_number: '2',
+    format: 1,
+    format_str: 'Test',
+    status: 3,
+    status_str: 'Live',
+    status_note: 'New Zealand vs India · 2nd Test',
+    game_state: 3,
+    game_state_str: 'Play Ongoing',
+    competition: { title: '2nd Test', abbr: 'NZ vs IND' },
+    teama: { team_id: 1, name: 'New Zealand', short_name: 'NZ', logo_url: '', scores_full: '', scores: '' },
+    teamb: { team_id: 2, name: 'India', short_name: 'IND', logo_url: '', scores_full: '', scores: '' },
+    venue: { name: '—', location: '', country: '' },
+    weather: {},
+    pitch: {},
+    toss: {},
+    latest_inning_number: 1,
+    innings: [],
+    players: [],
+    match_notes: []
+  }
+};
 
 const ROLE_LABELS = {
   bat: 'Batter',
@@ -213,13 +240,13 @@ function renderData(payload, feedStamp){
   $('gameState').textContent = gameStateStr ? `· ${gameStateStr}` : '';
   $('statusDot').style.background = isLive ? 'var(--green)' : 'var(--yellow)';
 
-  const baseTitle = r.title || `${ta.name || 'Australia'} vs ${tb.name || 'England'}`;
+  const baseTitle = r.title || `${ta.name || 'New Zealand'} vs ${tb.name || 'India'}`;
   $('matchTitle').textContent = r.subtitle ? `${baseTitle} · ${r.subtitle}` : baseTitle;
   $('matchNote').textContent = [
     comp.title,
     r.match_number ? `Match #${r.match_number}` : '',
     r.format_str
-  ].filter(Boolean).join(' · ') || 'AUS vs ENG · T20I';
+  ].filter(Boolean).join(' · ') || 'NZ vs IND · 2nd Test';
 
   const noteItems = [r.status_note, toss.text, r.live].filter(Boolean);
   const dedupedNotes = noteItems.filter((item, idx) => noteItems.findIndex(x => x.toLowerCase() === item.toLowerCase()) === idx);
@@ -273,7 +300,7 @@ function renderData(payload, feedStamp){
   const runs = eq.runs ?? activeInn.scores ?? '—';
   const overs = eq.overs ?? activeInn.overs ?? '—';
   const rr = eq.runrate ?? '—';
-  $('inningTitle').textContent = activeInn.name || `${ta.name || 'Australia'} Inning`;
+  $('inningTitle').textContent = activeInn.name || `${ta.name || 'New Zealand'} Inning`;
   $('inningScore').textContent = activeInn.scores_full || (runs !== '—' ? `${runs} (${overs} ov)` : '—');
 
   const pship = activeInn.current_partnership;
@@ -304,7 +331,7 @@ function renderData(payload, feedStamp){
     ${dnb.length ? `<div style="${mNotes.length ? 'margin-top:8px' : ''}"><strong>Yet to Bat:</strong> ${esc(dnb.join(', '))}</div>` : ''}
   `;
 
-  $('startIstLabel').textContent = r.date_start_ist || r.date_start || 'T20I';
+  $('startIstLabel').textContent = r.date_start_ist || r.date_start || 'Test';
   const venueStr = [venue.name, venue.location, venue.country].filter(Boolean).join(', ') || '—';
   const weatherStr = weather.weather_desc
     ? `${weather.weather_desc}${weather.temp !== undefined ? ` (${weather.temp}°C)` : ''} · Hum ${weather.humidity ?? '—'}%`
@@ -353,7 +380,7 @@ async function fetchMatch(){
     if(!hasLiveData){
       renderData(FALLBACK_DATA, FALLBACK_DATA.datetime || 'Snapshot');
       $('updatedTop').textContent = 'Offline sample';
-      $('footerText').textContent = 'Showing cnm.txt sample data · Auto refresh every 2 minutes';
+      $('footerText').textContent = 'Showing sample fallback data · Auto refresh every 2 minutes';
     }else{
       $('updatedTop').textContent = 'Retry in 2m';
     }
