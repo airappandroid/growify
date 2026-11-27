@@ -102,8 +102,8 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
     </div>
   </div>
   <div class="match-switch" role="group" aria-label="Select match">
-    <button type="button" id="matchAUSENG" aria-pressed="false">🇦🇺 Australia vs England</button>
-    <button type="button" id="matchNZIND" class="active" aria-pressed="true">🇳🇿 New Zealand vs India</button>
+    <button type="button" id="matchAUSENG" class="active" aria-pressed="true">🇦🇺 Australia vs England</button>
+    <button type="button" id="matchNZIND" aria-pressed="false">🇳🇿 New Zealand vs India</button>
   </div>
 </header>
 
@@ -113,9 +113,9 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
     <div class="match-head">
       <div class="match-head-left">
         <div class="live"><span class="dot" id="liveDot"></span><span class="live-text" id="liveLabel">MATCH UPDATE</span><span class="status" id="status">Loading...</span></div>
-        <div class="note" id="matchNote">NEW ZEALAND vs INDIA · 2nd Test</div>
+        <div class="note" id="matchNote">AUSTRALIA vs ENGLAND · 3rd T20I · 27 Nov · 1:45 PM IST</div>
       </div>
-      <button class="inline-audio-btn" id="audioBtn" type="button" aria-label="Audio Commentary">🎙️ Audio</button>
+      <button class="inline-audio-btn" id="audioBtn" type="button" aria-label="Australia vs England, 3rd T20I Audio Commentary">🎙️ Audio</button>
     </div>
     <div class="timer-bar" id="timerBar" hidden>
       <span class="timer-pill" id="matchTimer">00:00</span>
@@ -164,7 +164,7 @@ const MATCHES={
   }
 };
 const REFRESH_MS=2 * 60 * 1000; // Auto-refresh score every 2 minutes
-let currentMatch=MATCHES.nzind;
+let currentMatch=MATCHES.auseng;
 let latestData=null;
 let countdownReachedZero=false;
 const $=id=>document.getElementById(id);
