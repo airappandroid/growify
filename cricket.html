@@ -102,7 +102,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
     </div>
   </div>
   <div class="match-switch" role="group" aria-label="Select match">
-    <button type="button" id="matchSLAIND" aria-pressed="false">🇱🇰 Sri Lanka A vs India A</button>
+    <button type="button" id="matchAUSENG" aria-pressed="false">🇦🇺 Australia vs England</button>
     <button type="button" id="matchNZIND" class="active" aria-pressed="true">🇳🇿 New Zealand vs India</button>
   </div>
 </header>
@@ -142,15 +142,15 @@ For privacy questions, contact the app developer: aminurmarch4@gmail.com</p>
 'use strict';
 
 const MATCHES={
-  slaind:{
-    url:'https://bdcr.aminurmarch.workers.dev/?id=100465',
-    id:'100465',
-    name:'Sri Lanka A vs India A',
-    team1:{flag:'🇱🇰',name:'Sri Lanka A',code:'SL-A'},
-    team2:{flag:'🇮🇳',name:'India A',code:'IND-A'},
-    fallback:'SRI LANKA A vs INDIA A · 1st Semi-Final · 26 Nov · 3:30 PM IST',
-    startLabel:'3:30 PM IST',
-    startIso:'2026-11-26T15:30:00+05:30'
+  auseng:{
+    url:'https://bdcr.aminurmarch.workers.dev/?id=96701',
+    id:'96701',
+    name:'Australia vs England, 3rd T20I',
+    team1:{flag:'🇦🇺',name:'Australia',code:'AUS'},
+    team2:{flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',name:'England',code:'ENG'},
+    fallback:'AUSTRALIA vs ENGLAND · 3rd T20I · 27 Nov · 1:45 PM IST',
+    startLabel:'1:45 PM IST',
+    startIso:'2026-11-27T13:45:00+05:30'
   },
   nzind:{
     url:'https://bdcr.aminurmarch.workers.dev/?id=98450',
@@ -248,9 +248,9 @@ function selectMatch(key){
   currentMatch=next;hasData=false;latestData=null;countdownReachedZero=false;
   if(controller)controller.abort();
   controller=null;busy=false;
-  $('matchSLAIND').classList.toggle('active',key==='slaind');
+  $('matchAUSENG').classList.toggle('active',key==='auseng');
   $('matchNZIND').classList.toggle('active',key==='nzind');
-  $('matchSLAIND').setAttribute('aria-pressed',String(key==='slaind'));
+  $('matchAUSENG').setAttribute('aria-pressed',String(key==='auseng'));
   $('matchNZIND').setAttribute('aria-pressed',String(key==='nzind'));
   syncMatchAudioButton();
   if(isMatchBeforeStart(currentMatch)){
@@ -264,10 +264,10 @@ function selectMatch(key){
   $('scorecardBtn').textContent='Full Scorecard →';
   update();
 }
-$('matchSLAIND').onclick=()=>selectMatch('slaind');
+$('matchAUSENG').onclick=()=>selectMatch('auseng');
 $('matchNZIND').onclick=()=>selectMatch('nzind');
 
-$('scorecardBtn').onclick=()=>{location.href=currentMatch===MATCHES.slaind?'go:card1':'go:card';};
+$('scorecardBtn').onclick=()=>{location.href=currentMatch===MATCHES.auseng?'go:card1':'go:card';};
 $('nzIndAudioBtn').onclick=()=>{location.href='go:commentary';};
 $('shareBtn').onclick=()=>{location.href='http://action_share';};
 
