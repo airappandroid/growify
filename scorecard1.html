@@ -45,7 +45,8 @@ table.score-table{width:100%;border-collapse:collapse;min-width:340px;font-size:
 .score-table th:first-child,.score-table td:first-child{text-align:left;padding-left:14px}
 .score-table th:last-child,.score-table td:last-child{padding-right:14px}
 .player-name{font-weight:750;color:var(--text)}
-.player-sub{font-size:10px;color:var(--green);margin-top:2px;font-weight:700}
+.player-sub{font-size:10px;color:var(--muted);margin-top:2px;font-weight:600}
+.player-sub.not-out{color:var(--green);font-weight:700}
 .info-strip{padding:11px 14px;border-top:1px solid var(--line);font-size:12px;color:#c3d0e6;line-height:1.55}
 .info-strip strong{color:var(--text)}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
@@ -193,6 +194,46 @@ let hasLiveData = false;
 let currentPlayers = [];
 let activeTeamFilter = 'all';
 
+function normalizeNoteKey(str){
+  return String(str || '')
+    .toLowerCase()
+    .replace(/\b(india|ind)\b/g, 'teamind')
+    .replace(/\b(new zealand|nz)\b/g, 'teamnz')
+    .replace(/\b(australia|aus)\b/g, 'teamaus')
+    .replace(/\b(england|eng)\b/g, 'teameng')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+function buildBannerText(items){
+  const parts = items.map(s => String(s || '').trim()).filter(Boolean);
+  const kept = [];
+  const seenKeys = [];
+
+  for(const part of parts){
+    const key = normalizeNoteKey(part);
+    if(!key) continue;
+    const isDuplicate = seenKeys.some(prev => prev === key || prev.includes(key) || key.includes(prev));
+    if(!isDuplicate){
+      seenKeys.push(key);
+      kept.push(part);
+    }
+  }
+  return kept.join(' · ') || 'Live match update';
+}
+
+function isPlayerNotOut(b){
+  const pos = String(b.position || '').toLowerCase();
+  const howOut = String(b.how_out || '').toLowerCase().trim();
+  const battingFlag = String(b.batting || '').toLowerCase();
+  if(pos === 'striker' || pos === 'non striker' || pos === 'non-striker' || battingFlag === 'true') return true;
+  if(!howOut) return false;
+  if(/\b(c & b|c\b|b\b|lbw|run out|stumped|hit wicket|retired out|retired hurt)\b/i.test(howOut) && !/not\s*out/i.test(howOut)){
+    return false;
+  }
+  return /not\s*out/i.test(howOut);
+}
+
 function renderSquad(){
   const filtered = activeTeamFilter === 'all'
     ? currentPlayers
@@ -248,9 +289,7 @@ function renderData(payload, feedStamp){
     r.format_str
   ].filter(Boolean).join(' · ') || 'NZ vs IND · 2nd Test';
 
-  const noteItems = [r.status_note, toss.text, r.live].filter(Boolean);
-  const dedupedNotes = noteItems.filter((item, idx) => noteItems.findIndex(x => x.toLowerCase() === item.toLowerCase()) === idx);
-  $('tossBanner').textContent = dedupedNotes.join(' · ') || 'Live match update';
+  $('tossBanner').textContent = buildBannerText([r.status_note, toss.text, r.live]);
 
   const batTeamId = Number(activeInn.batting_team_id || (toss.decision === 1 ? toss.winner : 0) || 0);
   $('teamsGrid').innerHTML = [ta, tb].map(t => {
@@ -272,11 +311,12 @@ function renderData(payload, feedStamp){
 
   const batsmen = Array.isArray(activeInn.batsmen) ? activeInn.batsmen : [];
   $('batBody').innerHTML = batsmen.length ? batsmen.map(b => {
-    const posTag = b.position === 'striker' ? 'striker*' : (b.how_out || 'not out');
+    const notOut = isPlayerNotOut(b);
+    const posTag = b.position === 'striker' ? 'striker*' : (notOut ? 'not out' : (b.how_out || 'out'));
     const roleBadge = b.role_str ? ` ${b.role_str}` : '';
     return `
       <tr>
-        <td><div class="player-name">${esc(b.name)}${esc(roleBadge)}</div><div class="player-sub">${esc(posTag)}</div></td>
+        <td><div class="player-name">${esc(b.name)}${esc(roleBadge)}</div><div class="player-sub${notOut ? ' not-out' : ''}">${esc(posTag)}</div></td>
         <td><strong>${esc(b.runs)}</strong></td>
         <td>${esc(b.balls_faced)}</td>
         <td>${esc(b.fours)}</td>
