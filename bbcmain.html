@@ -509,59 +509,47 @@ function getUKDateTime() {
     return { year, month, day, minutesNow: (hour * 60) + minute };
 }
 
-// BBC Radio 5 Sports Extra Schedule (Fri, 27 Nov 2026 | UK Time)
+// BBC Radio 5 Sports Extra Schedule (Sat, 28 Nov 2026 | UK Time)
 const EVENTS_CONFIG = [
     {
         sport: "CRICKET",
-        program: "Cricket Commentary: Australia v England – 3rd T20",
-        title: "Cricket Commentary: Australia v England – 3rd T20",
-        timeDisplay: "7:30 AM",
-        dateDisplay: "Fri, 27 Nov",
+        program: "Women's Big Bash League: Sydney Thunder v Sydney Sixers",
+        title: "Women's Big Bash League: Sydney Thunder v Sydney Sixers",
+        timeDisplay: "8:00 AM",
+        dateDisplay: "Sat, 28 Nov",
         year: 2026,
         month: 11,
-        day: 27,
-        startMin: 450,   // 7:30 AM UK time
-        endMin: 720      // 12:00 PM UK time
+        day: 28,
+        startMin: 480,   // 8:00 AM UK time
+        endMin: 690      // 11:30 AM UK time
     },
     {
-        sport: "FORMULA 1",
-        program: "Formula 1: Qatar – Practice 1",
-        title: "Formula 1: Qatar – Practice 1",
-        timeDisplay: "1:25 PM",
-        dateDisplay: "Fri, 27 Nov",
+        sport: "FOOTBALL",
+        program: "Premier League Football: Leeds United v Coventry City",
+        title: "Premier League Football: Leeds United v Coventry City",
+        timeDisplay: "2:55 PM",
+        dateDisplay: "Sat, 28 Nov",
         year: 2026,
         month: 11,
-        day: 27,
-        startMin: 805,   // 1:25 PM UK time
-        endMin: 915      // 3:15 PM UK time
+        day: 28,
+        startMin: 895,   // 2:55 PM UK time
+        endMin: 1020     // 5:00 PM UK time
     },
     {
-        sport: "FORMULA 1",
-        program: "Formula 1: Qatar – Practice 2",
-        title: "Formula 1: Qatar – Practice 2",
-        timeDisplay: "4:55 PM",
-        dateDisplay: "Fri, 27 Nov",
+        sport: "FOOTBALL",
+        program: "Premier League Football: Ipswich Town v Aston Villa",
+        title: "Premier League Football: Ipswich Town v Aston Villa",
+        timeDisplay: "5:25 PM",
+        dateDisplay: "Sat, 28 Nov",
         year: 2026,
         month: 11,
-        day: 27,
-        startMin: 1015,  // 4:55 PM UK time
-        endMin: 1125     // 6:45 PM UK time
-    },
-    {
-        sport: "RUGBY UNION",
-        program: "Rugby Union: Ireland v Australia",
-        title: "Rugby Union: Ireland v Australia",
-        timeDisplay: "7:55 PM",
-        dateDisplay: "Fri, 27 Nov",
-        year: 2026,
-        month: 11,
-        day: 27,
-        startMin: 1195,  // 7:55 PM UK time
-        endMin: 1350     // 10:30 PM UK time
+        day: 28,
+        startMin: 1045,  // 5:25 PM UK time
+        endMin: 1170     // 7:30 PM UK time
     }
 ];
 
-const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a6db66278dcf065703144f5";
+const CRIC_API_ENDPOINT = "https://cricvoice.aminurmarch.workers.dev/?matchId=6a589baf5a2a46d5d3506fcf";
 
 function formatInningScore(teamObj, prefix) {
     if (!teamObj) return "";
