@@ -12,12 +12,12 @@
   --green:#4ade80;--yellow:#fbbf24;--line:rgba(255,255,255,.085);
 }
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:14px Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:14px system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:radial-gradient(ellipse at 50% -15%,rgba(72,105,180,.2),transparent 50%),var(--bg)}
 .container{width:100%;max-width:680px;margin:0 auto;padding:16px 13px 32px}
 .match-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#1a2944 0%,#111a2b 72%);border:1px solid rgba(155,180,255,.15);border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:0 14px 38px rgba(0,0,0,.25)}
 .status-row{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:800;letter-spacing:1px;color:var(--green)}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px currentColor;flex-shrink:0}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
 .status-sub{color:#c8d4ea;font-weight:700;letter-spacing:.4px}
 .updated-top{margin-left:auto;color:var(--muted);font-weight:500;letter-spacing:0;white-space:nowrap}
 .match-title{font-size:19px;font-weight:850;margin-top:14px;line-height:1.3;letter-spacing:-.3px}
@@ -30,6 +30,11 @@ body{background:radial-gradient(ellipse at 50% -15%,rgba(72,105,180,.2),transpar
 .team-name{font-size:13px;font-weight:800;overflow-wrap:anywhere}
 .team-role{font-size:10px;color:var(--accent2);font-weight:700;margin-top:2px}
 .team-score{font-size:19px;font-weight:900;margin-top:9px;font-variant-numeric:tabular-nums;color:var(--text)}
+.inn-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.inn-tab{flex:1 1 160px;border:1px solid var(--line);background:var(--card);color:#c5d2e8;border-radius:14px;padding:10px 12px;text-align:left;cursor:pointer}
+.inn-tab.active{background:linear-gradient(105deg,#ffad82,#ff7954);border-color:transparent;color:#1b1c25}
+.inn-tab-title{font-size:12px;font-weight:800;line-height:1.25}
+.inn-tab-sub{font-size:11px;font-weight:700;opacity:.85;margin-top:2px;font-variant-numeric:tabular-nums}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:17px;overflow:hidden;margin-bottom:14px;box-shadow:0 8px 24px rgba(0,0,0,.14)}
 .panel-head{padding:13px 14px;background:linear-gradient(100deg,#1b2942,#172238);display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid var(--line)}
 .panel-title{font-weight:800;font-size:14px}
@@ -79,10 +84,12 @@ table.score-table{width:100%;border-collapse:collapse;min-width:340px;font-size:
     <div class="teams" id="teamsGrid"></div>
   </section>
 
+  <div class="inn-tabs" id="inningsTabs"></div>
+
   <section class="panel">
     <div class="panel-head">
       <div class="panel-title">Batting</div>
-      <div class="panel-meta">Current Crease</div>
+      <div class="panel-meta" id="batPanelMeta">Scorecard</div>
     </div>
     <div class="table-wrap">
       <table class="score-table">
@@ -97,7 +104,7 @@ table.score-table{width:100%;border-collapse:collapse;min-width:340px;font-size:
   <section class="panel">
     <div class="panel-head">
       <div class="panel-title">Bowling</div>
-      <div class="panel-meta">Current Spell</div>
+      <div class="panel-meta" id="bowlPanelMeta">Spell</div>
     </div>
     <div class="table-wrap">
       <table class="score-table">
@@ -111,7 +118,7 @@ table.score-table{width:100%;border-collapse:collapse;min-width:340px;font-size:
 
   <section class="panel">
     <div class="panel-head">
-      <div class="panel-title" id="inningTitle">New Zealand Inning</div>
+      <div class="panel-title" id="inningTitle">Inning</div>
       <div class="panel-meta" id="inningScore">—</div>
     </div>
     <div class="metrics" id="metricsGrid"></div>
@@ -147,7 +154,7 @@ table.score-table{width:100%;border-collapse:collapse;min-width:340px;font-size:
 'use strict';
 
 const API_URL = 'https://bdcr2.aminurmarch.workers.dev/?id=98450';
-const REFRESH_MS = 2 * 60 * 1000; // Auto refresh every 2 minutes
+const REFRESH_MS = 2 * 60 * 1000;
 
 const FALLBACK_DATA = {
   status: 'ok',
@@ -191,6 +198,10 @@ const esc = v => String(v === null || v === undefined || v === '' ? '—' : v)
 
 let busy = false;
 let hasLiveData = false;
+let latestPayload = null;
+let latestStamp = '';
+let selectedInningNumber = null;
+let lastKnownLatestInn = null;
 let currentPlayers = [];
 let activeTeamFilter = 'all';
 
@@ -259,9 +270,109 @@ function renderSquad(){
   }).join('');
 }
 
+function renderSelectedInning(r, innings){
+  const latestNum = Number(r.latest_inning_number || (innings[innings.length - 1] && innings[innings.length - 1].number) || 1);
+  if(lastKnownLatestInn !== latestNum || selectedInningNumber === null){
+    selectedInningNumber = latestNum;
+    lastKnownLatestInn = latestNum;
+  }
+
+  $('inningsTabs').innerHTML = innings.map(inn => {
+    const num = Number(inn.number);
+    const active = num === Number(selectedInningNumber);
+    const label = String(inn.short_name || inn.name || `Inning ${num}`).trim();
+    const score = String(inn.scores_full || inn.scores || '').trim() || '—';
+    return `
+      <button type="button" class="inn-tab${active ? ' active' : ''}" data-inn="${esc(num)}">
+        <div class="inn-tab-title">${esc(label)}</div>
+        <div class="inn-tab-sub">${esc(score)}</div>
+      </button>`;
+  }).join('');
+
+  $('inningsTabs').querySelectorAll('.inn-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedInningNumber = Number(btn.dataset.inn);
+      renderSelectedInning(r, innings);
+    });
+  });
+
+  const activeInn = innings.find(i => Number(i.number) === Number(selectedInningNumber))
+    || innings[innings.length - 1]
+    || {};
+  const eq = activeInn.equations || {};
+  const isCurrentLiveInn = Number(activeInn.number) === latestNum;
+
+  $('batPanelMeta').textContent = isCurrentLiveInn ? 'Current Crease' : (activeInn.short_name || activeInn.name || 'Inning');
+  $('bowlPanelMeta').textContent = isCurrentLiveInn ? 'Current Spell' : 'Bowling Figures';
+
+  const batsmen = Array.isArray(activeInn.batsmen) ? activeInn.batsmen : [];
+  $('batBody').innerHTML = batsmen.length ? batsmen.map(b => {
+    const notOut = isPlayerNotOut(b);
+    const posTag = b.position === 'striker' ? 'striker*' : (notOut ? 'not out' : (b.how_out || 'out'));
+    const roleBadge = b.role_str ? ` ${b.role_str}` : '';
+    return `
+      <tr>
+        <td><div class="player-name">${esc(b.name)}${esc(roleBadge)}</div><div class="player-sub${notOut ? ' not-out' : ''}">${esc(posTag)}</div></td>
+        <td><strong>${esc(b.runs)}</strong></td>
+        <td>${esc(b.balls_faced)}</td>
+        <td>${esc(b.fours)}</td>
+        <td>${esc(b.sixes)}</td>
+        <td>${esc(b.strike_rate)}</td>
+      </tr>`;
+  }).join('') : '<tr><td colspan="6" style="text-align:center;color:var(--muted)">No batters available</td></tr>';
+
+  const bowlers = Array.isArray(activeInn.bowlers) ? activeInn.bowlers : [];
+  $('bowlBody').innerHTML = bowlers.length ? bowlers.map(bw => `
+    <tr>
+      <td><div class="player-name">${esc(bw.name)}</div><div class="player-sub">${esc(bw.position || 'bowler')}</div></td>
+      <td>${esc(bw.overs)}</td>
+      <td>${esc(bw.maidens)}</td>
+      <td>${esc(bw.runs_conceded)}</td>
+      <td><strong>${esc(bw.wickets)}</strong></td>
+      <td>${esc(bw.econ)}</td>
+    </tr>
+  `).join('') : '<tr><td colspan="6" style="text-align:center;color:var(--muted)">No bowlers available</td></tr>';
+
+  const runs = eq.runs ?? activeInn.scores ?? '—';
+  const overs = eq.overs ?? activeInn.overs ?? '—';
+  const rr = eq.runrate ?? '—';
+  $('inningTitle').textContent = String(activeInn.name || `${(r.teama && r.teama.name) || 'Team'} Inning`).trim();
+  $('inningScore').textContent = activeInn.scores_full || (runs !== '—' ? `${runs} (${overs} ov)` : '—');
+
+  const pship = activeInn.current_partnership;
+  const pshipBatters = Array.isArray(pship && pship.batsmen)
+    ? pship.batsmen.map(b => `${b.name} ${b.runs} (${b.balls})`).join(' & ')
+    : '';
+  const pshipText = pship
+    ? `${pship.runs} (${pship.balls}b · ${pship.overs} ov)${pshipBatters ? ` · ${pshipBatters}` : ''}`
+    : '—';
+
+  const p1 = activeInn.powerplay && activeInn.powerplay.p1;
+  const ppText = p1 ? `Overs ${p1.startover} – ${p1.endover}` : '—';
+
+  const ex = activeInn.extra_runs || {};
+  const extrasText = `Total ${ex.total ?? 0} (b ${ex.byes ?? 0}, lb ${ex.legbyes ?? 0}, w ${ex.wides ?? 0}, nb ${ex.noballs ?? 0})`;
+
+  $('metricsGrid').innerHTML = `
+    <div class="metric"><div class="metric-label">Score &amp; Overs</div><div class="metric-val">${esc(activeInn.scores_full || `${runs} (${overs} ov)`)}</div></div>
+    <div class="metric"><div class="metric-label">Run Rate</div><div class="metric-val">${esc(rr)}</div></div>
+    <div class="metric"><div class="metric-label">Partnership</div><div class="metric-val">${esc(pshipText)}</div></div>
+    <div class="metric"><div class="metric-label">Powerplay / Extras</div><div class="metric-val">${esc(ppText)} · ${esc(extrasText)}</div></div>
+  `;
+
+  const dnb = Array.isArray(activeInn.did_not_bat) ? activeInn.did_not_bat.map(x => x.name || x).filter(Boolean) : [];
+  const mNotes = Array.isArray(r.match_notes) ? r.match_notes.flat().filter(Boolean) : [];
+  $('extraInfo').innerHTML = `
+    ${mNotes.length ? `<div><strong>Match Notes:</strong> <span class="chips">${mNotes.map(n => `<span class="chip">${esc(n)}</span>`).join('')}</span></div>` : ''}
+    ${dnb.length ? `<div style="${mNotes.length ? 'margin-top:8px' : ''}"><strong>Yet to Bat:</strong> ${esc(dnb.join(', '))}</div>` : ''}
+  `;
+}
+
 function renderData(payload, feedStamp){
   const r = payload && payload.response ? payload.response : payload;
   if(!r || typeof r !== 'object') return;
+  latestPayload = payload;
+  if(feedStamp) latestStamp = feedStamp;
 
   const ta = r.teama || {};
   const tb = r.teamb || {};
@@ -272,7 +383,6 @@ function renderData(payload, feedStamp){
   const toss = r.toss || {};
   const innings = Array.isArray(r.innings) ? r.innings : [];
   const activeInn = innings.find(i => Number(i.number) === Number(r.latest_inning_number)) || innings[innings.length - 1] || {};
-  const eq = activeInn.equations || {};
 
   const statusStr = String(r.status_str || 'Live');
   const gameStateStr = String(r.game_state_str || '');
@@ -316,67 +426,7 @@ function renderData(payload, feedStamp){
       </div>`;
   }).join('');
 
-  const batsmen = Array.isArray(activeInn.batsmen) ? activeInn.batsmen : [];
-  $('batBody').innerHTML = batsmen.length ? batsmen.map(b => {
-    const notOut = isPlayerNotOut(b);
-    const posTag = b.position === 'striker' ? 'striker*' : (notOut ? 'not out' : (b.how_out || 'out'));
-    const roleBadge = b.role_str ? ` ${b.role_str}` : '';
-    return `
-      <tr>
-        <td><div class="player-name">${esc(b.name)}${esc(roleBadge)}</div><div class="player-sub${notOut ? ' not-out' : ''}">${esc(posTag)}</div></td>
-        <td><strong>${esc(b.runs)}</strong></td>
-        <td>${esc(b.balls_faced)}</td>
-        <td>${esc(b.fours)}</td>
-        <td>${esc(b.sixes)}</td>
-        <td>${esc(b.strike_rate)}</td>
-      </tr>`;
-  }).join('') : '<tr><td colspan="6" style="text-align:center;color:var(--muted)">No active batters</td></tr>';
-
-  const bowlers = Array.isArray(activeInn.bowlers) ? activeInn.bowlers : [];
-  $('bowlBody').innerHTML = bowlers.length ? bowlers.map(bw => `
-    <tr>
-      <td><div class="player-name">${esc(bw.name)}</div><div class="player-sub">${esc(bw.position || 'bowler')}</div></td>
-      <td>${esc(bw.overs)}</td>
-      <td>${esc(bw.maidens)}</td>
-      <td>${esc(bw.runs_conceded)}</td>
-      <td><strong>${esc(bw.wickets)}</strong></td>
-      <td>${esc(bw.econ)}</td>
-    </tr>
-  `).join('') : '<tr><td colspan="6" style="text-align:center;color:var(--muted)">No active bowlers</td></tr>';
-
-  const runs = eq.runs ?? activeInn.scores ?? '—';
-  const overs = eq.overs ?? activeInn.overs ?? '—';
-  const rr = eq.runrate ?? '—';
-  $('inningTitle').textContent = activeInn.name || `${ta.name || 'New Zealand'} Inning`;
-  $('inningScore').textContent = activeInn.scores_full || (runs !== '—' ? `${runs} (${overs} ov)` : '—');
-
-  const pship = activeInn.current_partnership;
-  const pshipBatters = Array.isArray(pship && pship.batsmen)
-    ? pship.batsmen.map(b => `${b.name} ${b.runs} (${b.balls})`).join(' & ')
-    : '';
-  const pshipText = pship
-    ? `${pship.runs} (${pship.balls}b · ${pship.overs} ov)${pshipBatters ? ` · ${pshipBatters}` : ''}`
-    : '—';
-
-  const p1 = activeInn.powerplay && activeInn.powerplay.p1;
-  const ppText = p1 ? `Overs ${p1.startover} – ${p1.endover}` : '—';
-
-  const ex = activeInn.extra_runs || {};
-  const extrasText = `Total ${ex.total ?? 0} (b ${ex.byes ?? 0}, lb ${ex.legbyes ?? 0}, w ${ex.wides ?? 0}, nb ${ex.noballs ?? 0})`;
-
-  $('metricsGrid').innerHTML = `
-    <div class="metric"><div class="metric-label">Score &amp; Overs</div><div class="metric-val">${esc(activeInn.scores_full || `${runs} (${overs} ov)`)}</div></div>
-    <div class="metric"><div class="metric-label">Run Rate</div><div class="metric-val">${esc(rr)}</div></div>
-    <div class="metric"><div class="metric-label">Partnership</div><div class="metric-val">${esc(pshipText)}</div></div>
-    <div class="metric"><div class="metric-label">Powerplay / Extras</div><div class="metric-val">${esc(ppText)} · ${esc(extrasText)}</div></div>
-  `;
-
-  const dnb = Array.isArray(activeInn.did_not_bat) ? activeInn.did_not_bat.map(x => x.name || x).filter(Boolean) : [];
-  const mNotes = Array.isArray(r.match_notes) ? r.match_notes.flat().filter(Boolean) : [];
-  $('extraInfo').innerHTML = `
-    ${mNotes.length ? `<div><strong>Match Notes:</strong> <span class="chips">${mNotes.map(n => `<span class="chip">${esc(n)}</span>`).join('')}</span></div>` : ''}
-    ${dnb.length ? `<div style="${mNotes.length ? 'margin-top:8px' : ''}"><strong>Yet to Bat:</strong> ${esc(dnb.join(', '))}</div>` : ''}
-  `;
+  renderSelectedInning(r, innings);
 
   $('startIstLabel').textContent = r.date_start_ist || r.date_start || 'Test';
   const venueStr = [venue.name, venue.location, venue.country].filter(Boolean).join(', ') || '—';
@@ -397,7 +447,7 @@ function renderData(payload, feedStamp){
   renderSquad();
 
   const nowStr = new Date().toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
-  const stamp = feedStamp || payload.datetime || payload.modified || '';
+  const stamp = latestStamp || payload.datetime || payload.modified || '';
   $('updatedTop').textContent = nowStr;
   $('footerText').textContent = `Last updated: ${nowStr}${stamp ? ` · Feed: ${stamp}` : ''} · Auto refresh every 2 minutes`;
 }
