@@ -2,644 +2,734 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>India team schedule</title>
   <style>
+    /* Design Tokens & Reset */
     :root {
-      --bg-body: #090e1a;
-      --bg-header: #0f172a;
-      --bg-card: #131c31;
-      --bg-card-alt: #18233c;
-      --bg-pill: #1e293b;
-      --border-color: #253352;
-      --text-primary: #f1f5f9;
+      --bg-page: #0b0f19;
+      --bg-card: #131a2a;
+      --bg-card-hover: #172034;
+      --bg-header: rgba(11, 15, 25, 0.88);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --text-primary: #f8fafc;
       --text-secondary: #94a3b8;
       --text-muted: #64748b;
-      --accent-blue: #38bdf8;
-      --india-blue: #2563eb;
-      --badge-odi: #0284c7;
-      --badge-test: #d97706;
-      --badge-t20: #7c3aed;
+
+      /* Format Accents */
+      --odi-bg: rgba(56, 189, 248, 0.14);
+      --odi-text: #38bdf8;
+      --odi-border: rgba(56, 189, 248, 0.3);
+
+      --t20-bg: rgba(168, 85, 247, 0.14);
+      --t20-text: #c084fc;
+      --t20-border: rgba(168, 85, 247, 0.3);
+
+      --test-bg: rgba(244, 63, 94, 0.14);
+      --test-text: #fb7185;
+      --test-border: rgba(244, 63, 94, 0.3);
+
+      --accent-ind: #2563eb;
     }
 
-    * {
+    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg-body);
-      color: var(--text-primary);
+      min-height: 100vh;
       line-height: 1.45;
-      padding-bottom: 28px;
+      padding-bottom: 2.5rem;
     }
 
-    /* Sticky Top Header */
-    .app-header {
+    /* Sticky Header & Filter Navigation */
+    header {
       position: sticky;
       top: 0;
-      z-index: 50;
+      z-index: 20;
       background-color: var(--bg-header);
-      border-bottom: 1px solid var(--border-color);
-      padding: 14px 16px 12px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
     }
 
-    .header-top {
+    .container {
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .header-inner {
+      padding: 1rem 0 0.85rem;
+    }
+
+    .title-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 0.6rem;
     }
 
-    .brand-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .brand-bar {
+      width: 4px;
+      height: 1.5rem;
+      border-radius: 99px;
+      background: linear-gradient(180deg, #ff9933 0%, #ffffff 50%, #138808 100%);
       flex-shrink: 0;
     }
 
-    .brand-title h1 {
-      font-size: 17px;
+    h1 {
+      font-size: 1.25rem;
       font-weight: 700;
-      letter-spacing: -0.2px;
+      letter-spacing: -0.02em;
       color: var(--text-primary);
     }
 
-    .brand-title p {
-      font-size: 11px;
+    .ist-pill {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
       color: var(--text-secondary);
-      margin-top: 1px;
-    }
-
-    .match-counter {
-      background-color: var(--bg-pill);
-      border: 1px solid var(--border-color);
-      color: var(--accent-blue);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      padding: 0.28rem 0.6rem;
       border-radius: 999px;
+      white-space: nowrap;
     }
 
-    /* Filter Bar */
-    .filter-row {
+    /* Filter Tabs */
+    .filter-bar {
       display: flex;
-      gap: 8px;
+      gap: 0.5rem;
       overflow-x: auto;
       scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding-bottom: 0.15rem;
     }
 
-    .filter-row::-webkit-scrollbar {
+    .filter-bar::-webkit-scrollbar {
       display: none;
     }
 
-    .filter-btn {
-      background-color: var(--bg-pill);
+    .tab-btn {
+      appearance: none;
+      border: 1px solid var(--border-subtle);
+      background-color: var(--bg-card);
       color: var(--text-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: 999px;
-      padding: 6px 14px;
-      font-size: 12px;
+      font-family: inherit;
+      font-size: 0.82rem;
       font-weight: 600;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
       white-space: nowrap;
-      transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+      touch-action: manipulation;
     }
 
-    .filter-btn.active {
-      background-color: var(--india-blue);
-      color: #ffffff;
+    .tab-btn:hover {
+      background-color: var(--bg-card-hover);
+      color: var(--text-primary);
+    }
+
+    .tab-btn:active {
+      transform: scale(0.97);
+    }
+
+    .tab-btn.active {
+      background-color: var(--accent-ind);
       border-color: #3b82f6;
+      color: #ffffff;
     }
 
-    /* Container */
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 12px 14px;
+    .tab-count {
+      font-size: 0.72rem;
+      padding: 0.05rem 0.42rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.25);
+      color: inherit;
     }
 
-    /* Series Divider */
-    .series-banner {
+    .tab-btn:not(.active) .tab-count {
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--text-muted);
+    }
+
+    /* Main List & Series Groupings */
+    main {
+      padding-top: 1rem;
+    }
+
+    .series-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .series-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: 16px 2px 10px;
-      padding-left: 8px;
-      border-left: 3px solid var(--accent-blue);
+      gap: 0.5rem;
+      margin: 0.5rem 0 0.7rem;
+      padding: 0 0.15rem;
     }
 
-    .series-banner:first-child {
-      margin-top: 4px;
-    }
-
-    .series-name {
-      font-size: 12px;
+    .series-title {
+      font-size: 0.78rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--accent-blue);
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
     }
 
-    .series-year {
-      font-size: 11px;
+    .series-meta {
+      font-size: 0.75rem;
       color: var(--text-muted);
-      font-weight: 600;
+    }
+
+    .match-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
     }
 
     /* Match Card */
     .match-card {
       background-color: var(--bg-card);
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--border-subtle);
       border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 11px;
+      padding: 0.95rem 1rem;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .match-card:hover {
+      border-color: var(--border-strong);
+      background-color: var(--bg-card-hover);
     }
 
     .card-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 10px;
+      gap: 0.6rem;
+      margin-bottom: 0.65rem;
+      flex-wrap: wrap;
     }
 
     .match-date {
-      font-size: 11.5px;
+      font-size: 0.8rem;
       font-weight: 600;
-      color: var(--text-secondary);
+      color: #cbd5e1;
+    }
+
+    .badges {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
     .format-badge {
-      font-size: 10.5px;
+      font-size: 0.68rem;
       font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 6px;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: #ffffff;
-      flex-shrink: 0;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      border: 1px solid transparent;
     }
 
-    .format-odi { background-color: var(--badge-odi); }
-    .format-test { background-color: var(--badge-test); }
-    .format-t20i { background-color: var(--badge-t20); }
+    .format-ODI {
+      background-color: var(--odi-bg);
+      color: var(--odi-text);
+      border-color: var(--odi-border);
+    }
 
-    .match-subtitle {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 10px;
+    .format-T20I {
+      background-color: var(--t20-bg);
+      color: var(--t20-text);
+      border-color: var(--t20-border);
+    }
+
+    .format-Test {
+      background-color: var(--test-bg);
+      color: var(--test-text);
+      border-color: var(--test-border);
+    }
+
+    .match-label {
+      font-size: 0.76rem;
       font-weight: 500;
-    }
-
-    /* Teams Section */
-    .teams-box {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      background-color: var(--bg-card-alt);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      border-radius: 10px;
-      padding: 10px 12px;
-      margin-bottom: 11px;
-    }
-
-    .team-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .team-info {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-    }
-
-    .team-code {
-      width: 30px;
-      height: 22px;
-      border-radius: 5px;
-      font-size: 10px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      letter-spacing: 0.4px;
-      color: #ffffff;
-      flex-shrink: 0;
-    }
-
-    .code-ind { background-color: #1d4ed8; }
-    .code-nz  { background-color: #334155; }
-    .code-sl  { background-color: #0369a1; }
-    .code-zim { background-color: #b91c1c; }
-    .code-aus { background-color: #ca8a04; color: #0f172a; }
-    .code-pak { background-color: #15803d; }
-    .code-afg { background-color: #1e40af; }
-    .code-tbc { background-color: #475569; }
-
-    .team-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .team-name.india {
-      color: #ffffff;
-      font-weight: 700;
-    }
-
-    /* Footer Details */
-    .card-footer {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      font-size: 12px;
       color: var(--text-secondary);
     }
 
-    .meta-line {
+    /* Teams Row */
+    .teams-row {
       display: flex;
-      align-items: flex-start;
-      gap: 6px;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
     }
 
-    .meta-line svg {
+    .team-name {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .team-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #3b82f6;
+      flex-shrink: 0;
+    }
+
+    .vs-tag {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: lowercase;
+    }
+
+    /* Footer Info: Venue & IST Time */
+    .card-bottom {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding-top: 0.65rem;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.8rem;
+    }
+
+    .venue {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.35rem;
+      color: var(--text-secondary);
+      flex: 1;
+      min-width: 0;
+    }
+
+    .venue svg {
       width: 14px;
       height: 14px;
       margin-top: 2px;
       flex-shrink: 0;
-      color: var(--accent-blue);
+      color: var(--text-muted);
     }
 
-    .empty-state {
+    .time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-weight: 700;
+      font-size: 0.78rem;
+      color: #e2e8f0;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.24rem 0.55rem;
+      border-radius: 6px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .time-badge svg {
+      width: 13px;
+      height: 13px;
+      color: #38bdf8;
+    }
+
+    footer {
       text-align: center;
-      padding: 40px 20px;
-      color: var(--text-secondary);
-      font-size: 14px;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 420px) {
+      h1 {
+        font-size: 1.12rem;
+      }
+      .card-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
     }
   </style>
 </head>
 <body>
-
-  <header class="app-header">
-    <div class="header-top">
-      <div class="brand">
-        <div class="brand-icon" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <path d="M6.5 6.5c3.5 3.5 7.5 3.5 11 0"></path>
-            <path d="M6.5 17.5c3.5-3.5 7.5-3.5 11 0"></path>
-          </svg>
-        </div>
-        <div class="brand-title">
+  <!-- Sticky Header with Title and Format Filters -->
+  <header>
+    <div class="container header-inner">
+      <div class="title-row">
+        <div class="brand">
+          <span class="brand-bar" aria-hidden="true"></span>
           <h1>India team schedule</h1>
-          <p>Men's Upcoming Fixtures (2026–2027)</p>
         </div>
+        <span class="ist-pill">ALL TIMES IST</span>
       </div>
-      <span class="match-counter" id="matchCount">21 Matches</span>
-    </div>
 
-    <div class="filter-row" role="tablist" aria-label="Match Format Filter">
-      <button class="filter-btn active" data-format="ALL">ALL (21)</button>
-      <button class="filter-btn" data-format="ODI">ODI (11)</button>
-      <button class="filter-btn" data-format="TEST">TEST (7)</button>
-      <button class="filter-btn" data-format="T20I">T20I (3)</button>
+      <nav class="filter-bar" role="tablist" aria-label="Match format filter">
+        <button class="tab-btn active" data-filter="ALL" role="tab" aria-selected="true">
+          All <span class="tab-count" id="count-ALL">19</span>
+        </button>
+        <button class="tab-btn" data-filter="Test" role="tab" aria-selected="false">
+          Test <span class="tab-count" id="count-Test">5</span>
+        </button>
+        <button class="tab-btn" data-filter="ODI" role="tab" aria-selected="false">
+          ODI <span class="tab-count" id="count-ODI">11</span>
+        </button>
+        <button class="tab-btn" data-filter="T20I" role="tab" aria-selected="false">
+          T20I <span class="tab-count" id="count-T20I">3</span>
+        </button>
+      </nav>
     </div>
   </header>
 
-  <main class="container" id="scheduleList"></main>
+  <!-- Schedule Container -->
+  <main class="container" id="schedule-root" aria-live="polite"></main>
+
+  <footer class="container">
+    Upcoming fixtures only &bull; Start times in Indian Standard Time (IST)
+  </footer>
 
   <script>
-    const scheduleData = [
-      {
-        series: "India Tour of New Zealand 2026",
-        year: "2026",
-        date: "THU, 19 NOV – MON, 23 NOV 2026",
-        title: "1st Test",
-        format: "TEST",
-        team1: { name: "New Zealand", code: "NZ" },
-        team2: { name: "India", code: "IND" },
-        venue: "Basin Reserve, Wellington",
-        time: "3:30 AM IST • 10:00 PM GMT / 11:00 AM LOCAL"
-      },
-      {
-        series: "India Tour of New Zealand 2026",
-        year: "2026",
-        date: "FRI, 27 NOV – TUE, 01 DEC 2026",
-        title: "2nd Test",
-        format: "TEST",
-        team1: { name: "New Zealand", code: "NZ" },
-        team2: { name: "India", code: "IND" },
-        venue: "Hagley Oval, Christchurch",
-        time: "3:30 AM IST • 10:00 PM GMT / 11:00 AM LOCAL"
-      },
-      {
-        series: "Sri Lanka Tour of India 2026",
-        year: "2026",
-        date: "SUN, 13 DEC 2026",
-        title: "1st ODI",
-        format: "ODI",
-        team1: { name: "India", code: "IND" },
-        team2: { name: "Sri Lanka", code: "SL" },
-        venue: "ACA-VDCA Cricket Stadium, Visakhapatnam",
-        time: "2:00 PM IST • 8:30 AM GMT / 2:00 PM LOCAL"
-      },
-      {
-        series: "Sri Lanka Tour of India 2026",
-        year: "2026",
-        date: "WED, 16 DEC 2026",
-        title: "2nd ODI",
-        format: "ODI",
-        team1: { name: "India", code: "IND" },
-        team2: { name: "Sri Lanka", code: "SL" },
-        venue: "M. Chinnaswamy Stadium, Bengaluru",
-        time: "2:00 PM IST • 8:30 AM GMT / 2:00 PM LOCAL"
-      },
-      {
-        series: "Sri Lanka Tour of India 2026",
-        year: "2026",
-        date: "SAT, 19 DEC 2026",
-        title: "3rd ODI",
-        format: "ODI",
-        team1: { name: "India", code: "IND" },
-        team2: { name: "Sri Lanka", code: "SL" },
-        venue: "Narendra Modi Stadium, Ahmedabad",
-        time: "2:00 PM IST • 8:30 AM GMT / 2:00 PM LOCAL"
-      },
-      {
-        series: "Sri Lanka Tour of India 2026",
-        year: "2026",
-        date: "TUE, 22 DEC 2026",
-        title: "1st T20I",
-        format: "T20I",
-        team1: { name: "India", code: "IND" },
-        team2: { name: "Sri Lanka", code: "SL" },
-        venue: "Niranjan Shah Stadium, Khandheri, Rajkot",
-        time: "7:00 PM IST • 1:30 PM GMT / 7:00 PM LOCAL"
-      },
-      {
-        series: "Sri Lanka Tour of India 2026",
-        year: "2026",
-        date: "THU, 24 DEC 2026",
-        title: "2nd T20I",
-        format: "T20I",
-        team1: { name: "India", code: "IND" },
-        team2: { name: "Sri Lanka", code: "SL" },
-        venue: "Barabati Stadium, Cuttack",
-        time: "7:00 PM IST • 1:30 PM GMT / 7:00 PM LOCAL"
-      },
-      {
-        series: "Sri Lanka Tour of India 2026",
-        year: "2026",
-        date: "SUN, 27 DEC 2026",
-        title: "3rd T20I",
-        format: "T20I",
-        team1: { name: "India", code: "IND" },
-        team2: { name: "Sri Lanka", code: "SL" },
-        venue: "Maharashtra Cricket Association Stadium, Pune",
-        time: "7:00 PM IST • 1:30 PM GMT / 7:00 PM LOCAL"
-      },
-      {
-        series: "Zimbabwe Tour of India 2027",
-        year: "2027",
-        date: "SUN, 03 JAN 2027",
-        title: "1st ODI",
-        format: "ODI",
-        team1: { name: "India", code: "IND" },
-        team2: { name: "Zimbabwe", code: "ZIM" },
-        venue: "Eden Gardens, Kolkata",
-        time: "2:00 PM IST • 8:30 AM GMT / 2:00 PM LOCAL"
-      },
-      {
-        series: "Zimbabwe Tour of India 2027",
-        year: "2027",
-        date: "WED, 06 JAN 2027",
-        title: "2nd ODI",
-        format: "ODI",
-        team1: { name: "India", code: "IND" },
-        team2: { name: "Zimbabwe", code: "ZIM" },
-        venue: "Rajiv Gandhi International Stadium, Hyderabad",
-        time: "2:00 PM IST • 8:30 AM GMT / 2:00 PM LOCAL"
-      },
-      {
-        series: "Zimbabwe Tour of India 2027",
-        year: "2027",
-        date: "SAT, 09 JAN 2027",
-        title: "3rd ODI",
-        format: "ODI",
-        team1: { name: "India", code: "IND" },
-        team2: { name: "Zimbabwe", code: "ZIM" },
-        venue: "Wankhede Stadium, Mumbai",
-        time: "2:00 PM IST • 8:30 AM GMT / 2:00 PM LOCAL"
-      },
-      {
-        series: "Australia Tour of India 2027",
-        year: "2027",
-        date: "THU, 21 JAN – MON, 25 JAN 2027",
-        title: "1st Test",
-        format: "TEST",
-        team1: { name: "India", code: "IND" },
-        team2: { name: "Australia", code: "AUS" },
-        venue: "Vidarbha Cricket Association Stadium, Nagpur",
-        time: "9:30 AM IST • 4:00 AM GMT / 9:30 AM LOCAL"
-      },
-      {
-        series: "Australia Tour of India 2027",
-        year: "2027",
-        date: "FRI, 29 JAN – TUE, 02 FEB 2027",
-        title: "2nd Test",
-        format: "TEST",
-        team1: { name: "India", code: "IND" },
-        team2: { name: "Australia", code: "AUS" },
-        venue: "MA Chidambaram Stadium, Chennai",
-        time: "9:30 AM IST • 4:00 AM GMT / 9:30 AM LOCAL"
-      },
-      {
-        series: "Australia Tour of India 2027",
-        year: "2027",
-        date: "THU, 11 FEB – MON, 15 FEB 2027",
-        title: "3rd Test",
-        format: "TEST",
-        team1: { name: "India", code: "IND" },
-        team2: { name: "Australia", code: "AUS" },
-        venue: "Barsapara Cricket Stadium, Guwahati",
-        time: "9:00 AM IST • 3:30 AM GMT / 9:00 AM LOCAL"
-      },
-      {
-        series: "Australia Tour of India 2027",
-        year: "2027",
-        date: "FRI, 19 FEB – TUE, 23 FEB 2027",
-        title: "4th Test",
-        format: "TEST",
-        team1: { name: "India", code: "IND" },
-        team2: { name: "Australia", code: "AUS" },
-        venue: "JSCA International Stadium Complex, Ranchi",
-        time: "9:30 AM IST • 4:00 AM GMT / 9:30 AM LOCAL"
-      },
-      {
-        series: "Australia Tour of India 2027",
-        year: "2027",
-        date: "SAT, 27 FEB – WED, 03 MAR 2027",
-        title: "5th Test",
-        format: "TEST",
-        team1: { name: "India", code: "IND" },
-        team2: { name: "Australia", code: "AUS" },
-        venue: "Narendra Modi Stadium, Ahmedabad",
-        time: "9:30 AM IST • 4:00 AM GMT / 9:30 AM LOCAL"
-      },
-      {
-        series: "ICC Cricket World Cup 2027 • Group A",
-        year: "2027",
-        date: "THU, 07 OCT 2027",
-        title: "1st Match, Group A",
-        format: "ODI",
-        team1: { name: "India", code: "IND" },
-        team2: { name: "Australia", code: "AUS" },
-        venue: "Newlands, Cape Town",
-        time: "1:30 PM IST • 8:00 AM GMT / 10:00 AM LOCAL"
-      },
-      {
-        series: "ICC Cricket World Cup 2027 • Group A",
-        year: "2027",
-        date: "SUN, 10 OCT 2027",
-        title: "6th Match, Group A",
-        format: "ODI",
-        team1: { name: "India", code: "IND" },
-        team2: { name: "Pakistan", code: "PAK" },
-        venue: "The Wanderers Stadium, Johannesburg",
-        time: "1:30 PM IST • 8:00 AM GMT / 10:00 AM LOCAL"
-      },
-      {
-        series: "ICC Cricket World Cup 2027 • Group A",
-        year: "2027",
-        date: "THU, 14 OCT 2027",
-        title: "13th Match, Group A",
-        format: "ODI",
-        team1: { name: "India", code: "IND" },
-        team2: { name: "Afghanistan", code: "AFG" },
-        venue: "SuperSport Park, Centurion",
-        time: "1:30 PM IST • 8:00 AM GMT / 10:00 AM LOCAL"
-      },
-      {
-        series: "ICC Cricket World Cup 2027 • Group A",
-        year: "2027",
-        date: "SUN, 17 OCT 2027",
-        title: "18th Match, Group A",
-        format: "ODI",
-        team1: { name: "India", code: "IND" },
-        team2: { name: "TBC (Qualifier A)", code: "TBC" },
-        venue: "Mangaung Oval, Bloemfontein",
-        time: "1:30 PM IST • 8:00 AM GMT / 10:00 AM LOCAL"
-      },
-      {
-        series: "ICC Cricket World Cup 2027 • Group A",
-        year: "2027",
-        date: "SUN, 24 OCT 2027",
-        title: "30th Match, Group A",
-        format: "ODI",
-        team1: { name: "Zimbabwe", code: "ZIM" },
-        team2: { name: "India", code: "IND" },
-        venue: "Mosi-oa-Tunya International Cricket Stadium, Victoria Falls",
-        time: "1:30 PM IST • 8:00 AM GMT / 10:00 AM LOCAL"
-      }
-    ];
+    (function () {
+      // Exact 19 upcoming matches in chronological order (IST only)
+      const MATCHES = [
+        {
+          id: 1,
+          series: "Sri Lanka tour of India, 2026",
+          date: "Sun, 13 Dec 2026",
+          title: "1st ODI",
+          format: "ODI",
+          team1: "India",
+          team2: "Sri Lanka",
+          venue: "ACA-VDCA Cricket Stadium, Visakhapatnam",
+          time: "2:00 PM IST"
+        },
+        {
+          id: 2,
+          series: "Sri Lanka tour of India, 2026",
+          date: "Wed, 16 Dec 2026",
+          title: "2nd ODI",
+          format: "ODI",
+          team1: "India",
+          team2: "Sri Lanka",
+          venue: "M.Chinnaswamy Stadium, Bengaluru",
+          time: "2:00 PM IST"
+        },
+        {
+          id: 3,
+          series: "Sri Lanka tour of India, 2026",
+          date: "Sat, 19 Dec 2026",
+          title: "3rd ODI",
+          format: "ODI",
+          team1: "India",
+          team2: "Sri Lanka",
+          venue: "Narendra Modi Stadium, Ahmedabad",
+          time: "2:00 PM IST"
+        },
+        {
+          id: 4,
+          series: "Sri Lanka tour of India, 2026",
+          date: "Tue, 22 Dec 2026",
+          title: "1st T20I",
+          format: "T20I",
+          team1: "India",
+          team2: "Sri Lanka",
+          venue: "Niranjan Shah Stadium, Khandheri, Rajkot",
+          time: "7:00 PM IST"
+        },
+        {
+          id: 5,
+          series: "Sri Lanka tour of India, 2026",
+          date: "Thu, 24 Dec 2026",
+          title: "2nd T20I",
+          format: "T20I",
+          team1: "India",
+          team2: "Sri Lanka",
+          venue: "Barabati Stadium, Cuttack",
+          time: "7:00 PM IST"
+        },
+        {
+          id: 6,
+          series: "Sri Lanka tour of India, 2026",
+          date: "Sun, 27 Dec 2026",
+          title: "3rd T20I",
+          format: "T20I",
+          team1: "India",
+          team2: "Sri Lanka",
+          venue: "Maharashtra Cricket Association Stadium, Pune",
+          time: "7:00 PM IST"
+        },
+        {
+          id: 7,
+          series: "Zimbabwe tour of India, 2027",
+          date: "Sun, 03 Jan 2027",
+          title: "1st ODI",
+          format: "ODI",
+          team1: "India",
+          team2: "Zimbabwe",
+          venue: "Eden Gardens, Kolkata",
+          time: "2:00 PM IST"
+        },
+        {
+          id: 8,
+          series: "Zimbabwe tour of India, 2027",
+          date: "Wed, 06 Jan 2027",
+          title: "2nd ODI",
+          format: "ODI",
+          team1: "India",
+          team2: "Zimbabwe",
+          venue: "Rajiv Gandhi International Stadium, Hyderabad",
+          time: "2:00 PM IST"
+        },
+        {
+          id: 9,
+          series: "Zimbabwe tour of India, 2027",
+          date: "Sat, 09 Jan 2027",
+          title: "3rd ODI",
+          format: "ODI",
+          team1: "India",
+          team2: "Zimbabwe",
+          venue: "Wankhede Stadium, Mumbai",
+          time: "2:00 PM IST"
+        },
+        {
+          id: 10,
+          series: "Australia tour of India, 2027",
+          date: "Thu, 21 Jan 2027 - Mon, 25 Jan 2027",
+          title: "1st Test",
+          format: "Test",
+          team1: "India",
+          team2: "Australia",
+          venue: "Vidarbha Cricket Association Stadium, Jamtha, Nagpur",
+          time: "9:30 AM IST"
+        },
+        {
+          id: 11,
+          series: "Australia tour of India, 2027",
+          date: "Fri, 29 Jan 2027 - Tue, 02 Feb 2027",
+          title: "2nd Test",
+          format: "Test",
+          team1: "India",
+          team2: "Australia",
+          venue: "MA Chidambaram Stadium, Chennai",
+          time: "9:30 AM IST"
+        },
+        {
+          id: 12,
+          series: "Australia tour of India, 2027",
+          date: "Thu, 11 Feb 2027 - Mon, 15 Feb 2027",
+          title: "3rd Test",
+          format: "Test",
+          team1: "India",
+          team2: "Australia",
+          venue: "Barsapara Cricket Stadium, Guwahati",
+          time: "9:00 AM IST"
+        },
+        {
+          id: 13,
+          series: "Australia tour of India, 2027",
+          date: "Fri, 19 Feb 2027 - Tue, 23 Feb 2027",
+          title: "4th Test",
+          format: "Test",
+          team1: "India",
+          team2: "Australia",
+          venue: "JSCA International Stadium Complex, Ranchi",
+          time: "9:30 AM IST"
+        },
+        {
+          id: 14,
+          series: "Australia tour of India, 2027",
+          date: "Sat, 27 Feb 2027 - Wed, 03 Mar 2027",
+          title: "5th Test",
+          format: "Test",
+          team1: "India",
+          team2: "Australia",
+          venue: "Narendra Modi Stadium, Ahmedabad",
+          time: "9:30 AM IST"
+        },
+        {
+          id: 15,
+          series: "ICC Cricket World Cup 2027",
+          date: "Thu, 07 Oct 2027",
+          title: "1st Match, Group A",
+          format: "ODI",
+          team1: "India",
+          team2: "Australia",
+          venue: "Newlands, Cape Town",
+          time: "1:30 PM IST"
+        },
+        {
+          id: 16,
+          series: "ICC Cricket World Cup 2027",
+          date: "Sun, 10 Oct 2027",
+          title: "6th Match, Group A",
+          format: "ODI",
+          team1: "India",
+          team2: "Pakistan",
+          venue: "The Wanderers Stadium, Johannesburg",
+          time: "1:30 PM IST"
+        },
+        {
+          id: 17,
+          series: "ICC Cricket World Cup 2027",
+          date: "Thu, 14 Oct 2027",
+          title: "13th Match, Group A",
+          format: "ODI",
+          team1: "India",
+          team2: "Afghanistan",
+          venue: "SuperSport Park, Centurion",
+          time: "1:30 PM IST"
+        },
+        {
+          id: 18,
+          series: "ICC Cricket World Cup 2027",
+          date: "Sun, 17 Oct 2027",
+          title: "18th Match, Group A",
+          format: "ODI",
+          team1: "India",
+          team2: "TBC (Qualifier A)",
+          venue: "Mangaung Oval, Bloemfontein",
+          time: "1:30 PM IST"
+        },
+        {
+          id: 19,
+          series: "ICC Cricket World Cup 2027",
+          date: "Sun, 24 Oct 2027",
+          title: "30th Match, Group A",
+          format: "ODI",
+          team1: "Zimbabwe",
+          team2: "India",
+          venue: "Mosi-oa-Tunya International Cricket Stadium, Victoria Falls",
+          time: "1:30 PM IST"
+        }
+      ];
 
-    const listEl = document.getElementById("scheduleList");
-    const countEl = document.getElementById("matchCount");
-    const filterBtns = document.querySelectorAll(".filter-btn");
+      const root = document.getElementById("schedule-root");
+      const buttons = document.querySelectorAll(".tab-btn");
 
-    const pinIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`;
-    const clockIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
+      // Inline SVG icons (zero external requests)
+      const PIN_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>';
+      const CLOCK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
 
-    function renderSchedule(formatFilter = "ALL") {
-      const filtered = formatFilter === "ALL"
-        ? scheduleData
-        : scheduleData.filter(m => m.format === formatFilter);
-
-      countEl.textContent = `${filtered.length} ${filtered.length === 1 ? "Match" : "Matches"}`;
-
-      if (!filtered.length) {
-        listEl.innerHTML = `<div class="empty-state">No matches found for this format.</div>`;
-        return;
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
       }
 
-      let html = "";
-      let currentSeries = "";
+      function renderTeam(name) {
+        const isIndia = name === "India";
+        return `<span class="team-name">${isIndia ? '<span class="team-dot" aria-hidden="true"></span>' : ""}${escapeHtml(name)}</span>`;
+      }
 
-      filtered.forEach(match => {
-        if (match.series !== currentSeries) {
-          currentSeries = match.series;
-          html += `
-            <div class="series-banner">
-              <span class="series-name">${match.series}</span>
-              <span class="series-year">${match.year}</span>
-            </div>
-          `;
+      function renderSchedule(filter) {
+        const filtered = filter === "ALL"
+          ? MATCHES
+          : MATCHES.filter((m) => m.format === filter);
+
+        // Preserve chronological order while grouping consecutive series matches cleanly
+        const groups = [];
+        for (const match of filtered) {
+          const lastGroup = groups[groups.length - 1];
+          if (lastGroup && lastGroup.series === match.series) {
+            lastGroup.matches.push(match);
+          } else {
+            groups.push({ series: match.series, matches: [match] });
+          }
         }
 
-        const badgeClass =
-          match.format === "TEST" ? "format-test" :
-          match.format === "T20I" ? "format-t20i" : "format-odi";
-
-        html += `
-          <article class="match-card">
-            <div class="card-top">
-              <span class="match-date">${match.date}</span>
-              <span class="format-badge ${badgeClass}">${match.format}</span>
-            </div>
-            <div class="match-subtitle">${match.title}</div>
-
-            <div class="teams-box">
-              <div class="team-row">
-                <div class="team-info">
-                  <span class="team-code code-${match.team1.code.toLowerCase()}">${match.team1.code}</span>
-                  <span class="team-name ${match.team1.code === 'IND' ? 'india' : ''}">${match.team1.name}</span>
+        const html = groups.map((group) => {
+          const cardsHtml = group.matches.map((m) => `
+            <article class="match-card">
+              <div class="card-top">
+                <span class="match-date">${escapeHtml(m.date)}</span>
+                <div class="badges">
+                  <span class="match-label">${escapeHtml(m.title)}</span>
+                  <span class="format-badge format-${escapeHtml(m.format)}">${escapeHtml(m.format)}</span>
                 </div>
               </div>
-
-              <div class="team-row">
-                <div class="team-info">
-                  <span class="team-code code-${match.team2.code.toLowerCase()}">${match.team2.code}</span>
-                  <span class="team-name ${match.team2.code === 'IND' ? 'india' : ''}">${match.team2.name}</span>
+              <div class="teams-row">
+                ${renderTeam(m.team1)}
+                <span class="vs-tag">vs</span>
+                ${renderTeam(m.team2)}
+              </div>
+              <div class="card-bottom">
+                <div class="venue">
+                  ${PIN_ICON}
+                  <span>${escapeHtml(m.venue)}</span>
+                </div>
+                <div class="time-badge">
+                  ${CLOCK_ICON}
+                  <span>${escapeHtml(m.time)}</span>
                 </div>
               </div>
-            </div>
+            </article>
+          `).join("");
 
-            <div class="card-footer">
-              <div class="meta-line">${pinIcon}<span>${match.venue}</span></div>
-              ${match.time ? `<div class="meta-line">${clockIcon}<span>${match.time}</span></div>` : ""}
-            </div>
-          </article>
-        `;
+          return `
+            <section class="series-group">
+              <div class="series-header">
+                <h2 class="series-title">${escapeHtml(group.series)}</h2>
+                <span class="series-meta">${group.matches.length} ${group.matches.length === 1 ? "match" : "matches"}</span>
+              </div>
+              <div class="match-list">
+                ${cardsHtml}
+              </div>
+            </section>
+          `;
+        }).join("");
+
+        root.innerHTML = html;
+      }
+
+      // Filter button interactions
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const selected = btn.getAttribute("data-filter");
+          buttons.forEach((b) => {
+            const isActive = b === btn;
+            b.classList.toggle("active", isActive);
+            b.setAttribute("aria-selected", String(isActive));
+          });
+          renderSchedule(selected);
+        });
       });
 
-      listEl.innerHTML = html;
-    }
-
-    filterBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        filterBtns.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        renderSchedule(btn.dataset.format);
-      });
-    });
-
-    renderSchedule("ALL");
+      // Initial render
+      renderSchedule("ALL");
+    })();
   </script>
 </body>
 </html>
