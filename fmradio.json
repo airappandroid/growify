@@ -343,18 +343,53 @@
     "logo": "https://ik.imagekit.io/sqt8ptw1k/36068193_ico.png"
   },
   {
-    "id": "radio8",
-    "name": "Bangla Gaan Radio",
+    "id": "radio47",
+    "name": "Bangla net",
     "category": "Bangla",
-    "trigger": "go:radio8",
-    "logo": "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=300&auto=format&fit=crop&q=80"
+    "trigger": "go:bnet",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32619578_ico.png"
   },
   {
-    "id": "radio9",
-    "name": "Dhaka FM Bangla",
+    "id": "radio48",
+    "name": "90s Bengali",
     "category": "Bangla",
-    "trigger": "go:radio9",
-    "logo": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&auto=format&fit=crop&q=80"
+    "trigger": "go:90sb",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32619569_ico.png"
+  },
+  {
+    "id": "radio49",
+    "name": "Radio Prantik",
+    "category": "Bangla",
+    "trigger": "go:pran",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32643270_ico.png"
+  },
+  {
+    "id": "radio50",
+    "name": "Ankora Radio",
+    "category": "Bangla",
+    "trigger": "go:anko",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32643283_ico.png"
+  },
+  {
+    "id": "radio51",
+    "name": "Radio Rangan",
+    "category": "Bangla",
+    "trigger": "go:rang",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32643289_ico.png"
+  },
+  {
+    "id": "radio52",
+    "name": "Radio Imagic",
+    "category": "Bangla",
+    "trigger": "go:imag",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32646642_ico.png"
+  },
+   {
+    "id": "radio53",
+    "name": "Diganta FM",
+    "category": "Bangla",
+    "trigger": "go:diga",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/32646660_ico.png"
   },
   {
     "id": "radio10",
