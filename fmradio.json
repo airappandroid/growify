@@ -308,6 +308,41 @@
     "logo": "https://ik.imagekit.io/sqt8ptw1k/36365302_ico.png"
   },
   {
+    "id": "radio43",
+    "name": "JKYog Radio",
+    "category": "Bhakti",
+    "trigger": "go:jky",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/35714979_ico.png"
+  },
+   {
+    "id": "radio44",
+    "name": "TGF Radio",
+    "category": "Bhakti",
+    "trigger": "go:tgf",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/35714988_ico.png"
+  },
+  {
+    "id": "radio45",
+    "name": "Radio Namaste",
+    "category": "Bhakti",
+    "trigger": "go:nama",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/35752243_ico.png"
+  },
+  {
+    "id": "radio46",
+    "name": "Vedic TV",
+    "category": "Bhakti",
+    "trigger": "go:vedic",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/35769621_ico.png"
+  },
+   {
+    "id": "radio46",
+    "name": "DC Naat Radio",
+    "category": "Bhakti",
+    "trigger": "go:dcn",
+    "logo": "https://ik.imagekit.io/sqt8ptw1k/36068193_ico.png"
+  },
+  {
     "id": "radio8",
     "name": "Bangla Gaan Radio",
     "category": "Bangla",
